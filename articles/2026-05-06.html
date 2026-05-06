@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-06</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-06</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/1804/live/f15df230-4960-11f1-8cde-350b393d70a2.jpg" alt="Two Britons self-isolating in UK after leaving hantavirus cruise ship early" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Two Britons self-isolating in UK after leaving hantavirus cruise ship early</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c9wepl8we90o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-05-06.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Two British people are self-isolating at home in the UK after potential <span class="keyword" data-word="exposure" data-phonetic="/ɪkˈspoʊʒər/" data-pos="n." data-def="暴露；接触" data-def-en="the state of being in contact with something harmful or infectious">exposure</span> to hantavirus on the cruise ship struck by an <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发；突然发生" data-def-en="a sudden occurrence of something unwelcome, such as a disease">outbreak</span>, the UK Health Security Agency (UKHSA) has said.</span></p>
+        <p class="cn">英国卫生安全局（UKHSA）表示，两名英国人在可能接触了暴发疫情的邮轮上的汉坦病毒后，正在英国家中自我隔离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">They were on the MV Hondius that departed from Argentina a month ago but left the vessel earlier in its journey and do not have symptoms.</span></p>
+        <p class="cn">他们一个月前从阿根廷出发，乘坐MV Hondius号邮轮，但在航程早期下船，目前没有症状。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The Britons left the cruise ship at St Helena, where it docked on 22-24 April, and flew back to the UK via Johannesburg.</span> <span class="sentence" data-sentence-index="3">The pair contacted health officials when they heard of the cases on the ship.</span></p>
+        <p class="cn">这两名英国人在圣赫勒拿岛下船（该船于4月22日至24日停靠），经约翰内斯堡飞回英国。他们听说船上出现病例后联系了卫生官员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">The UKHSA said their contacts on the journey home are being traced, adding the risk to the general public remains very low.</span></p>
+        <p class="cn">UKHSA表示，正在追踪他们回国途中的接触者，并补充说对公众的风险仍然非常低。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Three passengers have died on the MV Hondius following the hantavirus <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发；突然发生" data-def-en="a sudden occurrence of something unwelcome, such as a disease">outbreak</span>.</span> <span class="sentence" data-sentence-index="6">Spanish authorities have given permission for the ship to dock in the Canary Islands, despite concerns from local officials.</span></p>
+        <p class="cn">汉坦病毒暴发后，MV Hondius号上已有三名乘客死亡。西班牙当局已允许该船在加那利群岛停靠，尽管当地官员表示担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">About 150 people are still aboard the cruise ship under "strict precautionary measures", Oceanwide Expeditions has said.</span></p>
+        <p class="cn">Oceanwide Expeditions公司表示，约有150人仍在邮轮上，并采取了“严格的预防措施”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">They include 19 passengers and four crew members listed as British, according to figures released by Oceanwide Expeditions on Tuesday.</span></p>
+        <p class="cn">根据Oceanwide Expeditions周二公布的数据，其中包括19名乘客和4名船员被列为英国人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">One of these, a 56-year-old British man, was among three people evacuated from the ship on Wednesday and is in a "stable condition".</span> <span class="sentence" data-sentence-index="10">Spain's health minister earlier said he was the ship's doctor but it is understood that was not correct.</span></p>
+        <p class="cn">其中一名56岁的英国男子是周三从船上撤离的三人之一，目前情况“稳定”。西班牙卫生部长此前称他是船上的医生，但据了解这一说法不正确。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">The UKHSA said the Britons on the ship would be flown home on a charter flight, probably from the Canary Islands as long as they did not have symptoms.</span></p>
+        <p class="cn">UKHSA表示，船上的英国人将乘坐包机回国，可能从加那利群岛出发，前提是他们没有症状。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">They would then have to <span class="keyword" data-word="self-isolate" data-phonetic="/ˌself ˈaɪsəleɪt/" data-pos="v." data-def="自我隔离" data-def-en="to voluntarily stay away from others to prevent the spread of disease">self-isolate</span> or be put into <span class="keyword" data-word="quarantine" data-phonetic="/ˈkwɔːrəntiːn/" data-pos="n./v." data-def="隔离；检疫" data-def-en="a state or period of isolation to prevent the spread of disease">quarantine</span> potentially for up to six weeks, depending on the timing of their last potential <span class="keyword" data-word="exposure" data-phonetic="/ɪkˈspoʊʒər/" data-pos="n." data-def="暴露；接触" data-def-en="the state of being in contact with something harmful or infectious">exposure</span> to the virus.</span></p>
+        <p class="cn">然后他们将不得不自我隔离或接受隔离，可能长达六周，具体取决于他们最后一次可能接触病毒的时间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">Prof Robin May, the chief scientific officer at the UKHSA, said: "We're going to ask everybody who's exposed to <span class="keyword" data-word="self-isolate" data-phonetic="/ˌself ˈaɪsəleɪt/" data-pos="v." data-def="自我隔离" data-def-en="to voluntarily stay away from others to prevent the spread of disease">self-isolate</span> but we'll be working very closely to support them on that with regular testing and all the support you'd expect us to put in place.</span></p>
+        <p class="cn">UKHSA首席科学官Robin May教授说：“我们将要求所有接触者自我隔离，但我们会与他们密切合作，提供定期检测和所有必要的支持。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">"That's obviously for their protection well as everybody around them."</span></p>
+        <p class="cn">“这显然是为了保护他们以及他们周围的人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">May said officials were making efforts to trace people who were in "close proximity" on the flights home taken by the two individuals currently self-isolating in the UK.</span></p>
+        <p class="cn">May表示，官员们正在努力追踪目前在英国自我隔离的两人回国航班上“近距离接触”的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">"We'll be approaching all of those individuals and again working closely with them to make sure there's no risk to them or to the people around them."</span></p>
+        <p class="cn">“我们将联系所有这些人员，并再次与他们密切合作，确保他们或他们周围的人没有风险。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">The World Health Organization (WHO) says the risk to the wider public is low and the virus rarely spreads through human to human <span class="keyword" data-word="transmission" data-phonetic="/trænzˈmɪʃn/" data-pos="n." data-def="传播；传染" data-def-en="the passing of a disease from one person to another">transmission</span> and only after close contact.</span></p>
+        <p class="cn">世界卫生组织（WHO）表示，对更广泛公众的风险较低，该病毒很少通过人际传播，只有在密切接触后才会发生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">It is still unknown where the <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发；突然发生" data-def-en="a sudden occurrence of something unwelcome, such as a disease">outbreak</span> originated from and if people other than cruise ship passengers have been infected with the disease.</span></p>
+        <p class="cn">目前尚不清楚疫情起源于何处，以及除邮轮乘客外是否有人感染该病。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">The three people with symptoms - who also include a 41-year-old Dutch crew member and a 65-year-old German - were evacuated from the vessel to receive medical help in the Netherlands, the WHO said.</span></p>
+        <p class="cn">WHO表示，三名有症状的人——包括一名41岁的荷兰船员和一名65岁的德国人——已从船上撤离，在荷兰接受医疗救助。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Earlier, the Foreign Office has said it is "working urgently" to get British nationals stuck on board the MV Hondius home safely.</span></p>
+        <p class="cn">早些时候，外交部表示正在“紧急行动”，以确保被困在MV Hondius号上的英国国民安全回家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">In a statement, Foreign Secretary Yvette Cooper said the situation was "very serious and deeply stressful for those affected and their families".</span></p>
+        <p class="cn">外交大臣Yvette Cooper在一份声明中表示，情况“非常严重，对受影响者及其家人来说压力巨大”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">The Foreign Office said the UK response to the <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发；突然发生" data-def-en="a sudden occurrence of something unwelcome, such as a disease">outbreak</span> was being led by the UKHSA working with the WHO.</span></p>
+        <p class="cn">外交部表示，英国对疫情的应对由UKHSA领导，并与WHO合作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">The aim is to make sure British nationals on the MV Hondius can "all get safely home with proper protection for public health", Cooper said.</span></p>
+        <p class="cn">Cooper说，目标是确保MV Hondius号上的英国国民能够“在适当保护公众健康的前提下全部安全回家”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Consular staff are in direct contact with British nationals onboard the ship and the Foreign Office has been "working with other countries to facilitate the medical evacuations, to support our Overseas Territories and to get British nationals home safely as quickly as possible", Cooper added.</span></p>
+        <p class="cn">Cooper补充说，领事人员正在与船上的英国国民直接联系，外交部一直“与其他国家合作，促进医疗撤离，支持我们的海外领土，并尽快让英国国民安全回家”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">The UKHSA is also working with governments in St Helena, Tristan de Cunha and Ascension Island on isolation, contact-tracing efforts and response protocols.</span></p>
+        <p class="cn">UKHSA还在与圣赫勒拿、特里斯坦达库尼亚和阿森松岛的政府合作，进行隔离、接触者追踪和应对方案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The vessel will sail to the Canary Islands where all passengers will be evacuated at the Granadilla port in Tenerife,  Spain's health minister Monica Garcia said on Wednesday.</span></p>
+        <p class="cn">西班牙卫生部长Monica Garcia周三表示，该船将驶往加那利群岛，所有乘客将在特内里费岛的格拉纳迪利亚港撤离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">Spanish passengers will be quarantined in Madrid, while those from other countries will be repatriated if they have no symptoms, Garcia said.</span></p>
+        <p class="cn">Garcia说，西班牙乘客将在马德里隔离，而来自其他国家的乘客如果没有症状将被遣返。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Hantavirus is a group of viruses carried by rodents such as mice and rats, and symptoms can include fever, extreme <span class="keyword" data-word="fatigue" data-phonetic="/fəˈtiːɡ/" data-pos="n." data-def="疲劳；疲倦" data-def-en="extreme tiredness, often as a symptom of illness">fatigue</span>, muscle aches, stomach pain, nausea and vomiting.</span></p>
+        <p class="cn">汉坦病毒是由老鼠等啮齿动物携带的一组病毒，症状包括发烧、极度疲劳、肌肉酸痛、胃痛、恶心和呕吐。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Following the <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发；突然发生" data-def-en="a sudden occurrence of something unwelcome, such as a disease">outbreak</span> on the cruise, the UKHSA said the risk to the UK population was "very low" and there was "no need for concern among the general public".</span></p>
+        <p class="cn">邮轮疫情暴发后，UKHSA表示对英国人口的风险“非常低”，“公众无需担忧”。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exposure</span>
+        <button class="kw-speak-btn" data-word="exposure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈspoʊʒər/ n.</span>
+      </div>
+      <p class="kw-def">暴露；接触</p>
+      <p class="kw-def-en">the state of being in contact with something harmful or infectious</p>
+      <p class="kw-ctx">&ldquo;Two British people are self-isolating at home in the UK after potential exposure to hantavirus on the cruise ship struck by an outbreak.&rdquo;</p>
+      <p class="kw-ctx-cn">两名英国人在可能接触了爆发疫情的游轮上的汉坦病毒后，正在英国家中自我隔离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">outbreak</span>
+        <button class="kw-speak-btn" data-word="outbreak" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈaʊtbreɪk/ n.</span>
+      </div>
+      <p class="kw-def">爆发；突然发生</p>
+      <p class="kw-def-en">a sudden occurrence of something unwelcome, such as a disease</p>
+      <p class="kw-ctx">&ldquo;Two British people are self-isolating at home in the UK after potential exposure to hantavirus on the cruise ship struck by an outbreak.&rdquo;</p>
+      <p class="kw-ctx-cn">两名英国人在可能接触了爆发疫情的游轮上的汉坦病毒后，正在英国家中自我隔离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">self-isolate</span>
+        <button class="kw-speak-btn" data-word="self-isolate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌself ˈaɪsəleɪt/ v.</span>
+      </div>
+      <p class="kw-def">自我隔离</p>
+      <p class="kw-def-en">to voluntarily stay away from others to prevent the spread of disease</p>
+      <p class="kw-ctx">&ldquo;Two British people are self-isolating at home in the UK after potential exposure to hantavirus on the cruise ship struck by an outbreak.&rdquo;</p>
+      <p class="kw-ctx-cn">两名英国人在可能接触了爆发疫情的游轮上的汉坦病毒后，正在英国家中自我隔离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">quarantine</span>
+        <button class="kw-speak-btn" data-word="quarantine" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkwɔːrəntiːn/ n./v.</span>
+      </div>
+      <p class="kw-def">隔离；检疫</p>
+      <p class="kw-def-en">a state or period of isolation to prevent the spread of disease</p>
+      <p class="kw-ctx">&ldquo;They would then have to self-isolate or be put into quarantine potentially for up to six weeks, depending on the timing of their last potential exposure to the virus.&rdquo;</p>
+      <p class="kw-ctx-cn">然后他们必须自我隔离或被隔离长达六周，具体取决于他们最后一次可能接触病毒的时间。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散；撤离</p>
+      <p class="kw-def-en">to move people from a dangerous place to a safer one</p>
+      <p class="kw-ctx">&ldquo;One of these, a 56-year-old British man, was among three people evacuated from the ship on Wednesday and is in a 'stable condition'.&rdquo;</p>
+      <p class="kw-ctx-cn">其中一名56岁的英国男子是周三从船上撤离的三人之一，目前情况稳定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">transmission</span>
+        <button class="kw-speak-btn" data-word="transmission" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trænzˈmɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">传播；传染</p>
+      <p class="kw-def-en">the passing of a disease from one person to another</p>
+      <p class="kw-ctx">&ldquo;The World Health Organization (WHO) says the risk to the wider public is low and the virus rarely spreads through human to human transmission and only after close contact.&rdquo;</p>
+      <p class="kw-ctx-cn">世界卫生组织表示，对更广泛公众的风险很低，该病毒很少通过人际传播，且仅在密切接触后才会传播。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">repatriate</span>
+        <button class="kw-speak-btn" data-word="repatriate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/riːˈpeɪtrieɪt/ v.</span>
+      </div>
+      <p class="kw-def">遣返回国</p>
+      <p class="kw-def-en">to send someone back to their own country</p>
+      <p class="kw-ctx">&ldquo;Spanish passengers will be quarantined in Madrid, while those from other countries will be repatriated if they have no symptoms, Garcia said.&rdquo;</p>
+      <p class="kw-ctx-cn">加西亚说，西班牙乘客将在马德里隔离，而来自其他国家的乘客如果没有症状将被遣返回国。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fatigue</span>
+        <button class="kw-speak-btn" data-word="fatigue" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fəˈtiːɡ/ n.</span>
+      </div>
+      <p class="kw-def">疲劳；疲倦</p>
+      <p class="kw-def-en">extreme tiredness, often as a symptom of illness</p>
+      <p class="kw-ctx">&ldquo;Hantavirus is a group of viruses carried by rodents such as mice and rats, and symptoms can include fever, extreme fatigue, muscle aches, stomach pain, nausea and vomiting.&rdquo;</p>
+      <p class="kw-ctx-cn">汉坦病毒是由老鼠等啮齿动物携带的一组病毒，症状包括发烧、极度疲劳、肌肉酸痛、胃痛、恶心和呕吐。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Two British people are self-isolating at home in the UK after potential exposure to hantavirus on the cruise ship struck by an outbreak, the UK Health Security Agency (UKHSA) has said.", "start_ms": 0, "end_ms": 14376, "paragraph_index": 0}, {"index": 1, "text": "They were on the MV Hondius that departed from Argentina a month ago but left the vessel earlier in its journey and do not have symptoms.", "start_ms": 14376, "end_ms": 23616, "paragraph_index": 1}, {"index": 2, "text": "The Britons left the cruise ship at St Helena, where it docked on 22-24 April, and flew back to the UK via Johannesburg.", "start_ms": 23616, "end_ms": 33552, "paragraph_index": 2}, {"index": 3, "text": "The pair contacted health officials when they heard of the cases on the ship.", "start_ms": 33552, "end_ms": 38640, "paragraph_index": 2}, {"index": 4, "text": "The UKHSA said their contacts on the journey home are being traced, adding the risk to the general public remains very low.", "start_ms": 38640, "end_ms": 47904, "paragraph_index": 3}, {"index": 5, "text": "Three passengers have died on the MV Hondius following the hantavirus outbreak.", "start_ms": 47904, "end_ms": 54024, "paragraph_index": 4}, {"index": 6, "text": "Spanish authorities have given permission for the ship to dock in the Canary Islands, despite concerns from local officials.", "start_ms": 54024, "end_ms": 62472, "paragraph_index": 4}, {"index": 7, "text": "About 150 people are still aboard the cruise ship under \"strict precautionary measures\", Oceanwide Expeditions has said.", "start_ms": 62472, "end_ms": 71640, "paragraph_index": 5}, {"index": 8, "text": "They include 19 passengers and four crew members listed as British, according to figures released by Oceanwide Expeditions on Tuesday.", "start_ms": 71640, "end_ms": 81528, "paragraph_index": 6}, {"index": 9, "text": "One of these, a 56-year-old British man, was among three people evacuated from the ship on Wednesday and is in a \"stable condition\".", "start_ms": 81528, "end_ms": 91248, "paragraph_index": 7}, {"index": 10, "text": "Spain's health minister earlier said he was the ship's doctor but it is understood that was not correct.", "start_ms": 91248, "end_ms": 98232, "paragraph_index": 7}, {"index": 11, "text": "The UKHSA said the Britons on the ship would be flown home on a charter flight, probably from the Canary Islands as long as they did not have symptoms.", "start_ms": 98232, "end_ms": 108696, "paragraph_index": 8}, {"index": 12, "text": "They would then have to self-isolate or be put into quarantine potentially for up to six weeks, depending on the timing of their last potential exposure to the virus.", "start_ms": 108696, "end_ms": 119664, "paragraph_index": 9}, {"index": 13, "text": "Prof Robin May, the chief scientific officer at the UKHSA, said: \"We're going to ask everybody who's exposed to self-isolate but we'll be working very closely to support them on that with regular testing and all the support you'd expect us to put in place.", "start_ms": 119664, "end_ms": 137112, "paragraph_index": 10}, {"index": 14, "text": "\"That's obviously for their protection well as everybody around them.\"", "start_ms": 137112, "end_ms": 142032, "paragraph_index": 11}, {"index": 15, "text": "May said officials were making efforts to trace people who were in \"close proximity\" on the flights home taken by the two individuals currently self-isolating in the UK.", "start_ms": 142032, "end_ms": 152952, "paragraph_index": 12}, {"index": 16, "text": "\"We'll be approaching all of those individuals and again working closely with them to make sure there's no risk to them or to the people around them.\"", "start_ms": 152952, "end_ms": 161760, "paragraph_index": 13}, {"index": 17, "text": "The World Health Organization (WHO) says the risk to the wider public is low and the virus rarely spreads through human to human transmission and only after close contact.", "start_ms": 161760, "end_ms": 174384, "paragraph_index": 14}, {"index": 18, "text": "It is still unknown where the outbreak originated from and if people other than cruise ship passengers have been infected with the disease.", "start_ms": 174384, "end_ms": 182952, "paragraph_index": 15}, {"index": 19, "text": "The three people with symptoms - who also include a 41-year-old Dutch crew member and a 65-year-old German - were evacuated from the vessel to receive medical help in the Netherlands, the WHO said.", "start_ms": 182952, "end_ms": 195960, "paragraph_index": 16}, {"index": 20, "text": "Earlier, the Foreign Office has said it is \"working urgently\" to get British nationals stuck on board the MV Hondius home safely.", "start_ms": 195960, "end_ms": 205104, "paragraph_index": 17}, {"index": 21, "text": "In a statement, Foreign Secretary Yvette Cooper said the situation was \"very serious and deeply stressful for those affected and their families\".", "start_ms": 205104, "end_ms": 215160, "paragraph_index": 18}, {"index": 22, "text": "The Foreign Office said the UK response to the outbreak was being led by the UKHSA working with the WHO.", "start_ms": 215160, "end_ms": 223008, "paragraph_index": 19}, {"index": 23, "text": "The aim is to make sure British nationals on the MV Hondius can \"all get safely home with proper protection for public health\", Cooper said.", "start_ms": 223008, "end_ms": 232536, "paragraph_index": 20}, {"index": 24, "text": "Consular staff are in direct contact with British nationals onboard the ship and the Foreign Office has been \"working with other countries to facilitate the medical evacuations, to support our Overseas Territories and to get British nationals home safely as quickly as possible\", Cooper added.", "start_ms": 232536, "end_ms": 251424, "paragraph_index": 21}, {"index": 25, "text": "The UKHSA is also working with governments in St Helena, Tristan de Cunha and Ascension Island on isolation, contact-tracing efforts and response protocols.", "start_ms": 251424, "end_ms": 264192, "paragraph_index": 22}, {"index": 26, "text": "The vessel will sail to the Canary Islands where all passengers will be evacuated at the Granadilla port in Tenerife,  Spain's health minister Monica Garcia said on Wednesday.", "start_ms": 264192, "end_ms": 276096, "paragraph_index": 23}, {"index": 27, "text": "Spanish passengers will be quarantined in Madrid, while those from other countries will be repatriated if they have no symptoms, Garcia said.", "start_ms": 276096, "end_ms": 285720, "paragraph_index": 24}, {"index": 28, "text": "Hantavirus is a group of viruses carried by rodents such as mice and rats, and symptoms can include fever, extreme fatigue, muscle aches, stomach pain, nausea and vomiting.", "start_ms": 285720, "end_ms": 298536, "paragraph_index": 25}, {"index": 29, "text": "Following the outbreak on the cruise, the UKHSA said the risk to the UK population was \"very low\" and there was \"no need for concern among the general public\".", "start_ms": 298536, "end_ms": 309768, "paragraph_index": 26}], "total_duration_ms": 309768};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "on": "在", "said": "说", "in": "在", "ship": "船舶", "with": "与", "is": "是", "british": "英国的", "people": "人们", "home": "家", "from": "来自", "have": "有", "as": "作为", "was": "是", "be": "是", "uk": "英国", "health": "健康", "they": "它们", "for": "为了", "working": "工作", "cruise": "巡航", "by": "被", "of": "的", "them": "他们", "who": "谁", "are": "是", "at": "在", "has": "有", "were": "是", "it": "它", "their": "他们的", "risk": "风险", "public": "公众", "very": "非常", "all": "所有", "foreign": "外交", "will": "将", "that": "那个", "but": "但是", "vessel": "船舶", "earlier": "较早", "not": "不", "where": "那里", "officials": "官员", "low": "低的", "three": "三个", "year-old": "岁的", "support": "支持", "those": "那些", "no": "没有", "other": "其他", "office": "办公室", "get": "得到", "safely": "安全地", "cooper": "库珀", "two": "两个", "after": "之后", "potential": "潜在", "left": "离开", "journey": "旅程", "being": "正在", "general": "总", "following": "随后", "still": "仍然", "crew": "船员", "among": "在...之中", "wednesday": "星期三", "minister": "部长", "would": "将", "or": "或者", "put": "提出", "may": "可能", "everybody": "每个人", "we'll": "我们将", "closely": "密切", "protection": "保护", "around": "在...周围", "efforts": "努力", "individuals": "个人", "make": "使", "contact": "接触", "if": "如果", "been": "已经", "also": "也", "medical": "医疗", "response": "回应", "can": "可以", "countries": "国家", "struck": "击中", "an": "一个", "security": "安全", "agency": "机构", "month": "月份", "ago": "以前", "its": "它的", "do": "做", "april": "四月", "back": "后退", "via": "通过", "pair": "一对", "contacted": "联系", "when": "当", "heard": "听到", "cases": "情况", "adding": "补充说", "remains": "仍然", "authorities": "当局", "given": "给定", "despite": "尽管", "concerns": "担忧", "local": "当地", "about": "关于", "under": "在...之下", "measures": "措施", "four": "四", "members": "成员", "according": "根据", "figures": "人物", "released": "释放", "tuesday": "星期二", "one": "一个", "these": "这些", "man": "男子", "stable": "稳定的", "condition": "状况", "he": "他", "understood": "理解", "probably": "很可能", "long": "长久", "did": "做了", "then": "然后", "into": "进入", "up": "向上", "six": "六", "weeks": "周", "last": "最后", "chief": "首席", "officer": "警官", "we're": "我们是", "going": "将要", "ask": "询问", "who's": "谁的", "expect": "期望", "us": "我们", "place": "地点", "that's": "那是", "obviously": "显然", "well": "好", "making": "进行", "taken": "采取", "currently": "目前", "approaching": "接近", "again": "再次", "there's": "有", "world": "世界", "says": "表示", "wider": "更广泛的", "through": "通过", "only": "只有", "unknown": "未知", "than": "比", "member": "成员", "german": "德国的", "receive": "收到", "help": "帮助", "stuck": "被困的", "board": "董事会", "statement": "声明", "secretary": "秘书", "yvette": "伊薇特", "situation": "局势", "serious": "严重的", "deeply": "深深地", "affected": "受影响", "families": "家庭", "led": "带领", "proper": "适当", "staff": "员工", "direct": "直接的", "our": "我们的", "quickly": "迅速", "possible": "可能的", "added": "补充", "governments": "政府", "de": "实际上", "protocols": "规程", "sail": "航行", "port": "港口", "while": "而", "group": "团体", "carried": "进行", "such": "如此", "extreme": "极端的", "pain": "痛苦", "there": "那里", "need": "需要", "concern": "关切", "ukhsa": "英国卫生安全局", "symptoms": "症状", "passengers": "乘客", "mv": "机动船", "hondius": "洪迪乌斯号", "nationals": "国民", "hantavirus": "汉坦病毒", "canary": "加那利", "islands": "群岛", "include": "包括", "evacuated": "撤离", "self-isolating": "自我隔离", "britons": "英国人", "st": "圣", "helena": "赫勒拿", "spanish": "西班牙的", "oceanwide": "远洋", "expeditions": "探险队", "spain's": "西班牙的", "virus": "病毒", "close": "密切的", "sure": "确定", "human": "人类", "garcia": "加西亚", "departed": "离开", "argentina": "阿根廷", "docked": "靠港", "flew": "飞往", "johannesburg": "约翰内斯堡", "contacts": "接触者", "traced": "追踪", "died": "死亡", "permission": "许可", "dock": "靠港", "aboard": "在船上", "strict": "严格的", "precautionary": "预防性的", "listed": "列出", "ship's": "船的", "doctor": "医生", "correct": "正确的", "flown": "空运", "charter": "包机", "flight": "航班", "potentially": "可能地", "depending": "取决于", "timing": "时机", "prof": "教授", "robin": "罗宾", "scientific": "科学的", "exposed": "暴露", "regular": "定期的", "testing": "检测", "you'd": "你会", "trace": "追踪", "proximity": "近距离", "flights": "航班", "organization": "组织", "rarely": "很少", "spreads": "传播", "originated": "起源", "infected": "感染", "disease": "疾病", "dutch": "荷兰的", "netherlands": "荷兰", "urgently": "紧急地", "stressful": "有压力的", "aim": "目标", "consular": "领事的", "onboard": "在船上", "facilitate": "促进", "evacuations": "撤离", "overseas": "海外的", "territories": "领土", "tristan": "特里斯坦", "cunha": "库尼亚", "ascension": "阿森松", "island": "岛", "isolation": "隔离", "contact-tracing": "接触者追踪", "granadilla": "格拉纳迪利亚", "tenerife": "特内里费", "monica": "莫妮卡", "quarantined": "隔离", "madrid": "马德里", "repatriated": "遣返", "viruses": "病毒", "rodents": "啮齿动物", "mice": "老鼠", "rats": "大鼠", "fever": "发烧", "muscle": "肌肉", "aches": "疼痛", "stomach": "胃", "nausea": "恶心", "vomiting": "呕吐", "population": "人口"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
