@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-07</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-07</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/0b49/live/8adc9850-4a5e-11f1-a4c0-1961880a461f.jpg" alt="When will we know the results for the England, Scotland and Wales elections?" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>When will we know the results for the England, Scotland and Wales elections?</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c62nq678nyzo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://jp7252.github.io/NEWS_APP/audio/2026-05-07.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The biggest set of elections since the 2024 general election has seen millions of people head to the polls.</span></p>
+        <p class="cn">自2024年大选以来最大规模的选举中，数百万人前往投票站投票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Voters in Scotland and Wales are electing representatives to their national parliaments.</span></p>
+        <p class="cn">苏格兰和威尔士的选民正在选举其国家议会的代表。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">In England, about 5,000 seats across 136 councils and six <span class="keyword" data-word="mayoral" data-phonetic="/ˈmeɪərəl/" data-pos="adj." data-def="市长的" data-def-en="Relating to a mayor or the office of mayor.">mayoral</span> contests are being decided.</span></p>
+        <p class="cn">在英格兰，136个议会约5000个席位以及六场市长竞选正在决出结果。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Now that the polls have closed the focus turns to the results.</span></p>
+        <p class="cn">投票站关闭后，焦点转向了结果。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The timing of the counts - and the expected results - vary across the elections.</span></p>
+        <p class="cn">计票时间——以及预期结果——因选举而异。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Previously, votes have been counted as soon as polls closed on Thursday.</span></p>
+        <p class="cn">此前，投票在周四关闭后立即开始计票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">This time, only a few local authorities will begin counting on Thursday night, with most starting on Friday morning.</span></p>
+        <p class="cn">这次，只有少数地方当局将在周四晚上开始计票，大多数从周五早上开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The first results are expected to be announced in the early hours on Friday.</span></p>
+        <p class="cn">首批结果预计在周五凌晨公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">It is expected that the latest will be known by Saturday evening.</span></p>
+        <p class="cn">预计最晚的结果将在周六晚上之前知晓。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Votes will begin to be counted for Scotland's constituencies and regional lists on Friday morning.</span></p>
+        <p class="cn">苏格兰选区和地区名单的投票将于周五上午开始计票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">It's likely that the shape of the new parliament will be clear by early Friday evening.</span></p>
+        <p class="cn">新议会的格局可能在周五傍晚前明朗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">But each count is the responsibility of a local <span class="keyword" data-word="returning officer" data-phonetic="/rɪˈtɜːrnɪŋ ˈɒfɪsər/" data-pos="n." data-def="选举监察官" data-def-en="An official responsible for conducting an election in a constituency.">returning officer</span> and there may be delays or recounts.</span></p>
+        <p class="cn">但每次计票由地方选举官负责，可能会有延迟或重新计票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">In a Holyrood election such delays could prevent the calculation of full results and it is possible that some seats may not be declared until late Friday evening or even Saturday.</span></p>
+        <p class="cn">在荷里路德选举中，此类延迟可能阻碍完整结果的计算，部分席位可能要到周五深夜甚至周六才能宣布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Votes will begin to be counted for all 16 of Wales' constituencies on Friday morning.</span></p>
+        <p class="cn">威尔士全部16个选区的投票将于周五上午开始计票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">It is estimated that results could then be declared from about lunchtime, continuing into the early evening.</span></p>
+        <p class="cn">预计结果可能从午餐时间左右开始宣布，持续到傍晚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">But with some experts predicting a higher number of recounts compared to past elections, and the unknowns of a brand-new voting system and new constituencies in the mix, whether Wales' results will be done and dusted before the weekend remains to be seen.</span></p>
+        <p class="cn">但由于一些专家预测重新计票次数将比以往选举更多，加上全新的投票系统和新选区等未知因素，威尔士的结果能否在周末前尘埃落定仍有待观察。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">From 23:00 BST BBC Radio 4 and BBC Radio 5 Live will join forces for an overnight results programme, co-presented by Nick Robinson and Rachel Burden.</span></p>
+        <p class="cn">从英国夏令时23:00起，BBC广播4台和BBC广播5台将联合播出通宵结果节目，由尼克·罗宾逊（Nick Robinson）和雷切尔·伯登（Rachel Burden）共同主持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">From 23:10 Laura Kuenssberg will host a special programme on BBC One, with analysis from polling expert Sir John Curtice and number-crunching from Reeta Chakrabarti.</span></p>
+        <p class="cn">从23:10起，劳拉·库恩斯伯格（Laura Kuenssberg）将在BBC一台主持特别节目，由民调专家约翰·柯蒂斯爵士（Sir John Curtice）提供分析，丽塔·查克拉巴蒂（Reeta Chakrabarti）负责数据解读。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Live pages on the BBC News website and app will keep you updated on results and reaction across the UK, with fact-checking from BBC Verify.</span> <span class="sentence" data-sentence-index="19">Follow BBC News on TikTok, Instagram and YouTube for the latest updates on social media.</span></p>
+        <p class="cn">BBC新闻网站和应用程序的实时页面将为您更新全英各地的结果和反应，并由BBC Verify进行事实核查。关注BBC新闻的TikTok、Instagram和YouTube账号，获取社交媒体上的最新动态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">From 09:30 BST Sophie Raworth will continue election coverage on BBC One after a BBC Breakfast special, with Clive Myrie in Cardiff for the Senedd elections and Kirsty Wark in Edinburgh for the Holyrood vote.</span></p>
+        <p class="cn">从英国夏令时09:30起，在BBC早餐特别节目之后，索菲·拉沃斯（Sophie Raworth）将继续在BBC一台进行选举报道，克莱夫·迈里（Clive Myrie）在卡迪夫报道塞内德选举，柯斯蒂·沃克（Kirsty Wark）在爱丁堡报道荷里路德投票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">From 09:30 BBC One Scotland and BBC Radio Scotland will bring live declarations, interviews and reporting from every count in Scotland.</span></p>
+        <p class="cn">从09:30起，BBC一台苏格兰频道和BBC广播苏格兰频道将带来苏格兰各计票点的现场宣布、采访和报道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">From 11:00 a results programme will be broadcast on BBC One Wales and S4C, providing analysis and interviews.</span> <span class="sentence" data-sentence-index="23">James Williams and Dot Davies will present a BBC Radio Wales programme and listeners can join Dewi Llwyd and Kate Crockett on BBC Radio Cymru.</span></p>
+        <p class="cn">从11:00起，BBC一台威尔士频道和S4C将播出结果节目，提供分析和采访。詹姆斯·威廉姆斯（James Williams）和多特·戴维斯（Dot Davies）将主持BBC广播威尔士节目，听众可以加入德维·卢伊德（Dewi Llwyd）和凯特·克罗克特（Kate Crockett）在BBC广播Cymru的节目。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">About 5,000 seats across 136 local councils are up for grabs.</span></p>
+        <p class="cn">136个地方议会约5000个席位可供争夺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">There are also six <span class="keyword" data-word="mayoral" data-phonetic="/ˈmeɪərəl/" data-pos="adj." data-def="市长的" data-def-en="Relating to a mayor or the office of mayor.">mayoral</span> contests, in Watford and five London boroughs - Croydon, Hackney, Lewisham, Newham and Tower Hamlets.</span></p>
+        <p class="cn">还有六场市长竞选，分别在沃特福德和五个伦敦自治市——克罗伊登、哈克尼、刘易舍姆、纽汉姆和塔村。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">In council elections, voters generally have one vote for each available seat in an election area, known as a ward or division.</span> <span class="sentence" data-sentence-index="27">Some wards have more than one representative.</span></p>
+        <p class="cn">在议会选举中，选民通常对选举区（称为选区或分区）中的每个可用席位投一票。有些选区有多名代表。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Like MPs in general elections, local councillors are elected under the <span class="keyword" data-word="first-past-the-post" data-phonetic="/fɜːrst pæst ðə poʊst/" data-pos="adj." data-def="得票最多者当选制" data-def-en="An electoral system where the candidate with the most votes wins.">first-past-the-post</span> system.</span> <span class="sentence" data-sentence-index="29">The candidate or candidates with the most votes in each ward win and become councillors.</span></p>
+        <p class="cn">与大选中的议员一样，地方议员在简单多数制下选举产生。每个选区得票最多的候选人获胜并成为议员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">The political party which wins the most seats gains control of the council.</span></p>
+        <p class="cn">赢得最多席位的政党获得议会的控制权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Councils are responsible for local services including care for older people and people with disabilities, rubbish collection and recycling, housing, education and road maintenance.</span></p>
+        <p class="cn">议会负责地方服务，包括照顾老年人和残疾人、垃圾收集和回收、住房、教育和道路维护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">The Scottish Parliament election will decide who governs the country in key areas such as health and education and, as a result, the direction it takes on many issues.</span></p>
+        <p class="cn">苏格兰议会选举将决定谁在健康和教育等关键领域治理国家，并因此决定在许多问题上的方向。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">All 129 Members of the Scottish Parliament (MSPs) are up for re-election.</span></p>
+        <p class="cn">所有129名苏格兰议会议员（MSP）都面临连任选举。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">There are 73 <span class="keyword" data-word="constituency" data-phonetic="/kənˈstɪtʃuənsi/" data-pos="n." data-def="选区" data-def-en="A geographical area that elects a representative to a legislature.">constituency</span> MSPs and 56 regional MSPs (seven per region) in Holyrood.</span></p>
+        <p class="cn">荷里路德有73名选区议员和56名地区议员（每个地区七名）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">Each voter had two ballot papers and cast two votes, one to elect their <span class="keyword" data-word="constituency" data-phonetic="/kənˈstɪtʃuənsi/" data-pos="n." data-def="选区" data-def-en="A geographical area that elects a representative to a legislature.">constituency</span> MSP and one to elect their area's regional MSPs.</span></p>
+        <p class="cn">每位选民有两张选票并投两票，一票选举其选区议员，一票选举其地区的地区议员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36"><span class="keyword" data-word="constituency" data-phonetic="/kənˈstɪtʃuənsi/" data-pos="n." data-def="选区" data-def-en="A geographical area that elects a representative to a legislature.">Constituency</span> MSPs are selected directly under first past the post, with the winner being the candidate who receives the most votes.</span></p>
+        <p class="cn">选区议员在简单多数制下直接选举产生，得票最多的候选人获胜。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">The process to select regional MSPs uses a type of <span class="keyword" data-word="proportional representation" data-phonetic="/prəˈpɔːrʃənl ˌreprɪzenˈteɪʃn/" data-pos="n." data-def="比例代表制" data-def-en="An electoral system where seats are allocated to parties based on their share of the vote.">proportional representation</span>.</span></p>
+        <p class="cn">选举地区议员的过程使用一种比例代表制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Voters chose either a political party or an individual candidate from a list.</span> <span class="sentence" data-sentence-index="39">Political parties are allocated regional seats according to a formula which includes the number of votes they receive in each region and the number of constituencies they win outright.</span></p>
+        <p class="cn">选民从名单中选择一个政党或一名独立候选人。政党根据一个公式分配地区席位，该公式包括他们在每个地区获得的票数以及他们直接赢得的选区数量。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">Usually the party with the most MSPs forms the Scottish government, and its leader becomes first minister.</span></p>
+        <p class="cn">通常，拥有最多议员的政党组成苏格兰政府，其领导人成为首席大臣。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">The current Scottish Parliament was set up in 1999, when Scotland already had its own legal and education system.</span></p>
+        <p class="cn">目前的苏格兰议会成立于1999年，当时苏格兰已经拥有自己的法律和教育体系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="42">Holyrood is now responsible for a much broader range of issues including health, housing, policing and prisons, as well as many aspects of transport, welfare and tax.</span></p>
+        <p class="cn">荷里路德现在负责更广泛的问题，包括健康、住房、警务和监狱，以及交通、福利和税收的许多方面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="43">It can pass laws in any areas not "reserved" to the UK parliament at Westminster.</span></p>
+        <p class="cn">它可以在任何未“保留”给威斯敏斯特英国议会的领域通过法律。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="44">The 2026 Senedd election represents the biggest change to the parliament since powers began to be transferred to Wales in 1999.</span> <span class="sentence" data-sentence-index="45">It will determine who governs Wales on many key issues.</span></p>
+        <p class="cn">2026年塞内德选举代表了自1999年权力开始移交给威尔士以来议会最大的变化。它将决定谁在许多关键问题上治理威尔士。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="46">The number of Members of the Senedd (MSs) is being expanded from 60 to 96 representatives from 16 newly devised constituencies .</span></p>
+        <p class="cn">塞内德议员（MS）人数从60人扩大到96人，来自16个新设立的选区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="47">Political parties could list up to eight candidates for each <span class="keyword" data-word="constituency" data-phonetic="/kənˈstɪtʃuənsi/" data-pos="n." data-def="选区" data-def-en="A geographical area that elects a representative to a legislature.">constituency</span>.</span> <span class="sentence" data-sentence-index="48">Independent candidates could also stand.</span> <span class="sentence" data-sentence-index="49">Voters chose one party or one independent candidate.</span></p>
+        <p class="cn">政党可以为每个选区列出最多八名候选人。独立候选人也可以参选。选民选择一个政党或一名独立候选人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="50">The 96 seats will then be allocated according to the share of votes received by each party or independent candidate.</span></p>
+        <p class="cn">然后，96个席位将根据每个政党或独立候选人获得的选票份额进行分配。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="51">The party that wins the most seats in the Senedd election would expect to lead the government.</span> <span class="sentence" data-sentence-index="52">However, no party has ever won a majority in the Welsh Parliament and the new system makes it highly unlikely that will change at this election.</span></p>
+        <p class="cn">在塞内德选举中赢得最多席位的政党有望领导政府。然而，从未有政党在威尔士议会赢得多数席位，新制度使得这次选举中这种情况极不可能改变。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="53">Any MS can nominate any member to be first minister.</span> <span class="sentence" data-sentence-index="54">If there are two or more candidates, MSs will vote to decide who they want to fill the role.</span></p>
+        <p class="cn">任何议员都可以提名任何成员担任首席大臣。如果有两名或更多候选人，议员将投票决定他们希望谁担任该职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="55">The National Assembly for Wales opened in 1999.</span></p>
+        <p class="cn">威尔士国民议会于1999年成立。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="56">Renamed Senedd Cymru or Welsh Parliament in 2020, its responsibilities now include health, schools, transport and farming, as well as some tax powers.</span></p>
+        <p class="cn">2020年更名为塞内德Cymru或威尔士议会，其职责现在包括健康、学校、交通和农业，以及一些税收权力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="57">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的政治要点通讯，了解威斯敏斯特及其他地方的内幕。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">constituency</span>
+        <button class="kw-speak-btn" data-word="constituency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈstɪtʃuənsi/ n.</span>
+      </div>
+      <p class="kw-def">选区</p>
+      <p class="kw-def-en">A geographical area that elects a representative to a legislature.</p>
+      <p class="kw-ctx">&ldquo;Votes will begin to be counted for all 16 of Wales' constituencies on Friday morning.&rdquo;</p>
+      <p class="kw-ctx-cn">威尔士所有16个选区的投票将于周五上午开始计票。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">proportional representation</span>
+        <button class="kw-speak-btn" data-word="proportional representation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈpɔːrʃənl ˌreprɪzenˈteɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">比例代表制</p>
+      <p class="kw-def-en">An electoral system where seats are allocated to parties based on their share of the vote.</p>
+      <p class="kw-ctx">&ldquo;The process to select regional MSPs uses a type of proportional representation.&rdquo;</p>
+      <p class="kw-ctx-cn">选择地区议员的程序采用了一种比例代表制。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">first-past-the-post</span>
+        <button class="kw-speak-btn" data-word="first-past-the-post" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fɜːrst pæst ðə poʊst/ adj.</span>
+      </div>
+      <p class="kw-def">得票最多者当选制</p>
+      <p class="kw-def-en">An electoral system where the candidate with the most votes wins.</p>
+      <p class="kw-ctx">&ldquo;Like MPs in general elections, local councillors are elected under the first-past-the-post system.&rdquo;</p>
+      <p class="kw-ctx-cn">与普选中的议员一样，地方议员也是根据得票最多者当选制选举产生的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">mayoral</span>
+        <button class="kw-speak-btn" data-word="mayoral" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmeɪərəl/ adj.</span>
+      </div>
+      <p class="kw-def">市长的</p>
+      <p class="kw-def-en">Relating to a mayor or the office of mayor.</p>
+      <p class="kw-ctx">&ldquo;In England, about 5,000 seats across 136 councils and six mayoral contests are being decided.&rdquo;</p>
+      <p class="kw-ctx-cn">在英格兰，大约5000个席位分布在136个议会和六场市长竞选中，结果正在揭晓。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">returning officer</span>
+        <button class="kw-speak-btn" data-word="returning officer" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈtɜːrnɪŋ ˈɒfɪsər/ n.</span>
+      </div>
+      <p class="kw-def">选举监察官</p>
+      <p class="kw-def-en">An official responsible for conducting an election in a constituency.</p>
+      <p class="kw-ctx">&ldquo;But each count is the responsibility of a local returning officer and there may be delays or recounts.&rdquo;</p>
+      <p class="kw-ctx-cn">但每次计票都由当地选举监察官负责，可能会出现延误或重新计票。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recount</span>
+        <button class="kw-speak-btn" data-word="recount" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈriːkaʊnt/ n.</span>
+      </div>
+      <p class="kw-def">重新计票</p>
+      <p class="kw-def-en">A second count of votes to verify the result.</p>
+      <p class="kw-ctx">&ldquo;But with some experts predicting a higher number of recounts compared to past elections...&rdquo;</p>
+      <p class="kw-ctx-cn">但由于一些专家预测重新计票的次数将比以往选举更多……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ballot paper</span>
+        <button class="kw-speak-btn" data-word="ballot paper" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbælət ˈpeɪpər/ n.</span>
+      </div>
+      <p class="kw-def">选票</p>
+      <p class="kw-def-en">A paper used for voting in an election.</p>
+      <p class="kw-ctx">&ldquo;Each voter had two ballot papers and cast two votes...&rdquo;</p>
+      <p class="kw-ctx-cn">每位选民有两张选票，投出两票……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allocate</span>
+        <button class="kw-speak-btn" data-word="allocate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈæləkeɪt/ v.</span>
+      </div>
+      <p class="kw-def">分配</p>
+      <p class="kw-def-en">To distribute resources or seats according to a plan.</p>
+      <p class="kw-ctx">&ldquo;Political parties are allocated regional seats according to a formula...&rdquo;</p>
+      <p class="kw-ctx-cn">政党根据一个公式获得地区席位分配……</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The biggest set of elections since the 2024 general election has seen millions of people head to the polls.", "start_ms": 0, "end_ms": 7704, "paragraph_index": 0}, {"index": 1, "text": "Voters in Scotland and Wales are electing representatives to their national parliaments.", "start_ms": 7704, "end_ms": 13992, "paragraph_index": 1}, {"index": 2, "text": "In England, about 5,000 seats across 136 councils and six mayoral contests are being decided.", "start_ms": 13992, "end_ms": 22896, "paragraph_index": 2}, {"index": 3, "text": "Now that the polls have closed the focus turns to the results.", "start_ms": 22896, "end_ms": 27600, "paragraph_index": 3}, {"index": 4, "text": "The timing of the counts - and the expected results - vary across the elections.", "start_ms": 27600, "end_ms": 33432, "paragraph_index": 4}, {"index": 5, "text": "Previously, votes have been counted as soon as polls closed on Thursday.", "start_ms": 33432, "end_ms": 39096, "paragraph_index": 5}, {"index": 6, "text": "This time, only a few local authorities will begin counting on Thursday night, with most starting on Friday morning.", "start_ms": 39096, "end_ms": 47136, "paragraph_index": 6}, {"index": 7, "text": "The first results are expected to be announced in the early hours on Friday.", "start_ms": 47136, "end_ms": 52632, "paragraph_index": 7}, {"index": 8, "text": "It is expected that the latest will be known by Saturday evening.", "start_ms": 52632, "end_ms": 57336, "paragraph_index": 8}, {"index": 9, "text": "Votes will begin to be counted for Scotland's constituencies and regional lists on Friday morning.", "start_ms": 57336, "end_ms": 64344, "paragraph_index": 9}, {"index": 10, "text": "It's likely that the shape of the new parliament will be clear by early Friday evening.", "start_ms": 64344, "end_ms": 70080, "paragraph_index": 10}, {"index": 11, "text": "But each count is the responsibility of a local returning officer and there may be delays or recounts.", "start_ms": 70080, "end_ms": 77568, "paragraph_index": 11}, {"index": 12, "text": "In a Holyrood election such delays could prevent the calculation of full results and it is possible that some seats may not be declared until late Friday evening or even Saturday.", "start_ms": 77568, "end_ms": 89520, "paragraph_index": 12}, {"index": 13, "text": "Votes will begin to be counted for all 16 of Wales' constituencies on Friday morning.", "start_ms": 89520, "end_ms": 96096, "paragraph_index": 13}, {"index": 14, "text": "It is estimated that results could then be declared from about lunchtime, continuing into the early evening.", "start_ms": 96096, "end_ms": 103680, "paragraph_index": 14}, {"index": 15, "text": "But with some experts predicting a higher number of recounts compared to past elections, and the unknowns of a brand-new voting system and new constituencies in the mix, whether Wales' results will be done and dusted before the weekend remains to be seen.", "start_ms": 103680, "end_ms": 119664, "paragraph_index": 15}, {"index": 16, "text": "From 23:00 BST BBC Radio 4 and BBC Radio 5 Live will join forces for an overnight results programme, co-presented by Nick Robinson and Rachel Burden.", "start_ms": 119664, "end_ms": 133704, "paragraph_index": 16}, {"index": 17, "text": "From 23:10 Laura Kuenssberg will host a special programme on BBC One, with analysis from polling expert Sir John Curtice and number-crunching from Reeta Chakrabarti.", "start_ms": 133704, "end_ms": 145896, "paragraph_index": 17}, {"index": 18, "text": "Live pages on the BBC News website and app will keep you updated on results and reaction across the UK, with fact-checking from BBC Verify.", "start_ms": 145896, "end_ms": 156792, "paragraph_index": 18}, {"index": 19, "text": "Follow BBC News on TikTok, Instagram and YouTube for the latest updates on social media.", "start_ms": 156792, "end_ms": 164064, "paragraph_index": 18}, {"index": 20, "text": "From 09:30 BST Sophie Raworth will continue election coverage on BBC One after a BBC Breakfast special, with Clive Myrie in Cardiff for the Senedd elections and Kirsty Wark in Edinburgh for the Holyrood vote.", "start_ms": 164064, "end_ms": 179808, "paragraph_index": 19}, {"index": 21, "text": "From 09:30 BBC One Scotland and BBC Radio Scotland will bring live declarations, interviews and reporting from every count in Scotland.", "start_ms": 179808, "end_ms": 190656, "paragraph_index": 20}, {"index": 22, "text": "From 11:00 a results programme will be broadcast on BBC One Wales and S4C, providing analysis and interviews.", "start_ms": 190656, "end_ms": 200544, "paragraph_index": 21}, {"index": 23, "text": "James Williams and Dot Davies will present a BBC Radio Wales programme and listeners can join Dewi Llwyd and Kate Crockett on BBC Radio Cymru.", "start_ms": 200544, "end_ms": 212424, "paragraph_index": 21}, {"index": 24, "text": "About 5,000 seats across 136 local councils are up for grabs.", "start_ms": 212424, "end_ms": 219048, "paragraph_index": 22}, {"index": 25, "text": "There are also six mayoral contests, in Watford and five London boroughs - Croydon, Hackney, Lewisham, Newham and Tower Hamlets.", "start_ms": 219048, "end_ms": 229392, "paragraph_index": 23}, {"index": 26, "text": "In council elections, voters generally have one vote for each available seat in an election area, known as a ward or division.", "start_ms": 229392, "end_ms": 238800, "paragraph_index": 24}, {"index": 27, "text": "Some wards have more than one representative.", "start_ms": 238800, "end_ms": 242544, "paragraph_index": 24}, {"index": 28, "text": "Like MPs in general elections, local councillors are elected under the first-past-the-post system.", "start_ms": 242544, "end_ms": 249792, "paragraph_index": 25}, {"index": 29, "text": "The candidate or candidates with the most votes in each ward win and become councillors.", "start_ms": 249792, "end_ms": 256176, "paragraph_index": 25}, {"index": 30, "text": "The political party which wins the most seats gains control of the council.", "start_ms": 256176, "end_ms": 261720, "paragraph_index": 26}, {"index": 31, "text": "Councils are responsible for local services including care for older people and people with disabilities, rubbish collection and recycling, housing, education and road maintenance.", "start_ms": 261720, "end_ms": 274632, "paragraph_index": 27}, {"index": 32, "text": "The Scottish Parliament election will decide who governs the country in key areas such as health and education and, as a result, the direction it takes on many issues.", "start_ms": 274632, "end_ms": 286080, "paragraph_index": 28}, {"index": 33, "text": "All 129 Members of the Scottish Parliament (MSPs) are up for re-election.", "start_ms": 286080, "end_ms": 293208, "paragraph_index": 29}, {"index": 34, "text": "There are 73 constituency MSPs and 56 regional MSPs (seven per region) in Holyrood.", "start_ms": 293208, "end_ms": 302136, "paragraph_index": 30}, {"index": 35, "text": "Each voter had two ballot papers and cast two votes, one to elect their constituency MSP and one to elect their area's regional MSPs.", "start_ms": 302136, "end_ms": 313008, "paragraph_index": 31}, {"index": 36, "text": "Constituency MSPs are selected directly under first past the post, with the winner being the candidate who receives the most votes.", "start_ms": 313008, "end_ms": 322704, "paragraph_index": 32}, {"index": 37, "text": "The process to select regional MSPs uses a type of proportional representation.", "start_ms": 322704, "end_ms": 329208, "paragraph_index": 33}, {"index": 38, "text": "Voters chose either a political party or an individual candidate from a list.", "start_ms": 329208, "end_ms": 335040, "paragraph_index": 34}, {"index": 39, "text": "Political parties are allocated regional seats according to a formula which includes the number of votes they receive in each region and the number of constituencies they win outright.", "start_ms": 335040, "end_ms": 346680, "paragraph_index": 34}, {"index": 40, "text": "Usually the party with the most MSPs forms the Scottish government, and its leader becomes first minister.", "start_ms": 346680, "end_ms": 354624, "paragraph_index": 35}, {"index": 41, "text": "The current Scottish Parliament was set up in 1999, when Scotland already had its own legal and education system.", "start_ms": 354624, "end_ms": 363696, "paragraph_index": 36}, {"index": 42, "text": "Holyrood is now responsible for a much broader range of issues including health, housing, policing and prisons, as well as many aspects of transport, welfare and tax.", "start_ms": 363696, "end_ms": 376560, "paragraph_index": 37}, {"index": 43, "text": "It can pass laws in any areas not \"reserved\" to the UK parliament at Westminster.", "start_ms": 376560, "end_ms": 382944, "paragraph_index": 38}, {"index": 44, "text": "The 2026 Senedd election represents the biggest change to the parliament since powers began to be transferred to Wales in 1999.", "start_ms": 382944, "end_ms": 392880, "paragraph_index": 39}, {"index": 45, "text": "It will determine who governs Wales on many key issues.", "start_ms": 392880, "end_ms": 397368, "paragraph_index": 39}, {"index": 46, "text": "The number of Members of the Senedd (MSs) is being expanded from 60 to 96 representatives from 16 newly devised constituencies .", "start_ms": 397368, "end_ms": 408024, "paragraph_index": 40}, {"index": 47, "text": "Political parties could list up to eight candidates for each constituency.", "start_ms": 408024, "end_ms": 413616, "paragraph_index": 41}, {"index": 48, "text": "Independent candidates could also stand.", "start_ms": 413616, "end_ms": 417216, "paragraph_index": 41}, {"index": 49, "text": "Voters chose one party or one independent candidate.", "start_ms": 417216, "end_ms": 421944, "paragraph_index": 41}, {"index": 50, "text": "The 96 seats will then be allocated according to the share of votes received by each party or independent candidate.", "start_ms": 421944, "end_ms": 430440, "paragraph_index": 42}, {"index": 51, "text": "The party that wins the most seats in the Senedd election would expect to lead the government.", "start_ms": 430440, "end_ms": 436512, "paragraph_index": 43}, {"index": 52, "text": "However, no party has ever won a majority in the Welsh Parliament and the new system makes it highly unlikely that will change at this election.", "start_ms": 436512, "end_ms": 445920, "paragraph_index": 43}, {"index": 53, "text": "Any MS can nominate any member to be first minister.", "start_ms": 445920, "end_ms": 450600, "paragraph_index": 44}, {"index": 54, "text": "If there are two or more candidates, MSs will vote to decide who they want to fill the role.", "start_ms": 450600, "end_ms": 457056, "paragraph_index": 44}, {"index": 55, "text": "The National Assembly for Wales opened in 1999.", "start_ms": 457056, "end_ms": 461856, "paragraph_index": 45}, {"index": 56, "text": "Renamed Senedd Cymru or Welsh Parliament in 2020, its responsibilities now include health, schools, transport and farming, as well as some tax powers.", "start_ms": 461856, "end_ms": 473976, "paragraph_index": 46}, {"index": 57, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 473976, "end_ms": 481416, "paragraph_index": 47}], "total_duration_ms": 481416};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "in": "在", "of": "的", "will": "将", "on": "在", "for": "为了", "be": "是", "from": "来自", "bbc": "英国广播公司", "are": "是", "with": "与", "one": "一个", "results": "结果", "as": "作为", "or": "或者", "wales": "威尔士", "parliament": "议会", "that": "那个", "it": "它", "each": "每个", "party": "政党", "most": "最", "friday": "星期五", "is": "是", "up": "向上", "scotland": "苏格兰", "local": "当地", "regional": "地区的", "radio": "电台", "candidate": "候选人", "across": "跨越", "have": "有", "first": "第一轮", "by": "被", "evening": "晚上", "there": "那里", "could": "可能", "some": "一些", "number": "数量", "programme": "节目", "political": "政治的", "scottish": "苏格兰的", "who": "谁", "people": "人们", "their": "他们的", "about": "关于", "being": "正在", "now": "现在", "expected": "预期", "begin": "开始", "morning": "上午", "early": "早期的", "new": "新的", "live": "生活", "an": "一个", "vote": "投票", "can": "可以", "health": "健康", "many": "许多", "issues": "问题", "two": "两个", "they": "它们", "its": "它的", "any": "任何", "independent": "独立的", "biggest": "最大的", "set": "设定", "since": "自从", "general": "总", "has": "有", "seen": "被视为", "representatives": "代表", "national": "国家", "six": "六", "closed": "关闭", "thursday": "星期四", "this": "这个", "latest": "最新的", "known": "已知", "saturday": "星期六", "but": "但是", "may": "可能", "such": "如此", "not": "不", "declared": "宣布", "all": "所有", "then": "然后", "past": "过去", "bst": "英国夏令时", "join": "加入", "special": "特别的", "analysis": "分析", "news": "新闻", "keep": "保持", "uk": "英国", "cymru": "威尔士", "also": "也", "council": "委员会", "more": "更多", "under": "在...之下", "win": "赢得", "which": "哪个", "responsible": "负责的", "including": "包括", "key": "关键", "areas": "区域", "members": "成员", "region": "地区", "had": "有", "list": "名单", "parties": "政党", "according": "根据", "government": "政府", "minister": "部长", "well": "好", "transport": "运输", "at": "在", "westminster": "威斯敏斯特", "change": "改变", "powers": "权力", "head": "前往", "england": "英格兰", "decided": "决定", "focus": "重点", "turns": "转折", "timing": "时机", "previously": "此前", "been": "已经", "soon": "很快", "time": "时间", "only": "只有", "few": "少数", "authorities": "当局", "night": "晚上", "announced": "宣布", "hours": "小时", "it's": "它是", "likely": "可能", "clear": "明确", "responsibility": "责任", "returning": "返回", "officer": "警官", "prevent": "防止", "full": "完整", "possible": "可能的", "until": "直到", "late": "已故", "even": "甚至", "estimated": "估计的", "continuing": "持续", "into": "进入", "experts": "专家", "compared": "比较", "whether": "是否", "done": "完成", "before": "之前", "weekend": "周末", "remains": "仍然", "forces": "力量", "overnight": "夜间", "sir": "爵士", "john": "约翰", "you": "你", "follow": "关注", "instagram": "Instagram", "updates": "更新", "social": "社交的", "media": "媒体", "continue": "继续", "coverage": "报道", "after": "之后", "edinburgh": "爱丁堡", "bring": "带来", "reporting": "报道", "every": "每个", "five": "五", "london": "伦敦", "available": "可获取", "area": "区域", "division": "分裂", "than": "比", "like": "像", "mps": "议员", "become": "成为", "control": "控制", "services": "服务", "road": "道路", "country": "国家", "result": "结果", "direction": "方向", "takes": "担任", "seven": "七", "cast": "投下", "directly": "直接地", "post": "职位", "process": "过程", "select": "选择", "type": "类型", "either": "要么", "individual": "个人", "includes": "包括", "receive": "收到", "outright": "彻底的", "usually": "通常", "forms": "形式", "leader": "领导人", "current": "当前的", "was": "是", "when": "当", "already": "已经", "own": "自己", "legal": "法律的", "much": "许多", "broader": "更广泛的", "policing": "警务", "pass": "通过", "laws": "法律", "reserved": "保留的", "represents": "代表", "began": "开始", "determine": "确定", "stand": "立场", "share": "分享", "received": "受到", "would": "将", "expect": "期望", "lead": "导致", "however": "然而", "no": "没有", "ever": "曾经", "highly": "高度", "unlikely": "不太可能", "member": "成员", "if": "如果", "want": "想要", "role": "角色", "opened": "开火", "include": "包括", "schools": "学校", "sign": "签署", "our": "我们的", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "inner": "内部的", "workings": "运作", "beyond": "超出", "election": "选举", "votes": "选票", "seats": "席位", "msps": "苏格兰议会议员", "elections": "选举", "constituencies": "选区", "senedd": "威尔士议会", "voters": "选民", "holyrood": "苏格兰议会", "system": "制度", "candidates": "候选人", "polls": "民调", "councils": "地方议会", "counted": "已计票", "education": "教育", "contests": "竞选", "count": "计票", "delays": "延误", "recounts": "重新计票", "interviews": "采访", "ward": "选区", "councillors": "地方议员", "wins": "获胜", "housing": "住房", "decide": "决定", "governs": "治理", "elect": "选举", "chose": "选择", "allocated": "分配", "tax": "税收", "mss": "女士", "welsh": "威尔士的", "millions": "数百万", "electing": "选举", "parliaments": "议会", "counts": "计票", "vary": "变化", "counting": "计票中", "starting": "开始", "scotland's": "苏格兰的", "lists": "名单", "shape": "塑造", "calculation": "计算", "lunchtime": "午餐时间", "predicting": "预测", "higher": "更高的", "unknowns": "未知因素", "brand-new": "全新的", "voting": "投票", "mix": "混合", "dusted": "拭去灰尘", "co-presented": "共同主持", "nick": "尼克", "robinson": "罗宾逊", "rachel": "雷切尔", "burden": "伯登", "laura": "劳拉", "kuenssberg": "昆斯伯格", "host": "主持人", "polling": "民调", "expert": "专家", "curtice": "柯蒂斯", "number-crunching": "数据处理", "reeta": "里塔", "chakrabarti": "查克拉巴蒂", "pages": "页面", "website": "网站", "app": "应用程序", "updated": "更新", "reaction": "反应", "fact-checking": "事实核查", "verify": "核实", "tiktok": "抖音", "youtube": "优兔", "sophie": "索菲", "raworth": "罗沃思", "breakfast": "早餐", "clive": "克莱夫", "myrie": "迈里", "cardiff": "加的夫", "kirsty": "柯丝蒂", "wark": "沃克", "declarations": "宣布结果", "broadcast": "广播", "providing": "提供", "james": "詹姆斯", "williams": "威廉姆斯", "dot": "点", "davies": "戴维斯", "present": "主持", "listeners": "听众", "dewi": "德威", "llwyd": "卢伊德", "kate": "凯特", "crockett": "克罗克特", "grabs": "抓住", "watford": "沃特福德", "boroughs": "自治市镇", "croydon": "克罗伊登", "hackney": "哈克尼", "lewisham": "刘易舍姆", "newham": "纽汉", "tower": "塔", "hamlets": "哈姆雷茨", "generally": "通常", "seat": "席位", "wards": "选区", "representative": "代表", "elected": "当选的", "gains": "获得", "care": "照顾", "older": "年长的", "disabilities": "残疾", "rubbish": "垃圾", "collection": "收集", "recycling": "回收", "maintenance": "维护", "re-election": "连任", "per": "每", "voter": "选民", "ballot": "选票", "papers": "文件", "msp": "苏格兰议会议员", "area's": "地区的", "selected": "被选中的", "winner": "获胜者", "receives": "收到", "uses": "使用", "proportional": "比例的", "representation": "代表制", "formula": "公式", "becomes": "成为", "range": "范围", "prisons": "监狱", "aspects": "方面", "welfare": "福利", "transferred": "转移", "expanded": "扩大", "newly": "新近", "devised": "设计", "eight": "八", "won": "赢得", "majority": "多数", "makes": "使得", "ms": "女士", "nominate": "提名", "fill": "填补", "assembly": "议会", "renamed": "更名", "responsibilities": "职责", "farming": "农业"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
