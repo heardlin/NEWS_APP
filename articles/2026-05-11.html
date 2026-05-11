@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-11</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-11</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/d172/live/2b60dcd0-4d40-11f1-b55d-0f258dce1735.jpg" alt="British passengers from hantavirus-hit cruise ship isolating in hospital" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>British passengers from hantavirus-hit cruise ship isolating in hospital</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c4g83vddnz0o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-11.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Twenty Britons are beginning 45 days of self-isolation in the UK after being evacuated from a cruise ship hit by hantavirus.</span></p>
+        <p class="cn">二十名英国人在从一艘爆发汉坦病毒的邮轮上撤离后，开始在英国进行45天的自我隔离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">They are isolating at Arrowe Park Hospital in Merseyside , after their chartered flight from Tenerife landed at Manchester Airport on Sunday.</span> <span class="sentence" data-sentence-index="2">They will stay there for 72 hours, before being asked to self-isolate for a further 42 days at home.</span></p>
+        <p class="cn">他们正在默西塞德郡的Arrowe Park医院进行隔离，此前他们从特内里费岛包机于周日降落在曼彻斯特机场。他们将在那里停留72小时，然后被要求在家中再自我隔离42天。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="3">Professor Robin May, chief scientific officer at the UK Health Security Agency (UKHSA) told the BBC that all of the evacuees are "healthy and <span class="keyword" data-word="asymptomatic" data-phonetic="/ˌeɪsɪmptəˈmætɪk/" data-pos="adj." data-def="无症状的" data-def-en="showing no symptoms of a disease">asymptomatic</span>".</span></p>
+        <p class="cn">英国卫生安全局（UKHSA）首席科学官Robin May教授告诉BBC，所有撤离人员都“健康且无症状”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Three people have died following the <span class="keyword" data-word="outbreak" data-phonetic="/ˈaʊtbreɪk/" data-pos="n." data-def="爆发，突然发生" data-def-en="the sudden start of something unpleasant, especially a disease">outbreak</span> on the MV Hondius, including two whom the World Health Organization has confirmed had hantavirus.</span></p>
+        <p class="cn">在MV Hondius号邮轮爆发疫情后，已有三人死亡，其中两人经世界卫生组织确认感染了汉坦病毒。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Two British nationals, who are being treated in the Netherlands and South Africa, also have confirmed cases.</span></p>
+        <p class="cn">两名英国国民正在荷兰和南非接受治疗，他们的病例也已确诊。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">A British-US dual national is currently in <span class="keyword" data-word="quarantine" data-phonetic="/ˈkwɒrəntiːn/" data-pos="n." data-def="隔离期，检疫" data-def-en="a period of isolation to prevent the spread of disease">quarantine</span> in Nebraska, according to Matthew Ferreira of the US Health and Human Services department.</span></p>
+        <p class="cn">据美国卫生与公众服务部的Matthew Ferreira称，一名英美双重国籍者目前正在内布拉斯加州进行隔离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Meanwhile, an American and French national who returned to their home countries after leaving the ship have also tested positive for the virus , according to local authorities.</span></p>
+        <p class="cn">与此同时，据地方当局称，一名美国人和一名法国人在离开邮轮返回本国后，病毒检测也呈阳性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">A Spanish national who was on board the ship also provisionally tested positive for Hantavirus, Spanish Health Minister Mónica García announced, with the result due to be confirmed late on Monday.</span></p>
+        <p class="cn">西班牙卫生部长Mónica García宣布，一名曾在该船上的西班牙国民初步检测出汉坦病毒阳性，结果预计将于周一晚些时候确认。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">On Monday evening the final six passengers who had been still onboard disembarked from the ship, alongside some members of the crew.</span></p>
+        <p class="cn">周一晚上，最后六名仍留在船上的乘客与部分船员一起下船。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">The vessel then left Tenerife for the Netherlands where the last 26 crew will leave and the boat will be disinfected.</span></p>
+        <p class="cn">随后，该船离开特内里费岛前往荷兰，最后26名船员将在那里离船，船只将进行消毒。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Most strains of hantavirus, a group of viruses carried by rodents, do not pass from person to person, but the Andes <span class="keyword" data-word="strain" data-phonetic="/streɪn/" data-pos="n." data-def="菌株，毒株" data-def-en="a particular type or variety of a virus or bacteria">strain</span> identified in a number of people who had been on the Dutch cruise ship does.</span></p>
+        <p class="cn">汉坦病毒是一种由啮齿动物携带的病毒，大多数毒株不会人传人，但在荷兰邮轮上多名感染者中发现的安第斯毒株却具有人传人能力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Twenty-two British nationals had been still aboard the ship when it docked in the Canary Islands on Sunday.</span> <span class="sentence" data-sentence-index="13">Two were dual nationals, with one heading to the US and one to Australia.</span></p>
+        <p class="cn">周日，当该船停靠在加那利群岛时，仍有22名英国国民在船上。其中两人是双重国籍者，一人前往美国，一人前往澳大利亚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">Some could be seen clad in blue protective gear as they were bussed from the Granadilla de Abona port to Tenerife South Airport.</span></p>
+        <p class="cn">可以看到一些人穿着蓝色防护装备，从Granadilla de Abona港乘坐大巴前往特内里费南部机场。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">They were tested for hantavirus before getting on the flight.</span></p>
+        <p class="cn">他们在登机前接受了汉坦病毒检测。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">"The UK Government has worked with international partners to ensure the safe return of all remaining British nationals on board the MV Hondius, with passengers now safely transferred to Arrowe Park Hospital," the UKHSA said in a statement.</span></p>
+        <p class="cn">UKHSA在一份声明中表示：“英国政府已与国际合作伙伴合作，确保MV Hondius号上所有剩余英国国民安全返回，乘客现已安全转移至Arrowe Park医院。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Twenty British nationals along with one German national, who is a UK resident, and one Japanese passenger, are now being monitored at the hospital.</span></p>
+        <p class="cn">二十名英国国民以及一名英国居民（德国籍）和一名日本乘客目前正在该医院接受监测。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">After their time in hospital, May said they will likely spend the rest of their isolation period in their homes, adding that decision would be made on a "case-by-case basis".</span></p>
+        <p class="cn">May表示，在医院期间过后，他们可能会在剩余隔离期在家中度过，并补充说将“根据具体情况”做出决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">Speaking to BBC Breakfast on Monday morning, he said "we may need to update" the period of isolation "depending on what the science tells us".</span></p>
+        <p class="cn">周一早上，他在接受BBC Breakfast节目采访时表示，“我们可能需要根据科学告诉我们什么来更新”隔离期。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">May said throughout that period, they will continue to support the passengers "very closely".</span></p>
+        <p class="cn">May表示，在整个期间，他们将继续“非常密切地”支持这些乘客。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">"Not just with testing, but also for the very large emotional turmoil this will obviously have – it's going to be a very stressful period for them and their families," he said.</span></p>
+        <p class="cn">他说：“不仅提供检测，还要应对这显然会带来的巨大情绪波动——这对他们和他们的家人来说将是一个非常紧张的时期。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">The support will include clothes and supplies, he said, as many had to leave behind all but essential belongings when they were evacuated.</span></p>
+        <p class="cn">他说，支持将包括衣物和补给品，因为许多人在撤离时除了必需品外不得不留下所有物品。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">May also reiterated that the risk to those not directly linked to the cruise is "extremely low indeed", and that the process of testing and contact tracing is still ongoing.</span></p>
+        <p class="cn">May还重申，与邮轮无直接关联的人的风险“确实极低”，检测和接触者追踪工作仍在进行中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">Janelle Holmes, CEO of Wirral University Teaching Hospital Trust, which oversees Arrowe Park Hospital, said the former passengers will be screened and continuously assessed when they arrive there.</span></p>
+        <p class="cn">负责管理Arrowe Park医院的Wirral大学教学医院信托基金首席执行官Janelle Holmes表示，前乘客到达后将接受筛查和持续评估。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">They will be housed in self-contained flats with access to phones so they can call friends and relatives.</span></p>
+        <p class="cn">他们将住在独立公寓内，可以使用电话联系亲友。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">A specialist team will be on site throughout their <span class="keyword" data-word="quarantine" data-phonetic="/ˈkwɒrəntiːn/" data-pos="n." data-def="隔离期，检疫" data-def-en="a period of isolation to prevent the spread of disease">quarantine</span> to support them.</span></p>
+        <p class="cn">一个专家团队将在他们隔离期间全程在场提供支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">"What we've learnt from past experience is they're going to be absolutely shattered.</span> <span class="sentence" data-sentence-index="28">They've probably felt quite traumatised by the whole experience so the thing for us to do is to make sure that they're here, they're safe, they're welcome," Holmes said.</span></p>
+        <p class="cn">Holmes说：“我们从过去的经验中学到的是，他们会感到极度疲惫。整个经历可能让他们受到创伤，所以我们要做的就是确保他们在这里安全、受欢迎。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">She added that if passengers develop symptoms, they will be taken to Royal Liverpool University Hospital, which houses the regional Tropical and Infectious Diseases Unit.</span></p>
+        <p class="cn">她补充说，如果乘客出现症状，他们将被送往皇家利物浦大学医院，该医院设有区域热带病和传染病科。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">They will not be allowed to take public transport when they leave Arrowe Park for a period of self-isolation at home.</span></p>
+        <p class="cn">当他们离开Arrowe Park回家自我隔离时，不允许乘坐公共交通工具。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">A joint statement from emergency services in the North West and Wirral Council said the hospital is "operating completely normally" and "visitors and staff should continue to come to the hospital with complete confidence".</span></p>
+        <p class="cn">西北部和Wirral议会的紧急服务部门联合声明称，该医院“完全正常运营”，“访客和工作人员应继续完全放心地来医院”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">"This is a planned, controlled and carefully managed arrangement.</span> <span class="sentence" data-sentence-index="33">Hantavirus is not spread through everyday social contact and there is no reason for local residents to be concerned," it said.</span></p>
+        <p class="cn">声明说：“这是一个有计划、受控且精心管理的安排。汉坦病毒不会通过日常社交接触传播，当地居民没有理由担心。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">On Sunday, Foreign Secretary Yvette Cooper thanked those "who worked around the clock to get passengers from MV Hondius back to the UK by special flight this evening with public health protections in place".</span></p>
+        <p class="cn">周日，外交大臣Yvette Cooper感谢那些“夜以继日工作，通过特殊航班将MV Hondius号乘客送回英国，并落实公共卫生保护措施”的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">As well as the confirmed cases, there are also two suspected cases, including a British man who is on the remote Atlantic island of Tristan da Cunha.</span> <span class="sentence" data-sentence-index="36">He is currently in a stable condition and in isolation.</span></p>
+        <p class="cn">除了确诊病例外，还有两例疑似病例，包括一名在偏远大西洋岛屿特里斯坦达库尼亚的英国男子。他目前情况稳定，正在隔离中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">A team of six British Army paratroopers and two medical clinicians have parachuted onto the island to help its two-person medical team provide care to the man and the island's other residents.</span></p>
+        <p class="cn">一支由六名英国陆军伞兵和两名医疗临床医生组成的团队已跳伞降落到该岛，帮助其两人医疗团队为该男子和岛上其他居民提供护理。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">It is the first time the UK military has parachuted in medical personnel to provide humanitarian support, according to the MoD.</span></p>
+        <p class="cn">据国防部称，这是英国军方首次空降医疗人员提供人道主义支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">Meanwhile two Britons are voluntarily self-isolating at home in the UK, having disembarked the vessel at St Helena on 24 April alongside dozens of other passengers before the first case of hantavirus was confirmed.</span></p>
+        <p class="cn">与此同时，两名英国人在英国自愿居家自我隔离，他们于4月24日在圣赫勒拿岛与数十名其他乘客一起下船，当时首例汉坦病毒病例尚未确诊。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">MV Hondius began its journey on 1 April in Ushuaia, Argentina, with about 150 passengers and crew from 28 countries reported to have initially been aboard.</span></p>
+        <p class="cn">MV Hondius号于4月1日从阿根廷乌斯怀亚启航，最初船上约有来自28个国家的150名乘客和船员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">Many of those still aboard the ship disembarked on Sunday for <span class="keyword" data-word="repatriation" data-phonetic="/ˌriːpætriˈeɪʃn/" data-pos="n." data-def="遣返回国" data-def-en="the act of sending someone back to their own country">repatriation</span> to their home countries.</span></p>
+        <p class="cn">周日，仍留在船上的许多人下船，准备返回各自国家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="42">In a video statement released by operator Oceanwide Expeditions on Monday, the captain said the past few weeks have been "extremely challenging", and praised the patience, discipline and kindness shown on board the vessel.</span></p>
+        <p class="cn">在运营商Oceanwide Expeditions周一发布的视频声明中，船长表示过去几周“极具挑战性”，并赞扬了船上展现的耐心、纪律和善意。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="43">Jan Dobrogowski said the crew's thoughts were "with the ones that are now longer with us".</span></p>
+        <p class="cn">Jan Dobrogowski表示，船员们“思念那些已不在我们身边的人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="44">With additional reporting by Dominic Hughes</span></p>
+        <p class="cn">Dominic Hughes补充报道</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散，撤离</p>
+      <p class="kw-def-en">to move people from a dangerous place to a safer one</p>
+      <p class="kw-ctx">&ldquo;Twenty Britons are beginning 45 days of self-isolation in the UK after being evacuated from a cruise ship hit by hantavirus.&rdquo;</p>
+      <p class="kw-ctx-cn">二十名英国人在从一艘爆发汉坦病毒的游轮上撤离后，开始在英国进行45天的自我隔离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">asymptomatic</span>
+        <button class="kw-speak-btn" data-word="asymptomatic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌeɪsɪmptəˈmætɪk/ adj.</span>
+      </div>
+      <p class="kw-def">无症状的</p>
+      <p class="kw-def-en">showing no symptoms of a disease</p>
+      <p class="kw-ctx">&ldquo;Professor Robin May, chief scientific officer at the UK Health Security Agency (UKHSA) told the BBC that all of the evacuees are 'healthy and asymptomatic'.&rdquo;</p>
+      <p class="kw-ctx-cn">英国卫生安全局首席科学官罗宾·梅教授告诉BBC，所有撤离人员都“健康且无症状”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">outbreak</span>
+        <button class="kw-speak-btn" data-word="outbreak" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈaʊtbreɪk/ n.</span>
+      </div>
+      <p class="kw-def">爆发，突然发生</p>
+      <p class="kw-def-en">the sudden start of something unpleasant, especially a disease</p>
+      <p class="kw-ctx">&ldquo;Three people have died following the outbreak on the MV Hondius, including two whom the World Health Organization has confirmed had hantavirus.&rdquo;</p>
+      <p class="kw-ctx-cn">在MV Hondius号爆发疫情后，已有三人死亡，其中两人经世界卫生组织确认感染了汉坦病毒。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">quarantine</span>
+        <button class="kw-speak-btn" data-word="quarantine" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkwɒrəntiːn/ n.</span>
+      </div>
+      <p class="kw-def">隔离期，检疫</p>
+      <p class="kw-def-en">a period of isolation to prevent the spread of disease</p>
+      <p class="kw-ctx">&ldquo;A British-US dual national is currently in quarantine in Nebraska, according to Matthew Ferreira of the US Health and Human Services department.&rdquo;</p>
+      <p class="kw-ctx-cn">据美国卫生与公众服务部的马修·费雷拉称，一名英美双重国籍者目前正在内布拉斯加州接受隔离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disinfect</span>
+        <button class="kw-speak-btn" data-word="disinfect" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdɪsɪnˈfekt/ v.</span>
+      </div>
+      <p class="kw-def">消毒，杀菌</p>
+      <p class="kw-def-en">to clean something using chemicals that kill bacteria and viruses</p>
+      <p class="kw-ctx">&ldquo;The vessel then left Tenerife for the Netherlands where the last 26 crew will leave and the boat will be disinfected.&rdquo;</p>
+      <p class="kw-ctx-cn">该船随后离开特内里费岛前往荷兰，最后26名船员将离船，船只将进行消毒。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">strain</span>
+        <button class="kw-speak-btn" data-word="strain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/streɪn/ n.</span>
+      </div>
+      <p class="kw-def">菌株，毒株</p>
+      <p class="kw-def-en">a particular type or variety of a virus or bacteria</p>
+      <p class="kw-ctx">&ldquo;Most strains of hantavirus, a group of viruses carried by rodents, do not pass from person to person, but the Andes strain identified in a number of people who had been on the Dutch cruise ship does.&rdquo;</p>
+      <p class="kw-ctx-cn">大多数汉坦病毒毒株（由啮齿动物携带的一组病毒）不会人传人，但在荷兰游轮上多人中发现的安第斯毒株却会。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">traumatise</span>
+        <button class="kw-speak-btn" data-word="traumatise" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrɔːmətaɪz/ v.</span>
+      </div>
+      <p class="kw-def">使受精神创伤</p>
+      <p class="kw-def-en">to cause someone to experience severe emotional shock or distress</p>
+      <p class="kw-ctx">&ldquo;They've probably felt quite traumatised by the whole experience so the thing for us to do is to make sure that they're here, they're safe, they're welcome.&rdquo;</p>
+      <p class="kw-ctx-cn">他们可能对整个经历感到非常痛苦，所以我们要做的就是确保他们在这里安全、受欢迎。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">repatriation</span>
+        <button class="kw-speak-btn" data-word="repatriation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːpætriˈeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">遣返回国</p>
+      <p class="kw-def-en">the act of sending someone back to their own country</p>
+      <p class="kw-ctx">&ldquo;Many of those still aboard the ship disembarked on Sunday for repatriation to their home countries.&rdquo;</p>
+      <p class="kw-ctx-cn">许多仍在船上的人于周日下船，准备遣返回国。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Twenty Britons are beginning 45 days of self-isolation in the UK after being evacuated from a cruise ship hit by hantavirus.", "start_ms": 0, "end_ms": 9504, "paragraph_index": 0}, {"index": 1, "text": "They are isolating at Arrowe Park Hospital in Merseyside , after their chartered flight from Tenerife landed at Manchester Airport on Sunday.", "start_ms": 9504, "end_ms": 19248, "paragraph_index": 1}, {"index": 2, "text": "They will stay there for 72 hours, before being asked to self-isolate for a further 42 days at home.", "start_ms": 19248, "end_ms": 27336, "paragraph_index": 1}, {"index": 3, "text": "Professor Robin May, chief scientific officer at the UK Health Security Agency (UKHSA) told the BBC that all of the evacuees are \"healthy and asymptomatic\".", "start_ms": 27336, "end_ms": 40608, "paragraph_index": 2}, {"index": 4, "text": "Three people have died following the outbreak on the MV Hondius, including two whom the World Health Organization has confirmed had hantavirus.", "start_ms": 40608, "end_ms": 50856, "paragraph_index": 3}, {"index": 5, "text": "Two British nationals, who are being treated in the Netherlands and South Africa, also have confirmed cases.", "start_ms": 50856, "end_ms": 58584, "paragraph_index": 4}, {"index": 6, "text": "A British-US dual national is currently in quarantine in Nebraska, according to Matthew Ferreira of the US Health and Human Services department.", "start_ms": 58584, "end_ms": 68880, "paragraph_index": 5}, {"index": 7, "text": "Meanwhile, an American and French national who returned to their home countries after leaving the ship have also tested positive for the virus , according to local authorities.", "start_ms": 68880, "end_ms": 80424, "paragraph_index": 6}, {"index": 8, "text": "A Spanish national who was on board the ship also provisionally tested positive for Hantavirus, Spanish Health Minister M\u00f3nica Garc\u00eda announced, with the result due to be confirmed late on Monday.", "start_ms": 80424, "end_ms": 93840, "paragraph_index": 7}, {"index": 9, "text": "On Monday evening the final six passengers who had been still onboard disembarked from the ship, alongside some members of the crew.", "start_ms": 93840, "end_ms": 102696, "paragraph_index": 8}, {"index": 10, "text": "The vessel then left Tenerife for the Netherlands where the last 26 crew will leave and the boat will be disinfected.", "start_ms": 102696, "end_ms": 110544, "paragraph_index": 9}, {"index": 11, "text": "Most strains of hantavirus, a group of viruses carried by rodents, do not pass from person to person, but the Andes strain identified in a number of people who had been on the Dutch cruise ship does.", "start_ms": 110544, "end_ms": 124008, "paragraph_index": 10}, {"index": 12, "text": "Twenty-two British nationals had been still aboard the ship when it docked in the Canary Islands on Sunday.", "start_ms": 124008, "end_ms": 131160, "paragraph_index": 11}, {"index": 13, "text": "Two were dual nationals, with one heading to the US and one to Australia.", "start_ms": 131160, "end_ms": 137064, "paragraph_index": 11}, {"index": 14, "text": "Some could be seen clad in blue protective gear as they were bussed from the Granadilla de Abona port to Tenerife South Airport.", "start_ms": 137064, "end_ms": 145560, "paragraph_index": 12}, {"index": 15, "text": "They were tested for hantavirus before getting on the flight.", "start_ms": 145560, "end_ms": 150024, "paragraph_index": 13}, {"index": 16, "text": "\"The UK Government has worked with international partners to ensure the safe return of all remaining British nationals on board the MV Hondius, with passengers now safely transferred to Arrowe Park Hospital,\" the UKHSA said in a statement.", "start_ms": 150024, "end_ms": 166824, "paragraph_index": 14}, {"index": 17, "text": "Twenty British nationals along with one German national, who is a UK resident, and one Japanese passenger, are now being monitored at the hospital.", "start_ms": 166824, "end_ms": 177408, "paragraph_index": 15}, {"index": 18, "text": "After their time in hospital, May said they will likely spend the rest of their isolation period in their homes, adding that decision would be made on a \"case-by-case basis\".", "start_ms": 177408, "end_ms": 188640, "paragraph_index": 16}, {"index": 19, "text": "Speaking to BBC Breakfast on Monday morning, he said \"we may need to update\" the period of isolation \"depending on what the science tells us\".", "start_ms": 188640, "end_ms": 198576, "paragraph_index": 17}, {"index": 20, "text": "May said throughout that period, they will continue to support the passengers \"very closely\".", "start_ms": 198576, "end_ms": 204984, "paragraph_index": 18}, {"index": 21, "text": "\"Not just with testing, but also for the very large emotional turmoil this will obviously have \u2013 it's going to be a very stressful period for them and their families,\" he said.", "start_ms": 204984, "end_ms": 216696, "paragraph_index": 19}, {"index": 22, "text": "The support will include clothes and supplies, he said, as many had to leave behind all but essential belongings when they were evacuated.", "start_ms": 216696, "end_ms": 226344, "paragraph_index": 20}, {"index": 23, "text": "May also reiterated that the risk to those not directly linked to the cruise is \"extremely low indeed\", and that the process of testing and contact tracing is still ongoing.", "start_ms": 226344, "end_ms": 237984, "paragraph_index": 21}, {"index": 24, "text": "Janelle Holmes, CEO of Wirral University Teaching Hospital Trust, which oversees Arrowe Park Hospital, said the former passengers will be screened and continuously assessed when they arrive there.", "start_ms": 237984, "end_ms": 251400, "paragraph_index": 22}, {"index": 25, "text": "They will be housed in self-contained flats with access to phones so they can call friends and relatives.", "start_ms": 251400, "end_ms": 258360, "paragraph_index": 23}, {"index": 26, "text": "A specialist team will be on site throughout their quarantine to support them.", "start_ms": 258360, "end_ms": 263736, "paragraph_index": 24}, {"index": 27, "text": "\"What we've learnt from past experience is they're going to be absolutely shattered.", "start_ms": 263736, "end_ms": 269160, "paragraph_index": 25}, {"index": 28, "text": "They've probably felt quite traumatised by the whole experience so the thing for us to do is to make sure that they're here, they're safe, they're welcome,\" Holmes said.", "start_ms": 269160, "end_ms": 279816, "paragraph_index": 25}, {"index": 29, "text": "She added that if passengers develop symptoms, they will be taken to Royal Liverpool University Hospital, which houses the regional Tropical and Infectious Diseases Unit.", "start_ms": 279816, "end_ms": 291456, "paragraph_index": 26}, {"index": 30, "text": "They will not be allowed to take public transport when they leave Arrowe Park for a period of self-isolation at home.", "start_ms": 291456, "end_ms": 299112, "paragraph_index": 27}, {"index": 31, "text": "A joint statement from emergency services in the North West and Wirral Council said the hospital is \"operating completely normally\" and \"visitors and staff should continue to come to the hospital with complete confidence\".", "start_ms": 299112, "end_ms": 312720, "paragraph_index": 28}, {"index": 32, "text": "\"This is a planned, controlled and carefully managed arrangement.", "start_ms": 312720, "end_ms": 317904, "paragraph_index": 29}, {"index": 33, "text": "Hantavirus is not spread through everyday social contact and there is no reason for local residents to be concerned,\" it said.", "start_ms": 317904, "end_ms": 326520, "paragraph_index": 29}, {"index": 34, "text": "On Sunday, Foreign Secretary Yvette Cooper thanked those \"who worked around the clock to get passengers from MV Hondius back to the UK by special flight this evening with public health protections in place\".", "start_ms": 326520, "end_ms": 339960, "paragraph_index": 30}, {"index": 35, "text": "As well as the confirmed cases, there are also two suspected cases, including a British man who is on the remote Atlantic island of Tristan da Cunha.", "start_ms": 339960, "end_ms": 350640, "paragraph_index": 31}, {"index": 36, "text": "He is currently in a stable condition and in isolation.", "start_ms": 350640, "end_ms": 355080, "paragraph_index": 31}, {"index": 37, "text": "A team of six British Army paratroopers and two medical clinicians have parachuted onto the island to help its two-person medical team provide care to the man and the island's other residents.", "start_ms": 355080, "end_ms": 367704, "paragraph_index": 32}, {"index": 38, "text": "It is the first time the UK military has parachuted in medical personnel to provide humanitarian support, according to the MoD.", "start_ms": 367704, "end_ms": 377064, "paragraph_index": 33}, {"index": 39, "text": "Meanwhile two Britons are voluntarily self-isolating at home in the UK, having disembarked the vessel at St Helena on 24 April alongside dozens of other passengers before the first case of hantavirus was confirmed.", "start_ms": 377064, "end_ms": 392328, "paragraph_index": 34}, {"index": 40, "text": "MV Hondius began its journey on 1 April in Ushuaia, Argentina, with about 150 passengers and crew from 28 countries reported to have initially been aboard.", "start_ms": 392328, "end_ms": 404952, "paragraph_index": 35}, {"index": 41, "text": "Many of those still aboard the ship disembarked on Sunday for repatriation to their home countries.", "start_ms": 404952, "end_ms": 411864, "paragraph_index": 36}, {"index": 42, "text": "In a video statement released by operator Oceanwide Expeditions on Monday, the captain said the past few weeks have been \"extremely challenging\", and praised the patience, discipline and kindness shown on board the vessel.", "start_ms": 411864, "end_ms": 426768, "paragraph_index": 37}, {"index": 43, "text": "Jan Dobrogowski said the crew's thoughts were \"with the ones that are now longer with us\".", "start_ms": 426768, "end_ms": 432696, "paragraph_index": 38}, {"index": 44, "text": "With additional reporting by Dominic Hughes", "start_ms": 432696, "end_ms": 436440, "paragraph_index": 39}], "total_duration_ms": 436440};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "in": "在", "on": "在", "of": "的", "they": "它们", "is": "是", "with": "与", "will": "将", "for": "为了", "be": "是", "said": "说", "from": "来自", "hospital": "医院", "are": "是", "at": "在", "their": "他们的", "that": "那个", "who": "谁", "passengers": "乘客", "uk": "英国", "ship": "船舶", "hantavirus": "汉坦病毒", "have": "有", "by": "被", "two": "两个", "british": "英国的", "also": "也", "home": "家", "may": "可能", "health": "健康", "confirmed": "确认", "had": "有", "nationals": "国民", "us": "我们", "been": "已经", "not": "不", "were": "是", "after": "之后", "being": "正在", "park": "公园", "sunday": "星期日", "there": "那里", "mv": "机动船", "hondius": "洪迪乌斯号", "national": "国家", "monday": "星期一", "still": "仍然", "when": "当", "one": "一个", "as": "作为", "he": "他", "support": "支持", "they're": "他们是", "cruise": "巡航", "flight": "航班", "tenerife": "特内里费", "before": "之前", "all": "所有", "has": "有", "cases": "情况", "according": "根据", "countries": "国家", "board": "董事会", "crew": "船员", "vessel": "船舶", "leave": "离开", "but": "但是", "aboard": "在船上", "it": "它", "now": "现在", "statement": "声明", "isolation": "隔离", "very": "非常", "this": "这个", "those": "那些", "team": "团队", "medical": "医疗", "britons": "英国人", "days": "天", "evacuated": "撤离", "airport": "机场", "ukhsa": "英国卫生安全局", "bbc": "英国广播公司", "people": "人们", "including": "包括", "netherlands": "荷兰", "south": "韩国", "currently": "目前", "services": "服务", "meanwhile": "与此同时", "positive": "积极的", "local": "当地", "spanish": "西班牙的", "was": "是", "evening": "晚上", "six": "六", "alongside": "与...一起", "some": "一些", "do": "做", "person": "个人", "worked": "工作", "safe": "安全", "time": "时间", "what": "什么", "throughout": "贯穿", "continue": "继续", "testing": "检测", "going": "将要", "them": "他们", "many": "许多", "contact": "接触", "university": "大学", "which": "哪个", "so": "所以", "past": "过去", "public": "公众", "man": "男子", "island": "岛", "its": "它的", "provide": "提供", "other": "其他", "first": "第一轮", "april": "四月", "beginning": "开始", "hit": "击中", "landed": "降落", "manchester": "曼彻斯特", "stay": "保持", "hours": "小时", "asked": "询问", "further": "进一步的", "robin": "罗宾", "chief": "首席", "scientific": "科学的", "officer": "警官", "security": "安全", "agency": "机构", "told": "告诉", "three": "三个", "died": "死亡", "following": "随后", "whom": "谁", "world": "世界", "organization": "组织", "treated": "接受治疗", "human": "人类", "department": "部门", "an": "一个", "american": "美国的", "returned": "返回", "leaving": "离开", "virus": "病毒", "authorities": "当局", "minister": "部长", "announced": "宣布", "result": "结果", "due": "应得", "late": "已故", "final": "最终", "onboard": "在船上", "members": "成员", "then": "然后", "left": "离开", "where": "那里", "last": "最后", "most": "最", "group": "团体", "viruses": "病毒", "carried": "进行", "rodents": "啮齿动物", "pass": "通过", "identified": "被确认", "number": "数量", "dutch": "荷兰的", "does": "做", "docked": "靠港", "canary": "加那利", "islands": "群岛", "heading": "领导", "could": "可能", "seen": "被视为", "blue": "蓝色", "granadilla": "格拉纳迪利亚", "de": "实际上", "port": "港口", "getting": "获得", "government": "政府", "international": "国际", "ensure": "确保", "return": "返回", "safely": "安全地", "transferred": "转移", "along": "一起", "german": "德国的", "likely": "可能", "spend": "花费", "rest": "其余", "adding": "补充说", "decision": "决定", "would": "将", "made": "做出", "basis": "基础", "speaking": "发言", "breakfast": "早餐", "morning": "上午", "we": "我们", "need": "需要", "update": "更新", "depending": "取决于", "closely": "密切", "just": "只是", "large": "大的", "obviously": "显然", "it's": "它是", "stressful": "有压力的", "families": "家庭", "include": "包括", "supplies": "补给", "behind": "在...后面", "essential": "必要的", "risk": "风险", "directly": "直接地", "linked": "关联的", "low": "低的", "process": "过程", "ongoing": "正在进行的", "trust": "信任", "former": "前任", "assessed": "评估", "arrive": "抵达", "access": "进入", "can": "可以", "call": "呼吁", "friends": "朋友", "specialist": "专家", "site": "网站", "we've": "我们已经", "absolutely": "绝对", "probably": "很可能", "felt": "感觉", "quite": "相当", "whole": "整个", "thing": "事情", "make": "使", "sure": "确定", "here": "这里", "she": "她", "added": "补充", "if": "如果", "develop": "发展", "symptoms": "症状", "taken": "采取", "royal": "王室的", "liverpool": "利物浦", "regional": "地区的", "unit": "单位", "allowed": "允许", "take": "采取", "transport": "运输", "joint": "联合的", "emergency": "紧急", "north": "北部", "west": "西部", "council": "委员会", "operating": "操作", "completely": "完全", "normally": "通常", "visitors": "游客", "staff": "员工", "should": "应该", "come": "到来", "confidence": "信任", "planned": "计划中的", "managed": "管理", "through": "通过", "social": "社交的", "no": "没有", "reason": "原因", "concerned": "担忧的", "foreign": "外交", "secretary": "秘书", "yvette": "伊薇特", "cooper": "库珀", "thanked": "感谢", "around": "在...周围", "clock": "时钟", "get": "得到", "back": "后退", "special": "特别的", "protections": "保护措施", "place": "地点", "well": "好", "suspected": "涉嫌", "atlantic": "大西洋", "tristan": "特里斯坦", "cunha": "库尼亚", "stable": "稳定的", "condition": "状况", "help": "帮助", "care": "照顾", "military": "军事", "personnel": "人员", "humanitarian": "人道主义的", "self-isolating": "自我隔离", "having": "拥有", "st": "圣", "helena": "赫勒拿", "dozens": "数十", "case": "案例", "began": "开始", "journey": "旅程", "argentina": "阿根廷", "about": "关于", "reported": "据报道", "initially": "最初", "video": "视频", "released": "释放", "oceanwide": "远洋", "expeditions": "探险队", "few": "少数", "weeks": "周", "praised": "赞扬", "thoughts": "想法", "longer": "更长的", "reporting": "报道", "period": "时期", "arrowe": "阿罗", "tested": "检测", "disembarked": "下船", "twenty": "二十", "self-isolation": "自我隔离", "dual": "双重的", "extremely": "极其", "holmes": "霍姆斯", "wirral": "威勒尔", "experience": "经历", "residents": "居民", "parachuted": "空降", "isolating": "隔离", "merseyside": "默西塞德郡", "chartered": "包租的", "self-isolate": "自我隔离", "professor": "教授", "evacuees": "撤离人员", "healthy": "健康的", "africa": "非洲", "british-us": "英美", "nebraska": "内布拉斯加", "matthew": "马修", "ferreira": "费雷拉", "french": "法国的", "provisionally": "临时地", "boat": "船", "disinfected": "消毒", "strains": "菌株", "andes": "安第斯山脉", "twenty-two": "二十二", "australia": "澳大利亚", "clad": "穿着", "protective": "防护的", "gear": "装备", "bussed": "用巴士运送", "abona": "阿博纳", "partners": "伴侣", "remaining": "剩余的", "resident": "居民", "japanese": "日本的", "passenger": "乘客", "monitored": "监测", "homes": "家", "case-by-case": "逐案", "science": "科学", "tells": "告诉", "emotional": "情感的", "turmoil": "混乱", "clothes": "衣服", "belongings": "财物", "reiterated": "重申", "indeed": "确实", "tracing": "追踪", "janelle": "珍妮尔", "ceo": "首席执行官", "teaching": "教学", "oversees": "监督", "screened": "筛查", "continuously": "持续地", "housed": "安置", "self-contained": "独立的", "flats": "公寓", "phones": "电话", "relatives": "亲属", "learnt": "得知", "shattered": "破碎的", "they've": "他们已经", "traumatised": "受创伤的", "welcome": "欢迎", "houses": "房屋", "tropical": "热带的", "infectious": "传染性的", "diseases": "疾病", "complete": "完全的", "controlled": "受控的", "carefully": "仔细地", "arrangement": "安排", "spread": "传播", "everyday": "日常的", "remote": "偏远的", "da": "达", "army": "军队", "paratroopers": "伞兵", "clinicians": "临床医生", "onto": "到...上", "two-person": "两人的", "island's": "岛屿的", "mod": "国防部", "voluntarily": "自愿地", "ushuaia": "乌斯怀亚", "operator": "运营商", "captain": "船长", "challenging": "具有挑战性的", "patience": "耐心", "discipline": "纪律", "kindness": "善意", "shown": "表现出", "jan": "简", "dobrogowski": "多布罗戈夫斯基", "crew's": "机组人员的", "ones": "人们", "additional": "额外的", "dominic": "多米尼克", "hughes": "休斯"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
