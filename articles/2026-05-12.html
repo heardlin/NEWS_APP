@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-12</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-12</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/f9c8/live/3ddd4840-4e48-11f1-ae62-ab9d6bf96137.jpg" alt="Starmer to meet Streeting on Wednesday as leadership crisis divides Labour" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Starmer to meet Streeting on Wednesday as leadership crisis divides Labour</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cx21jkmxd42o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-12.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Prime Minister Sir Keir Starmer is to meet Health Secretary Wes Streeting, one of his potential leadership challengers, on Wednesday morning, as his government faces an attempt by Labour MPs to <span class="keyword" data-word="oust" data-phonetic="/aʊst/" data-pos="v." data-def="驱逐；罢黜" data-def-en="To remove someone from a position of power or authority.">oust</span> him from the top job.</span></p>
+        <p class="cn">首相基尔·斯塔默爵士（Sir Keir Starmer）将于周三上午会见卫生大臣韦斯·斯特里廷（Wes Streeting），后者是其潜在领导权挑战者之一。目前，工党议员正试图将斯塔默从最高职位上赶下台。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The meeting comes after four ministers resigned, including prominent MP Jess Phillips who quit as safeguarding minister, and Streeting ally Zubir Ahmed.</span></p>
+        <p class="cn">此次会面是在四位大臣辞职后进行的，其中包括著名议员杰斯·菲利普斯（Jess Phillips），她辞去了保护大臣一职，以及斯特里廷的盟友祖贝尔·艾哈迈德（Zubir Ahmed）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">More than 80 Labour MPs also urged Sir Keir to stand down, exposing deep divisions over the prime minister's future.</span></p>
+        <p class="cn">超过80名工党议员也敦促基尔爵士下台，这暴露了围绕首相未来的严重分歧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Sir Keir vowed to get on with governing on Tuesday, while his cabinet allies and more than 100 MPs rallied behind the prime minister, warning against a leadership contest.</span></p>
+        <p class="cn">基尔爵士周二誓言要继续执政，而他的内阁盟友和100多名议员则团结在首相身后，警告不要进行领导权竞争。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">But the prime minister's authority has been weakened by the Labour <span class="keyword" data-word="revolt" data-phonetic="/rɪˈvoʊlt/" data-pos="n." data-def="反抗；叛乱" data-def-en="A refusal to accept authority or a rebellion against a government or leader.">revolt</span>, which came after a dire set of election results last week.</span></p>
+        <p class="cn">但首相的权威因工党反叛而被削弱，此前上周的选举结果惨淡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The resignations and <span class="keyword" data-word="turmoil" data-phonetic="/ˈtɜːrmɔɪl/" data-pos="n." data-def="混乱；动荡" data-def-en="A state of great disturbance, confusion, or uncertainty.">turmoil</span> in Downing Street come as Sir Keir's government is due to set out its <span class="keyword" data-word="legislative" data-phonetic="/ˈledʒɪsleɪtɪv/" data-pos="adj." data-def="立法的" data-def-en="Relating to the making of laws.">legislative</span> agenda in the King's Speech .</span></p>
+        <p class="cn">辞职事件和唐宁街的动荡发生之际，基尔爵士的政府即将在国王演讲中阐述其立法议程。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Streeting is due to meet Sir Keir in Number 10 Downing Street ahead of the event, which marks the start of a new parliamentary session.</span></p>
+        <p class="cn">斯特里廷将在活动前于唐宁街10号与基尔爵士会面，该活动标志着新议会会期的开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The BBC has been told Streeting will not be saying anything that might distract from the King's Speech following the meeting.</span></p>
+        <p class="cn">BBC获悉，斯特里廷在会面后不会发表任何可能分散国王演讲注意力的言论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The prime minister earlier defied calls to depart No 10, telling his cabinet the country "expects us to get on with governing" and pointing out that a formal leadership challenge had not been triggered.</span></p>
+        <p class="cn">首相早些时候无视了离开唐宁街的呼声，他告诉内阁，国家“期望我们继续执政”，并指出正式的领导权挑战尚未触发。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">A leadership election can only be triggered if the leader resigns, or if Labour MPs launch a challenge when there is no vacancy.</span></p>
+        <p class="cn">只有在领导人辞职，或者工党议员在没有空缺的情况下发起挑战时，才能触发领导权选举。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">A challenger wishing to <span class="keyword" data-word="oust" data-phonetic="/aʊst/" data-pos="v." data-def="驱逐；罢黜" data-def-en="To remove someone from a position of power or authority.">oust</span> an <span class="keyword" data-word="incumbent" data-phonetic="/ɪnˈkʌmbənt/" data-pos="n." data-def="现任者" data-def-en="The person currently holding a particular office or position.">incumbent</span> leader must be supported by 20% of Labour MPs, meaning 81 would need to support a challenger to formally start the process.</span></p>
+        <p class="cn">希望罢免现任领导人的挑战者必须获得20%工党议员的支持，这意味着需要81人支持挑战者才能正式启动程序。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Streeting has previously been open about his leadership ambitions and has plenty of support from Labour MPs, particularly those on the centre and the right of the party.</span></p>
+        <p class="cn">斯特里廷此前曾公开表达过他的领导抱负，并得到了许多工党议员的支持，尤其是党内中间派和右翼议员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">The BBC has been told the prime minister's allies are convinced the health secretary will not be able to produce a list of 81 supporters in his meeting on Wednesday.</span></p>
+        <p class="cn">BBC获悉，首相的盟友确信，卫生大臣在周三的会面中无法拿出81名支持者的名单。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Some of Streeting's backers had written letters suggesting Sir Keir had lost the support of the country, and ministers seen as <span class="keyword" data-word="sympathetic" data-phonetic="/ˌsɪmpəˈθetɪk/" data-pos="adj." data-def="同情的；支持的" data-def-en="Showing approval or support for someone or something.">sympathetic</span> to the health secretary have resigned.</span></p>
+        <p class="cn">斯特里廷的一些支持者曾写信暗示基尔爵士已失去国家的支持，被视为同情卫生大臣的大臣也已辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">But Sir Keir has defied the pressure to go and some MPs on the party's right, who would have been assumed to be Streeting supporters, have signed the statement that says now is not the time for a leadership contest.</span></p>
+        <p class="cn">但基尔爵士顶住了辞职压力，党内一些本应被视为斯特里廷支持者的右翼议员签署声明称，现在不是进行领导权竞争的时候。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Even if Streeting does lack sufficient support, other challenges remain.</span></p>
+        <p class="cn">即使斯特里廷确实缺乏足够支持，其他挑战依然存在。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The prime minister has pulled out of a meeting with the unions which help fund the Labour Party.</span></p>
+        <p class="cn">首相取消了与资助工党的工会的会面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Those unions are expected to issue a statement declaring that Sir Keir should not lead the party into the next general election.</span></p>
+        <p class="cn">这些工会预计将发表声明，宣称基尔爵士不应领导该党参加下届大选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">The uncertainty over Sir Keir's job security is an awkward backdrop to the King's Speech.</span></p>
+        <p class="cn">基尔爵士职位安全的不确定性为国王演讲增添了尴尬背景。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">The King's Speech is expected to include more than 35 bills and draft bills, including immigration, NHS and police reforms, along with a route to potentially nationalising British Steel.</span></p>
+        <p class="cn">国王演讲预计将包含超过35项法案和草案，涉及移民、NHS和警察改革，以及可能将英国钢铁公司国有化的路径。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">But whether Sir Keir remains prime minister long enough to deliver the legislation promised is an open question in Westminster.</span></p>
+        <p class="cn">但基尔爵士能否在位足够长的时间来兑现承诺的立法，在威斯敏斯特仍是一个悬而未决的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">A day of political drama on Tuesday started with the cabinet meeting at which Sir Keir pushed aside calls for him to resign.</span></p>
+        <p class="cn">周二的政治戏剧日始于内阁会议，基尔爵士在会上驳斥了要求他辞职的呼声。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">A government source told the BBC that at the cabinet meeting Sir Keir told colleagues he would not discuss the election results or his leadership, and would only speak to cabinet ministers about those topics "individually".</span></p>
+        <p class="cn">一位政府消息人士告诉BBC，在内阁会议上，基尔爵士告诉同僚，他不会讨论选举结果或他的领导权，只会“单独”与内阁大臣讨论这些话题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">The BBC understands several cabinet ministers tried to talk to Sir Keir about his leadership after the cabinet meeting but he declined to speak to them.</span></p>
+        <p class="cn">BBC了解到，几位内阁大臣试图在内阁会议后与基尔爵士谈论他的领导权，但他拒绝与他们交谈。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">In a speech aimed at steadying his <span class="keyword" data-word="tottering" data-phonetic="/ˈtɒtərɪŋ/" data-pos="adj." data-def="摇摇欲坠的" data-def-en="Shaking or moving unsteadily, often used figuratively to describe a position or situation that is unstable.">tottering</span> premiership on Monday, Sir Keir said "incremental change won't cut it" as he promised to "face up to the big challenges" the country faced.</span></p>
+        <p class="cn">在周一旨在稳定摇摇欲坠的首相职位的演讲中，基尔爵士表示“渐进式变革行不通”，并承诺“直面国家面临的重大挑战”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="25">But it was not enough to win over Phillips, who resigned as safeguarding minister.</span></p>
+        <p class="cn">但这不足以赢得菲利普斯的支持，她辞去了保护大臣一职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="26">In her letter , Phillips said "real change" in her role "usually came from threats made by me in light of catastrophic mistakes".</span></p>
+        <p class="cn">菲利普斯在辞职信中说，她角色中的“真正变革”“通常来自我在灾难性错误威胁下做出的努力”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="27">"I think you are a good man fundamentally, who cares about the right things however I have seen first-hand how that is not enough," Phillips said.</span></p>
+        <p class="cn">菲利普斯说：“我认为你本质上是个好人，关心正确的事情，但我亲眼目睹这还不够。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="28">"The desire not to have an argument means we rarely make an argument, leaving opportunities for progress stalled and delayed."</span></p>
+        <p class="cn">“不愿争论意味着我们很少提出论点，导致进步机会停滞和延迟。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="29">Signing off her letter, Phillips said: "I want a Labour government to work and I will strive as I always have for its success and popularity, but I'm not seeing the change I think I, and the country expect, and so cannot continue to serve as a minister under the current leadership."</span></p>
+        <p class="cn">菲利普斯在信的结尾写道：“我希望工党政府能够运作，我将一如既往地为其成功和受欢迎而努力，但我没有看到我认为我和国家所期望的变化，因此无法在当前领导下继续担任大臣。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="30">Phillips' departure followed Miatta Fahnbulleh's resignation as minister for devolution, faith and communities.</span></p>
+        <p class="cn">菲利普斯离职之前，米娅塔·法恩布勒（Miatta Fahnbulleh）辞去了权力下放、信仰和社区大臣一职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="31">She told the prime minister "to do the right thing for the country and the party and set a timetable for an orderly transition".</span></p>
+        <p class="cn">她告诉首相“为国家 and 政党做正确的事，为有序过渡制定时间表”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="32">Alex Davies-Jones also resigned as minister for victims and violence against women and girls.</span></p>
+        <p class="cn">亚历克斯·戴维斯-琼斯（Alex Davies-Jones）也辞去了受害者及暴力侵害妇女和女童事务大臣一职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="33">She called for "bold, radical action" and similarly urged Sir Keir to set out a timetable for his departure.</span></p>
+        <p class="cn">她呼吁采取“大胆、激进的行动”，并同样敦促基尔爵士制定离职时间表。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="34">Zubir Ahmed was the fourth minister to quit on Tuesday, telling Sir Keir his resignation letter that the public had "irretrievably lost confidence in you as prime minister" and "continuation in office is wholly untenable".</span></p>
+        <p class="cn">祖贝尔·艾哈迈德是周二第四位辞职的大臣，他在辞职信中告诉基尔爵士，公众“已经不可挽回地对你作为首相失去了信心”，并且“继续任职完全站不住脚”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="35">Nesil Caliskan, Natalie Fleet, Catherine Atkinson and Preet Kaur Gill have been appointed as government ministers to replace those who resigned, while Gen Kitchen, Deirdre Costigan and Shaun Davies have been appointed as Labour whips.</span></p>
+        <p class="cn">内西尔·卡利斯坎（Nesil Caliskan）、娜塔莉·弗利特（Natalie Fleet）、凯瑟琳·阿特金森（Catherine Atkinson）和普里特·考尔·吉尔（Preet Kaur Gill）被任命为政府大臣以接替辞职者，而吉恩·基钦（Gen Kitchen）、迪尔德丽·科斯蒂根（Deirdre Costigan）和肖恩·戴维斯（Shaun Davies）被任命为工党党鞭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="36">Deputy Prime Minister David Lammy said Sir Keir had his "full support", as he urged colleagues calling for him to resign to "step back".</span></p>
+        <p class="cn">副首相大卫·拉米（David Lammy）表示，他“全力支持”基尔爵士，并敦促呼吁他辞职的同事“退一步”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="37">"No one seems to have the names to stand up against Keir Starmer, and for those who are suggesting that he should stand down, they should say which candidate would be better," Lammy said.</span></p>
+        <p class="cn">拉米说：“似乎没有人有名字站出来反对基尔·斯塔默，对于那些建议他下台的人，他们应该说出哪个候选人更好。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="38">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的《政治要闻》时事通讯，了解威斯敏斯特内外的运作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">oust</span>
+        <button class="kw-speak-btn" data-word="oust" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/aʊst/ v.</span>
+      </div>
+      <p class="kw-def">驱逐；罢黜</p>
+      <p class="kw-def-en">To remove someone from a position of power or authority.</p>
+      <p class="kw-ctx">&ldquo;as his government faces an attempt by Labour MPs to oust him from the top job.&rdquo;</p>
+      <p class="kw-ctx-cn">因为他的政府面临工党议员试图将他从最高职位上赶下台的企图。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">revolt</span>
+        <button class="kw-speak-btn" data-word="revolt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈvoʊlt/ n.</span>
+      </div>
+      <p class="kw-def">反抗；叛乱</p>
+      <p class="kw-def-en">A refusal to accept authority or a rebellion against a government or leader.</p>
+      <p class="kw-ctx">&ldquo;But the prime minister's authority has been weakened by the Labour revolt, which came after a dire set of election results last week.&rdquo;</p>
+      <p class="kw-ctx-cn">但首相的权威因工党的反抗而被削弱，这是在上一周一系列糟糕的选举结果之后发生的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">turmoil</span>
+        <button class="kw-speak-btn" data-word="turmoil" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɜːrmɔɪl/ n.</span>
+      </div>
+      <p class="kw-def">混乱；动荡</p>
+      <p class="kw-def-en">A state of great disturbance, confusion, or uncertainty.</p>
+      <p class="kw-ctx">&ldquo;The resignations and turmoil in Downing Street come as Sir Keir's government is due to set out its legislative agenda in the King's Speech.&rdquo;</p>
+      <p class="kw-ctx-cn">唐宁街的辞职和动荡发生在基尔爵士的政府即将在国王演讲中阐述其立法议程之际。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">legislative</span>
+        <button class="kw-speak-btn" data-word="legislative" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈledʒɪsleɪtɪv/ adj.</span>
+      </div>
+      <p class="kw-def">立法的</p>
+      <p class="kw-def-en">Relating to the making of laws.</p>
+      <p class="kw-ctx">&ldquo;The resignations and turmoil in Downing Street come as Sir Keir's government is due to set out its legislative agenda in the King's Speech.&rdquo;</p>
+      <p class="kw-ctx-cn">唐宁街的辞职和动荡发生在基尔爵士的政府即将在国王演讲中阐述其立法议程之际。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">defy</span>
+        <button class="kw-speak-btn" data-word="defy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈfaɪ/ v.</span>
+      </div>
+      <p class="kw-def">违抗；蔑视</p>
+      <p class="kw-def-en">To openly resist or refuse to obey someone or something.</p>
+      <p class="kw-ctx">&ldquo;The prime minister earlier defied calls to depart No 10, telling his cabinet the country 'expects us to get on with governing' and pointing out that a formal leadership challenge had not been triggered.&rdquo;</p>
+      <p class="kw-ctx-cn">首相早些时候无视了离开唐宁街10号的呼吁，告诉内阁国家“期望我们继续执政”，并指出正式的领导权挑战尚未触发。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incumbent</span>
+        <button class="kw-speak-btn" data-word="incumbent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkʌmbənt/ n.</span>
+      </div>
+      <p class="kw-def">现任者</p>
+      <p class="kw-def-en">The person currently holding a particular office or position.</p>
+      <p class="kw-ctx">&ldquo;A challenger wishing to oust an incumbent leader must be supported by 20% of Labour MPs, meaning 81 would need to support a challenger to formally start the process.&rdquo;</p>
+      <p class="kw-ctx-cn">想要罢免现任领导人的挑战者必须得到20%的工党议员支持，这意味着需要81人支持挑战者才能正式启动这一过程。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sympathetic</span>
+        <button class="kw-speak-btn" data-word="sympathetic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌsɪmpəˈθetɪk/ adj.</span>
+      </div>
+      <p class="kw-def">同情的；支持的</p>
+      <p class="kw-def-en">Showing approval or support for someone or something.</p>
+      <p class="kw-ctx">&ldquo;Some of Streeting's backers had written letters suggesting Sir Keir had lost the support of the country, and ministers seen as sympathetic to the health secretary have resigned.&rdquo;</p>
+      <p class="kw-ctx-cn">斯特里廷的一些支持者写信暗示基尔爵士失去了国家的支持，被视为同情卫生大臣的部长们已经辞职。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tottering</span>
+        <button class="kw-speak-btn" data-word="tottering" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɒtərɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">摇摇欲坠的</p>
+      <p class="kw-def-en">Shaking or moving unsteadily, often used figuratively to describe a position or situation that is unstable.</p>
+      <p class="kw-ctx">&ldquo;In a speech aimed at steadying his tottering premiership on Monday, Sir Keir said 'incremental change won't cut it' as he promised to 'face up to the big challenges' the country faced.&rdquo;</p>
+      <p class="kw-ctx-cn">在周一旨在稳定他摇摇欲坠的首相职位的演讲中，基尔爵士表示“渐进式变革行不通”，并承诺“直面国家面临的重大挑战”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Prime Minister Sir Keir Starmer is to meet Health Secretary Wes Streeting, one of his potential leadership challengers, on Wednesday morning, as his government faces an attempt by Labour MPs to oust him from the top job.", "start_ms": 0, "end_ms": 14784, "paragraph_index": 0}, {"index": 1, "text": "The meeting comes after four ministers resigned, including prominent MP Jess Phillips who quit as safeguarding minister, and Streeting ally Zubir Ahmed.", "start_ms": 14784, "end_ms": 25680, "paragraph_index": 1}, {"index": 2, "text": "More than 80 Labour MPs also urged Sir Keir to stand down, exposing deep divisions over the prime minister's future.", "start_ms": 25680, "end_ms": 34776, "paragraph_index": 2}, {"index": 3, "text": "Sir Keir vowed to get on with governing on Tuesday, while his cabinet allies and more than 100 MPs rallied behind the prime minister, warning against a leadership contest.", "start_ms": 34776, "end_ms": 47280, "paragraph_index": 3}, {"index": 4, "text": "But the prime minister's authority has been weakened by the Labour revolt, which came after a dire set of election results last week.", "start_ms": 47280, "end_ms": 56136, "paragraph_index": 4}, {"index": 5, "text": "The resignations and turmoil in Downing Street come as Sir Keir's government is due to set out its legislative agenda in the King's Speech .", "start_ms": 56136, "end_ms": 65376, "paragraph_index": 5}, {"index": 6, "text": "Streeting is due to meet Sir Keir in Number 10 Downing Street ahead of the event, which marks the start of a new parliamentary session.", "start_ms": 65376, "end_ms": 74664, "paragraph_index": 6}, {"index": 7, "text": "The BBC has been told Streeting will not be saying anything that might distract from the King's Speech following the meeting.", "start_ms": 74664, "end_ms": 82512, "paragraph_index": 7}, {"index": 8, "text": "The prime minister earlier defied calls to depart No 10, telling his cabinet the country \"expects us to get on with governing\" and pointing out that a formal leadership challenge had not been triggered.", "start_ms": 82512, "end_ms": 95184, "paragraph_index": 8}, {"index": 9, "text": "A leadership election can only be triggered if the leader resigns, or if Labour MPs launch a challenge when there is no vacancy.", "start_ms": 95184, "end_ms": 104112, "paragraph_index": 9}, {"index": 10, "text": "A challenger wishing to oust an incumbent leader must be supported by 20% of Labour MPs, meaning 81 would need to support a challenger to formally start the process.", "start_ms": 104112, "end_ms": 116472, "paragraph_index": 10}, {"index": 11, "text": "Streeting has previously been open about his leadership ambitions and has plenty of support from Labour MPs, particularly those on the centre and the right of the party.", "start_ms": 116472, "end_ms": 127776, "paragraph_index": 11}, {"index": 12, "text": "The BBC has been told the prime minister's allies are convinced the health secretary will not be able to produce a list of 81 supporters in his meeting on Wednesday.", "start_ms": 127776, "end_ms": 138936, "paragraph_index": 12}, {"index": 13, "text": "Some of Streeting's backers had written letters suggesting Sir Keir had lost the support of the country, and ministers seen as sympathetic to the health secretary have resigned.", "start_ms": 138936, "end_ms": 150264, "paragraph_index": 13}, {"index": 14, "text": "But Sir Keir has defied the pressure to go and some MPs on the party's right, who would have been assumed to be Streeting supporters, have signed the statement that says now is not the time for a leadership contest.", "start_ms": 150264, "end_ms": 163704, "paragraph_index": 14}, {"index": 15, "text": "Even if Streeting does lack sufficient support, other challenges remain.", "start_ms": 163704, "end_ms": 169272, "paragraph_index": 15}, {"index": 16, "text": "The prime minister has pulled out of a meeting with the unions which help fund the Labour Party.", "start_ms": 169272, "end_ms": 175368, "paragraph_index": 16}, {"index": 17, "text": "Those unions are expected to issue a statement declaring that Sir Keir should not lead the party into the next general election.", "start_ms": 175368, "end_ms": 183696, "paragraph_index": 17}, {"index": 18, "text": "The uncertainty over Sir Keir's job security is an awkward backdrop to the King's Speech.", "start_ms": 183696, "end_ms": 190416, "paragraph_index": 18}, {"index": 19, "text": "The King's Speech is expected to include more than 35 bills and draft bills, including immigration, NHS and police reforms, along with a route to potentially nationalising British Steel.", "start_ms": 190416, "end_ms": 204288, "paragraph_index": 19}, {"index": 20, "text": "But whether Sir Keir remains prime minister long enough to deliver the legislation promised is an open question in Westminster.", "start_ms": 204288, "end_ms": 212976, "paragraph_index": 20}, {"index": 21, "text": "A day of political drama on Tuesday started with the cabinet meeting at which Sir Keir pushed aside calls for him to resign.", "start_ms": 212976, "end_ms": 221424, "paragraph_index": 21}, {"index": 22, "text": "A government source told the BBC that at the cabinet meeting Sir Keir told colleagues he would not discuss the election results or his leadership, and would only speak to cabinet ministers about those topics \"individually\".", "start_ms": 221424, "end_ms": 235512, "paragraph_index": 22}, {"index": 23, "text": "The BBC understands several cabinet ministers tried to talk to Sir Keir about his leadership after the cabinet meeting but he declined to speak to them.", "start_ms": 235512, "end_ms": 245448, "paragraph_index": 23}, {"index": 24, "text": "In a speech aimed at steadying his tottering premiership on Monday, Sir Keir said \"incremental change won't cut it\" as he promised to \"face up to the big challenges\" the country faced.", "start_ms": 245448, "end_ms": 257352, "paragraph_index": 24}, {"index": 25, "text": "But it was not enough to win over Phillips, who resigned as safeguarding minister.", "start_ms": 257352, "end_ms": 263280, "paragraph_index": 25}, {"index": 26, "text": "In her letter , Phillips said \"real change\" in her role \"usually came from threats made by me in light of catastrophic mistakes\".", "start_ms": 263280, "end_ms": 271968, "paragraph_index": 26}, {"index": 27, "text": "\"I think you are a good man fundamentally, who cares about the right things however I have seen first-hand how that is not enough,\" Phillips said.", "start_ms": 271968, "end_ms": 281352, "paragraph_index": 27}, {"index": 28, "text": "\"The desire not to have an argument means we rarely make an argument, leaving opportunities for progress stalled and delayed.\"", "start_ms": 281352, "end_ms": 290040, "paragraph_index": 28}, {"index": 29, "text": "Signing off her letter, Phillips said: \"I want a Labour government to work and I will strive as I always have for its success and popularity, but I'm not seeing the change I think I, and the country expect, and so cannot continue to serve as a minister under the current leadership.\"", "start_ms": 290040, "end_ms": 308088, "paragraph_index": 29}, {"index": 30, "text": "Phillips' departure followed Miatta Fahnbulleh's resignation as minister for devolution, faith and communities.", "start_ms": 308088, "end_ms": 316440, "paragraph_index": 30}, {"index": 31, "text": "She told the prime minister \"to do the right thing for the country and the party and set a timetable for an orderly transition\".", "start_ms": 316440, "end_ms": 324648, "paragraph_index": 31}, {"index": 32, "text": "Alex Davies-Jones also resigned as minister for victims and violence against women and girls.", "start_ms": 324648, "end_ms": 331656, "paragraph_index": 32}, {"index": 33, "text": "She called for \"bold, radical action\" and similarly urged Sir Keir to set out a timetable for his departure.", "start_ms": 331656, "end_ms": 339744, "paragraph_index": 33}, {"index": 34, "text": "Zubir Ahmed was the fourth minister to quit on Tuesday, telling Sir Keir his resignation letter that the public had \"irretrievably lost confidence in you as prime minister\" and \"continuation in office is wholly untenable\".", "start_ms": 339744, "end_ms": 354576, "paragraph_index": 34}, {"index": 35, "text": "Nesil Caliskan, Natalie Fleet, Catherine Atkinson and Preet Kaur Gill have been appointed as government ministers to replace those who resigned, while Gen Kitchen, Deirdre Costigan and Shaun Davies have been appointed as Labour whips.", "start_ms": 354576, "end_ms": 370272, "paragraph_index": 35}, {"index": 36, "text": "Deputy Prime Minister David Lammy said Sir Keir had his \"full support\", as he urged colleagues calling for him to resign to \"step back\".", "start_ms": 370272, "end_ms": 379872, "paragraph_index": 36}, {"index": 37, "text": "\"No one seems to have the names to stand up against Keir Starmer, and for those who are suggesting that he should stand down, they should say which candidate would be better,\" Lammy said.", "start_ms": 379872, "end_ms": 391608, "paragraph_index": 37}, {"index": 38, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 391608, "end_ms": 399048, "paragraph_index": 38}], "total_duration_ms": 399048};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "sir": "爵士", "keir": "基尔", "minister": "部长", "of": "的", "as": "作为", "for": "为了", "his": "他的", "prime": "首相", "in": "在", "is": "是", "on": "在", "not": "不", "leadership": "领导力", "labour": "工党", "have": "有", "been": "已经", "that": "那个", "streeting": "街头活动", "an": "一个", "mps": "议员", "meeting": "会议", "cabinet": "内阁", "has": "有", "who": "谁", "with": "与", "but": "但是", "be": "是", "said": "说", "government": "政府", "ministers": "部长", "resigned": "辞职的", "which": "哪个", "speech": "演讲", "told": "告诉", "country": "国家", "had": "有", "would": "将", "support": "支持", "those": "那些", "he": "他", "by": "被", "from": "来自", "set": "设定", "election": "选举", "out": "出来", "king's": "国王的", "bbc": "英国广播公司", "about": "关于", "right": "正确", "party": "政党", "are": "是", "up": "向上", "health": "健康", "secretary": "秘书", "him": "他", "after": "之后", "more": "更多", "than": "比", "urged": "敦促", "stand": "立场", "over": "超过", "minister's": "部长的", "tuesday": "星期二", "against": "反对", "will": "将", "no": "没有", "if": "如果", "should": "应该", "enough": "足够", "at": "在", "change": "改变", "her": "她的", "starmer": "斯塔默", "meet": "会见", "one": "一个", "wednesday": "星期三", "job": "工作", "including": "包括", "quit": "辞职", "also": "也", "down": "下来", "get": "得到", "while": "而", "allies": "盟友", "contest": "竞争", "came": "到来", "results": "结果", "downing": "唐宁", "street": "街", "keir's": "基尔的", "due": "应得", "its": "它的", "start": "开始", "calls": "呼吁", "telling": "告诉", "challenge": "挑战", "only": "只有", "leader": "领导人", "or": "或者", "challenger": "挑战者", "open": "开放", "supporters": "支持者", "some": "一些", "suggesting": "暗示", "lost": "失去", "seen": "被视为", "statement": "声明", "challenges": "挑战", "unions": "工会", "expected": "预期", "promised": "承诺", "westminster": "威斯敏斯特", "resign": "辞职", "colleagues": "同事", "it": "它", "was": "是", "think": "认为", "you": "你", "argument": "争论", "departure": "离职", "resignation": "辞职", "she": "她", "timetable": "时间表", "appointed": "任命", "wes": "我们", "potential": "潜在", "morning": "上午", "faces": "面临", "attempt": "企图", "top": "顶级的", "comes": "到来", "four": "四", "prominent": "著名的", "mp": "议员", "deep": "深切", "future": "未来", "rallied": "团结起来", "behind": "在...后面", "warning": "警告", "dire": "严峻的", "last": "最后", "week": "周", "come": "到来", "agenda": "议程", "number": "数量", "ahead": "提前", "event": "事件", "new": "新的", "parliamentary": "议会", "session": "会议", "saying": "说", "anything": "任何事", "might": "可能", "following": "随后", "earlier": "较早", "expects": "期望", "us": "我们", "pointing": "指出", "formal": "正式的", "can": "可以", "launch": "启动", "when": "当", "there": "那里", "must": "必须", "meaning": "意义", "need": "需要", "formally": "正式", "process": "过程", "previously": "此前", "ambitions": "野心", "plenty": "大量", "particularly": "尤其", "centre": "中心", "able": "能够", "produce": "产生", "list": "名单", "backers": "支持者", "written": "书面", "pressure": "压力", "go": "去", "party's": "党的", "says": "表示", "now": "现在", "time": "时间", "even": "甚至", "does": "做", "lack": "缺乏", "other": "其他", "remain": "仍然", "help": "帮助", "issue": "问题", "lead": "导致", "into": "进入", "next": "下一个", "general": "总", "uncertainty": "不确定性", "security": "安全", "backdrop": "背景", "include": "包括", "immigration": "移民", "police": "警方", "along": "一起", "route": "航线", "potentially": "可能地", "british": "英国的", "whether": "是否", "remains": "仍然", "long": "长久", "deliver": "发表", "legislation": "立法", "question": "问题", "day": "天", "political": "政治的", "started": "开始", "pushed": "推动", "aside": "抛开", "source": "来源", "discuss": "讨论", "understands": "理解", "several": "数个", "tried": "试图", "talk": "会谈", "declined": "拒绝", "them": "他们", "premiership": "首相任期", "monday": "星期一", "won't": "不会", "cut": "削减", "face": "面临", "big": "大的", "faced": "面对", "win": "赢得", "real": "真正的", "role": "角色", "usually": "通常", "threats": "威胁", "made": "做出", "me": "我", "mistakes": "错误", "good": "良好", "man": "男子", "things": "事情", "however": "然而", "how": "如何", "desire": "渴望", "means": "意味着", "we": "我们", "rarely": "很少", "make": "使", "leaving": "离开", "progress": "进展", "stalled": "停滞的", "delayed": "延迟的", "off": "离开", "want": "想要", "work": "工作", "always": "总是", "success": "成功", "i'm": "我是", "seeing": "看到", "expect": "期望", "so": "所以", "cannot": "不能", "continue": "继续", "under": "在...之下", "current": "当前的", "followed": "遵循", "communities": "社区", "do": "做", "thing": "事情", "victims": "受害者", "violence": "暴力", "women": "女性", "called": "称为", "bold": "大胆的", "action": "行动", "public": "公众", "confidence": "信任", "continuation": "继续", "office": "办公室", "wholly": "完全", "catherine": "凯瑟琳", "replace": "取代", "davies": "戴维斯", "deputy": "副手", "david": "大卫", "full": "完整", "calling": "呼吁", "step": "步骤", "back": "后退", "seems": "似乎", "names": "名字", "they": "它们", "say": "说", "candidate": "候选人", "better": "更好的", "sign": "签署", "our": "我们的", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "beyond": "超出", "phillips": "菲利普斯", "letter": "信件", "safeguarding": "保护", "zubir": "祖比尔", "ahmed": "艾哈迈德", "governing": "治理", "defied": "违抗", "triggered": "引发", "bills": "法案", "speak": "发言", "lammy": "拉米", "challengers": "挑战者", "jess": "杰丝", "ally": "盟友", "exposing": "揭露", "divisions": "分歧", "vowed": "发誓", "authority": "权威", "weakened": "削弱", "resignations": "辞职", "marks": "标志", "distract": "分散注意力", "depart": "离开", "resigns": "辞职", "vacancy": "空缺", "wishing": "希望", "supported": "支持", "convinced": "确信", "streeting's": "斯特里廷的", "letters": "信件", "assumed": "假设", "signed": "签署", "sufficient": "足够的", "pulled": "撤回", "fund": "资金", "declaring": "宣布", "awkward": "尴尬的", "draft": "草案", "nhs": "英国国家医疗服务体系", "reforms": "改革", "nationalising": "国有化", "steel": "钢铁", "drama": "戏剧", "topics": "话题", "individually": "个别地", "aimed": "旨在", "steadying": "稳定", "incremental": "渐进的", "light": "轻的", "catastrophic": "灾难性的", "fundamentally": "根本上", "cares": "关心", "first-hand": "第一手的", "opportunities": "机会", "signing": "签署", "strive": "努力", "popularity": "受欢迎程度", "serve": "服务", "miatta": "米娅塔", "fahnbulleh's": "法恩布勒的", "devolution": "权力下放", "faith": "信仰", "orderly": "有序的", "transition": "过渡", "alex": "亚历克斯", "davies-jones": "戴维斯-琼斯", "girls": "女孩", "radical": "激进的", "similarly": "类似地", "fourth": "第四", "irretrievably": "不可挽回地", "untenable": "站不住脚的", "nesil": "内西尔", "caliskan": "卡利斯坎", "natalie": "娜塔莉", "fleet": "弗利特", "atkinson": "阿特金森", "preet": "普里特", "kaur": "考尔", "gill": "吉尔", "gen": "根", "kitchen": "基钦", "deirdre": "迪尔德丽", "costigan": "科斯蒂根", "shaun": "肖恩", "whips": "党鞭"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
