@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-17</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/4840/live/a983c310-51d3-11f1-88a8-f9e787ff27f2.jpg" alt="Personal decision for Starmer on whether to fight leadership contest, minister says" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Personal decision for Starmer on whether to fight leadership contest, minister says</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/clypg60k25ro?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player hidden">
+      <audio id="article-audio" src="" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">It is a "personal decision" for Sir Keir Starmer whether he chooses to fight any potential leadership <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span>, Culture Secretary Lisa Nandy has said.</span></p>
+        <p class="cn">文化大臣丽莎·南迪表示，基尔·斯塔默爵士是否选择参加任何潜在的领导权竞争，这是他个人的决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">She told the BBC's Sunday with Laura Kuenssberg that Sir Keir had "shown before that he's up for a fight" and "I wouldn't write off the prime minister".</span></p>
+        <p class="cn">她告诉BBC的《劳拉·昆斯伯格周日秀》节目，基尔爵士“此前已表现出他勇于战斗”，并且“我不会看低首相”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The PM has <span class="keyword" data-word="defied" data-phonetic="/dɪˈfaɪd/" data-pos="v." data-def="公然反抗，违抗" data-def-en="To resist or challenge openly.">defied</span> calls to step down in recent days, after nearly 90 of his own MPs urged him to go and five ministers resigned.</span></p>
+        <p class="cn">近90名本党议员敦促首相下台，五名大臣辞职后，首相近日拒绝了辞职的呼声。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Nandy also <span class="keyword" data-word="voiced" data-phonetic="/vɔɪst/" data-pos="v." data-def="表达，说出" data-def-en="To express or utter something.">voiced</span> her support for Andy Burnham to be "back in Parliament at the heart of power".</span> <span class="sentence" data-sentence-index="4">The Greater Manchester mayor is seeking to stand for Labour in the Makerfield by-election and is widely expected to launch a leadership challenge if he wins.</span></p>
+        <p class="cn">南迪还表示支持安迪·伯纳姆“重返议会，处于权力核心”。这位大曼彻斯特市长正寻求代表工党参加梅克菲尔德补选，外界普遍预计如果他获胜，将发起领导权挑战。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">On Saturday Wes Streeting confirmed he would stand in any future leadership race , after he resigned as health secretary earlier this week.</span></p>
+        <p class="cn">周六，韦斯·斯特里廷确认他将参加未来的任何领导权竞选，此前他于本周早些时候辞去了卫生大臣职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sir Keir would automatically be on the ballot paper if he chose to <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span> any leadership election, and the prime minister has said he would stand if one took place.</span></p>
+        <p class="cn">如果基尔爵士选择参加任何领导权选举，他将自动出现在选票上，首相已表示如果举行选举，他将参选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Asked if she thought Sir Keir should be replaced as Labour leader, Nandy - who represents the Greater Manchester constituency of Wigan and is an ally of Burnham - told the BBC: "No I don't.</span> <span class="sentence" data-sentence-index="8">If I did I wouldn't be in his cabinet."</span></p>
+        <p class="cn">当被问及她是否认为基尔爵士应被取代工党领袖时，代表大曼彻斯特威根选区且是伯纳姆盟友的南迪告诉BBC：“不，我不这么认为。如果我认为，我就不会在他的内阁里了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">"I think that we were elected to bring an end to the chaos," she said.</span></p>
+        <p class="cn">她说：“我认为我们当选是为了结束混乱。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Pressed over whether she thought Sir Keir should run in any leadership <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span>, the culture secretary said: "He said himself that he will."</span></p>
+        <p class="cn">当被追问她是否认为基尔爵士应参加任何领导权竞选时，这位文化大臣说：“他自己说过他会。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">She added: "It's a very personal decision for him.</span></p>
+        <p class="cn">她补充道：“这对他来说是一个非常个人的决定。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">"I haven't spoken to him this weekend but I've spoken to him several times over the last week and obviously he's shown before that he's up for a fight."</span></p>
+        <p class="cn">“这个周末我没有和他谈过，但过去一周我和他谈过几次，显然他之前已表现出他勇于战斗。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">She pointed to Sir Keir's <span class="keyword" data-word="landslide" data-phonetic="/ˈlændslaɪd/" data-pos="n." data-def="压倒性胜利" data-def-en="An overwhelming majority of votes in an election.">landslide</span> general election victory in 2024, after sceptics said he would not be able to return Labour to power in just one term.</span></p>
+        <p class="cn">她指出，在怀疑者称基尔爵士无法在一个任期内让工党重新执政后，他在2024年大选中取得了压倒性胜利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">But Nandy said last week's <span class="keyword" data-word="disastrous" data-phonetic="/dɪˈzɑːstrəs/" data-pos="adj." data-def="灾难性的，极糟糕的" data-def-en="Causing great damage or suffering; catastrophic.">disastrous</span> set of election results for Labour showed "people feel they haven't seen enough fight from us".</span></p>
+        <p class="cn">但南迪表示，上周工党灾难性的选举结果表明“人们觉得他们没有看到我们足够的斗争”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">She added: "We have fought for people but the message is loud and clear, they want to see us on the pitch fighting harder, speaking louder and doing more."</span></p>
+        <p class="cn">她补充道：“我们为人民而战，但信息响亮而清晰：他们希望看到我们在场上更努力地战斗，更大声地说话，做得更多。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Nandy, who was out campaigning alongside Burnham in Makerfield on Saturday, said: "We were hearing that loud and clear.</span></p>
+        <p class="cn">周六与伯纳姆一起在梅克菲尔德拉票的南迪说：“我们听到了这个响亮而清晰的信息。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">"People want that and they want voices from our part of the country and from all of those parts of the country that have been written off for too long to be heard much louder and clearer at the heart of government."</span></p>
+        <p class="cn">“人们希望这样，他们希望来自我们国家这部分以及所有那些被忽视太久的地区的声音，在政府核心被更响亮、更清晰地听到。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">Nandy – who ran against Sir Keir to become Labour leader in 2020 - <span class="keyword" data-word="ruled out" data-phonetic="/ruːld aʊt/" data-pos="v. phr." data-def="排除，拒绝考虑" data-def-en="To exclude or decide not to consider something.">ruled out</span> standing in any future <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span> herself.</span></p>
+        <p class="cn">南迪——她在2020年与基尔爵士竞争工党领袖——排除了自己参加任何未来竞选的可能性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">On Friday, Labour's ruling National Executive Committee, which had blocked Burnham's previous attempt to stand in a by-election in January, <span class="keyword" data-word="cleared" data-phonetic="/klɪəd/" data-pos="v." data-def="批准，允许" data-def-en="To give official permission or approval.">cleared</span> him to seek selection as Labour's candidate in Makerfield .</span></p>
+        <p class="cn">周五，工党执政的国家执行委员会——该委员会此前在1月阻止了伯纳姆参加补选的尝试——批准他寻求成为梅克菲尔德工党候选人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">It came after Labour MP Josh Simons said he would resign to make way for Burnham, while Sir Keir's allies indicated the prime minister would not seek to block his return to Parliament.</span></p>
+        <p class="cn">此前，工党议员乔什·西蒙斯表示他将辞职为伯纳姆让路，而基尔爵士的盟友表示首相不会试图阻止他重返议会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Nandy admitted it would be a "tough fight" for Burnham to win in Makerfield, with Reform UK performing strongly in last week's council elections in the area.</span></p>
+        <p class="cn">南迪承认，伯纳姆在梅克菲尔德获胜将是一场“艰苦的战斗”，因为改革党在上周该地区的地方选举中表现强劲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">Labour won the constituency with a majority of 5,399 votes in the 2024 general election, but Nigel Farage's party has been consistently leading in national opinion polls since spring last year.</span></p>
+        <p class="cn">工党在2024年大选中以5399票的多数优势赢得该选区，但自去年春季以来，奈杰尔·法拉奇的政党在全国民调中一直领先。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">There are no precise figures for how the parties performed in Makerfield during the local elections because the ward boundaries do not fully align with the constituency boundaries - but Reform UK won roughly 50% of the vote share in the area.</span></p>
+        <p class="cn">由于选区边界与选区边界不完全一致，没有精确数字显示各党在梅克菲尔德地方选举中的表现——但改革党在该地区获得了约50%的选票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">However, Burnham's backers argue this does not account for the strong personal support he has in Greater Manchester, where he has won three successive landslides in mayoral elections.</span></p>
+        <p class="cn">然而，伯纳姆的支持者认为，这并未考虑到他在大曼彻斯特拥有的强大个人支持，他在市长选举中连续三次取得压倒性胜利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">Nandy said: "Because of Andy's record as mayor, people who didn't vote for [Labour] last week were saying that they would vote for us again."</span></p>
+        <p class="cn">南迪说：“由于安迪作为市长的记录，上周没有投票给工党的人说他们会再次投票给我们。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">She added: "That's why I make no apology for saying that I think he is a really important voice that needs to be heard loud and clear at the centre of Westminster."</span></p>
+        <p class="cn">她补充道：“这就是为什么我毫不抱歉地说，我认为他是一个非常重要的声音，需要在威斯敏斯特中心被响亮而清晰地听到。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">Simons told the programme it would be "<span class="keyword" data-word="existential" data-phonetic="/ˌeɡzɪˈstenʃəl/" data-pos="adj." data-def="关于存在的，生死攸关的" data-def-en="Relating to existence, especially in a critical or fundamental way.">existential</span>" for the Labour Party if it lost the Makerfield by-election.</span></p>
+        <p class="cn">西蒙斯告诉该节目，如果工党失去梅克菲尔德补选，那将是“生死攸关”的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">He said the <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span> was "about a fundamental question for my party, which is can they win back the trust of working-class people".</span></p>
+        <p class="cn">他说，这场竞选“关乎我党的一个根本问题，即他们能否赢回工人阶级的信任”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">"If the answer to that question is yes, then I think we can get to a moment of unifying and coming together from the different traditions across my party," he added.</span></p>
+        <p class="cn">他补充道：“如果这个问题的答案是肯定的，那么我认为我们可以迎来一个团结的时刻，将我党不同传统的人凝聚在一起。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">However, Conservative leader Kemi Badenoch said: "It doesn't matter whether it's Andy Burnham or Keir Starmer, the problem is the Labour Party."</span></p>
+        <p class="cn">然而，保守党领袖凯米·巴德诺赫表示：“无论是安迪·伯纳姆还是基尔·斯塔默，问题在于工党本身。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">The UK's relationship with the European Union looks set to become an issue in any future leadership <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="A competition or struggle for power or leadership.">contest</span>.</span></p>
+        <p class="cn">英国与欧盟的关系似乎将成为未来任何领导权竞选中的一个议题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">In a speech on Saturday, Streeting said leaving the EU had been a "catastrophic mistake" and the UK should "one day" rejoin the bloc.</span></p>
+        <p class="cn">在周六的一次演讲中，斯特里廷表示脱离欧盟是一个“灾难性错误”，英国应该“有一天”重新加入欧盟。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">Burnham has also said there may be a case for rejoining the EU "in the long-term", but insisted he was "not advocating that in this by-election".</span></p>
+        <p class="cn">伯纳姆也表示“长期来看”可能有理由重新加入欧盟，但坚称他“在这次补选中不主张这一点”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="34">Asked about Streeting's comments, Nandy said that while she campaigned for Remain in the 2016 referendum, "if the answer to all of this was the European Union, then essentially we'd be saying to people what was going on in 2015 in towns like Wigan was absolutely fine".</span></p>
+        <p class="cn">当被问及斯特里廷的言论时，南迪表示，虽然她在2016年公投中支持留欧，“但如果所有问题的答案都是欧盟，那么本质上我们就是在告诉人们，2015年像威根这样的城镇发生的事情完全没问题”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="35">"Well, I can tell you that it wasn't, that people's living standards had been falling, people's high streets had been falling apart, people's kids had had to get out to get on for some time, and that's to do with deindustrialisation and the failure of governments to address it," she said.</span></p>
+        <p class="cn">她说：“嗯，我可以告诉你并非如此，人们的生活水平一直在下降，人们的高街一直在崩溃，人们的孩子们不得不离开家乡才能发展，这已经持续了一段时间，这与去工业化以及政府未能解决它有关。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="36">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的《政治要闻》时事通讯，了解威斯敏斯特内外的运作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">contest</span>
+        <button class="kw-speak-btn" data-word="contest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒntest/ n.</span>
+      </div>
+      <p class="kw-def">竞争，比赛</p>
+      <p class="kw-def-en">A competition or struggle for power or leadership.</p>
+      <p class="kw-ctx">&ldquo;It is a 'personal decision' for Sir Keir Starmer whether he chooses to fight any potential leadership contest, Culture Secretary Lisa Nandy has said.&rdquo;</p>
+      <p class="kw-ctx-cn">文化大臣丽莎·南迪表示，基尔·斯塔默爵士是否选择参加任何潜在的领导权竞争，这是他个人的决定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">defied</span>
+        <button class="kw-speak-btn" data-word="defied" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈfaɪd/ v.</span>
+      </div>
+      <p class="kw-def">公然反抗，违抗</p>
+      <p class="kw-def-en">To resist or challenge openly.</p>
+      <p class="kw-ctx">&ldquo;The PM has defied calls to step down in recent days, after nearly 90 of his own MPs urged him to go and five ministers resigned.&rdquo;</p>
+      <p class="kw-ctx-cn">近几天，首相无视了下台的要求，此前近90名他自己的议员敦促他离职，五名部长辞职。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">voiced</span>
+        <button class="kw-speak-btn" data-word="voiced" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/vɔɪst/ v.</span>
+      </div>
+      <p class="kw-def">表达，说出</p>
+      <p class="kw-def-en">To express or utter something.</p>
+      <p class="kw-ctx">&ldquo;Nandy also voiced her support for Andy Burnham to be 'back in Parliament at the heart of power'.&rdquo;</p>
+      <p class="kw-ctx-cn">南迪还表达了对安迪·伯纳姆的支持，希望他“重返议会，处于权力核心”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">landslide</span>
+        <button class="kw-speak-btn" data-word="landslide" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlændslaɪd/ n.</span>
+      </div>
+      <p class="kw-def">压倒性胜利</p>
+      <p class="kw-def-en">An overwhelming majority of votes in an election.</p>
+      <p class="kw-ctx">&ldquo;She pointed to Sir Keir's landslide general election victory in 2024, after sceptics said he would not be able to return Labour to power in just one term.&rdquo;</p>
+      <p class="kw-ctx-cn">她提到了基尔爵士在2024年大选中取得的压倒性胜利，此前怀疑者称他无法在一个任期内让工党重新执政。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disastrous</span>
+        <button class="kw-speak-btn" data-word="disastrous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈzɑːstrəs/ adj.</span>
+      </div>
+      <p class="kw-def">灾难性的，极糟糕的</p>
+      <p class="kw-def-en">Causing great damage or suffering; catastrophic.</p>
+      <p class="kw-ctx">&ldquo;But Nandy said last week's disastrous set of election results for Labour showed 'people feel they haven't seen enough fight from us'.&rdquo;</p>
+      <p class="kw-ctx-cn">但南迪表示，上周工党一系列灾难性的选举结果显示，“人们觉得他们没有看到我们足够的斗争”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ruled out</span>
+        <button class="kw-speak-btn" data-word="ruled out" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ruːld aʊt/ v. phr.</span>
+      </div>
+      <p class="kw-def">排除，拒绝考虑</p>
+      <p class="kw-def-en">To exclude or decide not to consider something.</p>
+      <p class="kw-ctx">&ldquo;Nandy – who ran against Sir Keir to become Labour leader in 2020 - ruled out standing in any future contest herself.&rdquo;</p>
+      <p class="kw-ctx-cn">南迪——曾在2020年与基尔爵士竞争工党领袖——排除了自己参加任何未来竞选的可能性。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cleared</span>
+        <button class="kw-speak-btn" data-word="cleared" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/klɪəd/ v.</span>
+      </div>
+      <p class="kw-def">批准，允许</p>
+      <p class="kw-def-en">To give official permission or approval.</p>
+      <p class="kw-ctx">&ldquo;On Friday, Labour's ruling National Executive Committee, which had blocked Burnham's previous attempt to stand in a by-election in January, cleared him to seek selection as Labour's candidate in Makerfield.&rdquo;</p>
+      <p class="kw-ctx-cn">周五，工党执政的国家执行委员会——此前曾阻止伯纳姆在一月补选中参选——批准他寻求成为工党在梅克菲尔德的候选人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">existential</span>
+        <button class="kw-speak-btn" data-word="existential" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌeɡzɪˈstenʃəl/ adj.</span>
+      </div>
+      <p class="kw-def">关于存在的，生死攸关的</p>
+      <p class="kw-def-en">Relating to existence, especially in a critical or fundamental way.</p>
+      <p class="kw-ctx">&ldquo;Simons told the programme it would be 'existential' for the Labour Party if it lost the Makerfield by-election.&rdquo;</p>
+      <p class="kw-ctx-cn">西蒙斯告诉节目，如果工党输掉梅克菲尔德补选，那将是“生死攸关”的。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [], "total_duration_ms": 0};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "for": "为了", "and": "和", "of": "的", "he": "他", "said": "说", "that": "那个", "be": "是", "she": "她", "labour": "工党", "is": "是", "would": "将", "it": "它", "sir": "爵士", "if": "如果", "on": "在", "keir": "基尔", "has": "有", "with": "与", "had": "有", "burnham": "伯纳姆", "any": "任何", "leadership": "领导力", "makerfield": "梅克菲尔德", "but": "但是", "people": "人们", "was": "是", "fight": "斗争", "him": "他", "this": "这个", "last": "最后", "not": "不", "they": "它们", "been": "已经", "party": "政党", "up": "向上", "after": "之后", "stand": "立场", "by-election": "补选", "as": "作为", "election": "选举", "who": "谁", "we": "我们", "added": "补充", "from": "来自", "personal": "个人", "whether": "是否", "secretary": "秘书", "told": "告诉", "he's": "他是", "prime": "首相", "minister": "部长", "his": "他的", "at": "在", "greater": "更大的", "manchester": "曼彻斯特", "saturday": "星期六", "future": "未来", "week": "周", "one": "一个", "should": "应该", "leader": "领导人", "constituency": "选区", "an": "一个", "no": "没有", "think": "认为", "were": "是", "us": "我们", "clear": "明确", "want": "想要", "out": "出来", "uk": "英国", "elections": "选举", "won": "赢得", "vote": "投票", "saying": "说", "can": "可以", "get": "得到", "people's": "人民的", "decision": "决定", "starmer": "斯塔默", "shown": "表现出", "before": "之前", "off": "离开", "resigned": "辞职的", "also": "也", "support": "支持", "andy": "安迪", "back": "后退", "parliament": "议会", "heart": "核心", "power": "权力", "mayor": "市长", "streeting": "街头活动", "asked": "询问", "thought": "认为", "over": "超过", "it's": "它是", "haven't": "尚未", "spoken": "发言", "keir's": "基尔的", "general": "总", "return": "返回", "week's": "一周的", "set": "设定", "have": "有", "our": "我们的", "country": "国家", "all": "所有", "heard": "听到", "become": "成为", "labour's": "工党的", "national": "国家", "which": "哪个", "burnham's": "伯纳姆的", "seek": "寻求", "simons": "西蒙斯", "make": "使", "while": "而", "win": "赢得", "reform": "改革", "area": "区域", "there": "那里", "because": "因为", "do": "做", "however": "然而", "that's": "那是", "westminster": "威斯敏斯特", "about": "关于", "question": "问题", "my": "我的", "answer": "回答", "then": "然后", "european": "欧洲的", "union": "工会", "eu": "欧盟", "falling": "下降", "potential": "潜在", "lisa": "丽莎", "bbc's": "英国广播公司的", "sunday": "星期日", "laura": "劳拉", "kuenssberg": "昆斯伯格", "pm": "首相", "calls": "呼吁", "step": "步骤", "down": "下来", "recent": "最近", "days": "天", "nearly": "几乎", "own": "自己", "mps": "议员", "urged": "敦促", "go": "去", "five": "五", "ministers": "部长", "her": "她的", "seeking": "寻求", "widely": "广泛地", "expected": "预期", "launch": "启动", "challenge": "挑战", "wins": "获胜", "wes": "我们", "confirmed": "确认", "race": "种族", "health": "健康", "earlier": "较早", "automatically": "自动地", "ballot": "选票", "paper": "报纸", "chose": "选择", "took": "担任", "place": "地点", "represents": "代表", "ally": "盟友", "bbc": "英国广播公司", "don't": "不要", "did": "做了", "cabinet": "内阁", "elected": "当选的", "bring": "带来", "end": "结束", "chaos": "混乱", "run": "奔跑", "himself": "他自己", "will": "将", "very": "非常", "weekend": "周末", "i've": "我已经", "several": "数个", "times": "次", "obviously": "显然", "pointed": "指出", "victory": "胜利", "able": "能够", "just": "只是", "term": "术语", "results": "结果", "showed": "显示", "seen": "被视为", "enough": "足够", "message": "信息", "see": "看到", "pitch": "推销", "fighting": "战斗", "speaking": "发言", "doing": "做", "more": "更多", "campaigning": "竞选活动", "alongside": "与...一起", "voices": "声音", "part": "部分", "those": "那些", "parts": "部分", "written": "书面", "too": "太", "long": "长久", "much": "许多", "government": "政府", "ran": "运行", "against": "反对", "standing": "站立", "herself": "她自己", "friday": "星期五", "ruling": "裁决", "executive": "行政的", "committee": "委员会", "blocked": "封锁", "previous": "先前", "attempt": "企图", "january": "一月", "selection": "选拔", "candidate": "候选人", "came": "到来", "mp": "议员", "josh": "乔希", "resign": "辞职", "way": "方式", "allies": "盟友", "indicated": "表明", "block": "阻止", "tough": "艰难的", "strongly": "强烈地", "council": "委员会", "majority": "多数", "votes": "选票", "nigel": "奈杰尔", "farage's": "法拉奇的", "leading": "领导", "polls": "民调", "since": "自从", "year": "年", "are": "是", "figures": "人物", "how": "如何", "parties": "政党", "during": "在期间", "local": "当地", "ward": "选区", "fully": "完全地", "roughly": "大约", "share": "分享", "backers": "支持者", "does": "做", "account": "责任", "strong": "强烈", "where": "那里", "three": "三个", "successive": "连续的", "record": "记录", "didn't": "没有", "again": "再次", "why": "为何", "really": "真正地", "important": "重要", "voice": "声音", "needs": "需要", "centre": "中心", "programme": "节目", "lost": "失去", "trust": "信任", "yes": "是的", "moment": "时刻", "unifying": "统一的", "coming": "即将到来的", "together": "一起", "different": "不同的", "across": "跨越", "conservative": "保守党", "kemi": "凯米", "badenoch": "巴德诺赫", "doesn't": "不", "matter": "事情", "or": "或者", "problem": "问题", "uk's": "英国的", "relationship": "关系", "looks": "看起来", "issue": "问题", "speech": "演讲", "leaving": "离开", "catastrophic": "灾难性的", "mistake": "错误", "day": "天", "rejoin": "重新加入", "bloc": "集团", "may": "可能", "case": "案例", "insisted": "坚持", "streeting's": "斯特里廷的", "comments": "评论", "remain": "仍然", "what": "什么", "going": "将要", "like": "像", "absolutely": "绝对", "well": "好", "tell": "告诉", "you": "你", "wasn't": "不是", "living": "生活", "standards": "标准", "high": "高的", "streets": "街道", "apart": "分开", "some": "一些", "time": "时间", "governments": "政府", "address": "地址", "sign": "签署", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "beyond": "超出", "nandy": "南迪", "loud": "大声的", "culture": "文化", "wouldn't": "不会", "wigan": "威根", "louder": "更响亮的", "boundaries": "界限", "chooses": "选择", "write": "写", "replaced": "取代", "pressed": "施压", "sceptics": "怀疑者", "feel": "感觉", "fought": "斗争", "harder": "更努力地", "hearing": "听证会", "clearer": "更清晰的", "ruled": "裁定", "admitted": "承认", "performing": "表演", "consistently": "一贯地", "opinion": "意见", "spring": "春天", "precise": "精确的", "performed": "表演了", "align": "对齐", "argue": "争论", "landslides": "山体滑坡", "mayoral": "市长的", "andy's": "安迪的", "apology": "道歉", "fundamental": "根本的", "working-class": "工人阶级的", "traditions": "传统", "rejoining": "重新加入", "long-term": "长期的", "advocating": "倡导", "campaigned": "竞选", "referendum": "公投", "essentially": "本质上", "we'd": "我们会", "towns": "城镇", "fine": "好的", "kids": "孩子们", "deindustrialisation": "去工业化", "failure": "失败"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
