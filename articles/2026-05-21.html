@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-21</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-21</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/7c3e/live/366a7130-550c-11f1-89a3-d1f559421220.jpg" alt="Toilets and changing rooms must be used on basis of biological sex, guidance confirms" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Toilets and changing rooms must be used on basis of biological sex, guidance confirms</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c0e2rj3zj02o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-21.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Single-sex spaces - such as changing rooms and toilets - must be used on the basis of biological sex, new <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> from the equalities watchdog has confirmed.</span></p>
+        <p class="cn">平等监督机构的新指南确认，更衣室和卫生间等单一性别空间必须根据生理性别使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">This means, for instance, that a trans woman - a biological male who identifies as a woman - should not use female toilets or changing rooms, according to the code of practice.</span></p>
+        <p class="cn">这意味着，例如，根据该实践准则，跨性别女性——即生理男性但自我认同为女性的人——不应使用女性卫生间或更衣室。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span>, produced by the Equalities and Human Rights Commission (EHRC) and now approved by ministers, makes it clear that transgender people should instead be offered a third or a gender-neutral space.</span></p>
+        <p class="cn">这份由平等与人权委员会（EHRC）制定并已获部长批准的指南明确指出，应为此类跨性别者提供第三性别或性别中立的空间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The code states that leaving a trans person without access to any services or facilities would be unlikely to be proportionate and could be <span class="keyword" data-word="discriminatory" data-phonetic="/dɪˈskrɪmɪnətɔːri/" data-pos="adj." data-def="歧视性的" data-def-en="Treating a person or group unfairly because of their identity.">discriminatory</span>.</span></p>
+        <p class="cn">该准则指出，让跨性别者无法使用任何服务或设施可能不合理，并可能构成歧视。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> was published on Thursday following the <span class="keyword" data-word="landmark" data-phonetic="/ˈlændmɑːrk/" data-pos="adj." data-def="里程碑式的" data-def-en="An important event or decision that marks a significant change.">landmark</span> Supreme Court ruling last year that the definition of a woman under the Equality Act should be based on biological sex.</span></p>
+        <p class="cn">该指南于周四发布，此前最高法院去年作出里程碑式裁决，认定《平等法》中女性的定义应基于生理性别。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The code of practice sets out how associations, businesses and services open to the public should organise their facilities.</span> <span class="sentence" data-sentence-index="6">It covers a wide range of settings from shopping centres and gyms to hospitals and restaurants.</span></p>
+        <p class="cn">该实践准则规定了面向公众开放的协会、企业和服务机构应如何组织其设施，涵盖从购物中心、健身房到医院和餐厅的广泛场所。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Women and Equalities Minister Bridget Phillipson said the aim was to allow people to live free from discrimination and <span class="keyword" data-word="harassment" data-phonetic="/ˈhærəsmənt/" data-pos="n." data-def="骚扰" data-def-en="Unwanted or aggressive behavior that causes distress.">harassment</span>.</span></p>
+        <p class="cn">妇女与平等事务部长布里奇特·菲利普森表示，目标是让人们免受歧视和骚扰地生活。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">"Our focus has always been making sure organisations have clear, <span class="keyword" data-word="accessible" data-phonetic="/əkˈsesəbl/" data-pos="adj." data-def="可获得的，易理解的" data-def-en="Easy to reach, use, or understand.">accessible</span> <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> on how to implement the law," she said.</span></p>
+        <p class="cn">她说：“我们一直专注于确保组织有清晰、易懂的指南来实施法律。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Within the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span>, it was recommended that gender neutral toilets or changing rooms should have self-contained lockable areas with floor-to-ceiling walls and wash basins.</span></p>
+        <p class="cn">指南中建议，性别中立的卫生间或更衣室应设有带锁的独立隔间，配备从地板到天花板的隔断和洗手盆。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">The watchdog said it did not think the requirements would be too <span class="keyword" data-word="onerous" data-phonetic="/ˈəʊnərəs/" data-pos="adj." data-def="繁重的，麻烦的" data-def-en="Involving a lot of effort or difficulty; burdensome.">onerous</span> as services could decide to let trans people use toilets for disabled people, for example.</span></p>
+        <p class="cn">该监督机构表示，认为这些要求不会过于繁重，因为服务机构可以决定让跨性别者使用残疾人卫生间等。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The EHRC also said if a service just had two toilets - one for men and one for women - they could be changed into unisex facilities.</span></p>
+        <p class="cn">EHRC还表示，如果某个场所只有两个卫生间——一个男用、一个女用——可以将其改为男女通用设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">With the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> now before parliament, MPs and peers have 40 days to raise any concerns.</span> <span class="sentence" data-sentence-index="13">If there are no objections, the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> becomes <span class="keyword" data-word="statutory" data-phonetic="/ˈstætʃətɔːri/" data-pos="adj." data-def="法定的" data-def-en="Required or regulated by law.">statutory</span>.</span></p>
+        <p class="cn">随着指南提交议会，下议院和上议院议员有40天时间提出任何关切。若无异议，该指南将成为法定文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">The <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span>, which is more than 300 pages long, was first sent to the government in September 2025.</span></p>
+        <p class="cn">这份超过300页的指南最初于2025年9月提交给政府。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">The EHRC said it expected ministers to spend six weeks examining it before either asking for revisions or placing it before parliament.</span></p>
+        <p class="cn">EHRC表示，预计部长们会用六周时间审查，然后要么要求修改，要么提交议会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Instead, the government said it would deal with the issue "thoroughly and carefully", and took eight months to release the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span>.</span></p>
+        <p class="cn">然而，政府表示将“彻底且谨慎地”处理此事，并花了八个月时间才发布该指南。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">EHRC chair Dr Mary-Ann Stephenson said she hoped people would read the code with an "open mind".</span></p>
+        <p class="cn">EHRC主席玛丽-安·斯蒂芬森博士表示，她希望人们能以“开放的心态”阅读该准则。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">"I think we do need to broaden out the debates, and we need to start from a point of saying, how do we make sure that everyone has access to the services they need, and that will be different things for different people," she said.</span></p>
+        <p class="cn">她说：“我认为我们确实需要拓宽辩论范围，并且需要从这样一个出发点开始：我们如何确保每个人都能获得所需的服务，而这对于不同的人来说将是不同的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">At the Watershed arts cinema in Bristol, chief executive Clare Reddington said they pride themselves on being inclusive.</span></p>
+        <p class="cn">在布里斯托尔的Watershed艺术影院，首席执行官克莱尔·雷丁顿表示，他们以包容性为傲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">She said it had taken too long for the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> to be published which has led to confusion and misinformation.</span></p>
+        <p class="cn">她说，指南的发布花了太长时间，导致了混乱和错误信息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Reddington described the impact on trans people as "toxic", and said they had been waiting to hear what the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> meant "for their ability to live a full public life".</span></p>
+        <p class="cn">雷丁顿将指南对跨性别者的影响描述为“有毒”，并表示他们一直在等待了解该指南“对他们充分参与公共生活的能力”意味着什么。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">The Watershed has gender neutral toilets, which won a Loo of the Year award in 2024.</span></p>
+        <p class="cn">Watershed设有性别中立卫生间，该卫生间在2024年获得了“年度厕所奖”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">The brightly coloured cubicles have floor-to-ceiling doors, and some have sinks inside.</span> <span class="sentence" data-sentence-index="24">They also have separate male and female toilets.</span></p>
+        <p class="cn">这些色彩鲜艳的隔间有从地板到天花板的门，有些内部还有洗手盆。此外，他们还设有独立的男性和女性卫生间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">"I would say that designing toilets for everyone is great for business," Reddington said.</span></p>
+        <p class="cn">雷丁顿说：“我想说，为所有人设计卫生间对生意很有好处。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Maya Forstater, of Sex Matters, a gender-critical women's rights group, said: "Finally, there are no more excuses for the many public and private sector organisations that said they were 'waiting for <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span>' before fixing their unlawful policies.</span></p>
+        <p class="cn">性别批判女性权利组织Sex Matters的玛雅·福斯特特表示：“终于，许多公共和私营部门组织不能再以‘等待指南’为借口来拖延修正其违法政策了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">"The government's long delay in placing the updated code of practice before Parliament was seized on as cover by organisations that preferred to break the law than enrage trans lobby groups.</span></p>
+        <p class="cn">“政府迟迟不将更新后的实践准则提交议会，被那些宁愿违法也不愿激怒跨性别游说团体的组织当作掩护。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">"The new <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> is long and detailed, but at its heart is a simple principle: 'sex' means what it says – male and female.</span> <span class="sentence" data-sentence-index="29">What people call themselves and how they dress doesn't change their sex.</span></p>
+        <p class="cn">“新指南冗长而详细，但其核心是一个简单的原则：‘性别’就是字面意思——男性和女性。人们如何自称以及如何穿着并不会改变他们的性别。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">"Any business, charity or public service provider that took a wrong turn and started letting men who identify as women use women's spaces or vice versa must now urgently fix its policies."</span></p>
+        <p class="cn">“任何走错了路、开始允许自我认同为女性的男性使用女性空间或反之的企业、慈善机构或公共服务提供者，现在必须紧急修正其政策。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">But a spokesperson for TransActual, a trans rights campaign group, said the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> left trans people with fewer rights.</span></p>
+        <p class="cn">但跨性别权利活动组织TransActual的发言人表示，该指南削弱了跨性别者的权利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">"Not only does this new <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> fail to protect the rights and dignity of transgender people, but appears to have weakened protections for the LGBT community as a whole," they said.</span></p>
+        <p class="cn">他们说：“这份新指南不仅未能保护跨性别者的权利和尊严，反而似乎削弱了整个LGBT群体的保护。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">"TransActual will continue to fight for equal access to public life for all trans people, and will publish our full thoughts on the new code once we have had the time to properly <span class="keyword" data-word="scrutinise" data-phonetic="/ˈskruːtɪnaɪz/" data-pos="v." data-def="仔细审查" data-def-en="To examine something very carefully.">scrutinise</span> it."</span></p>
+        <p class="cn">“TransActual将继续为所有跨性别者争取平等参与公共生活的权利，并在仔细审查新准则后发布我们的完整看法。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">Joanne Moseley, of Irwin Mitchell Solicitors, said she is being regularly asked to provide advice to business and services on what they need to do.</span></p>
+        <p class="cn">Irwin Mitchell律师事务所的乔安妮·莫斯利表示，她经常被企业和服务机构咨询需要做什么。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">She believes that good signage and, where appropriate, ensuring that a gender-neutral space is available are important.</span></p>
+        <p class="cn">她认为，良好的标识以及在适当情况下确保提供性别中立空间非常重要。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">She said some businesses and employers made changes to their facilities immediately after the Supreme Court judgement, but others are putting off doing anything until the EHRC <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> comes into force.</span></p>
+        <p class="cn">她说，一些企业和雇主在最高法院判决后立即对其设施进行了改造，但其他企业则推迟行动，直到EHRC指南生效。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">However, she warned the <span class="keyword" data-word="guidance" data-phonetic="/ˈɡaɪdns/" data-pos="n." data-def="指导，指南" data-def-en="Official advice or instructions on how to do something.">guidance</span> was not "a silver bullet" and that if someone made a claim of discrimination against an organisation it was not a defence to say "we're waiting for the guidance".</span></p>
+        <p class="cn">然而，她警告说，该指南并非“万能药”，如果有人对某个组织提出歧视索赔，以“我们在等待指南”为由并不能作为辩护。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">guidance</span>
+        <button class="kw-speak-btn" data-word="guidance" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡaɪdns/ n.</span>
+      </div>
+      <p class="kw-def">指导，指南</p>
+      <p class="kw-def-en">Official advice or instructions on how to do something.</p>
+      <p class="kw-ctx">&ldquo;The guidance, produced by the Equalities and Human Rights Commission (EHRC) and now approved by ministers, makes it clear that transgender people should instead be offered a third or a gender-neutral space.&rdquo;</p>
+      <p class="kw-ctx-cn">这份由平等与人权委员会制定、现已获得部长批准的指南明确指出，跨性别者应被提供第三种或性别中立的空间。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">discriminatory</span>
+        <button class="kw-speak-btn" data-word="discriminatory" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈskrɪmɪnətɔːri/ adj.</span>
+      </div>
+      <p class="kw-def">歧视性的</p>
+      <p class="kw-def-en">Treating a person or group unfairly because of their identity.</p>
+      <p class="kw-ctx">&ldquo;The code states that leaving a trans person without access to any services or facilities would be unlikely to be proportionate and could be discriminatory.&rdquo;</p>
+      <p class="kw-ctx-cn">该准则指出，让跨性别者无法使用任何服务或设施可能是不合理的，并且可能构成歧视。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">landmark</span>
+        <button class="kw-speak-btn" data-word="landmark" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlændmɑːrk/ adj.</span>
+      </div>
+      <p class="kw-def">里程碑式的</p>
+      <p class="kw-def-en">An important event or decision that marks a significant change.</p>
+      <p class="kw-ctx">&ldquo;The guidance was published on Thursday following the landmark Supreme Court ruling last year that the definition of a woman under the Equality Act should be based on biological sex.&rdquo;</p>
+      <p class="kw-ctx-cn">该指南于周四发布，此前最高法院去年做出了里程碑式的裁决，即《平等法》中对女性的定义应基于生理性别。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">harassment</span>
+        <button class="kw-speak-btn" data-word="harassment" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhærəsmənt/ n.</span>
+      </div>
+      <p class="kw-def">骚扰</p>
+      <p class="kw-def-en">Unwanted or aggressive behavior that causes distress.</p>
+      <p class="kw-ctx">&ldquo;Women and Equalities Minister Bridget Phillipson said the aim was to allow people to live free from discrimination and harassment.&rdquo;</p>
+      <p class="kw-ctx-cn">妇女与平等事务部长布里奇特·菲利普森表示，目标是让人们免受歧视和骚扰。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">accessible</span>
+        <button class="kw-speak-btn" data-word="accessible" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əkˈsesəbl/ adj.</span>
+      </div>
+      <p class="kw-def">可获得的，易理解的</p>
+      <p class="kw-def-en">Easy to reach, use, or understand.</p>
+      <p class="kw-ctx">&ldquo;"Our focus has always been making sure organisations have clear, accessible guidance on how to implement the law," she said.&rdquo;</p>
+      <p class="kw-ctx-cn">她说：“我们的重点一直是确保组织拥有清晰、易于理解的指南，以实施法律。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">onerous</span>
+        <button class="kw-speak-btn" data-word="onerous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈəʊnərəs/ adj.</span>
+      </div>
+      <p class="kw-def">繁重的，麻烦的</p>
+      <p class="kw-def-en">Involving a lot of effort or difficulty; burdensome.</p>
+      <p class="kw-ctx">&ldquo;The watchdog said it did not think the requirements would be too onerous as services could decide to let trans people use toilets for disabled people, for example.&rdquo;</p>
+      <p class="kw-ctx-cn">该监管机构表示，它认为这些要求不会过于繁重，因为服务机构可以决定让跨性别者使用残疾人厕所等。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">statutory</span>
+        <button class="kw-speak-btn" data-word="statutory" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstætʃətɔːri/ adj.</span>
+      </div>
+      <p class="kw-def">法定的</p>
+      <p class="kw-def-en">Required or regulated by law.</p>
+      <p class="kw-ctx">&ldquo;If there are no objections, the guidance becomes statutory.&rdquo;</p>
+      <p class="kw-ctx-cn">如果没有反对意见，该指南将成为法定文件。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrutinise</span>
+        <button class="kw-speak-btn" data-word="scrutinise" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskruːtɪnaɪz/ v.</span>
+      </div>
+      <p class="kw-def">仔细审查</p>
+      <p class="kw-def-en">To examine something very carefully.</p>
+      <p class="kw-ctx">&ldquo;"TransActual will continue to fight for equal access to public life for all trans people, and will publish our full thoughts on the new code once we have had the time to properly scrutinise it."&rdquo;</p>
+      <p class="kw-ctx-cn">“TransActual将继续为所有跨性别者平等参与公共生活而斗争，一旦我们有时间仔细审查新准则，就会发布我们的完整看法。”</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Single-sex spaces - such as changing rooms and toilets - must be used on the basis of biological sex, new guidance from the equalities watchdog has confirmed.", "start_ms": 0, "end_ms": 11472, "paragraph_index": 0}, {"index": 1, "text": "This means, for instance, that a trans woman - a biological male who identifies as a woman - should not use female toilets or changing rooms, according to the code of practice.", "start_ms": 11472, "end_ms": 23856, "paragraph_index": 1}, {"index": 2, "text": "The guidance, produced by the Equalities and Human Rights Commission (EHRC) and now approved by ministers, makes it clear that transgender people should instead be offered a third or a gender-neutral space.", "start_ms": 23856, "end_ms": 38328, "paragraph_index": 2}, {"index": 3, "text": "The code states that leaving a trans person without access to any services or facilities would be unlikely to be proportionate and could be discriminatory.", "start_ms": 38328, "end_ms": 48552, "paragraph_index": 3}, {"index": 4, "text": "The guidance was published on Thursday following the landmark Supreme Court ruling last year that the definition of a woman under the Equality Act should be based on biological sex.", "start_ms": 48552, "end_ms": 60192, "paragraph_index": 4}, {"index": 5, "text": "The code of practice sets out how associations, businesses and services open to the public should organise their facilities.", "start_ms": 60192, "end_ms": 69192, "paragraph_index": 5}, {"index": 6, "text": "It covers a wide range of settings from shopping centres and gyms to hospitals and restaurants.", "start_ms": 69192, "end_ms": 75936, "paragraph_index": 5}, {"index": 7, "text": "Women and Equalities Minister Bridget Phillipson said the aim was to allow people to live free from discrimination and harassment.", "start_ms": 75936, "end_ms": 84576, "paragraph_index": 6}, {"index": 8, "text": "\"Our focus has always been making sure organisations have clear, accessible guidance on how to implement the law,\" she said.", "start_ms": 84576, "end_ms": 93264, "paragraph_index": 7}, {"index": 9, "text": "Within the guidance, it was recommended that gender neutral toilets or changing rooms should have self-contained lockable areas with floor-to-ceiling walls and wash basins.", "start_ms": 93264, "end_ms": 104640, "paragraph_index": 8}, {"index": 10, "text": "The watchdog said it did not think the requirements would be too onerous as services could decide to let trans people use toilets for disabled people, for example.", "start_ms": 104640, "end_ms": 115608, "paragraph_index": 9}, {"index": 11, "text": "The EHRC also said if a service just had two toilets - one for men and one for women - they could be changed into unisex facilities.", "start_ms": 115608, "end_ms": 125520, "paragraph_index": 10}, {"index": 12, "text": "With the guidance now before parliament, MPs and peers have 40 days to raise any concerns.", "start_ms": 125520, "end_ms": 132648, "paragraph_index": 11}, {"index": 13, "text": "If there are no objections, the guidance becomes statutory.", "start_ms": 132648, "end_ms": 137520, "paragraph_index": 11}, {"index": 14, "text": "The guidance, which is more than 300 pages long, was first sent to the government in September 2025.", "start_ms": 137520, "end_ms": 145920, "paragraph_index": 12}, {"index": 15, "text": "The EHRC said it expected ministers to spend six weeks examining it before either asking for revisions or placing it before parliament.", "start_ms": 145920, "end_ms": 155832, "paragraph_index": 13}, {"index": 16, "text": "Instead, the government said it would deal with the issue \"thoroughly and carefully\", and took eight months to release the guidance.", "start_ms": 155832, "end_ms": 164016, "paragraph_index": 14}, {"index": 17, "text": "EHRC chair Dr Mary-Ann Stephenson said she hoped people would read the code with an \"open mind\".", "start_ms": 164016, "end_ms": 171168, "paragraph_index": 15}, {"index": 18, "text": "\"I think we do need to broaden out the debates, and we need to start from a point of saying, how do we make sure that everyone has access to the services they need, and that will be different things for different people,\" she said.", "start_ms": 171168, "end_ms": 185184, "paragraph_index": 16}, {"index": 19, "text": "At the Watershed arts cinema in Bristol, chief executive Clare Reddington said they pride themselves on being inclusive.", "start_ms": 185184, "end_ms": 193560, "paragraph_index": 17}, {"index": 20, "text": "She said it had taken too long for the guidance to be published which has led to confusion and misinformation.", "start_ms": 193560, "end_ms": 200640, "paragraph_index": 18}, {"index": 21, "text": "Reddington described the impact on trans people as \"toxic\", and said they had been waiting to hear what the guidance meant \"for their ability to live a full public life\".", "start_ms": 200640, "end_ms": 211176, "paragraph_index": 19}, {"index": 22, "text": "The Watershed has gender neutral toilets, which won a Loo of the Year award in 2024.", "start_ms": 211176, "end_ms": 218208, "paragraph_index": 20}, {"index": 23, "text": "The brightly coloured cubicles have floor-to-ceiling doors, and some have sinks inside.", "start_ms": 218208, "end_ms": 224616, "paragraph_index": 21}, {"index": 24, "text": "They also have separate male and female toilets.", "start_ms": 224616, "end_ms": 228888, "paragraph_index": 21}, {"index": 25, "text": "\"I would say that designing toilets for everyone is great for business,\" Reddington said.", "start_ms": 228888, "end_ms": 235032, "paragraph_index": 22}, {"index": 26, "text": "Maya Forstater, of Sex Matters, a gender-critical women's rights group, said: \"Finally, there are no more excuses for the many public and private sector organisations that said they were 'waiting for guidance' before fixing their unlawful policies.", "start_ms": 235032, "end_ms": 251424, "paragraph_index": 23}, {"index": 27, "text": "\"The government's long delay in placing the updated code of practice before Parliament was seized on as cover by organisations that preferred to break the law than enrage trans lobby groups.", "start_ms": 251424, "end_ms": 263616, "paragraph_index": 24}, {"index": 28, "text": "\"The new guidance is long and detailed, but at its heart is a simple principle: 'sex' means what it says \u2013 male and female.", "start_ms": 263616, "end_ms": 272184, "paragraph_index": 25}, {"index": 29, "text": "What people call themselves and how they dress doesn't change their sex.", "start_ms": 272184, "end_ms": 277368, "paragraph_index": 25}, {"index": 30, "text": "\"Any business, charity or public service provider that took a wrong turn and started letting men who identify as women use women's spaces or vice versa must now urgently fix its policies.\"", "start_ms": 277368, "end_ms": 290520, "paragraph_index": 26}, {"index": 31, "text": "But a spokesperson for TransActual, a trans rights campaign group, said the guidance left trans people with fewer rights.", "start_ms": 290520, "end_ms": 299016, "paragraph_index": 27}, {"index": 32, "text": "\"Not only does this new guidance fail to protect the rights and dignity of transgender people, but appears to have weakened protections for the LGBT community as a whole,\" they said.", "start_ms": 299016, "end_ms": 311112, "paragraph_index": 28}, {"index": 33, "text": "\"TransActual will continue to fight for equal access to public life for all trans people, and will publish our full thoughts on the new code once we have had the time to properly scrutinise it.\"", "start_ms": 311112, "end_ms": 323520, "paragraph_index": 29}, {"index": 34, "text": "Joanne Moseley, of Irwin Mitchell Solicitors, said she is being regularly asked to provide advice to business and services on what they need to do.", "start_ms": 323520, "end_ms": 333600, "paragraph_index": 30}, {"index": 35, "text": "She believes that good signage and, where appropriate, ensuring that a gender-neutral space is available are important.", "start_ms": 333600, "end_ms": 341856, "paragraph_index": 31}, {"index": 36, "text": "She said some businesses and employers made changes to their facilities immediately after the Supreme Court judgement, but others are putting off doing anything until the EHRC guidance comes into force.", "start_ms": 341856, "end_ms": 355344, "paragraph_index": 32}, {"index": 37, "text": "However, she warned the guidance was not \"a silver bullet\" and that if someone made a claim of discrimination against an organisation it was not a defence to say \"we're waiting for the guidance\".", "start_ms": 355344, "end_ms": 367176, "paragraph_index": 33}], "total_duration_ms": 367176};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "for": "为了", "said": "说", "that": "那个", "of": "的", "it": "它", "people": "人们", "be": "是", "on": "在", "they": "它们", "have": "有", "she": "她", "as": "作为", "or": "或者", "was": "是", "code": "准则", "is": "是", "sex": "性", "has": "有", "should": "应该", "not": "不", "services": "服务", "would": "将", "public": "公众", "their": "他们的", "with": "与", "before": "之前", "new": "新的", "from": "来自", "how": "如何", "had": "有", "are": "是", "long": "长久", "in": "在", "we": "我们", "need": "需要", "what": "什么", "but": "但是", "changing": "改变", "woman": "女性", "use": "使用", "by": "被", "now": "现在", "access": "进入", "any": "任何", "could": "可能", "women": "女性", "organisations": "组织", "if": "如果", "parliament": "议会", "which": "哪个", "do": "做", "will": "将", "waiting": "等待", "business": "事务", "must": "必须", "watchdog": "监管机构", "this": "这个", "means": "意味着", "who": "谁", "ministers": "部长", "clear": "明确", "instead": "反而", "published": "发布", "supreme": "最高", "court": "法庭", "year": "年", "out": "出来", "open": "开放", "live": "生活", "our": "我们的", "been": "已经", "sure": "确定", "law": "法律", "neutral": "中立的", "think": "认为", "too": "太", "also": "也", "service": "服务", "one": "一个", "men": "男人们", "into": "进入", "there": "那里", "no": "没有", "more": "更多", "than": "比", "government": "政府", "took": "担任", "an": "一个", "everyone": "每个人", "different": "不同的", "at": "在", "themselves": "他们自己", "being": "正在", "full": "完整", "life": "生活", "some": "一些", "say": "说", "women's": "女性的", "group": "团体", "policies": "政策", "its": "它的", "made": "做出", "such": "如此", "used": "使用", "basis": "基础", "confirmed": "确认", "according": "根据", "human": "人类", "approved": "批准", "makes": "使得", "offered": "提供", "third": "第三", "states": "国家", "leaving": "离开", "person": "个人", "without": "没有", "unlikely": "不太可能", "thursday": "星期四", "following": "随后", "ruling": "裁决", "last": "最后", "under": "在...之下", "act": "行为", "based": "基于", "sets": "设定", "organise": "组织", "range": "范围", "shopping": "购物", "centres": "中心", "minister": "部长", "bridget": "布里奇特", "phillipson": "菲利普森", "aim": "目标", "allow": "允许", "free": "自由的", "focus": "重点", "always": "总是", "making": "进行", "implement": "实施", "within": "在内部", "recommended": "建议", "self-contained": "独立的", "areas": "区域", "walls": "墙壁", "did": "做了", "requirements": "要求", "decide": "决定", "let": "让", "example": "例子", "just": "只是", "two": "两个", "changed": "改变", "mps": "议员", "days": "天", "raise": "提高", "concerns": "担忧", "objections": "反对", "becomes": "成为", "pages": "页面", "first": "第一轮", "sent": "派遣", "september": "九月", "expected": "预期", "spend": "花费", "six": "六", "weeks": "周", "either": "要么", "asking": "询问", "deal": "协议", "issue": "问题", "carefully": "仔细地", "eight": "八", "months": "月", "release": "发布", "chair": "主席", "hoped": "希望", "read": "阅读", "start": "开始", "point": "点", "saying": "说", "make": "使", "things": "事情", "arts": "艺术", "chief": "首席", "executive": "行政的", "pride": "骄傲", "taken": "采取", "led": "带领", "confusion": "混乱", "described": "描述", "impact": "影响", "hear": "听到", "meant": "意味着", "ability": "能力", "won": "赢得", "doors": "门", "inside": "内部", "separate": "单独的", "great": "伟大的", "matters": "事务", "many": "许多", "private": "私人的", "were": "是", "fixing": "固定", "government's": "政府的", "updated": "更新", "cover": "覆盖", "preferred": "更喜欢的", "break": "突破", "groups": "团体", "heart": "核心", "says": "表示", "call": "呼吁", "doesn't": "不", "change": "改变", "charity": "慈善机构", "wrong": "错误的", "turn": "转变", "started": "开始", "letting": "允许", "identify": "识别", "urgently": "紧急地", "fix": "修复", "spokesperson": "发言人", "campaign": "竞选活动", "left": "离开", "only": "只有", "does": "做", "fail": "失败", "protect": "保护", "appears": "似乎", "weakened": "削弱", "protections": "保护措施", "community": "社区", "whole": "整个", "continue": "继续", "fight": "斗争", "all": "所有", "thoughts": "想法", "once": "一旦", "time": "时间", "properly": "妥善", "regularly": "定期地", "asked": "询问", "provide": "提供", "advice": "建议", "believes": "认为", "good": "良好", "where": "那里", "appropriate": "合适", "available": "可获取", "important": "重要", "immediately": "立即", "after": "之后", "judgement": "判断", "others": "其他", "putting": "放置", "off": "离开", "doing": "做", "anything": "任何事", "until": "直到", "comes": "到来", "force": "力量", "however": "然而", "warned": "警告", "bullet": "子弹", "someone": "某人", "claim": "声称", "against": "反对", "organisation": "组织", "defence": "国防", "we're": "我们是", "toilets": "厕所", "trans": "跨性别", "rights": "权利", "ehrc": "平等与人权委员会", "facilities": "设施", "rooms": "房间", "biological": "生理的", "equalities": "平等", "male": "男性", "female": "女性", "practice": "实践", "reddington": "雷丁顿", "spaces": "空间", "transgender": "跨性别者", "gender-neutral": "性别中立", "space": "空间", "businesses": "企业", "discrimination": "歧视", "gender": "性别", "floor-to-ceiling": "落地", "placing": "放置", "watershed": "分水岭", "transactual": "跨性别行动", "single-sex": "单一性别", "instance": "实例", "identifies": "认同", "produced": "产生", "commission": "委员会", "proportionate": "相称的", "definition": "定义", "equality": "平等", "associations": "协会", "covers": "涵盖", "wide": "广泛的", "settings": "环境", "gyms": "健身房", "hospitals": "医院", "restaurants": "餐厅", "lockable": "可上锁的", "wash": "洗手", "basins": "洗手池", "disabled": "残疾的", "unisex": "男女通用", "peers": "同行", "examining": "审查", "revisions": "修订", "thoroughly": "彻底地", "dr": "博士", "mary-ann": "玛丽-安", "stephenson": "斯蒂芬森", "mind": "介意", "broaden": "扩大", "debates": "辩论", "cinema": "电影院", "bristol": "布里斯托尔", "clare": "克莱尔", "inclusive": "包容的", "misinformation": "错误信息", "toxic": "有毒的", "loo": "厕所", "award": "奖项", "brightly": "明亮地", "coloured": "彩色的", "cubicles": "隔间", "sinks": "水槽", "designing": "设计", "maya": "玛雅", "forstater": "福斯特特", "gender-critical": "性别批判", "finally": "最终", "excuses": "借口", "sector": "部门", "unlawful": "非法的", "delay": "延迟", "seized": "抓住", "enrage": "激怒", "lobby": "游说", "detailed": "详细的", "simple": "简单的", "principle": "原则", "dress": "着装", "provider": "提供者", "vice": "反之", "versa": "亦然", "fewer": "更少", "dignity": "尊严", "lgbt": "性少数群体", "equal": "平等的", "publish": "发布", "joanne": "乔安妮", "moseley": "莫斯利", "irwin": "欧文", "mitchell": "米切尔", "solicitors": "律师", "signage": "标识", "ensuring": "确保", "employers": "雇主", "changes": "变化", "silver": "银色的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
