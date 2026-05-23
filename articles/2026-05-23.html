@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-23</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-23</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/7430/live/da26d190-56c1-11f1-89a3-d1f559421220.jpg" alt="Trump says Iran deal 'largely negotiated' including reopening Strait of Hormuz" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump says Iran deal 'largely negotiated' including reopening Strait of Hormuz</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/crmp121z3z8o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-23.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">US President Donald Trump says an agreement with Iran has been "largely negotiated" and details will be announced soon.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普表示，与伊朗的协议已“基本谈判完成”，细节将很快公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The deal would include the reopening of the Strait of Hormuz, he said on Saturday, without giving further details.</span></p>
+        <p class="cn">他周六表示，该协议将包括重新开放霍尔木兹海峡，但没有提供更多细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Iranian foreign ministry spokesman Esmaeil Baqaei earlier told state television that US and Iranian positions had been converging in the last week, but warned that did not mean agreements would be reached on key issues and accused the Americans of "contradictory statements".</span></p>
+        <p class="cn">伊朗外交部发言人伊斯梅尔·巴加埃早些时候对国家电视台表示，美国和伊朗的立场在过去一周趋于接近，但警告称这并不意味着能在关键问题上达成协议，并指责美国人“自相矛盾的言论”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">On social media, Trump said he had a "very good call" with the leaders of Saudi Arabia, the United Arab Emirates, Qatar, and others about a "Memorandum of Understanding <span class="keyword" data-word="pertaining to" data-phonetic="/pərˈteɪnɪŋ tuː/" data-pos="prep." data-def="关于，涉及" data-def-en="relating to; concerning">pertaining to</span> PEACE".</span></p>
+        <p class="cn">在社交媒体上，特朗普表示他与沙特阿拉伯、阿拉伯联合酋长国、卡塔尔等国领导人就“关于和平的谅解备忘录”进行了“非常愉快的通话”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">"An agreement has been largely negotiated, subject to <span class="keyword" data-word="finalization" data-phonetic="/ˌfaɪnəlaɪˈzeɪʃən/" data-pos="n." data-def="最终确定，定稿" data-def-en="the act of making something final or complete">finalization</span> between the United States of America, the Islamic Republic of Iran, and the various other Countries, as listed," Trump said.</span></p>
+        <p class="cn">特朗普说：“一项协议已基本谈判完成，有待美利坚合众国、伊朗伊斯兰共和国以及所列其他各国最终确定。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">"Final aspects and details of the deal are currently being discussed, and will be announced shortly."</span></p>
+        <p class="cn">“协议的最终方面和细节目前正在讨论中，并将很快公布。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">He also said he had a call on Saturday with Israeli Prime Minister Benjamin Netanyahu, which "went very well".</span></p>
+        <p class="cn">他还表示，周六与以色列总理本雅明·内塔尼亚胡进行了通话，“进展非常顺利”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The president has not given any further details on the deal, but has insisted any agreement would "absolutely" prevent Iran from obtaining a nuclear weapon.</span></p>
+        <p class="cn">总统尚未提供该协议的任何进一步细节，但坚称任何协议都将“绝对”阻止伊朗获得核武器。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The US and Israel launched wide-ranging strikes on Iran on 28 February, sparking conflict across the Middle East.</span> <span class="sentence" data-sentence-index="9">Iran responded by launching attacks on Israel and US-allied states in the Gulf.</span></p>
+        <p class="cn">美国和以色列于2月28日对伊朗发动了大规模打击，引发了中东地区的冲突。伊朗则对以色列和海湾地区的美国盟国发动了攻击作为回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">A <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火，休战" data-def-en="an agreement to stop fighting for a period of time">ceasefire</span> in Iran was agreed in early April, and since then Washington and Tehran have engaged in talks over a long-term peace deal.</span></p>
+        <p class="cn">伊朗停火协议于4月初达成，此后华盛顿和德黑兰就长期和平协议进行了谈判。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Speaking to state television on Saturday, Iranian foreign ministry spokesman Esmaeil Baqaei also described a "memorandum of understanding", saying Iran's intention was to reach an agreement "in the form of a framework, consisting of 14 points".</span></p>
+        <p class="cn">周六，伊朗外交部发言人伊斯梅尔·巴加埃在国家电视台上也描述了一份“谅解备忘录”，称伊朗的意图是达成一项“由14点组成的框架协议”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Baqaei said they were in the process of finalising the memorandum, so further talks could be held within 30 to 60 days "and ultimately a final agreement can be reached".</span></p>
+        <p class="cn">巴加埃表示，他们正在最终确定备忘录，以便在30至60天内举行进一步谈判，“并最终达成最终协议”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">The new sense of <span class="keyword" data-word="momentum" data-phonetic="/moʊˈmentəm/" data-pos="n." data-def="势头，动力" data-def-en="the force that keeps something moving or developing">momentum</span> comes after the mood appeared to have soured in Washington, with anonymous officials briefing US media on Friday that the administration was preparing for a fresh round of military strikes, although no final decision had been made.</span></p>
+        <p class="cn">这种新的势头出现之前，华盛顿的气氛似乎已经恶化，匿名官员周五向美国媒体通报称，政府正准备新一轮军事打击，尽管尚未做出最终决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">On Friday, the president posted on Truth Social that he would not attend his son Donald Jr's wedding this weekend so he could remain in Washington DC "during this important period of time".</span></p>
+        <p class="cn">周五，总统在Truth Social上发帖称，他不会参加本周末儿子小唐纳德的婚礼，以便“在这个重要时期”留在华盛顿特区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">Last week, Trump had said the truce was on "massive life support" after rejecting Tehran's demands, labelling them "totally unacceptable".</span></p>
+        <p class="cn">上周，特朗普在拒绝德黑兰的要求并称其“完全不可接受”后，表示停火协议“严重依赖生命支持”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">The US has blockaded Iranian ports since 13 April.</span></p>
+        <p class="cn">自4月13日起，美国封锁了伊朗港口。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">On Saturday, US Central Command (Centcom) said it had redirected 100 vessels, disabled four, and allowed 26 humanitarian aid ships to pass since the <span class="keyword" data-word="blockade" data-phonetic="/blɑːˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="the act of preventing goods or people from entering or leaving a place">blockade</span> began.</span></p>
+        <p class="cn">周六，美国中央司令部表示，自封锁开始以来，已重新定向100艘船只，使4艘船只瘫痪，并允许26艘人道主义援助船只通过。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Centcom commander Admiral Brad Cooper said its forces had been "highly effective" in "allowing zero trade into and out of Iranian ports which has squeezed Iran economically".</span></p>
+        <p class="cn">中央司令部司令布拉德·库珀上将表示，其部队在“阻止任何贸易进出伊朗港口，从而在经济上挤压伊朗”方面“非常有效”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Meanwhile, Iran has claimed military control of an area around the Strait of Hormuz, and has said all transit through the strait "requires coordination with and authorisation from the Persian Gulf Strait Authority".</span></p>
+        <p class="cn">与此同时，伊朗声称对霍尔木兹海峡周边地区拥有军事控制权，并表示所有通过该海峡的运输“需要与波斯湾海峡管理局协调并获得授权”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">The US and Gulf allies have repeatedly rejected Iranian attempts to assert control over the strait, and the US has told ships not to comply with Iran's rules.</span></p>
+        <p class="cn">美国和海湾盟国一再拒绝伊朗试图控制该海峡的行为，并告诉船只不要遵守伊朗的规定。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">negotiate</span>
+        <button class="kw-speak-btn" data-word="negotiate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/nɪˈɡoʊʃieɪt/ v.</span>
+      </div>
+      <p class="kw-def">谈判，协商</p>
+      <p class="kw-def-en">to try to reach an agreement by discussion</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump says an agreement with Iran has been 'largely negotiated' and details will be announced soon.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统唐纳德·特朗普表示，与伊朗的协议已‘基本谈妥’，细节将很快公布。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">converge</span>
+        <button class="kw-speak-btn" data-word="converge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈvɜːrdʒ/ v.</span>
+      </div>
+      <p class="kw-def">趋同，汇聚</p>
+      <p class="kw-def-en">to come together from different directions to reach the same point</p>
+      <p class="kw-ctx">&ldquo;Iranian foreign ministry spokesman Esmaeil Baqaei earlier told state television that US and Iranian positions had been converging in the last week, but warned that did not mean agreements would be reached on key issues and accused the Americans of 'contradictory statements'.&rdquo;</p>
+      <p class="kw-ctx-cn">伊朗外交部发言人埃斯梅尔·巴加埃早些时候对国家电视台表示，美国和伊朗的立场在过去一周趋于一致，但警告说这并不意味着能在关键问题上达成协议，并指责美国人‘自相矛盾’。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pertaining to</span>
+        <button class="kw-speak-btn" data-word="pertaining to" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pərˈteɪnɪŋ tuː/ prep.</span>
+      </div>
+      <p class="kw-def">关于，涉及</p>
+      <p class="kw-def-en">relating to; concerning</p>
+      <p class="kw-ctx">&ldquo;On social media, Trump said he had a 'very good call' with the leaders of Saudi Arabia, the United Arab Emirates, Qatar, and others about a 'Memorandum of Understanding pertaining to PEACE'.&rdquo;</p>
+      <p class="kw-ctx-cn">在社交媒体上，特朗普表示他与沙特阿拉伯、阿拉伯联合酋长国、卡塔尔等国领导人就一份‘关于和平的谅解备忘录’进行了‘非常好的通话’。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">finalization</span>
+        <button class="kw-speak-btn" data-word="finalization" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌfaɪnəlaɪˈzeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">最终确定，定稿</p>
+      <p class="kw-def-en">the act of making something final or complete</p>
+      <p class="kw-ctx">&ldquo;'An agreement has been largely negotiated, subject to finalization between the United States of America, the Islamic Republic of Iran, and the various other Countries, as listed,' Trump said.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普说：‘协议已基本谈妥，有待美利坚合众国、伊朗伊斯兰共和国以及所列其他各国最终确定。’</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spark</span>
+        <button class="kw-speak-btn" data-word="spark" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/spɑːrk/ v.</span>
+      </div>
+      <p class="kw-def">引发，触发</p>
+      <p class="kw-def-en">to cause something to start or happen</p>
+      <p class="kw-ctx">&ldquo;The US and Israel launched wide-ranging strikes on Iran on 28 February, sparking conflict across the Middle East.&rdquo;</p>
+      <p class="kw-ctx-cn">美国和以色列于2月28日对伊朗发动了大规模打击，引发了整个中东地区的冲突。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ceasefire</span>
+        <button class="kw-speak-btn" data-word="ceasefire" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsiːsfaɪər/ n.</span>
+      </div>
+      <p class="kw-def">停火，休战</p>
+      <p class="kw-def-en">an agreement to stop fighting for a period of time</p>
+      <p class="kw-ctx">&ldquo;A ceasefire in Iran was agreed in early April, and since then Washington and Tehran have engaged in talks over a long-term peace deal.&rdquo;</p>
+      <p class="kw-ctx-cn">4月初，伊朗方面达成了停火协议，此后华盛顿和德黑兰就长期和平协议进行了谈判。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">momentum</span>
+        <button class="kw-speak-btn" data-word="momentum" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/moʊˈmentəm/ n.</span>
+      </div>
+      <p class="kw-def">势头，动力</p>
+      <p class="kw-def-en">the force that keeps something moving or developing</p>
+      <p class="kw-ctx">&ldquo;The new sense of momentum comes after the mood appeared to have soured in Washington, with anonymous officials briefing US media on Friday that the administration was preparing for a fresh round of military strikes, although no final decision had been made.&rdquo;</p>
+      <p class="kw-ctx-cn">这种新的势头出现之前，华盛顿的气氛似乎已经恶化，匿名官员周五向美国媒体透露，政府正准备新一轮军事打击，尽管尚未做出最终决定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">blockade</span>
+        <button class="kw-speak-btn" data-word="blockade" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/blɑːˈkeɪd/ n.</span>
+      </div>
+      <p class="kw-def">封锁</p>
+      <p class="kw-def-en">the act of preventing goods or people from entering or leaving a place</p>
+      <p class="kw-ctx">&ldquo;The US has blockaded Iranian ports since 13 April.&rdquo;</p>
+      <p class="kw-ctx-cn">自4月13日以来，美国一直封锁伊朗港口。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "US President Donald Trump says an agreement with Iran has been \"largely negotiated\" and details will be announced soon.", "start_ms": 0, "end_ms": 8400, "paragraph_index": 0}, {"index": 1, "text": "The deal would include the reopening of the Strait of Hormuz, he said on Saturday, without giving further details.", "start_ms": 8400, "end_ms": 16368, "paragraph_index": 1}, {"index": 2, "text": "Iranian foreign ministry spokesman Esmaeil Baqaei earlier told state television that US and Iranian positions had been converging in the last week, but warned that did not mean agreements would be reached on key issues and accused the Americans of \"contradictory statements\".", "start_ms": 16368, "end_ms": 34416, "paragraph_index": 2}, {"index": 3, "text": "On social media, Trump said he had a \"very good call\" with the leaders of Saudi Arabia, the United Arab Emirates, Qatar, and others about a \"Memorandum of Understanding pertaining to PEACE\".", "start_ms": 34416, "end_ms": 47760, "paragraph_index": 3}, {"index": 4, "text": "\"An agreement has been largely negotiated, subject to finalization between the United States of America, the Islamic Republic of Iran, and the various other Countries, as listed,\" Trump said.", "start_ms": 47760, "end_ms": 61392, "paragraph_index": 4}, {"index": 5, "text": "\"Final aspects and details of the deal are currently being discussed, and will be announced shortly.\"", "start_ms": 61392, "end_ms": 68640, "paragraph_index": 5}, {"index": 6, "text": "He also said he had a call on Saturday with Israeli Prime Minister Benjamin Netanyahu, which \"went very well\".", "start_ms": 68640, "end_ms": 76584, "paragraph_index": 6}, {"index": 7, "text": "The president has not given any further details on the deal, but has insisted any agreement would \"absolutely\" prevent Iran from obtaining a nuclear weapon.", "start_ms": 76584, "end_ms": 87192, "paragraph_index": 7}, {"index": 8, "text": "The US and Israel launched wide-ranging strikes on Iran on 28 February, sparking conflict across the Middle East.", "start_ms": 87192, "end_ms": 96240, "paragraph_index": 8}, {"index": 9, "text": "Iran responded by launching attacks on Israel and US-allied states in the Gulf.", "start_ms": 96240, "end_ms": 102576, "paragraph_index": 8}, {"index": 10, "text": "A ceasefire in Iran was agreed in early April, and since then Washington and Tehran have engaged in talks over a long-term peace deal.", "start_ms": 102576, "end_ms": 112248, "paragraph_index": 9}, {"index": 11, "text": "Speaking to state television on Saturday, Iranian foreign ministry spokesman Esmaeil Baqaei also described a \"memorandum of understanding\", saying Iran's intention was to reach an agreement \"in the form of a framework, consisting of 14 points\".", "start_ms": 112248, "end_ms": 129240, "paragraph_index": 10}, {"index": 12, "text": "Baqaei said they were in the process of finalising the memorandum, so further talks could be held within 30 to 60 days \"and ultimately a final agreement can be reached\".", "start_ms": 129240, "end_ms": 140904, "paragraph_index": 11}, {"index": 13, "text": "The new sense of momentum comes after the mood appeared to have soured in Washington, with anonymous officials briefing US media on Friday that the administration was preparing for a fresh round of military strikes, although no final decision had been made.", "start_ms": 140904, "end_ms": 157440, "paragraph_index": 12}, {"index": 14, "text": "On Friday, the president posted on Truth Social that he would not attend his son Donald Jr's wedding this weekend so he could remain in Washington DC \"during this important period of time\".", "start_ms": 157440, "end_ms": 169800, "paragraph_index": 13}, {"index": 15, "text": "Last week, Trump had said the truce was on \"massive life support\" after rejecting Tehran's demands, labelling them \"totally unacceptable\".", "start_ms": 169800, "end_ms": 179592, "paragraph_index": 14}, {"index": 16, "text": "The US has blockaded Iranian ports since 13 April.", "start_ms": 179592, "end_ms": 184632, "paragraph_index": 15}, {"index": 17, "text": "On Saturday, US Central Command (Centcom) said it had redirected 100 vessels, disabled four, and allowed 26 humanitarian aid ships to pass since the blockade began.", "start_ms": 184632, "end_ms": 198384, "paragraph_index": 16}, {"index": 18, "text": "Centcom commander Admiral Brad Cooper said its forces had been \"highly effective\" in \"allowing zero trade into and out of Iranian ports which has squeezed Iran economically\".", "start_ms": 198384, "end_ms": 210216, "paragraph_index": 17}, {"index": 19, "text": "Meanwhile, Iran has claimed military control of an area around the Strait of Hormuz, and has said all transit through the strait \"requires coordination with and authorisation from the Persian Gulf Strait Authority\".", "start_ms": 210216, "end_ms": 224328, "paragraph_index": 18}, {"index": 20, "text": "The US and Gulf allies have repeatedly rejected Iranian attempts to assert control over the strait, and the US has told ships not to comply with Iran's rules.", "start_ms": 224328, "end_ms": 235632, "paragraph_index": 19}], "total_duration_ms": 235632};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "on": "在", "in": "在", "has": "有", "said": "说", "to": "到", "us": "我们", "iran": "伊朗", "had": "有", "with": "与", "he": "他", "iranian": "伊朗的", "agreement": "协议", "been": "已经", "be": "是", "strait": "海峡", "trump": "特朗普", "an": "一个", "details": "细节", "deal": "协议", "would": "将", "saturday": "星期六", "that": "那个", "not": "不", "was": "是", "president": "总统", "further": "进一步的", "baqaei": "巴卡埃", "final": "最终", "gulf": "海湾", "since": "自从", "washington": "华盛顿", "have": "有", "donald": "唐纳德", "largely": "很大程度上", "negotiated": "谈判的", "will": "将", "announced": "宣布", "hormuz": "霍尔木兹", "foreign": "外交", "ministry": "外交部", "spokesman": "发言人", "esmaeil": "伊斯梅尔", "told": "告诉", "state": "国家", "television": "电视", "last": "最后", "week": "周", "but": "但是", "reached": "达成", "social": "社交的", "media": "媒体", "very": "非常", "call": "呼吁", "united": "联合", "peace": "和平", "states": "国家", "also": "也", "which": "哪个", "any": "任何", "from": "来自", "israel": "以色列", "strikes": "袭击", "april": "四月", "talks": "会谈", "over": "超过", "iran's": "伊朗的", "so": "所以", "could": "可能", "after": "之后", "friday": "星期五", "military": "军事", "this": "这个", "ports": "港口", "ships": "舰船", "control": "控制", "says": "表示", "soon": "很快", "include": "包括", "reopening": "重新开放", "without": "没有", "giving": "给予", "earlier": "较早", "positions": "立场", "warned": "警告", "did": "做了", "mean": "意味着", "key": "关键", "issues": "问题", "accused": "被指控", "americans": "美国人", "contradictory": "矛盾的", "good": "良好", "leaders": "领导人", "qatar": "卡塔尔", "others": "其他", "about": "关于", "subject": "主题", "between": "之间", "america": "美国", "islamic": "伊斯兰", "various": "各种", "other": "其他", "countries": "国家", "as": "作为", "listed": "列出", "aspects": "方面", "are": "是", "currently": "目前", "being": "正在", "discussed": "讨论", "shortly": "不久", "israeli": "以色列的", "prime": "首相", "minister": "部长", "benjamin": "本雅明", "netanyahu": "内塔尼亚胡", "went": "去", "well": "好", "given": "给定", "insisted": "坚持", "absolutely": "绝对", "prevent": "防止", "nuclear": "核的", "weapon": "武器", "launched": "发起", "february": "二月", "conflict": "冲突", "across": "跨越", "middle": "中间", "east": "东部", "responded": "回应", "by": "被", "launching": "发起", "attacks": "袭击", "agreed": "同意", "early": "早期的", "then": "然后", "tehran": "德黑兰", "engaged": "交战", "long-term": "长期的", "speaking": "发言", "described": "描述", "saying": "说", "reach": "达到", "framework": "框架", "points": "水平", "they": "它们", "were": "是", "process": "过程", "held": "举行", "within": "在内部", "days": "天", "can": "可以", "new": "新的", "sense": "感觉", "comes": "到来", "mood": "情绪", "appeared": "出现", "officials": "官员", "briefing": "简报", "administration": "政府", "preparing": "准备", "for": "为了", "fresh": "新的", "round": "轮", "although": "虽然", "no": "没有", "decision": "决定", "made": "做出", "posted": "发布", "truth": "真相", "attend": "出席", "his": "他的", "weekend": "周末", "remain": "仍然", "dc": "华盛顿特区", "during": "在期间", "important": "重要", "period": "时期", "time": "时间", "life": "生活", "support": "支持", "tehran's": "德黑兰的", "demands": "要求", "them": "他们", "totally": "完全地", "unacceptable": "不可接受", "blockaded": "封锁", "command": "指挥", "it": "它", "vessels": "船只", "disabled": "残疾的", "four": "四", "allowed": "允许", "humanitarian": "人道主义的", "aid": "援助", "pass": "通过", "began": "开始", "cooper": "库珀", "its": "它的", "forces": "力量", "highly": "高度", "allowing": "允许", "trade": "贸易", "into": "进入", "out": "出来", "economically": "经济上", "meanwhile": "与此同时", "claimed": "声称", "area": "区域", "around": "在...周围", "all": "所有", "through": "通过", "coordination": "协调", "persian": "波斯", "authority": "权威", "allies": "盟友", "repeatedly": "反复地", "rejected": "拒绝", "rules": "规则", "memorandum": "备忘录", "understanding": "谅解", "centcom": "中央司令部", "converging": "汇聚", "agreements": "协议", "statements": "声明", "saudi": "沙特", "arabia": "阿拉伯", "arab": "阿拉伯", "emirates": "酋长国", "pertaining": "关于", "republic": "共和国", "obtaining": "获得", "wide-ranging": "广泛的", "sparking": "引发", "us-allied": "美国盟友", "intention": "意图", "form": "形成", "consisting": "由…组成", "finalising": "最终确定", "ultimately": "最终", "soured": "恶化", "anonymous": "匿名的", "son": "儿子", "jr's": "小", "wedding": "婚礼", "truce": "停火", "massive": "大规模的", "rejecting": "拒绝", "labelling": "标签化", "central": "中央的", "redirected": "重新定向", "commander": "指挥官", "admiral": "海军上将", "brad": "布拉德", "effective": "有效的", "zero": "零", "squeezed": "挤压", "transit": "过境", "requires": "需要", "authorisation": "授权", "attempts": "尝试", "assert": "声称", "comply": "遵守"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
