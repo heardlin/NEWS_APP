@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-24</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-24</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/5305/live/6c77b5c0-5779-11f1-bafe-434e6ec4ac4b.jpg" alt="Starmer 'appalled' by case of boys spared jail after raping teenage girls" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Starmer 'appalled' by case of boys spared jail after raping teenage girls</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c332ljdkd81o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-24.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Prime Minister Sir Keir Starmer has described a case in which three teenage boys were spared <span class="keyword" data-word="custodial" data-phonetic="/kʌˈstəʊdiəl/" data-pos="adj." data-def="监禁的，拘留的" data-def-en="relating to or involving imprisonment">custodial</span> sentences over the rape of two girls as "<span class="keyword" data-word="appalling" data-phonetic="/əˈpɔːlɪŋ/" data-pos="adj." data-def="令人震惊的，骇人听闻的" data-def-en="causing shock, horror, or disgust">appalling</span>".</span></p>
+        <p class="cn">英国首相基尔·斯塔默爵士（Sir Keir Starmer）将三名青少年因强奸两名女孩而免于监禁判决的案件描述为“骇人听闻”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">He added that it was "right" that the sentences given by a judge at Southampton Crown Court were being reviewed by the attorney general.</span></p>
+        <p class="cn">他补充说，总检察长正在审查南安普顿皇家法院（Southampton Crown Court）一名法官作出的判决，这是“正确的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Two girls, then aged 15 and 14, were raped in separate incidents in Fordingbridge, Hampshire, in November 2024 and January 2025, by two 14-year-olds.</span> <span class="sentence" data-sentence-index="3">Another boy, then 13, was also <span class="keyword" data-word="convicted" data-phonetic="/kənˈvɪktɪd/" data-pos="v. (past participle)" data-def="被判有罪的" data-def-en="declared guilty of a criminal offense">convicted</span> for his involvement in the second attack.</span></p>
+        <p class="cn">两名女孩（当时分别为15岁和14岁）于2024年11月和2025年1月在汉普郡（Hampshire）福丁布里奇（Fordingbridge）分别被两名14岁男孩强奸。另一名当时13岁的男孩也因参与第二次袭击而被定罪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Sir Keir said the girls have "shown extraordinary bravery and strength in <span class="keyword" data-word="heinous" data-phonetic="/ˈheɪnəs/" data-pos="adj." data-def="极其邪恶的，可憎的" data-def-en="utterly odious or wicked">heinous</span> circumstances".</span></p>
+        <p class="cn">基尔爵士表示，这些女孩“在骇人听闻的情况下展现了非凡的勇气和力量”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">At a sentencing hearing for the boys on Thursday, Judge Nicholas Rowland said he wanted to "avoid criminalising these children unnecessarily".</span></p>
+        <p class="cn">在周四对这些男孩的量刑听证会上，法官尼古拉斯·罗兰（Nicholas Rowland）表示，他希望“避免不必要地将这些孩子定罪”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Instead, the boys were given Youth Rehabilitation Orders (YROs) - community sentences given to children, which can include unpaid work, curfews or a requirement to undertake treatment.</span></p>
+        <p class="cn">相反，这些男孩被判处了青少年康复令（Youth Rehabilitation Orders, YROs）——针对儿童的社区刑罚，可能包括无偿工作、宵禁或接受治疗的要求。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">But one of their victims told the BBC's Sunday with Laura Kuenssberg programme that the decision was like a "rock straight in my face".</span></p>
+        <p class="cn">但其中一名受害者告诉BBC的《周日与劳拉·库恩斯伯格》节目，这一决定就像“一块石头直接砸在我脸上”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">The girl, now 16, said it "almost made it seem as if what the boys did was not OK, but it was OK in the eyes of the law because they were still children".</span></p>
+        <p class="cn">这名现年16岁的女孩说，这“几乎让人觉得男孩们的行为虽然不对，但在法律眼中却是可以的，因为他们还是孩子”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">She and her family want the sentences to be changed, and the boys sent to jail, saying the sentences amounted to a "slap on the wrist".</span></p>
+        <p class="cn">她和家人希望改变判决，并将这些男孩送进监狱，称这些判决相当于“轻轻拍了一下手腕”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">"Why did I sit and put myself through the pain of going to court, going through a trial, reliving everything because of evidence and watching it all happen again?" the girl said.</span></p>
+        <p class="cn">女孩说：“为什么我要坐下来，忍受上法庭、经历审判、因为证据而重温一切、看着一切再次发生的痛苦？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The teenager was 15 when she was raped in an underpass by the River Avon.</span></p>
+        <p class="cn">这名少女在埃文河（River Avon）附近的地下通道被强奸时年仅15岁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">She had travelled to meet one of the boys for the first time in November 2024 after he had begun a "relationship" with her on social media platform Snapchat.</span> <span class="sentence" data-sentence-index="13">The second victim was raped in a field.</span></p>
+        <p class="cn">2024年11月，她在社交媒体平台Snapchat上与其中一名男孩开始“交往”后，第一次去见他。第二名受害者是在一片田野中被强奸的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">The boys filmed the rapes on their phones and later shared some of the footage online.</span></p>
+        <p class="cn">这些男孩用手机拍摄了强奸过程，后来在网上分享了部分视频。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">In a post on X responding to the BBC interview, the prime minister said: "This is a <span class="keyword" data-word="harrowing" data-phonetic="/ˈhærəʊɪŋ/" data-pos="adj." data-def="令人痛苦的，折磨人的" data-def-en="extremely distressing or painful">harrowing</span> and brave <span class="keyword" data-word="testimony" data-phonetic="/ˈtestɪməni/" data-pos="n." data-def="证词，证言" data-def-en="a formal written or spoken statement given in a court of law">testimony</span>.</span></p>
+        <p class="cn">在回应BBC采访的X平台帖子中，首相表示：“这是一份令人痛心且勇敢的证词。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">"The girls at the heart of this case have shown extraordinary bravery and strength in <span class="keyword" data-word="heinous" data-phonetic="/ˈheɪnəs/" data-pos="adj." data-def="极其邪恶的，可憎的" data-def-en="utterly odious or wicked">heinous</span> circumstances.</span></p>
+        <p class="cn">“本案核心的女孩们在骇人听闻的情况下展现了非凡的勇气和力量。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">"This is an <span class="keyword" data-word="appalling" data-phonetic="/əˈpɔːlɪŋ/" data-pos="adj." data-def="令人震惊的，骇人听闻的" data-def-en="causing shock, horror, or disgust">appalling</span> case and it is right that law officers are urgently reviewing the sentences."</span></p>
+        <p class="cn">“这是一个骇人听闻的案件，法律官员正在紧急审查判决，这是正确的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">At the sentencing, the judge stressed the "seriousness" of the crimes and said the filming of the assaults made them even "more serious".</span> <span class="sentence" data-sentence-index="19">He also praised the boys for how they had behaved during the trial.</span></p>
+        <p class="cn">在量刑时，法官强调了犯罪的“严重性”，并表示拍摄袭击行为使情况“更加严重”。他还赞扬了男孩们在审判期间的表现。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">The attorney general will have 28 days to decide whether the sentences should be referred to the Court of Appeal.</span></p>
+        <p class="cn">总检察长将有28天时间决定是否将判决提交上诉法院（Court of Appeal）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Cabinet Minister Darren Jones told the BBC he expects the decision to be made quicker than that, saying: "We all want to look at this urgently."</span></p>
+        <p class="cn">内阁大臣达伦·琼斯（Darren Jones）告诉BBC，他预计决定会比这更快做出，他说：“我们都希望紧急处理此事。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">He said the girls "deserve justice, as do their families, both for them but also for other girls that are put in that position".</span></p>
+        <p class="cn">他说，这些女孩“理应得到正义，她们的家人也应如此，不仅为了她们，也为了其他处于同样境地的女孩”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">Two of the <span class="keyword" data-word="convicted" data-phonetic="/kənˈvɪktɪd/" data-pos="v. (past participle)" data-def="被判有罪的" data-def-en="declared guilty of a criminal offense">convicted</span> rapists are now aged 15, while the other is 14.</span></p>
+        <p class="cn">两名被定罪的强奸犯现在15岁，另一名14岁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">One of the 15-year-olds was given a three-year YRO with 180 days of intensive supervision and surveillance for the rape of each of the two girls and two <span class="keyword" data-word="indecent" data-phonetic="/ɪnˈdiːsnt/" data-pos="adj." data-def="下流的，猥亵的" data-def-en="offending against moral standards; obscene">indecent</span> images charges.</span></p>
+        <p class="cn">其中一名15岁男孩因强奸两名女孩各一次以及两项猥亵图像指控，被判处三年YRO，包括180天的密集监督和监视。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">The other 15-year-old was given the same sentence for three charges of rape against each of the victims and four counts of taking <span class="keyword" data-word="indecent" data-phonetic="/ɪnˈdiːsnt/" data-pos="adj." data-def="下流的，猥亵的" data-def-en="offending against moral standards; obscene">indecent</span> images.</span></p>
+        <p class="cn">另一名15岁男孩因对每名受害者犯下三项强奸罪和四项拍摄猥亵图像罪，被判处相同刑罚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The 14-year-old boy was given an 18-month YRO for charges of rape in the January 2025 attack by encouraging one of the other defendants.</span></p>
+        <p class="cn">14岁男孩因在2025年1月的袭击中鼓励另一名被告犯下强奸罪，被判处18个月YRO。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">The boys would not have been sent to prison if they had been given <span class="keyword" data-word="custodial" data-phonetic="/kʌˈstəʊdiəl/" data-pos="adj." data-def="监禁的，拘留的" data-def-en="relating to or involving imprisonment">custodial</span> sentences.</span> <span class="sentence" data-sentence-index="28">People who are aged under 18 serve <span class="keyword" data-word="custodial" data-phonetic="/kʌˈstəʊdiəl/" data-pos="adj." data-def="监禁的，拘留的" data-def-en="relating to or involving imprisonment">custodial</span> sentences in secure centres for children.</span></p>
+        <p class="cn">如果这些男孩被判处监禁，他们也不会被送进监狱。18岁以下的人在儿童安全中心服刑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Reform UK MP Robert Jenrick said justice had not been done in the case.</span> <span class="sentence" data-sentence-index="30">"If a judge has made a very bad error, which I think has happened in this case, they should be accountable for it," he told the BBC.</span></p>
+        <p class="cn">改革英国党（Reform UK）议员罗伯特·詹里克（Robert Jenrick）表示，此案未实现正义。他告诉BBC：“如果法官犯了一个非常严重的错误——我认为此案就是如此——他们应该为此负责。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="31">Conservative leader Kemi Badenoch said on Friday she was "sickened" by the case, adding: "The crime could hardly be graver, yet the punishment was no punishment at all."</span></p>
+        <p class="cn">保守党领袖凯米·巴德诺赫（Kemi Badenoch）周五表示，她对这起案件感到“恶心”，并补充说：“罪行几乎不可能更严重，但惩罚却根本不是惩罚。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">Ben Maguire MP, Lib Dem Attorney general spokesperson, described the case as "utterly horrific", adding that the review must be conducted "swiftly and decisively".</span></p>
+        <p class="cn">自由民主党（Lib Dem）总检察长发言人本·马奎尔（Ben Maguire）议员将这一案件描述为“极其恐怖”，并补充说审查必须“迅速而果断”地进行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">Dame Rachel de Souza, the Children's Commissioner for England, said she was "deeply concerned" and that her office would reach out to the families to offer support.</span></p>
+        <p class="cn">英格兰儿童事务专员雷切尔·德·索萨女爵士（Dame Rachel de Souza）表示，她“深感担忧”，她的办公室将联系这些家庭提供支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">"I don't want any young girl in this country to feel that can happen and not be addressed properly," Dame Rachel said.</span></p>
+        <p class="cn">雷切尔女爵士说：“我不希望这个国家的任何年轻女孩觉得这种事可能发生而得不到妥善处理。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">A government spokesperson said: "We share the public's shock at the details of this horrific case, and our thoughts are with the young victims during this distressing time.</span></p>
+        <p class="cn">一位政府发言人表示：“我们与公众一样对这件可怕案件的细节感到震惊，在这个痛苦时刻，我们与年轻受害者同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">"The law officers are urgently reviewing the case with the utmost care and attention."</span></p>
+        <p class="cn">“法律官员正在以最大的谨慎和关注紧急审查此案。”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">appalling</span>
+        <button class="kw-speak-btn" data-word="appalling" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈpɔːlɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人震惊的，骇人听闻的</p>
+      <p class="kw-def-en">causing shock, horror, or disgust</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Sir Keir Starmer has described a case in which three teenage boys were spared custodial sentences over the rape of two girls as 'appalling'.&rdquo;</p>
+      <p class="kw-ctx-cn">首相基尔·斯塔默爵士将三名青少年男孩因强奸两名女孩而免于监禁判决的案件描述为“骇人听闻”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">custodial</span>
+        <button class="kw-speak-btn" data-word="custodial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kʌˈstəʊdiəl/ adj.</span>
+      </div>
+      <p class="kw-def">监禁的，拘留的</p>
+      <p class="kw-def-en">relating to or involving imprisonment</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Sir Keir Starmer has described a case in which three teenage boys were spared custodial sentences over the rape of two girls as 'appalling'.&rdquo;</p>
+      <p class="kw-ctx-cn">首相基尔·斯塔默爵士将三名青少年男孩因强奸两名女孩而免于监禁判决的案件描述为“骇人听闻”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">heinous</span>
+        <button class="kw-speak-btn" data-word="heinous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈheɪnəs/ adj.</span>
+      </div>
+      <p class="kw-def">极其邪恶的，可憎的</p>
+      <p class="kw-def-en">utterly odious or wicked</p>
+      <p class="kw-ctx">&ldquo;Sir Keir said the girls have 'shown extraordinary bravery and strength in heinous circumstances'.&rdquo;</p>
+      <p class="kw-ctx-cn">基尔爵士表示，这些女孩“在极其邪恶的环境中展现了非凡的勇气和力量”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">convicted</span>
+        <button class="kw-speak-btn" data-word="convicted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈvɪktɪd/ v. (past participle)</span>
+      </div>
+      <p class="kw-def">被判有罪的</p>
+      <p class="kw-def-en">declared guilty of a criminal offense</p>
+      <p class="kw-ctx">&ldquo;Another boy, then 13, was also convicted for his involvement in the second attack.&rdquo;</p>
+      <p class="kw-ctx-cn">另一名当时13岁的男孩也因参与第二次袭击而被判有罪。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">testimony</span>
+        <button class="kw-speak-btn" data-word="testimony" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtestɪməni/ n.</span>
+      </div>
+      <p class="kw-def">证词，证言</p>
+      <p class="kw-def-en">a formal written or spoken statement given in a court of law</p>
+      <p class="kw-ctx">&ldquo;In a post on X responding to the BBC interview, the prime minister said: 'This is a harrowing and brave testimony.'&rdquo;</p>
+      <p class="kw-ctx-cn">在回应BBC采访的X帖子中，首相表示：“这是一个令人痛苦且勇敢的证词。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">harrowing</span>
+        <button class="kw-speak-btn" data-word="harrowing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhærəʊɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人痛苦的，折磨人的</p>
+      <p class="kw-def-en">extremely distressing or painful</p>
+      <p class="kw-ctx">&ldquo;In a post on X responding to the BBC interview, the prime minister said: 'This is a harrowing and brave testimony.'&rdquo;</p>
+      <p class="kw-ctx-cn">在回应BBC采访的X帖子中，首相表示：“这是一个令人痛苦且勇敢的证词。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">curfew</span>
+        <button class="kw-speak-btn" data-word="curfew" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɜːfjuː/ n.</span>
+      </div>
+      <p class="kw-def">宵禁，宵禁时间</p>
+      <p class="kw-def-en">a regulation requiring people to remain indoors between specified hours</p>
+      <p class="kw-ctx">&ldquo;Instead, the boys were given Youth Rehabilitation Orders (YROs) - community sentences given to children, which can include unpaid work, curfews or a requirement to undertake treatment.&rdquo;</p>
+      <p class="kw-ctx-cn">相反，这些男孩被判处青少年康复令——针对儿童的社区刑罚，可能包括无偿工作、宵禁或接受治疗的要求。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">indecent</span>
+        <button class="kw-speak-btn" data-word="indecent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈdiːsnt/ adj.</span>
+      </div>
+      <p class="kw-def">下流的，猥亵的</p>
+      <p class="kw-def-en">offending against moral standards; obscene</p>
+      <p class="kw-ctx">&ldquo;One of the 15-year-olds was given a three-year YRO with 180 days of intensive supervision and surveillance for the rape of each of the two girls and two indecent images charges.&rdquo;</p>
+      <p class="kw-ctx-cn">其中一名15岁少年因强奸两名女孩各一项罪名以及两项猥亵图像指控，被判处三年青少年康复令，包括180天强化监督和监视。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Prime Minister Sir Keir Starmer has described a case in which three teenage boys were spared custodial sentences over the rape of two girls as \"appalling\".", "start_ms": 0, "end_ms": 10344, "paragraph_index": 0}, {"index": 1, "text": "He added that it was \"right\" that the sentences given by a judge at Southampton Crown Court were being reviewed by the attorney general.", "start_ms": 10344, "end_ms": 18624, "paragraph_index": 1}, {"index": 2, "text": "Two girls, then aged 15 and 14, were raped in separate incidents in Fordingbridge, Hampshire, in November 2024 and January 2025, by two 14-year-olds.", "start_ms": 18624, "end_ms": 32472, "paragraph_index": 2}, {"index": 3, "text": "Another boy, then 13, was also convicted for his involvement in the second attack.", "start_ms": 32472, "end_ms": 39144, "paragraph_index": 2}, {"index": 4, "text": "Sir Keir said the girls have \"shown extraordinary bravery and strength in heinous circumstances\".", "start_ms": 39144, "end_ms": 46032, "paragraph_index": 3}, {"index": 5, "text": "At a sentencing hearing for the boys on Thursday, Judge Nicholas Rowland said he wanted to \"avoid criminalising these children unnecessarily\".", "start_ms": 46032, "end_ms": 55752, "paragraph_index": 4}, {"index": 6, "text": "Instead, the boys were given Youth Rehabilitation Orders (YROs) - community sentences given to children, which can include unpaid work, curfews or a requirement to undertake treatment.", "start_ms": 55752, "end_ms": 69720, "paragraph_index": 5}, {"index": 7, "text": "But one of their victims told the BBC's Sunday with Laura Kuenssberg programme that the decision was like a \"rock straight in my face\".", "start_ms": 69720, "end_ms": 78240, "paragraph_index": 6}, {"index": 8, "text": "The girl, now 16, said it \"almost made it seem as if what the boys did was not OK, but it was OK in the eyes of the law because they were still children\".", "start_ms": 78240, "end_ms": 88920, "paragraph_index": 7}, {"index": 9, "text": "She and her family want the sentences to be changed, and the boys sent to jail, saying the sentences amounted to a \"slap on the wrist\".", "start_ms": 88920, "end_ms": 98040, "paragraph_index": 8}, {"index": 10, "text": "\"Why did I sit and put myself through the pain of going to court, going through a trial, reliving everything because of evidence and watching it all happen again?\" the girl said.", "start_ms": 98040, "end_ms": 108984, "paragraph_index": 9}, {"index": 11, "text": "The teenager was 15 when she was raped in an underpass by the River Avon.", "start_ms": 108984, "end_ms": 114624, "paragraph_index": 10}, {"index": 12, "text": "She had travelled to meet one of the boys for the first time in November 2024 after he had begun a \"relationship\" with her on social media platform Snapchat.", "start_ms": 114624, "end_ms": 125304, "paragraph_index": 11}, {"index": 13, "text": "The second victim was raped in a field.", "start_ms": 125304, "end_ms": 128784, "paragraph_index": 11}, {"index": 14, "text": "The boys filmed the rapes on their phones and later shared some of the footage online.", "start_ms": 128784, "end_ms": 134592, "paragraph_index": 12}, {"index": 15, "text": "In a post on X responding to the BBC interview, the prime minister said: \"This is a harrowing and brave testimony.", "start_ms": 134592, "end_ms": 143304, "paragraph_index": 13}, {"index": 16, "text": "\"The girls at the heart of this case have shown extraordinary bravery and strength in heinous circumstances.", "start_ms": 143304, "end_ms": 150480, "paragraph_index": 14}, {"index": 17, "text": "\"This is an appalling case and it is right that law officers are urgently reviewing the sentences.\"", "start_ms": 150480, "end_ms": 157200, "paragraph_index": 15}, {"index": 18, "text": "At the sentencing, the judge stressed the \"seriousness\" of the crimes and said the filming of the assaults made them even \"more serious\".", "start_ms": 157200, "end_ms": 165984, "paragraph_index": 16}, {"index": 19, "text": "He also praised the boys for how they had behaved during the trial.", "start_ms": 165984, "end_ms": 170856, "paragraph_index": 16}, {"index": 20, "text": "The attorney general will have 28 days to decide whether the sentences should be referred to the Court of Appeal.", "start_ms": 170856, "end_ms": 178416, "paragraph_index": 17}, {"index": 21, "text": "Cabinet Minister Darren Jones told the BBC he expects the decision to be made quicker than that, saying: \"We all want to look at this urgently.\"", "start_ms": 178416, "end_ms": 188424, "paragraph_index": 18}, {"index": 22, "text": "He said the girls \"deserve justice, as do their families, both for them but also for other girls that are put in that position\".", "start_ms": 188424, "end_ms": 197016, "paragraph_index": 19}, {"index": 23, "text": "Two of the convicted rapists are now aged 15, while the other is 14.", "start_ms": 197016, "end_ms": 203160, "paragraph_index": 20}, {"index": 24, "text": "One of the 15-year-olds was given a three-year YRO with 180 days of intensive supervision and surveillance for the rape of each of the two girls and two indecent images charges.", "start_ms": 203160, "end_ms": 215592, "paragraph_index": 21}, {"index": 25, "text": "The other 15-year-old was given the same sentence for three charges of rape against each of the victims and four counts of taking indecent images.", "start_ms": 215592, "end_ms": 225312, "paragraph_index": 22}, {"index": 26, "text": "The 14-year-old boy was given an 18-month YRO for charges of rape in the January 2025 attack by encouraging one of the other defendants.", "start_ms": 225312, "end_ms": 236160, "paragraph_index": 23}, {"index": 27, "text": "The boys would not have been sent to prison if they had been given custodial sentences.", "start_ms": 236160, "end_ms": 241968, "paragraph_index": 24}, {"index": 28, "text": "People who are aged under 18 serve custodial sentences in secure centres for children.", "start_ms": 241968, "end_ms": 248784, "paragraph_index": 24}, {"index": 29, "text": "Reform UK MP Robert Jenrick said justice had not been done in the case.", "start_ms": 248784, "end_ms": 254784, "paragraph_index": 25}, {"index": 30, "text": "\"If a judge has made a very bad error, which I think has happened in this case, they should be accountable for it,\" he told the BBC.", "start_ms": 254784, "end_ms": 263736, "paragraph_index": 25}, {"index": 31, "text": "Conservative leader Kemi Badenoch said on Friday she was \"sickened\" by the case, adding: \"The crime could hardly be graver, yet the punishment was no punishment at all.\"", "start_ms": 263736, "end_ms": 274800, "paragraph_index": 26}, {"index": 32, "text": "Ben Maguire MP, Lib Dem Attorney general spokesperson, described the case as \"utterly horrific\", adding that the review must be conducted \"swiftly and decisively\".", "start_ms": 274800, "end_ms": 286632, "paragraph_index": 27}, {"index": 33, "text": "Dame Rachel de Souza, the Children's Commissioner for England, said she was \"deeply concerned\" and that her office would reach out to the families to offer support.", "start_ms": 286632, "end_ms": 297024, "paragraph_index": 28}, {"index": 34, "text": "\"I don't want any young girl in this country to feel that can happen and not be addressed properly,\" Dame Rachel said.", "start_ms": 297024, "end_ms": 304464, "paragraph_index": 29}, {"index": 35, "text": "A government spokesperson said: \"We share the public's shock at the details of this horrific case, and our thoughts are with the young victims during this distressing time.", "start_ms": 304464, "end_ms": 315096, "paragraph_index": 30}, {"index": 36, "text": "\"The law officers are urgently reviewing the case with the utmost care and attention.\"", "start_ms": 315096, "end_ms": 321000, "paragraph_index": 31}], "total_duration_ms": 321000};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "in": "在", "to": "到", "was": "是", "for": "为了", "said": "说", "that": "那个", "case": "案例", "boys": "男孩们", "sentences": "刑期", "this": "这个", "girls": "女孩", "he": "他", "it": "它", "given": "给定", "at": "在", "be": "是", "two": "两个", "by": "被", "on": "在", "are": "是", "were": "是", "with": "与", "she": "她", "had": "有", "rape": "强奸", "as": "作为", "judge": "法官", "have": "有", "children": "儿童", "one": "一个", "made": "做出", "not": "不", "they": "它们", "is": "是", "other": "其他", "minister": "部长", "has": "有", "which": "哪个", "court": "法庭", "attorney": "检察官", "general": "总", "aged": "年龄为", "raped": "强奸了", "also": "也", "but": "但是", "their": "他们的", "victims": "受害者", "told": "告诉", "girl": "女孩", "if": "如果", "law": "法律", "her": "她的", "want": "想要", "all": "所有", "an": "一个", "bbc": "英国广播公司", "urgently": "紧急地", "charges": "指控", "been": "已经", "prime": "首相", "sir": "爵士", "keir": "基尔", "described": "描述", "three": "三个", "right": "正确", "then": "然后", "november": "十一月", "january": "一月", "boy": "男孩", "second": "第二", "attack": "袭击", "shown": "表现出", "circumstances": "情况", "sentencing": "判刑", "can": "可以", "decision": "决定", "now": "现在", "did": "做了", "ok": "好的", "because": "因为", "sent": "派遣", "saying": "说", "put": "提出", "through": "通过", "going": "将要", "trial": "审判", "happen": "发生", "time": "时间", "officers": "官员", "reviewing": "审查", "them": "他们", "during": "在期间", "days": "天", "should": "应该", "we": "我们", "justice": "正义", "families": "家庭", "yro": "青年康复令", "each": "每个", "year-old": "岁的", "would": "将", "mp": "议员", "adding": "补充说", "punishment": "惩罚", "spokesperson": "发言人", "horrific": "可怕的", "dame": "女爵士", "rachel": "雷切尔", "young": "年轻的", "starmer": "斯塔默", "teenage": "青少年的", "over": "超过", "added": "补充", "southampton": "南安普顿", "crown": "王冠", "being": "正在", "reviewed": "审查过的", "separate": "单独的", "incidents": "事件", "fordingbridge": "福丁布里奇", "hampshire": "汉普郡", "another": "另一个", "his": "他的", "involvement": "参与", "hearing": "听证会", "thursday": "星期四", "nicholas": "尼古拉斯", "rowland": "罗兰", "wanted": "想要", "avoid": "避免", "criminalising": "定罪", "these": "这些", "instead": "反而", "youth": "青年", "orders": "命令", "community": "社区", "include": "包括", "unpaid": "未支付的", "work": "工作", "or": "或者", "bbc's": "英国广播公司的", "sunday": "星期日", "laura": "劳拉", "kuenssberg": "昆斯伯格", "programme": "节目", "like": "像", "rock": "岩石", "straight": "直接", "my": "我的", "face": "面临", "almost": "几乎", "what": "什么", "eyes": "关注", "still": "仍然", "family": "家庭", "changed": "改变", "amounted": "相当于", "why": "为何", "pain": "痛苦", "everything": "一切", "evidence": "证据", "watching": "关注", "again": "再次", "when": "当", "underpass": "地下通道", "river": "河", "avon": "埃文河", "travelled": "旅行", "meet": "会见", "first": "第一轮", "after": "之后", "begun": "开始", "relationship": "关系", "social": "社交的", "media": "媒体", "platform": "平台", "snapchat": "色拉布", "victim": "受害者", "field": "领域", "filmed": "拍摄了", "rapes": "强奸案", "phones": "电话", "later": "后来", "shared": "分享", "some": "一些", "footage": "视频片段", "online": "在线", "post": "职位", "responding": "回应", "interview": "采访", "brave": "勇敢的", "heart": "核心", "stressed": "强调", "seriousness": "严重性", "crimes": "罪行", "filming": "拍摄", "assaults": "袭击", "even": "甚至", "more": "更多", "serious": "严重的", "praised": "赞扬", "how": "如何", "will": "将", "decide": "决定", "whether": "是否", "referred": "提及", "appeal": "呼吁", "cabinet": "内阁", "darren": "达伦", "jones": "琼斯", "expects": "期望", "than": "比", "look": "看起来", "deserve": "应得", "do": "做", "both": "两者", "position": "立场", "while": "而", "three-year": "三年的", "same": "相同", "sentence": "判决", "against": "反对", "four": "四", "counts": "计票", "taking": "采取", "month": "月份", "encouraging": "鼓励", "prison": "监狱", "people": "人们", "who": "谁", "under": "在...之下", "serve": "服务", "centres": "中心", "reform": "改革", "uk": "英国", "done": "完成", "very": "非常", "bad": "糟糕", "error": "错误", "think": "认为", "happened": "发生", "conservative": "保守党", "leader": "领导人", "kemi": "凯米", "badenoch": "巴德诺赫", "friday": "星期五", "crime": "犯罪", "could": "可能", "yet": "尚未", "no": "没有", "ben": "本", "lib": "自由", "dem": "民主党", "utterly": "完全地", "review": "审查", "must": "必须", "swiftly": "迅速", "de": "实际上", "commissioner": "专员", "england": "英格兰", "deeply": "深深地", "concerned": "担忧的", "office": "办公室", "reach": "达到", "out": "出来", "offer": "提供", "support": "支持", "don't": "不要", "any": "任何", "country": "国家", "feel": "感觉", "properly": "妥善", "government": "政府", "share": "分享", "public's": "公众的", "shock": "震惊", "details": "细节", "our": "我们的", "thoughts": "想法", "distressing": "令人痛苦的", "utmost": "极度的", "care": "照顾", "attention": "关注", "year-olds": "岁的人", "extraordinary": "非凡的", "bravery": "勇敢", "strength": "力量", "images": "图像", "spared": "幸免", "unnecessarily": "不必要地", "rehabilitation": "康复", "yros": "岁的人", "curfews": "宵禁", "requirement": "要求", "undertake": "进行", "treatment": "治疗", "seem": "似乎", "jail": "监禁", "slap": "拍打", "wrist": "手腕", "sit": "坐", "myself": "我自己", "reliving": "重温", "teenager": "青少年", "behaved": "表现", "quicker": "更快", "rapists": "强奸犯", "intensive": "密集的", "supervision": "监督", "surveillance": "监视", "defendants": "被告", "secure": "安全的", "robert": "罗伯特", "jenrick": "詹里克", "accountable": "负责的", "sickened": "感到恶心", "hardly": "几乎不", "graver": "更严重", "maguire": "马奎尔", "conducted": "进行", "decisively": "果断地", "souza": "索萨", "children's": "儿童的", "addressed": "处理"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
