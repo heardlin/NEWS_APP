@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-27</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-27</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/1fe3/live/cd580120-59b7-11f1-a709-a756a39103f6.jpg" alt="'We are at risk of a lost generation': One in six young people will not be in work or training in five years without action, report warns" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>'We are at risk of a lost generation': One in six young people will not be in work or training in five years without action, report warns</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cy026x9jpd0o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-27.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">One in six young people will not be in education, employment or training within five years unless "<span class="keyword" data-word="urgent" data-phonetic="/ˈɜːrdʒənt/" data-pos="adj." data-def="紧急的，迫切的" data-def-en="requiring immediate action or attention">urgent</span>" action is taken, a major review has warned.</span></p>
+        <p class="cn">一项重大审查警告称，除非采取“紧急”行动，否则六分之一年轻人将在五年内无法接受教育、就业或培训。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The education, health and welfare systems are "no longer fit for purpose" in preparing young people for adult life, said its author former minister Alan Milburn.</span></p>
+        <p class="cn">该审查的作者、前部长艾伦·米尔本（Alan Milburn）表示，教育、健康和福利体系在帮助年轻人准备成年生活方面“已不再适用”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">"We are at risk of a lost generation," he warned, with the number of 16 to 24-year-olds out of work, education or training set to rise to 1.25 million by 2031.</span></p>
+        <p class="cn">他警告说：“我们面临失去一代人的风险。”到2031年，16至24岁失业、失学或未接受培训的年轻人数量将上升至125万。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The "first rung of the career ladder has <span class="keyword" data-word="thinned" data-phonetic="/θɪnd/" data-pos="v. (past tense of thin)" data-def="变少，变稀薄" data-def-en="became less dense or numerous">thinned</span>" and that for "too many young people it is now simply out of reach", Milburn is set to say in a speech later.</span></p>
+        <p class="cn">米尔本将在稍后的演讲中表示，“职业阶梯的第一级已经变薄”，对“太多年轻人来说，现在根本无法触及”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">"That places them in a hopeless <span class="keyword" data-word="catch-22" data-phonetic="/ˈkætʃ ˈtwɛnti tuː/" data-pos="n." data-def="进退两难的困境" data-def-en="a dilemma or difficult situation from which there is no escape because of mutually conflicting conditions">catch-22</span> where employers ask for work experience but the opportunities for young people to gain it have narrowed or gone," he will say.</span></p>
+        <p class="cn">他将说：“这让他们陷入绝望的‘第22条军规’：雇主要求工作经验，但年轻人获得经验的机会却已减少或消失。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">There are growing concerns over the number of young people not working.</span> <span class="sentence" data-sentence-index="6">Latest figures show the unemployment rate for 16 to 24-year-olds is 16.2%, the highest since 2014, and more than three times the broader unemployment rate of 5%.</span></p>
+        <p class="cn">人们对年轻人不工作的数量日益担忧。最新数据显示，16至24岁失业率为16.2%，为2014年以来最高，是整体失业率5%的三倍多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Milburn was tasked with investigating why so many young people are not in employment, education or training - known by the <span class="keyword" data-word="acronym" data-phonetic="/ˈækrənɪm/" data-pos="n." data-def="首字母缩略词" data-def-en="a word formed from the initial letters of other words">acronym</span> Neets.</span></p>
+        <p class="cn">米尔本受命调查为何如此多年轻人未就业、未接受教育或培训——这类人群被称为“尼特族”（Neets）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">According to the latest official UK figures, there were 957,000 young people classed as Neet from October to December 2025, equivalent to one in eight people in that age category.</span></p>
+        <p class="cn">根据英国官方最新数据，2025年10月至12月期间，有95.7万年轻人被归类为尼特族，相当于该年龄段每八人中就有一人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">More than half of those were deemed to be not looking for work.</span></p>
+        <p class="cn">其中超过一半被认为没有在找工作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Milburn warned that number could rise to 1.25 million, or one in six young people, in the next five years unless action was taken.</span></p>
+        <p class="cn">米尔本警告称，除非采取行动，否则这一数字在未来五年可能上升至125万，即六分之一年轻人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Work and Pensions Secretary Pat McFadden said he <span class="keyword" data-word="commissioned" data-phonetic="/kəˈmɪʃənd/" data-pos="v. (past tense of commission)" data-def="委托，任命" data-def-en="formally asked someone to do a piece of work">commissioned</span> the report to save a generation of young people from unemployment, welcoming its findings.</span></p>
+        <p class="cn">就业与养老金大臣帕特·麦克法登（Pat McFadden）表示，他委托撰写这份报告是为了拯救一代年轻人免于失业，并对调查结果表示欢迎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">"We are already taking action," he said, highlighting the government's plans to pay companies to hire young people and its moves to create more <span class="keyword" data-word="apprenticeships" data-phonetic="/əˈprentɪsʃɪps/" data-pos="n. (plural)" data-def="学徒期，学徒制" data-def-en="systems of training a new generation of practitioners of a trade or profession with on-the-job training and often some accompanying study">apprenticeships</span> .</span></p>
+        <p class="cn">他说：“我们已经在采取行动。”他强调了政府计划向雇佣年轻人的公司支付费用，以及增加学徒岗位的措施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">McFadden also said the government is focusing on "early <span class="keyword" data-word="intervention" data-phonetic="/ˌɪntərˈvenʃən/" data-pos="n." data-def="干预，介入" data-def-en="the action of becoming intentionally involved in a difficult situation to improve it or prevent it from getting worse">intervention</span>" measures such as special educational needs support and the removal of the two-child cap on benefits.</span> <span class="sentence" data-sentence-index="14">"But we know there is more to do," he added.</span></p>
+        <p class="cn">麦克法登还表示，政府正专注于“早期干预”措施，如特殊教育需求支持和取消福利二胎限制。“但我们知道还有更多工作要做，”他补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">The findings from the former Labour health secretary's review have been heavily trailed.</span> <span class="sentence" data-sentence-index="16">He told the BBC's Laura Kuenssberg that the government spends 25 times as much on benefits for young people than it does on supporting them into work.</span></p>
+        <p class="cn">这位前工党卫生大臣的审查结果已被广泛预告。他告诉BBC的劳拉·库恩斯伯格（Laura Kuenssberg），政府在年轻人福利上的支出是支持其就业支出的25倍。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">However, in his <span class="keyword" data-word="interim" data-phonetic="/ˈɪntərɪm/" data-pos="adj." data-def="临时的，过渡的" data-def-en="temporary or provisional">interim</span> report, he challenged the narrative that young people do not want to work, saying that 84% of Neets surveyed said they want a job or training.</span></p>
+        <p class="cn">然而，在他的中期报告中，他质疑了年轻人不想工作的说法，称84%接受调查的尼特族表示他们想要工作或培训。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">He argues young people are not to blame for the youth unemployment crisis.</span></p>
+        <p class="cn">他认为年轻人不应为青年失业危机负责。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">"This is not a failure of young people.</span> <span class="sentence" data-sentence-index="20">It is a failure of a system stuck in the past.</span> <span class="sentence" data-sentence-index="21">Whether it is education or health or welfare, that system fails to enable their participation in the labour market," he is expected to say in a speech later.</span></p>
+        <p class="cn">他预计将在稍后的演讲中说：“这不是年轻人的失败。这是一个固守过去的体系的失败。无论是教育、健康还是福利，这个体系都无法让他们参与劳动力市场。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">"Instead, all too often it ends up putting young people on a path to a life not in jobs but on benefits.</span> <span class="sentence" data-sentence-index="23">This should be the priority for the government.</span> <span class="sentence" data-sentence-index="24">It should be the priority for all of us."</span></p>
+        <p class="cn">“相反，它往往最终将年轻人引向依赖福利而非工作的生活。这应该是政府的优先事项。也应该是我们所有人的优先事项。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="25">Zaynah, 24, has suffered from physical ill health and has not had a job since leaving college.</span> <span class="sentence" data-sentence-index="26">Over the past year, she has applied for more than 200 jobs but said she never heard back from any of the employers.</span></p>
+        <p class="cn">24岁的扎伊娜（Zaynah）因身体健康问题，自离开大学后一直未找到工作。过去一年，她申请了200多份工作，但表示从未收到任何雇主的回复。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="27">"Getting a job is very hard because with my issues, I haven't got that much experience, I've never worked before," she added.</span></p>
+        <p class="cn">她补充道：“找工作非常难，因为我的问题，我没有太多经验，以前从未工作过。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="28">"So I feel like it's restricting me and I'm not getting jobs.'' She said she was planning to start doing some volunteering so she can improve her CV.</span></p>
+        <p class="cn">“所以我觉得这限制了我，我找不到工作。”她说她计划开始做一些志愿工作，以改善简历。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="29">Luke, who studied product design at the prestigious Central St Martin's University, cannot find a job despite trying hard.</span></p>
+        <p class="cn">卢克（Luke）在著名的中央圣马丁大学（Central St Martin's University）学习产品设计，尽管努力尝试，但仍找不到工作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="30">The 23-year-old has applied for more than 400 positions and has only ever had one interview as a cleaner which he did not get.</span></p>
+        <p class="cn">这位23岁的年轻人已申请了400多个职位，只获得过一次清洁工面试机会，但最终未被录用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="31">''It's humiliating," he said.</span> <span class="sentence" data-sentence-index="32">"You think 'okay I've got all the knowledge, I've got all the skills, all I'm waiting for is a job to put it in practice'.</span></p>
+        <p class="cn">他说：“这很丢脸。你会想‘好吧，我有知识，有技能，只等一份工作来实践。’”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="33">"It makes you depressed especially the amount of rejections." He said he had no choice but to claim benefits.</span></p>
+        <p class="cn">“这让你沮丧，尤其是面对这么多拒绝。”他说他别无选择，只能申请福利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="34">Meanwhile Rocky had been out of work for a year before he joined Nando's as a waiter.</span> <span class="sentence" data-sentence-index="35">Three years on he is now an assistant manager.</span></p>
+        <p class="cn">与此同时，洛奇（Rocky）在加入Nando's当服务员之前已失业一年。三年后，他现在是助理经理。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="36">Written off at school, he now cannot believe how things have turned out for him.</span></p>
+        <p class="cn">在学校时曾被看衰，他现在简直不敢相信自己的转变。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="37">"I'm 23 years old and I'm a manager at Nando's," he says.</span> <span class="sentence" data-sentence-index="38">"I feel happy with myself.</span> <span class="sentence" data-sentence-index="39">I can look back and tell my doubters that I made it.''</span></p>
+        <p class="cn">他说：“我23岁，是Nando's的经理。我对自己感到满意。我可以回顾过去，告诉那些怀疑我的人，我成功了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="40">He said he would not have progressed without mentoring by a manager at Nando's and ongoing support from the youth charity Spear.</span></p>
+        <p class="cn">他说，如果没有Nando's一位经理的指导以及青年慈善机构Spear的持续支持，他不可能取得进步。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="41">The report found in 2024/25, for every £1 spent on employment support for young people, around £25 was spent on benefits.</span></p>
+        <p class="cn">报告发现，在2024/25年度，每花费1英镑用于年轻人就业支持，就有约25英镑用于福利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="42">It also said the number of low-and medium-skilled jobs in the UK had fallen by 1.6 million in the past 20 years, while the number of higher-skilled positions has risen by 6.3 million.</span></p>
+        <p class="cn">报告还指出，过去20年英国中低技能岗位减少了160万个，而高技能岗位增加了630万个。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="43">High street retailers and hospitality businesses such as restaurants, cafes and pubs often offer the first experience of work for many young people.</span></p>
+        <p class="cn">高街零售商和餐饮、咖啡馆、酒吧等酒店业企业通常为许多年轻人提供第一份工作体验。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="44">But in the hospitality sector vacancies have halved in the past four years.</span></p>
+        <p class="cn">但在酒店业，职位空缺在过去四年中减少了一半。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="45">The boss of Next, Lord Simon Wolfson, told the BBC this week that just two years ago, the retail giant typically received 10 applications for every shop vacancy, but that number had since risen to 19.</span></p>
+        <p class="cn">Next的老板西蒙·沃尔夫森勋爵（Lord Simon Wolfson）本周告诉BBC，就在两年前，这家零售巨头每个店铺职位通常收到10份申请，但如今已增至19份。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="46">Rain Newton-Smith, the chief executive of the Confederation of British Industry, said the report exposed "a tragic waste of potential and sets out the key problems that must be fixed".</span></p>
+        <p class="cn">英国工业联合会（Confederation of British Industry）首席执行官雷恩·牛顿-史密斯（Rain Newton-Smith）表示，该报告揭露了“对潜力的可悲浪费，并指出了必须解决的关键问题”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="47">"Reducing the high cost of creating jobs in the UK would open up more opportunities," she claimed.</span></p>
+        <p class="cn">她声称：“降低英国创造就业岗位的高成本将打开更多机会。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="48">Some employers have argued it has become more difficult to hire young people due to higher minimum wages and increased taxes, such as employer National Insurance contributions.</span></p>
+        <p class="cn">一些雇主认为，由于最低工资提高和税收增加（如雇主国民保险缴款），雇佣年轻人变得更加困难。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="49">The government has defended its decision to raise taxes on business and increasing the national minimum wage.</span></p>
+        <p class="cn">政府为其提高企业税和增加全国最低工资的决定进行了辩护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="50">Last year, Prime Minister Sir Keir Starmer U-turned reforms to welfare spending that aimed to save £5bn a year by 2030 after facing a rebellion by his own Labour MPs.</span></p>
+        <p class="cn">去年，首相基尔·斯塔默爵士（Sir Keir Starmer）在面临自己工党议员的反抗后，放弃了旨在到2030年每年节省50亿英镑的福利支出改革。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="51">The review does not include potential solutions to the crisis, but these will come at a later date in a final report.</span></p>
+        <p class="cn">该审查不包括危机的潜在解决方案，这些将在稍后的最终报告中提出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="52">The Conservative Party said Labour is too focused on its own internal leadership speculation to deal with the "generational crisis" Milburn warned of.</span></p>
+        <p class="cn">保守党表示，工党过于关注内部领导层猜测，而忽视了米尔本警告的“代际危机”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="53">Shadow Work and Pensions Secretary Helen Whately said: "Every policy choice Labour has made, from their jobs tax, capping apprenticeship funding, or trapping young people on welfare, has made it harder for a young person to take their first step into work.</span></p>
+        <p class="cn">影子就业与养老金大臣海伦·惠特利（Helen Whately）表示：“工党做出的每一项政策选择，从就业税、限制学徒资金，到将年轻人困在福利中，都让年轻人更难迈出就业第一步。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="54">"Their only answer has been a flurry of piecemeal work programmes – an approach this report rubbishes."</span></p>
+        <p class="cn">“他们唯一的答案就是一系列零散的工作计划——这份报告对这种做法嗤之以鼻。”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">urgent</span>
+        <button class="kw-speak-btn" data-word="urgent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɜːrdʒənt/ adj.</span>
+      </div>
+      <p class="kw-def">紧急的，迫切的</p>
+      <p class="kw-def-en">requiring immediate action or attention</p>
+      <p class="kw-ctx">&ldquo;One in six young people will not be in education, employment or training within five years unless 'urgent' action is taken, a major review has warned.&rdquo;</p>
+      <p class="kw-ctx-cn">一项重大审查警告称，除非采取‘紧急’行动，否则五年内将有六分之一的年轻人无法接受教育、就业或培训。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">thinned</span>
+        <button class="kw-speak-btn" data-word="thinned" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/θɪnd/ v. (past tense of thin)</span>
+      </div>
+      <p class="kw-def">变少，变稀薄</p>
+      <p class="kw-def-en">became less dense or numerous</p>
+      <p class="kw-ctx">&ldquo;The 'first rung of the career ladder has thinned' and that for 'too many young people it is now simply out of reach', Milburn is set to say in a speech later.&rdquo;</p>
+      <p class="kw-ctx-cn">米尔本将在稍后的演讲中说，‘职业阶梯的第一级已经变窄’，对‘太多年轻人来说，现在根本无法企及’。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">catch-22</span>
+        <button class="kw-speak-btn" data-word="catch-22" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkætʃ ˈtwɛnti tuː/ n.</span>
+      </div>
+      <p class="kw-def">进退两难的困境</p>
+      <p class="kw-def-en">a dilemma or difficult situation from which there is no escape because of mutually conflicting conditions</p>
+      <p class="kw-ctx">&ldquo;That places them in a hopeless catch-22 where employers ask for work experience but the opportunities for young people to gain it have narrowed or gone.&rdquo;</p>
+      <p class="kw-ctx-cn">这让他们陷入无望的‘第22条军规’式困境：雇主要求工作经验，但年轻人获得经验的机会却减少或消失了。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">acronym</span>
+        <button class="kw-speak-btn" data-word="acronym" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈækrənɪm/ n.</span>
+      </div>
+      <p class="kw-def">首字母缩略词</p>
+      <p class="kw-def-en">a word formed from the initial letters of other words</p>
+      <p class="kw-ctx">&ldquo;Milburn was tasked with investigating why so many young people are not in employment, education or training - known by the acronym Neets.&rdquo;</p>
+      <p class="kw-ctx-cn">米尔本的任务是调查为什么这么多年轻人没有就业、教育或培训——这些年轻人被称为‘尼特族’（Neets）。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">commissioned</span>
+        <button class="kw-speak-btn" data-word="commissioned" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈmɪʃənd/ v. (past tense of commission)</span>
+      </div>
+      <p class="kw-def">委托，任命</p>
+      <p class="kw-def-en">formally asked someone to do a piece of work</p>
+      <p class="kw-ctx">&ldquo;Work and Pensions Secretary Pat McFadden said he commissioned the report to save a generation of young people from unemployment, welcoming its findings.&rdquo;</p>
+      <p class="kw-ctx-cn">工作和养老金大臣帕特·麦克法登表示，他委托撰写这份报告是为了让一代年轻人免于失业，并对调查结果表示欢迎。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">apprenticeships</span>
+        <button class="kw-speak-btn" data-word="apprenticeships" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈprentɪsʃɪps/ n. (plural)</span>
+      </div>
+      <p class="kw-def">学徒期，学徒制</p>
+      <p class="kw-def-en">systems of training a new generation of practitioners of a trade or profession with on-the-job training and often some accompanying study</p>
+      <p class="kw-ctx">&ldquo;We are already taking action, he said, highlighting the government's plans to pay companies to hire young people and its moves to create more apprenticeships.&rdquo;</p>
+      <p class="kw-ctx-cn">他说，我们已经在采取行动，强调政府计划向雇佣年轻人的公司支付费用，并采取措施创造更多学徒岗位。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intervention</span>
+        <button class="kw-speak-btn" data-word="intervention" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntərˈvenʃən/ n.</span>
+      </div>
+      <p class="kw-def">干预，介入</p>
+      <p class="kw-def-en">the action of becoming intentionally involved in a difficult situation to improve it or prevent it from getting worse</p>
+      <p class="kw-ctx">&ldquo;McFadden also said the government is focusing on 'early intervention' measures such as special educational needs support and the removal of the two-child cap on benefits.&rdquo;</p>
+      <p class="kw-ctx-cn">麦克法登还表示，政府正专注于‘早期干预’措施，如特殊教育需求支持和取消福利的两孩限制。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">interim</span>
+        <button class="kw-speak-btn" data-word="interim" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪntərɪm/ adj.</span>
+      </div>
+      <p class="kw-def">临时的，过渡的</p>
+      <p class="kw-def-en">temporary or provisional</p>
+      <p class="kw-ctx">&ldquo;However, in his interim report, he challenged the narrative that young people do not want to work, saying that 84% of Neets surveyed said they want a job or training.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，在他的临时报告中，他质疑了年轻人不想工作的说法，称84%接受调查的‘尼特族’表示他们想要工作或培训。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "One in six young people will not be in education, employment or training within five years unless \"urgent\" action is taken, a major review has warned.", "start_ms": 0, "end_ms": 10584, "paragraph_index": 0}, {"index": 1, "text": "The education, health and welfare systems are \"no longer fit for purpose\" in preparing young people for adult life, said its author former minister Alan Milburn.", "start_ms": 10584, "end_ms": 21864, "paragraph_index": 1}, {"index": 2, "text": "\"We are at risk of a lost generation,\" he warned, with the number of 16 to 24-year-olds out of work, education or training set to rise to 1.25 million by 2031.", "start_ms": 21864, "end_ms": 35424, "paragraph_index": 2}, {"index": 3, "text": "The \"first rung of the career ladder has thinned\" and that for \"too many young people it is now simply out of reach\", Milburn is set to say in a speech later.", "start_ms": 35424, "end_ms": 45696, "paragraph_index": 3}, {"index": 4, "text": "\"That places them in a hopeless catch-22 where employers ask for work experience but the opportunities for young people to gain it have narrowed or gone,\" he will say.", "start_ms": 45696, "end_ms": 57000, "paragraph_index": 4}, {"index": 5, "text": "There are growing concerns over the number of young people not working.", "start_ms": 57000, "end_ms": 61920, "paragraph_index": 5}, {"index": 6, "text": "Latest figures show the unemployment rate for 16 to 24-year-olds is 16.2%, the highest since 2014, and more than three times the broader unemployment rate of 5%.", "start_ms": 61920, "end_ms": 76320, "paragraph_index": 5}, {"index": 7, "text": "Milburn was tasked with investigating why so many young people are not in employment, education or training - known by the acronym Neets.", "start_ms": 76320, "end_ms": 85872, "paragraph_index": 6}, {"index": 8, "text": "According to the latest official UK figures, there were 957,000 young people classed as Neet from October to December 2025, equivalent to one in eight people in that age category.", "start_ms": 85872, "end_ms": 100344, "paragraph_index": 7}, {"index": 9, "text": "More than half of those were deemed to be not looking for work.", "start_ms": 100344, "end_ms": 104760, "paragraph_index": 8}, {"index": 10, "text": "Milburn warned that number could rise to 1.25 million, or one in six young people, in the next five years unless action was taken.", "start_ms": 104760, "end_ms": 114840, "paragraph_index": 9}, {"index": 11, "text": "Work and Pensions Secretary Pat McFadden said he commissioned the report to save a generation of young people from unemployment, welcoming its findings.", "start_ms": 114840, "end_ms": 125088, "paragraph_index": 10}, {"index": 12, "text": "\"We are already taking action,\" he said, highlighting the government's plans to pay companies to hire young people and its moves to create more apprenticeships .", "start_ms": 125088, "end_ms": 135528, "paragraph_index": 11}, {"index": 13, "text": "McFadden also said the government is focusing on \"early intervention\" measures such as special educational needs support and the removal of the two-child cap on benefits.", "start_ms": 135528, "end_ms": 146712, "paragraph_index": 12}, {"index": 14, "text": "\"But we know there is more to do,\" he added.", "start_ms": 146712, "end_ms": 150336, "paragraph_index": 12}, {"index": 15, "text": "The findings from the former Labour health secretary's review have been heavily trailed.", "start_ms": 150336, "end_ms": 156096, "paragraph_index": 13}, {"index": 16, "text": "He told the BBC's Laura Kuenssberg that the government spends 25 times as much on benefits for young people than it does on supporting them into work.", "start_ms": 156096, "end_ms": 166176, "paragraph_index": 13}, {"index": 17, "text": "However, in his interim report, he challenged the narrative that young people do not want to work, saying that 84% of Neets surveyed said they want a job or training.", "start_ms": 166176, "end_ms": 177816, "paragraph_index": 14}, {"index": 18, "text": "He argues young people are not to blame for the youth unemployment crisis.", "start_ms": 177816, "end_ms": 183240, "paragraph_index": 15}, {"index": 19, "text": "\"This is not a failure of young people.", "start_ms": 183240, "end_ms": 186576, "paragraph_index": 16}, {"index": 20, "text": "It is a failure of a system stuck in the past.", "start_ms": 186576, "end_ms": 190488, "paragraph_index": 16}, {"index": 21, "text": "Whether it is education or health or welfare, that system fails to enable their participation in the labour market,\" he is expected to say in a speech later.", "start_ms": 190488, "end_ms": 201144, "paragraph_index": 16}, {"index": 22, "text": "\"Instead, all too often it ends up putting young people on a path to a life not in jobs but on benefits.", "start_ms": 201144, "end_ms": 208944, "paragraph_index": 17}, {"index": 23, "text": "This should be the priority for the government.", "start_ms": 208944, "end_ms": 212400, "paragraph_index": 17}, {"index": 24, "text": "It should be the priority for all of us.\"", "start_ms": 212400, "end_ms": 215808, "paragraph_index": 17}, {"index": 25, "text": "Zaynah, 24, has suffered from physical ill health and has not had a job since leaving college.", "start_ms": 215808, "end_ms": 223248, "paragraph_index": 18}, {"index": 26, "text": "Over the past year, she has applied for more than 200 jobs but said she never heard back from any of the employers.", "start_ms": 223248, "end_ms": 231408, "paragraph_index": 18}, {"index": 27, "text": "\"Getting a job is very hard because with my issues, I haven't got that much experience, I've never worked before,\" she added.", "start_ms": 231408, "end_ms": 240360, "paragraph_index": 19}, {"index": 28, "text": "\"So I feel like it's restricting me and I'm not getting jobs.'' She said she was planning to start doing some volunteering so she can improve her CV.", "start_ms": 240360, "end_ms": 249888, "paragraph_index": 20}, {"index": 29, "text": "Luke, who studied product design at the prestigious Central St Martin's University, cannot find a job despite trying hard.", "start_ms": 249888, "end_ms": 258936, "paragraph_index": 21}, {"index": 30, "text": "The 23-year-old has applied for more than 400 positions and has only ever had one interview as a cleaner which he did not get.", "start_ms": 258936, "end_ms": 268056, "paragraph_index": 22}, {"index": 31, "text": "''It's humiliating,\" he said.", "start_ms": 268056, "end_ms": 270984, "paragraph_index": 23}, {"index": 32, "text": "\"You think 'okay I've got all the knowledge, I've got all the skills, all I'm waiting for is a job to put it in practice'.", "start_ms": 270984, "end_ms": 279192, "paragraph_index": 23}, {"index": 33, "text": "\"It makes you depressed especially the amount of rejections.\" He said he had no choice but to claim benefits.", "start_ms": 279192, "end_ms": 287568, "paragraph_index": 24}, {"index": 34, "text": "Meanwhile Rocky had been out of work for a year before he joined Nando's as a waiter.", "start_ms": 287568, "end_ms": 293520, "paragraph_index": 25}, {"index": 35, "text": "Three years on he is now an assistant manager.", "start_ms": 293520, "end_ms": 297264, "paragraph_index": 25}, {"index": 36, "text": "Written off at school, he now cannot believe how things have turned out for him.", "start_ms": 297264, "end_ms": 302760, "paragraph_index": 26}, {"index": 37, "text": "\"I'm 23 years old and I'm a manager at Nando's,\" he says.", "start_ms": 302760, "end_ms": 307992, "paragraph_index": 27}, {"index": 38, "text": "\"I feel happy with myself.", "start_ms": 307992, "end_ms": 310848, "paragraph_index": 27}, {"index": 39, "text": "I can look back and tell my doubters that I made it.''", "start_ms": 310848, "end_ms": 314736, "paragraph_index": 27}, {"index": 40, "text": "He said he would not have progressed without mentoring by a manager at Nando's and ongoing support from the youth charity Spear.", "start_ms": 314736, "end_ms": 322848, "paragraph_index": 28}, {"index": 41, "text": "The report found in 2024/25, for every \u00a31 spent on employment support for young people, around \u00a325 was spent on benefits.", "start_ms": 322848, "end_ms": 334368, "paragraph_index": 29}, {"index": 42, "text": "It also said the number of low-and medium-skilled jobs in the UK had fallen by 1.6 million in the past 20 years, while the number of higher-skilled positions has risen by 6.3 million.", "start_ms": 334368, "end_ms": 348168, "paragraph_index": 30}, {"index": 43, "text": "High street retailers and hospitality businesses such as restaurants, cafes and pubs often offer the first experience of work for many young people.", "start_ms": 348168, "end_ms": 358752, "paragraph_index": 31}, {"index": 44, "text": "But in the hospitality sector vacancies have halved in the past four years.", "start_ms": 358752, "end_ms": 364248, "paragraph_index": 32}, {"index": 45, "text": "The boss of Next, Lord Simon Wolfson, told the BBC this week that just two years ago, the retail giant typically received 10 applications for every shop vacancy, but that number had since risen to 19.", "start_ms": 364248, "end_ms": 378912, "paragraph_index": 33}, {"index": 46, "text": "Rain Newton-Smith, the chief executive of the Confederation of British Industry, said the report exposed \"a tragic waste of potential and sets out the key problems that must be fixed\".", "start_ms": 378912, "end_ms": 391344, "paragraph_index": 34}, {"index": 47, "text": "\"Reducing the high cost of creating jobs in the UK would open up more opportunities,\" she claimed.", "start_ms": 391344, "end_ms": 398520, "paragraph_index": 35}, {"index": 48, "text": "Some employers have argued it has become more difficult to hire young people due to higher minimum wages and increased taxes, such as employer National Insurance contributions.", "start_ms": 398520, "end_ms": 410328, "paragraph_index": 36}, {"index": 49, "text": "The government has defended its decision to raise taxes on business and increasing the national minimum wage.", "start_ms": 410328, "end_ms": 417888, "paragraph_index": 37}, {"index": 50, "text": "Last year, Prime Minister Sir Keir Starmer U-turned reforms to welfare spending that aimed to save \u00a35bn a year by 2030 after facing a rebellion by his own Labour MPs.", "start_ms": 417888, "end_ms": 431424, "paragraph_index": 38}, {"index": 51, "text": "The review does not include potential solutions to the crisis, but these will come at a later date in a final report.", "start_ms": 431424, "end_ms": 439512, "paragraph_index": 39}, {"index": 52, "text": "The Conservative Party said Labour is too focused on its own internal leadership speculation to deal with the \"generational crisis\" Milburn warned of.", "start_ms": 439512, "end_ms": 449664, "paragraph_index": 40}, {"index": 53, "text": "Shadow Work and Pensions Secretary Helen Whately said: \"Every policy choice Labour has made, from their jobs tax, capping apprenticeship funding, or trapping young people on welfare, has made it harder for a young person to take their first step into work.", "start_ms": 449664, "end_ms": 466944, "paragraph_index": 41}, {"index": 54, "text": "\"Their only answer has been a flurry of piecemeal work programmes \u2013 an approach this report rubbishes.\"", "start_ms": 466944, "end_ms": 474096, "paragraph_index": 42}], "total_duration_ms": 474096};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "of": "的", "in": "在", "for": "为了", "young": "年轻的", "people": "人们", "he": "他", "and": "和", "is": "是", "said": "说", "that": "那个", "not": "不", "has": "有", "it": "它", "on": "在", "work": "工作", "or": "或者", "but": "但是", "more": "更多", "years": "多年", "by": "被", "as": "作为", "from": "来自", "she": "她", "are": "是", "at": "在", "number": "数量", "have": "有", "report": "报告", "had": "有", "be": "是", "education": "教育", "its": "它的", "with": "与", "out": "出来", "than": "比", "benefits": "好处", "labour": "工党", "job": "工作", "all": "所有", "one": "一个", "training": "培训", "warned": "警告", "health": "健康", "welfare": "福利", "million": "百万", "was": "是", "government": "政府", "this": "这个", "past": "过去", "their": "他们的", "year": "年", "i'm": "我是", "will": "将", "action": "行动", "review": "审查", "we": "我们", "first": "第一轮", "too": "太", "many": "许多", "now": "现在", "say": "说", "later": "后来", "employers": "雇主", "experience": "经历", "there": "那里", "since": "自从", "so": "所以", "uk": "英国", "such": "如此", "support": "支持", "been": "已经", "crisis": "危机", "got": "获得", "i've": "我已经", "made": "做出", "every": "每个", "six": "六", "five": "五", "unless": "除非", "taken": "采取", "no": "没有", "life": "生活", "former": "前任", "minister": "部长", "generation": "一代", "year-olds": "岁的人", "set": "设定", "rise": "上升", "speech": "演讲", "them": "他们", "opportunities": "机会", "over": "超过", "latest": "最新的", "figures": "人物", "three": "三个", "times": "次", "were": "是", "next": "下一个", "secretary": "秘书", "save": "节省", "findings": "调查结果", "also": "也", "do": "做", "added": "补充", "told": "告诉", "much": "许多", "does": "做", "into": "进入", "his": "他的", "want": "想要", "youth": "青年", "failure": "失败", "system": "制度", "often": "经常", "up": "向上", "should": "应该", "never": "从未", "back": "后退", "getting": "获得", "hard": "艰难的", "my": "我的", "before": "之前", "feel": "感觉", "it's": "它是", "some": "一些", "can": "可以", "cannot": "不能", "positions": "立场", "only": "只有", "you": "你", "choice": "选择", "an": "一个", "would": "将", "high": "高的", "potential": "潜在", "minimum": "最低的", "national": "国家", "own": "自己", "within": "在内部", "major": "重大的", "systems": "系统", "longer": "更长的", "fit": "适合", "preparing": "准备", "alan": "艾伦", "risk": "风险", "lost": "失去", "reach": "达到", "where": "那里", "ask": "询问", "gain": "获得", "gone": "已去", "growing": "日益增长的", "concerns": "担忧", "working": "工作", "show": "显示", "highest": "最高", "broader": "更广泛的", "investigating": "调查", "why": "为何", "known": "已知", "according": "根据", "official": "官方", "october": "十月", "december": "十二月", "eight": "八", "age": "年龄", "those": "那些", "could": "可能", "already": "已经", "taking": "采取", "government's": "政府的", "plans": "计划", "pay": "支付", "companies": "公司", "moves": "行动", "create": "造成", "early": "早期的", "measures": "措施", "special": "特别的", "needs": "需要", "know": "知道", "bbc's": "英国广播公司的", "laura": "劳拉", "kuenssberg": "昆斯伯格", "supporting": "支持", "however": "然而", "saying": "说", "they": "它们", "stuck": "被困的", "whether": "是否", "expected": "预期", "instead": "反而", "putting": "放置", "path": "道路", "us": "我们", "suffered": "遭受", "physical": "身体的", "leaving": "离开", "heard": "听到", "any": "任何", "very": "非常", "because": "因为", "issues": "问题", "haven't": "尚未", "worked": "工作", "like": "像", "restricting": "限制", "me": "我", "planning": "计划", "start": "开始", "doing": "做", "improve": "改善", "her": "她的", "who": "谁", "studied": "学习", "prestigious": "著名的", "central": "中央的", "st": "圣", "university": "大学", "find": "找到", "despite": "尽管", "trying": "尝试", "year-old": "岁的", "ever": "曾经", "interview": "采访", "which": "哪个", "did": "做了", "get": "得到", "think": "认为", "knowledge": "知识", "waiting": "等待", "put": "提出", "practice": "实践", "makes": "使得", "especially": "尤其", "amount": "数量", "claim": "声称", "meanwhile": "与此同时", "joined": "加入", "assistant": "助理", "written": "书面", "off": "离开", "believe": "认为", "how": "如何", "things": "事情", "turned": "转向", "him": "他", "old": "旧的", "says": "表示", "happy": "高兴的", "myself": "我自己", "look": "看起来", "tell": "告诉", "without": "没有", "ongoing": "正在进行的", "charity": "慈善机构", "found": "发现", "around": "在...周围", "while": "而", "street": "街", "businesses": "企业", "restaurants": "餐厅", "offer": "提供", "sector": "部门", "four": "四", "boss": "老板", "lord": "勋爵", "bbc": "英国广播公司", "week": "周", "just": "只是", "two": "两个", "ago": "以前", "giant": "巨型", "typically": "通常", "received": "受到", "applications": "申请", "shop": "商店", "vacancy": "空缺", "rain": "雨", "chief": "首席", "executive": "行政的", "british": "英国的", "industry": "行业", "exposed": "暴露", "tragic": "悲惨的", "sets": "设定", "key": "关键", "problems": "问题", "must": "必须", "open": "开放", "claimed": "声称", "argued": "争论", "become": "成为", "difficult": "困难的", "due": "应得", "higher": "更高的", "increased": "增加的", "defended": "辩护", "decision": "决定", "raise": "提高", "business": "事务", "increasing": "增加", "wage": "工资", "last": "最后", "prime": "首相", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "reforms": "改革", "spending": "支出", "aimed": "旨在", "after": "之后", "facing": "面临", "mps": "议员", "include": "包括", "solutions": "解决方案", "these": "这些", "come": "到来", "date": "日期", "final": "最终", "conservative": "保守党", "party": "政党", "focused": "专注的", "internal": "内部的", "leadership": "领导力", "speculation": "猜测", "deal": "协议", "generational": "代际的", "shadow": "阴影", "helen": "海伦", "policy": "政策", "tax": "税收", "funding": "资金", "harder": "更努力地", "person": "个人", "take": "采取", "step": "步骤", "answer": "回答", "approach": "方法", "jobs": "工作", "milburn": "米尔本", "unemployment": "失业", "employment": "就业", "nando's": "Nando's餐厅", "manager": "经理", "rate": "比率", "neets": "啃老族", "pensions": "养老金", "mcfadden": "麦克法登", "hire": "雇佣", "priority": "优先事项", "applied": "申请", "spent": "花费", "risen": "上升", "hospitality": "酒店餐饮业", "taxes": "税收", "purpose": "目的", "adult": "成年人", "author": "作者", "rung": "梯级", "career": "职业", "ladder": "阶梯", "simply": "仅仅", "places": "地方", "hopeless": "无望的", "catch-": "困境", "narrowed": "缩小", "tasked": "委派任务", "classed": "归类", "neet": "啃老族", "equivalent": "等同的", "category": "类别", "half": "一半", "deemed": "被视为", "looking": "寻找", "pat": "轻拍", "welcoming": "欢迎的", "highlighting": "强调", "focusing": "聚焦", "educational": "教育的", "removal": "取消", "two-child": "二胎", "cap": "上限", "secretary's": "秘书的", "heavily": "大量地", "trailed": "落后", "spends": "花费", "challenged": "受到挑战", "narrative": "叙述", "surveyed": "调查", "argues": "主张", "blame": "责备", "fails": "未能", "enable": "使能够", "participation": "参与", "market": "市场", "ends": "结束", "zaynah": "Zaynah", "ill": "生病", "college": "学院", "volunteering": "志愿服务", "cv": "简历", "luke": "卢克", "product": "产品", "design": "设计", "martin's": "马丁的", "cleaner": "清洁工", "humiliating": "羞辱性的", "okay": "好的", "skills": "技能", "depressed": "沮丧的", "rejections": "拒绝", "rocky": "艰难的", "waiter": "服务员", "school": "学校", "doubters": "怀疑者", "progressed": "进步", "mentoring": "指导", "spear": "矛", "low-and": "低和", "medium-skilled": "中等技能", "fallen": "下降", "higher-skilled": "高技能", "retailers": "零售商", "cafes": "咖啡馆", "pubs": "酒吧", "vacancies": "职位空缺", "halved": "减半", "simon": "西蒙", "wolfson": "沃尔夫森", "retail": "零售", "newton-smith": "牛顿-史密斯", "confederation": "联合会", "waste": "浪费", "fixed": "固定的", "reducing": "减少", "cost": "成本", "creating": "创造", "wages": "工资", "employer": "雇主", "insurance": "保险", "contributions": "缴款", "u-turned": "掉头", "rebellion": "反抗", "whately": "沃特利", "capping": "设定上限", "apprenticeship": "学徒制", "trapping": "困住", "flurry": "一阵", "piecemeal": "零碎的", "programmes": "项目", "rubbishes": "贬低"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
