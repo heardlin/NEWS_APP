@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-29</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-29</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/67d2/live/38648570-5b4c-11f1-8b8c-6d33e1d5abb6.jpg" alt="'Poison seller' who sold toxic chemicals online to people across world admits aiding suicides" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>'Poison seller' who sold toxic chemicals online to people across world admits aiding suicides</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c70vg7glglyo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-29.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A man has pleaded guilty to 14 counts of aiding suicides in Canada after he sold toxic chemicals online.</span></p>
+        <p class="cn">一名男子因在加拿大出售有毒化学品而承认了14项协助自杀的罪名。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Kenneth Law, 60, entered the guilty pleas in an Ontario court on Friday, as part of a deal with prosecutors, who withdrew more serious murder charges.</span></p>
+        <p class="cn">60岁的肯尼思·劳（Kenneth Law）周五在安大略省法院认罪，这是他与检方达成的协议的一部分，检方撤回了更严重的谋杀指控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Authorities said the former chef also sold about 1,200 packages of the toxic substances to recipients - who he met in online suicide forums - in 40 countries, roughly a quarter of which were sent to the UK.</span></p>
+        <p class="cn">当局表示，这位前厨师还向40个国家的收件人出售了约1200包有毒物质——他在在线自杀论坛上认识这些人——其中约四分之一寄往英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The charges all relate to Canadian victims - but families of British victims have said they were angry UK prosecutors would not charge Law over the deaths of 79 Britons, which authorities say are linked to products he supplied.</span></p>
+        <p class="cn">这些指控均涉及加拿大受害者——但英国受害者的家属表示，他们对英国检方不会就79名英国人的死亡起诉劳感到愤怒，当局称这些死亡与他供应的产品有关。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The Crown Prosecution Service (CPS) said it had agreed to the Canadian <span class="keyword" data-word="plea bargain" data-phonetic="/pliː ˈbɑːrɡən/" data-pos="n." data-def="认罪协议" data-def-en="an agreement between a prosecutor and a defendant to plead guilty to a lesser charge">plea bargain</span> on the basis Law's sentence take the British deaths into account.</span></p>
+        <p class="cn">英国皇家检察署（Crown Prosecution Service, CPS）表示，已同意加拿大的认罪协议，前提是劳的刑期将考虑英国死亡案件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">A letter from the CPS, seen by the BBC, said Law would not face charges in the UK because he could challenge the <span class="keyword" data-word="extradition" data-phonetic="/ˌekstrəˈdɪʃn/" data-pos="n." data-def="引渡" data-def-en="the surrender of an alleged criminal by one state to another">extradition</span> after being convicted of similar offences in Canada.</span></p>
+        <p class="cn">英国广播公司（BBC）看到的一封CPS信函称，劳不会在英国面临指控，因为他在加拿大因类似罪行被定罪后，可以挑战引渡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Specialist CPS prosecutor Andrew Hudson said that including UK victims in the Canadian sentencing process was the "quickest and most effective route" to justice.</span></p>
+        <p class="cn">CPS专业检察官安德鲁·哈德森（Andrew Hudson）表示，将英国受害者纳入加拿大量刑程序是实现正义的“最快、最有效的途径”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Hudson said a successful <span class="keyword" data-word="extradition" data-phonetic="/ˌekstrəˈdɪʃn/" data-pos="n." data-def="引渡" data-def-en="the surrender of an alleged criminal by one state to another">extradition</span> was "far from guaranteed and would have taken years to conclude", while any UK prosecution "could have been blocked under double jeopardy principles".</span></p>
+        <p class="cn">哈德森表示，成功引渡“远非有保障，且需要数年才能完成”，而任何英国起诉“可能因双重危险原则而被阻止”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Ontario man Ashtyn Prosser-Blake, 19, was one of Law's victims who died by suicide in March 2023.</span></p>
+        <p class="cn">安大略省男子阿什廷·普罗瑟-布莱克（Ashtyn Prosser-Blake），19岁，是劳的受害者之一，于2023年3月自杀身亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"He was just such a super happy, really gentle soul, always looking to stand up for the <span class="keyword" data-word="underdog" data-phonetic="/ˈʌndərdɒɡ/" data-pos="n." data-def="弱者" data-def-en="a person or group in a position of disadvantage">underdog</span>, the kids that got picked on," his mother, Kim Prosser, told the BBC.</span></p>
+        <p class="cn">“他就是一个超级快乐、非常温柔的灵魂，总是为弱者、被欺负的孩子挺身而出，”他的母亲金·普罗瑟（Kim Prosser）告诉BBC。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Prosser-Blake's mental health declined after the Covid pandemic - he went to college for a year in Toronto before dropping out and moving home, where he "just continued to struggle" before dying by suicide, his mother said.</span></p>
+        <p class="cn">普罗瑟-布莱克在新冠疫情后心理健康状况恶化——他在多伦多上了一年大学，然后辍学回家，在那里“继续挣扎”，最后自杀身亡，他的母亲说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">"The pain of losing my son Ashtyn doesn't ease because someone sits behind bars," she said.</span> <span class="sentence" data-sentence-index="12">"There is no <span class="keyword" data-word="solace" data-phonetic="/ˈsɒləs/" data-pos="n." data-def="安慰" data-def-en="comfort or consolation in a time of distress">solace</span> in my healing journey to see someone else suffer."</span></p>
+        <p class="cn">“失去儿子阿什廷的痛苦不会因为有人坐牢而减轻，”她说。“在我的康复过程中，看到别人受苦并不能带来安慰。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">In the UK, David Parfett's 22 year-old son, Thomas, used the substance said to have been sold to him by Law.</span></p>
+        <p class="cn">在英国，大卫·帕菲特（David Parfett）22岁的儿子托马斯（Thomas）使用了据称由劳出售给他的物质。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">"Tom was somebody who really saw the joy in life.</span> <span class="sentence" data-sentence-index="15">He would find humour in the weirdest places.</span> <span class="sentence" data-sentence-index="16">I often think about his laugh," Parfett said.</span></p>
+        <p class="cn">“汤姆是一个真正看到生活乐趣的人。他能在最奇怪的地方找到幽默。我经常想起他的笑声，”帕菲特说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">"Tom was a massive football fan and he was a good footballer as well.</span> <span class="sentence" data-sentence-index="18">I miss the opportunity to enjoy the 2026 World Cup with him."</span></p>
+        <p class="cn">“汤姆是个超级足球迷，他足球也踢得很好。我怀念和他一起享受2026年世界杯的机会。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">Tom paid the equivalent of £50 ($67; C$92) for the substance.</span> <span class="sentence" data-sentence-index="20">His body was found in a hotel in Sunbury-on-Thames, Surrey, in 2021.</span></p>
+        <p class="cn">汤姆为这种物质支付了相当于50英镑（67美元；92加元）的费用。他的尸体于2021年在萨里郡泰晤士河畔森伯里的一家酒店被发现。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="21">Parfett said that while it was good Law had "admitted guilt", he said it was still "a moment of unbelievable frustration".</span></p>
+        <p class="cn">帕菲特表示，虽然劳“认罪”是好事，但这仍然是“一个令人难以置信的沮丧时刻”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">"I would have preferred Kenneth Law to be tried here [in the UK].</span> <span class="sentence" data-sentence-index="23">I would have wanted to have seen him in court answering charges related to my son's death," he told the BBC on Friday.</span></p>
+        <p class="cn">“我更希望肯尼思·劳在这里（英国）受审。我希望看到他在法庭上回答与我儿子死亡有关的指控，”他周五告诉BBC。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="24">Parfett is calling on the UK government to hold a public inquiry into the deaths, as he wanted authorities to "understand this issue and stop other people unfortunately suffering the loss of a family member due to a very preventable suicide".</span></p>
+        <p class="cn">帕菲特呼吁英国政府对这些死亡事件进行公开调查，因为他希望当局“了解这个问题，并阻止其他人不幸因本可预防的自杀而失去家人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">"The toll here is astonishing - multiple deaths including of children - and yet we don't see any coordinated attempt to really understand it."</span></p>
+        <p class="cn">“这里的代价惊人——包括儿童在内的多起死亡——但我们没有看到任何协调一致的努力来真正理解它。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="26">In a statement, the Home Office said its "thoughts are with the families and friends of those who lost a loved one in this case".</span></p>
+        <p class="cn">英国内政部在一份声明中表示，其“心系此案中失去亲人的家庭和朋友”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="27">"We are working closely with law enforcement partners to identify and intercept harmful substances entering the UK."</span></p>
+        <p class="cn">“我们正在与执法伙伴密切合作，识别并拦截进入英国的有害物质。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="28">Law was arrested in May 2023, following a complex investigation by at least 11 law-enforcement agencies and involved investigators from around a dozen countries, including the UK, Italy and the US.</span></p>
+        <p class="cn">劳于2023年5月被捕，此前至少11个执法机构进行了复杂调查，涉及包括英国、意大利和美国在内的约十几个国家的调查人员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="29">His arrest came a week after a Times investigation alleged he was selling poison to young people, after a journalist posed as a customer and spoke to Law directly.</span></p>
+        <p class="cn">他的被捕发生在一名记者假扮顾客直接与劳交谈后，《泰晤士报》调查指控他向年轻人出售毒药一周后。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="30">Law reportedly counselled the journalist on how to use his products to "best ensure death".</span></p>
+        <p class="cn">据报道，劳指导记者如何使用他的产品以“最好地确保死亡”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="31">Canadian detectives told the BBC in 2023 that Law ran multiple websites offering equipment and substances to help people end their lives.</span></p>
+        <p class="cn">加拿大侦探在2023年告诉BBC，劳运营多个网站，提供帮助人们结束生命的设备和物质。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="32">Those found guilty of aiding suicide under Canada's criminal code can face up to 14 years in prison.</span></p>
+        <p class="cn">根据加拿大刑法，协助自杀罪名成立者最高可判处14年监禁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="33">Law's sentencing hearing will take place over several days beginning on 23 September, with victim impact statements read out in court.</span></p>
+        <p class="cn">劳的量刑听证会将于9月23日开始，持续数天，届时将在法庭上宣读受害者影响陈述。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">If you or anyone you know has been affected by the issues raised in this article, details of organisations offering information are available at BBC Action Line .</span></p>
+        <p class="cn">如果您或您认识的人受到本文所述问题的影响，提供信息的组织详情可在BBC Action Line获取。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">Additional reporting by Grace Eliza Goodwin</span></p>
+        <p class="cn">格蕾丝·伊丽莎·古德温（Grace Eliza Goodwin）补充报道</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">plead guilty</span>
+        <button class="kw-speak-btn" data-word="plead guilty" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pliːd ˈɡɪlti/ v. phrase</span>
+      </div>
+      <p class="kw-def">认罪</p>
+      <p class="kw-def-en">to formally state in court that one is guilty of a crime</p>
+      <p class="kw-ctx">&ldquo;A man has pleaded guilty to 14 counts of aiding suicides in Canada after he sold toxic chemicals online.&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子因在网上出售有毒化学品，在加拿大承认了14项协助自杀的罪名。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">count</span>
+        <button class="kw-speak-btn" data-word="count" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kaʊnt/ n.</span>
+      </div>
+      <p class="kw-def">（指控的）项</p>
+      <p class="kw-def-en">a separate charge in a legal indictment</p>
+      <p class="kw-ctx">&ldquo;A man has pleaded guilty to 14 counts of aiding suicides in Canada after he sold toxic chemicals online.&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子因在网上出售有毒化学品，在加拿大承认了14项协助自杀的罪名。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">withdraw</span>
+        <button class="kw-speak-btn" data-word="withdraw" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/wɪðˈdrɔː/ v.</span>
+      </div>
+      <p class="kw-def">撤回</p>
+      <p class="kw-def-en">to take back or remove (a charge, offer, etc.)</p>
+      <p class="kw-ctx">&ldquo;Kenneth Law, 60, entered the guilty pleas in an Ontario court on Friday, as part of a deal with prosecutors, who withdrew more serious murder charges.&rdquo;</p>
+      <p class="kw-ctx-cn">60岁的肯尼斯·劳于周五在安大略省法院认罪，这是与检察官达成的协议的一部分，检察官撤回了更严重的谋杀指控。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recipient</span>
+        <button class="kw-speak-btn" data-word="recipient" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈsɪpiənt/ n.</span>
+      </div>
+      <p class="kw-def">接收者</p>
+      <p class="kw-def-en">a person who receives something</p>
+      <p class="kw-ctx">&ldquo;Authorities said the former chef also sold about 1,200 packages of the toxic substances to recipients - who he met in online suicide forums - in 40 countries, roughly a quarter of which were sent to the UK.&rdquo;</p>
+      <p class="kw-ctx-cn">当局表示，这位前厨师还向40个国家的接收者出售了约1200包有毒物质——这些接收者是他通过在线自杀论坛认识的——其中大约四分之一寄往英国。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">plea bargain</span>
+        <button class="kw-speak-btn" data-word="plea bargain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pliː ˈbɑːrɡən/ n.</span>
+      </div>
+      <p class="kw-def">认罪协议</p>
+      <p class="kw-def-en">an agreement between a prosecutor and a defendant to plead guilty to a lesser charge</p>
+      <p class="kw-ctx">&ldquo;The Crown Prosecution Service (CPS) said it had agreed to the Canadian plea bargain on the basis Law's sentence take the British deaths into account.&rdquo;</p>
+      <p class="kw-ctx-cn">皇家检控署表示，它已同意加拿大的认罪协议，条件是劳的判决要考虑英国死亡案件。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">extradition</span>
+        <button class="kw-speak-btn" data-word="extradition" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌekstrəˈdɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">引渡</p>
+      <p class="kw-def-en">the surrender of an alleged criminal by one state to another</p>
+      <p class="kw-ctx">&ldquo;Specialist CPS prosecutor Andrew Hudson said that including UK victims in the Canadian sentencing process was the 'quickest and most effective route' to justice.&rdquo;</p>
+      <p class="kw-ctx-cn">皇家检控署专业检察官安德鲁·哈德森表示，将英国受害者纳入加拿大量刑过程是伸张正义的“最快、最有效的途径”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">underdog</span>
+        <button class="kw-speak-btn" data-word="underdog" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈʌndərdɒɡ/ n.</span>
+      </div>
+      <p class="kw-def">弱者</p>
+      <p class="kw-def-en">a person or group in a position of disadvantage</p>
+      <p class="kw-ctx">&ldquo;'He was just such a super happy, really gentle soul, always looking to stand up for the underdog, the kids that got picked on,' his mother, Kim Prosser, told the BBC.&rdquo;</p>
+      <p class="kw-ctx-cn">“他是一个非常快乐、非常温柔的人，总是为弱者、被欺负的孩子挺身而出，”他的母亲金·普罗瑟告诉BBC。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">solace</span>
+        <button class="kw-speak-btn" data-word="solace" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsɒləs/ n.</span>
+      </div>
+      <p class="kw-def">安慰</p>
+      <p class="kw-def-en">comfort or consolation in a time of distress</p>
+      <p class="kw-ctx">&ldquo;'There is no solace in my healing journey to see someone else suffer,' she said.&rdquo;</p>
+      <p class="kw-ctx-cn">“在我的康复过程中，看到别人受苦并不能给我带来安慰，”她说。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A man has pleaded guilty to 14 counts of aiding suicides in Canada after he sold toxic chemicals online.", "start_ms": 0, "end_ms": 8472, "paragraph_index": 0}, {"index": 1, "text": "Kenneth Law, 60, entered the guilty pleas in an Ontario court on Friday, as part of a deal with prosecutors, who withdrew more serious murder charges.", "start_ms": 8472, "end_ms": 19872, "paragraph_index": 1}, {"index": 2, "text": "Authorities said the former chef also sold about 1,200 packages of the toxic substances to recipients - who he met in online suicide forums - in 40 countries, roughly a quarter of which were sent to the UK.", "start_ms": 19872, "end_ms": 35136, "paragraph_index": 2}, {"index": 3, "text": "The charges all relate to Canadian victims - but families of British victims have said they were angry UK prosecutors would not charge Law over the deaths of 79 Britons, which authorities say are linked to products he supplied.", "start_ms": 35136, "end_ms": 50064, "paragraph_index": 3}, {"index": 4, "text": "The Crown Prosecution Service (CPS) said it had agreed to the Canadian plea bargain on the basis Law's sentence take the British deaths into account.", "start_ms": 50064, "end_ms": 60408, "paragraph_index": 4}, {"index": 5, "text": "A letter from the CPS, seen by the BBC, said Law would not face charges in the UK because he could challenge the extradition after being convicted of similar offences in Canada.", "start_ms": 60408, "end_ms": 72744, "paragraph_index": 5}, {"index": 6, "text": "Specialist CPS prosecutor Andrew Hudson said that including UK victims in the Canadian sentencing process was the \"quickest and most effective route\" to justice.", "start_ms": 72744, "end_ms": 84264, "paragraph_index": 6}, {"index": 7, "text": "Hudson said a successful extradition was \"far from guaranteed and would have taken years to conclude\", while any UK prosecution \"could have been blocked under double jeopardy principles\".", "start_ms": 84264, "end_ms": 96504, "paragraph_index": 7}, {"index": 8, "text": "Ontario man Ashtyn Prosser-Blake, 19, was one of Law's victims who died by suicide in March 2023.", "start_ms": 96504, "end_ms": 105480, "paragraph_index": 8}, {"index": 9, "text": "\"He was just such a super happy, really gentle soul, always looking to stand up for the underdog, the kids that got picked on,\" his mother, Kim Prosser, told the BBC.", "start_ms": 105480, "end_ms": 117408, "paragraph_index": 9}, {"index": 10, "text": "Prosser-Blake's mental health declined after the Covid pandemic - he went to college for a year in Toronto before dropping out and moving home, where he \"just continued to struggle\" before dying by suicide, his mother said.", "start_ms": 117408, "end_ms": 131688, "paragraph_index": 10}, {"index": 11, "text": "\"The pain of losing my son Ashtyn doesn't ease because someone sits behind bars,\" she said.", "start_ms": 131688, "end_ms": 138552, "paragraph_index": 11}, {"index": 12, "text": "\"There is no solace in my healing journey to see someone else suffer.\"", "start_ms": 138552, "end_ms": 143472, "paragraph_index": 11}, {"index": 13, "text": "In the UK, David Parfett's 22 year-old son, Thomas, used the substance said to have been sold to him by Law.", "start_ms": 143472, "end_ms": 152328, "paragraph_index": 12}, {"index": 14, "text": "\"Tom was somebody who really saw the joy in life.", "start_ms": 152328, "end_ms": 156312, "paragraph_index": 13}, {"index": 15, "text": "He would find humour in the weirdest places.", "start_ms": 156312, "end_ms": 159960, "paragraph_index": 13}, {"index": 16, "text": "I often think about his laugh,\" Parfett said.", "start_ms": 159960, "end_ms": 163920, "paragraph_index": 13}, {"index": 17, "text": "\"Tom was a massive football fan and he was a good footballer as well.", "start_ms": 163920, "end_ms": 169008, "paragraph_index": 14}, {"index": 18, "text": "I miss the opportunity to enjoy the 2026 World Cup with him.\"", "start_ms": 169008, "end_ms": 174432, "paragraph_index": 14}, {"index": 19, "text": "Tom paid the equivalent of \u00a350 ($67; C$92) for the substance.", "start_ms": 174432, "end_ms": 182760, "paragraph_index": 15}, {"index": 20, "text": "His body was found in a hotel in Sunbury-on-Thames, Surrey, in 2021.", "start_ms": 182760, "end_ms": 189264, "paragraph_index": 15}, {"index": 21, "text": "Parfett said that while it was good Law had \"admitted guilt\", he said it was still \"a moment of unbelievable frustration\".", "start_ms": 189264, "end_ms": 197280, "paragraph_index": 16}, {"index": 22, "text": "\"I would have preferred Kenneth Law to be tried here [in the UK].", "start_ms": 197280, "end_ms": 202200, "paragraph_index": 17}, {"index": 23, "text": "I would have wanted to have seen him in court answering charges related to my son's death,\" he told the BBC on Friday.", "start_ms": 202200, "end_ms": 210192, "paragraph_index": 17}, {"index": 24, "text": "Parfett is calling on the UK government to hold a public inquiry into the deaths, as he wanted authorities to \"understand this issue and stop other people unfortunately suffering the loss of a family member due to a very preventable suicide\".", "start_ms": 210192, "end_ms": 225648, "paragraph_index": 18}, {"index": 25, "text": "\"The toll here is astonishing - multiple deaths including of children - and yet we don't see any coordinated attempt to really understand it.\"", "start_ms": 225648, "end_ms": 234864, "paragraph_index": 19}, {"index": 26, "text": "In a statement, the Home Office said its \"thoughts are with the families and friends of those who lost a loved one in this case\".", "start_ms": 234864, "end_ms": 242784, "paragraph_index": 20}, {"index": 27, "text": "\"We are working closely with law enforcement partners to identify and intercept harmful substances entering the UK.\"", "start_ms": 242784, "end_ms": 251064, "paragraph_index": 21}, {"index": 28, "text": "Law was arrested in May 2023, following a complex investigation by at least 11 law-enforcement agencies and involved investigators from around a dozen countries, including the UK, Italy and the US.", "start_ms": 251064, "end_ms": 266664, "paragraph_index": 22}, {"index": 29, "text": "His arrest came a week after a Times investigation alleged he was selling poison to young people, after a journalist posed as a customer and spoke to Law directly.", "start_ms": 266664, "end_ms": 277752, "paragraph_index": 23}, {"index": 30, "text": "Law reportedly counselled the journalist on how to use his products to \"best ensure death\".", "start_ms": 277752, "end_ms": 284256, "paragraph_index": 24}, {"index": 31, "text": "Canadian detectives told the BBC in 2023 that Law ran multiple websites offering equipment and substances to help people end their lives.", "start_ms": 284256, "end_ms": 294912, "paragraph_index": 25}, {"index": 32, "text": "Those found guilty of aiding suicide under Canada's criminal code can face up to 14 years in prison.", "start_ms": 294912, "end_ms": 302448, "paragraph_index": 26}, {"index": 33, "text": "Law's sentencing hearing will take place over several days beginning on 23 September, with victim impact statements read out in court.", "start_ms": 302448, "end_ms": 312168, "paragraph_index": 27}, {"index": 34, "text": "If you or anyone you know has been affected by the issues raised in this article, details of organisations offering information are available at BBC Action Line .", "start_ms": 312168, "end_ms": 323664, "paragraph_index": 28}, {"index": 35, "text": "Additional reporting by Grace Eliza Goodwin", "start_ms": 323664, "end_ms": 327600, "paragraph_index": 29}], "total_duration_ms": 327600};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "of": "的", "he": "他", "said": "说", "was": "是", "and": "和", "law": "法律", "uk": "英国", "on": "在", "have": "有", "by": "被", "would": "将", "his": "他的", "after": "之后", "with": "与", "who": "谁", "bbc": "英国广播公司", "as": "作为", "charges": "指控", "victims": "受害者", "are": "是", "it": "它", "that": "那个", "guilty": "有罪", "court": "法庭", "authorities": "当局", "from": "来自", "including": "包括", "been": "已经", "really": "真正地", "for": "为了", "told": "告诉", "my": "我的", "is": "是", "him": "他", "this": "这个", "people": "人们", "man": "男子", "has": "有", "toxic": "有毒的", "online": "在线", "friday": "星期五", "prosecutors": "检察官", "about": "关于", "countries": "国家", "which": "哪个", "were": "是", "families": "家庭", "british": "英国的", "not": "不", "over": "超过", "prosecution": "起诉", "had": "有", "take": "采取", "into": "进入", "seen": "被视为", "face": "面临", "because": "因为", "could": "可能", "sentencing": "判刑", "years": "多年", "while": "而", "any": "任何", "under": "在...之下", "one": "一个", "just": "只是", "up": "向上", "before": "之前", "out": "出来", "home": "家", "son": "儿子", "someone": "某人", "see": "看到", "good": "良好", "found": "发现", "here": "这里", "wanted": "想要", "understand": "理解", "multiple": "多条", "we": "我们", "those": "那些", "investigation": "调查", "at": "在", "journalist": "记者", "offering": "提供", "you": "你", "pleaded": "认罪", "counts": "计票", "entered": "进入", "an": "一个", "part": "部分", "deal": "协议", "more": "更多", "serious": "严重的", "murder": "谋杀", "former": "前任", "also": "也", "met": "伦敦警察厅", "roughly": "大约", "sent": "派遣", "all": "所有", "relate": "关联", "but": "但是", "they": "它们", "angry": "愤怒的", "charge": "负责", "britons": "英国人", "say": "说", "linked": "关联的", "crown": "王冠", "service": "服务", "agreed": "同意", "plea": "抗辩", "basis": "基础", "sentence": "判决", "account": "责任", "letter": "信件", "challenge": "挑战", "being": "正在", "convicted": "被定罪", "similar": "类似的", "offences": "罪行", "specialist": "专家", "prosecutor": "检察官", "andrew": "安德鲁", "process": "过程", "most": "最", "effective": "有效的", "route": "航线", "justice": "正义", "successful": "成功的", "far": "远", "taken": "采取", "blocked": "封锁", "died": "死亡", "march": "三月", "such": "如此", "happy": "高兴的", "always": "总是", "looking": "寻找", "stand": "立场", "kids": "孩子们", "got": "获得", "mental": "精神的", "health": "健康", "declined": "拒绝", "went": "去", "college": "学院", "year": "年", "moving": "移动", "where": "那里", "continued": "持续的", "struggle": "搏斗", "dying": "垂死的", "pain": "痛苦", "doesn't": "不", "ease": "缓解", "behind": "在...后面", "she": "她", "there": "那里", "no": "没有", "journey": "旅程", "else": "其他", "suffer": "遭受", "david": "大卫", "year-old": "岁的", "used": "使用", "somebody": "某人", "saw": "看到", "life": "生活", "find": "找到", "places": "地方", "often": "经常", "think": "认为", "massive": "大规模的", "well": "好", "miss": "错过", "opportunity": "机会", "enjoy": "享受", "world": "世界", "paid": "支付", "equivalent": "等同的", "body": "机构", "hotel": "酒店", "surrey": "萨里郡", "admitted": "承认", "still": "仍然", "moment": "时刻", "frustration": "沮丧", "preferred": "更喜欢的", "be": "是", "tried": "试图", "related": "相关的", "calling": "呼吁", "government": "政府", "hold": "追究", "public": "公众", "inquiry": "调查", "issue": "问题", "stop": "停止", "other": "其他", "unfortunately": "不幸的是", "suffering": "苦难", "family": "家庭", "member": "成员", "due": "应得", "very": "非常", "astonishing": "惊人", "children": "儿童", "yet": "尚未", "don't": "不要", "attempt": "企图", "statement": "声明", "office": "办公室", "its": "它的", "thoughts": "想法", "friends": "朋友", "lost": "失去", "case": "案例", "working": "工作", "closely": "密切", "enforcement": "执法", "partners": "伴侣", "identify": "识别", "intercept": "拦截", "entering": "进入", "arrested": "被捕", "may": "可能", "following": "随后", "complex": "复杂的", "least": "至少", "agencies": "机构", "involved": "涉及的", "investigators": "调查人员", "around": "在...周围", "italy": "意大利", "us": "我们", "arrest": "逮捕", "came": "到来", "week": "周", "times": "次", "alleged": "据称的", "young": "年轻的", "spoke": "发言", "directly": "直接地", "reportedly": "据报道", "how": "如何", "use": "使用", "best": "最佳", "ensure": "确保", "detectives": "侦探", "ran": "运行", "equipment": "设备", "help": "帮助", "end": "结束", "their": "他们的", "lives": "生命", "canada's": "加拿大的", "criminal": "犯罪的", "code": "准则", "can": "可以", "prison": "监狱", "hearing": "听证会", "will": "将", "place": "地点", "several": "数个", "days": "天", "beginning": "开始", "september": "九月", "victim": "受害者", "impact": "影响", "statements": "声明", "read": "阅读", "if": "如果", "or": "或者", "anyone": "任何人", "know": "知道", "affected": "受影响", "issues": "问题", "raised": "提出的", "details": "细节", "organisations": "组织", "information": "信息", "available": "可获取", "action": "行动", "line": "界限", "additional": "额外的", "reporting": "报道", "suicide": "自杀", "canadian": "加拿大的", "deaths": "死亡", "sold": "出售", "substances": "物质", "cps": "加拿大儿科协会", "law's": "法律的", "tom": "汤姆", "parfett": "帕菲特", "aiding": "帮助", "canada": "加拿大", "kenneth": "肯尼斯", "ontario": "安大略省", "products": "产品", "hudson": "哈德逊", "ashtyn": "阿什廷", "mother": "母亲", "substance": "物质", "death": "死亡", "suicides": "自杀事件", "chemicals": "化学品", "pleas": "请求", "withdrew": "撤回", "chef": "厨师", "packages": "包裹", "recipients": "收件人", "forums": "论坛", "quarter": "四分之一", "supplied": "提供", "bargain": "廉价品", "quickest": "最快的", "guaranteed": "保证的", "conclude": "得出结论", "double": "双重", "jeopardy": "危险", "principles": "原则", "prosser-blake": "普罗瑟-布莱克", "super": "超级", "gentle": "温和的", "soul": "灵魂", "picked": "挑选", "kim": "金", "prosser": "普罗瑟", "prosser-blake's": "普罗瑟-布莱克的", "covid": "新冠肺炎", "pandemic": "大流行", "toronto": "多伦多", "dropping": "下降", "losing": "失去", "sits": "位于", "bars": "酒吧", "healing": "愈合", "parfett's": "帕菲特的", "thomas": "托马斯", "joy": "喜悦", "humour": "幽默", "weirdest": "最古怪的", "laugh": "笑", "football": "足球", "fan": "粉丝", "footballer": "足球运动员", "cup": "杯赛", "sunbury-on-thames": "泰晤士河畔森伯里", "guilt": "内疚", "unbelievable": "难以置信的", "answering": "回答", "son's": "儿子的", "loss": "损失", "preventable": "可预防的", "toll": "代价", "coordinated": "协调的", "loved": "爱过的", "harmful": "有害的", "law-enforcement": "执法", "dozen": "一打", "selling": "销售", "poison": "毒药", "posed": "造成", "customer": "顾客", "counselled": "建议", "websites": "网站", "article": "文章", "grace": "格蕾丝", "eliza": "伊丽莎", "goodwin": "古德温"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
