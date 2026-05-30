@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-30</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-30</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/e124/live/cd8aeaa0-5c6d-11f1-97bf-b32da8e5f462.jpg" alt="Why crucial penalty miss was 'cruel blow' for Arsenal standout Gabriel" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Why crucial penalty miss was 'cruel blow' for Arsenal standout Gabriel</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/sport/football/articles/clypr1lzxvno?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-30.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Gabriel blazes over penalty as PSG win Champions League</span></p>
+        <p class="cn">加布里埃尔罚失点球，巴黎圣日耳曼赢得欧冠冠军</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The defining image of Arsenal 's Champions League final defeat was Gabriel standing with his head in his hands as he was <span class="keyword" data-word="consoled" data-phonetic="/kənˈsoʊld/" data-pos="v." data-def="安慰，抚慰" data-def-en="to give comfort to someone who is sad or disappointed">consoled</span> by Paris St-Germain captain and Brazil team-mate Marquinhos.</span></p>
+        <p class="cn">阿森纳欧冠决赛失利的标志性画面是加布里埃尔双手抱头，巴黎圣日耳曼队长兼巴西队友马尔基尼奥斯正在安慰他。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">It was a cruel end to the defender's first European final.</span> <span class="sentence" data-sentence-index="4">His penalty, blasted over the crossbar, proved <span class="keyword" data-word="decisive" data-phonetic="/dɪˈsaɪsɪv/" data-pos="adj." data-def="决定性的" data-def-en="having the power to decide the outcome of something">decisive</span> as the Gunners suffered shootout heartbreak and PSG successfully defended their title.</span></p>
+        <p class="cn">对于这位后卫的首次欧洲决赛来说，这是一个残酷的结局。他罚失的点球飞过了横梁，成为决定性的一击，让枪手在点球大战中心碎，而巴黎圣日耳曼成功卫冕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">For a player who has so often been Arsenal 's difference-maker this season, it was not the contribution he would have <span class="keyword" data-word="envisaged" data-phonetic="/ɪnˈvɪzɪdʒd/" data-pos="v." data-def="设想，展望" data-def-en="to imagine or expect something as a future possibility">envisaged</span> before the club's first Champions League final since 2006.</span></p>
+        <p class="cn">对于本赛季经常成为阿森纳关键先生的球员来说，这并非他在俱乐部自2006年以来首次欧冠决赛前所设想的贡献。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">It was the first penalty Gabriel had taken for Arsenal , with manager Mikel Arteta revealing the defender had "prepared and trained for this moment".</span></p>
+        <p class="cn">这是加布里埃尔为阿森纳主罚的第一个点球，主教练米克尔·阿尔特塔透露这位后卫“为这一刻做了准备和训练”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">"He wanted to take it," Arteta said.</span> <span class="sentence" data-sentence-index="8">"Normally the penalty takers would be Bukayo [Saka], Martin [Odegaard] and Kai [Havertz].</span> <span class="sentence" data-sentence-index="9">But we knew if the game went to extra-time and penalties, different players would have to step forward."</span></p>
+        <p class="cn">“他想主罚，”阿尔特塔说。“通常的点球手会是布卡约·萨卡、马丁·厄德高和凯·哈弗茨。但我们知道如果比赛进入加时赛和点球大战，不同的球员必须站出来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="10">It was a painful way for one of Arsenal 's <span class="keyword" data-word="standout" data-phonetic="/ˈstændaʊt/" data-pos="adj." data-def="杰出的，突出的" data-def-en="clearly better or more important than others">standout</span> performers of the season to bring his campaign to a close.</span></p>
+        <p class="cn">对于阿森纳本赛季表现最出色的球员之一来说，以这种方式结束他的征程是痛苦的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">Speaking on BBC Radio 5 Live, former Arsenal defender Matt Upson called it "one of those John Terry moments", referring to the 2008 Champions League final when the Chelsea captain had the chance to win the final in a shootout, but slipped as he struck the ball, which hit the post as Manchester United went on to claim the title.</span></p>
+        <p class="cn">在BBC广播5台直播中，前阿森纳后卫马特·厄普森称其为“约翰·特里时刻之一”，指的是2008年欧冠决赛，当时切尔西队长有机会在点球大战中赢得决赛，但射门时滑倒，球击中门柱，曼联最终夺冠。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">Instead of celebrating with his PSG team-mates, Marquinhos <span class="keyword" data-word="consoled" data-phonetic="/kənˈsoʊld/" data-pos="v." data-def="安慰，抚慰" data-def-en="to give comfort to someone who is sad or disappointed">consoled</span> his compatriot</span></p>
+        <p class="cn">马尔基尼奥斯没有与巴黎圣日耳曼队友一起庆祝，而是安慰了他的同胞。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">It was a night that began so brightly for Arsenal .</span></p>
+        <p class="cn">对阿森纳来说，这个夜晚开始得非常光明。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">When Kai Havertz smashed the ball high into the roof of the net over Matvey Safonov inside six minutes, their supporters were in dreamland at the Puskas Arena in Budapest.</span></p>
+        <p class="cn">当凯·哈弗茨在六分钟内将球高高射入马特维·萨福诺夫把守的球门网顶时，他们的支持者在布达佩斯的普斯卡什竞技场仿佛置身梦境。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">And despite dominating possession, PSG were unable to fashion many clear chances for their feared front three of Khvicha Kvaratskhelia, Ousmane Dembele and Desire Doue, with Arsenal 's defence largely keeping them under control.</span></p>
+        <p class="cn">尽管控球占优，巴黎圣日耳曼却未能为他们的恐怖三叉戟赫维恰·克瓦拉茨赫利亚、奥斯曼·登贝莱和德西雷·杜埃创造出多少明显机会，阿森纳的防守基本控制住了他们。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">At the heart of that was Gabriel.</span> <span class="sentence" data-sentence-index="17">The defender made more clearances than any other player on the pitch (13) as the Gunners chased the rare <span class="keyword" data-word="feat" data-phonetic="/fiːt/" data-pos="n." data-def="壮举，功绩" data-def-en="an achievement that requires great courage, skill, or strength">feat</span> of a Premier League and Champions League double - achieved only by Manchester United (1999 and 2008) and Manchester City (2023) since 1992.</span></p>
+        <p class="cn">而防守的核心正是加布里埃尔。这位后卫的解围次数（13次）比场上任何其他球员都多，因为枪手在追逐英超和欧冠双冠王这一罕见成就——自1992年以来只有曼联（1999年和2008年）和曼城（2023年）实现过。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">But after Dembele equalised from the penalty spot, the contest became a must-not-lose affair for both sides, with neither keeper seriously tested as the tension rose in Hungary and the game drifted towards a shootout.</span></p>
+        <p class="cn">但在登贝莱点球扳平后，比赛变成了双方都不能输的较量，在匈牙利紧张气氛上升、比赛逐渐走向点球大战的过程中，两位门将都没有受到严峻考验。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">There was an early advantage for PSG when Eberechi Eze stroked his penalty wide after a stuttering run up, but Gunners keeper David Raya responded by saving Nuno Mendes' effort.</span></p>
+        <p class="cn">巴黎圣日耳曼早早取得优势，埃贝雷奇·埃泽在助跑犹豫后罚出的点球偏出，但枪手门将大卫·拉亚随后扑出了努诺·门德斯的射门。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">However, after four successful kicks, there would be no <span class="keyword" data-word="reprieve" data-phonetic="/rɪˈpriːv/" data-pos="n." data-def="缓解，暂缓" data-def-en="a temporary relief from something unpleasant">reprieve</span> for Gabriel who fired his penalty over the crossbar and into the delirious PSG fans.</span></p>
+        <p class="cn">然而，在四次成功罚球后，加布里埃尔没有获得救赎，他将点球射过了横梁，飞入了狂喜的巴黎圣日耳曼球迷中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="21">"To miss a penalty in a Champions League final, obviously it's not nice," Arsenal midfielder Declan Rice said on TNT Sports.</span></p>
+        <p class="cn">“在欧冠决赛中罚失点球，显然不好受，”阿森纳中场德克兰·赖斯在TNT体育频道上说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="22">"But we love them and we're with them.</span> <span class="sentence" data-sentence-index="23">It happens in football.</span> <span class="sentence" data-sentence-index="24">They're not going to be the last players to miss penalties in finals.</span></p>
+        <p class="cn">“但我们爱他们，我们和他们在一起。这在足球中会发生。他们不会是最后一批在决赛中罚失点球的球员。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">"Everyone has missed a penalty and without those two this season we wouldn't have won the Premier League, that's for sure.</span></p>
+        <p class="cn">“每个人都罚失过点球，没有他们两个，我们本赛季肯定赢不了英超。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="26">"Gabriel, I've run out of words for him as a person and as a player.</span> <span class="sentence" data-sentence-index="27">Eze has scored some crucial goals for us this season.</span></p>
+        <p class="cn">“加布里埃尔，作为一个人和一个球员，我已经找不到词来形容他了。埃泽本赛季为我们打进了一些关键进球。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="28">"It happens.</span> <span class="sentence" data-sentence-index="29">It's football and it's cruel.</span> <span class="sentence" data-sentence-index="30">We take the positives and keep going."</span></p>
+        <p class="cn">“这会发生。这就是足球，很残酷。我们接受积极的一面，继续前进。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="31">Arsenal 'pain' will fuel fire after Champions League heartbreak</span></p>
+        <p class="cn">阿森纳的“痛苦”将在欧冠心碎后点燃斗志</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="32">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="33">PSG retain Champions League after penalty shootout win over Arsenal</span></p>
+        <p class="cn">巴黎圣日耳曼点球大战战胜阿森纳，卫冕欧冠冠军</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="34">The sight of Gabriel wiping away tears as PSG's players celebrated with the trophy will be one that lingers long in the memory of Arsenal supporters.</span></p>
+        <p class="cn">加布里埃尔擦去眼泪，而巴黎圣日耳曼球员庆祝奖杯的画面，将长久留在阿森纳球迷的记忆中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="35">The Brazilian, one of Mikel Arteta's first signings after taking charge in December 2019, has been a driving force behind the club's rise back to the summit of English football and their Premier League title triumph this season.</span></p>
+        <p class="cn">这位巴西人，是米克尔·阿尔特塔在2019年12月接手后最早签下的球员之一，一直是俱乐部重返英格兰足球巅峰以及本赛季英超夺冠的推动力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="36">He started 48 of Arsenal 's 63 matches across all competitions and contributed nine goals and assists - more than both Martin Odegaard and Gabriel Jesus.</span></p>
+        <p class="cn">他在阿森纳全部63场比赛中首发了48场，贡献了9个进球和助攻——比马丁·厄德高和加布里埃尔·热苏斯都多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="37">While rival fans may focus on his miss in Budapest, Arsenal supporters will remember the countless occasions he delivered for his side, including a dramatic 96th-minute winner against Newcastle United in September.</span></p>
+        <p class="cn">虽然对手球迷可能关注他在布达佩斯的罚失，但阿森纳球迷会记住他无数次为球队做出的贡献，包括9月对阵纽卡斯尔联时戏剧性的第96分钟绝杀。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="38">"I've just listened to Declan Rice talking about how he has run out of words to describe Gabriel because he has been so important and so good for Arsenal all season, and over the past few years as well," former Manchester City defender Nedum Onuoha told BBC Sport.</span></p>
+        <p class="cn">“我刚听了德克兰·赖斯说他已经找不到词来形容加布里埃尔，因为他整个赛季对阿森纳都如此重要和出色，过去几年也是如此，”前曼城后卫内杜姆·奥诺哈告诉BBC体育。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="39">"So for him to be the one who misses the penalty that costs them the Champions League final is heartbreaking.</span></p>
+        <p class="cn">“所以，他是那个罚失点球导致他们输掉欧冠决赛的人，这令人心碎。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="40">"But I think everyone will <span class="keyword" data-word="rally" data-phonetic="/ˈræli/" data-pos="v." data-def="团结；振作" data-def-en="to come together to support someone or something; to recover from a setback">rally</span> around him because Arsenal would not have won the Premier League without him.</span> <span class="sentence" data-sentence-index="41">He has been invaluable and, quite rightly, is in the conversation for PFA Player of the Year.</span></p>
+        <p class="cn">“但我认为每个人都会支持他，因为没有他，阿森纳不可能赢得英超。他非常宝贵，并且理所当然地进入了PFA年度最佳球员的讨论。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="42">"The pressure is always there in a shootout.</span> <span class="sentence" data-sentence-index="43">You can practice penalties in training, but in a Champions League final you can never truly prepare for that moment.</span> <span class="sentence" data-sentence-index="44">Unfortunately, he has experienced what every player dreads - missing the penalty that decides a final."</span></p>
+        <p class="cn">“点球大战中压力总是存在。你可以在训练中练习点球，但在欧冠决赛中，你永远无法真正为那一刻做好准备。不幸的是，他经历了每个球员都害怕的事情——罚失决定决赛的点球。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="45">Former England defender Upson added: "It's one of those moments that will be remembered for years, a cruel blow for a player who has been a tower of strength for Arsenal .</span></p>
+        <p class="cn">前英格兰后卫厄普森补充道：“这是那种会被铭记多年的时刻，对一个一直是阿森纳中流砥柱的球员来说，是一个残酷的打击。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="46">"Gabriel gave everything for his team.</span> <span class="sentence" data-sentence-index="47">He showed the mentality and courage to step forward and take responsibility, which is all you can ask of any player.</span></p>
+        <p class="cn">“加布里埃尔为球队付出了一切。他展现了站出来承担责任的心态和勇气，这是你对任何球员所能要求的全部。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="48">"It is desperately sad for him, but he strikes me as someone who will recover quickly and use it as motivation.</span> <span class="sentence" data-sentence-index="49">He still has a huge summer ahead with Brazil."</span></p>
+        <p class="cn">“对他来说非常难过，但他给我的印象是能迅速恢复并以此作为动力。他还有与巴西队一起度过的重大夏天。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="50">PSG go back-to-back and join 'greatest of all time'</span></p>
+        <p class="cn">巴黎圣日耳曼连续夺冠，加入‘史上最伟大’行列</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="51">Latest Arsenal news, analysis and fan views</span></p>
+        <p class="cn">最新阿森纳新闻、分析和球迷观点</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="52">Ask about Arsenal - what do you want to know?</span></p>
+        <p class="cn">询问关于阿森纳——你想知道什么？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">blaze</span>
+        <button class="kw-speak-btn" data-word="blaze" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bleɪz/ v.</span>
+      </div>
+      <p class="kw-def">猛射；闪耀</p>
+      <p class="kw-def-en">to shoot or hit a ball very hard and high</p>
+      <p class="kw-ctx">&ldquo;Gabriel blazes over penalty as PSG win Champions League&rdquo;</p>
+      <p class="kw-ctx-cn">加布里埃尔罚丢点球，巴黎圣日耳曼赢得欧冠</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">consoled</span>
+        <button class="kw-speak-btn" data-word="consoled" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈsoʊld/ v.</span>
+      </div>
+      <p class="kw-def">安慰，抚慰</p>
+      <p class="kw-def-en">to give comfort to someone who is sad or disappointed</p>
+      <p class="kw-ctx">&ldquo;The defining image of Arsenal's Champions League final defeat was Gabriel standing with his head in his hands as he was consoled by Paris St-Germain captain and Brazil team-mate Marquinhos.&rdquo;</p>
+      <p class="kw-ctx-cn">阿森纳欧冠决赛失利的标志性画面是加布里埃尔双手抱头，巴黎圣日耳曼队长兼巴西队友马尔基尼奥斯在安慰他。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">decisive</span>
+        <button class="kw-speak-btn" data-word="decisive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈsaɪsɪv/ adj.</span>
+      </div>
+      <p class="kw-def">决定性的</p>
+      <p class="kw-def-en">having the power to decide the outcome of something</p>
+      <p class="kw-ctx">&ldquo;His penalty, blasted over the crossbar, proved decisive as the Gunners suffered shootout heartbreak and PSG successfully defended their title.&rdquo;</p>
+      <p class="kw-ctx-cn">他罚失的点球成为决定性因素，阿森纳在点球大战中伤心落败，巴黎圣日耳曼成功卫冕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">envisaged</span>
+        <button class="kw-speak-btn" data-word="envisaged" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈvɪzɪdʒd/ v.</span>
+      </div>
+      <p class="kw-def">设想，展望</p>
+      <p class="kw-def-en">to imagine or expect something as a future possibility</p>
+      <p class="kw-ctx">&ldquo;For a player who has so often been Arsenal's difference-maker this season, it was not the contribution he would have envisaged before the club's first Champions League final since 2006.&rdquo;</p>
+      <p class="kw-ctx-cn">对于本赛季多次成为阿森纳关键先生的球员来说，这并不是他在俱乐部自2006年以来首次欧冠决赛前所设想的贡献。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">standout</span>
+        <button class="kw-speak-btn" data-word="standout" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstændaʊt/ adj.</span>
+      </div>
+      <p class="kw-def">杰出的，突出的</p>
+      <p class="kw-def-en">clearly better or more important than others</p>
+      <p class="kw-ctx">&ldquo;It was a painful way for one of Arsenal's standout performers of the season to bring his campaign to a close.&rdquo;</p>
+      <p class="kw-ctx-cn">对于阿森纳本赛季表现最出色的球员之一来说，以这种方式结束征程是痛苦的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">feat</span>
+        <button class="kw-speak-btn" data-word="feat" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fiːt/ n.</span>
+      </div>
+      <p class="kw-def">壮举，功绩</p>
+      <p class="kw-def-en">an achievement that requires great courage, skill, or strength</p>
+      <p class="kw-ctx">&ldquo;The defender made more clearances than any other player on the pitch (13) as the Gunners chased the rare feat of a Premier League and Champions League double - achieved only by Manchester United (1999 and 2008) and Manchester City (2023) since 1992.&rdquo;</p>
+      <p class="kw-ctx-cn">这位后卫的解围次数（13次）比场上任何其他球员都多，当时阿森纳正在追逐英超和欧冠双冠王的罕见壮举——自1992年以来只有曼联（1999年和2008年）和曼城（2023年）实现过。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reprieve</span>
+        <button class="kw-speak-btn" data-word="reprieve" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈpriːv/ n.</span>
+      </div>
+      <p class="kw-def">缓解，暂缓</p>
+      <p class="kw-def-en">a temporary relief from something unpleasant</p>
+      <p class="kw-ctx">&ldquo;However, after four successful kicks, there would be no reprieve for Gabriel who fired his penalty over the crossbar and into the delirious PSG fans.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，在四次成功罚球后，加布里埃尔没有获得缓解，他将点球踢飞过横梁，落入狂喜的巴黎圣日耳曼球迷中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rally</span>
+        <button class="kw-speak-btn" data-word="rally" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈræli/ v.</span>
+      </div>
+      <p class="kw-def">团结；振作</p>
+      <p class="kw-def-en">to come together to support someone or something; to recover from a setback</p>
+      <p class="kw-ctx">&ldquo;But I think everyone will rally around him because Arsenal would not have won the Premier League without him.&rdquo;</p>
+      <p class="kw-ctx-cn">但我认为每个人都会团结在他周围，因为如果没有他，阿森纳不可能赢得英超冠军。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Gabriel blazes over penalty as PSG win Champions League", "start_ms": 3000, "end_ms": 8328, "paragraph_index": 1}, {"index": 2, "text": "The defining image of Arsenal 's Champions League final defeat was Gabriel standing with his head in his hands as he was consoled by Paris St-Germain captain and Brazil team-mate Marquinhos.", "start_ms": 8328, "end_ms": 21192, "paragraph_index": 2}, {"index": 3, "text": "It was a cruel end to the defender's first European final.", "start_ms": 21192, "end_ms": 25872, "paragraph_index": 3}, {"index": 4, "text": "His penalty, blasted over the crossbar, proved decisive as the Gunners suffered shootout heartbreak and PSG successfully defended their title.", "start_ms": 25872, "end_ms": 36144, "paragraph_index": 3}, {"index": 5, "text": "For a player who has so often been Arsenal 's difference-maker this season, it was not the contribution he would have envisaged before the club's first Champions League final since 2006.", "start_ms": 36144, "end_ms": 48696, "paragraph_index": 4}, {"index": 6, "text": "It was the first penalty Gabriel had taken for Arsenal , with manager Mikel Arteta revealing the defender had \"prepared and trained for this moment\".", "start_ms": 48696, "end_ms": 58824, "paragraph_index": 5}, {"index": 7, "text": "\"He wanted to take it,\" Arteta said.", "start_ms": 58824, "end_ms": 62208, "paragraph_index": 6}, {"index": 8, "text": "\"Normally the penalty takers would be Bukayo [Saka], Martin [Odegaard] and Kai [Havertz].", "start_ms": 62208, "end_ms": 69720, "paragraph_index": 6}, {"index": 9, "text": "But we knew if the game went to extra-time and penalties, different players would have to step forward.\"", "start_ms": 69720, "end_ms": 76560, "paragraph_index": 6}, {"index": 10, "text": "It was a painful way for one of Arsenal 's standout performers of the season to bring his campaign to a close.", "start_ms": 76560, "end_ms": 84336, "paragraph_index": 7}, {"index": 11, "text": "Speaking on BBC Radio 5 Live, former Arsenal defender Matt Upson called it \"one of those John Terry moments\", referring to the 2008 Champions League final when the Chelsea captain had the chance to win the final in a shootout, but slipped as he struck the ball, which hit the post as Manchester United went on to claim the title.", "start_ms": 84336, "end_ms": 106680, "paragraph_index": 8}, {"index": 12, "text": "Instead of celebrating with his PSG team-mates, Marquinhos consoled his compatriot", "start_ms": 106680, "end_ms": 113520, "paragraph_index": 9}, {"index": 13, "text": "It was a night that began so brightly for Arsenal .", "start_ms": 113520, "end_ms": 117528, "paragraph_index": 10}, {"index": 14, "text": "When Kai Havertz smashed the ball high into the roof of the net over Matvey Safonov inside six minutes, their supporters were in dreamland at the Puskas Arena in Budapest.", "start_ms": 117528, "end_ms": 129240, "paragraph_index": 11}, {"index": 15, "text": "And despite dominating possession, PSG were unable to fashion many clear chances for their feared front three of Khvicha Kvaratskhelia, Ousmane Dembele and Desire Doue, with Arsenal 's defence largely keeping them under control.", "start_ms": 129240, "end_ms": 145440, "paragraph_index": 12}, {"index": 16, "text": "At the heart of that was Gabriel.", "start_ms": 145440, "end_ms": 148296, "paragraph_index": 13}, {"index": 17, "text": "The defender made more clearances than any other player on the pitch (13) as the Gunners chased the rare feat of a Premier League and Champions League double - achieved only by Manchester United (1999 and 2008) and Manchester City (2023) since 1992.", "start_ms": 148296, "end_ms": 168720, "paragraph_index": 13}, {"index": 18, "text": "But after Dembele equalised from the penalty spot, the contest became a must-not-lose affair for both sides, with neither keeper seriously tested as the tension rose in Hungary and the game drifted towards a shootout.", "start_ms": 168720, "end_ms": 183504, "paragraph_index": 14}, {"index": 19, "text": "There was an early advantage for PSG when Eberechi Eze stroked his penalty wide after a stuttering run up, but Gunners keeper David Raya responded by saving Nuno Mendes' effort.", "start_ms": 183504, "end_ms": 196008, "paragraph_index": 15}, {"index": 20, "text": "However, after four successful kicks, there would be no reprieve for Gabriel who fired his penalty over the crossbar and into the delirious PSG fans.", "start_ms": 196008, "end_ms": 206952, "paragraph_index": 16}, {"index": 21, "text": "\"To miss a penalty in a Champions League final, obviously it's not nice,\" Arsenal midfielder Declan Rice said on TNT Sports.", "start_ms": 206952, "end_ms": 216696, "paragraph_index": 17}, {"index": 22, "text": "\"But we love them and we're with them.", "start_ms": 216696, "end_ms": 219600, "paragraph_index": 18}, {"index": 23, "text": "It happens in football.", "start_ms": 219600, "end_ms": 222096, "paragraph_index": 18}, {"index": 24, "text": "They're not going to be the last players to miss penalties in finals.", "start_ms": 222096, "end_ms": 226992, "paragraph_index": 18}, {"index": 25, "text": "\"Everyone has missed a penalty and without those two this season we wouldn't have won the Premier League, that's for sure.", "start_ms": 226992, "end_ms": 234768, "paragraph_index": 19}, {"index": 26, "text": "\"Gabriel, I've run out of words for him as a person and as a player.", "start_ms": 234768, "end_ms": 240024, "paragraph_index": 20}, {"index": 27, "text": "Eze has scored some crucial goals for us this season.", "start_ms": 240024, "end_ms": 244128, "paragraph_index": 20}, {"index": 28, "text": "\"It happens.", "start_ms": 244128, "end_ms": 246168, "paragraph_index": 21}, {"index": 29, "text": "It's football and it's cruel.", "start_ms": 246168, "end_ms": 248904, "paragraph_index": 21}, {"index": 30, "text": "We take the positives and keep going.\"", "start_ms": 248904, "end_ms": 252168, "paragraph_index": 21}, {"index": 31, "text": "Arsenal 'pain' will fuel fire after Champions League heartbreak", "start_ms": 252168, "end_ms": 257064, "paragraph_index": 22}, {"index": 32, "text": "This video can not be played", "start_ms": 257064, "end_ms": 260064, "paragraph_index": 23}, {"index": 33, "text": "PSG retain Champions League after penalty shootout win over Arsenal", "start_ms": 260064, "end_ms": 265920, "paragraph_index": 24}, {"index": 34, "text": "The sight of Gabriel wiping away tears as PSG's players celebrated with the trophy will be one that lingers long in the memory of Arsenal supporters.", "start_ms": 265920, "end_ms": 276000, "paragraph_index": 25}, {"index": 35, "text": "The Brazilian, one of Mikel Arteta's first signings after taking charge in December 2019, has been a driving force behind the club's rise back to the summit of English football and their Premier League title triumph this season.", "start_ms": 276000, "end_ms": 291576, "paragraph_index": 26}, {"index": 36, "text": "He started 48 of Arsenal 's 63 matches across all competitions and contributed nine goals and assists - more than both Martin Odegaard and Gabriel Jesus.", "start_ms": 291576, "end_ms": 303408, "paragraph_index": 27}, {"index": 37, "text": "While rival fans may focus on his miss in Budapest, Arsenal supporters will remember the countless occasions he delivered for his side, including a dramatic 96th-minute winner against Newcastle United in September.", "start_ms": 303408, "end_ms": 318408, "paragraph_index": 28}, {"index": 38, "text": "\"I've just listened to Declan Rice talking about how he has run out of words to describe Gabriel because he has been so important and so good for Arsenal all season, and over the past few years as well,\" former Manchester City defender Nedum Onuoha told BBC Sport.", "start_ms": 318408, "end_ms": 336240, "paragraph_index": 29}, {"index": 39, "text": "\"So for him to be the one who misses the penalty that costs them the Champions League final is heartbreaking.", "start_ms": 336240, "end_ms": 343392, "paragraph_index": 30}, {"index": 40, "text": "\"But I think everyone will rally around him because Arsenal would not have won the Premier League without him.", "start_ms": 343392, "end_ms": 350160, "paragraph_index": 31}, {"index": 41, "text": "He has been invaluable and, quite rightly, is in the conversation for PFA Player of the Year.", "start_ms": 350160, "end_ms": 357384, "paragraph_index": 31}, {"index": 42, "text": "\"The pressure is always there in a shootout.", "start_ms": 357384, "end_ms": 360792, "paragraph_index": 32}, {"index": 43, "text": "You can practice penalties in training, but in a Champions League final you can never truly prepare for that moment.", "start_ms": 360792, "end_ms": 368712, "paragraph_index": 32}, {"index": 44, "text": "Unfortunately, he has experienced what every player dreads - missing the penalty that decides a final.\"", "start_ms": 368712, "end_ms": 376104, "paragraph_index": 32}, {"index": 45, "text": "Former England defender Upson added: \"It's one of those moments that will be remembered for years, a cruel blow for a player who has been a tower of strength for Arsenal .", "start_ms": 376104, "end_ms": 387072, "paragraph_index": 33}, {"index": 46, "text": "\"Gabriel gave everything for his team.", "start_ms": 387072, "end_ms": 390432, "paragraph_index": 34}, {"index": 47, "text": "He showed the mentality and courage to step forward and take responsibility, which is all you can ask of any player.", "start_ms": 390432, "end_ms": 398328, "paragraph_index": 34}, {"index": 48, "text": "\"It is desperately sad for him, but he strikes me as someone who will recover quickly and use it as motivation.", "start_ms": 398328, "end_ms": 405936, "paragraph_index": 35}, {"index": 49, "text": "He still has a huge summer ahead with Brazil.\"", "start_ms": 405936, "end_ms": 409800, "paragraph_index": 35}, {"index": 50, "text": "PSG go back-to-back and join 'greatest of all time'", "start_ms": 409800, "end_ms": 414240, "paragraph_index": 36}, {"index": 51, "text": "Latest Arsenal news, analysis and fan views", "start_ms": 414240, "end_ms": 419016, "paragraph_index": 37}, {"index": 52, "text": "Ask about Arsenal - what do you want to know?", "start_ms": 419016, "end_ms": 422568, "paragraph_index": 38}], "total_duration_ms": 422568};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "for": "为了", "of": "的", "to": "到", "in": "在", "as": "作为", "he": "他", "his": "他的", "it": "它", "has": "有", "final": "最终", "was": "是", "be": "是", "with": "与", "but": "但是", "this": "这个", "that": "那个", "not": "不", "over": "超过", "season": "季节", "one": "一个", "after": "之后", "will": "将", "can": "可以", "who": "谁", "so": "所以", "been": "已经", "would": "将", "on": "在", "him": "他", "is": "是", "first": "第一轮", "their": "他们的", "have": "有", "we": "我们", "manchester": "曼彻斯特", "them": "他们", "it's": "它是", "all": "所有", "you": "你", "win": "赢得", "by": "被", "had": "有", "take": "采取", "players": "参与者", "former": "前任", "those": "那些", "when": "当", "united": "联合", "supporters": "支持者", "there": "那里", "run": "奔跑", "miss": "错过", "football": "足球", "video": "视频", "captain": "船长", "since": "自从", "moment": "时刻", "said": "说", "game": "游戏", "went": "去", "step": "步骤", "forward": "向前", "bbc": "英国广播公司", "moments": "时刻", "which": "哪个", "into": "进入", "were": "是", "at": "在", "more": "更多", "than": "比", "any": "任何", "city": "城市", "both": "两者", "declan": "德克兰", "happens": "发生", "going": "将要", "everyone": "每个人", "without": "没有", "won": "赢得", "i've": "我已经", "out": "出来", "words": "言辞", "about": "关于", "because": "因为", "years": "多年", "what": "什么", "ask": "询问", "defeat": "失败", "standing": "站立", "head": "前往", "hands": "双手", "paris": "巴黎", "end": "结束", "european": "欧洲的", "proved": "证明是", "suffered": "遭受", "successfully": "成功地", "defended": "辩护", "often": "经常", "before": "之前", "taken": "采取", "manager": "经理", "revealing": "揭露性的", "prepared": "准备好的", "trained": "训练有素的", "wanted": "想要", "normally": "通常", "knew": "知道", "if": "如果", "different": "不同的", "painful": "痛苦的", "way": "方式", "bring": "带来", "campaign": "竞选活动", "close": "密切的", "speaking": "发言", "radio": "电台", "live": "生活", "called": "称为", "john": "约翰", "referring": "提及", "chance": "机会", "slipped": "溜走", "struck": "击中", "hit": "击中", "post": "职位", "claim": "声称", "instead": "反而", "night": "晚上", "began": "开始", "brightly": "明亮地", "high": "高的", "inside": "内部", "six": "六", "minutes": "会议记录", "despite": "尽管", "unable": "无法", "many": "许多", "clear": "明确", "chances": "机会", "feared": "担心", "front": "前线", "three": "三个", "desire": "渴望", "defence": "国防", "largely": "很大程度上", "keeping": "保持", "under": "在...之下", "control": "控制", "heart": "核心", "made": "做出", "other": "其他", "pitch": "推销", "double": "双重", "achieved": "实现", "only": "只有", "from": "来自", "contest": "竞争", "became": "成为", "sides": "各方", "seriously": "认真地", "tested": "检测", "towards": "对待", "an": "一个", "early": "早期的", "wide": "广泛的", "up": "向上", "david": "大卫", "responded": "回应", "saving": "拯救", "however": "然而", "four": "四", "successful": "成功的", "no": "没有", "fired": "发射", "obviously": "显然", "love": "爱", "we're": "我们是", "they're": "他们是", "last": "最后", "missed": "未击中", "two": "两个", "wouldn't": "不会", "that's": "那是", "sure": "确定", "person": "个人", "some": "一些", "crucial": "关键的", "us": "我们", "keep": "保持", "pain": "痛苦", "fire": "射击", "sight": "视线", "away": "离开", "long": "长久", "taking": "采取", "charge": "负责", "december": "十二月", "force": "力量", "behind": "在...后面", "rise": "上升", "back": "后退", "english": "英格兰的", "started": "开始", "matches": "匹配", "across": "跨越", "contributed": "促成", "nine": "九", "while": "而", "rival": "对手", "may": "可能", "focus": "重点", "occasions": "场合", "delivered": "递送", "side": "方面", "including": "包括", "winner": "获胜者", "against": "反对", "september": "九月", "just": "只是", "talking": "谈论", "how": "如何", "important": "重要", "good": "良好", "past": "过去", "few": "少数", "well": "好", "told": "告诉", "costs": "成本", "think": "认为", "around": "在...周围", "quite": "相当", "conversation": "对话", "year": "年", "pressure": "压力", "always": "总是", "practice": "实践", "training": "培训", "never": "从未", "truly": "真正地", "prepare": "准备", "unfortunately": "不幸的是", "experienced": "经历", "every": "每个", "missing": "失踪", "england": "英格兰", "added": "补充", "tower": "塔", "strength": "力量", "gave": "给予", "everything": "一切", "team": "团队", "showed": "显示", "courage": "勇气", "responsibility": "责任", "strikes": "袭击", "me": "我", "someone": "某人", "quickly": "迅速", "use": "使用", "still": "仍然", "huge": "巨大的", "ahead": "提前", "go": "去", "join": "加入", "time": "时间", "latest": "最新的", "news": "新闻", "analysis": "分析", "fan": "粉丝", "views": "观点", "do": "做", "want": "想要", "know": "知道", "arsenal": "阿森纳", "league": "联赛", "penalty": "点球", "gabriel": "加布里埃尔", "champions": "冠军", "psg": "巴黎圣日耳曼", "player": "球员", "shootout": "点球大战", "defender": "后卫", "premier": "英超", "cruel": "残酷的", "gunners": "枪手", "title": "冠军头衔", "penalties": "点球", "played": "比赛", "brazil": "巴西", "marquinhos": "马尔基尼奥斯", "crossbar": "横梁", "heartbreak": "心碎", "club's": "俱乐部的", "mikel": "米克尔", "arteta": "阿尔特塔", "martin": "马丁", "odegaard": "厄德高", "kai": "凯", "havertz": "哈弗茨", "upson": "厄普森", "ball": "球", "budapest": "布达佩斯", "dembele": "登贝莱", "keeper": "门将", "eze": "埃泽", "fans": "球迷", "rice": "赖斯", "goals": "进球", "blazes": "射飞", "defining": "决定性的", "image": "画面", "st-germain": "圣日耳曼", "team-mate": "队友", "defender's": "后卫的", "blasted": "猛射", "difference-maker": "关键人物", "contribution": "贡献", "takers": "罚球者", "bukayo": "布卡约", "saka": "萨卡", "extra-time": "加时赛", "performers": "表现者", "matt": "马特", "terry": "特里", "chelsea": "切尔西", "celebrating": "庆祝", "team-mates": "队友们", "compatriot": "同胞", "smashed": "猛击", "roof": "顶网", "net": "球网", "matvey": "马特维", "safonov": "萨福诺夫", "dreamland": "梦幻", "puskas": "普斯卡什", "arena": "球场", "dominating": "占据优势", "possession": "控球", "fashion": "方式", "khvicha": "克瓦拉茨赫利亚", "kvaratskhelia": "克瓦拉茨赫利亚", "ousmane": "奥斯曼", "doue": "杜埃", "clearances": "解围", "chased": "追赶", "rare": "罕见的", "equalised": "扳平", "spot": "点球点", "must-not-lose": "不容有失", "affair": "比赛", "neither": "双方都不", "tension": "紧张", "rose": "上升", "hungary": "匈牙利", "drifted": "飘移", "advantage": "优势", "eberechi": "埃贝雷奇", "stroked": "轻推", "stuttering": "犹豫的", "raya": "拉亚", "nuno": "努诺", "mendes": "门德斯", "effort": "射门", "kicks": "踢", "delirious": "狂喜的", "nice": "尼斯", "midfielder": "中场", "tnt": "TNT", "sports": "体育", "finals": "决赛", "scored": "得分", "positives": "积极因素", "fuel": "动力", "retain": "保留", "wiping": "擦拭", "tears": "眼泪", "psg's": "巴黎圣日耳曼的", "celebrated": "庆祝的", "trophy": "奖杯", "lingers": "萦绕", "memory": "记忆", "brazilian": "巴西的", "arteta's": "阿尔特塔的", "signings": "签约球员", "driving": "推动", "summit": "巅峰", "triumph": "胜利", "competitions": "比赛", "assists": "助攻", "jesus": "热苏斯", "remember": "记住", "countless": "无数的", "dramatic": "戏剧性的", "minute": "分钟", "newcastle": "纽卡斯尔", "listened": "倾听", "describe": "描述", "nedum": "内杜姆", "onuoha": "奥诺哈", "sport": "体育", "misses": "想念", "heartbreaking": "令人心碎的", "invaluable": "无价的", "rightly": "理所当然地", "pfa": "职业足球运动员协会", "dreads": "害怕", "decides": "决定", "remembered": "被记住", "blow": "打击", "mentality": "心态", "desperately": "拼命地", "sad": "悲伤的", "recover": "恢复", "motivation": "动力", "summer": "夏天", "back-to-back": "连续的", "greatest": "最伟大的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
