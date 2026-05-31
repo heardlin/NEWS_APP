@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-05-31</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-05-31</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/6a91/live/451863a0-5c63-11f1-aeb2-75cc9209ef5d.jpg" alt="Sturgeon tells BBC: I'm serving a sentence for crime I didn't commit" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Sturgeon tells BBC: I'm serving a sentence for crime I didn't commit</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c2027k1ev3zo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-05-31.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Nicola Sturgeon has told the BBC she feels like she is "serving a sentence for a crime I did not commit" after her estranged husband admitted embezzling £400,000 from the SNP, the party she led for years.</span></p>
+        <p class="cn">尼古拉·斯特金（Nicola Sturgeon）告诉BBC，在她的分居丈夫承认从苏格兰民族党（SNP）挪用了40万英镑后，她感觉自己“在为一桩我没有犯下的罪行服刑”。她曾领导该党多年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">In an exclusive interview with Laura Kuenssberg, Scotland's former first minister refused to apologise for the <span class="keyword" data-word="scandal" data-phonetic="/ˈskæn.dəl/" data-pos="n." data-def="丑闻" data-def-en="an action or event that causes public shock or disapproval">scandal</span> and struggled to hold back tears, recalling gifts from Peter Murrell that turned out to have been purchased with stolen money.</span></p>
+        <p class="cn">在接受劳拉·库恩斯伯格（Laura Kuenssberg）的独家采访时，这位苏格兰前首席大臣拒绝为这一丑闻道歉，并强忍泪水，回忆起彼得·穆雷尔（Peter Murrell）赠送的礼物，结果发现这些礼物是用赃款购买的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Sturgeon told the BBC: "I am not responsible for the crimes that my former husband committed and I'm not going to apologise for somebody else's crimes."</span></p>
+        <p class="cn">斯特金告诉BBC：“我不对我前夫所犯的罪行负责，我不会为别人的罪行道歉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">She has consistently denied any knowledge of Murrell's <span class="keyword" data-word="wrongdoing" data-phonetic="/ˈrɒŋ.duː.ɪŋ/" data-pos="n." data-def="不法行为" data-def-en="illegal or immoral behavior">wrongdoing</span>, committed between 2010 and 2022.</span></p>
+        <p class="cn">她一直否认对穆雷尔在2010年至2022年间的不当行为知情。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The former first minister was not charged following a police investigation.</span></p>
+        <p class="cn">警方调查后，这位前首席大臣并未受到指控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Sturgeon was SNP party leader between 2014 and 2023 and in that role shared responsibility for monitoring the party's accounts.</span></p>
+        <p class="cn">斯特金在2014年至2023年间担任苏格兰民族党领袖，并在此职位上共同负责监督该党的账目。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">In the interview, broadcast on Sunday, Sturgeon said: "For my own sake, but for the sake of people out there, a lot of women who end up finding themselves blamed for the actions of the men in their lives, I'm not going to contribute to that kind of sense that I am responsible for somebody else's crimes."</span></p>
+        <p class="cn">在周日播出的采访中，斯特金说：“为了我自己，也为了那些最终发现自己因生活中男人的行为而受到指责的女性，我不会助长那种认为我对别人的罪行负责的感觉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">She added: "I will take responsibility for the things I do, the decisions I make.</span> <span class="sentence" data-sentence-index="8">I'm sitting here with you right now, answering questions because I believe strongly in that <span class="keyword" data-word="accountability" data-phonetic="/əˌkaʊn.təˈbɪl.ə.ti/" data-pos="n." data-def="问责制，责任" data-def-en="the fact of being responsible for what you do and able to give a satisfactory reason for it">accountability</span>.</span></p>
+        <p class="cn">她补充道：“我会为自己所做的事情、所做的决定负责。我现在坐在这里回答你的问题，因为我坚信这种问责制。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">"But I am not responsible for the crimes that my former husband committed and I'm not going to apologise for somebody else's crimes."</span></p>
+        <p class="cn">“但我不对我前夫所犯的罪行负责，我不会为别人的罪行道歉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Sturgeon's interview was met with scepticism from some and a demand for further investigation into the <span class="keyword" data-word="scandal" data-phonetic="/ˈskæn.dəl/" data-pos="n." data-def="丑闻" data-def-en="an action or event that causes public shock or disapproval">scandal</span>.</span></p>
+        <p class="cn">斯特金的采访遭到了一些人的质疑，并要求对丑闻进行进一步调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">UK government minister Pat McFadden warned there should not be a "culture of control and secrecy that just tries to shut this down".</span></p>
+        <p class="cn">英国政府部长帕特·麦克法登（Pat McFadden）警告说，不应存在“一种试图掩盖此事的控制和保密文化”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Asked if she bore no responsibility at all despite her role, Sturgeon told the BBC: "No...</span> <span class="sentence" data-sentence-index="13">[Murrell] perpetrated a crime on the SNP.</span> <span class="sentence" data-sentence-index="14">By definition, that included me as the party leader.</span> <span class="sentence" data-sentence-index="15">He misled.</span> <span class="sentence" data-sentence-index="16">He deceived.</span></p>
+        <p class="cn">当被问及尽管她身居高位，是否完全不承担责任时，斯特金告诉BBC：“不……（穆雷尔）对苏格兰民族党犯下了罪行。这自然包括作为党领袖的我。他误导、欺骗了大家。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="17">"He is serving and will be serving a sentence for a crime he committed.</span> <span class="sentence" data-sentence-index="18">I'm out here feeling as if I'm serving a sentence for a crime I did not commit."</span></p>
+        <p class="cn">“他正在并将为他所犯的罪行服刑。而我却感觉自己像是在为一桩我没有犯下的罪行服刑。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="19">That echoed comments from the former first minister earlier in the week, when she told an audience at a literary festival she was "deceived, betrayed and lied to" by her husband.</span></p>
+        <p class="cn">这与这位前首席大臣本周早些时候的言论相呼应，当时她在一次文学节上告诉听众，她被丈夫“欺骗、背叛和蒙蔽”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="20">The largest single transaction made by Murrell was £124,550 for a motorhome which was parked at his mother's house.</span></p>
+        <p class="cn">穆雷尔最大的一笔交易是花费124,550英镑购买一辆房车，停放在他母亲家中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="21">Sturgeon said she had no "conscious memory" of ever seeing the luxury vehicle, which she said was "round the sides of the house which is not immediately visible in the way that we went into the home".</span></p>
+        <p class="cn">斯特金表示，她对这辆豪华车没有“清晰的记忆”，并称它“在房子侧面，我们进家门时并不直接能看到”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="22">She said "it was between their house and the next door neighbour's" and if she had seen it she would "probably have assumed it was a neighbour's", adding: "Why would it have crossed my mind that it was the SNP's?"</span></p>
+        <p class="cn">她说“它在他家和邻居家之间”，如果她看到了，她“可能会以为是邻居的”，并补充道：“我怎么会想到那是苏格兰民族党的呢？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="23">Murrell also spent the money on two cars, jewellery, handbags, expensive coffee machines and games consoles, among other things.</span></p>
+        <p class="cn">穆雷尔还用这笔钱购买了两辆汽车、珠宝、手袋、昂贵的咖啡机和游戏机等物品。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="24">Sturgeon became visibly emotional when speaking to the BBC about a necklace gifted to her by Murrell that cost more than £400 and which she often wore in public.</span></p>
+        <p class="cn">当斯特金向BBC谈及穆雷尔赠送的一条价值超过400英镑的项链时，她明显情绪激动，这条项链她经常在公共场合佩戴。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">She said: "I'd been campaigning a lot in Shetland and we went to visit, as part of the campaign, we went to visit this amazing business, the Shetland jewellers, and I was being shown around the shop and I stopped at this pendant.</span></p>
+        <p class="cn">她说：“我经常在设得兰群岛（Shetland）竞选，我们作为竞选活动的一部分去参观了一家很棒的企业——设得兰珠宝店。我在店里参观时，停在了这个吊坠前。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="26">"I mean, you've seen pictures of it, it's beautiful.</span></p>
+        <p class="cn">“我的意思是，你见过它的照片，它很漂亮。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="27">"Later that night, Peter said to me 'I've got a surprise for you' and 'I saw you admiring this pendant' and gave me it."</span></p>
+        <p class="cn">“那天晚上晚些时候，彼得对我说‘我有个惊喜给你’，‘我看到你欣赏这个吊坠了’，然后把它给了我。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="28">She struggled to hold back her emotion, before continuing: "Sorry.</span> <span class="sentence" data-sentence-index="29">I loved that necklace and I wore it a lot.</span></p>
+        <p class="cn">她强忍泪水，继续说道：“抱歉。我深爱那条项链，经常佩戴。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="30">"And this is the other thing.</span> <span class="sentence" data-sentence-index="31">The idea that I would have gone about wearing things that I had known were anything other than what they were presented as, a gift from my husband...</span> <span class="sentence" data-sentence-index="32">to then find out that these were gifts given to me that he'd bought with the party's money causes a level of, I don't know, pain, <span class="keyword" data-word="bewilderment" data-phonetic="/bɪˈwɪl.dər.mənt/" data-pos="n." data-def="困惑，迷惘" data-def-en="a feeling of being confused and uncertain">bewilderment</span>.</span></p>
+        <p class="cn">“还有另一件事。认为我会戴着我知道并非如它们所呈现的那样——我丈夫的礼物——的东西到处走……然后发现这些礼物是他用党的钱买给我的，这带来了一定程度的，我不知道，痛苦和困惑。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="33">"I don't know, I just...</span> <span class="sentence" data-sentence-index="34">I'm not sure.</span> <span class="sentence" data-sentence-index="35">I'm going to try.</span> <span class="sentence" data-sentence-index="36">I am just not sure I will ever properly come to terms with that."</span></p>
+        <p class="cn">“我不知道，我只是……我不确定。我会努力。我只是不确定我是否能真正接受这一切。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="37">Murrell spent more than 20 years as chief executive of the party before resigning in March 2023 due to controversy over details of membership numbers.</span></p>
+        <p class="cn">穆雷尔担任该党首席执行官超过20年，后因成员人数细节争议于2023年3月辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="38">He was arrested less than three weeks later in connection with the Operation Branchform investigation into SNP funds.</span></p>
+        <p class="cn">不到三周后，他因与调查苏格兰民族党资金的“布兰奇福姆行动”（Operation Branchform）有关而被捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="39">As party leader Sturgeon shared responsibility for monitoring the SNP's accounts.</span> <span class="sentence" data-sentence-index="40">When asked if she had done enough when others in the party were raising concerns about the SNP's finances, she said: "I reject completely the notion that people were trying to alert the party to the kind of behaviour that Peter pled guilty to on Monday".</span></p>
+        <p class="cn">作为党领袖，斯特金共同负责监督苏格兰民族党的账目。当被问及当党内其他人对苏格兰民族党的财务状况提出担忧时，她是否做得足够时，她说：“我完全拒绝那种认为人们试图提醒党注意彼得周一认罪的那种行为的说法。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="41">She also said she wanted to be careful not to do anything that would "step on the toes" of the police investigation into SNP finances.</span></p>
+        <p class="cn">她还表示，她想小心谨慎，不做任何会“妨碍”警方调查苏格兰民族党财务的事情。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="42">She said if there had been anything in the accounts which could have alerted her the police "might have reached a different position" on her.</span></p>
+        <p class="cn">她说，如果账目中有什么能提醒她，警方“可能会对她得出不同的结论”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="43">Sturgeon told Kuenssberg while there will now likely be a legal process to recover money from Murrell on behalf of the donors to the party, she should not be expected to contribute.</span></p>
+        <p class="cn">斯特金告诉库恩斯伯格，虽然现在可能会有一个法律程序，代表党的捐赠者从穆雷尔那里追回资金，但她不应该被要求出钱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="44">"I am not guilty of that embezzlement" she said, "so nothing that belongs to me should be part of it." Sturgeon added that includes her marital home, which "wasn't bought by the SNP".</span></p>
+        <p class="cn">她说：“我没有犯下那起挪用公款罪，所以任何属于我的东西都不应该被包括在内。”斯特金补充说，这包括她的婚姻住所，那“不是苏格兰民族党买的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="45">She explained that there would however be a toll on her life and said "the idea that emotionally, practically I can just skip away from this is not true".</span></p>
+        <p class="cn">她解释说，然而这会对她的生活造成影响，并说“认为我在情感上、实际上可以轻松摆脱这件事，这不是真的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="46">Sturgeon was arrested two months later in connection with the inquiry and was questioned by detectives before being released without charge.</span></p>
+        <p class="cn">两个月后，斯特金因与该调查有关而被捕，并接受了侦探的讯问，随后被无罪释放。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="47">Following his guilty plea at the High Court in Edinburgh on Monday, Murrell was remanded in custody and could face a lengthy prison term when sentenced on 23 June.</span></p>
+        <p class="cn">在周一于爱丁堡高等法院认罪后，穆雷尔被还押候审，并可能在6月23日被判刑时面临长期监禁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="48">"Peter will pay a price rightly for what he's done, but he's paying a price for something he did do.</span> <span class="sentence" data-sentence-index="49">The price I pay is for something I didn't do," Sturgeon said.</span></p>
+        <p class="cn">斯特金说：“彼得将为他所做的事付出应有的代价，但他是在为他确实做过的事付出代价。而我付出的代价，是为了我没有做过的事。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="50">"I'm not saying that for sympathy, I'm just saying it because it possibly is the worst feeling in the world to be blamed for the actions of somebody else… particularly when that person is somebody you loved and trusted."</span></p>
+        <p class="cn">“我这么说不是为了博取同情，我只是想说，因为别人的行为而受到指责可能是世界上最糟糕的感觉……尤其是当那个人是你曾经爱过并信任的人时。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="51">Former SNP MP Joanna Cherry, who resigned from the party's ruling national executive committee in 2021 due to concerns about transparency, said Sturgeon was "setting up a straw man".</span></p>
+        <p class="cn">前苏格兰民族党议员乔安娜·切里（Joanna Cherry）于2021年因对透明度担忧而辞去该党全国执行委员会职务，她表示斯特金在“树立一个稻草人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="52">Cherry told BBC Scotland's The Sunday Show: "She's trying to put in our minds that she's being held guilty for her husband's embezzlement, but what we are actually concerned about is her frustration of legitimate scrutiny of the finances of the party."</span></p>
+        <p class="cn">切里告诉BBC苏格兰频道的《周日秀》节目：“她试图让我们相信她因丈夫的挪用公款而受到指责，但我们真正关心的是她阻挠对党财务的合法监督。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="53">Meanwhile, Work and Pensions Secretary Pat McFadden backed Scottish Labour leader Anas Sarwar's call for a Holyrood inquiry into the SNP.</span></p>
+        <p class="cn">与此同时，工作和养老金大臣帕特·麦克法登支持苏格兰工党领袖阿纳斯·萨瓦尔（Anas Sarwar）的呼吁，要求荷里路德（Holyrood）对苏格兰民族党进行调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="54">The minister said that the Scottish Parliament could "step up to the plate and show that it can do this".</span></p>
+        <p class="cn">这位部长表示，苏格兰议会可以“挺身而出，表明他们能做到这一点”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="55">McFadden added it was a matter for MPs on the Scottish Affairs Committee as to whether they also wanted to establish an inquiry in Westminster.</span></p>
+        <p class="cn">麦克法登补充说，苏格兰事务委员会的议员们是否也愿意在威斯敏斯特（Westminster）设立调查，是他们自己的事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="56">"What you cannot have is a culture of control and secrecy that just tries to shut this down when the SNP is such a dominant force in Scotland."</span></p>
+        <p class="cn">“你不能有一种控制和保密的氛围，试图在苏格兰民族党在苏格兰如此强势的情况下掩盖此事。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="57">Conservative shadow home secretary Chris Philp added that there should "definitely be an inquiry because trust in politics has been fundamentally undermined" by the <span class="keyword" data-word="scandal" data-phonetic="/ˈskæn.dəl/" data-pos="n." data-def="丑闻" data-def-en="an action or event that causes public shock or disapproval">scandal</span>.</span></p>
+        <p class="cn">保守党影子内政大臣克里斯·菲利普（Chris Philp）补充说，“绝对应该进行调查，因为公众对政治的信任已被这一丑闻从根本上削弱”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="58">First Minister John Swinney, who has rejected calls for a Holyrood inquiry, said "we know exactly what happened" in the Murrell case.</span></p>
+        <p class="cn">首席大臣约翰·斯温尼（John Swinney）拒绝了荷里路德调查的呼吁，他表示“我们确切知道”穆雷尔案中发生了什么。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="59">He told the BBC: "You can't actually get a standard of investigation any higher in Scotland than a forensic police investigation that results in a successful High Court prosecution and a guilty plea."</span></p>
+        <p class="cn">他告诉BBC：“在苏格兰，你实际上找不到比法医警察调查更高的调查标准了，其结果是在高等法院成功起诉并认罪。”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">embezzle</span>
+        <button class="kw-speak-btn" data-word="embezzle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈbez.əl/ v.</span>
+      </div>
+      <p class="kw-def">盗用，贪污</p>
+      <p class="kw-def-en">to steal money that you are responsible for</p>
+      <p class="kw-ctx">&ldquo;Nicola Sturgeon has told the BBC she feels like she is 'serving a sentence for a crime I did not commit' after her estranged husband admitted embezzling £400,000 from the SNP, the party she led for years.&rdquo;</p>
+      <p class="kw-ctx-cn">尼古拉·斯特金告诉BBC，在她的分居丈夫承认从她领导多年的苏格兰民族党盗用40万英镑后，她感觉自己“在为一桩我没有犯下的罪行服刑”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">estrange</span>
+        <button class="kw-speak-btn" data-word="estrange" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈstreɪndʒ/ v.</span>
+      </div>
+      <p class="kw-def">使疏远</p>
+      <p class="kw-def-en">to cause someone to no longer have a close relationship with someone else</p>
+      <p class="kw-ctx">&ldquo;Nicola Sturgeon has told the BBC she feels like she is 'serving a sentence for a crime I did not commit' after her estranged husband admitted embezzling £400,000 from the SNP, the party she led for years.&rdquo;</p>
+      <p class="kw-ctx-cn">尼古拉·斯特金告诉BBC，在她的分居丈夫承认从她领导多年的苏格兰民族党盗用40万英镑后，她感觉自己“在为一桩我没有犯下的罪行服刑”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scandal</span>
+        <button class="kw-speak-btn" data-word="scandal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskæn.dəl/ n.</span>
+      </div>
+      <p class="kw-def">丑闻</p>
+      <p class="kw-def-en">an action or event that causes public shock or disapproval</p>
+      <p class="kw-ctx">&ldquo;In an exclusive interview with Laura Kuenssberg, Scotland's former first minister refused to apologise for the scandal and struggled to hold back tears, recalling gifts from Peter Murrell that turned out to have been purchased with stolen money.&rdquo;</p>
+      <p class="kw-ctx-cn">在接受劳拉·库恩斯伯格的独家采访时，苏格兰前首席大臣拒绝为这起丑闻道歉，并强忍泪水，回忆起彼得·穆雷尔的礼物——这些礼物后来被发现是用赃款购买的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">wrongdoing</span>
+        <button class="kw-speak-btn" data-word="wrongdoing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈrɒŋ.duː.ɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">不法行为</p>
+      <p class="kw-def-en">illegal or immoral behavior</p>
+      <p class="kw-ctx">&ldquo;She has consistently denied any knowledge of Murrell's wrongdoing, committed between 2010 and 2022.&rdquo;</p>
+      <p class="kw-ctx-cn">她一直否认对穆雷尔在2010年至2022年间的不法行为知情。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">accountability</span>
+        <button class="kw-speak-btn" data-word="accountability" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˌkaʊn.təˈbɪl.ə.ti/ n.</span>
+      </div>
+      <p class="kw-def">问责制，责任</p>
+      <p class="kw-def-en">the fact of being responsible for what you do and able to give a satisfactory reason for it</p>
+      <p class="kw-ctx">&ldquo;I will take responsibility for the things I do, the decisions I make. I'm sitting here with you right now, answering questions because I believe strongly in that accountability.&rdquo;</p>
+      <p class="kw-ctx-cn">我会为自己所做的事情和所做的决定负责。我现在坐在这里回答你的问题，因为我坚信这种问责制。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">perpetrate</span>
+        <button class="kw-speak-btn" data-word="perpetrate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɜːr.pə.treɪt/ v.</span>
+      </div>
+      <p class="kw-def">犯（罪），实施</p>
+      <p class="kw-def-en">to commit a harmful or illegal act</p>
+      <p class="kw-ctx">&ldquo;He perpetrated a crime on the SNP.&rdquo;</p>
+      <p class="kw-ctx-cn">他对苏格兰民族党犯下了罪行。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deceive</span>
+        <button class="kw-speak-btn" data-word="deceive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈsiːv/ v.</span>
+      </div>
+      <p class="kw-def">欺骗</p>
+      <p class="kw-def-en">to make someone believe something that is not true</p>
+      <p class="kw-ctx">&ldquo;He misled. He deceived.&rdquo;</p>
+      <p class="kw-ctx-cn">他误导了。他欺骗了。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bewilderment</span>
+        <button class="kw-speak-btn" data-word="bewilderment" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bɪˈwɪl.dər.mənt/ n.</span>
+      </div>
+      <p class="kw-def">困惑，迷惘</p>
+      <p class="kw-def-en">a feeling of being confused and uncertain</p>
+      <p class="kw-ctx">&ldquo;To then find out that these were gifts given to me that he'd bought with the party's money causes a level of, I don't know, pain, bewilderment.&rdquo;</p>
+      <p class="kw-ctx-cn">然后发现这些是他用党的钱买给我的礼物，这带来了一定程度的——我不知道——痛苦、困惑。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Nicola Sturgeon has told the BBC she feels like she is \"serving a sentence for a crime I did not commit\" after her estranged husband admitted embezzling \u00a3400,000 from the SNP, the party she led for years.", "start_ms": 0, "end_ms": 15024, "paragraph_index": 0}, {"index": 1, "text": "In an exclusive interview with Laura Kuenssberg, Scotland's former first minister refused to apologise for the scandal and struggled to hold back tears, recalling gifts from Peter Murrell that turned out to have been purchased with stolen money.", "start_ms": 15024, "end_ms": 30336, "paragraph_index": 1}, {"index": 2, "text": "Sturgeon told the BBC: \"I am not responsible for the crimes that my former husband committed and I'm not going to apologise for somebody else's crimes.\"", "start_ms": 30336, "end_ms": 40752, "paragraph_index": 2}, {"index": 3, "text": "She has consistently denied any knowledge of Murrell's wrongdoing, committed between 2010 and 2022.", "start_ms": 40752, "end_ms": 48984, "paragraph_index": 3}, {"index": 4, "text": "The former first minister was not charged following a police investigation.", "start_ms": 48984, "end_ms": 54648, "paragraph_index": 4}, {"index": 5, "text": "Sturgeon was SNP party leader between 2014 and 2023 and in that role shared responsibility for monitoring the party's accounts.", "start_ms": 54648, "end_ms": 65472, "paragraph_index": 5}, {"index": 6, "text": "In the interview, broadcast on Sunday, Sturgeon said: \"For my own sake, but for the sake of people out there, a lot of women who end up finding themselves blamed for the actions of the men in their lives, I'm not going to contribute to that kind of sense that I am responsible for somebody else's crimes.\"", "start_ms": 65472, "end_ms": 84744, "paragraph_index": 6}, {"index": 7, "text": "She added: \"I will take responsibility for the things I do, the decisions I make.", "start_ms": 84744, "end_ms": 91008, "paragraph_index": 7}, {"index": 8, "text": "I'm sitting here with you right now, answering questions because I believe strongly in that accountability.", "start_ms": 91008, "end_ms": 98016, "paragraph_index": 7}, {"index": 9, "text": "\"But I am not responsible for the crimes that my former husband committed and I'm not going to apologise for somebody else's crimes.\"", "start_ms": 98016, "end_ms": 106608, "paragraph_index": 8}, {"index": 10, "text": "Sturgeon's interview was met with scepticism from some and a demand for further investigation into the scandal.", "start_ms": 106608, "end_ms": 114312, "paragraph_index": 9}, {"index": 11, "text": "UK government minister Pat McFadden warned there should not be a \"culture of control and secrecy that just tries to shut this down\".", "start_ms": 114312, "end_ms": 123336, "paragraph_index": 10}, {"index": 12, "text": "Asked if she bore no responsibility at all despite her role, Sturgeon told the BBC: \"No...", "start_ms": 123336, "end_ms": 130584, "paragraph_index": 11}, {"index": 13, "text": "[Murrell] perpetrated a crime on the SNP.", "start_ms": 130584, "end_ms": 134832, "paragraph_index": 11}, {"index": 14, "text": "By definition, that included me as the party leader.", "start_ms": 134832, "end_ms": 139320, "paragraph_index": 11}, {"index": 15, "text": "He misled.", "start_ms": 139320, "end_ms": 141336, "paragraph_index": 11}, {"index": 16, "text": "He deceived.", "start_ms": 141336, "end_ms": 143352, "paragraph_index": 11}, {"index": 17, "text": "\"He is serving and will be serving a sentence for a crime he committed.", "start_ms": 143352, "end_ms": 148200, "paragraph_index": 12}, {"index": 18, "text": "I'm out here feeling as if I'm serving a sentence for a crime I did not commit.\"", "start_ms": 148200, "end_ms": 153768, "paragraph_index": 12}, {"index": 19, "text": "That echoed comments from the former first minister earlier in the week, when she told an audience at a literary festival she was \"deceived, betrayed and lied to\" by her husband.", "start_ms": 153768, "end_ms": 165384, "paragraph_index": 13}, {"index": 20, "text": "The largest single transaction made by Murrell was \u00a3124,550 for a motorhome which was parked at his mother's house.", "start_ms": 165384, "end_ms": 175728, "paragraph_index": 14}, {"index": 21, "text": "Sturgeon said she had no \"conscious memory\" of ever seeing the luxury vehicle, which she said was \"round the sides of the house which is not immediately visible in the way that we went into the home\".", "start_ms": 175728, "end_ms": 187800, "paragraph_index": 15}, {"index": 22, "text": "She said \"it was between their house and the next door neighbour's\" and if she had seen it she would \"probably have assumed it was a neighbour's\", adding: \"Why would it have crossed my mind that it was the SNP's?\"", "start_ms": 187800, "end_ms": 200040, "paragraph_index": 16}, {"index": 23, "text": "Murrell also spent the money on two cars, jewellery, handbags, expensive coffee machines and games consoles, among other things.", "start_ms": 200040, "end_ms": 210024, "paragraph_index": 17}, {"index": 24, "text": "Sturgeon became visibly emotional when speaking to the BBC about a necklace gifted to her by Murrell that cost more than \u00a3400 and which she often wore in public.", "start_ms": 210024, "end_ms": 221256, "paragraph_index": 18}, {"index": 25, "text": "She said: \"I'd been campaigning a lot in Shetland and we went to visit, as part of the campaign, we went to visit this amazing business, the Shetland jewellers, and I was being shown around the shop and I stopped at this pendant.", "start_ms": 221256, "end_ms": 235464, "paragraph_index": 19}, {"index": 26, "text": "\"I mean, you've seen pictures of it, it's beautiful.", "start_ms": 235464, "end_ms": 239640, "paragraph_index": 20}, {"index": 27, "text": "\"Later that night, Peter said to me 'I've got a surprise for you' and 'I saw you admiring this pendant' and gave me it.\"", "start_ms": 239640, "end_ms": 247944, "paragraph_index": 21}, {"index": 28, "text": "She struggled to hold back her emotion, before continuing: \"Sorry.", "start_ms": 247944, "end_ms": 253248, "paragraph_index": 22}, {"index": 29, "text": "I loved that necklace and I wore it a lot.", "start_ms": 253248, "end_ms": 256896, "paragraph_index": 22}, {"index": 30, "text": "\"And this is the other thing.", "start_ms": 256896, "end_ms": 259440, "paragraph_index": 23}, {"index": 31, "text": "The idea that I would have gone about wearing things that I had known were anything other than what they were presented as, a gift from my husband...", "start_ms": 259440, "end_ms": 268440, "paragraph_index": 23}, {"index": 32, "text": "to then find out that these were gifts given to me that he'd bought with the party's money causes a level of, I don't know, pain, bewilderment.", "start_ms": 268440, "end_ms": 277608, "paragraph_index": 23}, {"index": 33, "text": "\"I don't know, I just...", "start_ms": 277608, "end_ms": 280272, "paragraph_index": 24}, {"index": 34, "text": "I'm not sure.", "start_ms": 280272, "end_ms": 282408, "paragraph_index": 24}, {"index": 35, "text": "I'm going to try.", "start_ms": 282408, "end_ms": 284712, "paragraph_index": 24}, {"index": 36, "text": "I am just not sure I will ever properly come to terms with that.\"", "start_ms": 284712, "end_ms": 289536, "paragraph_index": 24}, {"index": 37, "text": "Murrell spent more than 20 years as chief executive of the party before resigning in March 2023 due to controversy over details of membership numbers.", "start_ms": 289536, "end_ms": 300480, "paragraph_index": 25}, {"index": 38, "text": "He was arrested less than three weeks later in connection with the Operation Branchform investigation into SNP funds.", "start_ms": 300480, "end_ms": 308880, "paragraph_index": 26}, {"index": 39, "text": "As party leader Sturgeon shared responsibility for monitoring the SNP's accounts.", "start_ms": 308880, "end_ms": 315480, "paragraph_index": 27}, {"index": 40, "text": "When asked if she had done enough when others in the party were raising concerns about the SNP's finances, she said: \"I reject completely the notion that people were trying to alert the party to the kind of behaviour that Peter pled guilty to on Monday\".", "start_ms": 315480, "end_ms": 331296, "paragraph_index": 27}, {"index": 41, "text": "She also said she wanted to be careful not to do anything that would \"step on the toes\" of the police investigation into SNP finances.", "start_ms": 331296, "end_ms": 340728, "paragraph_index": 28}, {"index": 42, "text": "She said if there had been anything in the accounts which could have alerted her the police \"might have reached a different position\" on her.", "start_ms": 340728, "end_ms": 348624, "paragraph_index": 29}, {"index": 43, "text": "Sturgeon told Kuenssberg while there will now likely be a legal process to recover money from Murrell on behalf of the donors to the party, she should not be expected to contribute.", "start_ms": 348624, "end_ms": 360000, "paragraph_index": 30}, {"index": 44, "text": "\"I am not guilty of that embezzlement\" she said, \"so nothing that belongs to me should be part of it.\" Sturgeon added that includes her marital home, which \"wasn't bought by the SNP\".", "start_ms": 360000, "end_ms": 372816, "paragraph_index": 31}, {"index": 45, "text": "She explained that there would however be a toll on her life and said \"the idea that emotionally, practically I can just skip away from this is not true\".", "start_ms": 372816, "end_ms": 382536, "paragraph_index": 32}, {"index": 46, "text": "Sturgeon was arrested two months later in connection with the inquiry and was questioned by detectives before being released without charge.", "start_ms": 382536, "end_ms": 391536, "paragraph_index": 33}, {"index": 47, "text": "Following his guilty plea at the High Court in Edinburgh on Monday, Murrell was remanded in custody and could face a lengthy prison term when sentenced on 23 June.", "start_ms": 391536, "end_ms": 402744, "paragraph_index": 34}, {"index": 48, "text": "\"Peter will pay a price rightly for what he's done, but he's paying a price for something he did do.", "start_ms": 402744, "end_ms": 409608, "paragraph_index": 35}, {"index": 49, "text": "The price I pay is for something I didn't do,\" Sturgeon said.", "start_ms": 409608, "end_ms": 414360, "paragraph_index": 35}, {"index": 50, "text": "\"I'm not saying that for sympathy, I'm just saying it because it possibly is the worst feeling in the world to be blamed for the actions of somebody else\u2026 particularly when that person is somebody you loved and trusted.\"", "start_ms": 414360, "end_ms": 427848, "paragraph_index": 36}, {"index": 51, "text": "Former SNP MP Joanna Cherry, who resigned from the party's ruling national executive committee in 2021 due to concerns about transparency, said Sturgeon was \"setting up a straw man\".", "start_ms": 427848, "end_ms": 442032, "paragraph_index": 37}, {"index": 52, "text": "Cherry told BBC Scotland's The Sunday Show: \"She's trying to put in our minds that she's being held guilty for her husband's embezzlement, but what we are actually concerned about is her frustration of legitimate scrutiny of the finances of the party.\"", "start_ms": 442032, "end_ms": 457656, "paragraph_index": 38}, {"index": 53, "text": "Meanwhile, Work and Pensions Secretary Pat McFadden backed Scottish Labour leader Anas Sarwar's call for a Holyrood inquiry into the SNP.", "start_ms": 457656, "end_ms": 468000, "paragraph_index": 39}, {"index": 54, "text": "The minister said that the Scottish Parliament could \"step up to the plate and show that it can do this\".", "start_ms": 468000, "end_ms": 474576, "paragraph_index": 40}, {"index": 55, "text": "McFadden added it was a matter for MPs on the Scottish Affairs Committee as to whether they also wanted to establish an inquiry in Westminster.", "start_ms": 474576, "end_ms": 484392, "paragraph_index": 41}, {"index": 56, "text": "\"What you cannot have is a culture of control and secrecy that just tries to shut this down when the SNP is such a dominant force in Scotland.\"", "start_ms": 484392, "end_ms": 493944, "paragraph_index": 42}, {"index": 57, "text": "Conservative shadow home secretary Chris Philp added that there should \"definitely be an inquiry because trust in politics has been fundamentally undermined\" by the scandal.", "start_ms": 493944, "end_ms": 505032, "paragraph_index": 43}, {"index": 58, "text": "First Minister John Swinney, who has rejected calls for a Holyrood inquiry, said \"we know exactly what happened\" in the Murrell case.", "start_ms": 505032, "end_ms": 514320, "paragraph_index": 44}, {"index": 59, "text": "He told the BBC: \"You can't actually get a standard of investigation any higher in Scotland than a forensic police investigation that results in a successful High Court prosecution and a guilty plea.\"", "start_ms": 514320, "end_ms": 527544, "paragraph_index": 45}], "total_duration_ms": 527544};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "that": "那个", "and": "和", "for": "为了", "in": "在", "she": "她", "of": "的", "not": "不", "was": "是", "said": "说", "sturgeon": "鲟鱼", "it": "它", "is": "是", "her": "她的", "on": "在", "i'm": "我是", "snp": "苏格兰民族党", "party": "政党", "murrell": "默雷尔", "be": "是", "from": "来自", "with": "与", "this": "这个", "told": "告诉", "have": "有", "by": "被", "as": "作为", "he": "他", "when": "当", "bbc": "英国广播公司", "former": "前任", "minister": "部长", "investigation": "调查", "there": "那里", "you": "你", "just": "只是", "which": "哪个", "husband": "丈夫", "am": "是", "crimes": "罪行", "my": "我的", "somebody": "某人", "will": "将", "do": "做", "into": "进入", "if": "如果", "at": "在", "me": "我", "had": "有", "we": "我们", "would": "将", "about": "关于", "than": "比", "were": "是", "what": "什么", "guilty": "有罪", "inquiry": "调查", "has": "有", "crime": "犯罪", "an": "一个", "first": "第一轮", "peter": "彼得", "out": "出来", "been": "已经", "going": "将要", "police": "警方", "leader": "领导人", "responsibility": "责任", "but": "但是", "added": "补充", "should": "应该", "sentence": "判决", "did": "做了", "interview": "采访", "apologise": "道歉", "responsible": "负责的", "between": "之间", "party's": "党的", "lot": "很多", "who": "谁", "up": "向上", "things": "事情", "because": "因为", "mcfadden": "麦克法登", "no": "没有", "house": "议院", "went": "去", "home": "家", "also": "也", "other": "其他", "being": "正在", "later": "后来", "before": "之前", "anything": "任何事", "know": "知道", "finances": "财务", "could": "可能", "price": "价格", "scottish": "苏格兰的", "commit": "犯下", "years": "多年", "kuenssberg": "昆斯伯格", "scotland's": "苏格兰的", "hold": "追究", "back": "后退", "any": "任何", "following": "随后", "role": "角色", "shared": "分享", "sunday": "星期日", "people": "人们", "blamed": "指责", "actions": "行动", "their": "他们的", "kind": "种类", "here": "这里", "now": "现在", "pat": "轻拍", "culture": "文化", "control": "控制", "shut": "关闭", "down": "下来", "asked": "询问", "deceived": "欺骗", "feeling": "感觉", "his": "他的", "ever": "曾经", "seen": "被视为", "spent": "花费", "two": "两个", "more": "更多", "visit": "访问", "part": "部分", "loved": "爱过的", "idea": "想法", "they": "它们", "don't": "不要", "sure": "确定", "executive": "行政的", "due": "应得", "arrested": "被捕", "connection": "联系", "done": "完成", "concerns": "担忧", "trying": "尝试", "monday": "星期一", "wanted": "想要", "step": "步骤", "can": "可以", "plea": "抗辩", "high": "高的", "court": "法庭", "pay": "支付", "he's": "他是", "something": "某事", "saying": "说", "committee": "委员会", "show": "显示", "she's": "她是", "actually": "实际上", "secretary": "秘书", "holyrood": "苏格兰议会", "scotland": "苏格兰", "nicola": "尼古拉", "like": "像", "after": "之后", "estranged": "疏远的", "admitted": "承认", "embezzling": "挪用公款", "led": "带领", "exclusive": "独家", "laura": "劳拉", "refused": "拒绝", "tears": "眼泪", "turned": "转向", "consistently": "一贯地", "denied": "拒绝", "knowledge": "知识", "murrell's": "默雷尔的", "charged": "指控", "broadcast": "广播", "own": "自己", "women": "女性", "end": "结束", "finding": "发现", "themselves": "他们自己", "men": "男人们", "lives": "生命", "sense": "感觉", "take": "采取", "decisions": "决定", "make": "使", "sitting": "现任的", "right": "正确", "answering": "回答", "questions": "问题", "believe": "认为", "strongly": "强烈地", "met": "伦敦警察厅", "some": "一些", "demand": "要求", "further": "进一步的", "uk": "英国", "government": "政府", "warned": "警告", "all": "所有", "despite": "尽管", "definition": "定义", "included": "包括", "misled": "误导", "echoed": "附和", "comments": "评论", "earlier": "较早", "week": "周", "audience": "观众", "festival": "节日", "betrayed": "背叛", "lied": "说谎", "largest": "最大的", "single": "单一的", "made": "做出", "motorhome": "房车", "memory": "记忆", "seeing": "看到", "luxury": "奢侈品", "round": "轮", "sides": "各方", "immediately": "立即", "visible": "可见的", "way": "方式", "next": "下一个", "door": "门", "probably": "很可能", "assumed": "假设", "adding": "补充说", "why": "为何", "crossed": "穿过", "mind": "介意", "cars": "汽车", "jewellery": "珠宝", "coffee": "咖啡", "machines": "机器", "among": "在...之中", "became": "成为", "visibly": "明显地", "emotional": "情感的", "speaking": "发言", "cost": "成本", "often": "经常", "public": "公众", "i'd": "我会", "campaigning": "竞选活动", "campaign": "竞选活动", "business": "事务", "shown": "表现出", "around": "在...周围", "shop": "商店", "stopped": "停止", "mean": "意味着", "you've": "你已经", "it's": "它是", "beautiful": "美丽", "night": "晚上", "i've": "我已经", "got": "获得", "surprise": "惊喜", "saw": "看到", "gave": "给予", "continuing": "持续", "sorry": "抱歉", "thing": "事情", "gone": "已去", "wearing": "穿着", "known": "已知", "presented": "提交", "then": "然后", "find": "找到", "these": "这些", "given": "给定", "he'd": "他曾", "level": "水平", "pain": "痛苦", "try": "审判", "properly": "妥善", "come": "到来", "terms": "条件", "chief": "首席", "resigning": "辞职", "march": "三月", "controversy": "争议", "over": "超过", "details": "细节", "membership": "会员资格", "numbers": "数字", "less": "更少", "three": "三个", "weeks": "周", "operation": "行动", "branchform": "分支形式", "funds": "资金", "enough": "足够", "others": "其他", "raising": "提出", "completely": "完全", "alert": "警报", "behaviour": "行为", "careful": "谨慎的", "alerted": "警报", "might": "可能", "reached": "达成", "different": "不同的", "position": "立场", "while": "而", "likely": "可能", "legal": "法律的", "process": "过程", "recover": "恢复", "behalf": "代表", "expected": "预期", "so": "所以", "includes": "包括", "wasn't": "不是", "however": "然而", "toll": "代价", "life": "生活", "away": "离开", "true": "真实", "months": "月", "questioned": "质疑", "detectives": "侦探", "released": "释放", "without": "没有", "charge": "负责", "edinburgh": "爱丁堡", "remanded": "还押", "custody": "羁押", "face": "面临", "lengthy": "漫长的", "prison": "监狱", "term": "术语", "sentenced": "判刑", "june": "六月", "rightly": "理所当然地", "didn't": "没有", "sympathy": "同情", "possibly": "可能", "worst": "最坏的", "world": "世界", "else": "其他", "particularly": "尤其", "person": "个人", "mp": "议员", "resigned": "辞职的", "ruling": "裁决", "national": "国家", "man": "男子", "put": "提出", "our": "我们的", "minds": "思想", "held": "举行", "are": "是", "concerned": "担忧的", "frustration": "沮丧", "legitimate": "合法的", "meanwhile": "与此同时", "work": "工作", "pensions": "养老金", "backed": "支持", "labour": "工党", "anas": "阿纳斯", "call": "呼吁", "parliament": "议会", "matter": "事情", "mps": "议员", "affairs": "事务", "whether": "是否", "establish": "确定", "westminster": "威斯敏斯特", "cannot": "不能", "such": "如此", "force": "力量", "conservative": "保守党", "shadow": "阴影", "chris": "克里斯", "trust": "信任", "politics": "政治", "fundamentally": "根本上", "john": "约翰", "swinney": "斯温尼", "rejected": "拒绝", "calls": "呼吁", "exactly": "确切地", "happened": "发生", "case": "案例", "can't": "不能", "get": "得到", "standard": "标准", "higher": "更高的", "results": "结果", "successful": "成功的", "prosecution": "起诉", "serving": "担任", "money": "金钱", "committed": "承诺的", "else's": "别人的", "accounts": "账户", "snp's": "苏格兰民族党的", "struggled": "艰难应对", "gifts": "礼物", "monitoring": "监控", "sake": "缘故", "contribute": "贡献", "secrecy": "保密", "tries": "试图", "neighbour's": "邻居的", "necklace": "项链", "wore": "佩戴", "shetland": "设得兰", "pendant": "吊坠", "bought": "购买", "embezzlement": "贪污", "cherry": "樱桃", "feels": "感觉", "recalling": "回忆", "purchased": "购买", "stolen": "被盗的", "sturgeon's": "斯特金的", "scepticism": "怀疑", "bore": "承受", "perpetrated": "实施", "literary": "文学的", "transaction": "交易", "parked": "停放", "mother's": "母亲的", "conscious": "有意识的", "vehicle": "车辆", "handbags": "手提包", "expensive": "昂贵的", "games": "游戏", "consoles": "游戏机", "gifted": "赠送", "amazing": "惊人的", "jewellers": "珠宝商", "pictures": "照片", "admiring": "欣赏", "emotion": "情感", "gift": "礼物", "causes": "导致", "reject": "拒绝", "notion": "概念", "pled": "恳求", "toes": "脚趾", "donors": "捐赠者", "nothing": "没有东西", "belongs": "属于", "marital": "婚姻的", "explained": "解释", "emotionally": "情感上", "practically": "实际上", "skip": "跳过", "paying": "支付", "trusted": "信任的", "joanna": "乔安娜", "transparency": "透明度", "setting": "环境", "straw": "稻草", "husband's": "丈夫的", "scrutiny": "审查", "sarwar's": "萨尔瓦的", "plate": "盘子", "dominant": "主导的", "philp": "菲尔普", "definitely": "肯定", "undermined": "削弱", "forensic": "法医的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
