@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-06</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-06</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/e528/live/bf8a1470-60c4-11f1-ba0c-494087e54831.jpg" alt="West Ham joint chairman David Sullivan steps down after 'serious' historical allegations" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>West Ham joint chairman David Sullivan steps down after 'serious' historical allegations</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/sport/football/articles/clypyk2e7vyo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-06.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">David Sullivan has been a West Ham fan since his family moved to Essex when he was a child</span></p>
+        <p class="cn">大卫·沙利文（David Sullivan）从小随家人搬到埃塞克斯（Essex）后，就一直是西汉姆联（West Ham）的球迷。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">West Ham United co-owner David Sullivan has stepped down from his position as joint chairman of the club with immediate effect following a joint investigation by BBC Panorama and the Times newspaper into his behaviour.</span></p>
+        <p class="cn">西汉姆联联合老板大卫·沙利文已立即辞去俱乐部联合主席一职，此前BBC《全景》（Panorama）节目和《泰晤士报》（The Times）对其行为进行了联合调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The BBC said Panorama's story is due to be broadcast and published on Monday.</span></p>
+        <p class="cn">BBC表示，《全景》的报道将于周一播出并发布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Hammers said they had "been made aware of the <span class="keyword" data-word="impending" data-phonetic="/ɪmˈpendɪŋ/" data-pos="adj." data-def="即将发生的" data-def-en="about to happen">impending</span> publication of serious historic allegations" concerning Sullivan.</span></p>
+        <p class="cn">铁锤帮（The Hammers）表示，他们“已获悉即将发布的关于沙利文的严重历史指控”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">In a statement of his own, the 77-year-old said a "small number of improper conduct claims" have been made against him, adding: "I <span class="keyword" data-word="categorically" data-phonetic="/ˌkætəˈɡɒrɪkli/" data-pos="adv." data-def="绝对地，明确地" data-def-en="in a way that is absolute and without doubt">categorically</span> deny these claims."</span></p>
+        <p class="cn">77岁的沙利文在一份个人声明中表示，有人对他提出了“少量不当行为指控”，并补充道：“我坚决否认这些指控。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">He said the "decades-old allegations concerning my personal life" are "factually incorrect and entirely false".</span></p>
+        <p class="cn">他说，这些“关于我私生活的几十年前的指控”“在事实上不正确且完全虚假”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sullivan, who had held the role for 16 years, said he stepped down "to apply my full energy and attention on fighting these false allegations".</span></p>
+        <p class="cn">担任该职位16年的沙利文表示，他辞职是为了“将全部精力和注意力用于对抗这些虚假指控”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Sullivan also said he plans to sue the BBC for <span class="keyword" data-word="libel" data-phonetic="/ˈlaɪbəl/" data-pos="n." data-def="诽谤（书面）" data-def-en="the act of publishing a false statement that damages someone's reputation">libel</span> "along with any other media outlet that repeats any libellous allegations".</span></p>
+        <p class="cn">沙利文还表示，他计划起诉BBC诽谤，“以及任何其他重复诽谤指控的媒体机构”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The Hammers were relegated from the Premier League at the end of the 2025-26 season after finishing 18th.</span></p>
+        <p class="cn">铁锤帮在2025-26赛季末排名第18位，从英超（Premier League）降级。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"At what is already a challenging and important time for the club, I refuse to allow personal matters concerning me to become an unnecessary <span class="keyword" data-word="distraction" data-phonetic="/dɪˈstrækʃən/" data-pos="n." data-def="分心，干扰" data-def-en="something that prevents someone from concentrating on something">distraction</span> or a source of instability," added Sullivan, who has also resigned as a director.</span></p>
+        <p class="cn">沙利文补充道：“在俱乐部本已充满挑战和重要的时刻，我不允许涉及我的个人事务成为不必要的干扰或不稳定的根源。”他也辞去了董事职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"Therefore, after very careful consideration and with a heavy heart, I have decided to resign."</span></p>
+        <p class="cn">“因此，经过深思熟虑并怀着沉重的心情，我决定辞职。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">In a club statement, West Ham said Sullivan has denied any "illegal conduct" and is leaving "in order to avoid disruption to the club while he addresses the matter privately".</span></p>
+        <p class="cn">在俱乐部声明中，西汉姆联表示沙利文否认任何“非法行为”，并辞职“是为了在私下处理此事时避免对俱乐部造成干扰”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Sullivan has been the club's largest single shareholder since the death of his business partner David Gold in January 2023, which left him with a 38.8% <span class="keyword" data-word="stake" data-phonetic="/steɪk/" data-pos="n." data-def="股份，利害关系" data-def-en="a share or financial interest in a company">stake</span>.</span></p>
+        <p class="cn">自其商业伙伴大卫·戈尔德（David Gold）于2023年1月去世后，沙利文一直是俱乐部最大的单一股东，持有38.8%的股份。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Sullivan and Gold became joint chairmen of West Ham when they completed their takeover of the club in January 2010.</span></p>
+        <p class="cn">沙利文和戈尔德于2010年1月完成对西汉姆联的收购后，成为联合主席。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">"It is understood none of the allegations relate to West Ham United or any of its operations," said West Ham .</span></p>
+        <p class="cn">西汉姆联表示：“据了解，这些指控均与西汉姆联或其任何运营无关。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">"Interim chief executive officer Karim Virani, reporting into the current board of directors, will continue to be responsible for leading the club's day-to-day operations.</span></p>
+        <p class="cn">“临时首席执行官卡里姆·维拉尼（Karim Virani）向现任董事会汇报，将继续负责领导俱乐部的日常运营。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">"The club will provide an update on the future structure of the board of directors in due course, but will make no further comment at this time."</span></p>
+        <p class="cn">“俱乐部将在适当时候提供关于董事会未来结构的更新，但此时不会进一步评论。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Sullivan and Gold had previously been co-owners of Birmingham City from 1993 to 2009.</span></p>
+        <p class="cn">沙利文和戈尔德此前曾于1993年至2009年共同拥有伯明翰城（Birmingham City）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">They oversaw West Ham 's move from Upton Park to London Stadium in 2016 and their Conference League win in 2023 - the Hammers' first major trophy since the 1980 FA Cup.</span></p>
+        <p class="cn">他们见证了西汉姆联于2016年从厄普顿公园（Upton Park）迁至伦敦体育场（London Stadium），以及2023年赢得欧协联（Conference League）冠军——这是铁锤帮自1980年足总杯（FA Cup）以来的首个重要奖杯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">The club's best Premier League finish during their tenure was sixth in 2021, but the Hammers have finished in the bottom half in three of the past four seasons and their 14-year spell in the top flight came to an end last month.</span></p>
+        <p class="cn">在他们任期内，俱乐部在英超的最佳排名是2021年的第六名，但铁锤帮在过去四个赛季中有三个赛季排名下半区，他们在顶级联赛的14年征程于上个月结束。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">West Ham fans have held protests on numerous occasions during the 2025-26 season, calling for Sullivan and Baroness Brady to <span class="keyword" data-word="step down" data-phonetic="/step daʊn/" data-pos="phrasal verb" data-def="辞职，下台" data-def-en="to resign from a position or job">step down</span>.</span></p>
+        <p class="cn">西汉姆联球迷在2025-26赛季期间多次举行抗议，要求沙利文和布拉迪男爵夫人（Baroness Brady）下台。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">Brady left her role as vice-chair on 15 April.</span></p>
+        <p class="cn">布拉迪于4月15日辞去副主席职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">Fans' fury as West Ham on brink of drop - how have they got here?</span></p>
+        <p class="cn">球迷愤怒，西汉姆联濒临降级——他们是如何走到这一步的？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">Latest West Ham news, analysis and fan views</span></p>
+        <p class="cn">最新西汉姆联新闻、分析和球迷观点</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">Ask about West Ham - what do you want to know?</span></p>
+        <p class="cn">关于西汉姆联，你想知道什么？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">step down</span>
+        <button class="kw-speak-btn" data-word="step down" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/step daʊn/ phrasal verb</span>
+      </div>
+      <p class="kw-def">辞职，下台</p>
+      <p class="kw-def-en">to resign from a position or job</p>
+      <p class="kw-ctx">&ldquo;West Ham United co-owner David Sullivan has stepped down from his position as joint chairman of the club with immediate effect following a joint investigation by BBC Panorama and the Times newspaper into his behaviour.&rdquo;</p>
+      <p class="kw-ctx-cn">西汉姆联队共同所有者大卫·沙利文在BBC《全景》节目和《泰晤士报》对其行为进行联合调查后，立即辞去了俱乐部联席主席的职务。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">impending</span>
+        <button class="kw-speak-btn" data-word="impending" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈpendɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">即将发生的</p>
+      <p class="kw-def-en">about to happen</p>
+      <p class="kw-ctx">&ldquo;The Hammers said they had 'been made aware of the impending publication of serious historic allegations' concerning Sullivan.&rdquo;</p>
+      <p class="kw-ctx-cn">铁锤帮表示，他们已“获悉即将发布关于沙利文的严重历史指控”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌæləˈɡeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">指控，断言</p>
+      <p class="kw-def-en">a claim or statement that someone has done something wrong</p>
+      <p class="kw-ctx">&ldquo;In a statement of his own, the 77-year-old said a 'small number of improper conduct claims' have been made against him, adding: 'I categorically deny these claims.'&rdquo;</p>
+      <p class="kw-ctx-cn">在个人声明中，这位77岁的老人表示，有人对他提出了“少量不当行为指控”，并补充说：“我坚决否认这些指控。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">categorically</span>
+        <button class="kw-speak-btn" data-word="categorically" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkætəˈɡɒrɪkli/ adv.</span>
+      </div>
+      <p class="kw-def">绝对地，明确地</p>
+      <p class="kw-def-en">in a way that is absolute and without doubt</p>
+      <p class="kw-ctx">&ldquo;In a statement of his own, the 77-year-old said a 'small number of improper conduct claims' have been made against him, adding: 'I categorically deny these claims.'&rdquo;</p>
+      <p class="kw-ctx-cn">在个人声明中，这位77岁的老人表示，有人对他提出了“少量不当行为指控”，并补充说：“我坚决否认这些指控。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">libel</span>
+        <button class="kw-speak-btn" data-word="libel" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlaɪbəl/ n.</span>
+      </div>
+      <p class="kw-def">诽谤（书面）</p>
+      <p class="kw-def-en">the act of publishing a false statement that damages someone's reputation</p>
+      <p class="kw-ctx">&ldquo;Sullivan also said he plans to sue the BBC for libel 'along with any other media outlet that repeats any libellous allegations'.&rdquo;</p>
+      <p class="kw-ctx-cn">沙利文还表示，他计划起诉BBC诽谤，“以及任何重复诽谤性指控的其他媒体”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">relegate</span>
+        <button class="kw-speak-btn" data-word="relegate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈrelɪɡeɪt/ v.</span>
+      </div>
+      <p class="kw-def">降级，降职</p>
+      <p class="kw-def-en">to move a team to a lower division in a sports league</p>
+      <p class="kw-ctx">&ldquo;The Hammers were relegated from the Premier League at the end of the 2025-26 season after finishing 18th.&rdquo;</p>
+      <p class="kw-ctx-cn">铁锤帮在2025-26赛季结束后排名第18，从英超降级。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">distraction</span>
+        <button class="kw-speak-btn" data-word="distraction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈstrækʃən/ n.</span>
+      </div>
+      <p class="kw-def">分心，干扰</p>
+      <p class="kw-def-en">something that prevents someone from concentrating on something</p>
+      <p class="kw-ctx">&ldquo;'At what is already a challenging and important time for the club, I refuse to allow personal matters concerning me to become an unnecessary distraction or a source of instability,' added Sullivan, who has also resigned as a director.&rdquo;</p>
+      <p class="kw-ctx-cn">“在俱乐部已经面临挑战和重要时刻之际，我拒绝让与我有关的个人事务成为不必要的干扰或不稳定的根源，”沙利文补充道，他也辞去了董事职务。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stake</span>
+        <button class="kw-speak-btn" data-word="stake" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/steɪk/ n.</span>
+      </div>
+      <p class="kw-def">股份，利害关系</p>
+      <p class="kw-def-en">a share or financial interest in a company</p>
+      <p class="kw-ctx">&ldquo;Sullivan has been the club's largest single shareholder since the death of his business partner David Gold in January 2023, which left him with a 38.8% stake.&rdquo;</p>
+      <p class="kw-ctx-cn">自2023年1月其商业伙伴大卫·戈尔德去世后，沙利文一直是俱乐部最大的单一股东，持有38.8%的股份。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "David Sullivan has been a West Ham fan since his family moved to Essex when he was a child", "start_ms": 0, "end_ms": 6648, "paragraph_index": 0}, {"index": 1, "text": "West Ham United co-owner David Sullivan has stepped down from his position as joint chairman of the club with immediate effect following a joint investigation by BBC Panorama and the Times newspaper into his behaviour.", "start_ms": 6648, "end_ms": 21096, "paragraph_index": 1}, {"index": 2, "text": "The BBC said Panorama's story is due to be broadcast and published on Monday.", "start_ms": 21096, "end_ms": 27312, "paragraph_index": 2}, {"index": 3, "text": "The Hammers said they had \"been made aware of the impending publication of serious historic allegations\" concerning Sullivan.", "start_ms": 27312, "end_ms": 35616, "paragraph_index": 3}, {"index": 4, "text": "In a statement of his own, the 77-year-old said a \"small number of improper conduct claims\" have been made against him, adding: \"I categorically deny these claims.\"", "start_ms": 35616, "end_ms": 46848, "paragraph_index": 4}, {"index": 5, "text": "He said the \"decades-old allegations concerning my personal life\" are \"factually incorrect and entirely false\".", "start_ms": 46848, "end_ms": 54720, "paragraph_index": 5}, {"index": 6, "text": "Sullivan, who had held the role for 16 years, said he stepped down \"to apply my full energy and attention on fighting these false allegations\".", "start_ms": 54720, "end_ms": 64800, "paragraph_index": 6}, {"index": 7, "text": "Sullivan also said he plans to sue the BBC for libel \"along with any other media outlet that repeats any libellous allegations\".", "start_ms": 64800, "end_ms": 74184, "paragraph_index": 7}, {"index": 8, "text": "The Hammers were relegated from the Premier League at the end of the 2025-26 season after finishing 18th.", "start_ms": 74184, "end_ms": 82656, "paragraph_index": 8}, {"index": 9, "text": "\"At what is already a challenging and important time for the club, I refuse to allow personal matters concerning me to become an unnecessary distraction or a source of instability,\" added Sullivan, who has also resigned as a director.", "start_ms": 82656, "end_ms": 98568, "paragraph_index": 9}, {"index": 10, "text": "\"Therefore, after very careful consideration and with a heavy heart, I have decided to resign.\"", "start_ms": 98568, "end_ms": 105648, "paragraph_index": 10}, {"index": 11, "text": "In a club statement, West Ham said Sullivan has denied any \"illegal conduct\" and is leaving \"in order to avoid disruption to the club while he addresses the matter privately\".", "start_ms": 105648, "end_ms": 117168, "paragraph_index": 11}, {"index": 12, "text": "Sullivan has been the club's largest single shareholder since the death of his business partner David Gold in January 2023, which left him with a 38.8% stake.", "start_ms": 117168, "end_ms": 129384, "paragraph_index": 12}, {"index": 13, "text": "Sullivan and Gold became joint chairmen of West Ham when they completed their takeover of the club in January 2010.", "start_ms": 129384, "end_ms": 137808, "paragraph_index": 13}, {"index": 14, "text": "\"It is understood none of the allegations relate to West Ham United or any of its operations,\" said West Ham .", "start_ms": 137808, "end_ms": 145824, "paragraph_index": 14}, {"index": 15, "text": "\"Interim chief executive officer Karim Virani, reporting into the current board of directors, will continue to be responsible for leading the club's day-to-day operations.", "start_ms": 145824, "end_ms": 157464, "paragraph_index": 15}, {"index": 16, "text": "\"The club will provide an update on the future structure of the board of directors in due course, but will make no further comment at this time.\"", "start_ms": 157464, "end_ms": 166344, "paragraph_index": 16}, {"index": 17, "text": "Sullivan and Gold had previously been co-owners of Birmingham City from 1993 to 2009.", "start_ms": 166344, "end_ms": 174240, "paragraph_index": 17}, {"index": 18, "text": "They oversaw West Ham 's move from Upton Park to London Stadium in 2016 and their Conference League win in 2023 - the Hammers' first major trophy since the 1980 FA Cup.", "start_ms": 174240, "end_ms": 187584, "paragraph_index": 18}, {"index": 19, "text": "The club's best Premier League finish during their tenure was sixth in 2021, but the Hammers have finished in the bottom half in three of the past four seasons and their 14-year spell in the top flight came to an end last month.", "start_ms": 187584, "end_ms": 202632, "paragraph_index": 19}, {"index": 20, "text": "West Ham fans have held protests on numerous occasions during the 2025-26 season, calling for Sullivan and Baroness Brady to step down.", "start_ms": 202632, "end_ms": 213696, "paragraph_index": 20}, {"index": 21, "text": "Brady left her role as vice-chair on 15 April.", "start_ms": 213696, "end_ms": 218016, "paragraph_index": 21}, {"index": 22, "text": "Fans' fury as West Ham on brink of drop - how have they got here?", "start_ms": 218016, "end_ms": 222984, "paragraph_index": 22}, {"index": 23, "text": "Latest West Ham news, analysis and fan views", "start_ms": 222984, "end_ms": 227832, "paragraph_index": 23}, {"index": 24, "text": "Ask about West Ham - what do you want to know?", "start_ms": 227832, "end_ms": 231480, "paragraph_index": 24}], "total_duration_ms": 231480};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "and": "和", "in": "在", "west": "西部", "said": "说", "club": "俱乐部", "on": "在", "has": "有", "been": "已经", "his": "他的", "he": "他", "allegations": "指控", "have": "有", "for": "为了", "from": "来自", "as": "作为", "with": "与", "is": "是", "they": "它们", "any": "任何", "their": "他们的", "david": "大卫", "since": "自从", "down": "下来", "joint": "联合的", "bbc": "英国广播公司", "had": "有", "concerning": "关于", "league": "联赛", "at": "在", "an": "一个", "club's": "俱乐部的", "gold": "黄金", "will": "将", "fan": "粉丝", "when": "当", "was": "是", "united": "联合", "stepped": "迈步", "into": "进入", "due": "应得", "be": "是", "made": "做出", "statement": "声明", "conduct": "行为", "claims": "声称", "him": "他", "these": "这些", "my": "我的", "personal": "个人", "false": "虚假的", "who": "谁", "held": "举行", "role": "角色", "also": "也", "premier": "英超", "end": "结束", "season": "季节", "after": "之后", "what": "什么", "time": "时间", "or": "或者", "january": "一月", "left": "离开", "operations": "行动", "board": "董事会", "but": "但是", "during": "在期间", "fans": "球迷", "family": "家庭", "moved": "移动", "essex": "埃塞克斯", "child": "孩子", "position": "立场", "chairman": "主席", "immediate": "立即的", "effect": "效果", "following": "随后", "investigation": "调查", "by": "被", "panorama": "全景", "times": "次", "newspaper": "报纸", "behaviour": "行为", "story": "故事", "broadcast": "广播", "published": "发布", "monday": "星期一", "aware": "意识到", "publication": "出版", "serious": "严重的", "historic": "历史性的", "own": "自己", "year-old": "岁的", "small": "小的", "number": "数量", "against": "反对", "adding": "补充说", "deny": "否认", "life": "生活", "are": "是", "entirely": "完全地", "years": "多年", "apply": "适用", "full": "完整", "energy": "能源", "attention": "关注", "fighting": "战斗", "plans": "计划", "along": "一起", "other": "其他", "media": "媒体", "that": "那个", "were": "是", "finishing": "完成", "already": "已经", "challenging": "具有挑战性的", "important": "重要", "allow": "允许", "matters": "事务", "me": "我", "become": "成为", "unnecessary": "不必要", "source": "来源", "added": "补充", "resigned": "辞职的", "director": "局长", "therefore": "因此", "very": "非常", "careful": "谨慎的", "heavy": "沉重的", "heart": "核心", "decided": "决定", "resign": "辞职", "denied": "拒绝", "leaving": "离开", "order": "命令", "avoid": "避免", "while": "而", "matter": "事情", "privately": "私下", "largest": "最大的", "single": "单一的", "death": "死亡", "business": "事务", "partner": "伴侣", "which": "哪个", "became": "成为", "completed": "完成", "it": "它", "understood": "理解", "none": "没有一个", "relate": "关联", "its": "它的", "chief": "首席", "executive": "行政的", "officer": "警官", "reporting": "报道", "current": "当前的", "continue": "继续", "responsible": "负责的", "leading": "领导", "provide": "提供", "update": "更新", "future": "未来", "course": "课程", "make": "使", "no": "没有", "further": "进一步的", "comment": "评论", "this": "这个", "previously": "此前", "birmingham": "伯明翰", "city": "城市", "move": "行动", "park": "公园", "london": "伦敦", "conference": "会议", "win": "赢得", "first": "第一轮", "major": "重大的", "trophy": "奖杯", "cup": "杯赛", "best": "最佳", "finished": "完成的", "half": "一半", "three": "三个", "past": "过去", "four": "四", "seasons": "季", "year": "年", "top": "顶级的", "flight": "航班", "came": "到来", "last": "最后", "month": "月份", "protests": "抗议活动", "numerous": "众多的", "occasions": "场合", "calling": "呼吁", "baroness": "女男爵", "step": "步骤", "her": "她的", "april": "四月", "fury": "愤怒", "drop": "放下", "how": "如何", "got": "获得", "here": "这里", "latest": "最新的", "news": "新闻", "analysis": "分析", "views": "观点", "ask": "询问", "about": "关于", "do": "做", "you": "你", "want": "想要", "know": "知道", "sullivan": "沙利文", "ham": "火腿", "hammers": "锤子", "directors": "董事", "brady": "布雷迪", "co-owner": "共同所有者", "panorama's": "全景的", "improper": "不当的", "decades-old": "数十年的", "factually": "事实上", "incorrect": "错误的", "sue": "起诉", "outlet": "媒体机构", "repeats": "重复", "libellous": "诽谤性的", "relegated": "降级", "refuse": "拒绝", "instability": "不稳定", "consideration": "考虑", "illegal": "非法的", "disruption": "中断", "addresses": "处理", "shareholder": "股东", "chairmen": "主席们", "takeover": "接管", "interim": "临时的", "karim": "卡里姆", "virani": "维拉尼", "day-to-day": "日常的", "structure": "结构", "co-owners": "共同所有者们", "oversaw": "监督", "upton": "厄普顿", "stadium": "体育场", "fa": "英足总", "finish": "完成", "tenure": "任期", "sixth": "第六", "bottom": "底部", "spell": "一段时间", "vice-chair": "副主席", "brink": "边缘"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
