@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-07</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-07</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/47da/live/dd7a6570-625e-11f1-8b8c-6d33e1d5abb6.jpg" alt="Lammy says he told JD Vance his Nowak comments were 'wrong'" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Lammy says he told JD Vance his Nowak comments were 'wrong'</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cjwg387040wo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-07.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Deputy Prime Minister David Lammy has said he called US Vice-President JD Vance to tell him he was "wrong" in the comments he made about the murder of teenager Henry Nowak.</span></p>
+        <p class="cn">副首相大卫·拉米（David Lammy）表示，他已致电美国副总统JD·万斯（JD Vance），告诉他关于青少年亨利·诺瓦克（Henry Nowak）谋杀案的评论是“错误的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Vance blamed the death of the 18-year-old British student, who was fatally stabbed by Vickrum Digwa last year, on the "mass invasion of migrants" and said the "only response" was "righteous anger".</span></p>
+        <p class="cn">万斯将这名18岁英国学生的死亡归咎于“移民的大规模入侵”，并称“唯一的回应”是“正义的愤怒”。去年，维克鲁姆·迪格瓦（Vickrum Digwa）用刀刺死了诺瓦克。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Lammy told the BBC he had spoken to Vance on Saturday and told the vice-president the killing "has got nothing to do with mass migration".</span></p>
+        <p class="cn">拉米告诉BBC，他已于周六与万斯通话，并告知副总统这起谋杀案“与大规模移民无关”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Digwa falsely claimed he had been racially abused and had acted in self-defence after murdering Nowak in Southampton in December last year.</span></p>
+        <p class="cn">迪格瓦去年12月在南安普顿（Southampton）谋杀诺瓦克后，谎称自己遭受种族虐待并出于自卫。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Digwa, who is British and was born in the UK, was jailed for life for murdering Nowak with a blade he claimed he was carrying for religious reasons linked to his Sikh faith.</span></p>
+        <p class="cn">迪格瓦是英国人，出生在英国，因用刀谋杀诺瓦克被判终身监禁，他声称携带刀具是出于锡克教信仰的宗教原因。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5"><span class="keyword" data-word="bodycam" data-phonetic="/ˈbɒdiˌkæm/" data-pos="n." data-def="随身摄像头" data-def-en="a small camera worn on the body, typically by police officers">Bodycam</span> footage showed police handcuffing Nowak as he lay dying after Digwa falsely claimed to officers he was the victim of a racist attack.</span></p>
+        <p class="cn">执法记录仪画面显示，在迪格瓦向警方谎称自己是种族袭击的受害者后，警察给奄奄一息的诺瓦克戴上了手铐。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The killing ignited a fierce debate about policing and knife laws in the UK, with violent protests erupting in Southampton.</span></p>
+        <p class="cn">这起谋杀案在英国引发了关于警务和刀具法的激烈辩论，南安普顿爆发了暴力抗议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Vance wrote on X on Friday that Nowak had died "the same way a civilisation dies: abandoned and handcuffed by authorities who neither trusted nor cared for him".</span></p>
+        <p class="cn">万斯周五在X上写道，诺瓦克“以文明消亡的方式死去：被既不信任也不关心他的当局抛弃并戴上手铐”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The killing had been as "tragic as it is enraging" and Nowak, Vance said, would still be alive today "if the last few generations of European elites had stood their ground against the politics of self-hatred and the mass invasion of migrants".</span></p>
+        <p class="cn">万斯称这起谋杀案“既悲剧又令人愤怒”，诺瓦克“如果过去几代欧洲精英坚持反对自我仇恨政治和大规模移民入侵”，今天还会活着。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Lammy told the BBC's Sunday with Laura Kuenssberg programme that he had called Vance to discuss his comments.</span></p>
+        <p class="cn">拉米告诉BBC的《周日与劳拉·库恩斯伯格》（Sunday with Laura Kuenssberg）节目，他已致电万斯讨论其评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"I told him he was wrong," Lammy said.</span></p>
+        <p class="cn">“我告诉他他错了，”拉米说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">He said the pair had an "agreeable" conversation, adding that he did not agree with Vance's "<span class="keyword" data-word="caricature" data-phonetic="/ˈkærɪkətʃʊər/" data-pos="n." data-def="漫画式描述，夸张的刻画" data-def-en="a description or representation that exaggerates certain characteristics">caricature</span>" of Western civilisation and its perceived decline.</span></p>
+        <p class="cn">他表示两人进行了“愉快的”对话，并补充说他不认同万斯对西方文明及其所谓衰落的“讽刺描述”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Lammy said he reminded Vance that Nowak's family had "called for calm" in what he described as "a robust conversation" with the vice-president.</span></p>
+        <p class="cn">拉米说，他提醒万斯，诺瓦克的家人“呼吁冷静”，这是他描述为与副总统“一次激烈的对话”中的内容。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">"We remain colleagues and friends, we're able to do that, and he has strongly held views," Lammy said.</span></p>
+        <p class="cn">“我们仍然是同事和朋友，我们能够做到这一点，而且他有坚定的观点，”拉米说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Henry Nowak's father, Mark, had appealed for calm in a statement outside the court following the <span class="keyword" data-word="sentencing" data-phonetic="/ˈsentənsɪŋ/" data-pos="n." data-def="判决，量刑" data-def-en="the act of giving a punishment to someone found guilty of a crime">sentencing</span>, saying: "We do not want his death to be used to create further division, hatred or tension."</span></p>
+        <p class="cn">亨利·诺瓦克的父亲马克（Mark）在宣判后在法庭外发表声明呼吁冷静，他说：“我们不希望他的死被用来制造进一步的分裂、仇恨或紧张。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Lammy and Vance have formed an unlikely friendship over the years and have met regularly since entering public office in their respective countries.</span></p>
+        <p class="cn">拉米和万斯多年来建立了不寻常的友谊，自各自进入公职以来定期会面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The friendship between the deputy prime minister and the vice-president began when Lammy was an opposition MP and Vance had just been elected to the US Senate.</span></p>
+        <p class="cn">副首相与副总统的友谊始于拉米还是反对党议员、万斯刚当选美国参议员之时。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Last summer, the vice-president and his family stayed with Lammy at his grace-and-favour home, Chevening, in Kent, during a holiday visit to the UK.</span></p>
+        <p class="cn">去年夏天，副总统及其家人在访问英国度假期间，与拉米同住他在肯特郡的官邸契弗宁（Chevening）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">But the US-UK relationship has been rockier of late, particularly over the war in Iran after the British government decided to not join the Trump administration's offensive military action in the Gulf.</span></p>
+        <p class="cn">但美英关系近来变得紧张，尤其是在伊朗战争问题上，英国政府决定不加入特朗普政府在海湾的进攻性军事行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">Downing Street has criticised "people trying to interfere in our democracy and seeking to stir up division", in response to Vance's comments.</span></p>
+        <p class="cn">唐宁街批评“试图干涉我们民主并煽动分裂的人”，以回应万斯的评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">The Independent Office for Police Conduct is investigating Hampshire Police's response to the Nowak case.</span></p>
+        <p class="cn">警察行为独立办公室（Independent Office for Police Conduct）正在调查汉普郡警方对诺瓦克案的处理。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">The head of Hampshire Police has told the BBC the force was "sorry for handcuffing and arresting Henry".</span></p>
+        <p class="cn">汉普郡警察局长告诉BBC，该部队“对给亨利戴上手铐并逮捕他表示抱歉”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">A document outlining anti-racism commitments by the National Police Chiefs' Council (NPCC), which brings together leaders from forces across the UK, has come under <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查，监督" data-def-en="careful and thorough examination">scrutiny</span> following Nowak's murder.</span></p>
+        <p class="cn">一份由英国警察局长理事会（National Police Chiefs' Council, NPCC）制定的反种族主义承诺文件，在诺瓦克谋杀案后受到审查。该理事会汇集了英国各地警察领导人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">The NPCC document says racial equality "does not mean treating everyone 'the same' or being 'colour blind'".</span></p>
+        <p class="cn">NPCC文件称种族平等“并不意味着‘一视同仁’或‘色盲’”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">On Tuesday, the NPCC said it would review language used in the document.</span></p>
+        <p class="cn">周二，NPCC表示将审查文件中使用的语言。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="25">Reform UK's home affairs spokesman Zia Yusuf argued there was a direct link between what he called police "guidance" and what happened to Nowak.</span></p>
+        <p class="cn">改革英国党（Reform UK）内政发言人齐亚·优素福（Zia Yusuf）认为，他所说的警方“指导”与诺瓦克的遭遇之间存在直接联系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="26">Yusuf said Reform UK had been respectful of the Nowak family's wishes not to use the case to divide communities, after party leader Nigel Farage was criticised for calling on the public to respond with "pure, cold rage".</span></p>
+        <p class="cn">优素福表示，改革英国党尊重诺瓦克家人不希望利用此案分裂社区的愿望，此前该党领袖奈杰尔·法拉奇（Nigel Farage）因呼吁公众以“纯粹、冷酷的愤怒”回应而受到批评。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="27">"The only way we can ensure that we do not have another situation like the tragedy of Henry's death is through political means," Yusuf told the BBC.</span></p>
+        <p class="cn">“确保不再发生像亨利死亡这样的悲剧的唯一途径是通过政治手段，”优素福告诉BBC。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="28">"That's why we're going to continue to make the argument.</span> <span class="sentence" data-sentence-index="29">And nobody is going to guilt trip us into not making these arguments."</span></p>
+        <p class="cn">“这就是为什么我们将继续提出论点。没有人能让我们因内疚而停止提出这些论点。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">Asked if he believed the police were institutionally racist, Yusuf said he did, citing the NPCC document.</span></p>
+        <p class="cn">当被问及是否认为警察机构存在种族主义时，优素福表示同意，并引用了NPCC文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">When he was asked about the NPCC document, Lammy said "we are all equal before the law", but added: "It is still the case that on arrest, on prosecution, conviction, I'm afraid in our prisons, ethnic minorities are disproportionately in the criminal justice system."</span></p>
+        <p class="cn">当被问及NPCC文件时，拉米表示“法律面前人人平等”，但补充道：“在逮捕、起诉、定罪方面，恐怕在我们的监狱中，少数族裔在刑事司法系统中的比例仍然过高。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">Lammy also said "we've moved on from that period of institutional racism" that was "very real" in policing in the past.</span></p>
+        <p class="cn">拉米还说，“我们已经超越了那个机构种族主义的时期”，这种种族主义在过去警务中“非常真实”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">"That's not my experience when I see policing," Lammy said.</span></p>
+        <p class="cn">“这不是我在看到警务时的经历，”拉米说。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stab</span>
+        <button class="kw-speak-btn" data-word="stab" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/stæb/ v.</span>
+      </div>
+      <p class="kw-def">刺，捅</p>
+      <p class="kw-def-en">to push a knife or other sharp object into someone</p>
+      <p class="kw-ctx">&ldquo;Digwa falsely claimed he had been racially abused and had acted in self-defence after murdering Nowak in Southampton in December last year.&rdquo;</p>
+      <p class="kw-ctx-cn">迪格瓦谎称自己遭受种族虐待，并在去年12月于南安普顿谋杀诺瓦克后声称是自卫行为。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">jail</span>
+        <button class="kw-speak-btn" data-word="jail" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dʒeɪl/ v.</span>
+      </div>
+      <p class="kw-def">监禁</p>
+      <p class="kw-def-en">to put someone in prison</p>
+      <p class="kw-ctx">&ldquo;Digwa, who is British and was born in the UK, was jailed for life for murdering Nowak with a blade he claimed he was carrying for religious reasons linked to his Sikh faith.&rdquo;</p>
+      <p class="kw-ctx-cn">迪格瓦是英国人，在英国出生，因用刀谋杀诺瓦克被判处终身监禁，他声称携带刀具是出于锡克教信仰的宗教原因。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bodycam</span>
+        <button class="kw-speak-btn" data-word="bodycam" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbɒdiˌkæm/ n.</span>
+      </div>
+      <p class="kw-def">随身摄像头</p>
+      <p class="kw-def-en">a small camera worn on the body, typically by police officers</p>
+      <p class="kw-ctx">&ldquo;Bodycam footage showed police handcuffing Nowak as he lay dying after Digwa falsely claimed to officers he was the victim of a racist attack.&rdquo;</p>
+      <p class="kw-ctx-cn">随身摄像头录像显示，在迪格瓦向警方谎称自己是种族袭击受害者后，警察给奄奄一息的诺瓦克戴上了手铐。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">handcuff</span>
+        <button class="kw-speak-btn" data-word="handcuff" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhændkʌf/ v.</span>
+      </div>
+      <p class="kw-def">给…戴手铐</p>
+      <p class="kw-def-en">to put handcuffs on someone</p>
+      <p class="kw-ctx">&ldquo;Bodycam footage showed police handcuffing Nowak as he lay dying after Digwa falsely claimed to officers he was the victim of a racist attack.&rdquo;</p>
+      <p class="kw-ctx-cn">随身摄像头录像显示，在迪格瓦向警方谎称自己是种族袭击受害者后，警察给奄奄一息的诺瓦克戴上了手铐。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">erupt</span>
+        <button class="kw-speak-btn" data-word="erupt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈrʌpt/ v.</span>
+      </div>
+      <p class="kw-def">爆发</p>
+      <p class="kw-def-en">to start suddenly and violently</p>
+      <p class="kw-ctx">&ldquo;The killing ignited a fierce debate about policing and knife laws in the UK, with violent protests erupting in Southampton.&rdquo;</p>
+      <p class="kw-ctx-cn">这起谋杀案引发了英国关于警务和刀具法的激烈辩论，南安普顿爆发了暴力抗议。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">caricature</span>
+        <button class="kw-speak-btn" data-word="caricature" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkærɪkətʃʊər/ n.</span>
+      </div>
+      <p class="kw-def">漫画式描述，夸张的刻画</p>
+      <p class="kw-def-en">a description or representation that exaggerates certain characteristics</p>
+      <p class="kw-ctx">&ldquo;He said the pair had an 'agreeable' conversation, adding that he did not agree with Vance's 'caricature' of Western civilisation and its perceived decline.&rdquo;</p>
+      <p class="kw-ctx-cn">他说两人进行了一次“愉快的”对话，并补充说，他不同意万斯对西方文明及其所谓衰落的“漫画式描述”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sentencing</span>
+        <button class="kw-speak-btn" data-word="sentencing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsentənsɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">判决，量刑</p>
+      <p class="kw-def-en">the act of giving a punishment to someone found guilty of a crime</p>
+      <p class="kw-ctx">&ldquo;Henry Nowak's father, Mark, had appealed for calm in a statement outside the court following the sentencing, saying: 'We do not want his death to be used to create further division, hatred or tension.'&rdquo;</p>
+      <p class="kw-ctx-cn">亨利·诺瓦克的父亲马克在判决后于法院外发表声明，呼吁保持冷静，他说：“我们不希望他的死被用来制造进一步的分裂、仇恨或紧张。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrutiny</span>
+        <button class="kw-speak-btn" data-word="scrutiny" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskruːtəni/ n.</span>
+      </div>
+      <p class="kw-def">仔细审查，监督</p>
+      <p class="kw-def-en">careful and thorough examination</p>
+      <p class="kw-ctx">&ldquo;A document outlining anti-racism commitments by the National Police Chiefs' Council (NPCC), which brings together leaders from forces across the UK, has come under scrutiny following Nowak's murder.&rdquo;</p>
+      <p class="kw-ctx-cn">英国警察局长理事会（NPCC）一份概述反种族主义承诺的文件，在诺瓦克谋杀案后受到审查。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Deputy Prime Minister David Lammy has said he called US Vice-President JD Vance to tell him he was \"wrong\" in the comments he made about the murder of teenager Henry Nowak.", "start_ms": 0, "end_ms": 11376, "paragraph_index": 0}, {"index": 1, "text": "Vance blamed the death of the 18-year-old British student, who was fatally stabbed by Vickrum Digwa last year, on the \"mass invasion of migrants\" and said the \"only response\" was \"righteous anger\".", "start_ms": 11376, "end_ms": 24360, "paragraph_index": 1}, {"index": 2, "text": "Lammy told the BBC he had spoken to Vance on Saturday and told the vice-president the killing \"has got nothing to do with mass migration\".", "start_ms": 24360, "end_ms": 33792, "paragraph_index": 2}, {"index": 3, "text": "Digwa falsely claimed he had been racially abused and had acted in self-defence after murdering Nowak in Southampton in December last year.", "start_ms": 33792, "end_ms": 43248, "paragraph_index": 3}, {"index": 4, "text": "Digwa, who is British and was born in the UK, was jailed for life for murdering Nowak with a blade he claimed he was carrying for religious reasons linked to his Sikh faith.", "start_ms": 43248, "end_ms": 54696, "paragraph_index": 4}, {"index": 5, "text": "Bodycam footage showed police handcuffing Nowak as he lay dying after Digwa falsely claimed to officers he was the victim of a racist attack.", "start_ms": 54696, "end_ms": 64536, "paragraph_index": 5}, {"index": 6, "text": "The killing ignited a fierce debate about policing and knife laws in the UK, with violent protests erupting in Southampton.", "start_ms": 64536, "end_ms": 73416, "paragraph_index": 6}, {"index": 7, "text": "Vance wrote on X on Friday that Nowak had died \"the same way a civilisation dies: abandoned and handcuffed by authorities who neither trusted nor cared for him\".", "start_ms": 73416, "end_ms": 84528, "paragraph_index": 7}, {"index": 8, "text": "The killing had been as \"tragic as it is enraging\" and Nowak, Vance said, would still be alive today \"if the last few generations of European elites had stood their ground against the politics of self-hatred and the mass invasion of migrants\".", "start_ms": 84528, "end_ms": 100248, "paragraph_index": 8}, {"index": 9, "text": "Lammy told the BBC's Sunday with Laura Kuenssberg programme that he had called Vance to discuss his comments.", "start_ms": 100248, "end_ms": 107808, "paragraph_index": 9}, {"index": 10, "text": "\"I told him he was wrong,\" Lammy said.", "start_ms": 107808, "end_ms": 111336, "paragraph_index": 10}, {"index": 11, "text": "He said the pair had an \"agreeable\" conversation, adding that he did not agree with Vance's \"caricature\" of Western civilisation and its perceived decline.", "start_ms": 111336, "end_ms": 121584, "paragraph_index": 11}, {"index": 12, "text": "Lammy said he reminded Vance that Nowak's family had \"called for calm\" in what he described as \"a robust conversation\" with the vice-president.", "start_ms": 121584, "end_ms": 130944, "paragraph_index": 12}, {"index": 13, "text": "\"We remain colleagues and friends, we're able to do that, and he has strongly held views,\" Lammy said.", "start_ms": 130944, "end_ms": 138336, "paragraph_index": 13}, {"index": 14, "text": "Henry Nowak's father, Mark, had appealed for calm in a statement outside the court following the sentencing, saying: \"We do not want his death to be used to create further division, hatred or tension.\"", "start_ms": 138336, "end_ms": 151752, "paragraph_index": 14}, {"index": 15, "text": "Lammy and Vance have formed an unlikely friendship over the years and have met regularly since entering public office in their respective countries.", "start_ms": 151752, "end_ms": 161232, "paragraph_index": 15}, {"index": 16, "text": "The friendship between the deputy prime minister and the vice-president began when Lammy was an opposition MP and Vance had just been elected to the US Senate.", "start_ms": 161232, "end_ms": 171816, "paragraph_index": 16}, {"index": 17, "text": "Last summer, the vice-president and his family stayed with Lammy at his grace-and-favour home, Chevening, in Kent, during a holiday visit to the UK.", "start_ms": 171816, "end_ms": 182616, "paragraph_index": 17}, {"index": 18, "text": "But the US-UK relationship has been rockier of late, particularly over the war in Iran after the British government decided to not join the Trump administration's offensive military action in the Gulf.", "start_ms": 182616, "end_ms": 196272, "paragraph_index": 18}, {"index": 19, "text": "Downing Street has criticised \"people trying to interfere in our democracy and seeking to stir up division\", in response to Vance's comments.", "start_ms": 196272, "end_ms": 206064, "paragraph_index": 19}, {"index": 20, "text": "The Independent Office for Police Conduct is investigating Hampshire Police's response to the Nowak case.", "start_ms": 206064, "end_ms": 213480, "paragraph_index": 20}, {"index": 21, "text": "The head of Hampshire Police has told the BBC the force was \"sorry for handcuffing and arresting Henry\".", "start_ms": 213480, "end_ms": 220632, "paragraph_index": 21}, {"index": 22, "text": "A document outlining anti-racism commitments by the National Police Chiefs' Council (NPCC), which brings together leaders from forces across the UK, has come under scrutiny following Nowak's murder.", "start_ms": 220632, "end_ms": 235032, "paragraph_index": 22}, {"index": 23, "text": "The NPCC document says racial equality \"does not mean treating everyone 'the same' or being 'colour blind'\".", "start_ms": 235032, "end_ms": 242736, "paragraph_index": 23}, {"index": 24, "text": "On Tuesday, the NPCC said it would review language used in the document.", "start_ms": 242736, "end_ms": 248736, "paragraph_index": 24}, {"index": 25, "text": "Reform UK's home affairs spokesman Zia Yusuf argued there was a direct link between what he called police \"guidance\" and what happened to Nowak.", "start_ms": 248736, "end_ms": 258288, "paragraph_index": 25}, {"index": 26, "text": "Yusuf said Reform UK had been respectful of the Nowak family's wishes not to use the case to divide communities, after party leader Nigel Farage was criticised for calling on the public to respond with \"pure, cold rage\".", "start_ms": 258288, "end_ms": 273672, "paragraph_index": 26}, {"index": 27, "text": "\"The only way we can ensure that we do not have another situation like the tragedy of Henry's death is through political means,\" Yusuf told the BBC.", "start_ms": 273672, "end_ms": 283560, "paragraph_index": 27}, {"index": 28, "text": "\"That's why we're going to continue to make the argument.", "start_ms": 283560, "end_ms": 287472, "paragraph_index": 28}, {"index": 29, "text": "And nobody is going to guilt trip us into not making these arguments.\"", "start_ms": 287472, "end_ms": 292704, "paragraph_index": 28}, {"index": 30, "text": "Asked if he believed the police were institutionally racist, Yusuf said he did, citing the NPCC document.", "start_ms": 292704, "end_ms": 301080, "paragraph_index": 29}, {"index": 31, "text": "When he was asked about the NPCC document, Lammy said \"we are all equal before the law\", but added: \"It is still the case that on arrest, on prosecution, conviction, I'm afraid in our prisons, ethnic minorities are disproportionately in the criminal justice system.\"", "start_ms": 301080, "end_ms": 319200, "paragraph_index": 30}, {"index": 32, "text": "Lammy also said \"we've moved on from that period of institutional racism\" that was \"very real\" in policing in the past.", "start_ms": 319200, "end_ms": 327504, "paragraph_index": 31}, {"index": 33, "text": "\"That's not my experience when I see policing,\" Lammy said.", "start_ms": 327504, "end_ms": 332376, "paragraph_index": 32}], "total_duration_ms": 332376};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "he": "他", "in": "在", "and": "和", "was": "是", "said": "说", "of": "的", "lammy": "拉米", "had": "有", "vance": "万斯", "nowak": "诺瓦克", "on": "在", "for": "为了", "that": "那个", "with": "与", "not": "不", "has": "有", "told": "告诉", "is": "是", "police": "警方", "vice-president": "副总统", "been": "已经", "uk": "英国", "his": "他的", "we": "我们", "document": "文件", "npcc": "国家警察局长委员会", "called": "称为", "digwa": "迪格瓦", "last": "最后", "do": "做", "after": "之后", "as": "作为", "yusuf": "优素福", "us": "我们", "him": "他", "comments": "评论", "about": "关于", "henry": "亨利", "death": "死亡", "british": "英国的", "who": "谁", "by": "被", "response": "回应", "bbc": "英国广播公司", "killing": "杀害", "claimed": "声称", "policing": "警务", "it": "它", "an": "一个", "nowak's": "诺瓦克的", "what": "什么", "have": "有", "when": "当", "case": "案例", "deputy": "副手", "prime": "首相", "minister": "部长", "wrong": "错误的", "murder": "谋杀", "year": "年", "only": "只有", "falsely": "错误地", "southampton": "南安普顿", "racist": "种族主义的", "same": "相同", "way": "方式", "civilisation": "文明", "would": "将", "still": "仍然", "be": "是", "if": "如果", "their": "他们的", "conversation": "对话", "did": "做了", "vance's": "万斯的", "family": "家庭", "calm": "平静的", "we're": "我们是", "following": "随后", "used": "使用", "division": "分裂", "or": "或者", "friendship": "友谊", "over": "超过", "public": "公众", "office": "办公室", "between": "之间", "home": "家", "but": "但是", "criticised": "批评", "our": "我们的", "hampshire": "汉普郡", "from": "来自", "reform": "改革", "that's": "那是", "going": "将要", "asked": "询问", "are": "是", "david": "大卫", "jd": "JD", "tell": "告诉", "made": "做出", "teenager": "青少年", "blamed": "指责", "year-old": "岁的", "student": "学生", "stabbed": "被刺伤", "vickrum": "维克鲁姆", "anger": "愤怒", "spoken": "发言", "saturday": "星期六", "got": "获得", "nothing": "没有东西", "racially": "种族地", "abused": "受虐待的", "acted": "行动", "december": "十二月", "born": "出生于", "jailed": "被监禁", "life": "生活", "blade": "刀刃", "carrying": "携带", "religious": "宗教的", "reasons": "原因", "linked": "关联的", "sikh": "锡克教徒", "faith": "信仰", "footage": "视频片段", "showed": "显示", "lay": "躺", "dying": "垂死的", "officers": "官员", "victim": "受害者", "attack": "袭击", "ignited": "点燃", "debate": "辩论", "knife": "刀", "laws": "法律", "violent": "暴力的", "protests": "抗议活动", "wrote": "写道", "friday": "星期五", "died": "死亡", "handcuffed": "被铐上手铐", "authorities": "当局", "neither": "双方都不", "trusted": "信任的", "tragic": "悲惨的", "today": "今天", "few": "少数", "european": "欧洲的", "stood": "站立", "ground": "地面", "against": "反对", "politics": "政治", "bbc's": "英国广播公司的", "sunday": "星期日", "laura": "劳拉", "kuenssberg": "昆斯伯格", "programme": "节目", "discuss": "讨论", "pair": "一对", "adding": "补充说", "agree": "同意", "western": "西方的", "its": "它的", "decline": "下降", "described": "描述", "remain": "仍然", "colleagues": "同事", "friends": "朋友", "able": "能够", "strongly": "强烈地", "held": "举行", "views": "观点", "father": "父亲", "mark": "标志", "appealed": "上诉", "statement": "声明", "outside": "外部", "court": "法庭", "saying": "说", "want": "想要", "create": "造成", "further": "进一步的", "hatred": "仇恨", "tension": "紧张", "unlikely": "不太可能", "years": "多年", "met": "伦敦警察厅", "regularly": "定期地", "since": "自从", "entering": "进入", "respective": "各自的", "countries": "国家", "began": "开始", "opposition": "反对党", "mp": "议员", "just": "只是", "elected": "当选的", "summer": "夏天", "stayed": "停留", "at": "在", "kent": "肯特", "during": "在期间", "visit": "访问", "us-uk": "美英", "relationship": "关系", "late": "已故", "particularly": "尤其", "war": "战争", "iran": "伊朗", "government": "政府", "decided": "决定", "join": "加入", "trump": "特朗普", "administration's": "政府的", "offensive": "冒犯的", "military": "军事", "action": "行动", "gulf": "海湾", "downing": "唐宁", "street": "街", "people": "人们", "trying": "尝试", "democracy": "民主", "seeking": "寻求", "stir": "搅动", "up": "向上", "independent": "独立的", "conduct": "行为", "investigating": "调查", "head": "前往", "force": "力量", "sorry": "抱歉", "arresting": "逮捕的", "outlining": "概述", "anti-racism": "反种族主义", "commitments": "承诺", "national": "国家", "chiefs": "首领", "council": "委员会", "which": "哪个", "brings": "带来", "together": "一起", "leaders": "领导人", "forces": "力量", "across": "跨越", "come": "到来", "under": "在...之下", "says": "表示", "equality": "平等", "does": "做", "mean": "意味着", "treating": "对待", "everyone": "每个人", "being": "正在", "colour": "肤色", "blind": "盲目的", "tuesday": "星期二", "review": "审查", "language": "语言", "uk's": "英国的", "affairs": "事务", "spokesman": "发言人", "zia": "齐亚", "argued": "争论", "there": "那里", "direct": "直接的", "guidance": "指导", "happened": "发生", "use": "使用", "divide": "分歧", "communities": "社区", "party": "政党", "leader": "领导人", "nigel": "奈杰尔", "farage": "法拉奇", "calling": "呼吁", "respond": "回应", "pure": "纯粹的", "cold": "寒冷", "rage": "愤怒", "can": "可以", "ensure": "确保", "another": "另一个", "situation": "局势", "like": "像", "tragedy": "悲剧", "henry's": "亨利的", "through": "通过", "political": "政治的", "means": "意味着", "why": "为何", "continue": "继续", "make": "使", "argument": "争论", "nobody": "没有人", "guilt": "内疚", "trip": "旅行", "into": "进入", "making": "进行", "these": "这些", "arguments": "论点", "believed": "据信", "were": "是", "all": "所有", "equal": "平等的", "before": "之前", "law": "法律", "added": "补充", "arrest": "逮捕", "prosecution": "起诉", "conviction": "定罪", "i'm": "我是", "afraid": "恐怕", "prisons": "监狱", "ethnic": "种族的", "criminal": "犯罪的", "justice": "正义", "system": "制度", "also": "也", "we've": "我们已经", "moved": "移动", "period": "时期", "racism": "种族主义", "very": "非常", "real": "真正的", "past": "过去", "my": "我的", "experience": "经历", "see": "看到", "mass": "大规模的", "invasion": "入侵", "migrants": "移民", "murdering": "谋杀", "handcuffing": "铐上手铐", "fatally": "致命地", "righteous": "正义的", "migration": "迁移", "self-defence": "自卫", "fierce": "激烈的", "erupting": "爆发", "dies": "死亡", "abandoned": "被遗弃的", "nor": "也不", "cared": "关心", "enraging": "激怒", "alive": "活着的", "generations": "几代人", "elites": "精英", "self-hatred": "自我憎恨", "agreeable": "令人愉快的", "perceived": "认为", "reminded": "提醒", "robust": "强劲的", "formed": "形成", "senate": "参议院", "grace-and-favour": "恩赐的", "chevening": "志奋领", "holiday": "假期", "rockier": "更艰难的", "interfere": "干涉", "police's": "警察的", "racial": "种族的", "link": "联系", "respectful": "尊重的", "family's": "家庭的", "wishes": "愿望", "institutionally": "制度上", "citing": "引用", "minorities": "少数群体", "disproportionately": "不成比例地", "institutional": "机构的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
