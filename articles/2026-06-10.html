@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-10</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-10</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/5805/live/b728a330-650d-11f1-b671-296779147873.jpg" alt="Water cannon fired in latest disorder after Belfast knife attack" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Water cannon fired in latest disorder after Belfast knife attack</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c1dypzw1d29o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-10.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A water cannon has been deployed to <span class="keyword" data-word="disperse" data-phonetic="/dɪˈspɜːrs/" data-pos="v." data-def="驱散；分散" data-def-en="to cause (a group) to separate and go in different directions">disperse</span> a large crowd after a second night of disorder in Northern Ireland following the Belfast knife attack.</span></p>
+        <p class="cn">在贝尔法斯特持刀袭击事件后，北爱尔兰连续第二晚发生骚乱，警方已出动水炮驱散大批人群。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Riot police came under <span class="keyword" data-word="sustained" data-phonetic="/səˈsteɪnd/" data-pos="adj." data-def="持续的；持久的" data-def-en="continuing for an extended period without interruption">sustained</span> attack from a group throwing bricks, bottles and pieces of wood at a major roundabout to the north-west of Belfast.</span></p>
+        <p class="cn">防暴警察在贝尔法斯特西北部的一个主要环岛遭到一群人的持续攻击，他们投掷砖块、瓶子和木块。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Additional officers were drafted in but Wednesday's disorder was not on the same scale as Tuesday's violence .</span></p>
+        <p class="cn">警方增派了警力，但周三的骚乱规模不及周二。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Public transport shut down across Northern Ireland and some schools closed early on Wednesday ahead of any disruption.</span> <span class="sentence" data-sentence-index="4">Belfast city centre was <span class="keyword" data-word="deserted" data-phonetic="/dɪˈzɜːrtɪd/" data-pos="adj." data-def="空无一人的；荒废的" data-def-en="having no people; empty and abandoned">deserted</span> after many businesses shut up shop by lunchtime.</span></p>
+        <p class="cn">北爱尔兰的公共交通停运，部分学校在周三提前关闭以防不测。贝尔法斯特市中心在午间许多商铺关门后变得空荡荡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">The cannon was deployed at the Sandyknowes roundabout in Glengormley, about eight miles (13km) north-west of Belfast city centre.</span></p>
+        <p class="cn">水炮部署在格伦戈姆利的桑迪诺尔斯环岛，该地距贝尔法斯特市中心西北约8英里（13公里）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6"><span class="keyword" data-word="footage" data-phonetic="/ˈfʊtɪdʒ/" data-pos="n." data-def="视频片段；镜头" data-def-en="a recording of an event or scene on film or video">Footage</span> showed dozens of people dressed all in black and wearing face coverings tearing up the driveways and fences of nearby houses to use as missiles.</span></p>
+        <p class="cn">视频显示，数十名身穿黑衣、戴面罩的人掀翻附近房屋的车道和围栏，用作投掷物。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">A large Department for Infrastructure vehicle was seen in flames, and bins were set on fire.</span></p>
+        <p class="cn">一辆大型基础设施部车辆被看到起火，垃圾桶也被点燃。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">The crowd attempted to set fire to a <span class="keyword" data-word="derelict" data-phonetic="/ˈderəlɪkt/" data-pos="adj." data-def="废弃的；破败的" data-def-en="in a very poor condition as a result of disuse and neglect">derelict</span> property in the same area, with some throwing petrol bombs at police lines.</span></p>
+        <p class="cn">人群试图在同一区域点燃一处废弃房屋，并向警方防线投掷燃烧瓶。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">It seems they were trying to get close to a hotel which houses <span class="keyword" data-word="asylum" data-phonetic="/əˈsaɪləm/" data-pos="n." data-def="庇护；政治避难" data-def-en="protection granted by a state to someone who has left their home country as a political refugee">asylum</span> seekers.</span></p>
+        <p class="cn">他们似乎试图靠近一家收容寻求庇护者的酒店。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">There have been protests elsewhere in Northern Ireland but they have been largely peaceful.</span></p>
+        <p class="cn">北爱尔兰其他地区也有抗议活动，但基本和平。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">In east Belfast, where there was major trouble on Tuesday, about 150 people gathered amid a large police presence.</span> <span class="sentence" data-sentence-index="12">Police said there was little trouble and few arrests had been made.</span></p>
+        <p class="cn">在周二发生严重骚乱的东贝尔法斯特，约150人在大量警力部署下聚集。警方称几乎没有麻烦，逮捕人数很少。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">More than 100 people gathered at row of houses near the Ulster University campus in Coleraine, County Londonderry.</span></p>
+        <p class="cn">在伦敦德里郡科尔雷恩的阿尔斯特大学校区附近，超过100人聚集在一排房屋前。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">Some of the crowd remonstrated with police about the houses of multiple occupation (HMOs) and those living in them before before finishing up.</span></p>
+        <p class="cn">部分人群就多户住宅（HMOs）及其住户与警方争论，随后散去。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">In Derry, police advised motorists to avoid the Ardmore Road at the Church Brae junction due to items on fire.</span></p>
+        <p class="cn">在德里，警方因物品起火建议司机避开教堂布雷路口的阿德莫尔路。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">About 140 protesters had gathered at the Stormont estate in Belfast.</span></p>
+        <p class="cn">约140名抗议者聚集在贝尔法斯特的斯托蒙特庄园。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Earlier, Hadi Alodid, a 30-year-old originally from Sudan, appeared in court on Wednesday charged with attempted murder over a knife attack in north Belfast on Monday that caused serious injuries to the victim, Stephen Ogilvie.</span></p>
+        <p class="cn">此前，原籍苏丹的30岁男子哈迪·阿洛迪德周三出庭，被控与周一北贝尔法斯特持刀袭击案相关的谋杀未遂罪，该袭击导致受害者斯蒂芬·奥格尔维重伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">Ogilvie, who is in his 40s, has lost his left eye and has damage to his right eye, along with injuries to his neck and back.</span></p>
+        <p class="cn">40多岁的奥格尔维左眼失明，右眼受损，颈部和背部受伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">His family released another statement on Wednesday night, saying he was in a stable condition.</span> <span class="sentence" data-sentence-index="20">They said they had been forced to do so after "witnessing a lot of false information on social media".</span></p>
+        <p class="cn">他的家人周三晚再次发表声明，称他情况稳定。他们表示，在“目睹社交媒体上大量虚假信息”后，被迫作出此声明。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">They have appealed for "peaceful protest as the only way forward" and said there were "many migrants who make a deeply valuable contribution to our society".</span></p>
+        <p class="cn">他们呼吁“和平抗议是唯一出路”，并称“许多移民为社会做出了宝贵贡献”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Reaction to the attack, and the alleged attacker's ethnicity, prompted protests on Tuesday evening in many parts of Northern Ireland.</span></p>
+        <p class="cn">对袭击事件及据称袭击者族裔的反应，引发了周二晚北爱尔兰多地的抗议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">Groups of masked men set fire to houses, a bus and cars, mostly in Belfast, forcing a number of families to flee their homes.</span> <span class="sentence" data-sentence-index="24">Petrol bombs were also thrown at police in a number of locations.</span></p>
+        <p class="cn">蒙面人群纵火烧毁房屋、公交车和汽车，主要集中在贝尔法斯特，迫使多个家庭逃离家园。多个地点还向警方投掷燃烧瓶。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">Many of the other protests, in areas such as Ballymena, Londonderry and Antrim, passed off peacefully.</span></p>
+        <p class="cn">其他许多抗议活动，如在巴利米纳、伦敦德里和安特里姆等地，和平进行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">In other developments:</span></p>
+        <p class="cn">其他进展：</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">On Wednesday night, the Stormont Executive issued a statement on behalf of all ministers condemning the disorder.</span></p>
+        <p class="cn">周三晚，斯托蒙特行政院代表所有部长发表声明，谴责骚乱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">They have repeated calls for calm and said the events have caused significant harm to communities, spread fear and risked innocent lives.</span></p>
+        <p class="cn">他们再次呼吁冷静，称事件对社区造成重大伤害，传播恐惧，危及无辜生命。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">The Royal College of Nursing said some staff had been "stopped by masked men" when trying to get into work on Tuesday night.</span></p>
+        <p class="cn">皇家护理学院称，部分员工周二晚试图上班时被“蒙面男子拦下”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">RCN director Rita Devlin said: "They have been asked to show their credentials to masked men.</span> <span class="sentence" data-sentence-index="31">They have been unable to get into work."</span></p>
+        <p class="cn">RCN主任丽塔·德夫林说：“他们被要求向蒙面男子出示证件，无法进入工作场所。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">She said some of these nurses were from overseas and were "absolutely petrified".</span></p>
+        <p class="cn">她表示，其中一些护士来自海外，“极度惊恐”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">Prime Minister Sir Keir Starmer said people were rightly sickened by the horrific attack on Monday night in north Belfast.</span></p>
+        <p class="cn">首相基尔·斯塔默爵士表示，人们对周一晚北贝尔法斯特的恐怖袭击感到恶心是合理的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">"But let me be clear, the acts of violence and arson that followed are totally unjustified," he added.</span></p>
+        <p class="cn">“但我要明确，随后的暴力和纵火行为完全不合理，”他补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">Conservative leader Kemi Badenoch said the scenes were "deeply disturbing", adding that people had a "right to be angry" and the right to "expect politicians to secure our borders".</span></p>
+        <p class="cn">保守党领袖凯米·巴德诺赫称这些场景“令人深感不安”，并补充说人们有“愤怒的权利”和“期望政客确保边境安全的权利”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">"But no-one has a right to burn families out of their homes or to burn public property and attack the police," she added.</span></p>
+        <p class="cn">“但没有人有权烧毁家庭住所、焚烧公共财产或攻击警察，”她补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">Northern Ireland Secretary Hilary Benn said it was now down to people who participated in disorder to decide whether they want to continue to "leave children absolutely terrified as they're taken out into the dark with flames and screaming around them".</span></p>
+        <p class="cn">北爱尔兰事务大臣希拉里·本表示，现在取决于参与骚乱的人是否愿意继续“让孩子们在火焰和尖叫声中被带入黑暗时极度恐惧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">PSNI Chief Constable Jon Boutcher called on people to not get "carried away with a tide" of views online and be "persuaded by people who know nothing about Northern Ireland".</span></p>
+        <p class="cn">PSNI总警长乔恩·布彻呼吁人们不要被网上的观点“冲昏头脑”，也不要被“对北爱尔兰一无所知的人”说服。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deploy</span>
+        <button class="kw-speak-btn" data-word="deploy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈplɔɪ/ v.</span>
+      </div>
+      <p class="kw-def">部署；调动</p>
+      <p class="kw-def-en">to move or place (something) into position for use</p>
+      <p class="kw-ctx">&ldquo;A water cannon has been deployed to disperse a large crowd after a second night of disorder in Northern Ireland following the Belfast knife attack.&rdquo;</p>
+      <p class="kw-ctx-cn">在贝尔法斯特持刀袭击事件后，北爱尔兰连续第二晚发生骚乱，警方已部署水炮驱散大量人群。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disperse</span>
+        <button class="kw-speak-btn" data-word="disperse" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈspɜːrs/ v.</span>
+      </div>
+      <p class="kw-def">驱散；分散</p>
+      <p class="kw-def-en">to cause (a group) to separate and go in different directions</p>
+      <p class="kw-ctx">&ldquo;A water cannon has been deployed to disperse a large crowd after a second night of disorder in Northern Ireland following the Belfast knife attack.&rdquo;</p>
+      <p class="kw-ctx-cn">在贝尔法斯特持刀袭击事件后，北爱尔兰连续第二晚发生骚乱，警方已部署水炮驱散大量人群。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sustained</span>
+        <button class="kw-speak-btn" data-word="sustained" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈsteɪnd/ adj.</span>
+      </div>
+      <p class="kw-def">持续的；持久的</p>
+      <p class="kw-def-en">continuing for an extended period without interruption</p>
+      <p class="kw-ctx">&ldquo;Riot police came under sustained attack from a group throwing bricks, bottles and pieces of wood at a major roundabout to the north-west of Belfast.&rdquo;</p>
+      <p class="kw-ctx-cn">防暴警察在贝尔法斯特西北部的一个主要环岛遭到一群人的持续攻击，他们投掷砖块、瓶子和木块。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">draft</span>
+        <button class="kw-speak-btn" data-word="draft" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dræft/ v.</span>
+      </div>
+      <p class="kw-def">抽调；征召</p>
+      <p class="kw-def-en">to select and bring (someone) for a special duty</p>
+      <p class="kw-ctx">&ldquo;Additional officers were drafted in but Wednesday's disorder was not on the same scale as Tuesday's violence.&rdquo;</p>
+      <p class="kw-ctx-cn">额外警员被抽调过来，但周三的骚乱规模不及周二的暴力事件。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deserted</span>
+        <button class="kw-speak-btn" data-word="deserted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈzɜːrtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">空无一人的；荒废的</p>
+      <p class="kw-def-en">having no people; empty and abandoned</p>
+      <p class="kw-ctx">&ldquo;Belfast city centre was deserted after many businesses shut up shop by lunchtime.&rdquo;</p>
+      <p class="kw-ctx-cn">贝尔法斯特市中心在午间许多商店关门后变得空无一人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">footage</span>
+        <button class="kw-speak-btn" data-word="footage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfʊtɪdʒ/ n.</span>
+      </div>
+      <p class="kw-def">视频片段；镜头</p>
+      <p class="kw-def-en">a recording of an event or scene on film or video</p>
+      <p class="kw-ctx">&ldquo;Footage showed dozens of people dressed all in black and wearing face coverings tearing up the driveways and fences of nearby houses to use as missiles.&rdquo;</p>
+      <p class="kw-ctx-cn">视频片段显示，数十名身穿黑衣、戴面罩的人拆毁附近房屋的车道和围栏，用作投掷物。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">derelict</span>
+        <button class="kw-speak-btn" data-word="derelict" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈderəlɪkt/ adj.</span>
+      </div>
+      <p class="kw-def">废弃的；破败的</p>
+      <p class="kw-def-en">in a very poor condition as a result of disuse and neglect</p>
+      <p class="kw-ctx">&ldquo;The crowd attempted to set fire to a derelict property in the same area, with some throwing petrol bombs at police lines.&rdquo;</p>
+      <p class="kw-ctx-cn">人群试图在同一区域点燃一处废弃房产，一些人向警察防线投掷汽油弹。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">asylum</span>
+        <button class="kw-speak-btn" data-word="asylum" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈsaɪləm/ n.</span>
+      </div>
+      <p class="kw-def">庇护；政治避难</p>
+      <p class="kw-def-en">protection granted by a state to someone who has left their home country as a political refugee</p>
+      <p class="kw-ctx">&ldquo;It seems they were trying to get close to a hotel which houses asylum seekers.&rdquo;</p>
+      <p class="kw-ctx-cn">他们似乎试图靠近一家收容寻求庇护者的酒店。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A water cannon has been deployed to disperse a large crowd after a second night of disorder in Northern Ireland following the Belfast knife attack.", "start_ms": 0, "end_ms": 9648, "paragraph_index": 0}, {"index": 1, "text": "Riot police came under sustained attack from a group throwing bricks, bottles and pieces of wood at a major roundabout to the north-west of Belfast.", "start_ms": 9648, "end_ms": 19704, "paragraph_index": 1}, {"index": 2, "text": "Additional officers were drafted in but Wednesday's disorder was not on the same scale as Tuesday's violence .", "start_ms": 19704, "end_ms": 27384, "paragraph_index": 2}, {"index": 3, "text": "Public transport shut down across Northern Ireland and some schools closed early on Wednesday ahead of any disruption.", "start_ms": 27384, "end_ms": 35736, "paragraph_index": 3}, {"index": 4, "text": "Belfast city centre was deserted after many businesses shut up shop by lunchtime.", "start_ms": 35736, "end_ms": 42072, "paragraph_index": 3}, {"index": 5, "text": "The cannon was deployed at the Sandyknowes roundabout in Glengormley, about eight miles (13km) north-west of Belfast city centre.", "start_ms": 42072, "end_ms": 52368, "paragraph_index": 4}, {"index": 6, "text": "Footage showed dozens of people dressed all in black and wearing face coverings tearing up the driveways and fences of nearby houses to use as missiles.", "start_ms": 52368, "end_ms": 62328, "paragraph_index": 5}, {"index": 7, "text": "A large Department for Infrastructure vehicle was seen in flames, and bins were set on fire.", "start_ms": 62328, "end_ms": 69192, "paragraph_index": 6}, {"index": 8, "text": "The crowd attempted to set fire to a derelict property in the same area, with some throwing petrol bombs at police lines.", "start_ms": 69192, "end_ms": 78048, "paragraph_index": 7}, {"index": 9, "text": "It seems they were trying to get close to a hotel which houses asylum seekers.", "start_ms": 78048, "end_ms": 83688, "paragraph_index": 8}, {"index": 10, "text": "There have been protests elsewhere in Northern Ireland but they have been largely peaceful.", "start_ms": 83688, "end_ms": 89496, "paragraph_index": 9}, {"index": 11, "text": "In east Belfast, where there was major trouble on Tuesday, about 150 people gathered amid a large police presence.", "start_ms": 89496, "end_ms": 98688, "paragraph_index": 10}, {"index": 12, "text": "Police said there was little trouble and few arrests had been made.", "start_ms": 98688, "end_ms": 103392, "paragraph_index": 10}, {"index": 13, "text": "More than 100 people gathered at row of houses near the Ulster University campus in Coleraine, County Londonderry.", "start_ms": 103392, "end_ms": 112008, "paragraph_index": 11}, {"index": 14, "text": "Some of the crowd remonstrated with police about the houses of multiple occupation (HMOs) and those living in them before before finishing up.", "start_ms": 112008, "end_ms": 122304, "paragraph_index": 12}, {"index": 15, "text": "In Derry, police advised motorists to avoid the Ardmore Road at the Church Brae junction due to items on fire.", "start_ms": 122304, "end_ms": 130584, "paragraph_index": 13}, {"index": 16, "text": "About 140 protesters had gathered at the Stormont estate in Belfast.", "start_ms": 130584, "end_ms": 136752, "paragraph_index": 14}, {"index": 17, "text": "Earlier, Hadi Alodid, a 30-year-old originally from Sudan, appeared in court on Wednesday charged with attempted murder over a knife attack in north Belfast on Monday that caused serious injuries to the victim, Stephen Ogilvie.", "start_ms": 136752, "end_ms": 152376, "paragraph_index": 15}, {"index": 18, "text": "Ogilvie, who is in his 40s, has lost his left eye and has damage to his right eye, along with injuries to his neck and back.", "start_ms": 152376, "end_ms": 161496, "paragraph_index": 16}, {"index": 19, "text": "His family released another statement on Wednesday night, saying he was in a stable condition.", "start_ms": 161496, "end_ms": 168048, "paragraph_index": 17}, {"index": 20, "text": "They said they had been forced to do so after \"witnessing a lot of false information on social media\".", "start_ms": 168048, "end_ms": 174960, "paragraph_index": 17}, {"index": 21, "text": "They have appealed for \"peaceful protest as the only way forward\" and said there were \"many migrants who make a deeply valuable contribution to our society\".", "start_ms": 174960, "end_ms": 184944, "paragraph_index": 18}, {"index": 22, "text": "Reaction to the attack, and the alleged attacker's ethnicity, prompted protests on Tuesday evening in many parts of Northern Ireland.", "start_ms": 184944, "end_ms": 194520, "paragraph_index": 19}, {"index": 23, "text": "Groups of masked men set fire to houses, a bus and cars, mostly in Belfast, forcing a number of families to flee their homes.", "start_ms": 194520, "end_ms": 204216, "paragraph_index": 20}, {"index": 24, "text": "Petrol bombs were also thrown at police in a number of locations.", "start_ms": 204216, "end_ms": 209400, "paragraph_index": 20}, {"index": 25, "text": "Many of the other protests, in areas such as Ballymena, Londonderry and Antrim, passed off peacefully.", "start_ms": 209400, "end_ms": 217464, "paragraph_index": 21}, {"index": 26, "text": "In other developments:", "start_ms": 217464, "end_ms": 219936, "paragraph_index": 22}, {"index": 27, "text": "On Wednesday night, the Stormont Executive issued a statement on behalf of all ministers condemning the disorder.", "start_ms": 219936, "end_ms": 227880, "paragraph_index": 23}, {"index": 28, "text": "They have repeated calls for calm and said the events have caused significant harm to communities, spread fear and risked innocent lives.", "start_ms": 227880, "end_ms": 237360, "paragraph_index": 24}, {"index": 29, "text": "The Royal College of Nursing said some staff had been \"stopped by masked men\" when trying to get into work on Tuesday night.", "start_ms": 237360, "end_ms": 245688, "paragraph_index": 25}, {"index": 30, "text": "RCN director Rita Devlin said: \"They have been asked to show their credentials to masked men.", "start_ms": 245688, "end_ms": 252504, "paragraph_index": 26}, {"index": 31, "text": "They have been unable to get into work.\"", "start_ms": 252504, "end_ms": 255768, "paragraph_index": 26}, {"index": 32, "text": "She said some of these nurses were from overseas and were \"absolutely petrified\".", "start_ms": 255768, "end_ms": 261672, "paragraph_index": 27}, {"index": 33, "text": "Prime Minister Sir Keir Starmer said people were rightly sickened by the horrific attack on Monday night in north Belfast.", "start_ms": 261672, "end_ms": 269856, "paragraph_index": 28}, {"index": 34, "text": "\"But let me be clear, the acts of violence and arson that followed are totally unjustified,\" he added.", "start_ms": 269856, "end_ms": 277128, "paragraph_index": 29}, {"index": 35, "text": "Conservative leader Kemi Badenoch said the scenes were \"deeply disturbing\", adding that people had a \"right to be angry\" and the right to \"expect politicians to secure our borders\".", "start_ms": 277128, "end_ms": 288864, "paragraph_index": 30}, {"index": 36, "text": "\"But no-one has a right to burn families out of their homes or to burn public property and attack the police,\" she added.", "start_ms": 288864, "end_ms": 297024, "paragraph_index": 31}, {"index": 37, "text": "Northern Ireland Secretary Hilary Benn said it was now down to people who participated in disorder to decide whether they want to continue to \"leave children absolutely terrified as they're taken out into the dark with flames and screaming around them\".", "start_ms": 297024, "end_ms": 312600, "paragraph_index": 32}, {"index": 38, "text": "PSNI Chief Constable Jon Boutcher called on people to not get \"carried away with a tide\" of views online and be \"persuaded by people who know nothing about Northern Ireland\".", "start_ms": 312600, "end_ms": 324240, "paragraph_index": 33}], "total_duration_ms": 324240};
+  const WORD_GLOSS = {"to": "到", "the": "这个", "in": "在", "of": "的", "and": "和", "on": "在", "said": "说", "were": "是", "they": "它们", "been": "已经", "police": "警方", "was": "是", "people": "人们", "at": "在", "have": "有", "northern": "北部的", "ireland": "爱尔兰", "attack": "袭击", "with": "与", "night": "晚上", "as": "作为", "some": "一些", "about": "关于", "houses": "房屋", "had": "有", "his": "他的", "has": "有", "disorder": "骚乱", "but": "但是", "wednesday": "星期三", "many": "许多", "by": "被", "fire": "射击", "get": "得到", "there": "那里", "who": "谁", "right": "正确", "large": "大的", "after": "之后", "from": "来自", "up": "向上", "for": "为了", "set": "设定", "protests": "抗议活动", "tuesday": "星期二", "gathered": "聚集", "that": "那个", "men": "男人们", "their": "他们的", "into": "进入", "be": "是", "deployed": "部署", "knife": "刀", "throwing": "抛出", "major": "重大的", "north-west": "西北部", "not": "不", "same": "相同", "violence": "暴力", "public": "公众", "shut": "关闭", "down": "下来", "city": "城市", "centre": "中心", "all": "所有", "attempted": "试图", "property": "财产", "it": "它", "trying": "尝试", "peaceful": "和平的", "trouble": "麻烦", "them": "他们", "before": "之前", "north": "北部", "monday": "星期一", "caused": "导致", "injuries": "受伤", "eye": "目光", "statement": "声明", "he": "他", "deeply": "深深地", "our": "我们的", "number": "数量", "families": "家庭", "homes": "家", "other": "其他", "work": "工作", "she": "她", "absolutely": "绝对", "added": "补充", "out": "出来", "water": "水", "second": "第二", "following": "随后", "riot": "骚乱", "came": "到来", "under": "在...之下", "group": "团体", "bricks": "砖块", "wood": "伍德", "additional": "额外的", "officers": "官员", "wednesday's": "周三的", "scale": "规模", "tuesday's": "周二的", "transport": "运输", "across": "跨越", "schools": "学校", "closed": "关闭", "early": "早期的", "ahead": "提前", "any": "任何", "disruption": "中断", "businesses": "企业", "shop": "商店", "lunchtime": "午餐时间", "eight": "八", "showed": "显示", "dozens": "数十", "dressed": "穿着", "black": "黑色", "wearing": "穿着", "face": "面临", "nearby": "附近", "use": "使用", "missiles": "导弹", "department": "部门", "infrastructure": "基础设施", "vehicle": "车辆", "seen": "被视为", "bins": "垃圾桶", "area": "区域", "lines": "线", "seems": "似乎", "close": "密切的", "hotel": "酒店", "which": "哪个", "elsewhere": "其他地方", "largely": "很大程度上", "east": "东部", "where": "那里", "amid": "在…中", "presence": "存在", "little": "很少", "few": "少数", "arrests": "逮捕", "made": "做出", "more": "更多", "than": "比", "row": "争吵", "near": "附近", "university": "大学", "county": "郡", "multiple": "多条", "occupation": "占领", "those": "那些", "living": "生活", "finishing": "完成", "advised": "建议", "avoid": "避免", "road": "道路", "church": "教堂", "due": "应得", "items": "物品", "protesters": "抗议者", "estate": "住宅区", "earlier": "较早", "year-old": "岁的", "appeared": "出现", "court": "法庭", "charged": "指控", "murder": "谋杀", "over": "超过", "serious": "严重的", "victim": "受害者", "is": "是", "lost": "失去", "left": "离开", "damage": "损坏", "along": "一起", "back": "后退", "family": "家庭", "released": "释放", "another": "另一个", "saying": "说", "stable": "稳定的", "condition": "状况", "forced": "被迫", "do": "做", "so": "所以", "lot": "很多", "false": "虚假的", "information": "信息", "social": "社交的", "media": "媒体", "appealed": "上诉", "protest": "抗议", "only": "只有", "way": "方式", "forward": "向前", "migrants": "移民", "make": "使", "contribution": "贡献", "society": "社会", "reaction": "反应", "alleged": "据称的", "prompted": "促使", "evening": "晚上", "parts": "部分", "groups": "团体", "bus": "巴士", "cars": "汽车", "also": "也", "thrown": "投掷", "locations": "地点", "areas": "区域", "such": "如此", "passed": "通过", "off": "离开", "peacefully": "和平地", "developments": "事态发展", "executive": "行政的", "issued": "发布", "behalf": "代表", "ministers": "部长", "condemning": "谴责", "repeated": "重复", "calls": "呼吁", "calm": "平静的", "events": "事件", "significant": "重大", "harm": "伤害", "communities": "社区", "spread": "传播", "fear": "恐惧", "innocent": "无辜的", "lives": "生命", "royal": "王室的", "college": "学院", "staff": "员工", "stopped": "停止", "when": "当", "director": "局长", "asked": "询问", "show": "显示", "unable": "无法", "these": "这些", "overseas": "海外的", "prime": "首相", "minister": "部长", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "rightly": "理所当然地", "sickened": "感到恶心", "horrific": "可怕的", "let": "让", "me": "我", "clear": "明确", "acts": "行为", "arson": "纵火", "followed": "遵循", "are": "是", "totally": "完全地", "conservative": "保守党", "leader": "领导人", "kemi": "凯米", "badenoch": "巴德诺赫", "scenes": "场景", "disturbing": "令人不安", "adding": "补充说", "angry": "愤怒的", "expect": "期望", "politicians": "政治家", "secure": "安全的", "borders": "边境", "no-one": "无人", "or": "或者", "secretary": "秘书", "now": "现在", "decide": "决定", "whether": "是否", "want": "想要", "continue": "继续", "leave": "离开", "children": "儿童", "they're": "他们是", "taken": "采取", "dark": "黑暗的", "screaming": "尖叫", "around": "在...周围", "chief": "首席", "constable": "警察", "called": "称为", "carried": "进行", "away": "离开", "views": "观点", "online": "在线", "persuaded": "说服", "know": "知道", "nothing": "没有东西", "belfast": "贝尔法斯特", "crowd": "人群", "masked": "蒙面的", "cannon": "大炮", "roundabout": "环岛", "flames": "火焰", "petrol": "汽油", "bombs": "炸弹", "londonderry": "伦敦德里", "stormont": "斯托蒙特", "ogilvie": "奥格尔维", "burn": "燃烧", "bottles": "瓶子", "pieces": "碎片", "drafted": "起草", "sandyknowes": "桑迪诺斯", "glengormley": "格伦戈姆利", "miles": "英里", "coverings": "覆盖物", "tearing": "撕扯", "driveways": "车道", "fences": "栅栏", "seekers": "寻求者", "ulster": "阿尔斯特", "campus": "校园", "coleraine": "科尔雷恩", "remonstrated": "抗议", "hmos": "房东", "derry": "德里", "motorists": "驾车者", "ardmore": "阿德莫尔", "brae": "山坡", "junction": "交叉口", "hadi": "哈迪", "alodid": "阿洛迪德", "originally": "最初", "sudan": "苏丹", "stephen": "斯蒂芬", "neck": "脖子", "witnessing": "目睹", "valuable": "宝贵的", "attacker's": "攻击者的", "ethnicity": "种族", "mostly": "主要", "forcing": "迫使", "flee": "逃离", "ballymena": "巴利米纳", "antrim": "安特里姆", "risked": "冒险", "nursing": "护理", "rcn": "皇家护理学院", "rita": "丽塔", "devlin": "德夫林", "credentials": "资质", "nurses": "护士", "petrified": "吓呆的", "unjustified": "不合理的", "hilary": "希拉里", "benn": "本", "participated": "参与", "terrified": "恐惧的", "psni": "北爱尔兰警察局", "jon": "乔恩", "boutcher": "鲍彻", "tide": "潮汐"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
