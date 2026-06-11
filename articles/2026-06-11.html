@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-11</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-11</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/44a7/live/81060f90-65da-11f1-94fa-99c9438be586.jpg" alt="Armed forces minister quits after Healey exit as defence funding row deepens" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Armed forces minister quits after Healey exit as defence funding row deepens</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c4gyp8n7g3go?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-11.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The armed forces minister has followed former Defence Secretary John Healey in quitting the government in a dispute with Prime Minister Sir Keir Starmer over funding for the military.</span></p>
+        <p class="cn">武装力量部长已跟随前国防大臣约翰·希利辞职，起因是与首相基尔·斯塔默爵士在军事资金问题上存在分歧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Al Carns resigned on Thursday evening, writing to Sir Keir to tell him the government's defence investment plan (DIP) was "neither transformative enough nor sufficiently funded".</span></p>
+        <p class="cn">阿尔·卡恩斯于周四晚辞职，他在致基尔爵士的信中表示，政府的国防投资计划“既不够具有变革性，也缺乏足够的资金”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">It came after Healey resigned in a <span class="keyword" data-word="scathing" data-phonetic="/ˈskeɪðɪŋ/" data-pos="adj." data-def="严厉批评的" data-def-en="severely critical">scathing</span> letter that said the level of military spending proposed by Sir Keir "falls well short" of what's needed to protect the country.</span></p>
+        <p class="cn">此前，希利在一封措辞尖锐的信中辞职，称基尔爵士提出的军费开支水平“远低于”保护国家所需。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Dan Jarvis, the security minister and a former British Army officer, was appointed to replace Healey in the cabinet role on Thursday evening.</span></p>
+        <p class="cn">安全部长、前英国陆军军官丹·贾维斯于周四晚被任命接替希利的内阁职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Sir Keir has yet to respond to Carns' exit.</span> <span class="sentence" data-sentence-index="5">In his response to Healey's resignation, the prime minister said he was "proud of our record on funding", adding the defence funding plan "will provide the resources our military needs to keep us safe".</span></p>
+        <p class="cn">基尔爵士尚未对卡恩斯的离职作出回应。在对希利辞职的回应中，首相表示他“为我们在资金方面的记录感到自豪”，并补充说国防资金计划“将提供我们的军队保护我们安全所需的资源”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Only an hour or so before his resignation, Carns had suggested he was willing to wait until the DIP was finalised before considering his position in government.</span></p>
+        <p class="cn">就在辞职前大约一小时，卡恩斯还曾表示他愿意等到国防投资计划最终确定后再考虑自己在政府中的职位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">But shortly after strikingly candid interviews with Sky News and the BBC, he posted his resignation letter to X, writing he could not defend "a level of investment I know to be <span class="keyword" data-word="inadequate" data-phonetic="/ɪnˈædɪkwət/" data-pos="adj." data-def="不充分的" data-def-en="not enough or not good enough">inadequate</span> to the task".</span></p>
+        <p class="cn">但在接受天空新闻和BBC异常坦率的采访后不久，他将辞职信发布到X平台，写道他无法捍卫“一个我知道不足以完成任务的投资水平”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">Labour MP Pamela Nash has also quit as Healey's parliamentary assistant at the Ministry of Defence.</span></p>
+        <p class="cn">工党议员帕梅拉·纳什也已辞去希利在国防部的议会助理职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">In her letter to the prime minister, Nash said "delays and difficulties with securing the necessary funding to progress the defence investment plan has been the latest issue that is damaging to the trust of the public in us".</span></p>
+        <p class="cn">在给首相的信中，纳什表示“在确保国防投资计划所需资金方面的延误和困难是损害公众对我们信任的最新问题”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">The BBC understands Healey had asked other defence ministers to remain in post.</span></p>
+        <p class="cn">BBC了解到希利曾要求其他国防部长留任。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The resignations have left the government <span class="keyword" data-word="reeling" data-phonetic="/ˈriːlɪŋ/" data-pos="adj." data-def="震惊的，混乱的" data-def-en="feeling shocked or confused">reeling</span> and have further sapped the authority of Sir Keir, whose long-term future in Downing Street was already in doubt.</span></p>
+        <p class="cn">这些辞职事件让政府措手不及，并进一步削弱了基尔爵士的权威，他在唐宁街的长期前景本已存疑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Healey's decision to quit is a particularly big <span class="keyword" data-word="blow" data-phonetic="/bləʊ/" data-pos="n." data-def="打击" data-def-en="a shock or disappointment">blow</span> to Sir Keir, given the former defence secretary was one of the prime minister's most loyal cabinet allies.</span></p>
+        <p class="cn">希利辞职的决定对基尔爵士尤其沉重，因为这位前国防大臣是首相在内阁中最忠诚的盟友之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">It also comes a week before a crucial by-election in which Labour candidate Andy Burnham is seeking a return to Westminster to enable him to challenge Sir Keir for the premiership.</span></p>
+        <p class="cn">此事发生在一场关键补选前一周，工党候选人安迪·伯纳姆正寻求重返威斯敏斯特，以便挑战基尔爵士的首相职位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Healey is the second cabinet minister to <span class="keyword" data-word="resign" data-phonetic="/rɪˈzaɪn/" data-pos="v." data-def="辞职" data-def-en="to give up a job or position">resign</span> from Sir Keir's government in recent weeks, after Wes Streeting quit as health secretary having "lost confidence" in the PM's leadership.</span></p>
+        <p class="cn">希利是近几周内第二位从基尔爵士政府辞职的内阁大臣，此前卫生大臣韦斯·斯特里廷因“对首相的领导失去信心”而辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">Sir Keir has faced calls to <span class="keyword" data-word="resign" data-phonetic="/rɪˈzaɪn/" data-pos="v." data-def="辞职" data-def-en="to give up a job or position">resign</span> within his own party following a poor set of election results in England, Scotland and Wales last month, although he has told supporters he will stand in any Labour leadership contest.</span></p>
+        <p class="cn">在上个月英格兰、苏格兰和威尔士的一系列糟糕选举结果后，基尔爵士面临党内辞职呼声，尽管他告诉支持者自己将参加任何工党领导权竞争。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">His new defence secretary Jarvis now faces the <span class="keyword" data-word="daunting" data-phonetic="/ˈdɔːntɪŋ/" data-pos="adj." data-def="令人畏惧的" data-def-en="making you feel slightly frightened or worried about your ability to achieve something">daunting</span> task of helping Sir Keir finalise a defence investment plan that his predecessor had said "could make the country less safe" in its current form.</span></p>
+        <p class="cn">他的新任国防大臣贾维斯现在面临艰巨任务，即帮助基尔爵士最终确定国防投资计划，而该计划的前任者曾表示其当前形式“可能使国家更不安全”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Announcing Jarvis as his new defence secretary, Sir Keir said "we will give our armed forces the capabilities they need to defend Britain and keep our nation secure".</span></p>
+        <p class="cn">在宣布贾维斯为新任国防大臣时，基尔爵士表示“我们将赋予军队保卫英国和维护国家安全所需的能力”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Last year's Strategic Defence Review (SDR) outlined a shift towards "warfighting readiness" to deter threats and pledged billions in extra spending for additional ammunition, next-generation fast jets, drones, and new attack submarines.</span></p>
+        <p class="cn">去年的战略防务审查概述了向“作战准备”转变以威慑威胁，并承诺额外支出数十亿用于额外弹药、下一代高速喷气机、无人机和新型攻击潜艇。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">The DIP is supposed to set out how this defence spending will be funded.</span></p>
+        <p class="cn">国防投资计划本应说明如何为这些国防开支提供资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">But internal <span class="keyword" data-word="wrangling" data-phonetic="/ˈræŋɡlɪŋ/" data-pos="n." data-def="争论，争吵" data-def-en="a long and complicated argument">wrangling</span> over defence spending has been rumbling on for months following multiple delays to the DIP, which was originally due last autumn.</span></p>
+        <p class="cn">但围绕国防开支的内部争论已持续数月，因为国防投资计划多次延迟，该计划原定于去年秋季公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">The issue has come to a head in the run-up to a summit of the Nato military alliance in Turkey next month, which the prime minister had set as a public deadline to announce the blueprint.</span></p>
+        <p class="cn">这一问题在下月北约军事联盟峰会前夕达到顶点，首相曾将该峰会设定为宣布蓝图的公开截止日期。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Reports have suggested the government was preparing to announce a £13.5bn funding increase for the Ministry of Defence (MoD) over the next four years, less than the extra £28bn requested by the department.</span></p>
+        <p class="cn">报道称，政府准备在未来四年内为国防部增加135亿英镑的资金，低于该部门要求的额外280亿英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">In his letter, Healey expressed concern that the DIP financial settlement, which he received on Monday, was "backloaded" when the "pressure of operations and imperative to speed up readiness to fight is in the first two years".</span></p>
+        <p class="cn">希利在信中表达了对国防投资计划财务结算的担忧，他于周一收到该结算，称其“后置”，而“行动压力和提高战备状态的紧迫性在前两年”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">He said the prime minister had been "unable" and the Treasury "unwilling" to "commit the resources that the nation needs to defend the country at this time of rising threats".</span></p>
+        <p class="cn">他表示，首相“无法”且财政部“不愿”“在这个威胁日益加剧的时刻，为国家保卫国家所需的资源做出承诺”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">But in a letter responding to Healey, Sir Keir insisted the DIP would provide "the resources our military needs to keep us safe and the clarity the British defence industry needs to plan".</span></p>
+        <p class="cn">但在给希利的回信中，基尔爵士坚称国防投资计划将提供“我们的军队保护我们安全所需的资源，以及英国国防工业规划所需的清晰度”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">"The increases in spending that underpin this plan will be sustainable and fair," Sir Keir said.</span> <span class="sentence" data-sentence-index="27">"They will mean significant reallocations of funding from across government departments and the right choices to protect our nation."</span></p>
+        <p class="cn">“支撑这一计划的支出增长将是可持续和公平的，”基尔爵士说。“它们将意味着从政府各部门进行重大的资金重新分配，并做出保护我们国家的正确选择。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">He added: "Irresponsible borrowing only puts that at risk.</span> <span class="sentence" data-sentence-index="29">Taking these decisions is never easy."</span></p>
+        <p class="cn">他补充道：“不负责任的借贷只会危及这一点。做出这些决定从来都不容易。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">The government has committed to spending 3.5% of gross domestic product (GDP) – a measure of the size of the economy – on defence by 2035, but is yet to spell out how it will pay for this commitment.</span></p>
+        <p class="cn">政府已承诺到2035年将国内生产总值的3.5%用于国防，但尚未说明如何支付这一承诺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">Sir Keir has said the government is cutting other areas of spending to fund defence.</span></p>
+        <p class="cn">基尔爵士表示，政府正在削减其他领域的开支以资助国防。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">The details of the cuts have not been confirmed, but reports suggest Sir Keir is asking all government departments to trim their capital budgets by 1% to raise £6bn towards defence.</span></p>
+        <p class="cn">削减的细节尚未确认，但报道称基尔爵士要求所有政府部门削减1%的资本预算，以筹集60亿英镑用于国防。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resign</span>
+        <button class="kw-speak-btn" data-word="resign" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzaɪn/ v.</span>
+      </div>
+      <p class="kw-def">辞职</p>
+      <p class="kw-def-en">to give up a job or position</p>
+      <p class="kw-ctx">&ldquo;Al Carns resigned on Thursday evening, writing to Sir Keir to tell him the government's defence investment plan (DIP) was 'neither transformative enough nor sufficiently funded'.&rdquo;</p>
+      <p class="kw-ctx-cn">阿尔·卡恩斯于周四晚辞职，他在给基尔爵士的信中表示，政府的国防投资计划“既不够变革性，也缺乏足够资金”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scathing</span>
+        <button class="kw-speak-btn" data-word="scathing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskeɪðɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">严厉批评的</p>
+      <p class="kw-def-en">severely critical</p>
+      <p class="kw-ctx">&ldquo;It came after Healey resigned in a scathing letter that said the level of military spending proposed by Sir Keir 'falls well short' of what's needed to protect the country.&rdquo;</p>
+      <p class="kw-ctx-cn">此前，希利在一封措辞严厉的信中辞职，称基尔爵士提议的军费开支水平“远未达到”保护国家所需。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inadequate</span>
+        <button class="kw-speak-btn" data-word="inadequate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈædɪkwət/ adj.</span>
+      </div>
+      <p class="kw-def">不充分的</p>
+      <p class="kw-def-en">not enough or not good enough</p>
+      <p class="kw-ctx">&ldquo;But shortly after strikingly candid interviews with Sky News and the BBC, he posted his resignation letter to X, writing he could not defend 'a level of investment I know to be inadequate to the task'.&rdquo;</p>
+      <p class="kw-ctx-cn">但在接受天空新闻和BBC非常坦诚的采访后不久，他在X上发布了辞职信，写道他无法为“一个我知道不足以完成任务的投资水平”辩护。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reeling</span>
+        <button class="kw-speak-btn" data-word="reeling" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈriːlɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">震惊的，混乱的</p>
+      <p class="kw-def-en">feeling shocked or confused</p>
+      <p class="kw-ctx">&ldquo;The resignations have left the government reeling and have further sapped the authority of Sir Keir, whose long-term future in Downing Street was already in doubt.&rdquo;</p>
+      <p class="kw-ctx-cn">这些辞职让政府震惊，并进一步削弱了基尔爵士的权威，他在唐宁街的长期前景本已存疑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sap</span>
+        <button class="kw-speak-btn" data-word="sap" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sæp/ v.</span>
+      </div>
+      <p class="kw-def">削弱</p>
+      <p class="kw-def-en">to gradually weaken or destroy</p>
+      <p class="kw-ctx">&ldquo;The resignations have left the government reeling and have further sapped the authority of Sir Keir, whose long-term future in Downing Street was already in doubt.&rdquo;</p>
+      <p class="kw-ctx-cn">这些辞职让政府震惊，并进一步削弱了基尔爵士的权威，他在唐宁街的长期前景本已存疑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">blow</span>
+        <button class="kw-speak-btn" data-word="blow" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bləʊ/ n.</span>
+      </div>
+      <p class="kw-def">打击</p>
+      <p class="kw-def-en">a shock or disappointment</p>
+      <p class="kw-ctx">&ldquo;Healey's decision to quit is a particularly big blow to Sir Keir, given the former defence secretary was one of the prime minister's most loyal cabinet allies.&rdquo;</p>
+      <p class="kw-ctx-cn">希利辞职的决定对基尔爵士来说是一个特别大的打击，因为这位前国防大臣是首相最忠诚的内阁盟友之一。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">daunting</span>
+        <button class="kw-speak-btn" data-word="daunting" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdɔːntɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人畏惧的</p>
+      <p class="kw-def-en">making you feel slightly frightened or worried about your ability to achieve something</p>
+      <p class="kw-ctx">&ldquo;His new defence secretary Jarvis now faces the daunting task of helping Sir Keir finalise a defence investment plan that his predecessor had said 'could make the country less safe' in its current form.&rdquo;</p>
+      <p class="kw-ctx-cn">他的新任国防大臣贾维斯现在面临一项艰巨的任务：帮助基尔爵士敲定国防投资计划，而他的前任曾表示该计划目前的形式“可能让国家更不安全”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">wrangling</span>
+        <button class="kw-speak-btn" data-word="wrangling" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈræŋɡlɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">争论，争吵</p>
+      <p class="kw-def-en">a long and complicated argument</p>
+      <p class="kw-ctx">&ldquo;But internal wrangling over defence spending has been rumbling on for months following multiple delays to the DIP, which was originally due last autumn.&rdquo;</p>
+      <p class="kw-ctx-cn">但围绕国防开支的内部争论已经持续了数月，因为国防投资计划多次推迟，该计划原定于去年秋天出台。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The armed forces minister has followed former Defence Secretary John Healey in quitting the government in a dispute with Prime Minister Sir Keir Starmer over funding for the military.", "start_ms": 0, "end_ms": 11904, "paragraph_index": 0}, {"index": 1, "text": "Al Carns resigned on Thursday evening, writing to Sir Keir to tell him the government's defence investment plan (DIP) was \"neither transformative enough nor sufficiently funded\".", "start_ms": 11904, "end_ms": 24096, "paragraph_index": 1}, {"index": 2, "text": "It came after Healey resigned in a scathing letter that said the level of military spending proposed by Sir Keir \"falls well short\" of what's needed to protect the country.", "start_ms": 24096, "end_ms": 34776, "paragraph_index": 2}, {"index": 3, "text": "Dan Jarvis, the security minister and a former British Army officer, was appointed to replace Healey in the cabinet role on Thursday evening.", "start_ms": 34776, "end_ms": 44904, "paragraph_index": 3}, {"index": 4, "text": "Sir Keir has yet to respond to Carns' exit.", "start_ms": 44904, "end_ms": 49104, "paragraph_index": 4}, {"index": 5, "text": "In his response to Healey's resignation, the prime minister said he was \"proud of our record on funding\", adding the defence funding plan \"will provide the resources our military needs to keep us safe\".", "start_ms": 49104, "end_ms": 62256, "paragraph_index": 4}, {"index": 6, "text": "Only an hour or so before his resignation, Carns had suggested he was willing to wait until the DIP was finalised before considering his position in government.", "start_ms": 62256, "end_ms": 73056, "paragraph_index": 5}, {"index": 7, "text": "But shortly after strikingly candid interviews with Sky News and the BBC, he posted his resignation letter to X, writing he could not defend \"a level of investment I know to be inadequate to the task\".", "start_ms": 73056, "end_ms": 87192, "paragraph_index": 6}, {"index": 8, "text": "Labour MP Pamela Nash has also quit as Healey's parliamentary assistant at the Ministry of Defence.", "start_ms": 87192, "end_ms": 94776, "paragraph_index": 7}, {"index": 9, "text": "In her letter to the prime minister, Nash said \"delays and difficulties with securing the necessary funding to progress the defence investment plan has been the latest issue that is damaging to the trust of the public in us\".", "start_ms": 94776, "end_ms": 108504, "paragraph_index": 8}, {"index": 10, "text": "The BBC understands Healey had asked other defence ministers to remain in post.", "start_ms": 108504, "end_ms": 114792, "paragraph_index": 9}, {"index": 11, "text": "The resignations have left the government reeling and have further sapped the authority of Sir Keir, whose long-term future in Downing Street was already in doubt.", "start_ms": 114792, "end_ms": 125064, "paragraph_index": 10}, {"index": 12, "text": "Healey's decision to quit is a particularly big blow to Sir Keir, given the former defence secretary was one of the prime minister's most loyal cabinet allies.", "start_ms": 125064, "end_ms": 136008, "paragraph_index": 11}, {"index": 13, "text": "It also comes a week before a crucial by-election in which Labour candidate Andy Burnham is seeking a return to Westminster to enable him to challenge Sir Keir for the premiership.", "start_ms": 136008, "end_ms": 147528, "paragraph_index": 12}, {"index": 14, "text": "Healey is the second cabinet minister to resign from Sir Keir's government in recent weeks, after Wes Streeting quit as health secretary having \"lost confidence\" in the PM's leadership.", "start_ms": 147528, "end_ms": 159984, "paragraph_index": 13}, {"index": 15, "text": "Sir Keir has faced calls to resign within his own party following a poor set of election results in England, Scotland and Wales last month, although he has told supporters he will stand in any Labour leadership contest.", "start_ms": 159984, "end_ms": 174888, "paragraph_index": 14}, {"index": 16, "text": "His new defence secretary Jarvis now faces the daunting task of helping Sir Keir finalise a defence investment plan that his predecessor had said \"could make the country less safe\" in its current form.", "start_ms": 174888, "end_ms": 188136, "paragraph_index": 15}, {"index": 17, "text": "Announcing Jarvis as his new defence secretary, Sir Keir said \"we will give our armed forces the capabilities they need to defend Britain and keep our nation secure\".", "start_ms": 188136, "end_ms": 199224, "paragraph_index": 16}, {"index": 18, "text": "Last year's Strategic Defence Review (SDR) outlined a shift towards \"warfighting readiness\" to deter threats and pledged billions in extra spending for additional ammunition, next-generation fast jets, drones, and new attack submarines.", "start_ms": 199224, "end_ms": 216168, "paragraph_index": 17}, {"index": 19, "text": "The DIP is supposed to set out how this defence spending will be funded.", "start_ms": 216168, "end_ms": 221544, "paragraph_index": 18}, {"index": 20, "text": "But internal wrangling over defence spending has been rumbling on for months following multiple delays to the DIP, which was originally due last autumn.", "start_ms": 221544, "end_ms": 231600, "paragraph_index": 19}, {"index": 21, "text": "The issue has come to a head in the run-up to a summit of the Nato military alliance in Turkey next month, which the prime minister had set as a public deadline to announce the blueprint.", "start_ms": 231600, "end_ms": 243456, "paragraph_index": 20}, {"index": 22, "text": "Reports have suggested the government was preparing to announce a \u00a313.5bn funding increase for the Ministry of Defence (MoD) over the next four years, less than the extra \u00a328bn requested by the department.", "start_ms": 243456, "end_ms": 259704, "paragraph_index": 21}, {"index": 23, "text": "In his letter, Healey expressed concern that the DIP financial settlement, which he received on Monday, was \"backloaded\" when the \"pressure of operations and imperative to speed up readiness to fight is in the first two years\".", "start_ms": 259704, "end_ms": 273960, "paragraph_index": 22}, {"index": 24, "text": "He said the prime minister had been \"unable\" and the Treasury \"unwilling\" to \"commit the resources that the nation needs to defend the country at this time of rising threats\".", "start_ms": 273960, "end_ms": 284352, "paragraph_index": 23}, {"index": 25, "text": "But in a letter responding to Healey, Sir Keir insisted the DIP would provide \"the resources our military needs to keep us safe and the clarity the British defence industry needs to plan\".", "start_ms": 284352, "end_ms": 296496, "paragraph_index": 24}, {"index": 26, "text": "\"The increases in spending that underpin this plan will be sustainable and fair,\" Sir Keir said.", "start_ms": 296496, "end_ms": 303384, "paragraph_index": 25}, {"index": 27, "text": "\"They will mean significant reallocations of funding from across government departments and the right choices to protect our nation.\"", "start_ms": 303384, "end_ms": 311952, "paragraph_index": 25}, {"index": 28, "text": "He added: \"Irresponsible borrowing only puts that at risk.", "start_ms": 311952, "end_ms": 316896, "paragraph_index": 26}, {"index": 29, "text": "Taking these decisions is never easy.\"", "start_ms": 316896, "end_ms": 320352, "paragraph_index": 26}, {"index": 30, "text": "The government has committed to spending 3.5% of gross domestic product (GDP) \u2013 a measure of the size of the economy \u2013 on defence by 2035, but is yet to spell out how it will pay for this commitment.", "start_ms": 320352, "end_ms": 335616, "paragraph_index": 27}, {"index": 31, "text": "Sir Keir has said the government is cutting other areas of spending to fund defence.", "start_ms": 335616, "end_ms": 341760, "paragraph_index": 28}, {"index": 32, "text": "The details of the cuts have not been confirmed, but reports suggest Sir Keir is asking all government departments to trim their capital budgets by 1% to raise \u00a36bn towards defence.", "start_ms": 341760, "end_ms": 355608, "paragraph_index": 29}], "total_duration_ms": 355608};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "of": "的", "defence": "国防", "sir": "爵士", "keir": "基尔", "and": "和", "has": "有", "was": "是", "is": "是", "government": "政府", "his": "他的", "he": "他", "minister": "部长", "said": "说", "healey": "希利", "that": "那个", "spending": "支出", "will": "将", "prime": "首相", "funding": "资金", "for": "为了", "on": "在", "plan": "计划", "our": "我们的", "secretary": "秘书", "military": "军事", "letter": "信件", "had": "有", "but": "但是", "by": "被", "needs": "需要", "as": "作为", "been": "已经", "have": "有", "which": "哪个", "this": "这个", "former": "前任", "with": "与", "over": "超过", "it": "它", "after": "之后", "country": "国家", "jarvis": "贾维斯", "cabinet": "内阁", "resignation": "辞职", "keep": "保持", "us": "我们", "safe": "安全", "before": "之前", "defend": "辩护", "be": "是", "labour": "工党", "quit": "辞职", "at": "在", "set": "设定", "last": "最后", "new": "新的", "nation": "国家", "armed": "武装的", "forces": "力量", "resigned": "辞职的", "thursday": "星期四", "evening": "晚上", "writing": "写作", "him": "他", "level": "水平", "protect": "保护", "british": "英国的", "yet": "尚未", "provide": "提供", "only": "只有", "suggested": "建议", "bbc": "英国广播公司", "could": "可能", "not": "不", "also": "也", "ministry": "外交部", "delays": "延误", "issue": "问题", "public": "公众", "other": "其他", "from": "来自", "leadership": "领导力", "following": "随后", "month": "月份", "less": "更少", "they": "它们", "towards": "对待", "threats": "威胁", "extra": "额外的", "out": "出来", "how": "如何", "next": "下一个", "announce": "宣布", "reports": "报道", "years": "多年", "followed": "遵循", "john": "约翰", "starmer": "斯塔默", "al": "阿尔", "tell": "告诉", "government's": "政府的", "neither": "双方都不", "enough": "足够", "nor": "也不", "sufficiently": "足够地", "came": "到来", "proposed": "提议的", "falls": "倒下", "well": "好", "short": "短暂的", "what's": "什么是", "needed": "需要", "dan": "丹", "security": "安全", "army": "军队", "officer": "警官", "appointed": "任命", "replace": "取代", "role": "角色", "respond": "回应", "exit": "退出", "response": "回应", "record": "记录", "adding": "补充说", "an": "一个", "or": "或者", "so": "所以", "willing": "愿意的", "wait": "等待", "until": "直到", "considering": "考虑", "position": "立场", "shortly": "不久", "interviews": "采访", "sky": "天空", "news": "新闻", "posted": "发布", "know": "知道", "mp": "议员", "parliamentary": "议会", "assistant": "助理", "her": "她的", "difficulties": "困难", "securing": "确保", "necessary": "必要的", "progress": "进展", "latest": "最新的", "damaging": "损坏", "trust": "信任", "understands": "理解", "asked": "询问", "ministers": "部长", "remain": "仍然", "post": "职位", "resignations": "辞职", "left": "离开", "further": "进一步的", "authority": "权威", "whose": "谁的", "long-term": "长期的", "future": "未来", "downing": "唐宁", "street": "街", "already": "已经", "doubt": "怀疑", "decision": "决定", "particularly": "尤其", "big": "大的", "given": "给定", "one": "一个", "minister's": "部长的", "most": "最", "loyal": "忠诚的", "allies": "盟友", "comes": "到来", "week": "周", "crucial": "关键的", "by-election": "补选", "candidate": "候选人", "andy": "安迪", "burnham": "伯纳姆", "seeking": "寻求", "return": "返回", "westminster": "威斯敏斯特", "enable": "使能够", "challenge": "挑战", "premiership": "首相任期", "second": "第二", "keir's": "基尔的", "recent": "最近", "weeks": "周", "wes": "我们", "streeting": "街头活动", "health": "健康", "having": "拥有", "lost": "失去", "confidence": "信任", "pm's": "首相的", "faced": "面对", "calls": "呼吁", "within": "在内部", "own": "自己", "party": "政党", "poor": "糟糕的", "election": "选举", "results": "结果", "england": "英格兰", "scotland": "苏格兰", "wales": "威尔士", "although": "虽然", "told": "告诉", "supporters": "支持者", "stand": "立场", "any": "任何", "contest": "竞争", "now": "现在", "faces": "面临", "helping": "帮助", "make": "使", "its": "它的", "current": "当前的", "form": "形成", "announcing": "宣布", "we": "我们", "give": "提供", "capabilities": "能力", "need": "需要", "britain": "英国", "secure": "安全的", "strategic": "战略的", "review": "审查", "shift": "转移", "deter": "威慑", "pledged": "承诺", "additional": "额外的", "fast": "快速的", "drones": "无人机", "attack": "袭击", "supposed": "应该", "internal": "内部的", "months": "月", "multiple": "多条", "originally": "最初", "due": "应得", "autumn": "秋天", "come": "到来", "head": "前往", "summit": "巅峰", "nato": "北约", "alliance": "联盟", "deadline": "截止日期", "preparing": "准备", "increase": "增加", "mod": "国防部", "four": "四", "than": "比", "requested": "要求", "department": "部门", "expressed": "表达", "concern": "关切", "financial": "金融的", "settlement": "解决", "received": "受到", "monday": "星期一", "when": "当", "pressure": "压力", "operations": "行动", "speed": "速度", "up": "向上", "fight": "斗争", "first": "第一轮", "two": "两个", "unable": "无法", "treasury": "财政部", "commit": "犯下", "time": "时间", "rising": "上升的", "responding": "回应", "insisted": "坚持", "would": "将", "industry": "行业", "mean": "意味着", "significant": "重大", "across": "跨越", "right": "正确", "added": "补充", "irresponsible": "不负责任的", "puts": "使处于", "risk": "风险", "taking": "采取", "these": "这些", "decisions": "决定", "never": "从未", "committed": "承诺的", "domestic": "国内的", "product": "产品", "gdp": "国内生产总值", "size": "大小", "economy": "经济", "spell": "一段时间", "pay": "支付", "commitment": "承诺", "areas": "区域", "fund": "资金", "details": "细节", "confirmed": "确认", "suggest": "表明", "asking": "询问", "all": "所有", "their": "他们的", "capital": "资本", "raise": "提高", "dip": "下降", "investment": "投资", "carns": "卡恩斯", "healey's": "希利的", "resources": "资源", "funded": "资助的", "task": "任务", "nash": "纳什", "readiness": "战备状态", "departments": "部门", "quitting": "退出", "dispute": "争端", "transformative": "变革性的", "proud": "自豪的", "hour": "时刻", "finalised": "最终确定", "strikingly": "显著地", "candid": "坦诚的", "pamela": "帕梅拉", "sapped": "削弱", "finalise": "最终确定", "predecessor": "前任", "year's": "今年的", "sdr": "特别提款权", "outlined": "概述", "warfighting": "作战", "billions": "数十亿", "ammunition": "弹药", "next-generation": "下一代", "jets": "喷气式飞机", "submarines": "潜艇", "rumbling": "隆隆声", "run-up": "前期", "turkey": "土耳其", "blueprint": "蓝图", "backloaded": "后置的", "imperative": "必要的", "unwilling": "不愿意的", "clarity": "清晰度", "increases": "增加", "underpin": "支撑", "sustainable": "可持续的", "fair": "公平的", "reallocations": "重新分配", "choices": "选择", "borrowing": "借贷", "easy": "容易的", "gross": "总的", "measure": "措施", "cutting": "削减", "cuts": "削减", "trim": "削减", "budgets": "预算"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
