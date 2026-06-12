@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-12</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-12</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/f94f/live/233c68e0-66a3-11f1-80bb-fb4d08542828.jpg" alt="Elon Musk becomes world's first trillionaire as SpaceX soars in stock market debut" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Elon Musk becomes world's first trillionaire as SpaceX soars in stock market debut</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c4gypy3wwl7o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-12.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Elon Musk on Friday became the world's first <span class="keyword" data-word="trillionaire" data-phonetic="/trɪl.jəˈneər/" data-pos="n." data-def="万亿富翁" data-def-en="A person whose wealth is at least one trillion dollars.">trillionaire</span> after shares in his SpaceX rocket company soared during the biggest-ever stock market <span class="keyword" data-word="debut" data-phonetic="/ˈdeɪbjuː/" data-pos="n." data-def="首次亮相，首次上市" data-def-en="The first public appearance or performance of something, such as a company's stock on a market.">debut</span>.</span></p>
+        <p class="cn">周五，埃隆·马斯克（Elon Musk）成为全球首位万亿富翁，其太空探索技术公司（SpaceX）的股价在史上最大规模首次公开募股（IPO）中飙升。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The Tesla and SpaceX founder comfortably <span class="keyword" data-word="cemented" data-phonetic="/sɪˈmentɪd/" data-pos="v." data-def="巩固，加强" data-def-en="To make something such as an agreement or position stronger or more definite.">cemented</span> his status as the world's richest man, with his total net worth standing at $1.11tn (£828bn) according to the Bloomberg rich list.</span></p>
+        <p class="cn">这位特斯拉（Tesla）和SpaceX的创始人稳居世界首富宝座，根据彭博亿万富豪指数，其净资产总额达到1.11万亿美元（约合8280亿英镑）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">It came as the rocket, telecommunications and artificial intelligence (AI) company listed on the Nasdaq stock exchange with a value of $2.2tn.</span></p>
+        <p class="cn">这家火箭、电信和人工智能（AI）公司在纳斯达克（Nasdaq）上市，估值达2.2万亿美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The company said its shares would be offered at $135 each, but trading opened at $150 and briefly reached $176.50 in a show of investor enthusiasm for potential business related to space and companies associated with Musk.</span></p>
+        <p class="cn">该公司表示，其股票发行价为每股135美元，但开盘价为150美元，并一度触及176.50美元，显示出投资者对与太空相关的潜在业务以及与马斯克关联公司的热情。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">SpaceX shares closed on Friday at about $161.</span></p>
+        <p class="cn">SpaceX股价周五收盘于约161美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The initial public offering (IPO) of SpaceX raised $75bn from investors and <span class="keyword" data-word="underwriters" data-phonetic="/ˈʌndəraɪtəz/" data-pos="n." data-def="承销商" data-def-en="Financial institutions that guarantee the sale of a company's shares in an IPO.">underwriters</span> of the deal before shares of the company hit the open stock market on Friday.</span></p>
+        <p class="cn">SpaceX的IPO在股票公开上市前，从投资者和承销商处筹集了750亿美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Musk's 42% ownership stake in SpaceX gives him essentially <span class="keyword" data-word="unilateral" data-phonetic="/ˌjuːnɪˈlætərəl/" data-pos="adj." data-def="单方面的，一方的" data-def-en="Done or decided by only one person or group, without agreement from others.">unilateral</span> control over everything it does.</span> <span class="sentence" data-sentence-index="7">He can spend the money being invested however he likes.</span></p>
+        <p class="cn">马斯克持有SpaceX 42%的股份，这赋予他对公司一切事务的几乎单方面控制权。他可以按自己的意愿支配投资资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">According to Bloomberg, his shares in SpaceX were worth $767.1bn at close of trade, and he has another $53.8 in SpaceX options.</span> <span class="sentence" data-sentence-index="9">He also has $168bn in Tesla shares, and a further $116.4bn in Tesla options.</span></p>
+        <p class="cn">据彭博社数据，截至收盘，他持有的SpaceX股票价值7671亿美元，另有538亿美元的SpaceX期权。他还持有1680亿美元的特斯拉股票，以及1164亿美元的特斯拉期权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Musk's status as the world's first <span class="keyword" data-word="trillionaire" data-phonetic="/trɪl.jəˈneər/" data-pos="n." data-def="万亿富翁" data-def-en="A person whose wealth is at least one trillion dollars.">trillionaire</span> immediately sparked debate about wealth inequality.</span> <span class="sentence" data-sentence-index="11">His wealth is now similar to the entire economic output of Poland or Switzerland.</span></p>
+        <p class="cn">马斯克成为全球首位万亿富翁立即引发了关于财富不平等的讨论。他的财富现在相当于波兰或瑞士整个经济产出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">Such unheard of wealth has already turned Musk into a powerful and <span class="keyword" data-word="divisive" data-phonetic="/dɪˈvaɪsɪv/" data-pos="adj." data-def="引起分歧的，分裂的" data-def-en="Causing disagreement or strong differences of opinion between people.">divisive</span> figure in global politics.</span></p>
+        <p class="cn">这种闻所未闻的财富已使马斯克成为全球政治中一个强大且引发分歧的人物。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">He gave hundreds of millions of dollars to the re-election campaign of US President Donald Trump after criticising the country's leadership, and for several months last year, Musk led the Department for Government Efficiency (Doge).</span></p>
+        <p class="cn">在批评美国领导层后，他向美国总统唐纳德·特朗普（Donald Trump）的连任竞选捐赠了数亿美元，并在去年几个月内领导了政府效率部（Doge）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">Through drastic cuts to government spending, Musk was responsible for the closure of the US Agency for International Development (USAID).</span></p>
+        <p class="cn">通过大幅削减政府开支，马斯克导致了美国国际开发署（USAID）的关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Such cuts could cause more than 14 million additional deaths by 2030, according to a warning published by researchers in the Lancet medical journal.</span></p>
+        <p class="cn">根据《柳叶刀》医学期刊研究人员发布的警告，此类削减可能导致到2030年新增超过1400万例死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">He has also criticised leadership in the UK and elsewhere, often on topics of immigration and promoting of racial divisions.</span></p>
+        <p class="cn">他还批评了英国及其他地方的领导层，经常涉及移民和种族分裂话题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">Musk has repeatedly clashed with UK Prime Minister Sir Keir Starmer, including over the murder of 18-year-old British student Henry Nowak.</span></p>
+        <p class="cn">马斯克多次与英国首相基尔·斯塔默爵士（Sir Keir Starmer）发生冲突，包括围绕18岁英国学生亨利·诺瓦克（Henry Nowak）遇害事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">Democratic US senators Bernie Sanders and Elizabeth Warren were among a slew of politicians to <span class="keyword" data-word="condemn" data-phonetic="/kənˈdem/" data-pos="v." data-def="谴责，指责" data-def-en="To express strong disapproval of something or someone, often publicly.">condemn</span> the <span class="keyword" data-word="trillionaire" data-phonetic="/trɪl.jəˈneər/" data-pos="n." data-def="万亿富翁" data-def-en="A person whose wealth is at least one trillion dollars.">trillionaire</span> milestone.</span> <span class="sentence" data-sentence-index="19">Warren said it should be a "wake up call" and argued it underlines the need for wealth taxes.</span></p>
+        <p class="cn">美国民主党参议员伯尼·桑德斯（Bernie Sanders）和伊丽莎白·沃伦（Elizabeth Warren）等众多政界人士谴责了这一万亿富翁里程碑。沃伦表示，这应是一个“警钟”，并强调这凸显了征收财富税的必要性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">However, Musk is a <span class="keyword" data-word="trillionaire" data-phonetic="/trɪl.jəˈneər/" data-pos="n." data-def="万亿富翁" data-def-en="A person whose wealth is at least one trillion dollars.">trillionaire</span> only on paper, as it is almost entirely tied to the value of his stockholdings in Tesla and now SpaceX.</span> <span class="sentence" data-sentence-index="21">He is unable to sell any of his SpaceX stock for at least a year.</span></p>
+        <p class="cn">然而，马斯克只是纸面上的万亿富翁，因为他的财富几乎完全与他在特斯拉和现在SpaceX的股票价值挂钩。他至少在一年内无法出售任何SpaceX股票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">SpaceX's public listing is also expected to have made millionaires of more than 4,400 of its current and former staff through the shares in the company they had been given as part of their pay.</span></p>
+        <p class="cn">SpaceX的公开上市预计也将使其超过4400名现任和前任员工成为百万富翁，因为他们获得了公司股票作为薪酬的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="23">SpaceX's <span class="keyword" data-word="valuation" data-phonetic="/ˌvæljuˈeɪʃən/" data-pos="n." data-def="估值，估价" data-def-en="The process of estimating the value of something, especially a company or asset.">valuation</span> is largely based on optimism about its potential future earnings, as opposed to financial results it has demonstrated so far.</span></p>
+        <p class="cn">SpaceX的估值主要基于对其未来潜在盈利的乐观预期，而非其迄今已展示的财务业绩。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="24">It is currently not profitable, meaning it loses more money from its operations than it makes.</span></p>
+        <p class="cn">该公司目前尚未盈利，意味着其运营亏损大于盈利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="25">The company lost more than $9bn in 2025 and 2026 so far, according to its financial filings, due to its huge spending on AI and other infrastructure investments.</span></p>
+        <p class="cn">根据其财务文件，由于在AI和其他基础设施投资上的巨额支出，该公司在2025年和2026年迄今已亏损超过90亿美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="26">The biggest focus of its business is the manufacture and launch of rockets with reusable parts.</span></p>
+        <p class="cn">其业务的最大重点是制造和发射带有可重复使用部件的火箭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="27">SpaceX also manufactures and launches Starlink internet satellites, and through this year's acquisition of xAI , another company Musk owned and operated, SpaceX entered into the AI business, too.</span></p>
+        <p class="cn">SpaceX还制造和发射星链（Starlink）互联网卫星，并通过今年收购xAI（马斯克拥有和运营的另一家公司），进入了AI业务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="28">SpaceX has said it will use the money to "fuel its growth strategy" around rockets, satellites for its growing Starlink internet service, and AI, including speculative plans to build data centres in orbit.</span></p>
+        <p class="cn">SpaceX表示，将利用这笔资金“推动其增长战略”，围绕火箭、为其不断增长的星链互联网服务发射卫星，以及AI（包括在轨道上建设数据中心的投机性计划）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="29">Nancy Tengler, who heads Laffer Tengler Investments and put in an order to buy shares of SpaceX, called the company's AI business a "cash incinerator" despite Musk's ambitions for the segment.</span></p>
+        <p class="cn">Laffer Tengler Investments负责人南希·滕格勒（Nancy Tengler）已下单购买SpaceX股票，她称该公司的AI业务是一个“烧钱炉”，尽管马斯克对该领域雄心勃勃。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="30">"It's important to take some of the projections with a grain of salt," Tengler said.</span></p>
+        <p class="cn">滕格勒说：“对一些预测持保留态度很重要。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="31">Nevertheless, she is buying into the company for its long-term potential.</span></p>
+        <p class="cn">尽管如此，她仍因公司的长期潜力而买入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">"Our investment horizon is three, five, and even ten years," Tengler said.</span></p>
+        <p class="cn">滕格勒说：“我们的投资期限是三年、五年，甚至十年。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">She is also expecting SpaceX to merge with Tesla in the next two years, potentially creating a company worth more than either one on its own.</span></p>
+        <p class="cn">她还预计SpaceX将在未来两年内与特斯拉合并，可能创造一家价值超过两者之和的公司。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">But the ambitions of SpaceX are currently more lofty than satellites or mergers.</span></p>
+        <p class="cn">但SpaceX的雄心目前比卫星或合并更为远大。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">As stated in its IPO prospectus, the mission of SpaceX is: "To build the systems and technologies necessary to make life multiplanetary, to understand the true nature of the universe and to extend the light of consciousness to the stars."</span></p>
+        <p class="cn">正如其IPO招股说明书所述，SpaceX的使命是：“建造使生命多行星化所必需的系统和技术，理解宇宙的真实本质，并将意识之光延伸至星辰。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">SpaceX even said that its future growth and success is based in large part on building what it refers to as the "lunar economy."</span></p>
+        <p class="cn">SpaceX甚至表示，其未来的增长和成功在很大程度上基于建设所谓的“月球经济”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">Essentially, such an economy would entail getting people and cargo to the moon and Mars, something that would need to be a regular occurrence for a true economy to develop around it.</span></p>
+        <p class="cn">本质上，这种经济将涉及将人员和货物运送到月球和火星，这需要成为常态，才能围绕其发展出真正的经济。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">SpaceX admits that it is unsure such a thing will ever succeed.</span></p>
+        <p class="cn">SpaceX承认不确定这样的事情能否成功。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">"Many of our initiatives… involve significant technical complexity, unproven technologies or technologies that do not exist, and such initiatives may not achieve commercial viability," the company wrote in its prospectus.</span></p>
+        <p class="cn">该公司在招股说明书中写道：“我们的许多举措……涉及显著的技术复杂性、未经证实的技术或不存在的技术，这些举措可能无法实现商业可行性。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">This level of uncertainty did not seem to trouble investors on Friday.</span></p>
+        <p class="cn">这种程度的不确定性似乎并未在周五困扰投资者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">Susannah Streeter, chief investment strategist at asset manager Wealth Club said the share price jump was "indicative of huge interest in Elon Musk's vision".</span></p>
+        <p class="cn">资产管理公司Wealth Club首席投资策略师苏珊娜·斯特里特（Susannah Streeter）表示，股价飙升“表明对埃隆·马斯克愿景的巨大兴趣”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="42">"He has long been reaching for the stars with his extra-terrestrial ambitions, and it appears plenty of investors share his enthusiasm for the future," she said.</span></p>
+        <p class="cn">她说：“他长期以来一直以地外野心触及星辰，似乎许多投资者与他一样对未来充满热情。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="43">But she warned Friday's rally was "being driven as much by hype and scarcity as fundamentals".</span></p>
+        <p class="cn">但她警告称，周五的上涨“既受基本面驱动，也受炒作和稀缺性驱动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="44">While many individual investors were eager to be a part of SpaceX's listing and snap up stock, others had expressed concerns about the number of investors who will be exposed to the company perhaps unintentionally.</span></p>
+        <p class="cn">尽管许多个人投资者渴望参与SpaceX上市并抢购股票，但其他人对可能无意中暴露于该公司的投资者数量表示担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="45">Pension pots and savings accounts often invest in index-linked funds, which buy into the biggest firms and will be affected by expected fluctuations in the company's share price.</span></p>
+        <p class="cn">养老金账户和储蓄账户通常投资于指数挂钩基金，这些基金买入最大型公司，并将受到公司股价预期波动的影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="46">Where the price of SpaceX goes from here will be the biggest concern for such investors.</span></p>
+        <p class="cn">SpaceX股价的后续走势将是这些投资者最关心的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="47">"The question on SpaceX is less about the immediate trading after IPO," said Samel Kerr, who leads equity capital markets research for Mergermarket.</span> <span class="sentence" data-sentence-index="48">"It's more about how the price holds over the longer term."</span></p>
+        <p class="cn">Mergermarket股权资本市场研究主管萨梅尔·克尔（Samel Kerr）表示：“关于SpaceX的问题，与其说是IPO后的即时交易，不如说是价格在长期内如何保持。”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">trillionaire</span>
+        <button class="kw-speak-btn" data-word="trillionaire" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trɪl.jəˈneər/ n.</span>
+      </div>
+      <p class="kw-def">万亿富翁</p>
+      <p class="kw-def-en">A person whose wealth is at least one trillion dollars.</p>
+      <p class="kw-ctx">&ldquo;Elon Musk on Friday became the world's first trillionaire after shares in his SpaceX rocket company soared during the biggest-ever stock market debut.&rdquo;</p>
+      <p class="kw-ctx-cn">埃隆·马斯克上周五成为世界上第一位万亿富翁，此前他的SpaceX火箭公司股票在史上最大规模的股市首次公开募股中飙升。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cemented</span>
+        <button class="kw-speak-btn" data-word="cemented" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sɪˈmentɪd/ v.</span>
+      </div>
+      <p class="kw-def">巩固，加强</p>
+      <p class="kw-def-en">To make something such as an agreement or position stronger or more definite.</p>
+      <p class="kw-ctx">&ldquo;The Tesla and SpaceX founder comfortably cemented his status as the world's richest man, with his total net worth standing at $1.11tn (£828bn) according to the Bloomberg rich list.&rdquo;</p>
+      <p class="kw-ctx-cn">这位特斯拉和SpaceX的创始人轻松巩固了其世界首富的地位，根据彭博富豪榜，他的总净资产为1.11万亿美元（8280亿英镑）。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">debut</span>
+        <button class="kw-speak-btn" data-word="debut" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdeɪbjuː/ n.</span>
+      </div>
+      <p class="kw-def">首次亮相，首次上市</p>
+      <p class="kw-def-en">The first public appearance or performance of something, such as a company's stock on a market.</p>
+      <p class="kw-ctx">&ldquo;Elon Musk on Friday became the world's first trillionaire after shares in his SpaceX rocket company soared during the biggest-ever stock market debut.&rdquo;</p>
+      <p class="kw-ctx-cn">埃隆·马斯克上周五成为世界上第一位万亿富翁，此前他的SpaceX火箭公司股票在史上最大规模的股市首次公开募股中飙升。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">underwriters</span>
+        <button class="kw-speak-btn" data-word="underwriters" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈʌndəraɪtəz/ n.</span>
+      </div>
+      <p class="kw-def">承销商</p>
+      <p class="kw-def-en">Financial institutions that guarantee the sale of a company's shares in an IPO.</p>
+      <p class="kw-ctx">&ldquo;The initial public offering (IPO) of SpaceX raised $75bn from investors and underwriters of the deal before shares of the company hit the open stock market on Friday.&rdquo;</p>
+      <p class="kw-ctx-cn">SpaceX的首次公开募股（IPO）在周五股票公开上市前，从投资者和交易承销商那里筹集了750亿美元。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unilateral</span>
+        <button class="kw-speak-btn" data-word="unilateral" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌjuːnɪˈlætərəl/ adj.</span>
+      </div>
+      <p class="kw-def">单方面的，一方的</p>
+      <p class="kw-def-en">Done or decided by only one person or group, without agreement from others.</p>
+      <p class="kw-ctx">&ldquo;Musk's 42% ownership stake in SpaceX gives him essentially unilateral control over everything it does.&rdquo;</p>
+      <p class="kw-ctx-cn">马斯克持有SpaceX 42%的股份，这基本上赋予了他对公司一切事务的单方面控制权。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">divisive</span>
+        <button class="kw-speak-btn" data-word="divisive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈvaɪsɪv/ adj.</span>
+      </div>
+      <p class="kw-def">引起分歧的，分裂的</p>
+      <p class="kw-def-en">Causing disagreement or strong differences of opinion between people.</p>
+      <p class="kw-ctx">&ldquo;Such unheard of wealth has already turned Musk into a powerful and divisive figure in global politics.&rdquo;</p>
+      <p class="kw-ctx-cn">这种闻所未闻的财富已经使马斯克成为全球政治中一个强大且引起分歧的人物。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">condemn</span>
+        <button class="kw-speak-btn" data-word="condemn" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈdem/ v.</span>
+      </div>
+      <p class="kw-def">谴责，指责</p>
+      <p class="kw-def-en">To express strong disapproval of something or someone, often publicly.</p>
+      <p class="kw-ctx">&ldquo;Democratic US senators Bernie Sanders and Elizabeth Warren were among a slew of politicians to condemn the trillionaire milestone.&rdquo;</p>
+      <p class="kw-ctx-cn">美国民主党参议员伯尼·桑德斯和伊丽莎白·沃伦等一批政界人士谴责了这一万亿富翁里程碑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">valuation</span>
+        <button class="kw-speak-btn" data-word="valuation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌvæljuˈeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">估值，估价</p>
+      <p class="kw-def-en">The process of estimating the value of something, especially a company or asset.</p>
+      <p class="kw-ctx">&ldquo;SpaceX's valuation is largely based on optimism about its potential future earnings, as opposed to financial results it has demonstrated so far.&rdquo;</p>
+      <p class="kw-ctx-cn">SpaceX的估值主要基于对其未来潜在收益的乐观预期，而非其迄今已展示的财务业绩。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Elon Musk on Friday became the world's first trillionaire after shares in his SpaceX rocket company soared during the biggest-ever stock market debut.", "start_ms": 0, "end_ms": 10128, "paragraph_index": 0}, {"index": 1, "text": "The Tesla and SpaceX founder comfortably cemented his status as the world's richest man, with his total net worth standing at $1.11tn (\u00a3828bn) according to the Bloomberg rich list.", "start_ms": 10128, "end_ms": 26136, "paragraph_index": 1}, {"index": 2, "text": "It came as the rocket, telecommunications and artificial intelligence (AI) company listed on the Nasdaq stock exchange with a value of $2.2tn.", "start_ms": 26136, "end_ms": 38472, "paragraph_index": 2}, {"index": 3, "text": "The company said its shares would be offered at $135 each, but trading opened at $150 and briefly reached $176.50 in a show of investor enthusiasm for potential business related to space and companies associated with Musk.", "start_ms": 38472, "end_ms": 57912, "paragraph_index": 3}, {"index": 4, "text": "SpaceX shares closed on Friday at about $161.", "start_ms": 57912, "end_ms": 63720, "paragraph_index": 4}, {"index": 5, "text": "The initial public offering (IPO) of SpaceX raised $75bn from investors and underwriters of the deal before shares of the company hit the open stock market on Friday.", "start_ms": 63720, "end_ms": 76968, "paragraph_index": 5}, {"index": 6, "text": "Musk's 42% ownership stake in SpaceX gives him essentially unilateral control over everything it does.", "start_ms": 76968, "end_ms": 85272, "paragraph_index": 6}, {"index": 7, "text": "He can spend the money being invested however he likes.", "start_ms": 85272, "end_ms": 89592, "paragraph_index": 6}, {"index": 8, "text": "According to Bloomberg, his shares in SpaceX were worth $767.1bn at close of trade, and he has another $53.8 in SpaceX options.", "start_ms": 89592, "end_ms": 103416, "paragraph_index": 7}, {"index": 9, "text": "He also has $168bn in Tesla shares, and a further $116.4bn in Tesla options.", "start_ms": 103416, "end_ms": 114000, "paragraph_index": 7}, {"index": 10, "text": "Musk's status as the world's first trillionaire immediately sparked debate about wealth inequality.", "start_ms": 114000, "end_ms": 120936, "paragraph_index": 8}, {"index": 11, "text": "His wealth is now similar to the entire economic output of Poland or Switzerland.", "start_ms": 120936, "end_ms": 127176, "paragraph_index": 8}, {"index": 12, "text": "Such unheard of wealth has already turned Musk into a powerful and divisive figure in global politics.", "start_ms": 127176, "end_ms": 134688, "paragraph_index": 9}, {"index": 13, "text": "He gave hundreds of millions of dollars to the re-election campaign of US President Donald Trump after criticising the country's leadership, and for several months last year, Musk led the Department for Government Efficiency (Doge).", "start_ms": 134688, "end_ms": 149736, "paragraph_index": 10}, {"index": 14, "text": "Through drastic cuts to government spending, Musk was responsible for the closure of the US Agency for International Development (USAID).", "start_ms": 149736, "end_ms": 160008, "paragraph_index": 11}, {"index": 15, "text": "Such cuts could cause more than 14 million additional deaths by 2030, according to a warning published by researchers in the Lancet medical journal.", "start_ms": 160008, "end_ms": 170568, "paragraph_index": 12}, {"index": 16, "text": "He has also criticised leadership in the UK and elsewhere, often on topics of immigration and promoting of racial divisions.", "start_ms": 170568, "end_ms": 179784, "paragraph_index": 13}, {"index": 17, "text": "Musk has repeatedly clashed with UK Prime Minister Sir Keir Starmer, including over the murder of 18-year-old British student Henry Nowak.", "start_ms": 179784, "end_ms": 190032, "paragraph_index": 14}, {"index": 18, "text": "Democratic US senators Bernie Sanders and Elizabeth Warren were among a slew of politicians to condemn the trillionaire milestone.", "start_ms": 190032, "end_ms": 199152, "paragraph_index": 15}, {"index": 19, "text": "Warren said it should be a \"wake up call\" and argued it underlines the need for wealth taxes.", "start_ms": 199152, "end_ms": 205680, "paragraph_index": 15}, {"index": 20, "text": "However, Musk is a trillionaire only on paper, as it is almost entirely tied to the value of his stockholdings in Tesla and now SpaceX.", "start_ms": 205680, "end_ms": 216072, "paragraph_index": 16}, {"index": 21, "text": "He is unable to sell any of his SpaceX stock for at least a year.", "start_ms": 216072, "end_ms": 221088, "paragraph_index": 16}, {"index": 22, "text": "SpaceX's public listing is also expected to have made millionaires of more than 4,400 of its current and former staff through the shares in the company they had been given as part of their pay.", "start_ms": 221088, "end_ms": 233592, "paragraph_index": 17}, {"index": 23, "text": "SpaceX's valuation is largely based on optimism about its potential future earnings, as opposed to financial results it has demonstrated so far.", "start_ms": 233592, "end_ms": 244704, "paragraph_index": 18}, {"index": 24, "text": "It is currently not profitable, meaning it loses more money from its operations than it makes.", "start_ms": 244704, "end_ms": 251544, "paragraph_index": 19}, {"index": 25, "text": "The company lost more than $9bn in 2025 and 2026 so far, according to its financial filings, due to its huge spending on AI and other infrastructure investments.", "start_ms": 251544, "end_ms": 265392, "paragraph_index": 20}, {"index": 26, "text": "The biggest focus of its business is the manufacture and launch of rockets with reusable parts.", "start_ms": 265392, "end_ms": 272088, "paragraph_index": 21}, {"index": 27, "text": "SpaceX also manufactures and launches Starlink internet satellites, and through this year's acquisition of xAI , another company Musk owned and operated, SpaceX entered into the AI business, too.", "start_ms": 272088, "end_ms": 286848, "paragraph_index": 22}, {"index": 28, "text": "SpaceX has said it will use the money to \"fuel its growth strategy\" around rockets, satellites for its growing Starlink internet service, and AI, including speculative plans to build data centres in orbit.", "start_ms": 286848, "end_ms": 301608, "paragraph_index": 23}, {"index": 29, "text": "Nancy Tengler, who heads Laffer Tengler Investments and put in an order to buy shares of SpaceX, called the company's AI business a \"cash incinerator\" despite Musk's ambitions for the segment.", "start_ms": 301608, "end_ms": 314928, "paragraph_index": 24}, {"index": 30, "text": "\"It's important to take some of the projections with a grain of salt,\" Tengler said.", "start_ms": 314928, "end_ms": 320736, "paragraph_index": 25}, {"index": 31, "text": "Nevertheless, she is buying into the company for its long-term potential.", "start_ms": 320736, "end_ms": 326352, "paragraph_index": 26}, {"index": 32, "text": "\"Our investment horizon is three, five, and even ten years,\" Tengler said.", "start_ms": 326352, "end_ms": 332760, "paragraph_index": 27}, {"index": 33, "text": "She is also expecting SpaceX to merge with Tesla in the next two years, potentially creating a company worth more than either one on its own.", "start_ms": 332760, "end_ms": 342744, "paragraph_index": 28}, {"index": 34, "text": "But the ambitions of SpaceX are currently more lofty than satellites or mergers.", "start_ms": 342744, "end_ms": 348864, "paragraph_index": 29}, {"index": 35, "text": "As stated in its IPO prospectus, the mission of SpaceX is: \"To build the systems and technologies necessary to make life multiplanetary, to understand the true nature of the universe and to extend the light of consciousness to the stars.\"", "start_ms": 348864, "end_ms": 365088, "paragraph_index": 30}, {"index": 36, "text": "SpaceX even said that its future growth and success is based in large part on building what it refers to as the \"lunar economy.\"", "start_ms": 365088, "end_ms": 373920, "paragraph_index": 31}, {"index": 37, "text": "Essentially, such an economy would entail getting people and cargo to the moon and Mars, something that would need to be a regular occurrence for a true economy to develop around it.", "start_ms": 373920, "end_ms": 385752, "paragraph_index": 32}, {"index": 38, "text": "SpaceX admits that it is unsure such a thing will ever succeed.", "start_ms": 385752, "end_ms": 390888, "paragraph_index": 33}, {"index": 39, "text": "\"Many of our initiatives\u2026 involve significant technical complexity, unproven technologies or technologies that do not exist, and such initiatives may not achieve commercial viability,\" the company wrote in its prospectus.", "start_ms": 390888, "end_ms": 406512, "paragraph_index": 34}, {"index": 40, "text": "This level of uncertainty did not seem to trouble investors on Friday.", "start_ms": 406512, "end_ms": 411840, "paragraph_index": 35}, {"index": 41, "text": "Susannah Streeter, chief investment strategist at asset manager Wealth Club said the share price jump was \"indicative of huge interest in Elon Musk's vision\".", "start_ms": 411840, "end_ms": 422664, "paragraph_index": 36}, {"index": 42, "text": "\"He has long been reaching for the stars with his extra-terrestrial ambitions, and it appears plenty of investors share his enthusiasm for the future,\" she said.", "start_ms": 422664, "end_ms": 433344, "paragraph_index": 37}, {"index": 43, "text": "But she warned Friday's rally was \"being driven as much by hype and scarcity as fundamentals\".", "start_ms": 433344, "end_ms": 440016, "paragraph_index": 38}, {"index": 44, "text": "While many individual investors were eager to be a part of SpaceX's listing and snap up stock, others had expressed concerns about the number of investors who will be exposed to the company perhaps unintentionally.", "start_ms": 440016, "end_ms": 453888, "paragraph_index": 39}, {"index": 45, "text": "Pension pots and savings accounts often invest in index-linked funds, which buy into the biggest firms and will be affected by expected fluctuations in the company's share price.", "start_ms": 453888, "end_ms": 466008, "paragraph_index": 40}, {"index": 46, "text": "Where the price of SpaceX goes from here will be the biggest concern for such investors.", "start_ms": 466008, "end_ms": 472152, "paragraph_index": 41}, {"index": 47, "text": "\"The question on SpaceX is less about the immediate trading after IPO,\" said Samel Kerr, who leads equity capital markets research for Mergermarket.", "start_ms": 472152, "end_ms": 483024, "paragraph_index": 42}, {"index": 48, "text": "\"It's more about how the price holds over the longer term.\"", "start_ms": 483024, "end_ms": 487224, "paragraph_index": 42}], "total_duration_ms": 487224};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "in": "在", "for": "为了", "is": "是", "it": "它", "its": "它的", "on": "在", "company": "公司", "as": "作为", "his": "他的", "said": "说", "with": "与", "he": "他", "has": "有", "at": "在", "be": "是", "more": "更多", "about": "关于", "such": "如此", "than": "比", "also": "也", "will": "将", "friday": "星期五", "according": "根据", "business": "事务", "into": "进入", "by": "被", "not": "不", "she": "她", "that": "那个", "price": "价格", "world's": "世界的", "after": "之后", "would": "将", "but": "但是", "potential": "潜在", "from": "来自", "over": "超过", "money": "金钱", "were": "是", "or": "或者", "us": "我们", "through": "通过", "was": "是", "part": "部分", "future": "未来", "biggest": "最大的", "who": "谁", "ambitions": "野心", "economy": "经济", "share": "分享", "first": "第一轮", "market": "市场", "status": "状态", "trading": "交易", "public": "公众", "essentially": "本质上", "being": "正在", "however": "然而", "another": "另一个", "now": "现在", "leadership": "领导力", "year": "年", "government": "政府", "cuts": "削减", "spending": "支出", "uk": "英国", "often": "经常", "including": "包括", "up": "向上", "need": "需要", "expected": "预期", "had": "有", "been": "已经", "based": "基于", "financial": "金融的", "so": "所以", "far": "远", "currently": "目前", "huge": "巨大的", "rockets": "火箭弹", "this": "这个", "growth": "增长", "around": "在...周围", "build": "建立", "an": "一个", "it's": "它是", "our": "我们的", "investment": "投资", "even": "甚至", "years": "多年", "true": "真实", "many": "许多", "became": "成为", "during": "在期间", "man": "男子", "total": "总体的", "net": "球网", "standing": "站立", "rich": "富有的", "list": "名单", "came": "到来", "intelligence": "情报", "listed": "列出", "exchange": "交换", "offered": "提供", "each": "每个", "opened": "开火", "briefly": "短暂地", "reached": "达成", "show": "显示", "related": "相关的", "space": "空间", "companies": "公司", "closed": "关闭", "initial": "最初", "offering": "提供", "raised": "提出的", "deal": "协议", "before": "之前", "hit": "击中", "open": "开放", "ownership": "所有权", "stake": "利害关系", "gives": "给予", "him": "他", "control": "控制", "everything": "一切", "does": "做", "can": "可以", "spend": "花费", "invested": "投入", "close": "密切的", "trade": "贸易", "further": "进一步的", "immediately": "立即", "sparked": "引发", "debate": "辩论", "similar": "类似的", "entire": "整个", "economic": "经济的", "output": "产出", "already": "已经", "turned": "转向", "powerful": "强大的", "figure": "人物", "global": "全球", "politics": "政治", "gave": "给予", "hundreds": "数百", "millions": "数百万", "re-election": "连任", "campaign": "竞选活动", "president": "总统", "donald": "唐纳德", "trump": "特朗普", "criticising": "批评", "country's": "国家的", "several": "数个", "months": "月", "last": "最后", "led": "带领", "department": "部门", "responsible": "负责的", "closure": "关闭", "agency": "机构", "international": "国际", "could": "可能", "cause": "事业", "million": "百万", "additional": "额外的", "deaths": "死亡", "warning": "警告", "published": "发布", "medical": "医疗", "criticised": "批评", "elsewhere": "其他地方", "topics": "话题", "immigration": "移民", "promoting": "宣传", "racial": "种族的", "divisions": "分歧", "repeatedly": "反复地", "clashed": "发生冲突", "prime": "首相", "minister": "部长", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "murder": "谋杀", "year-old": "岁的", "british": "英国的", "student": "学生", "henry": "亨利", "nowak": "诺瓦克", "democratic": "民主的", "elizabeth": "伊丽莎白", "among": "在...之中", "politicians": "政治家", "should": "应该", "wake": "醒来", "call": "呼吁", "argued": "争论", "taxes": "税收", "only": "只有", "paper": "报纸", "almost": "几乎", "entirely": "完全地", "tied": "绑定的", "unable": "无法", "any": "任何", "least": "至少", "have": "有", "made": "做出", "current": "当前的", "former": "前任", "staff": "员工", "they": "它们", "given": "给定", "their": "他们的", "pay": "支付", "largely": "很大程度上", "results": "结果", "demonstrated": "展示", "meaning": "意义", "operations": "行动", "makes": "使得", "lost": "失去", "due": "应得", "other": "其他", "infrastructure": "基础设施", "focus": "重点", "launch": "启动", "parts": "部分", "year's": "今年的", "operated": "运营", "entered": "进入", "too": "太", "use": "使用", "fuel": "动力", "strategy": "策略", "growing": "日益增长的", "service": "服务", "plans": "计划", "data": "数据", "centres": "中心", "heads": "领导", "put": "提出", "order": "命令", "called": "称为", "cash": "现金", "despite": "尽管", "important": "重要", "take": "采取", "some": "一些", "buying": "购买", "long-term": "长期的", "three": "三个", "five": "五", "expecting": "期待", "next": "下一个", "two": "两个", "potentially": "可能地", "creating": "创造", "either": "要么", "one": "一个", "own": "自己", "are": "是", "stated": "陈述", "mission": "使命", "systems": "系统", "necessary": "必要的", "make": "使", "life": "生活", "understand": "理解", "nature": "性质", "extend": "延长", "light": "轻的", "success": "成功", "large": "大的", "building": "建筑物", "what": "什么", "getting": "获得", "people": "人们", "cargo": "货物", "something": "某事", "regular": "定期的", "develop": "发展", "thing": "事情", "ever": "曾经", "significant": "重大", "technical": "技术的", "do": "做", "exist": "存在", "may": "可能", "achieve": "实现", "commercial": "商业", "wrote": "写道", "level": "水平", "uncertainty": "不确定性", "did": "做了", "seem": "似乎", "trouble": "麻烦", "chief": "首席", "manager": "经理", "club": "俱乐部", "interest": "兴趣", "vision": "愿景", "long": "长久", "appears": "似乎", "plenty": "大量", "warned": "警告", "friday's": "周五的", "rally": "集会", "driven": "驱动", "much": "许多", "while": "而", "individual": "个人", "others": "其他", "expressed": "表达", "concerns": "担忧", "number": "数量", "exposed": "暴露", "perhaps": "或许", "accounts": "账户", "invest": "投资", "funds": "资金", "which": "哪个", "affected": "受影响", "where": "那里", "goes": "进行", "here": "这里", "concern": "关切", "question": "问题", "less": "更少", "immediate": "立即的", "capital": "资本", "markets": "市场", "how": "如何", "holds": "持有", "longer": "更长的", "term": "术语", "spacex": "太空探索技术公司", "musk": "马斯克", "shares": "股票", "investors": "投资者", "stock": "股票", "tesla": "特斯拉", "ai": "人工智能", "wealth": "财富", "musk's": "马斯克的", "tengler": "腾格勒", "worth": "价值", "ipo": "首次公开募股", "spacex's": "太空探索技术公司的", "satellites": "卫星", "technologies": "技术", "elon": "埃隆", "rocket": "火箭", "bloomberg": "彭博社", "value": "价值", "enthusiasm": "热情", "options": "期权", "warren": "沃伦", "listing": "上市", "investments": "投资", "starlink": "星链", "internet": "互联网", "buy": "买入", "company's": "公司的", "prospectus": "招股说明书", "stars": "恒星", "initiatives": "倡议", "soared": "飙升", "biggest-ever": "史上最大", "founder": "创始人", "comfortably": "轻松地", "richest": "最富有的", "telecommunications": "电信", "artificial": "人工的", "nasdaq": "纳斯达克", "investor": "投资者", "associated": "相关的", "likes": "喜欢", "inequality": "不平等", "poland": "波兰", "switzerland": "瑞士", "unheard": "闻所未闻的", "dollars": "美元", "efficiency": "效率", "doge": "狗狗币", "drastic": "剧烈的", "development": "发展", "usaid": "美国国际开发署", "researchers": "研究人员", "lancet": "《柳叶刀》", "journal": "期刊", "senators": "参议员", "bernie": "伯尼", "sanders": "桑德斯", "slew": "大量", "milestone": "里程碑", "underlines": "强调", "stockholdings": "持股", "sell": "卖出", "millionaires": "百万富翁", "optimism": "乐观", "earnings": "收益", "opposed": "反对的", "profitable": "盈利的", "loses": "亏损", "filings": "申报文件", "manufacture": "制造", "reusable": "可重复使用的", "manufactures": "制造", "launches": "发射", "acquisition": "收购", "xai": "xAI", "owned": "拥有的", "speculative": "投机性的", "orbit": "轨道", "nancy": "南希", "laffer": "拉弗", "incinerator": "焚烧炉", "segment": "部分", "projections": "预测", "grain": "谷物", "salt": "盐", "nevertheless": "然而", "horizon": "地平线", "ten": "十", "merge": "合并", "lofty": "崇高的", "mergers": "合并", "multiplanetary": "多行星的", "universe": "宇宙", "consciousness": "意识", "refers": "指的是", "lunar": "月球的", "entail": "需要", "moon": "月球", "mars": "火星", "occurrence": "发生", "admits": "承认", "unsure": "不确定", "succeed": "成功", "involve": "涉及", "complexity": "复杂性", "unproven": "未经证实的", "viability": "可行性", "susannah": "苏珊娜", "streeter": "斯特里特", "strategist": "策略师", "asset": "资产", "jump": "跃升", "indicative": "指示性的", "reaching": "达到", "extra-terrestrial": "外星", "hype": "炒作", "scarcity": "稀缺", "fundamentals": "基本面", "eager": "渴望", "snap": "抢购", "unintentionally": "无意中", "pension": "养老金", "pots": "资金池", "savings": "储蓄", "index-linked": "指数挂钩的", "firms": "公司", "fluctuations": "波动", "samel": "萨梅尔", "kerr": "克尔", "leads": "领先", "equity": "股权", "research": "研究", "mergermarket": "并购市场"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
