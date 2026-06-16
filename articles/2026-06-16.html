@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-16</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-16</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/decc/live/d073f060-69cc-11f1-8dbe-5392e973184a.jpg" alt="'It was surreal': British couple describe having warning shots fired near them by Russian warship" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>'It was surreal': British couple describe having warning shots fired near them by Russian warship</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/c20yzm84r7lo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-16.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A British retired couple who were on a yacht which had warning shots fired near it by a Russian warship in the English Channel on Tuesday have described the "<span class="keyword" data-word="surreal" data-phonetic="/səˈriːəl/" data-pos="adj." data-def="超现实的，离奇的" data-def-en="having a dreamlike or unreal quality">surreal</span>" experience to BBC Newsnight.</span></p>
+        <p class="cn">一对英国退休夫妇向BBC《新闻之夜》讲述了他们在英吉利海峡的“超现实”经历——周二，他们乘坐的游艇附近有俄罗斯军舰鸣枪示警。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Jane and Alan Kelvey were sailing 23 miles off the coast of the Isle of Wight on Tuesday morning when they came into close contact with a Russian <span class="keyword" data-word="frigate" data-phonetic="/ˈfrɪɡət/" data-pos="n." data-def="护卫舰" data-def-en="a type of warship">frigate</span>, the Admiral Grigorovich.</span></p>
+        <p class="cn">周二上午，简·凯尔维和阿兰·凯尔维在怀特岛海岸外23英里处航行时，与俄罗斯护卫舰“格里戈罗维奇海军上将号”近距离接触。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The warship fired into the UK-registered yacht's path, in what the Ministry of Defence has described as an "isolated incident" and not linked to the <span class="keyword" data-word="seizure" data-phonetic="/ˈsiːʒər/" data-pos="n." data-def="扣押，没收" data-def-en="the act of taking control of something by force or legal authority">seizure</span> of a Russian shadow fleet tanker in the Channel on Sunday.</span></p>
+        <p class="cn">这艘军舰向这艘英国注册的游艇航向开枪射击，英国国防部称这是一起“孤立事件”，与周日英吉利海峡扣押俄罗斯影子舰队油轮无关。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Jane Kelvey told BBC Newsnight: "[The warship] gave out five blasts on their horn, which means 'have you seen us?'</span></p>
+        <p class="cn">简·凯尔维告诉BBC《新闻之夜》：“（军舰）鸣笛五次，意思是‘你看到我们了吗？’</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">"We immediately turned two degrees to port so they could see we had made a deliberate change of course, which meant we had seen them.</span></p>
+        <p class="cn">“我们立即向左转舵两度，以便他们看到我们有意改变了航向，这意味着我们看到了他们。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">"Then a minute or so later they gave another five blasts on their horn, immediately followed by four to five small arms fire.</span></p>
+        <p class="cn">“大约一分钟后，他们再次鸣笛五次，紧接着开了四到五枪。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"That wasn't aimed at us - it was warning fire that went up in the air, we believe."</span></p>
+        <p class="cn">“我们认为，那不是瞄准我们——是朝天鸣枪示警。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Jane said their yacht, the Bright Future, was "definitely not on a <span class="keyword" data-word="collision" data-phonetic="/kəˈlɪʒən/" data-pos="n." data-def="碰撞，冲突" data-def-en="an accident in which two vehicles or objects hit each other">collision</span> course", adding: "As far as we were concerned, it wasn't an incident until the gunfire started."</span></p>
+        <p class="cn">简说，他们的游艇“光明未来号”“绝对没有处于碰撞航线上”，并补充道：“就我们而言，在枪响之前，这根本不算事件。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Alan Kelvey said the gunfire had been "unnecessary", and the couple said a Royal Navy vessel arrived to check on their welfare shortly afterwards.</span></p>
+        <p class="cn">阿兰·凯尔维说，开枪是“不必要的”，夫妇俩表示，不久后一艘皇家海军舰艇前来确认他们的安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">The couple disputed elements of the Russian Defence Ministry's account, which said the yacht had been on a "dangerous approach" towards the warship.</span></p>
+        <p class="cn">夫妇俩对俄罗斯国防部的部分说法提出异议，俄方称游艇曾“危险接近”军舰。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">The ministry said its crew fired into the yacht's path with rifles after making several attempts to contact it over the radio and after launching warning flares.</span></p>
+        <p class="cn">俄国防部表示，其船员在多次尝试通过无线电联系并发射信号弹后，用步枪向游艇航向开枪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">It also said its sailors had acted in "strict accordance with international shipping regulations", while the MoD said it was investigating the incident.</span></p>
+        <p class="cn">俄方还表示，其水兵的行动“严格遵守国际航运规则”，而英国国防部则表示正在调查此事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">The BBC understands that the small, motor-less yacht had drifted towards the warship in foggy conditions after setting off from the UK.</span></p>
+        <p class="cn">BBC了解到，这艘无动力小游艇从英国出发后，在雾中漂向军舰。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">British officials believe the Admiral Grigorovich was attempting to signal it was drifting rather than being powered by its engines, therefore making it less <span class="keyword" data-word="manoeuvrable" data-phonetic="/məˈnuːvrəbl/" data-pos="adj." data-def="机动灵活的" data-def-en="able to be moved easily and quickly">manoeuvrable</span> - possibly leading its crew to assess it was more vulnerable to a <span class="keyword" data-word="collision" data-phonetic="/kəˈlɪʒən/" data-pos="n." data-def="碰撞，冲突" data-def-en="an accident in which two vehicles or objects hit each other">collision</span>.</span></p>
+        <p class="cn">英国官员认为，“格里戈罗维奇海军上将号”试图表明它正在漂移而非依靠引擎动力，因此机动性较差——可能使其船员评估认为更容易发生碰撞。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">An MoD spokesperson told the BBC: "Following attempts to contact a British vessel in the channel, the Grigorovich fired warning shots.</span> <span class="sentence" data-sentence-index="15">These were not aimed at the vessel and were an attempt to prevent a possible <span class="keyword" data-word="collision" data-phonetic="/kəˈlɪʒən/" data-pos="n." data-def="碰撞，冲突" data-def-en="an accident in which two vehicles or objects hit each other">collision</span>."</span></p>
+        <p class="cn">英国国防部发言人告诉BBC：“在试图联系海峡中的一艘英国船只后，‘格里戈罗维奇号’鸣枪示警。这些枪弹并非瞄准船只，而是试图防止可能的碰撞。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">A boat from HMS Tyne, a British patrol vessel, was sent to the yacht to gather details and check on the safety of the crew.</span></p>
+        <p class="cn">英国巡逻舰“泰恩号”派出小艇前往游艇收集细节并检查船员安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">The incident comes days after Royal Marine Commandos intercepted a Russian shadow fleet tanker carrying sanctioned oil in the Channel on Sunday, in the first operation of its kind carried out by the British military.</span></p>
+        <p class="cn">此事发生前几天，周日皇家海军陆战队突击队员在英吉利海峡拦截了一艘运载受制裁石油的俄罗斯影子舰队油轮，这是英国军方首次执行此类行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Russian warships regularly pass through the Channel in international waters and are routinely monitored by Royal Navy vessels.</span></p>
+        <p class="cn">俄罗斯军舰定期通过英吉利海峡的国际水域，并受到皇家海军舰艇的常规监视。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">The Admiral Grigorovich was being shadowed by the HMS Mersey, as it had been for several days after being spotted off the coast of Brest in France, in what the Royal Navy described as a "routine operation".</span></p>
+        <p class="cn">“格里戈罗维奇海军上将号”此前已被“默西号”跟踪数日，自其在法国布雷斯特海岸附近被发现以来，皇家海军称这是一次“例行行动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">On Tuesday morning, British authorities received reports from the yacht's occupants that the Russian vessel had fired warning shots from around 500 yards (457 metres) away - a relatively near distance by the standards of sea travel.</span></p>
+        <p class="cn">周二上午，英国当局收到游艇乘员报告称，俄罗斯船只从约500码（457米）外鸣枪示警——按海上航行标准，这是一个相对较近的距离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">The incident happened around 20 nautical miles - around 23 standard miles - south of the Isle of Wight, outside of UK territorial waters.</span></p>
+        <p class="cn">事件发生在怀特岛以南约20海里（约23英里）处，位于英国领海之外。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Last week, a Nato source told BBC Verify that the Admiral Grigorovich had been ordered by Moscow to escort shadow fleet vessels through the Channel.</span></p>
+        <p class="cn">上周，一名北约消息人士告诉BBC Verify，“格里戈罗维奇海军上将号”已受莫斯科命令护送影子舰队船只通过海峡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">The <span class="keyword" data-word="frigate" data-phonetic="/ˈfrɪɡət/" data-pos="n." data-def="护卫舰" data-def-en="a type of warship">frigate</span> is understood to have been operating in the area for some time and had been repeatedly re-supplied by a repair vessel.</span></p>
+        <p class="cn">据了解，这艘护卫舰已在该区域活动一段时间，并多次由一艘维修船补给。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Satellite images reviewed by BBC Verify have shown the repair vessel, the PM-82, operating between the Channel and the North Sea in recent months.</span></p>
+        <p class="cn">BBC Verify审查的卫星图像显示，维修船PM-82近几个月来在海峡和北海之间活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Nato officials believe the PM-82 delivered food, water and other supplies to the Admiral Grigorovich, allowing it to stay at sea for extended periods of time and lead Russian convoys though the Channel.</span></p>
+        <p class="cn">北约官员认为，PM-82向“格里戈罗维奇海军上将号”运送了食物、水和其他补给，使其能够长时间在海上停留，并带领俄罗斯船队通过海峡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">In April, the <span class="keyword" data-word="frigate" data-phonetic="/ˈfrɪɡət/" data-pos="n." data-def="护卫舰" data-def-en="a type of warship">frigate</span> was reported to have escorted six shadow fleet vessels through the waterway while being monitored by the Royal Navy.</span></p>
+        <p class="cn">今年4月，据报道这艘护卫舰在皇家海军监视下护送六艘影子舰队船只通过该水道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">The Royal Navy previously said the Grigorovich escorted Russian-flagged vessels heading to and from the Atlantic, Mediterranean and Baltic, including "one submarine and around six merchant and support vessels".</span></p>
+        <p class="cn">皇家海军此前表示，“格里戈罗维奇号”护送悬挂俄罗斯国旗的船只往返大西洋、地中海和波罗的海，包括“一艘潜艇和大约六艘商船及支援船”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">James Parkin, a former Royal Navy rear admiral, says the use of armed force is a last resort, reserved only for self-defence.</span></p>
+        <p class="cn">前皇家海军少将詹姆斯·帕金表示，使用武力是最后手段，仅用于自卫。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">"I would not be surprised if it was a miscalculation, rather than a deliberate act to try and fire on a British yacht very close to British waters," he told BBC News.</span></p>
+        <p class="cn">“如果这是误判，而非故意在英国水域附近向英国游艇开火，我不会感到惊讶，”他告诉BBC新闻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">While the MoD has assessed Tuesday's incident was not linked to the <span class="keyword" data-word="seizure" data-phonetic="/ˈsiːʒər/" data-pos="n." data-def="扣押，没收" data-def-en="the act of taking control of something by force or legal authority">seizure</span> of the Russian shadow fleet tanker at the weekend, Parkin said that had been a "huge embarrassment" for Moscow, given there "is a Russian navy ship in the English Channel who is only there to stop this kind of thing happening".</span></p>
+        <p class="cn">尽管英国国防部评估周二事件与周末扣押俄罗斯影子舰队油轮无关，但帕金表示，这对莫斯科来说是“巨大尴尬”，因为“英吉利海峡有一艘俄罗斯海军舰艇，其唯一目的就是阻止此类事件发生”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">Coming at a time of <span class="keyword" data-word="heightened" data-phonetic="/ˈhaɪtnd/" data-pos="adj." data-def="加剧的，增强的" data-def-en="increased or made more intense">heightened</span> tension between the UK and Russia, and on the day when two departing UK defence ministers, in their resignation speeches, sounded the alarm about Russia's increasingly aggressive behaviour, this relatively minor incident has, perhaps inevitably, been magnified.</span></p>
+        <p class="cn">此事发生在英俄关系紧张加剧之际，且当天两位即将离任的英国国防大臣在辞职演讲中就俄罗斯日益激进的行为发出警告，因此这一相对较小的事件或许不可避免地受到了放大。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">surreal</span>
+        <button class="kw-speak-btn" data-word="surreal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈriːəl/ adj.</span>
+      </div>
+      <p class="kw-def">超现实的，离奇的</p>
+      <p class="kw-def-en">having a dreamlike or unreal quality</p>
+      <p class="kw-ctx">&ldquo;A British retired couple who were on a yacht which had warning shots fired near it by a Russian warship in the English Channel on Tuesday have described the "surreal" experience to BBC Newsnight.&rdquo;</p>
+      <p class="kw-ctx-cn">周二，一对英国退休夫妇乘坐的游艇在英吉利海峡遭到俄罗斯军舰鸣枪示警，他们向BBC《新闻之夜》描述了这一“超现实”的经历。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">frigate</span>
+        <button class="kw-speak-btn" data-word="frigate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfrɪɡət/ n.</span>
+      </div>
+      <p class="kw-def">护卫舰</p>
+      <p class="kw-def-en">a type of warship</p>
+      <p class="kw-ctx">&ldquo;Jane and Alan Kelvey were sailing 23 miles off the coast of the Isle of Wight on Tuesday morning when they came into close contact with a Russian frigate, the Admiral Grigorovich.&rdquo;</p>
+      <p class="kw-ctx-cn">周二上午，简和艾伦·凯尔维在怀特岛海岸外23英里处航行时，与俄罗斯护卫舰“格里戈罗维奇海军上将号”近距离接触。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">seizure</span>
+        <button class="kw-speak-btn" data-word="seizure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsiːʒər/ n.</span>
+      </div>
+      <p class="kw-def">扣押，没收</p>
+      <p class="kw-def-en">the act of taking control of something by force or legal authority</p>
+      <p class="kw-ctx">&ldquo;The warship fired into the UK-registered yacht's path, in what the Ministry of Defence has described as an "isolated incident" and not linked to the seizure of a Russian shadow fleet tanker in the Channel on Sunday.&rdquo;</p>
+      <p class="kw-ctx-cn">这艘军舰向这艘英国注册游艇的航向开火，英国国防部称这是一起“孤立事件”，与周日英吉利海峡扣押俄罗斯影子舰队油轮无关。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">collision</span>
+        <button class="kw-speak-btn" data-word="collision" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈlɪʒən/ n.</span>
+      </div>
+      <p class="kw-def">碰撞，冲突</p>
+      <p class="kw-def-en">an accident in which two vehicles or objects hit each other</p>
+      <p class="kw-ctx">&ldquo;Jane said their yacht, the Bright Future, was "definitely not on a collision course", adding: "As far as we were concerned, it wasn't an incident until the gunfire started."&rdquo;</p>
+      <p class="kw-ctx-cn">简说他们的游艇“光明未来号”“绝对没有处于碰撞航线上”，并补充道：“就我们而言，在枪声响起之前，这不算事件。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">dispute</span>
+        <button class="kw-speak-btn" data-word="dispute" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈspjuːt/ v.</span>
+      </div>
+      <p class="kw-def">质疑，争论</p>
+      <p class="kw-def-en">to argue or disagree with something</p>
+      <p class="kw-ctx">&ldquo;The couple disputed elements of the Russian Defence Ministry's account, which said the yacht had been on a "dangerous approach" towards the warship.&rdquo;</p>
+      <p class="kw-ctx-cn">这对夫妇对俄罗斯国防部说法中的部分内容提出质疑，俄方称游艇当时正“危险地靠近”军舰。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">manoeuvrable</span>
+        <button class="kw-speak-btn" data-word="manoeuvrable" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/məˈnuːvrəbl/ adj.</span>
+      </div>
+      <p class="kw-def">机动灵活的</p>
+      <p class="kw-def-en">able to be moved easily and quickly</p>
+      <p class="kw-ctx">&ldquo;British officials believe the Admiral Grigorovich was attempting to signal it was drifting rather than being powered by its engines, therefore making it less manoeuvrable - possibly leading its crew to assess it was more vulnerable to a collision.&rdquo;</p>
+      <p class="kw-ctx-cn">英国官员认为，“格里戈罗维奇海军上将号”试图发出信号表明它正在漂流而非引擎驱动，因此机动性较差——可能使其船员评估认为更容易发生碰撞。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intercept</span>
+        <button class="kw-speak-btn" data-word="intercept" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntərˈsept/ v.</span>
+      </div>
+      <p class="kw-def">拦截，截获</p>
+      <p class="kw-def-en">to stop or catch something that is moving from one place to another</p>
+      <p class="kw-ctx">&ldquo;The incident comes days after Royal Marine Commandos intercepted a Russian shadow fleet tanker carrying sanctioned oil in the Channel on Sunday, in the first operation of its kind carried out by the British military.&rdquo;</p>
+      <p class="kw-ctx-cn">事发前几天，皇家海军陆战队突击队于周日在英吉利海峡拦截了一艘运载受制裁石油的俄罗斯影子舰队油轮，这是英国军方首次执行此类行动。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">heightened</span>
+        <button class="kw-speak-btn" data-word="heightened" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhaɪtnd/ adj.</span>
+      </div>
+      <p class="kw-def">加剧的，增强的</p>
+      <p class="kw-def-en">increased or made more intense</p>
+      <p class="kw-ctx">&ldquo;Coming at a time of heightened tension between the UK and Russia, and on the day when two departing UK defence ministers, in their resignation speeches, sounded the alarm about Russia's increasingly aggressive behaviour, this relatively minor incident has, perhaps inevitably, been magnified.&rdquo;</p>
+      <p class="kw-ctx-cn">正值英俄关系紧张加剧之际，且当天两位即将离任的英国国防大臣在辞职演讲中就俄罗斯日益咄咄逼人的行为发出警告，这一相对较小的事件或许不可避免地放大了。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A British retired couple who were on a yacht which had warning shots fired near it by a Russian warship in the English Channel on Tuesday have described the \"surreal\" experience to BBC Newsnight.", "start_ms": 0, "end_ms": 12456, "paragraph_index": 0}, {"index": 1, "text": "Jane and Alan Kelvey were sailing 23 miles off the coast of the Isle of Wight on Tuesday morning when they came into close contact with a Russian frigate, the Admiral Grigorovich.", "start_ms": 12456, "end_ms": 24552, "paragraph_index": 1}, {"index": 2, "text": "The warship fired into the UK-registered yacht's path, in what the Ministry of Defence has described as an \"isolated incident\" and not linked to the seizure of a Russian shadow fleet tanker in the Channel on Sunday.", "start_ms": 24552, "end_ms": 38088, "paragraph_index": 2}, {"index": 3, "text": "Jane Kelvey told BBC Newsnight: \"[The warship] gave out five blasts on their horn, which means 'have you seen us?'", "start_ms": 38088, "end_ms": 46560, "paragraph_index": 3}, {"index": 4, "text": "\"We immediately turned two degrees to port so they could see we had made a deliberate change of course, which meant we had seen them.", "start_ms": 46560, "end_ms": 54888, "paragraph_index": 4}, {"index": 5, "text": "\"Then a minute or so later they gave another five blasts on their horn, immediately followed by four to five small arms fire.", "start_ms": 54888, "end_ms": 63624, "paragraph_index": 5}, {"index": 6, "text": "\"That wasn't aimed at us - it was warning fire that went up in the air, we believe.\"", "start_ms": 63624, "end_ms": 69360, "paragraph_index": 6}, {"index": 7, "text": "Jane said their yacht, the Bright Future, was \"definitely not on a collision course\", adding: \"As far as we were concerned, it wasn't an incident until the gunfire started.\"", "start_ms": 69360, "end_ms": 80952, "paragraph_index": 7}, {"index": 8, "text": "Alan Kelvey said the gunfire had been \"unnecessary\", and the couple said a Royal Navy vessel arrived to check on their welfare shortly afterwards.", "start_ms": 80952, "end_ms": 91008, "paragraph_index": 8}, {"index": 9, "text": "The couple disputed elements of the Russian Defence Ministry's account, which said the yacht had been on a \"dangerous approach\" towards the warship.", "start_ms": 91008, "end_ms": 100296, "paragraph_index": 9}, {"index": 10, "text": "The ministry said its crew fired into the yacht's path with rifles after making several attempts to contact it over the radio and after launching warning flares.", "start_ms": 100296, "end_ms": 110832, "paragraph_index": 10}, {"index": 11, "text": "It also said its sailors had acted in \"strict accordance with international shipping regulations\", while the MoD said it was investigating the incident.", "start_ms": 110832, "end_ms": 120864, "paragraph_index": 11}, {"index": 12, "text": "The BBC understands that the small, motor-less yacht had drifted towards the warship in foggy conditions after setting off from the UK.", "start_ms": 120864, "end_ms": 130608, "paragraph_index": 12}, {"index": 13, "text": "British officials believe the Admiral Grigorovich was attempting to signal it was drifting rather than being powered by its engines, therefore making it less manoeuvrable - possibly leading its crew to assess it was more vulnerable to a collision.", "start_ms": 130608, "end_ms": 145512, "paragraph_index": 13}, {"index": 14, "text": "An MoD spokesperson told the BBC: \"Following attempts to contact a British vessel in the channel, the Grigorovich fired warning shots.", "start_ms": 145512, "end_ms": 155328, "paragraph_index": 14}, {"index": 15, "text": "These were not aimed at the vessel and were an attempt to prevent a possible collision.\"", "start_ms": 155328, "end_ms": 161088, "paragraph_index": 14}, {"index": 16, "text": "A boat from HMS Tyne, a British patrol vessel, was sent to the yacht to gather details and check on the safety of the crew.", "start_ms": 161088, "end_ms": 169848, "paragraph_index": 15}, {"index": 17, "text": "The incident comes days after Royal Marine Commandos intercepted a Russian shadow fleet tanker carrying sanctioned oil in the Channel on Sunday, in the first operation of its kind carried out by the British military.", "start_ms": 169848, "end_ms": 184320, "paragraph_index": 16}, {"index": 18, "text": "Russian warships regularly pass through the Channel in international waters and are routinely monitored by Royal Navy vessels.", "start_ms": 184320, "end_ms": 192936, "paragraph_index": 17}, {"index": 19, "text": "The Admiral Grigorovich was being shadowed by the HMS Mersey, as it had been for several days after being spotted off the coast of Brest in France, in what the Royal Navy described as a \"routine operation\".", "start_ms": 192936, "end_ms": 206736, "paragraph_index": 18}, {"index": 20, "text": "On Tuesday morning, British authorities received reports from the yacht's occupants that the Russian vessel had fired warning shots from around 500 yards (457 metres) away - a relatively near distance by the standards of sea travel.", "start_ms": 206736, "end_ms": 223608, "paragraph_index": 19}, {"index": 21, "text": "The incident happened around 20 nautical miles - around 23 standard miles - south of the Isle of Wight, outside of UK territorial waters.", "start_ms": 223608, "end_ms": 234264, "paragraph_index": 20}, {"index": 22, "text": "Last week, a Nato source told BBC Verify that the Admiral Grigorovich had been ordered by Moscow to escort shadow fleet vessels through the Channel.", "start_ms": 234264, "end_ms": 244824, "paragraph_index": 21}, {"index": 23, "text": "The frigate is understood to have been operating in the area for some time and had been repeatedly re-supplied by a repair vessel.", "start_ms": 244824, "end_ms": 253128, "paragraph_index": 22}, {"index": 24, "text": "Satellite images reviewed by BBC Verify have shown the repair vessel, the PM-82, operating between the Channel and the North Sea in recent months.", "start_ms": 253128, "end_ms": 264456, "paragraph_index": 23}, {"index": 25, "text": "Nato officials believe the PM-82 delivered food, water and other supplies to the Admiral Grigorovich, allowing it to stay at sea for extended periods of time and lead Russian convoys though the Channel.", "start_ms": 264456, "end_ms": 278472, "paragraph_index": 24}, {"index": 26, "text": "In April, the frigate was reported to have escorted six shadow fleet vessels through the waterway while being monitored by the Royal Navy.", "start_ms": 278472, "end_ms": 287472, "paragraph_index": 25}, {"index": 27, "text": "The Royal Navy previously said the Grigorovich escorted Russian-flagged vessels heading to and from the Atlantic, Mediterranean and Baltic, including \"one submarine and around six merchant and support vessels\".", "start_ms": 287472, "end_ms": 301968, "paragraph_index": 26}, {"index": 28, "text": "James Parkin, a former Royal Navy rear admiral, says the use of armed force is a last resort, reserved only for self-defence.", "start_ms": 301968, "end_ms": 311832, "paragraph_index": 27}, {"index": 29, "text": "\"I would not be surprised if it was a miscalculation, rather than a deliberate act to try and fire on a British yacht very close to British waters,\" he told BBC News.", "start_ms": 311832, "end_ms": 323568, "paragraph_index": 28}, {"index": 30, "text": "While the MoD has assessed Tuesday's incident was not linked to the seizure of the Russian shadow fleet tanker at the weekend, Parkin said that had been a \"huge embarrassment\" for Moscow, given there \"is a Russian navy ship in the English Channel who is only there to stop this kind of thing happening\".", "start_ms": 323568, "end_ms": 341376, "paragraph_index": 29}, {"index": 31, "text": "Coming at a time of heightened tension between the UK and Russia, and on the day when two departing UK defence ministers, in their resignation speeches, sounded the alarm about Russia's increasingly aggressive behaviour, this relatively minor incident has, perhaps inevitably, been magnified.", "start_ms": 341376, "end_ms": 361104, "paragraph_index": 30}], "total_duration_ms": 361104};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "in": "在", "on": "在", "had": "有", "it": "它", "by": "被", "was": "是", "russian": "俄罗斯的", "channel": "航道", "said": "说", "british": "英国的", "been": "已经", "bbc": "英国广播公司", "incident": "事件", "royal": "王室的", "navy": "海军", "vessel": "船舶", "admiral": "海军上将", "that": "那个", "were": "是", "warning": "警告", "fired": "发射", "warship": "军舰", "have": "有", "as": "作为", "not": "不", "shadow": "阴影", "fleet": "弗利特", "their": "他们的", "we": "我们", "at": "在", "its": "它的", "after": "之后", "from": "来自", "vessels": "船只", "for": "为了", "which": "哪个", "an": "一个", "told": "告诉", "uk": "英国", "being": "正在", "around": "在...周围", "is": "是", "couple": "几个", "shots": "枪击", "tuesday": "星期二", "described": "描述", "miles": "英里", "off": "离开", "they": "它们", "into": "进入", "contact": "接触", "with": "与", "defence": "国防", "has": "有", "tanker": "油轮", "five": "五", "fire": "射击", "believe": "认为", "crew": "船员", "while": "而", "mod": "国防部", "through": "通过", "waters": "水域", "sea": "海域", "time": "时间", "who": "谁", "near": "附近", "english": "英格兰的", "newsnight": "新闻之夜", "alan": "艾伦", "coast": "海岸", "isle": "岛", "wight": "怀特岛", "morning": "上午", "when": "当", "close": "密切的", "path": "道路", "what": "什么", "ministry": "外交部", "linked": "关联的", "sunday": "星期日", "gave": "给予", "out": "出来", "seen": "被视为", "us": "我们", "immediately": "立即", "two": "两个", "so": "所以", "deliberate": "故意", "course": "课程", "small": "小的", "wasn't": "不是", "aimed": "旨在", "gunfire": "炮火", "check": "支票", "towards": "对待", "making": "进行", "several": "数个", "attempts": "尝试", "international": "国际", "officials": "官员", "rather": "宁愿", "than": "比", "days": "天", "operation": "行动", "kind": "种类", "monitored": "监测", "last": "最后", "nato": "北约", "verify": "核实", "moscow": "莫斯科", "operating": "操作", "repair": "修复", "between": "之间", "six": "六", "only": "只有", "there": "那里", "this": "这个", "experience": "经历", "came": "到来", "means": "意味着", "you": "你", "turned": "转向", "degrees": "度", "port": "港口", "could": "可能", "see": "看到", "made": "做出", "change": "改变", "meant": "意味着", "them": "他们", "then": "然后", "minute": "分钟", "or": "或者", "later": "后来", "another": "另一个", "followed": "遵循", "four": "四", "went": "去", "up": "向上", "air": "气氛", "bright": "明亮的", "future": "未来", "definitely": "肯定", "adding": "补充说", "far": "远", "concerned": "担忧的", "until": "直到", "started": "开始", "unnecessary": "不必要", "arrived": "抵达", "welfare": "福利", "shortly": "不久", "afterwards": "之后", "disputed": "有争议的", "account": "责任", "dangerous": "危险", "approach": "方法", "over": "超过", "radio": "电台", "launching": "发起", "also": "也", "sailors": "水手", "acted": "行动", "strict": "严格的", "shipping": "航运", "investigating": "调查", "understands": "理解", "drifted": "飘移", "conditions": "条件", "setting": "环境", "attempting": "试图", "therefore": "因此", "less": "更少", "possibly": "可能", "leading": "领导", "assess": "评估", "more": "更多", "spokesperson": "发言人", "following": "随后", "these": "这些", "attempt": "企图", "prevent": "防止", "possible": "可能的", "boat": "船", "sent": "派遣", "gather": "聚集", "details": "细节", "safety": "安全", "comes": "到来", "intercepted": "拦截", "carrying": "携带", "sanctioned": "受制裁的", "oil": "石油", "first": "第一轮", "carried": "进行", "military": "军事", "regularly": "定期地", "pass": "通过", "are": "是", "spotted": "发现", "routine": "常规的", "authorities": "当局", "received": "受到", "reports": "报道", "metres": "米", "away": "离开", "standards": "标准", "travel": "旅行", "happened": "发生", "standard": "标准", "south": "韩国", "outside": "外部", "week": "周", "source": "来源", "ordered": "命令", "escort": "护送", "understood": "理解", "area": "区域", "some": "一些", "repeatedly": "反复地", "images": "图像", "reviewed": "审查过的", "shown": "表现出", "north": "北部", "recent": "最近", "months": "月", "delivered": "递送", "water": "水", "other": "其他", "supplies": "补给", "allowing": "允许", "stay": "保持", "extended": "延长", "lead": "导致", "though": "尽管", "april": "四月", "reported": "据报道", "waterway": "水道", "previously": "此前", "heading": "领导", "atlantic": "大西洋", "including": "包括", "one": "一个", "submarine": "潜艇", "merchant": "商船", "support": "支持", "james": "詹姆斯", "former": "前任", "says": "表示", "use": "使用", "armed": "武装的", "force": "力量", "reserved": "保留的", "self-defence": "自卫", "would": "将", "be": "是", "surprised": "惊讶的", "if": "如果", "act": "行为", "try": "审判", "very": "非常", "he": "他", "news": "新闻", "assessed": "评估", "tuesday's": "周二的", "weekend": "周末", "huge": "巨大的", "given": "给定", "ship": "船舶", "stop": "停止", "thing": "事情", "happening": "发生", "coming": "即将到来的", "tension": "紧张", "russia": "俄罗斯", "day": "天", "ministers": "部长", "resignation": "辞职", "about": "关于", "russia's": "俄罗斯的", "aggressive": "激进的", "behaviour": "行为", "minor": "轻微", "perhaps": "或许", "grigorovich": "格里戈罗维奇", "yacht": "游艇", "jane": "简", "kelvey": "凯尔维", "yacht's": "游艇的", "blasts": "鸣响", "horn": "喇叭", "hms": "英国皇家海军", "relatively": "相对地", "pm-": "下午", "escorted": "护送", "parkin": "帕金", "retired": "退役的", "sailing": "航行", "uk-registered": "英国注册的", "isolated": "孤立的", "arms": "武器", "elements": "要素", "ministry's": "部的", "rifles": "步枪", "flares": "信号弹", "accordance": "按照", "regulations": "规定", "motor-less": "无动力的", "foggy": "有雾的", "signal": "信号", "drifting": "漂流", "powered": "动力驱动的", "engines": "发动机", "vulnerable": "易受攻击的", "tyne": "泰恩河", "patrol": "巡逻", "marine": "海军陆战队", "commandos": "突击队", "warships": "军舰", "routinely": "例行地", "shadowed": "跟踪", "mersey": "默西河", "brest": "布雷斯特", "france": "法国", "occupants": "occupants", "yards": "码", "distance": "距离", "nautical": "海里的", "territorial": "领海的", "re-supplied": "再补给", "satellite": "卫星", "food": "食物", "periods": "时期", "convoys": "护航队", "russian-flagged": "挂俄罗斯旗的", "mediterranean": "地中海", "baltic": "波罗的海", "rear": "后部", "resort": "度假胜地", "miscalculation": "误判", "embarrassment": "尴尬", "departing": "离开的", "speeches": "演讲", "sounded": "发出声响", "alarm": "警报", "increasingly": "日益", "inevitably": "不可避免地", "magnified": "放大"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
