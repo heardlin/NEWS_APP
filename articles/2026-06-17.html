@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-17</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/5622/live/98fcb090-6a49-11f1-8e1d-bbbb1017d210.png" alt="Iran sends tankers loaded with oil past US military blockade" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Iran sends tankers loaded with oil past US military blockade</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/cpq37yxexd9o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-17.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Three Iranian tankers loaded with <span class="keyword" data-word="crude" data-phonetic="/kruːd/" data-pos="n." data-def="原油" data-def-en="unrefined petroleum oil.">crude</span> oil have passed the US <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> line in the Gulf of Oman, ship-tracking data shows.</span></p>
+        <p class="cn">船舶追踪数据显示，三艘载有原油的伊朗油轮已通过美国在阿曼湾的封锁线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Two were broadcasting their locations as they crossed and a third appeared to switch on its location tracker just past the line.</span></p>
+        <p class="cn">其中两艘在穿越时公开了位置，第三艘则在刚过封锁线后打开了位置追踪器。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Despite President Donald Trump announcing on Sunday the "immediate removal" of the <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> of Iranian ports, US naval forces later confirmed it would remain in effect until the deal with Iran was signed.</span> <span class="sentence" data-sentence-index="3">This is expected to take place in Switzerland on Friday.</span></p>
+        <p class="cn">尽管美国总统唐纳德·特朗普周日宣布“立即解除”对伊朗港口的封锁，但美国海军随后确认，在伊朗签署协议前封锁仍将有效。协议预计将于周五在瑞士签署。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">"This a sign that Iran is confident the <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> is over, even if the US has insisted it will be in place until Friday," Michelle Wiese Bockman, senior analyst at Windward Maritime Intelligence, told BBC Verify.</span></p>
+        <p class="cn">“这表明伊朗确信封锁已经结束，即使美国坚称封锁将持续到周五，”Windward Maritime Intelligence 的高级分析师米歇尔·维泽·博克曼告诉 BBC Verify。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">The three Iran-flagged tankers, Diona, Hero II and Sonia I, are all owned by the National Iranian Tanker Company which has been sanctioned by the US Treasury, as have the ships themselves.</span></p>
+        <p class="cn">这三艘悬挂伊朗国旗的油轮——Diona、Hero II 和 Sonia I——均归伊朗国家油轮公司所有，该公司及其船只均受到美国财政部的制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Iran has been subject to long-term US sanctions in response to fears the country is developing nuclear weapons, its support for groups designated by Washington as terrorist organisations, and alleged human rights abuses.</span></p>
+        <p class="cn">由于担心伊朗发展核武器、支持被美国认定为恐怖组织的团体以及涉嫌侵犯人权，伊朗长期受到美国制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Data from MarineTraffic shows Hero II and Sonia I left Iran's Chabahar port on Tuesday, where several other Iranian tankers are currently anchored, and sailed past the US <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> line into the Arabian Sea in the early hours of Wednesday morning.</span></p>
+        <p class="cn">MarineTraffic 的数据显示，Hero II 和 Sonia I 于周二离开伊朗的恰巴哈尔港（目前该港还停泊着其他几艘伊朗油轮），并于周三凌晨驶过美国封锁线进入阿拉伯海。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">Diona began broadcasting its location just past the US <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> line, which stretches from the eastern tip of Oman to the coast of Iran, yesterday.</span></p>
+        <p class="cn">Diona 于昨日在刚过美国封锁线（从阿曼东端延伸至伊朗海岸）的位置开始广播其位置。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Maritime intelligence firm Windward says this is the first time any of these Iranian tankers have <span class="keyword" data-word="broadcast" data-phonetic="/ˈbrɔːdkɑːst/" data-pos="v." data-def="播送；发送" data-def-en="to transmit a signal or information, especially via radio or electronic means.">broadcast</span> their locations since March and, if they make it to their <span class="keyword" data-word="destination" data-phonetic="/ˌdestɪˈneɪʃən/" data-pos="n." data-def="目的地" data-def-en="the place to which someone or something is going or being sent.">destination</span>, they will be Iran's first oil exports for two months, according to TankerTrackers.com.</span></p>
+        <p class="cn">海事情报公司 Windward 表示，这是自三月以来这些伊朗油轮首次广播位置。据 TankerTrackers.com 称，如果它们抵达目的地，将是伊朗两个月来首次出口石油。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">The three ships are carrying a combined total of 3.8 million barrels of <span class="keyword" data-word="crude" data-phonetic="/kruːd/" data-pos="n." data-def="原油" data-def-en="unrefined petroleum oil.">crude</span> oil, according to TankerTrackers.com.</span> <span class="sentence" data-sentence-index="11">They are currently not broadcasting their planned destinations.</span></p>
+        <p class="cn">据 TankerTrackers.com 称，这三艘船共装载 380 万桶原油。目前它们未广播计划目的地。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">The US <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> has cut Iran's <span class="keyword" data-word="crude" data-phonetic="/kruːd/" data-pos="n." data-def="原油" data-def-en="unrefined petroleum oil.">crude</span> exports to the lowest amount in six years at 260,000 barrels per day in May, less than a fifth of the 2025 average of 1.67 million barrels per day, data from maritime intelligence firm Kpler shows.</span></p>
+        <p class="cn">海事情报公司 Kpler 的数据显示，美国封锁已将伊朗原油出口量降至六年来最低水平，5 月日均出口 26 万桶，不到 2025 年平均水平（167 万桶/日）的五分之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">The US had said early in its <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> that <span class="keyword" data-word="enforcement" data-phonetic="/ɪnˈfɔːsmənt/" data-pos="n." data-def="执行；实施" data-def-en="the act of compelling observance of or compliance with a law, rule, or obligation.">enforcement</span> could happen outside of the Gulf region and BBC Verify has previously covered American forces intercepting Iran-linked vessels in the Indian Ocean, thousands of miles from the Gulf.</span></p>
+        <p class="cn">美国在封锁初期曾表示，执法可能发生在海湾地区以外。BBC Verify 此前曾报道美军在距海湾数千英里的印度洋拦截与伊朗有关的船只。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">Another <span class="keyword" data-word="crude" data-phonetic="/kruːd/" data-pos="n." data-def="原油" data-def-en="unrefined petroleum oil.">crude</span> oil tanker owned by NITC, Stream, stopped broadcasting its location just before the US <span class="keyword" data-word="blockade" data-phonetic="/blɒˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="an act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> line and appears to be sailing towards Iran.</span></p>
+        <p class="cn">另一艘 NITC 拥有的原油油轮 Stream 在接近美国封锁线前停止广播位置，似乎正驶向伊朗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">The unladen tanker has been circling off the Pakistani port of Karachi since 8 May, ship tracking data shows.</span></p>
+        <p class="cn">船舶追踪数据显示，这艘空载油轮自 5 月 8 日起一直在巴基斯坦卡拉奇港外盘旋。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Since the announcement of the US deal with Iran, "Iranian-linked tankers and cargo ships have become noticeably more active globally," according to the campaign and monitoring group United Against Nuclear Iran (UANI).</span></p>
+        <p class="cn">据监督组织“联合反对核伊朗”（UANI）称，自美国与伊朗达成协议宣布以来，“与伊朗有关的油轮和货船在全球范围内明显变得更加活跃”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Two other <span class="keyword" data-word="crude" data-phonetic="/kruːd/" data-pos="n." data-def="原油" data-def-en="unrefined petroleum oil.">crude</span> oil tankers owned by the National Iranian Tanker Company also began broadcasting their positions in the Strait of Malacca between Malaysia and Indonesia on Tuesday.</span></p>
+        <p class="cn">周二，伊朗国家油轮公司拥有的另外两艘原油油轮也在马来西亚和印度尼西亚之间的马六甲海峡开始广播位置。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">Both tankers, Dan and Sinopa, had not been seen on publicly available ship tracking platforms  since early April and now appear to be sailing towards Iran.</span></p>
+        <p class="cn">这两艘油轮 Dan 和 Sinopa 自 4 月初以来一直未出现在公开的船舶追踪平台上，现在似乎正驶向伊朗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">"Iran is wasting no time getting its tankers back into <span class="keyword" data-word="circulation" data-phonetic="/ˌsɜːkjʊˈleɪʃən/" data-pos="n." data-def="流通；循环" data-def-en="the movement or distribution of something, such as goods or information, within a system.">circulation</span>," said Bockman.</span></p>
+        <p class="cn">“伊朗正在迅速让其油轮重新投入运营，”博克曼说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">Additional reporting by Barbara Metzler</span></p>
+        <p class="cn">芭芭拉·梅茨勒补充报道</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">blockade</span>
+        <button class="kw-speak-btn" data-word="blockade" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/blɒˈkeɪd/ n.</span>
+      </div>
+      <p class="kw-def">封锁</p>
+      <p class="kw-def-en">an act of sealing off a place to prevent goods or people from entering or leaving.</p>
+      <p class="kw-ctx">&ldquo;Three Iranian tankers loaded with crude oil have passed the US blockade line in the Gulf of Oman, ship-tracking data shows.&rdquo;</p>
+      <p class="kw-ctx-cn">船舶追踪数据显示，三艘装载原油的伊朗油轮已通过美国在阿曼湾的封锁线。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃən/ v.</span>
+      </div>
+      <p class="kw-def">制裁</p>
+      <p class="kw-def-en">to impose a penalty or restriction on a country or organization for violating international law or norms.</p>
+      <p class="kw-ctx">&ldquo;The three Iran-flagged tankers, Diona, Hero II and Sonia I, are all owned by the National Iranian Tanker Company which has been sanctioned by the US Treasury, as have the ships themselves.&rdquo;</p>
+      <p class="kw-ctx-cn">这三艘悬挂伊朗国旗的油轮——Diona、Hero II和Sonia I——均归美国财政部制裁的伊朗国家油轮公司所有，这些船只本身也受到制裁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">crude</span>
+        <button class="kw-speak-btn" data-word="crude" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kruːd/ n.</span>
+      </div>
+      <p class="kw-def">原油</p>
+      <p class="kw-def-en">unrefined petroleum oil.</p>
+      <p class="kw-ctx">&ldquo;Three Iranian tankers loaded with crude oil have passed the US blockade line in the Gulf of Oman, ship-tracking data shows.&rdquo;</p>
+      <p class="kw-ctx-cn">船舶追踪数据显示，三艘装载原油的伊朗油轮已通过美国在阿曼湾的封锁线。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">broadcast</span>
+        <button class="kw-speak-btn" data-word="broadcast" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbrɔːdkɑːst/ v.</span>
+      </div>
+      <p class="kw-def">播送；发送</p>
+      <p class="kw-def-en">to transmit a signal or information, especially via radio or electronic means.</p>
+      <p class="kw-ctx">&ldquo;Two were broadcasting their locations as they crossed and a third appeared to switch on its location tracker just past the line.&rdquo;</p>
+      <p class="kw-ctx-cn">两艘油轮在穿越时正在播报其位置，第三艘似乎在刚过封锁线时打开了位置追踪器。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intercept</span>
+        <button class="kw-speak-btn" data-word="intercept" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈsept/ v.</span>
+      </div>
+      <p class="kw-def">拦截</p>
+      <p class="kw-def-en">to stop or seize something or someone in transit.</p>
+      <p class="kw-ctx">&ldquo;BBC Verify has previously covered American forces intercepting Iran-linked vessels in the Indian Ocean, thousands of miles from the Gulf.&rdquo;</p>
+      <p class="kw-ctx-cn">BBC Verify此前报道过美军在距海湾数千英里的印度洋拦截与伊朗有关的船只。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enforcement</span>
+        <button class="kw-speak-btn" data-word="enforcement" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈfɔːsmənt/ n.</span>
+      </div>
+      <p class="kw-def">执行；实施</p>
+      <p class="kw-def-en">the act of compelling observance of or compliance with a law, rule, or obligation.</p>
+      <p class="kw-ctx">&ldquo;The US had said early in its blockade that enforcement could happen outside of the Gulf region.&rdquo;</p>
+      <p class="kw-ctx-cn">美国在封锁初期就表示，执行行动可能发生在海湾地区以外。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">destination</span>
+        <button class="kw-speak-btn" data-word="destination" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdestɪˈneɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">目的地</p>
+      <p class="kw-def-en">the place to which someone or something is going or being sent.</p>
+      <p class="kw-ctx">&ldquo;They are currently not broadcasting their planned destinations.&rdquo;</p>
+      <p class="kw-ctx-cn">它们目前没有播报计划中的目的地。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">circulation</span>
+        <button class="kw-speak-btn" data-word="circulation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌsɜːkjʊˈleɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">流通；循环</p>
+      <p class="kw-def-en">the movement or distribution of something, such as goods or information, within a system.</p>
+      <p class="kw-ctx">&ldquo;"Iran is wasting no time getting its tankers back into circulation," said Bockman.&rdquo;</p>
+      <p class="kw-ctx-cn">博克曼说：“伊朗正在抓紧时间让其油轮重新投入流通。”</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Three Iranian tankers loaded with crude oil have passed the US blockade line in the Gulf of Oman, ship-tracking data shows.", "start_ms": 0, "end_ms": 8976, "paragraph_index": 0}, {"index": 1, "text": "Two were broadcasting their locations as they crossed and a third appeared to switch on its location tracker just past the line.", "start_ms": 8976, "end_ms": 17400, "paragraph_index": 1}, {"index": 2, "text": "Despite President Donald Trump announcing on Sunday the \"immediate removal\" of the blockade of Iranian ports, US naval forces later confirmed it would remain in effect until the deal with Iran was signed.", "start_ms": 17400, "end_ms": 31080, "paragraph_index": 2}, {"index": 3, "text": "This is expected to take place in Switzerland on Friday.", "start_ms": 31080, "end_ms": 35568, "paragraph_index": 2}, {"index": 4, "text": "\"This a sign that Iran is confident the blockade is over, even if the US has insisted it will be in place until Friday,\" Michelle Wiese Bockman, senior analyst at Windward Maritime Intelligence, told BBC Verify.", "start_ms": 35568, "end_ms": 50952, "paragraph_index": 3}, {"index": 5, "text": "The three Iran-flagged tankers, Diona, Hero II and Sonia I, are all owned by the National Iranian Tanker Company which has been sanctioned by the US Treasury, as have the ships themselves.", "start_ms": 50952, "end_ms": 64536, "paragraph_index": 4}, {"index": 6, "text": "Iran has been subject to long-term US sanctions in response to fears the country is developing nuclear weapons, its support for groups designated by Washington as terrorist organisations, and alleged human rights abuses.", "start_ms": 64536, "end_ms": 80064, "paragraph_index": 5}, {"index": 7, "text": "Data from MarineTraffic shows Hero II and Sonia I left Iran's Chabahar port on Tuesday, where several other Iranian tankers are currently anchored, and sailed past the US blockade line into the Arabian Sea in the early hours of Wednesday morning.", "start_ms": 80064, "end_ms": 96912, "paragraph_index": 6}, {"index": 8, "text": "Diona began broadcasting its location just past the US blockade line, which stretches from the eastern tip of Oman to the coast of Iran, yesterday.", "start_ms": 96912, "end_ms": 107688, "paragraph_index": 7}, {"index": 9, "text": "Maritime intelligence firm Windward says this is the first time any of these Iranian tankers have broadcast their locations since March and, if they make it to their destination, they will be Iran's first oil exports for two months, according to TankerTrackers.com.", "start_ms": 107688, "end_ms": 125688, "paragraph_index": 8}, {"index": 10, "text": "The three ships are carrying a combined total of 3.8 million barrels of crude oil, according to TankerTrackers.com.", "start_ms": 125688, "end_ms": 134736, "paragraph_index": 9}, {"index": 11, "text": "They are currently not broadcasting their planned destinations.", "start_ms": 134736, "end_ms": 139608, "paragraph_index": 9}, {"index": 12, "text": "The US blockade has cut Iran's crude exports to the lowest amount in six years at 260,000 barrels per day in May, less than a fifth of the 2025 average of 1.67 million barrels per day, data from maritime intelligence firm Kpler shows.", "start_ms": 139608, "end_ms": 158664, "paragraph_index": 10}, {"index": 13, "text": "The US had said early in its blockade that enforcement could happen outside of the Gulf region and BBC Verify has previously covered American forces intercepting Iran-linked vessels in the Indian Ocean, thousands of miles from the Gulf.", "start_ms": 158664, "end_ms": 174600, "paragraph_index": 11}, {"index": 14, "text": "Another crude oil tanker owned by NITC, Stream, stopped broadcasting its location just before the US blockade line and appears to be sailing towards Iran.", "start_ms": 174600, "end_ms": 186408, "paragraph_index": 12}, {"index": 15, "text": "The unladen tanker has been circling off the Pakistani port of Karachi since 8 May, ship tracking data shows.", "start_ms": 186408, "end_ms": 194808, "paragraph_index": 13}, {"index": 16, "text": "Since the announcement of the US deal with Iran, \"Iranian-linked tankers and cargo ships have become noticeably more active globally,\" according to the campaign and monitoring group United Against Nuclear Iran (UANI).", "start_ms": 194808, "end_ms": 210072, "paragraph_index": 14}, {"index": 17, "text": "Two other crude oil tankers owned by the National Iranian Tanker Company also began broadcasting their positions in the Strait of Malacca between Malaysia and Indonesia on Tuesday.", "start_ms": 210072, "end_ms": 222288, "paragraph_index": 15}, {"index": 18, "text": "Both tankers, Dan and Sinopa, had not been seen on publicly available ship tracking platforms  since early April and now appear to be sailing towards Iran.", "start_ms": 222288, "end_ms": 233472, "paragraph_index": 16}, {"index": 19, "text": "\"Iran is wasting no time getting its tankers back into circulation,\" said Bockman.", "start_ms": 233472, "end_ms": 239760, "paragraph_index": 17}, {"index": 20, "text": "Additional reporting by Barbara Metzler", "start_ms": 239760, "end_ms": 243336, "paragraph_index": 18}], "total_duration_ms": 243336};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "us": "我们", "in": "在", "iran": "伊朗", "tankers": "油轮", "iranian": "伊朗的", "on": "在", "its": "它的", "is": "是", "has": "有", "by": "被", "oil": "石油", "line": "界限", "their": "他们的", "have": "有", "data": "数据", "shows": "显示", "they": "它们", "be": "是", "are": "是", "tanker": "油轮", "been": "已经", "from": "来自", "since": "自从", "three": "三个", "with": "与", "gulf": "海湾", "two": "两个", "as": "作为", "location": "地点", "just": "只是", "past": "过去", "it": "它", "this": "这个", "maritime": "海上", "intelligence": "情报", "owned": "拥有的", "ships": "舰船", "iran's": "伊朗的", "early": "早期的", "according": "根据", "oman": "阿曼", "locations": "地点", "forces": "力量", "until": "直到", "deal": "协议", "place": "地点", "friday": "星期五", "that": "那个", "if": "如果", "will": "将", "at": "在", "bbc": "英国广播公司", "verify": "核实", "hero": "英雄", "ii": "二世", "national": "国家", "company": "公司", "which": "哪个", "nuclear": "核的", "for": "为了", "port": "港口", "tuesday": "星期二", "other": "其他", "currently": "目前", "into": "进入", "began": "开始", "firm": "坚定", "first": "第一轮", "time": "时间", "exports": "出口", "million": "百万", "not": "不", "per": "每", "day": "天", "may": "可能", "had": "有", "said": "说", "sailing": "航行", "towards": "对待", "ship": "船舶", "tracking": "追踪", "loaded": "装载", "passed": "通过", "were": "是", "crossed": "穿过", "third": "第三", "appeared": "出现", "despite": "尽管", "president": "总统", "donald": "唐纳德", "trump": "特朗普", "announcing": "宣布", "sunday": "星期日", "immediate": "立即的", "removal": "取消", "ports": "港口", "naval": "海军的", "later": "后来", "confirmed": "确认", "would": "将", "remain": "仍然", "effect": "效果", "was": "是", "signed": "签署", "expected": "预期", "take": "采取", "switzerland": "瑞士", "sign": "签署", "confident": "自信", "over": "超过", "even": "甚至", "insisted": "坚持", "senior": "高级", "told": "告诉", "all": "所有", "sanctioned": "受制裁的", "treasury": "财政部", "themselves": "他们自己", "subject": "主题", "long-term": "长期的", "response": "回应", "fears": "担忧", "country": "国家", "weapons": "武器", "support": "支持", "groups": "团体", "washington": "华盛顿", "terrorist": "恐怖分子", "organisations": "组织", "alleged": "据称的", "human": "人类", "rights": "权利", "marinetraffic": "船舶交通", "left": "离开", "where": "那里", "several": "数个", "anchored": "停泊的", "sailed": "航行", "arabian": "阿拉伯", "sea": "海域", "hours": "小时", "wednesday": "星期三", "morning": "上午", "eastern": "东部的", "coast": "海岸", "yesterday": "昨天", "says": "表示", "any": "任何", "these": "这些", "march": "三月", "make": "使", "months": "月", "carrying": "携带", "total": "总体的", "planned": "计划中的", "cut": "削减", "amount": "数量", "six": "六", "years": "多年", "less": "更少", "than": "比", "fifth": "第五", "could": "可能", "happen": "发生", "outside": "外部", "region": "地区", "previously": "此前", "american": "美国的", "vessels": "船只", "indian": "印度的", "thousands": "数千", "miles": "英里", "another": "另一个", "stream": "流媒体", "stopped": "停止", "before": "之前", "appears": "似乎", "off": "离开", "pakistani": "巴基斯坦的", "announcement": "公告", "cargo": "货物", "become": "成为", "more": "更多", "active": "现役的", "campaign": "竞选活动", "monitoring": "监控", "group": "团体", "united": "联合", "against": "反对", "also": "也", "positions": "立场", "strait": "海峡", "between": "之间", "both": "两者", "dan": "丹", "seen": "被视为", "publicly": "公开地", "available": "可获取", "platforms": "平台", "april": "四月", "now": "现在", "appear": "出现", "wasting": "浪费", "no": "没有", "getting": "获得", "back": "后退", "additional": "额外的", "reporting": "报道", "broadcasting": "广播", "barrels": "桶", "bockman": "博克曼", "windward": "迎风", "diona": "迪奥娜", "sonia": "索尼娅", "tankertrackers": "油轮追踪者", "com": "com", "ship-tracking": "船舶追踪", "switch": "切换", "tracker": "追踪器", "michelle": "米歇尔", "wiese": "维泽", "analyst": "分析师", "iran-flagged": "伊朗船旗", "sanctions": "制裁", "developing": "发展中的", "designated": "指定的", "abuses": "滥用", "chabahar": "恰巴哈尔", "stretches": "延伸", "tip": "提示", "combined": "联合的", "destinations": "目的地", "lowest": "最低的", "average": "平均", "kpler": "Kpler", "covered": "覆盖的", "intercepting": "拦截", "iran-linked": "与伊朗有关联的", "ocean": "海洋", "nitc": "NITC", "unladen": "空载的", "circling": "盘旋", "karachi": "卡拉奇", "iranian-linked": "与伊朗有关联的", "noticeably": "显著地", "globally": "全球地", "uani": "UANI", "malacca": "马六甲", "malaysia": "马来西亚", "indonesia": "印度尼西亚", "sinopa": "Sinopa", "barbara": "芭芭拉", "metzler": "梅茨勒"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
