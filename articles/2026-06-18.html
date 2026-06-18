@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-18</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-18</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/news/1024/branded_news/2514/live/13659b90-6b39-11f1-b1db-af71d47507d6.png" alt="Man arrested on suspicion of attempted murder after boy injured in crocodile enclosure" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Man arrested on suspicion of attempted murder after boy injured in crocodile enclosure</h1>
+      <p class="source">Source: <a href="https://www.bbc.com/news/articles/czx50n2vj74o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-18.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A man has been arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃn/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling or belief that someone is guilty of something">suspicion</span> of <span class="keyword" data-word="attempted" data-phonetic="/əˈtemptɪd/" data-pos="adj." data-def="未遂的，尝试的" data-def-en="tried but not successful">attempted</span> murder after a three-year-old boy was left with <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous">critical</span> injuries after ending up in a zoo's crocodile <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏，圈地" data-def-en="an area surrounded by a fence or wall">enclosure</span>.</span></p>
+        <p class="cn">一名男子因涉嫌谋杀未遂被捕，此前一名三岁男孩在动物园鳄鱼池中受伤，伤势危急。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Cambridgeshire Police said it was called to Johnsons of Old Hurst, near Huntingdon, at 13:24 BST.</span></p>
+        <p class="cn">剑桥郡警方表示，他们于英国夏令时13:24接到报警，事发地点位于亨廷顿附近Old Hurst的约翰逊动物园。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The boy was taken to Addenbrooke's Hospital with serious injuries and is in a <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous">critical</span> but stable condition, the force said.</span></p>
+        <p class="cn">警方称，男孩被送往阿登布鲁克医院，伤势严重，目前情况危急但稳定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">A 30-year-old man from Norfolk has been arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃn/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling or belief that someone is guilty of something">suspicion</span> of <span class="keyword" data-word="attempted" data-phonetic="/əˈtemptɪd/" data-pos="adj." data-def="未遂的，尝试的" data-def-en="tried but not successful">attempted</span> murder and officers added that they do not believe the man and child were known to each other.</span></p>
+        <p class="cn">一名来自诺福克的30岁男子因涉嫌谋杀未遂被捕，警方补充称，他们认为该男子与男孩并不相识。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The force said it was investigating whether the child was attacked by the animals.</span></p>
+        <p class="cn">警方表示，他们正在调查孩子是否遭到了鳄鱼的攻击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">A spokesperson for Johnsons of Old Hurst said its thoughts and prayers were with the boy and his family.</span></p>
+        <p class="cn">约翰逊动物园的一位发言人表示，他们的心与男孩及其家人同在，并为他们祈祷。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"Out of respect to the family, our Tropical House will remain closed until further notice," they added.</span></p>
+        <p class="cn">"出于对家人的尊重，我们的热带馆将关闭，直至另行通知，"他们补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"If you have any questions about the incident, please direct inquiries to Cambridgeshire Police Constabulary.</span></p>
+        <p class="cn">"如果您对事件有任何疑问，请向剑桥郡警察局咨询。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">"The rest of the site will remain open as normal."</span></p>
+        <p class="cn">"园区其他区域将正常开放。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Det Insp Verity McCann, from Cambridgeshire Police, said: "At this stage we are speaking to people who were at the zoo at the time of this <span class="keyword" data-word="distressing" data-phonetic="/dɪˈstresɪŋ/" data-pos="adj." data-def="令人痛苦的，令人忧虑的" data-def-en="causing worry, sadness, or pain">distressing</span> incident to understand more about the circumstances.</span></p>
+        <p class="cn">剑桥郡警方的探长Verity McCann表示："目前，我们正在与事发时在动物园的游客交谈，以了解更多情况。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"We do not believe the man arrested and the child are known to each other.</span> <span class="sentence" data-sentence-index="11">Officers are supporting the boy's family at hospital, and our thoughts remain with them."</span></p>
+        <p class="cn">"我们认为被捕男子与孩子并不相识。警员正在医院支持男孩的家人，我们心系他们。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Huntingdon MP Ben Obese-Jecty wrote on social media that his "thoughts were with the young victim and his family during a hugely <span class="keyword" data-word="traumatic" data-phonetic="/trɔːˈmætɪk/" data-pos="adj." data-def="创伤性的，痛苦的" data-def-en="causing severe emotional shock or distress">traumatic</span> and difficult time" and he urged people to "refrain from <span class="keyword" data-word="speculation" data-phonetic="/ˌspekjuˈleɪʃn/" data-pos="n." data-def="猜测，推测" data-def-en="the act of forming opinions without having definite knowledge">speculation</span> online".</span></p>
+        <p class="cn">亨廷顿议员Ben Obese-Jecty在社交媒体上写道，他的"心与年幼的受害者及其家人同在，他们正经历巨大的创伤和困难时期"，并呼吁人们"避免在网上猜测"。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">He said he was "<span class="keyword" data-word="liaising" data-phonetic="/liˈeɪzɪŋ/" data-pos="v." data-def="联络，联系" data-def-en="to work with someone in order to exchange information and achieve a common goal">liaising</span> with senior officers at Gold Command who are treating this as a <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous">critical</span> incident".</span></p>
+        <p class="cn">他说他"正在与黄金指挥部的资深警官联络，他们将此事件视为重大事件"。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Darryl Preston, Cambridgeshire and Peterborough's police and crime commissioner, said he had been briefed by Chief Constable Simon Megicks.</span></p>
+        <p class="cn">剑桥郡和彼得伯勒的警察与犯罪专员Darryl Preston表示，他已听取了警察局长Simon Megicks的简报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"My thoughts go out to the family of the little boy involved in this truly horrific incident," he said.</span></p>
+        <p class="cn">"我的心与这起可怕事件中的小男孩的家人同在，"他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">"I can only begin to imagine the trauma those involved are going through."</span></p>
+        <p class="cn">"我无法想象相关人员正在经历的创伤。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">A spokesperson for the East of England Ambulance Service said an ambulance, a rapid response vehicle, an ambulance officer vehicle and Magpas Air Ambulance attended the scene.</span></p>
+        <p class="cn">英格兰东部救护车服务中心的一位发言人表示，一辆救护车、一辆快速反应车、一辆救护官车辆和Magpas空中救护车赶到了现场。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">"A child was transported by road to hospital for further care," they added.</span></p>
+        <p class="cn">"一名儿童通过陆路被送往医院接受进一步治疗，"他们补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">A Magpas Air Ambulance spokesperson said a <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous">critical</span> care team attended the incident at 13:42 and "treated one patient at the scene before taking them to hospital".</span></p>
+        <p class="cn">Magpas空中救护车的一位发言人表示，一个重症监护团队于13:42到达现场，"在现场治疗了一名患者，随后将其送往医院"。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">A near neighbour of the zoo, who did not wish to be named, described hearing a "lot of sirens" then an air ambulance arriving.</span></p>
+        <p class="cn">动物园的一位不愿透露姓名的近邻描述说，他听到了"很多警笛声"，随后一架空中救护车抵达。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">He said the incident was "shocking".</span></p>
+        <p class="cn">他说这起事件"令人震惊"。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Mike Annicelli, 52, who also lives close to the zoo, said he had previously visited the attraction.</span></p>
+        <p class="cn">52岁的Mike Annicelli也住在动物园附近，他说他以前去过这个景点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">He said there was a "raised platform" in the <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏，圈地" data-def-en="an area surrounded by a fence or wall">enclosure</span> and estimated the crocodiles were about 15ft (4.5m) below.</span> <span class="sentence" data-sentence-index="24">He said there was fencing along walkways which he estimated was around 4ft (1.2m) high.</span></p>
+        <p class="cn">他说围栏里有一个"高台"，估计鳄鱼在下方约15英尺（4.5米）处。他说走道旁有围栏，估计高度约为4英尺（1.2米）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">According to its website, Johnsons of Old Hurst is a family-run farming business that now features a butchers, a farm shop, tea room, steakhouse and zoo.</span></p>
+        <p class="cn">根据其网站，约翰逊动物园是一个家族经营的农场企业，现在设有肉店、农场商店、茶室、牛排馆和动物园。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">It says it "houses over 100 fascinating animals" including crocodiles, African lions and a Bengal tiger.</span></p>
+        <p class="cn">它说它"饲养了100多种迷人的动物"，包括鳄鱼、非洲狮和一只孟加拉虎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">The crocodiles are kept in a converted cattle barn, which has metal-fenced elevated walkways looking down on large pools of water surrounded by tropical vegetation.</span></p>
+        <p class="cn">鳄鱼被饲养在一个改建的牛棚里，那里有金属围栏的高架走道，可以俯瞰被热带植被环绕的大水池。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">Charlotte Lowe, who represents Old Hurst on Huntingdonshire District Council and Cambridgeshire County Council, said she was "shocked" when she heard about the incident.</span></p>
+        <p class="cn">在亨廷顿郡议会和剑桥郡议会代表Old Hurst的Charlotte Lowe表示，她听到这起事件时感到"震惊"。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">"To have something like this happen here is just incredulous," she said.</span> <span class="sentence" data-sentence-index="30">"You don't expect this to happen in a rural village."</span></p>
+        <p class="cn">"这样的事情发生在这里简直令人难以置信，"她说。"你没想到会在一个乡村发生这种事。"</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">The <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏，圈地" data-def-en="an area surrounded by a fence or wall">enclosure</span> had safety measures in place, she added, including Perspex glass and secure walkways, and the zoo was a popular attraction to visitors from all over the country.</span></p>
+        <p class="cn">她补充说，围栏有安全措施，包括有机玻璃和安全的走道，动物园是全国游客的热门景点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">"Our thoughts and prayers are with the family of the young boy suffering in this," she added.</span></p>
+        <p class="cn">"我们的心与这起事件中受苦的小男孩的家人同在，并为他们祈祷，"她补充道。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicion</span>
+        <button class="kw-speak-btn" data-word="suspicion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">怀疑，嫌疑</p>
+      <p class="kw-def-en">a feeling or belief that someone is guilty of something</p>
+      <p class="kw-ctx">&ldquo;A man has been arrested on suspicion of attempted murder after a three-year-old boy was left with critical injuries after ending up in a zoo's crocodile enclosure.&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子因涉嫌谋杀未遂被捕，此前一名三岁男孩在动物园的鳄鱼围栏内受重伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">attempted</span>
+        <button class="kw-speak-btn" data-word="attempted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈtemptɪd/ adj.</span>
+      </div>
+      <p class="kw-def">未遂的，尝试的</p>
+      <p class="kw-def-en">tried but not successful</p>
+      <p class="kw-ctx">&ldquo;A 30-year-old man from Norfolk has been arrested on suspicion of attempted murder and officers added that they do not believe the man and child were known to each other.&rdquo;</p>
+      <p class="kw-ctx-cn">一名来自诺福克的30岁男子因涉嫌谋杀未遂被捕，警方补充说，他们认为该男子与孩子并不相识。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">critical</span>
+        <button class="kw-speak-btn" data-word="critical" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkrɪtɪkl/ adj.</span>
+      </div>
+      <p class="kw-def">危急的，关键的</p>
+      <p class="kw-def-en">extremely serious or dangerous</p>
+      <p class="kw-ctx">&ldquo;The boy was taken to Addenbrooke's Hospital with serious injuries and is in a critical but stable condition, the force said.&rdquo;</p>
+      <p class="kw-ctx-cn">警方称，男孩被送往阿登布鲁克医院，伤势严重，情况危急但稳定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enclosure</span>
+        <button class="kw-speak-btn" data-word="enclosure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkloʊʒər/ n.</span>
+      </div>
+      <p class="kw-def">围栏，圈地</p>
+      <p class="kw-def-en">an area surrounded by a fence or wall</p>
+      <p class="kw-ctx">&ldquo;A man has been arrested on suspicion of attempted murder after a three-year-old boy was left with critical injuries after ending up in a zoo's crocodile enclosure.&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子因涉嫌谋杀未遂被捕，此前一名三岁男孩在动物园的鳄鱼围栏内受重伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">distressing</span>
+        <button class="kw-speak-btn" data-word="distressing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈstresɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人痛苦的，令人忧虑的</p>
+      <p class="kw-def-en">causing worry, sadness, or pain</p>
+      <p class="kw-ctx">&ldquo;At this stage we are speaking to people who were at the zoo at the time of this distressing incident to understand more about the circumstances.&rdquo;</p>
+      <p class="kw-ctx-cn">在这个阶段，我们正在与事发时在动物园的人交谈，以了解更多情况。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">traumatic</span>
+        <button class="kw-speak-btn" data-word="traumatic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trɔːˈmætɪk/ adj.</span>
+      </div>
+      <p class="kw-def">创伤性的，痛苦的</p>
+      <p class="kw-def-en">causing severe emotional shock or distress</p>
+      <p class="kw-ctx">&ldquo;Huntingdon MP Ben Obese-Jecty wrote on social media that his "thoughts were with the young victim and his family during a hugely traumatic and difficult time" and he urged people to "refrain from speculation online".&rdquo;</p>
+      <p class="kw-ctx-cn">亨廷登议员本·奥贝斯-杰蒂在社交媒体上写道，他“与年幼的受害者及其家人同在，他们正经历着巨大的创伤和困难时期”，并敦促人们“避免在网上猜测”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">speculation</span>
+        <button class="kw-speak-btn" data-word="speculation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌspekjuˈleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">猜测，推测</p>
+      <p class="kw-def-en">the act of forming opinions without having definite knowledge</p>
+      <p class="kw-ctx">&ldquo;Huntingdon MP Ben Obese-Jecty wrote on social media that his "thoughts were with the young victim and his family during a hugely traumatic and difficult time" and he urged people to "refrain from speculation online".&rdquo;</p>
+      <p class="kw-ctx-cn">亨廷登议员本·奥贝斯-杰蒂在社交媒体上写道，他“与年幼的受害者及其家人同在，他们正经历着巨大的创伤和困难时期”，并敦促人们“避免在网上猜测”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">liaising</span>
+        <button class="kw-speak-btn" data-word="liaising" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/liˈeɪzɪŋ/ v.</span>
+      </div>
+      <p class="kw-def">联络，联系</p>
+      <p class="kw-def-en">to work with someone in order to exchange information and achieve a common goal</p>
+      <p class="kw-ctx">&ldquo;He said he was "liaising with senior officers at Gold Command who are treating this as a critical incident".&rdquo;</p>
+      <p class="kw-ctx-cn">他说他“正在与黄金指挥部的高级官员联络，他们正在将此视为一起重大事件处理”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A man has been arrested on suspicion of attempted murder after a three-year-old boy was left with critical injuries after ending up in a zoo's crocodile enclosure.", "start_ms": 0, "end_ms": 10584, "paragraph_index": 0}, {"index": 1, "text": "Cambridgeshire Police said it was called to Johnsons of Old Hurst, near Huntingdon, at 13:24 BST.", "start_ms": 10584, "end_ms": 19320, "paragraph_index": 1}, {"index": 2, "text": "The boy was taken to Addenbrooke's Hospital with serious injuries and is in a critical but stable condition, the force said.", "start_ms": 19320, "end_ms": 27792, "paragraph_index": 2}, {"index": 3, "text": "A 30-year-old man from Norfolk has been arrested on suspicion of attempted murder and officers added that they do not believe the man and child were known to each other.", "start_ms": 27792, "end_ms": 38232, "paragraph_index": 3}, {"index": 4, "text": "The force said it was investigating whether the child was attacked by the animals.", "start_ms": 38232, "end_ms": 43824, "paragraph_index": 4}, {"index": 5, "text": "A spokesperson for Johnsons of Old Hurst said its thoughts and prayers were with the boy and his family.", "start_ms": 43824, "end_ms": 50496, "paragraph_index": 5}, {"index": 6, "text": "\"Out of respect to the family, our Tropical House will remain closed until further notice,\" they added.", "start_ms": 50496, "end_ms": 57816, "paragraph_index": 6}, {"index": 7, "text": "\"If you have any questions about the incident, please direct inquiries to Cambridgeshire Police Constabulary.", "start_ms": 57816, "end_ms": 65424, "paragraph_index": 7}, {"index": 8, "text": "\"The rest of the site will remain open as normal.\"", "start_ms": 65424, "end_ms": 69264, "paragraph_index": 8}, {"index": 9, "text": "Det Insp Verity McCann, from Cambridgeshire Police, said: \"At this stage we are speaking to people who were at the zoo at the time of this distressing incident to understand more about the circumstances.", "start_ms": 69264, "end_ms": 81960, "paragraph_index": 9}, {"index": 10, "text": "\"We do not believe the man arrested and the child are known to each other.", "start_ms": 81960, "end_ms": 87000, "paragraph_index": 10}, {"index": 11, "text": "Officers are supporting the boy's family at hospital, and our thoughts remain with them.\"", "start_ms": 87000, "end_ms": 93000, "paragraph_index": 10}, {"index": 12, "text": "Huntingdon MP Ben Obese-Jecty wrote on social media that his \"thoughts were with the young victim and his family during a hugely traumatic and difficult time\" and he urged people to \"refrain from speculation online\".", "start_ms": 93000, "end_ms": 106536, "paragraph_index": 11}, {"index": 13, "text": "He said he was \"liaising with senior officers at Gold Command who are treating this as a critical incident\".", "start_ms": 106536, "end_ms": 113688, "paragraph_index": 12}, {"index": 14, "text": "Darryl Preston, Cambridgeshire and Peterborough's police and crime commissioner, said he had been briefed by Chief Constable Simon Megicks.", "start_ms": 113688, "end_ms": 123288, "paragraph_index": 13}, {"index": 15, "text": "\"My thoughts go out to the family of the little boy involved in this truly horrific incident,\" he said.", "start_ms": 123288, "end_ms": 130128, "paragraph_index": 14}, {"index": 16, "text": "\"I can only begin to imagine the trauma those involved are going through.\"", "start_ms": 130128, "end_ms": 135288, "paragraph_index": 15}, {"index": 17, "text": "A spokesperson for the East of England Ambulance Service said an ambulance, a rapid response vehicle, an ambulance officer vehicle and Magpas Air Ambulance attended the scene.", "start_ms": 135288, "end_ms": 147456, "paragraph_index": 16}, {"index": 18, "text": "\"A child was transported by road to hospital for further care,\" they added.", "start_ms": 147456, "end_ms": 153240, "paragraph_index": 17}, {"index": 19, "text": "A Magpas Air Ambulance spokesperson said a critical care team attended the incident at 13:42 and \"treated one patient at the scene before taking them to hospital\".", "start_ms": 153240, "end_ms": 164688, "paragraph_index": 18}, {"index": 20, "text": "A near neighbour of the zoo, who did not wish to be named, described hearing a \"lot of sirens\" then an air ambulance arriving.", "start_ms": 164688, "end_ms": 173256, "paragraph_index": 19}, {"index": 21, "text": "He said the incident was \"shocking\".", "start_ms": 173256, "end_ms": 176256, "paragraph_index": 20}, {"index": 22, "text": "Mike Annicelli, 52, who also lives close to the zoo, said he had previously visited the attraction.", "start_ms": 176256, "end_ms": 184392, "paragraph_index": 21}, {"index": 23, "text": "He said there was a \"raised platform\" in the enclosure and estimated the crocodiles were about 15ft (4.5m) below.", "start_ms": 184392, "end_ms": 193920, "paragraph_index": 22}, {"index": 24, "text": "He said there was fencing along walkways which he estimated was around 4ft (1.2m) high.", "start_ms": 193920, "end_ms": 201768, "paragraph_index": 22}, {"index": 25, "text": "According to its website, Johnsons of Old Hurst is a family-run farming business that now features a butchers, a farm shop, tea room, steakhouse and zoo.", "start_ms": 201768, "end_ms": 213072, "paragraph_index": 23}, {"index": 26, "text": "It says it \"houses over 100 fascinating animals\" including crocodiles, African lions and a Bengal tiger.", "start_ms": 213072, "end_ms": 222000, "paragraph_index": 24}, {"index": 27, "text": "The crocodiles are kept in a converted cattle barn, which has metal-fenced elevated walkways looking down on large pools of water surrounded by tropical vegetation.", "start_ms": 222000, "end_ms": 233208, "paragraph_index": 25}, {"index": 28, "text": "Charlotte Lowe, who represents Old Hurst on Huntingdonshire District Council and Cambridgeshire County Council, said she was \"shocked\" when she heard about the incident.", "start_ms": 233208, "end_ms": 243936, "paragraph_index": 26}, {"index": 29, "text": "\"To have something like this happen here is just incredulous,\" she said.", "start_ms": 243936, "end_ms": 248976, "paragraph_index": 27}, {"index": 30, "text": "\"You don't expect this to happen in a rural village.\"", "start_ms": 248976, "end_ms": 252936, "paragraph_index": 27}, {"index": 31, "text": "The enclosure had safety measures in place, she added, including Perspex glass and secure walkways, and the zoo was a popular attraction to visitors from all over the country.", "start_ms": 252936, "end_ms": 265248, "paragraph_index": 28}, {"index": 32, "text": "\"Our thoughts and prayers are with the family of the young boy suffering in this,\" she added.", "start_ms": 265248, "end_ms": 271176, "paragraph_index": 29}], "total_duration_ms": 271176};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "said": "说", "of": "的", "was": "是", "he": "他", "in": "在", "at": "在", "with": "与", "incident": "事件", "this": "这个", "are": "是", "family": "家庭", "ambulance": "救护车", "on": "在", "boy": "男孩", "cambridgeshire": "剑桥郡", "added": "补充", "were": "是", "thoughts": "想法", "who": "谁", "she": "她", "man": "男子", "police": "警方", "it": "它", "old": "旧的", "hospital": "医院", "from": "来自", "child": "孩子", "by": "被", "about": "关于", "has": "有", "been": "已经", "arrested": "被捕", "is": "是", "officers": "官员", "that": "那个", "they": "它们", "not": "不", "spokesperson": "发言人", "for": "为了", "his": "他的", "our": "我们的", "remain": "仍然", "had": "有", "an": "一个", "air": "气氛", "murder": "谋杀", "after": "之后", "injuries": "受伤", "near": "附近", "force": "力量", "do": "做", "believe": "认为", "known": "已知", "each": "每个", "other": "其他", "its": "它的", "prayers": "祈祷", "out": "出来", "tropical": "热带的", "will": "将", "further": "进一步的", "you": "你", "have": "有", "as": "作为", "we": "我们", "people": "人们", "time": "时间", "them": "他们", "young": "年轻的", "involved": "涉及的", "vehicle": "车辆", "attended": "参加", "scene": "现场", "care": "照顾", "there": "那里", "estimated": "估计的", "which": "哪个", "over": "超过", "including": "包括", "council": "委员会", "happen": "发生", "left": "离开", "ending": "结束", "up": "向上", "called": "称为", "bst": "英国夏令时", "taken": "采取", "serious": "严重的", "but": "但是", "stable": "稳定的", "condition": "状况", "year-old": "岁的", "norfolk": "诺福克", "investigating": "调查", "whether": "是否", "attacked": "袭击", "respect": "尊重", "house": "议院", "closed": "关闭", "until": "直到", "notice": "通知", "if": "如果", "any": "任何", "questions": "问题", "direct": "直接的", "constabulary": "警察部队", "rest": "其余", "site": "网站", "open": "开放", "normal": "正常", "det": "侦探", "stage": "舞台", "speaking": "发言", "understand": "理解", "more": "更多", "circumstances": "情况", "supporting": "支持", "mp": "议员", "ben": "本", "wrote": "写道", "social": "社交的", "media": "媒体", "victim": "受害者", "during": "在期间", "difficult": "困难的", "urged": "敦促", "refrain": "克制", "online": "在线", "senior": "高级", "gold": "黄金", "command": "指挥", "treating": "对待", "crime": "犯罪", "commissioner": "专员", "briefed": "简报", "chief": "首席", "constable": "警察", "simon": "西蒙", "my": "我的", "go": "去", "little": "很少", "truly": "真正地", "horrific": "可怕的", "can": "可以", "only": "只有", "begin": "开始", "imagine": "想象", "trauma": "创伤", "those": "那些", "going": "将要", "through": "通过", "east": "东部", "england": "英格兰", "service": "服务", "response": "回应", "officer": "警官", "transported": "运输", "road": "道路", "team": "团队", "treated": "接受治疗", "one": "一个", "before": "之前", "taking": "采取", "did": "做了", "wish": "希望", "be": "是", "named": "名为", "described": "描述", "hearing": "听证会", "lot": "很多", "then": "然后", "arriving": "到达", "mike": "麦克风", "also": "也", "lives": "生命", "close": "密切的", "previously": "此前", "visited": "访问", "raised": "提出的", "platform": "平台", "below": "下方", "along": "一起", "around": "在...周围", "high": "高的", "according": "根据", "website": "网站", "farming": "农业", "business": "事务", "now": "现在", "features": "功能", "shop": "商店", "tea": "茶", "room": "房间", "says": "表示", "houses": "房屋", "kept": "保留", "looking": "寻找", "down": "下来", "large": "大的", "pools": "水池", "water": "水", "charlotte": "夏洛特", "represents": "代表", "district": "地区", "county": "郡", "shocked": "震惊", "when": "当", "heard": "听到", "something": "某事", "like": "像", "here": "这里", "just": "只是", "don't": "不要", "expect": "期望", "safety": "安全", "measures": "措施", "place": "地点", "secure": "安全的", "popular": "流行的", "visitors": "游客", "all": "所有", "country": "国家", "suffering": "苦难", "zoo": "动物园", "hurst": "赫斯特", "johnsons": "约翰逊一家", "crocodiles": "鳄鱼", "walkways": "走道", "huntingdon": "亨廷登", "animals": "动物", "magpas": "马格帕斯", "attraction": "景点", "three-year-old": "三岁的", "zoo's": "动物园的", "crocodile": "鳄鱼", "addenbrooke's": "阿登布鲁克医院", "please": "请", "inquiries": "询问", "insp": "督察", "verity": "维里蒂", "mccann": "麦卡恩", "boy's": "男孩的", "obese-jecty": "肥胖注射", "hugely": "极其", "darryl": "达里尔", "preston": "普雷斯顿", "peterborough's": "彼得伯勒的", "megicks": "梅吉克斯", "rapid": "迅速的", "patient": "病人", "neighbour": "邻居", "sirens": "警笛声", "shocking": "令人震惊的", "annicelli": "安尼切利", "fencing": "围栏", "family-run": "家族经营的", "butchers": "肉店", "farm": "农场", "steakhouse": "牛排馆", "fascinating": "迷人的", "african": "非洲的", "lions": "狮子", "bengal": "孟加拉", "tiger": "老虎", "converted": "改建的", "cattle": "牛", "barn": "谷仓", "metal-fenced": "金属围栏的", "elevated": "高架的", "surrounded": "被环绕的", "vegetation": "植被", "lowe": "洛", "huntingdonshire": "亨廷登郡", "incredulous": "怀疑的", "rural": "乡村的", "village": "村庄", "perspex": "有机玻璃", "glass": "玻璃"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
