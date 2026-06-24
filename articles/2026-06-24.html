@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-24</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-24</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6551/live/0e9d3450-6fea-11f1-b1db-af71d47507d6.jpg" alt="UK sees hottest June day on record as 36.1C recorded in Hampshire" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>UK sees hottest June day on record as 36.1C recorded in Hampshire</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c30y619glveo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-24.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">'No let up' - The people working in extreme heat</span></p>
+        <p class="cn">'毫无缓解'——在极端高温下工作的人们</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The UK has experienced its hottest June day on record after temperatures soared to 36.1C (97F) in Gosport, Hampshire on Wednesday afternoon.</span></p>
+        <p class="cn">英国经历了有记录以来最热的六月天，周三下午汉普郡戈斯波特的气温飙升至36.1摄氏度（97华氏度）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Hundreds of schools shut across England and Wales and transport has also been disrupted, with train passengers advised to avoid all non-essential travel.</span></p>
+        <p class="cn">英格兰和威尔士数百所学校关闭，交通也受到影响，火车乘客被建议避免所有非必要旅行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The heatwave is <span class="keyword" data-word="forecast" data-phonetic="/ˈfɔːrkæst/" data-pos="v./n." data-def="预报，预测" data-def-en="to predict or estimate future events, especially weather">forecast</span> to continue into Thursday and Friday, with a further high of about 38C possible, the Met Office said.</span></p>
+        <p class="cn">英国气象局表示，热浪预计将持续到周四和周五，可能进一步达到约38摄氏度的高温。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">A red extreme heat <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> issued by the Met Office across parts of south and central England and south Wales remains in place until 23:59 BST on Thursday.</span></p>
+        <p class="cn">英国气象局发布的红色极端高温警告覆盖英格兰南部和中部部分地区以及南威尔士，将持续到周四英国夏令时23:59。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The high for the day came between 15:00 and 16:00 BST - breaking the previous June record of 35.6C recorded in Southampton in 1976 and Camden in 1957.</span></p>
+        <p class="cn">当日最高气温出现在英国夏令时15:00至16:00之间，打破了1976年南安普顿和1957年卡姆登创下的35.6摄氏度的六月纪录。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">This new record is described as "<span class="keyword" data-word="provisional" data-phonetic="/prəˈvɪʒənl/" data-pos="adj." data-def="临时的，暂定的" data-def-en="arranged for the present time only and likely to be changed later">provisional</span>" by the Met Office, which now has to conduct checks to ensure the measurement is reliable.</span></p>
+        <p class="cn">英国气象局称这一新纪录为“临时”纪录，现在必须进行检查以确保测量可靠。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The next highest temperatures of the day were all recorded in southern England, including Wisley, Surrey on 36C, Wiggonholt, West Sussex on 35.9C,  and Charlwood.</span> <span class="sentence" data-sentence-index="9">Surrey on 35.7C.</span> <span class="sentence" data-sentence-index="10">And Wales had its hottest day of the year so far, with a high of 33.3C at Cardiff Bute Park.</span></p>
+        <p class="cn">当日次高气温均出现在英格兰南部，包括萨里郡威斯利36摄氏度、西萨塞克斯郡威格霍尔特35.9摄氏度，以及萨里郡查尔伍德35.7摄氏度。威尔士也经历了今年最热的一天，加的夫布特公园最高气温达33.3摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Meanwhile, a searing European heatwave continues to cause deaths and disruption, - with France recording its hottest day since records began in 1947, and the temperature in Paris and other areas above 40C.</span></p>
+        <p class="cn">与此同时，灼热的欧洲热浪继续造成死亡和混乱——法国记录了自1947年有记录以来最热的一天，巴黎和其他地区气温超过40摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">Among the areas covered by the UK red <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> are the East Midlands, the east of England, London and south-east England, south-west England, Wales and the West Midlands.</span></p>
+        <p class="cn">英国红色警告覆盖的地区包括东米德兰兹、英格兰东部、伦敦和英格兰东南部、英格兰西南部、威尔士和西米德兰兹。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">These regions can expect an "<span class="keyword" data-word="exceptional" data-phonetic="/ɪkˈsepʃənl/" data-pos="adj." data-def="异常的，杰出的" data-def-en="unusually good or much better than average; unusual and not typical">exceptional</span> spell of hot and humid weather" with impacts to the general population "highly likely", according to the Met Office.</span></p>
+        <p class="cn">英国气象局表示，这些地区预计将出现“异常炎热潮湿的天气”，对普通人群的影响“极有可能”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">It is only the second time a red <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> has been issued since extreme heat warnings began in 2021.</span></p>
+        <p class="cn">这是自2021年极端高温警告开始以来第二次发布红色警告。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">Climate change has led to more frequent and intense heatwaves, said the Met Office's chief scientist, Professor Stephen Belcher.</span></p>
+        <p class="cn">英国气象局首席科学家斯蒂芬·贝尔彻教授表示，气候变化导致了更频繁和更强烈的热浪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">"To see temperatures like this in the UK in June is <span class="keyword" data-word="sobering" data-phonetic="/ˈsoʊbərɪŋ/" data-pos="adj." data-def="令人警醒的" data-def-en="making you feel serious and think carefully">sobering</span>," he added.</span></p>
+        <p class="cn">他补充说：“在六月看到英国出现这样的气温令人警醒。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">June temperature records set in 1976 and 1957 were broken</span></p>
+        <p class="cn">1976年和1957年创下的六月气温纪录被打破</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">A wider amber <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> covers much of England and Wales through Thursday, , external with areas as far north as Manchester expected to see temperatures reach above 30C.</span></p>
+        <p class="cn">更广泛的琥珀色警告覆盖英格兰和威尔士大部分地区，持续到周四，外部，远至北部的曼彻斯特等地区预计气温将超过30摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">A separate amber <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> for extreme heat, lasting from midnight on Friday , external until 23:59 covers south-east England, eastern England and parts of the Midlands.</span> <span class="sentence" data-sentence-index="20">And a new amber weather <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> has been issued , external for between 00:00 and 21:00 on Saturday, covering parts of southern and eastern England.</span></p>
+        <p class="cn">另一个针对极端高温的琥珀色警告，从周五午夜外部持续到23:59，覆盖英格兰东南部、英格兰东部和米德兰兹部分地区。此外，还发布了新的琥珀色天气警告外部，时间为周六00:00至21:00，覆盖英格兰南部和东部部分地区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">The daily air temperature record for the UK in June is 35.6C, which was reached on 28 June 1976 - but this is very likely to be exceeded in the coming days.</span></p>
+        <p class="cn">英国六月日气温纪录为35.6摄氏度，于1976年6月28日达到——但未来几天很可能被超越。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">The "feels like" temperature, which indicates how people will experience the heat, is likely to reach more than 40C in parts of England.</span></p>
+        <p class="cn">“体感”温度，即人们如何感受热度的指标，在英格兰部分地区可能超过40摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">King Charles got a helping hand to stay cool when he attended a London Climate Week reception</span></p>
+        <p class="cn">查尔斯国王在参加伦敦气候周招待会时得到了帮助保持凉爽的助力</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Matthew Lehnert, chief forecaster at the Met Office, said high humidity means the heat will feel "much more <span class="keyword" data-word="potent" data-phonetic="/ˈpoʊtnt/" data-pos="adj." data-def="强有力的，有效的" data-def-en="having great power, influence, or effect">potent</span>".</span></p>
+        <p class="cn">英国气象局首席预报员马修·莱纳特表示，高湿度意味着热量会感觉“更加强烈”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">Parts of the UK are also set to experience "tropical nights", which occur when night-time temperatures stay above 20C.</span></p>
+        <p class="cn">英国部分地区还将经历“热带夜晚”，即夜间气温保持在20摄氏度以上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The Met Office has warned that the weather could result in "population-wide adverse health effects", leading to serious illness or danger to life.</span></p>
+        <p class="cn">英国气象局警告说，这种天气可能导致“全人口范围的不良健康影响”，引发严重疾病或生命危险。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">Changes in working practices will be required, and there will be "significantly more" people visiting coastal areas and lakes, leading to an increased risk of water safety incidents.</span></p>
+        <p class="cn">工作方式将需要改变，前往沿海地区和湖泊的人数将“显著增加”，导致水上安全事件风险上升。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">It comes as a major rescue operation was initiated in Hampshire after a 15-year-old boy went missing while swimming in a nature reserve lake.</span></p>
+        <p class="cn">与此同时，汉普郡一名15岁男孩在自然保护区湖泊游泳时失踪，随后展开了大规模救援行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Several people stranded in traffic on the M25 near Godstone in Surrey after a crash are being treated for heat-related illnesses, South East Coast Ambulance Service said.</span></p>
+        <p class="cn">东南海岸救护车服务表示，在萨里郡戈德斯通附近的M25公路上，一起车祸后被困在交通中的几名乘客正在接受与高温相关的疾病治疗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Train operators including South Western Railway, Thameslink, Northern and Avanti West Coast have asked people to only make essential journeys and have put reduced timetables in place.</span> <span class="sentence" data-sentence-index="31">Transport for London warned passengers that "very high temperatures may cause disruption to some Tube and rail services.</span></p>
+        <p class="cn">包括西南铁路、泰晤士联线、北方铁路和阿凡提西海岸在内的火车运营商已要求人们仅进行必要旅行，并实施了缩减的时刻表。伦敦交通局警告乘客，“非常高的温度可能导致部分地铁和铁路服务中断”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">Ice cream man Emery, 17, said customers were coming out on "almost every street" because of the heat</span></p>
+        <p class="cn">17岁的冰淇淋小贩埃默里表示，由于高温，顾客“几乎每条街”都出来购买。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">The heat has affected working people across the country.</span> <span class="sentence" data-sentence-index="34">Telecoms engineer Jake Bird told the BBC how he was preparing for a week of high temperatures in his job, which requires him to climb telephone poles in PPE and a harness.</span></p>
+        <p class="cn">高温影响了全国各地的上班族。电信工程师杰克·伯德告诉BBC，他如何准备在需要穿着个人防护装备和安全带爬电线杆的工作中应对一周的高温。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">The 21-year-old has decided to keep working as he is self-employed but said he would take strategic cooling breaks.</span></p>
+        <p class="cn">这位21岁的工程师决定继续工作，因为他是自雇人士，但表示会进行策略性的降温休息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">The engineer, from Oxfordshire, said: "Here it's going to be 36 degrees and that is just insane, especially going up a pole in all that kit and everything.</span> <span class="sentence" data-sentence-index="37">It's just going to be absolutely dreadful."</span></p>
+        <p class="cn">这位来自牛津郡的工程师说：“这里将达到36度，这太疯狂了，尤其是带着所有装备爬电线杆。这绝对会非常糟糕。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="38">Meanwhile, bricklayer Elijah told BBC Newsbeat he tries to "keep the complaining [about the heat] to a minimum because about 10 months of the year, you're in rain and the cold".</span></p>
+        <p class="cn">与此同时，泥瓦匠伊利亚告诉BBC新闻节拍，他尽量“把对高温的抱怨降到最低，因为一年中大约有10个月，你都在雨和寒冷中工作”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="39">But he admitted the heat is "a lot to deal with", so his team in London has been starting work earlier than normal and finishing by midday.</span> <span class="sentence" data-sentence-index="40">He also gives his employees water and ice lollies to keep them cool.</span></p>
+        <p class="cn">但他承认高温“很难应对”，因此他在伦敦的团队比平时更早开始工作，并在中午前结束。他还给员工提供水和冰棒以保持凉爽。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="41">For 17-year-old ice cream man Emery, from Gloucester, the heat is "good for money and for the business".</span> <span class="sentence" data-sentence-index="42">However, the extreme heat also brings costs: everything in the van has to be plugged in overnight to keep it cool for the next day.</span></p>
+        <p class="cn">对于来自格洛斯特的17岁冰淇淋小贩埃默里来说，高温“对赚钱和生意都有好处”。然而，极端高温也带来了成本：货车里的一切都必须整夜插电以保持第二天凉爽。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="43">The UK Health Security Agency (UKHSA) has also issued a red heat-health alert, which remains in place until 23:00 BST on Thursday.</span></p>
+        <p class="cn">英国卫生安全局也发布了红色高温健康警报，该警报将持续到周四英国夏令时23:00。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="44">Meanwhile, Network Rail is advising passengers travelling to, from or within the current red weather <span class="keyword" data-word="warning" data-phonetic="/ˈwɔːrnɪŋ/" data-pos="n." data-def="警告，警报" data-def-en="a statement or event that tells of possible danger or problems">warning</span> zone to only to make necessary journeys on Wednesday, Thursday and Friday.</span></p>
+        <p class="cn">与此同时，英国铁路网公司建议前往、来自或位于当前红色天气警告区域内的乘客仅在周三、周四和周五进行必要旅行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="45">Dr Agostinho Sousa, head of extreme events and health protection at UKHSA, said it was "vitally important" for people to understand the risk the high temperatures poses.</span></p>
+        <p class="cn">英国卫生安全局极端事件和健康保护负责人阿戈斯蒂尼奥·索萨博士表示，让人们了解高温风险“至关重要”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="46">"A red heat health alert indicates a risk to life for even the healthy population, but simple actions like staying hydrated, avoiding the sun during the hottest part of the day, and keeping your home cool can make a big difference," he said.</span></p>
+        <p class="cn">他说：“红色高温健康警报表明即使对健康人群也存在生命风险，但保持水分、避免在一天中最热的时候晒太阳以及保持家中凉爽等简单措施可以产生很大影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="47">Transport for London warned passengers that "very high temperatures may cause disruption to some services</span></p>
+        <p class="cn">伦敦交通局警告乘客，“非常高的温度可能导致部分服务中断”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="48">More than 800 schools in England have been disrupted because of the high temperatures.</span> <span class="sentence" data-sentence-index="49">The Department for Education said on Monday that it does not normally advise schools to shut during hot weather.</span></p>
+        <p class="cn">英格兰超过800所学校因高温受到影响。教育部周一表示，通常不建议学校在炎热天气关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="50">It said that attendance was "the best way for pupils to learn" and that hot weather could "usually be managed safely".</span></p>
+        <p class="cn">它表示，出勤是“学生学习的最佳方式”，炎热天气“通常可以安全管理”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="51">Emma Howard-Boyd from the National Heat Commission said the closure of schools and transport routes showed that the UK was "not prepared" for the heatwave.</span></p>
+        <p class="cn">国家热浪委员会的艾玛·霍华德-博伊德表示，学校和交通路线的关闭表明英国“没有准备好”应对热浪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="52">She told BBC Breakfast the country had to prepare for the heat "we know is coming in the months and years to come".</span></p>
+        <p class="cn">她告诉BBC早餐节目，国家必须为“我们知道在未来几个月和几年里即将到来的”高温做好准备。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="53">Scientists have warned hotter temperatures are likely in the years ahead.</span> <span class="sentence" data-sentence-index="54">Between 2015 and 2024, the number of days exceeding 30C in the UK more than trebled compared with the 1961-1990 average, the Met Office says.</span></p>
+        <p class="cn">科学家警告说，未来几年可能出现更热的温度。英国气象局表示，2015年至2024年间，英国超过30摄氏度的天数比1961-1990年的平均值增加了两倍多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="55">Howard-Boyd said: "We need to make sure that as we're upgrading, refurbishing, rebuilding our schools, that we have heat at the top of the agenda.</span> <span class="sentence" data-sentence-index="56">It's the same for our transport networks."</span></p>
+        <p class="cn">霍华德-博伊德说：“我们需要确保在升级、翻新、重建学校时，将高温问题放在议程首位。我们的交通网络也是如此。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="57">Northern Ireland and Scotland experienced their hottest days of the year on Tuesday, with temperatures reaching 28.1C in Katesbridge, County Down and 29C in Dyce in Aberdeen respectively.</span></p>
+        <p class="cn">北爱尔兰和苏格兰周二经历了今年最热的一天，唐郡凯茨布里奇气温达到28.1摄氏度，阿伯丁戴斯达到29摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="58">The UK's summers are getting hotter - but how prepared are we?</span></p>
+        <p class="cn">英国的夏天越来越热——但我们准备好了吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="48">
+        <p class="en"><span class="sentence" data-sentence-index="59">Can you keep your kids off school or refuse to work during a heatwave?</span></p>
+        <p class="cn">热浪期间你能让孩子不去上学或拒绝工作吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="49">
+        <p class="en"><span class="sentence" data-sentence-index="60">Red heat alerts issued in France, Italy and Spain as 40C temperatures <span class="keyword" data-word="forecast" data-phonetic="/ˈfɔːrkæst/" data-pos="v./n." data-def="预报，预测" data-def-en="to predict or estimate future events, especially weather">forecast</span></span></p>
+        <p class="cn">法国、意大利和西班牙发布红色高温警报，预计气温达40摄氏度</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">soar</span>
+        <button class="kw-speak-btn" data-word="soar" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sɔːr/ v.</span>
+      </div>
+      <p class="kw-def">猛增，剧增</p>
+      <p class="kw-def-en">to rise very quickly to a high level</p>
+      <p class="kw-ctx">&ldquo;The UK has experienced its hottest June day on record after temperatures soared to 36.1C (97F) in Gosport, Hampshire on Wednesday afternoon.&rdquo;</p>
+      <p class="kw-ctx-cn">英国经历了有记录以来最热的六月天，周三下午汉普郡戈斯波特的温度飙升至36.1摄氏度（97华氏度）。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disrupt</span>
+        <button class="kw-speak-btn" data-word="disrupt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈrʌpt/ v.</span>
+      </div>
+      <p class="kw-def">扰乱，中断</p>
+      <p class="kw-def-en">to cause disorder or interruption in a system or process</p>
+      <p class="kw-ctx">&ldquo;Hundreds of schools shut across England and Wales and transport has also been disrupted, with train passengers advised to avoid all non-essential travel.&rdquo;</p>
+      <p class="kw-ctx-cn">英格兰和威尔士数百所学校关闭，交通也受到干扰，火车乘客被建议避免所有非必要的旅行。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">forecast</span>
+        <button class="kw-speak-btn" data-word="forecast" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfɔːrkæst/ v./n.</span>
+      </div>
+      <p class="kw-def">预报，预测</p>
+      <p class="kw-def-en">to predict or estimate future events, especially weather</p>
+      <p class="kw-ctx">&ldquo;The heatwave is forecast to continue into Thursday and Friday, with a further high of about 38C possible, the Met Office said.&rdquo;</p>
+      <p class="kw-ctx-cn">英国气象局表示，热浪预计将持续到周四和周五，可能进一步达到约38摄氏度的高温。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">warning</span>
+        <button class="kw-speak-btn" data-word="warning" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwɔːrnɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">警告，警报</p>
+      <p class="kw-def-en">a statement or event that tells of possible danger or problems</p>
+      <p class="kw-ctx">&ldquo;A red extreme heat warning issued by the Met Office across parts of south and central England and south Wales remains in place until 23:59 BST on Thursday.&rdquo;</p>
+      <p class="kw-ctx-cn">英国气象局对英格兰南部和中部以及南威尔士部分地区发布的红色极端高温警告将持续到英国夏令时周四23:59。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">provisional</span>
+        <button class="kw-speak-btn" data-word="provisional" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈvɪʒənl/ adj.</span>
+      </div>
+      <p class="kw-def">临时的，暂定的</p>
+      <p class="kw-def-en">arranged for the present time only and likely to be changed later</p>
+      <p class="kw-ctx">&ldquo;This new record is described as 'provisional' by the Met Office, which now has to conduct checks to ensure the measurement is reliable.&rdquo;</p>
+      <p class="kw-ctx-cn">英国气象局称这一新记录是“临时的”，现在必须进行检查以确保测量结果可靠。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exceptional</span>
+        <button class="kw-speak-btn" data-word="exceptional" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈsepʃənl/ adj.</span>
+      </div>
+      <p class="kw-def">异常的，杰出的</p>
+      <p class="kw-def-en">unusually good or much better than average; unusual and not typical</p>
+      <p class="kw-ctx">&ldquo;These regions can expect an 'exceptional spell of hot and humid weather' with impacts to the general population 'highly likely', according to the Met Office.&rdquo;</p>
+      <p class="kw-ctx-cn">据英国气象局称，这些地区预计将出现“异常炎热潮湿的天气”，对普通人群的影响“非常可能”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sobering</span>
+        <button class="kw-speak-btn" data-word="sobering" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsoʊbərɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">令人警醒的</p>
+      <p class="kw-def-en">making you feel serious and think carefully</p>
+      <p class="kw-ctx">&ldquo;'To see temperatures like this in the UK in June is sobering,' he added.&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说：“在英国六月看到这样的温度令人警醒。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">potent</span>
+        <button class="kw-speak-btn" data-word="potent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpoʊtnt/ adj.</span>
+      </div>
+      <p class="kw-def">强有力的，有效的</p>
+      <p class="kw-def-en">having great power, influence, or effect</p>
+      <p class="kw-ctx">&ldquo;Matthew Lehnert, chief forecaster at the Met Office, said high humidity means the heat will feel 'much more potent'.&rdquo;</p>
+      <p class="kw-ctx-cn">英国气象局首席预报员马修·莱纳特表示，高湿度意味着热量会感觉“更加强烈”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "'No let up' - The people working in extreme heat", "start_ms": 3000, "end_ms": 6912, "paragraph_index": 1}, {"index": 2, "text": "The UK has experienced its hottest June day on record after temperatures soared to 36.1C (97F) in Gosport, Hampshire on Wednesday afternoon.", "start_ms": 6912, "end_ms": 19656, "paragraph_index": 2}, {"index": 3, "text": "Hundreds of schools shut across England and Wales and transport has also been disrupted, with train passengers advised to avoid all non-essential travel.", "start_ms": 19656, "end_ms": 30048, "paragraph_index": 3}, {"index": 4, "text": "The heatwave is forecast to continue into Thursday and Friday, with a further high of about 38C possible, the Met Office said.", "start_ms": 30048, "end_ms": 39240, "paragraph_index": 4}, {"index": 5, "text": "A red extreme heat warning issued by the Met Office across parts of south and central England and south Wales remains in place until 23:59 BST on Thursday.", "start_ms": 39240, "end_ms": 51528, "paragraph_index": 5}, {"index": 6, "text": "The high for the day came between 15:00 and 16:00 BST - breaking the previous June record of 35.6C recorded in Southampton in 1976 and Camden in 1957.", "start_ms": 51528, "end_ms": 67584, "paragraph_index": 6}, {"index": 7, "text": "This new record is described as \"provisional\" by the Met Office, which now has to conduct checks to ensure the measurement is reliable.", "start_ms": 67584, "end_ms": 76608, "paragraph_index": 7}, {"index": 8, "text": "The next highest temperatures of the day were all recorded in southern England, including Wisley, Surrey on 36C, Wiggonholt, West Sussex on 35.9C,  and Charlwood.", "start_ms": 76608, "end_ms": 90264, "paragraph_index": 8}, {"index": 9, "text": "Surrey on 35.7C.", "start_ms": 90264, "end_ms": 93864, "paragraph_index": 8}, {"index": 10, "text": "And Wales had its hottest day of the year so far, with a high of 33.3C at Cardiff Bute Park.", "start_ms": 93864, "end_ms": 101928, "paragraph_index": 8}, {"index": 11, "text": "Meanwhile, a searing European heatwave continues to cause deaths and disruption, - with France recording its hottest day since records began in 1947, and the temperature in Paris and other areas above 40C.", "start_ms": 101928, "end_ms": 117360, "paragraph_index": 9}, {"index": 12, "text": "Among the areas covered by the UK red warning are the East Midlands, the east of England, London and south-east England, south-west England, Wales and the West Midlands.", "start_ms": 117360, "end_ms": 129432, "paragraph_index": 10}, {"index": 13, "text": "These regions can expect an \"exceptional spell of hot and humid weather\" with impacts to the general population \"highly likely\", according to the Met Office.", "start_ms": 129432, "end_ms": 139800, "paragraph_index": 11}, {"index": 14, "text": "It is only the second time a red warning has been issued since extreme heat warnings began in 2021.", "start_ms": 139800, "end_ms": 147552, "paragraph_index": 12}, {"index": 15, "text": "Climate change has led to more frequent and intense heatwaves, said the Met Office's chief scientist, Professor Stephen Belcher.", "start_ms": 147552, "end_ms": 156624, "paragraph_index": 13}, {"index": 16, "text": "\"To see temperatures like this in the UK in June is sobering,\" he added.", "start_ms": 156624, "end_ms": 162120, "paragraph_index": 14}, {"index": 17, "text": "June temperature records set in 1976 and 1957 were broken", "start_ms": 162120, "end_ms": 168720, "paragraph_index": 15}, {"index": 18, "text": "A wider amber warning covers much of England and Wales through Thursday, , external with areas as far north as Manchester expected to see temperatures reach above 30C.", "start_ms": 168720, "end_ms": 180216, "paragraph_index": 16}, {"index": 19, "text": "A separate amber warning for extreme heat, lasting from midnight on Friday , external until 23:59 covers south-east England, eastern England and parts of the Midlands.", "start_ms": 180216, "end_ms": 193032, "paragraph_index": 17}, {"index": 20, "text": "And a new amber weather warning has been issued , external for between 00:00 and 21:00 on Saturday, covering parts of southern and eastern England.", "start_ms": 193032, "end_ms": 204024, "paragraph_index": 17}, {"index": 21, "text": "The daily air temperature record for the UK in June is 35.6C, which was reached on 28 June 1976 - but this is very likely to be exceeded in the coming days.", "start_ms": 204024, "end_ms": 217344, "paragraph_index": 18}, {"index": 22, "text": "The \"feels like\" temperature, which indicates how people will experience the heat, is likely to reach more than 40C in parts of England.", "start_ms": 217344, "end_ms": 226584, "paragraph_index": 19}, {"index": 23, "text": "King Charles got a helping hand to stay cool when he attended a London Climate Week reception", "start_ms": 226584, "end_ms": 233112, "paragraph_index": 20}, {"index": 24, "text": "Matthew Lehnert, chief forecaster at the Met Office, said high humidity means the heat will feel \"much more potent\".", "start_ms": 233112, "end_ms": 241272, "paragraph_index": 21}, {"index": 25, "text": "Parts of the UK are also set to experience \"tropical nights\", which occur when night-time temperatures stay above 20C.", "start_ms": 241272, "end_ms": 250272, "paragraph_index": 22}, {"index": 26, "text": "The Met Office has warned that the weather could result in \"population-wide adverse health effects\", leading to serious illness or danger to life.", "start_ms": 250272, "end_ms": 259992, "paragraph_index": 23}, {"index": 27, "text": "Changes in working practices will be required, and there will be \"significantly more\" people visiting coastal areas and lakes, leading to an increased risk of water safety incidents.", "start_ms": 259992, "end_ms": 272520, "paragraph_index": 24}, {"index": 28, "text": "It comes as a major rescue operation was initiated in Hampshire after a 15-year-old boy went missing while swimming in a nature reserve lake.", "start_ms": 272520, "end_ms": 282336, "paragraph_index": 25}, {"index": 29, "text": "Several people stranded in traffic on the M25 near Godstone in Surrey after a crash are being treated for heat-related illnesses, South East Coast Ambulance Service said.", "start_ms": 282336, "end_ms": 294264, "paragraph_index": 26}, {"index": 30, "text": "Train operators including South Western Railway, Thameslink, Northern and Avanti West Coast have asked people to only make essential journeys and have put reduced timetables in place.", "start_ms": 294264, "end_ms": 306792, "paragraph_index": 27}, {"index": 31, "text": "Transport for London warned passengers that \"very high temperatures may cause disruption to some Tube and rail services.", "start_ms": 306792, "end_ms": 315312, "paragraph_index": 27}, {"index": 32, "text": "Ice cream man Emery, 17, said customers were coming out on \"almost every street\" because of the heat", "start_ms": 315312, "end_ms": 323160, "paragraph_index": 28}, {"index": 33, "text": "The heat has affected working people across the country.", "start_ms": 323160, "end_ms": 327408, "paragraph_index": 29}, {"index": 34, "text": "Telecoms engineer Jake Bird told the BBC how he was preparing for a week of high temperatures in his job, which requires him to climb telephone poles in PPE and a harness.", "start_ms": 327408, "end_ms": 339912, "paragraph_index": 29}, {"index": 35, "text": "The 21-year-old has decided to keep working as he is self-employed but said he would take strategic cooling breaks.", "start_ms": 339912, "end_ms": 347904, "paragraph_index": 30}, {"index": 36, "text": "The engineer, from Oxfordshire, said: \"Here it's going to be 36 degrees and that is just insane, especially going up a pole in all that kit and everything.", "start_ms": 347904, "end_ms": 359016, "paragraph_index": 31}, {"index": 37, "text": "It's just going to be absolutely dreadful.\"", "start_ms": 359016, "end_ms": 362640, "paragraph_index": 31}, {"index": 38, "text": "Meanwhile, bricklayer Elijah told BBC Newsbeat he tries to \"keep the complaining [about the heat] to a minimum because about 10 months of the year, you're in rain and the cold\".", "start_ms": 362640, "end_ms": 374472, "paragraph_index": 32}, {"index": 39, "text": "But he admitted the heat is \"a lot to deal with\", so his team in London has been starting work earlier than normal and finishing by midday.", "start_ms": 374472, "end_ms": 383808, "paragraph_index": 33}, {"index": 40, "text": "He also gives his employees water and ice lollies to keep them cool.", "start_ms": 383808, "end_ms": 388920, "paragraph_index": 33}, {"index": 41, "text": "For 17-year-old ice cream man Emery, from Gloucester, the heat is \"good for money and for the business\".", "start_ms": 388920, "end_ms": 396672, "paragraph_index": 34}, {"index": 42, "text": "However, the extreme heat also brings costs: everything in the van has to be plugged in overnight to keep it cool for the next day.", "start_ms": 396672, "end_ms": 405792, "paragraph_index": 34}, {"index": 43, "text": "The UK Health Security Agency (UKHSA) has also issued a red heat-health alert, which remains in place until 23:00 BST on Thursday.", "start_ms": 405792, "end_ms": 418944, "paragraph_index": 35}, {"index": 44, "text": "Meanwhile, Network Rail is advising passengers travelling to, from or within the current red weather warning zone to only to make necessary journeys on Wednesday, Thursday and Friday.", "start_ms": 418944, "end_ms": 431736, "paragraph_index": 36}, {"index": 45, "text": "Dr Agostinho Sousa, head of extreme events and health protection at UKHSA, said it was \"vitally important\" for people to understand the risk the high temperatures poses.", "start_ms": 431736, "end_ms": 444456, "paragraph_index": 37}, {"index": 46, "text": "\"A red heat health alert indicates a risk to life for even the healthy population, but simple actions like staying hydrated, avoiding the sun during the hottest part of the day, and keeping your home cool can make a big difference,\" he said.", "start_ms": 444456, "end_ms": 460128, "paragraph_index": 38}, {"index": 47, "text": "Transport for London warned passengers that \"very high temperatures may cause disruption to some services", "start_ms": 460128, "end_ms": 467688, "paragraph_index": 39}, {"index": 48, "text": "More than 800 schools in England have been disrupted because of the high temperatures.", "start_ms": 467688, "end_ms": 473760, "paragraph_index": 40}, {"index": 49, "text": "The Department for Education said on Monday that it does not normally advise schools to shut during hot weather.", "start_ms": 473760, "end_ms": 481320, "paragraph_index": 40}, {"index": 50, "text": "It said that attendance was \"the best way for pupils to learn\" and that hot weather could \"usually be managed safely\".", "start_ms": 481320, "end_ms": 489024, "paragraph_index": 41}, {"index": 51, "text": "Emma Howard-Boyd from the National Heat Commission said the closure of schools and transport routes showed that the UK was \"not prepared\" for the heatwave.", "start_ms": 489024, "end_ms": 498672, "paragraph_index": 42}, {"index": 52, "text": "She told BBC Breakfast the country had to prepare for the heat \"we know is coming in the months and years to come\".", "start_ms": 498672, "end_ms": 506208, "paragraph_index": 43}, {"index": 53, "text": "Scientists have warned hotter temperatures are likely in the years ahead.", "start_ms": 506208, "end_ms": 511416, "paragraph_index": 44}, {"index": 54, "text": "Between 2015 and 2024, the number of days exceeding 30C in the UK more than trebled compared with the 1961-1990 average, the Met Office says.", "start_ms": 511416, "end_ms": 524568, "paragraph_index": 44}, {"index": 55, "text": "Howard-Boyd said: \"We need to make sure that as we're upgrading, refurbishing, rebuilding our schools, that we have heat at the top of the agenda.", "start_ms": 524568, "end_ms": 534168, "paragraph_index": 45}, {"index": 56, "text": "It's the same for our transport networks.\"", "start_ms": 534168, "end_ms": 537888, "paragraph_index": 45}, {"index": 57, "text": "Northern Ireland and Scotland experienced their hottest days of the year on Tuesday, with temperatures reaching 28.1C in Katesbridge, County Down and 29C in Dyce in Aberdeen respectively.", "start_ms": 537888, "end_ms": 552336, "paragraph_index": 46}, {"index": 58, "text": "The UK's summers are getting hotter - but how prepared are we?", "start_ms": 552336, "end_ms": 556920, "paragraph_index": 47}, {"index": 59, "text": "Can you keep your kids off school or refuse to work during a heatwave?", "start_ms": 556920, "end_ms": 561936, "paragraph_index": 48}, {"index": 60, "text": "Red heat alerts issued in France, Italy and Spain as 40C temperatures forecast", "start_ms": 561936, "end_ms": 568920, "paragraph_index": 49}], "total_duration_ms": 568920};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "in": "在", "of": "的", "for": "为了", "heat": "高温", "on": "在", "is": "是", "temperatures": "温度", "said": "说", "has": "有", "england": "英格兰", "that": "那个", "with": "与", "high": "高的", "he": "他", "be": "是", "uk": "英国", "met": "伦敦警察厅", "people": "人们", "day": "天", "office": "办公室", "red": "红色的", "as": "作为", "extreme": "极端的", "june": "六月", "which": "哪个", "are": "是", "weather": "天气", "it": "它", "more": "更多", "was": "是", "hottest": "最热的", "schools": "学校", "wales": "威尔士", "transport": "运输", "also": "也", "been": "已经", "thursday": "星期四", "issued": "发布", "parts": "部分", "london": "伦敦", "from": "来自", "but": "但是", "have": "有", "keep": "保持", "this": "这个", "can": "可以", "working": "工作", "record": "记录", "passengers": "乘客", "heatwave": "热浪", "by": "被", "south": "韩国", "at": "在", "temperature": "温度", "areas": "区域", "likely": "可能", "will": "将", "than": "比", "cool": "凉爽的", "warned": "警告", "health": "健康", "make": "使", "we": "我们", "not": "不", "its": "它的", "after": "之后", "across": "跨越", "all": "所有", "friday": "星期五", "about": "关于", "place": "地点", "until": "直到", "bst": "英国夏令时", "between": "之间", "were": "是", "surrey": "萨里郡", "west": "西部", "year": "年", "meanwhile": "与此同时", "cause": "事业", "disruption": "中断", "above": "超过", "east": "东部", "midlands": "中部地区", "hot": "热门的", "only": "只有", "like": "像", "amber": "琥珀色", "external": "外部的", "very": "非常", "coming": "即将到来的", "days": "天", "how": "如何", "or": "或者", "risk": "风险", "year-old": "岁的", "ice": "冰", "because": "因为", "told": "告诉", "bbc": "英国广播公司", "his": "他的", "it's": "它是", "going": "将要", "during": "在期间", "up": "向上", "experienced": "经历", "hampshire": "汉普郡", "wednesday": "星期三", "shut": "关闭", "disrupted": "中断的", "train": "火车", "remains": "仍然", "recorded": "记录", "new": "新的", "next": "下一个", "southern": "南部的", "including": "包括", "had": "有", "so": "所以", "far": "远", "france": "法国", "since": "自从", "records": "记录", "began": "开始", "south-east": "东南部", "an": "一个", "population": "人口", "climate": "气候", "chief": "首席", "see": "看到", "set": "设定", "covers": "涵盖", "much": "许多", "reach": "达到", "eastern": "东部的", "experience": "经历", "stay": "保持", "when": "当", "week": "周", "could": "可能", "leading": "领导", "life": "生活", "water": "水", "coast": "海岸", "northern": "北部的", "may": "可能", "some": "一些", "rail": "铁路", "services": "服务", "man": "男子", "country": "国家", "engineer": "工程师", "just": "只是", "everything": "一切", "months": "月", "work": "工作", "ukhsa": "英国卫生安全局", "alert": "警报", "your": "你的", "prepared": "准备好的", "years": "多年", "our": "我们的", "video": "视频", "played": "比赛", "no": "没有", "let": "让", "soared": "飙升", "afternoon": "下午", "hundreds": "数百", "advised": "建议", "avoid": "避免", "non-essential": "非必要的", "travel": "旅行", "continue": "继续", "into": "进入", "further": "进一步的", "possible": "可能的", "central": "中央的", "came": "到来", "previous": "先前", "southampton": "南安普顿", "described": "描述", "now": "现在", "conduct": "行为", "checks": "审查", "ensure": "确保", "highest": "最高", "wisley": "威斯利（地名）", "cardiff": "加的夫", "bute": "布特", "park": "公园", "european": "欧洲的", "continues": "继续", "deaths": "死亡", "paris": "巴黎", "other": "其他", "among": "在...之中", "covered": "覆盖的", "south-west": "西南部", "these": "这些", "expect": "期望", "spell": "一段时间", "humid": "潮湿的", "impacts": "影响", "general": "总", "highly": "高度", "according": "根据", "second": "第二", "time": "时间", "warnings": "警告", "change": "改变", "led": "带领", "frequent": "频繁的", "intense": "激烈的", "heatwaves": "热浪", "office's": "办公室的", "professor": "教授", "stephen": "斯蒂芬", "added": "补充", "broken": "打破的", "wider": "更广泛的", "through": "通过", "north": "北部", "manchester": "曼彻斯特", "expected": "预期", "separate": "单独的", "saturday": "星期六", "covering": "涵盖", "daily": "每日", "air": "气氛", "reached": "达成", "exceeded": "超过", "feels": "感觉", "king": "国王", "charles": "查尔斯", "got": "获得", "helping": "帮助", "hand": "手", "attended": "参加", "matthew": "马修", "forecaster": "预报员", "means": "意味着", "feel": "感觉", "tropical": "热带的", "result": "结果", "adverse": "不利的", "effects": "影响", "serious": "严重的", "illness": "疾病", "danger": "危险", "changes": "变化", "practices": "做法", "required": "需要", "there": "那里", "significantly": "显著地", "visiting": "访问", "coastal": "沿海的", "lakes": "湖泊", "increased": "增加的", "safety": "安全", "incidents": "事件", "comes": "到来", "major": "重大的", "rescue": "救援", "operation": "行动", "boy": "男孩", "went": "去", "missing": "失踪", "while": "而", "swimming": "游泳", "nature": "性质", "lake": "湖", "several": "数个", "stranded": "滞留的", "traffic": "交通", "near": "附近", "being": "正在", "treated": "接受治疗", "heat-related": "与高温相关的", "ambulance": "救护车", "service": "服务", "operators": "运营商", "western": "西方的", "railway": "铁路", "thameslink": "泰晤士连线", "avanti": "阿凡提（铁路公司）", "asked": "询问", "essential": "必要的", "put": "提出", "reduced": "减少的", "customers": "客户", "out": "出来", "almost": "几乎", "every": "每个", "street": "街", "affected": "受影响", "jake": "杰克", "preparing": "准备", "job": "工作", "requires": "需要", "him": "他", "climb": "攀升", "decided": "决定", "would": "将", "take": "采取", "strategic": "战略的", "here": "这里", "degrees": "度", "especially": "尤其", "kit": "装备", "absolutely": "绝对", "tries": "试图", "minimum": "最低的", "you're": "你是", "rain": "雨", "cold": "寒冷", "admitted": "承认", "lot": "很多", "deal": "协议", "team": "团队", "starting": "开始", "earlier": "较早", "normal": "正常", "finishing": "完成", "gives": "给予", "them": "他们", "good": "良好", "money": "金钱", "business": "事务", "however": "然而", "brings": "带来", "costs": "成本", "overnight": "夜间", "security": "安全", "agency": "机构", "network": "网络", "travelling": "旅行", "within": "在内部", "current": "当前的", "necessary": "必要的", "dr": "博士", "head": "前往", "events": "事件", "protection": "保护", "important": "重要", "understand": "理解", "poses": "构成", "even": "甚至", "healthy": "健康的", "simple": "简单的", "actions": "行动", "avoiding": "避免", "part": "部分", "keeping": "保持", "home": "家", "big": "大的", "difference": "差异", "department": "部门", "education": "教育", "monday": "星期一", "does": "做", "normally": "通常", "advise": "建议", "attendance": "出席", "best": "最佳", "way": "方式", "pupils": "瞳孔", "usually": "通常", "managed": "管理", "safely": "安全地", "national": "国家", "commission": "委员会", "closure": "关闭", "showed": "显示", "she": "她", "breakfast": "早餐", "prepare": "准备", "know": "知道", "come": "到来", "scientists": "科学家", "ahead": "提前", "number": "数量", "compared": "比较", "average": "平均", "says": "表示", "need": "需要", "sure": "确定", "we're": "我们是", "rebuilding": "重建", "top": "顶级的", "agenda": "议程", "same": "相同", "networks": "网络", "ireland": "爱尔兰", "scotland": "苏格兰", "their": "他们的", "tuesday": "星期二", "reaching": "达到", "county": "郡", "down": "下来", "respectively": "分别地", "uk's": "英国的", "getting": "获得", "you": "你", "kids": "孩子们", "off": "离开", "school": "学校", "refuse": "拒绝", "alerts": "警报", "italy": "意大利", "spain": "西班牙", "indicates": "表明", "journeys": "行程", "cream": "奶油", "emery": "埃默里", "howard-boyd": "霍华德-博伊德", "hotter": "更热", "gosport": "戈斯波特", "breaking": "打破", "camden": "卡姆登", "measurement": "测量", "reliable": "可靠的", "wiggonholt": "威根霍尔特", "sussex": "萨塞克斯", "charlwood": "查尔伍德", "searing": "灼热的", "recording": "记录", "regions": "地区", "scientist": "科学家", "belcher": "贝尔彻", "lasting": "持久的", "midnight": "午夜", "reception": "接待", "lehnert": "莱纳特", "humidity": "湿度", "nights": "夜晚", "occur": "发生", "night-time": "夜间", "population-wide": "全人口范围的", "initiated": "启动", "reserve": "保护区", "godstone": "戈德斯通", "crash": "坠毁", "illnesses": "疾病", "timetables": "时间表", "tube": "地铁", "telecoms": "电信", "bird": "鸟", "telephone": "电话", "poles": "杆子", "ppe": "个人防护装备", "harness": "背带", "self-employed": "自雇的", "cooling": "冷却", "breaks": "休息", "oxfordshire": "牛津郡", "insane": "疯狂的", "pole": "杆", "dreadful": "可怕的", "bricklayer": "砌砖工", "elijah": "以利亚", "newsbeat": "新闻节拍", "complaining": "抱怨", "midday": "正午", "employees": "员工", "lollies": "冰棍", "gloucester": "格洛斯特", "van": "货车", "plugged": "插入", "heat-health": "高温健康", "advising": "建议", "zone": "区域", "agostinho": "阿戈斯蒂尼奥", "sousa": "索萨", "vitally": "极其", "staying": "保持", "hydrated": "补充水分", "sun": "太阳", "learn": "学习", "emma": "艾玛", "routes": "路线", "exceeding": "超过", "trebled": "增至三倍", "upgrading": "升级", "refurbishing": "翻新", "katesbridge": "凯茨布里奇", "dyce": "戴斯", "aberdeen": "阿伯丁", "summers": "夏季"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
