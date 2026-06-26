@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-26</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-26</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/731d/live/eebb89d0-71a0-11f1-b1db-af71d47507d6.jpg" alt="US conducts strikes on Iran after attack on cargo ship" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US conducts strikes on Iran after attack on cargo ship</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/ckg590wqxwpo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-26.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Stock photo of cargo ships near the Strait of Hormuz</span></p>
+        <p class="cn">霍尔木兹海峡附近货船的资料照片</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The US military has conducted strikes on Iranian targets after President Donald Trump accused Iran of a "foolish violation" of its truce following an attack on a cargo ship in the Strait of Hormuz.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普指责伊朗在霍尔木兹海峡袭击一艘货船是“愚蠢地违反”停火协议后，美军对伊朗目标实施了打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">No casualties were reported when the ship was struck by a one-way attack drone on Thursday, an incident that prompted a planned <span class="keyword" data-word="evacuation" data-phonetic="/ɪˌvækjuˈeɪʃən/" data-pos="n." data-def="撤离，疏散" data-def-en="the process of moving people from a dangerous place to safety">evacuation</span> of thousands of sailors stuck in the region.</span></p>
+        <p class="cn">周四，这艘船被一架单向攻击无人机击中，没有人员伤亡报告，这一事件促使计划疏散滞留在该地区的数千名海员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In response, US Central Command said on Friday it had struck missile and drone storage facilities and coastal radar positions.</span> <span class="sentence" data-sentence-index="4">Iran's Islamic Revolutionary Guard Corps (IRGC) blamed the US and Israel.</span></p>
+        <p class="cn">作为回应，美国中央司令部周五表示，已打击了导弹和无人机储存设施以及海岸雷达阵地。伊朗伊斯兰革命卫队指责美国和以色列。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Just moments before the strikes were announced, Trump said "you'll see" when asked if the US would hit back at Iran.</span></p>
+        <p class="cn">就在宣布打击前几分钟，当被问及美国是否会反击伊朗时，特朗普说“你会看到的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">US Central Command - or Centcom - described the strikes as "a powerful response" to the drone attack.</span></p>
+        <p class="cn">美国中央司令部称这些打击是对无人机袭击的“有力回应”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">"The unwarranted aggression against commercial shipping by Iranian forces clearly violated the ceasefire," it said in a statement.</span></p>
+        <p class="cn">它在一份声明中说：“伊朗军队对商业航运的无端侵略明显违反了停火协议。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">"Furthermore, Iran's dangerous behavior undermined freedom of navigation as commerce increasingly flows through the vital international trade corridor."</span></p>
+        <p class="cn">“此外，随着商业活动日益通过这一重要的国际贸易走廊，伊朗的危险行为破坏了航行自由。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Centcom said the US military would "continue to provide safe passage coordination and support to commercial vessels transiting the strait".</span></p>
+        <p class="cn">中央司令部表示，美军将“继续为通过海峡的商业船只提供安全通行协调和支持”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">For the moment, it is unclear if the US attacks were isolated or form part of a larger, ongoing response.</span></p>
+        <p class="cn">目前尚不清楚美国的打击是孤立的，还是构成更大规模、持续反应的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The IRGC said in a statement later on Friday: "The treaty-breaking US regime as always violated its commitments and launched an airstrike on the coast of the Islamic Republic of Iran under various pretexts of a ship violating an unauthorised route in the Strait of Hormuz."</span></p>
+        <p class="cn">伊朗伊斯兰革命卫队周五晚些时候在一份声明中说：“背信弃义的美国政权一如既往地违反其承诺，以一艘船在霍尔木兹海峡违反未经授权航线为各种借口，对伊朗伊斯兰共和国海岸发动了空袭。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">It added: "If the aggression is repeated our response will be more extensive than this."</span></p>
+        <p class="cn">它补充说：“如果侵略再次发生，我们的回应将比这次更广泛。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">The IRGC also accused the "Zionist regime" -  a reference to Israel â of violating a ceasefire in Lebanon.</span></p>
+        <p class="cn">伊朗伊斯兰革命卫队还指责“犹太复国主义政权”——指以色列——违反了黎巴嫩的停火协议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">It came as Israel and Lebanon signed a framework agreement for a peace plan in Washington on Friday.</span> <span class="sentence" data-sentence-index="15">Limited fighting has recently continued between Israeli forces and the Iran-backed Hezbollah in southern Lebanon, despite an existing ceasefire.</span></p>
+        <p class="cn">与此同时，以色列和黎巴嫩周五在华盛顿签署了和平计划框架协议。尽管已有停火协议，但以色列军队和伊朗支持的真主党最近在黎巴嫩南部仍持续发生有限战斗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Tehran effectively closed the strait after US and Israeli attacks against Iran began at the end of February.</span></p>
+        <p class="cn">在美国和以色列于2月底开始对伊朗发动袭击后，德黑兰实际上关闭了海峡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">The shutdown of the  critical waterway for oil and gas shipments caused a <span class="keyword" data-word="spike" data-phonetic="/spaɪk/" data-pos="n." data-def="激增，猛涨" data-def-en="a sudden large increase in something">spike</span> in global oil prices and choked off shipments of other crucial commodities such as fertiliser.</span></p>
+        <p class="cn">这条关键的石油和天然气运输水道关闭导致全球油价飙升，并扼杀了化肥等其他重要商品的运输。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">The US and Iran agreed on 17 June to end hostilities under a 14-point memorandum of understanding, which had also called for Iran to use its "best efforts for the safe passage of commercial vessels with no charge for 60 days".</span></p>
+        <p class="cn">美国和伊朗于6月17日同意根据一份14点谅解备忘录结束敌对行动，该备忘录还要求伊朗“尽最大努力确保商业船只安全通行，60天内不收费”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">In a post on X following the US <span class="keyword" data-word="retaliatory" data-phonetic="/rɪˈtæliətɔːri/" data-pos="adj." data-def="报复性的" data-def-en="done in response to an attack or injury to punish the person responsible">retaliatory</span> strikes, Vice-President JD Vance said that if Iran "has disagreements about how the MOU is being applied, they can pick up the phone".</span></p>
+        <p class="cn">在美国报复性打击后，副总统JD·万斯在X上发帖称，如果伊朗“对谅解备忘录如何适用有异议，他们可以打电话”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">"But violence will be met with violence," he added.</span></p>
+        <p class="cn">但他补充说：“暴力将以暴力回应。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Speaking to reporters at the White House on Friday afternoon, Trump refused to be drawn into questions on how the US might respond to the drone attack, or whether he viewed the ceasefire as still intact.</span></p>
+        <p class="cn">周五下午在白宫对记者讲话时，特朗普拒绝回答美国可能如何回应无人机袭击的问题，也拒绝回答他是否认为停火协议仍然有效。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">"You'll find out," he said.</span> <span class="sentence" data-sentence-index="23">"I don't like the fact that they took a shot yesterday.</span> <span class="sentence" data-sentence-index="24">They shouldn't be doing that."</span></p>
+        <p class="cn">他说：“你会知道的。我不喜欢他们昨天开枪的事实。他们不应该那样做。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">Asked why he believed Iran would <span class="keyword" data-word="conduct" data-phonetic="/kənˈdʌkt/" data-pos="v." data-def="实施，进行" data-def-en="to carry out or perform an activity">conduct</span> such an operation, Trump said only that "they're a little bit different".</span></p>
+        <p class="cn">当被问及为什么他认为伊朗会进行这样的行动时，特朗普只说“他们有点不同”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">In recent days, Trump and other US officials insisted negotiations with Iran were progressing well, saying Iran had given up any suggestion of tolling vessels transiting through the Strait of Hormuz.</span></p>
+        <p class="cn">最近几天，特朗普和其他美国官员坚称与伊朗的谈判进展顺利，称伊朗已放弃对通过霍尔木兹海峡的船只收费的任何提议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">In a Truth Social post on Wednesday, Trump said Iran had informed the US that there would be "no tolls, no insurance costs and no other charges of any kind being sought or received".</span></p>
+        <p class="cn">周三，特朗普在Truth Social上发帖称，伊朗已通知美国，“不会寻求或收取通行费、保险费或任何其他费用”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">"If this is false information, negotiations would end, immediately," he added.</span></p>
+        <p class="cn">他补充说：“如果这是虚假信息，谈判将立即结束。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">The US has condemned reports that Iran is charging fees to tankers going through the strait, and many see any tolling system as going against international maritime law.</span></p>
+        <p class="cn">美国谴责有关伊朗对通过海峡的油轮收费的报道，许多人认为任何收费系统都违反国际海事法。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">On Tuesday, Iranian and Omani officials held talks in Oman's capital of Muscat to discuss "the future management of navigation", although Omani Foreign Minister Badr Al-Busaidi said both countries were committed to "toll-free safe passage".</span></p>
+        <p class="cn">周二，伊朗和阿曼官员在阿曼首都马斯喀特举行会谈，讨论“未来航行管理”，尽管阿曼外交大臣巴德尔·布赛迪表示，两国致力于“免费安全通行”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">However, Iran's chief negotiator, Mohammed Bagher Ghalibaf, told state-affiliated news outlets that "everyone should know that the administration of the Strait of Hormuz will never go back to the way it was before the war."</span></p>
+        <p class="cn">然而，伊朗首席谈判代表穆罕默德·巴吉尔·卡利巴夫对国家附属新闻媒体表示，“每个人都应该知道，霍尔木兹海峡的管理永远不会回到战前的状态。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">The cargo ship hit by a projectile on Thursday was the Ever Lovely, a Singapore-flagged vessel.</span></p>
+        <p class="cn">周四被炮弹击中的货船是“长悦”号，悬挂新加坡国旗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">According to British maritime security agency UKMTO, the ship was struck 7.5 nautical miles south-east of Oman's port of Dahit.</span></p>
+        <p class="cn">据英国海事安全机构UKMTO称，该船在阿曼达希特港东南7.5海里处被击中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">The Ever Lovely had been following the UKMTO's recommended route through the strait when it was struck, the ship's owner, Evergreen, said.</span></p>
+        <p class="cn">船东长荣表示，“长悦”号在被击中时正遵循UKMTO推荐的海峡航线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">"All crew members remain safe as does the vessel itself and all cargo," it added.</span></p>
+        <p class="cn">它补充说：“所有船员以及船只本身和所有货物均安全。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">In response, the UN's International Maritime Organization (IMO) paused its planned <span class="keyword" data-word="evacuation" data-phonetic="/ɪˌvækjuˈeɪʃən/" data-pos="n." data-def="撤离，疏散" data-def-en="the process of moving people from a dangerous place to safety">evacuation</span> of more than 11,000 sailors who have been stranded in the key shipping lane since the war erupted.</span></p>
+        <p class="cn">作为回应，联合国国际海事组织暂停了原计划疏散自战争爆发以来被困在关键航道的11000多名海员的行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">Trump accuses Iran of ceasefire breach after Strait of Hormuz attack</span></p>
+        <p class="cn">（翻译缺失）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Trump asks Congress for billions for Iran war, after tension with Republicans</span></p>
+        <p class="cn">（翻译缺失）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Why Trump is so annoyed by Republican discord on Iran war</span></p>
+        <p class="cn">（翻译缺失）</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">conduct</span>
+        <button class="kw-speak-btn" data-word="conduct" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈdʌkt/ v.</span>
+      </div>
+      <p class="kw-def">实施，进行</p>
+      <p class="kw-def-en">to carry out or perform an activity</p>
+      <p class="kw-ctx">&ldquo;The US military has conducted strikes on Iranian targets after President Donald Trump accused Iran of a 'foolish violation' of its truce following an attack on a cargo ship in the Strait of Hormuz.&rdquo;</p>
+      <p class="kw-ctx-cn">在唐纳德·特朗普总统指责伊朗在霍尔木兹海峡一艘货船遭袭后‘愚蠢地违反’停火协议后，美国军方对伊朗目标实施了打击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuation</span>
+        <button class="kw-speak-btn" data-word="evacuation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˌvækjuˈeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">撤离，疏散</p>
+      <p class="kw-def-en">the process of moving people from a dangerous place to safety</p>
+      <p class="kw-ctx">&ldquo;No casualties were reported when the ship was struck by a one-way attack drone on Thursday, an incident that prompted a planned evacuation of thousands of sailors stuck in the region.&rdquo;</p>
+      <p class="kw-ctx-cn">周四，该船被单向攻击无人机击中，没有人员伤亡报告，这一事件促使计划撤离被困在该地区的数千名海员。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">facility</span>
+        <button class="kw-speak-btn" data-word="facility" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fəˈsɪlɪti/ n.</span>
+      </div>
+      <p class="kw-def">设施，场所</p>
+      <p class="kw-def-en">a place, building, or equipment used for a particular purpose</p>
+      <p class="kw-ctx">&ldquo;In response, US Central Command said on Friday it had struck missile and drone storage facilities and coastal radar positions.&rdquo;</p>
+      <p class="kw-ctx-cn">作为回应，美国中央司令部周五表示，它已打击了导弹和无人机储存设施以及沿海雷达阵地。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">undermine</span>
+        <button class="kw-speak-btn" data-word="undermine" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌndərˈmaɪn/ v.</span>
+      </div>
+      <p class="kw-def">削弱，破坏</p>
+      <p class="kw-def-en">to make something weaker or less effective, often gradually</p>
+      <p class="kw-ctx">&ldquo;Furthermore, Iran's dangerous behavior undermined freedom of navigation as commerce increasingly flows through the vital international trade corridor.&rdquo;</p>
+      <p class="kw-ctx-cn">此外，随着商业越来越多地流经这条重要的国际贸易走廊，伊朗的危险行为破坏了航行自由。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">transit</span>
+        <button class="kw-speak-btn" data-word="transit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrænzɪt/ v.</span>
+      </div>
+      <p class="kw-def">通过，过境</p>
+      <p class="kw-def-en">to pass through or across a place</p>
+      <p class="kw-ctx">&ldquo;Centcom said the US military would 'continue to provide safe passage coordination and support to commercial vessels transiting the strait'.&rdquo;</p>
+      <p class="kw-ctx-cn">中央司令部表示，美国军方将‘继续为过境海峡的商船提供安全通行协调和支持’。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pretext</span>
+        <button class="kw-speak-btn" data-word="pretext" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpriːtekst/ n.</span>
+      </div>
+      <p class="kw-def">借口，托词</p>
+      <p class="kw-def-en">a false reason given for an action to hide the real reason</p>
+      <p class="kw-ctx">&ldquo;The IRGC said in a statement later on Friday: 'The treaty-breaking US regime as always violated its commitments and launched an airstrike on the coast of the Islamic Republic of Iran under various pretexts of a ship violating an unauthorised route in the Strait of Hormuz.'&rdquo;</p>
+      <p class="kw-ctx-cn">伊斯兰革命卫队周五晚些时候在一份声明中表示：‘破坏条约的美国政权一如既往地违反其承诺，以一艘船在霍尔木兹海峡违反未经授权航线等各种借口，对伊朗伊斯兰共和国海岸发动了空袭。’</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spike</span>
+        <button class="kw-speak-btn" data-word="spike" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/spaɪk/ n.</span>
+      </div>
+      <p class="kw-def">激增，猛涨</p>
+      <p class="kw-def-en">a sudden large increase in something</p>
+      <p class="kw-ctx">&ldquo;The shutdown of the critical waterway for oil and gas shipments caused a spike in global oil prices and choked off shipments of other crucial commodities such as fertiliser.&rdquo;</p>
+      <p class="kw-ctx-cn">这条关键的石油和天然气运输水道关闭导致全球油价飙升，并扼杀了化肥等其他重要商品的运输。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">retaliatory</span>
+        <button class="kw-speak-btn" data-word="retaliatory" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈtæliətɔːri/ adj.</span>
+      </div>
+      <p class="kw-def">报复性的</p>
+      <p class="kw-def-en">done in response to an attack or injury to punish the person responsible</p>
+      <p class="kw-ctx">&ldquo;In a post on X following the US retaliatory strikes, Vice-President JD Vance said that if Iran 'has disagreements about how the MOU is being applied, they can pick up the phone'.&rdquo;</p>
+      <p class="kw-ctx-cn">在美国报复性打击之后，副总统JD·万斯在X上发帖称，如果伊朗‘对谅解备忘录的实施方式有异议，他们可以打电话’。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Stock photo of cargo ships near the Strait of Hormuz", "start_ms": 0, "end_ms": 4416, "paragraph_index": 0}, {"index": 1, "text": "The US military has conducted strikes on Iranian targets after President Donald Trump accused Iran of a \"foolish violation\" of its truce following an attack on a cargo ship in the Strait of Hormuz.", "start_ms": 4416, "end_ms": 17976, "paragraph_index": 1}, {"index": 2, "text": "No casualties were reported when the ship was struck by a one-way attack drone on Thursday, an incident that prompted a planned evacuation of thousands of sailors stuck in the region.", "start_ms": 17976, "end_ms": 29784, "paragraph_index": 2}, {"index": 3, "text": "In response, US Central Command said on Friday it had struck missile and drone storage facilities and coastal radar positions.", "start_ms": 29784, "end_ms": 39216, "paragraph_index": 3}, {"index": 4, "text": "Iran's Islamic Revolutionary Guard Corps (IRGC) blamed the US and Israel.", "start_ms": 39216, "end_ms": 46224, "paragraph_index": 3}, {"index": 5, "text": "Just moments before the strikes were announced, Trump said \"you'll see\" when asked if the US would hit back at Iran.", "start_ms": 46224, "end_ms": 53904, "paragraph_index": 4}, {"index": 6, "text": "US Central Command - or Centcom - described the strikes as \"a powerful response\" to the drone attack.", "start_ms": 53904, "end_ms": 61488, "paragraph_index": 5}, {"index": 7, "text": "\"The unwarranted aggression against commercial shipping by Iranian forces clearly violated the ceasefire,\" it said in a statement.", "start_ms": 61488, "end_ms": 70344, "paragraph_index": 6}, {"index": 8, "text": "\"Furthermore, Iran's dangerous behavior undermined freedom of navigation as commerce increasingly flows through the vital international trade corridor.\"", "start_ms": 70344, "end_ms": 80976, "paragraph_index": 7}, {"index": 9, "text": "Centcom said the US military would \"continue to provide safe passage coordination and support to commercial vessels transiting the strait\".", "start_ms": 80976, "end_ms": 90624, "paragraph_index": 8}, {"index": 10, "text": "For the moment, it is unclear if the US attacks were isolated or form part of a larger, ongoing response.", "start_ms": 90624, "end_ms": 99024, "paragraph_index": 9}, {"index": 11, "text": "The IRGC said in a statement later on Friday: \"The treaty-breaking US regime as always violated its commitments and launched an airstrike on the coast of the Islamic Republic of Iran under various pretexts of a ship violating an unauthorised route in the Strait of Hormuz.\"", "start_ms": 99024, "end_ms": 117288, "paragraph_index": 10}, {"index": 12, "text": "It added: \"If the aggression is repeated our response will be more extensive than this.\"", "start_ms": 117288, "end_ms": 123432, "paragraph_index": 11}, {"index": 13, "text": "The IRGC also accused the \"Zionist regime\" -  a reference to Israel \u00e2\u0080\u0093 of violating a ceasefire in Lebanon.", "start_ms": 123432, "end_ms": 132000, "paragraph_index": 12}, {"index": 14, "text": "It came as Israel and Lebanon signed a framework agreement for a peace plan in Washington on Friday.", "start_ms": 132000, "end_ms": 139056, "paragraph_index": 13}, {"index": 15, "text": "Limited fighting has recently continued between Israeli forces and the Iran-backed Hezbollah in southern Lebanon, despite an existing ceasefire.", "start_ms": 139056, "end_ms": 149280, "paragraph_index": 13}, {"index": 16, "text": "Tehran effectively closed the strait after US and Israeli attacks against Iran began at the end of February.", "start_ms": 149280, "end_ms": 157200, "paragraph_index": 14}, {"index": 17, "text": "The shutdown of the  critical waterway for oil and gas shipments caused a spike in global oil prices and choked off shipments of other crucial commodities such as fertiliser.", "start_ms": 157200, "end_ms": 168408, "paragraph_index": 15}, {"index": 18, "text": "The US and Iran agreed on 17 June to end hostilities under a 14-point memorandum of understanding, which had also called for Iran to use its \"best efforts for the safe passage of commercial vessels with no charge for 60 days\".", "start_ms": 168408, "end_ms": 184464, "paragraph_index": 16}, {"index": 19, "text": "In a post on X following the US retaliatory strikes, Vice-President JD Vance said that if Iran \"has disagreements about how the MOU is being applied, they can pick up the phone\".", "start_ms": 184464, "end_ms": 197328, "paragraph_index": 17}, {"index": 20, "text": "\"But violence will be met with violence,\" he added.", "start_ms": 197328, "end_ms": 201408, "paragraph_index": 18}, {"index": 21, "text": "Speaking to reporters at the White House on Friday afternoon, Trump refused to be drawn into questions on how the US might respond to the drone attack, or whether he viewed the ceasefire as still intact.", "start_ms": 201408, "end_ms": 214800, "paragraph_index": 19}, {"index": 22, "text": "\"You'll find out,\" he said.", "start_ms": 214800, "end_ms": 217584, "paragraph_index": 20}, {"index": 23, "text": "\"I don't like the fact that they took a shot yesterday.", "start_ms": 217584, "end_ms": 221616, "paragraph_index": 20}, {"index": 24, "text": "They shouldn't be doing that.\"", "start_ms": 221616, "end_ms": 224256, "paragraph_index": 20}, {"index": 25, "text": "Asked why he believed Iran would conduct such an operation, Trump said only that \"they're a little bit different\".", "start_ms": 224256, "end_ms": 231816, "paragraph_index": 21}, {"index": 26, "text": "In recent days, Trump and other US officials insisted negotiations with Iran were progressing well, saying Iran had given up any suggestion of tolling vessels transiting through the Strait of Hormuz.", "start_ms": 231816, "end_ms": 245856, "paragraph_index": 22}, {"index": 27, "text": "In a Truth Social post on Wednesday, Trump said Iran had informed the US that there would be \"no tolls, no insurance costs and no other charges of any kind being sought or received\".", "start_ms": 245856, "end_ms": 258720, "paragraph_index": 23}, {"index": 28, "text": "\"If this is false information, negotiations would end, immediately,\" he added.", "start_ms": 258720, "end_ms": 264960, "paragraph_index": 24}, {"index": 29, "text": "The US has condemned reports that Iran is charging fees to tankers going through the strait, and many see any tolling system as going against international maritime law.", "start_ms": 264960, "end_ms": 276696, "paragraph_index": 25}, {"index": 30, "text": "On Tuesday, Iranian and Omani officials held talks in Oman's capital of Muscat to discuss \"the future management of navigation\", although Omani Foreign Minister Badr Al-Busaidi said both countries were committed to \"toll-free safe passage\".", "start_ms": 276696, "end_ms": 292632, "paragraph_index": 26}, {"index": 31, "text": "However, Iran's chief negotiator, Mohammed Bagher Ghalibaf, told state-affiliated news outlets that \"everyone should know that the administration of the Strait of Hormuz will never go back to the way it was before the war.\"", "start_ms": 292632, "end_ms": 306936, "paragraph_index": 27}, {"index": 32, "text": "The cargo ship hit by a projectile on Thursday was the Ever Lovely, a Singapore-flagged vessel.", "start_ms": 306936, "end_ms": 313896, "paragraph_index": 28}, {"index": 33, "text": "According to British maritime security agency UKMTO, the ship was struck 7.5 nautical miles south-east of Oman's port of Dahit.", "start_ms": 313896, "end_ms": 324768, "paragraph_index": 29}, {"index": 34, "text": "The Ever Lovely had been following the UKMTO's recommended route through the strait when it was struck, the ship's owner, Evergreen, said.", "start_ms": 324768, "end_ms": 334224, "paragraph_index": 30}, {"index": 35, "text": "\"All crew members remain safe as does the vessel itself and all cargo,\" it added.", "start_ms": 334224, "end_ms": 340440, "paragraph_index": 31}, {"index": 36, "text": "In response, the UN's International Maritime Organization (IMO) paused its planned evacuation of more than 11,000 sailors who have been stranded in the key shipping lane since the war erupted.", "start_ms": 340440, "end_ms": 354552, "paragraph_index": 32}, {"index": 37, "text": "Trump accuses Iran of ceasefire breach after Strait of Hormuz attack", "start_ms": 354552, "end_ms": 360096, "paragraph_index": 33}, {"index": 38, "text": "Trump asks Congress for billions for Iran war, after tension with Republicans", "start_ms": 360096, "end_ms": 366528, "paragraph_index": 34}, {"index": 39, "text": "Why Trump is so annoyed by Republican discord on Iran war", "start_ms": 366528, "end_ms": 371568, "paragraph_index": 35}], "total_duration_ms": 371568};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "in": "在", "and": "和", "us": "我们", "on": "在", "iran": "伊朗", "to": "到", "said": "说", "strait": "海峡", "trump": "特朗普", "that": "那个", "it": "它", "as": "作为", "for": "为了", "hormuz": "霍尔木兹", "an": "一个", "is": "是", "attack": "袭击", "ship": "船舶", "no": "没有", "were": "是", "was": "是", "response": "回应", "had": "有", "if": "如果", "would": "将", "ceasefire": "停火", "be": "是", "he": "他", "cargo": "货物", "has": "有", "strikes": "袭击", "after": "之后", "its": "它的", "struck": "击中", "by": "被", "drone": "无人机", "friday": "星期五", "or": "或者", "through": "通过", "safe": "安全", "added": "补充", "with": "与", "war": "战争", "iranian": "伊朗的", "following": "随后", "when": "当", "iran's": "伊朗的", "irgc": "伊斯兰革命卫队", "israel": "以色列", "at": "在", "against": "反对", "commercial": "商业", "international": "国际", "passage": "通道", "vessels": "船只", "will": "将", "lebanon": "黎巴嫩", "end": "结束", "other": "其他", "they": "它们", "any": "任何", "maritime": "海上", "military": "军事", "accused": "被指控", "thursday": "星期四", "planned": "计划中的", "sailors": "水手", "central": "中央的", "command": "指挥", "islamic": "伊斯兰", "before": "之前", "you'll": "你将", "see": "看到", "asked": "询问", "hit": "击中", "back": "后退", "centcom": "中央司令部", "aggression": "侵略", "shipping": "航运", "forces": "力量", "statement": "声明", "transiting": "过境", "attacks": "袭击", "regime": "政权", "under": "在...之下", "violating": "违反", "route": "航线", "more": "更多", "than": "比", "this": "这个", "also": "也", "israeli": "以色列的", "oil": "石油", "such": "如此", "days": "天", "post": "职位", "how": "如何", "being": "正在", "up": "向上", "violence": "暴力", "why": "为何", "officials": "官员", "negotiations": "谈判", "going": "将要", "ever": "曾经", "vessel": "船舶", "been": "已经", "all": "所有", "stock": "股票", "photo": "照片", "ships": "舰船", "near": "附近", "conducted": "进行", "targets": "目标", "president": "总统", "donald": "唐纳德", "violation": "侵犯", "truce": "停火", "reported": "据报道", "incident": "事件", "prompted": "促使", "thousands": "数千", "stuck": "被困的", "region": "地区", "missile": "导弹", "storage": "储存", "facilities": "设施", "coastal": "沿海的", "positions": "立场", "revolutionary": "革命的", "guard": "卫队", "corps": "军团", "blamed": "指责", "just": "只是", "moments": "时刻", "announced": "宣布", "described": "描述", "powerful": "强大的", "clearly": "显然", "dangerous": "危险", "undermined": "削弱", "freedom": "自由", "increasingly": "日益", "vital": "至关重要的", "trade": "贸易", "continue": "继续", "provide": "提供", "coordination": "协调", "support": "支持", "moment": "时刻", "unclear": "不清楚的", "isolated": "孤立的", "form": "形成", "part": "部分", "larger": "更大的", "ongoing": "正在进行的", "later": "后来", "always": "总是", "commitments": "承诺", "launched": "发起", "coast": "海岸", "republic": "共和国", "various": "各种", "repeated": "重复", "our": "我们的", "extensive": "广泛的", "reference": "提及", "came": "到来", "signed": "签署", "framework": "框架", "agreement": "协议", "peace": "和平", "plan": "计划", "washington": "华盛顿", "limited": "有限的", "fighting": "战斗", "recently": "最近", "continued": "持续的", "between": "之间", "iran-backed": "伊朗支持的", "hezbollah": "真主党", "southern": "南部的", "despite": "尽管", "tehran": "德黑兰", "effectively": "实际上", "closed": "关闭", "began": "开始", "february": "二月", "critical": "关键", "waterway": "水道", "gas": "气体", "caused": "导致", "global": "全球", "prices": "价格", "off": "离开", "crucial": "关键的", "agreed": "同意", "june": "六月", "point": "点", "memorandum": "备忘录", "understanding": "谅解", "which": "哪个", "called": "称为", "use": "使用", "best": "最佳", "efforts": "努力", "charge": "负责", "vice-president": "副总统", "jd": "JD", "vance": "万斯", "disagreements": "分歧", "about": "关于", "applied": "申请", "can": "可以", "pick": "选择", "phone": "电话", "but": "但是", "met": "伦敦警察厅", "speaking": "发言", "reporters": "记者们", "white": "白色的", "house": "议院", "afternoon": "下午", "refused": "拒绝", "drawn": "划定", "into": "进入", "questions": "问题", "might": "可能", "respond": "回应", "whether": "是否", "viewed": "看待", "still": "仍然", "intact": "完好无损的", "find": "找到", "out": "出来", "don't": "不要", "like": "像", "fact": "事实", "took": "担任", "shot": "开枪", "yesterday": "昨天", "shouldn't": "不应该", "doing": "做", "believed": "据信", "operation": "行动", "only": "只有", "they're": "他们是", "little": "很少", "bit": "一点", "different": "不同的", "recent": "最近", "insisted": "坚持", "well": "好", "saying": "说", "given": "给定", "suggestion": "建议", "truth": "真相", "social": "社交的", "wednesday": "星期三", "informed": "告知", "there": "那里", "tolls": "通行费", "insurance": "保险", "costs": "成本", "charges": "指控", "kind": "种类", "sought": "寻求", "received": "受到", "false": "虚假的", "information": "信息", "immediately": "立即", "condemned": "谴责", "reports": "报道", "fees": "费用", "tankers": "油轮", "many": "许多", "system": "制度", "law": "法律", "tuesday": "星期二", "held": "举行", "talks": "会谈", "capital": "资本", "discuss": "讨论", "future": "未来", "management": "管理", "although": "虽然", "foreign": "外交", "minister": "部长", "both": "两者", "countries": "国家", "committed": "承诺的", "however": "然而", "chief": "首席", "negotiator": "谈判者", "bagher": "巴盖尔", "ghalibaf": "卡利巴夫", "told": "告诉", "news": "新闻", "outlets": "出口", "everyone": "每个人", "should": "应该", "know": "知道", "administration": "政府", "never": "从未", "go": "去", "way": "方式", "projectile": "抛射物", "according": "根据", "british": "英国的", "security": "安全", "agency": "机构", "ukmto": "英国海上贸易行动办公室", "nautical": "海里的", "miles": "英里", "south-east": "东南部", "port": "港口", "recommended": "建议", "ship's": "船的", "owner": "店主", "crew": "船员", "members": "成员", "remain": "仍然", "does": "做", "itself": "自身", "organization": "组织", "who": "谁", "have": "有", "stranded": "滞留的", "key": "关键", "lane": "航道", "since": "自从", "accuses": "指责", "breach": "违反", "asks": "询问", "congress": "国会", "billions": "数十亿", "tension": "紧张", "so": "所以", "republican": "共和党人", "discord": "不和", "violated": "违反", "navigation": "航行", "shipments": "货物", "tolling": "收费", "omani": "阿曼的", "oman's": "阿曼的", "lovely": "可爱的", "foolish": "愚蠢的", "casualties": "伤亡", "one-way": "单程的", "radar": "雷达", "unwarranted": "无根据的", "furthermore": "此外", "behavior": "行为", "commerce": "贸易", "flows": "流动", "corridor": "走廊", "treaty-breaking": "违约的", "airstrike": "空袭", "pretexts": "借口", "unauthorised": "未经授权的", "zionist": "犹太复国主义的", "existing": "现有的", "shutdown": "关闭", "choked": "堵塞", "commodities": "商品", "fertiliser": "肥料", "hostilities": "敌对行动", "mou": "谅解备忘录", "progressing": "进展", "charging": "收费", "muscat": "马斯喀特", "badr": "巴德尔", "al-busaidi": "布赛义迪", "toll-free": "免费", "mohammed": "穆罕默德", "state-affiliated": "国有", "singapore-flagged": "悬挂新加坡国旗的", "dahit": "达希特", "ukmto's": "英国海上贸易运营局的", "evergreen": "长荣", "un's": "联合国的", "imo": "国际海事组织", "paused": "暂停", "erupted": "爆发", "republicans": "共和党人", "annoyed": "恼怒"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
