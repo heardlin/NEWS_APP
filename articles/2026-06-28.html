@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-28</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-28</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e90b/live/b36ae050-72e1-11f1-b28d-37d67ec29837.png" alt="Two boys rescued from Venezuela earthquake rubble after days of being trapped" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Two boys rescued from Venezuela earthquake rubble after days of being trapped</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cr47dvywvy5o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player hidden">
+      <audio id="article-audio" src="" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">An 11-year-old boy, named Moises, was rescued after days <span class="keyword" data-word="trapped" data-phonetic="/træpt/" data-pos="adj." data-def="被困的，陷入困境的" data-def-en="unable to escape from a place or situation">trapped</span> beneath heavy <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span></span></p>
+        <p class="cn">一名叫莫伊塞斯（Moises）的11岁男孩在被困于厚重瓦砾下数天后获救</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">More stories of miraculous <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> have emerged from Venezuela on Sunday, days after two powerful earthquakes struck the country.</span></p>
+        <p class="cn">周日，委内瑞拉在遭受两次强烈地震数天后，又传出了更多奇迹般救援的故事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Interim President Delcy RodrÃ­guez said 33 people had been pulled from <span class="keyword" data-word="debris" data-phonetic="/dəˈbriː/" data-pos="n." data-def="碎片，残骸" data-def-en="scattered pieces of waste or remains">debris</span> alive over the weekend.</span> <span class="sentence" data-sentence-index="4">Among them were two 11-year-old boys, who were separately rescued from collapsed buildings within hours of each other on Sunday.</span></p>
+        <p class="cn">临时总统德尔西·罗德里格斯（Delcy Rodríguez）表示，周末有33人从废墟中被活着救出。其中包括两名11岁男孩，他们在周日分别于几小时内从倒塌的建筑中被救出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">However, with tens of thousands of people still missing, hopes of finding more survivors are fading by the hour.</span></p>
+        <p class="cn">然而，由于仍有数万人失踪，找到更多幸存者的希望正随时间流逝而减弱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Aid agencies say the first 48 to 72 hours after a disaster are crucial for finding people alive.</span> <span class="sentence" data-sentence-index="7">Relatives of the missing are facing a fifth night waiting for news of their loved ones.</span></p>
+        <p class="cn">援助机构表示，灾难发生后的头48至72小时是寻找生还者的关键时期。失踪者的亲属正面临第五个夜晚，等待亲人的消息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Since the <span class="keyword" data-word="magnitude" data-phonetic="/ˈmæɡnɪtjuːd/" data-pos="n." data-def="震级；大小，重要性" data-def-en="the size or extent of something, especially the strength of an earthquake">magnitude</span> 7.2 and 7.5 quakes on Wednesday, officials have confirmed at least 1,450 deaths.</span></p>
+        <p class="cn">自周三发生7.2级和7.5级地震以来，官员已确认至少1450人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">The two earthquakes, which struck within 39 seconds, caused hundreds of buildings to <span class="keyword" data-word="collapse" data-phonetic="/kəˈlæps/" data-pos="v./n." data-def="倒塌，崩溃" data-def-en="to fall down or give way suddenly">collapse</span> and many people remain <span class="keyword" data-word="trapped" data-phonetic="/træpt/" data-pos="adj." data-def="被困的，陷入困境的" data-def-en="unable to escape from a place or situation">trapped</span> inside.</span> <span class="sentence" data-sentence-index="10">Desperate families have been digging through the <span class="keyword" data-word="debris" data-phonetic="/dəˈbriː/" data-pos="n." data-def="碎片，残骸" data-def-en="scattered pieces of waste or remains">debris</span> by hand, trying to find their loved ones.</span></p>
+        <p class="cn">这两次地震相隔39秒，导致数百栋建筑倒塌，许多人仍被困其中。绝望的家属们徒手挖掘废墟，试图找到他们的亲人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">Some have told the BBC that they can hear people under the <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span> , but cannot move the heavy slabs of concrete, and are waiting anxiously for heavy machinery to arrive.</span></p>
+        <p class="cn">一些人告诉BBC，他们能听到瓦砾下有人声，但无法移动沉重的混凝土板，正焦急等待重型机械到来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">Though the crucial 72-hour window had passed, rescuers had not given up on Sunday, saying people could still be found alive, especially if they had access to food and water.</span></p>
+        <p class="cn">尽管关键的72小时窗口已过，但救援人员周日并未放弃，称仍有可能找到生还者，尤其是如果他们能获得食物和水。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">RodrÃ­guez has been sharing optimistic messages on social media, including videos of rescues from over the weekend.</span></p>
+        <p class="cn">罗德里格斯一直在社交媒体上分享乐观信息，包括周末救援的视频。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">Rescuers shared video footage of an 11-year-old boy, named as Moises, being pulled from twisted <span class="keyword" data-word="debris" data-phonetic="/dəˈbriː/" data-pos="n." data-def="碎片，残骸" data-def-en="scattered pieces of waste or remains">debris</span> - his eyes covered to protect them from the sun.</span></p>
+        <p class="cn">救援人员分享了一段视频，显示一名叫莫伊塞斯的11岁男孩从扭曲的废墟中被拉出——他的眼睛被遮住以防阳光伤害。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">11-year-old Moises was pulled out of the <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span> after being <span class="keyword" data-word="trapped" data-phonetic="/træpt/" data-pos="adj." data-def="被困的，陷入困境的" data-def-en="unable to escape from a place or situation">trapped</span> for days</span></p>
+        <p class="cn">11岁的莫伊塞斯在被困数天后从瓦砾中被救出</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">Colombia's National Unit for Disaster Risk Management (UNGRD) said Moises was buried under about 3m (9.8ft) of <span class="keyword" data-word="debris" data-phonetic="/dəˈbriː/" data-pos="n." data-def="碎片，残骸" data-def-en="scattered pieces of waste or remains">debris</span>, and the <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> team spent six hours conducting "high-precision work" on Saturday to reach him.</span></p>
+        <p class="cn">哥伦比亚国家灾害风险管理中心（UNGRD）表示，莫伊塞斯被埋在约3米（9.8英尺）深的废墟下，救援队周六花了六个小时进行“高精度作业”才到达他身边。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">Reuters reported that a rescuer was overheard on a walkie-talkie saying the young boy was found near his sister and mother, who had both died.</span></p>
+        <p class="cn">路透社报道，有人在对讲机中听到一名救援人员说，这名男孩是在他的姐姐和母亲附近被发现的，两人均已死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">Hours later, RodrÃ­guez posted a video on X, purportedly showing the <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> of a second 11-year-old boy in the town of Caraballeda.</span></p>
+        <p class="cn">几小时后，罗德里格斯在X上发布了一段视频，据称显示在卡拉巴列达（Caraballeda）镇救出了第二名11岁男孩。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">"In these hours, every life is hope for Venezuela," she wrote.</span></p>
+        <p class="cn">她写道：“在这些时刻，每一条生命都是委内瑞拉的希望。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Also in Caraballeda, French and American teams rescued a father and his teenage son from under <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span> on Sunday, news agency AFP reported.</span></p>
+        <p class="cn">据法新社报道，同样在卡拉巴列达，法国和美国救援队周日从废墟中救出了一名父亲和他十几岁的儿子。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Officials said the coastal region of La Guaira, where Caraballeda is located, has been hit the hardest.</span></p>
+        <p class="cn">官员表示，卡拉巴列达所在的拉瓜伊拉（La Guaira）沿海地区受灾最严重。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Rescuers' efforts have been hampered by aftershocks, which are in turn terrifying residents.</span></p>
+        <p class="cn">救援工作受到余震的阻碍，而余震又让居民感到恐惧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">"To be honest, it makes you feel kind of nervous.</span> <span class="sentence" data-sentence-index="24">Any little noise...</span> <span class="sentence" data-sentence-index="25">horrible," JesÃºs Andueza, a 64-year-old bus driver told BBC Mundo.</span></p>
+        <p class="cn">64岁的公交车司机赫苏斯·安杜埃萨（Jesús Andueza）告诉BBC Mundo：“说实话，这让你感到有点紧张。任何一点小声音……都可怕。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="26">Frustration has also grown, with some saying the government's response is too slow and inefficient.</span> <span class="sentence" data-sentence-index="27">In some of the worst areas, such as Caribe and Tanaguarena, there are entire areas where <span class="keyword" data-word="debris" data-phonetic="/dəˈbriː/" data-pos="n." data-def="碎片，残骸" data-def-en="scattered pieces of waste or remains">debris</span> removal has not yet started.</span></p>
+        <p class="cn">不满情绪也在增长，一些人表示政府的反应太慢且效率低下。在一些最严重的地区，如加勒比（Caribe）和塔纳瓜雷纳（Tanaguarena），整个区域的废墟清理尚未开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="28">One person told the BBC that the government was actually hindering <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> efforts, by limiting access to affected areas and closing roads.</span></p>
+        <p class="cn">一人告诉BBC，政府实际上通过限制进入受灾地区和关闭道路来阻碍救援工作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="29">Thousands of people are living in their cars or camping at places like the airport and golf course, away from buildings that could <span class="keyword" data-word="collapse" data-phonetic="/kəˈlæps/" data-pos="v./n." data-def="倒塌，崩溃" data-def-en="to fall down or give way suddenly">collapse</span>.</span></p>
+        <p class="cn">数千人住在自己的车里，或在机场和高尔夫球场等地露营，远离可能倒塌的建筑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="30">The golf course in Caraballeda has become an epicentre for the emergency response.</span></p>
+        <p class="cn">卡拉巴列达的高尔夫球场已成为应急响应的中心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="31">Its green lawn, which used to be perfectly manicured, is now a <span class="keyword" data-word="makeshift" data-phonetic="/ˈmeɪkʃɪft/" data-pos="adj." data-def="临时的，权宜的" data-def-en="used as a temporary substitute when the proper thing is not available">makeshift</span> hospital and donation centre, where residents who have lost everything are sifting through piles of donated clothing and boxes of humanitarian aid.</span></p>
+        <p class="cn">原本修剪整齐的绿色草坪现在变成了临时医院和捐赠中心，失去一切的居民正在翻捡成堆的捐赠衣物和人道主义援助物资箱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="32">In another part of the golf course, next to a small lagoon, a strip of land has been set up as a landing pad for helicopters arriving with supplies and emergency personnel from within Venezuela and abroad.</span></p>
+        <p class="cn">在高尔夫球场的另一部分，靠近一个小泻湖的地方，一块区域被设为直升机停机坪，用于接收来自委内瑞拉国内外的物资和应急人员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="33">In the area surrounding the golf course, Caraballeda's streets â cracked and covered in <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span> â are marked by dust and silence, interrupted only by heavy machinery and those searching among the remains.</span></p>
+        <p class="cn">在高尔夫球场周边，卡拉巴列达的街道——开裂且覆盖着瓦砾——被尘土和寂静笼罩，只有重型机械和废墟中搜寻的人们打破这种氛围。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">Watch: Inside the Venezuela country club that is now a <span class="keyword" data-word="makeshift" data-phonetic="/ˈmeɪkʃɪft/" data-pos="adj." data-def="临时的，权宜的" data-def-en="used as a temporary substitute when the proper thing is not available">makeshift</span> hospital</span></p>
+        <p class="cn">观看：委内瑞拉乡村俱乐部内部，如今成为临时医院</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">Milagros GonzÃ¡lez, who lives in Caribe, told BBC Mundo that her building was one of the few that didn't <span class="keyword" data-word="collapse" data-phonetic="/kəˈlæps/" data-pos="v./n." data-def="倒塌，崩溃" data-def-en="to fall down or give way suddenly">collapse</span>, and she fled as soon as she could to take refuge at the golf course.</span></p>
+        <p class="cn">住在加勒比的米拉格罗斯·冈萨雷斯（Milagros González）告诉BBC Mundo，她的建筑是少数没有倒塌的之一，她尽快逃离并到高尔夫球场避难。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="37">"I left with my two young daughters and my two elderly relatives.</span> <span class="sentence" data-sentence-index="38">But thank God we got out alive.</span> <span class="sentence" data-sentence-index="39">The building can't be lived in.</span> <span class="sentence" data-sentence-index="40">But we're alive, which is what matters," she said.</span></p>
+        <p class="cn">她说：“我带着两个年幼的女儿和两个年迈的亲戚离开了。但感谢上帝，我们活着出来了。那栋楼不能住了。但我们活着，这才是最重要的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="41">GonzÃ¡lez admitted that every time she lies down, she wakes up dizzy and thinks it's shaking.</span></p>
+        <p class="cn">冈萨雷斯承认，每次躺下，她都会头晕醒来，以为是地震。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="42">"A psychologist just told me that it's part of the process," she said, while her two young daughters play with dolls on a mattress on the grass.</span></p>
+        <p class="cn">她说：“一位心理学家刚刚告诉我，这是过程的一部分。”而她的两个小女儿正在草地上的床垫上玩娃娃。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="43">Donated clothes have been piling up at the Caraballeda golf course, for residents who have lost everything</span></p>
+        <p class="cn">捐赠的衣物在卡拉巴列达高尔夫球场堆积如山，供失去一切的居民使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="44">In a separate video message on Sunday, RodrÃ­quez said the JosÃ© MarÃ­a Vargas sports complex in La Guaira was also serving as an emergency response centre.</span></p>
+        <p class="cn">在周日的另一段视频信息中，罗德里格斯表示，拉瓜伊拉的何塞·玛丽亚·巴尔加斯（José María Vargas）体育中心也作为应急响应中心运作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="45">Pointing out that the armed forces were sorting clothes, medicine and food, RodrÃ­guez said "everything is functioning as well as possible during these terrible moments, these terrible hours, that our people are enduring".</span></p>
+        <p class="cn">罗德里格斯指出，武装部队正在分类衣物、药品和食物，她说：“在我们的人民正在忍受的这些可怕时刻、可怕时光里，一切都在尽可能好地运转。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="46">"Let them know that no one here is alone, not a single family or individual need [to] feel alone.</span> <span class="sentence" data-sentence-index="47">Our people and our state are here, the social protection system is here, and international solidarity is here."</span></p>
+        <p class="cn">“让他们知道，这里没有人是孤独的，没有一个家庭或个人需要感到孤独。我们的人民和国家在这里，社会保障体系在这里，国际团结也在这里。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="48">In recent days, international <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> teams from Mexico, Spain, Qatar, the US, and the UK have arrived to reinforce the search efforts.</span></p>
+        <p class="cn">近日，来自墨西哥、西班牙、卡塔尔、美国和英国的国际救援队已抵达，以加强搜救工作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="49">The UN's Tom Fletcher said on Saturday that 39 search and <span class="keyword" data-word="rescue" data-phonetic="/ˈreskjuː/" data-pos="n./v." data-def="救援，营救" data-def-en="to save someone from a dangerous situation">rescue</span> teams had been deployed from all over the world, with each consisting of 50-100 people.</span></p>
+        <p class="cn">联合国汤姆·弗莱彻（Tom Fletcher）周六表示，已从世界各地部署了39支搜救队，每队由50至100人组成。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="50">"You're looking at almost 2,000 people surging in, 111 dogs, medical teams as well.</span> <span class="sentence" data-sentence-index="51">We go in with these micro drones, they call them cockroach drones, that help us find people in the buildings."</span></p>
+        <p class="cn">“你看到的是近2000人涌入，111只搜救犬，还有医疗队。我们带着这些微型无人机——他们称之为蟑螂无人机——进去，帮助我们找到建筑里的人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="52">Families calling out to loved ones <span class="keyword" data-word="trapped" data-phonetic="/træpt/" data-pos="adj." data-def="被困的，陷入困境的" data-def-en="unable to escape from a place or situation">trapped</span> in <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span> by Venezuela quakes</span></p>
+        <p class="cn">委内瑞拉地震中，家属向被困瓦砾中的亲人呼喊</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="53">Newborn baby rescued from Venezuela earthquake <span class="keyword" data-word="rubble" data-phonetic="/ˈrʌbl/" data-pos="n." data-def="碎石，瓦砾" data-def-en="broken pieces of stone, brick, etc., from a building that has been destroyed">rubble</span></span></p>
+        <p class="cn">新生婴儿从委内瑞拉地震废墟中获救</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="54">Venezuela earthquakes in maps and graphics - where they hit and how severe they could be</span></p>
+        <p class="cn">委内瑞拉地震地图与图表——震中位置及可能严重程度</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rescue</span>
+        <button class="kw-speak-btn" data-word="rescue" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈreskjuː/ n./v.</span>
+      </div>
+      <p class="kw-def">救援，营救</p>
+      <p class="kw-def-en">to save someone from a dangerous situation</p>
+      <p class="kw-ctx">&ldquo;More stories of miraculous rescue have emerged from Venezuela on Sunday, days after two powerful earthquakes struck the country.&rdquo;</p>
+      <p class="kw-ctx-cn">周日，在两次强烈地震袭击委内瑞拉数天后，更多奇迹般的救援故事涌现出来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">debris</span>
+        <button class="kw-speak-btn" data-word="debris" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dəˈbriː/ n.</span>
+      </div>
+      <p class="kw-def">碎片，残骸</p>
+      <p class="kw-def-en">scattered pieces of waste or remains</p>
+      <p class="kw-ctx">&ldquo;Interim President Delcy RodrÃ­guez said 33 people had been pulled from debris alive over the weekend.&rdquo;</p>
+      <p class="kw-ctx-cn">临时总统德尔西·罗德里格斯表示，周末有33人从废墟中被活着救出。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">collapse</span>
+        <button class="kw-speak-btn" data-word="collapse" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈlæps/ v./n.</span>
+      </div>
+      <p class="kw-def">倒塌，崩溃</p>
+      <p class="kw-def-en">to fall down or give way suddenly</p>
+      <p class="kw-ctx">&ldquo;The two earthquakes, which struck within 39 seconds, caused hundreds of buildings to collapse and many people remain trapped inside.&rdquo;</p>
+      <p class="kw-ctx-cn">两次地震在39秒内接连发生，导致数百栋建筑倒塌，许多人仍被困在内部。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">trapped</span>
+        <button class="kw-speak-btn" data-word="trapped" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/træpt/ adj.</span>
+      </div>
+      <p class="kw-def">被困的，陷入困境的</p>
+      <p class="kw-def-en">unable to escape from a place or situation</p>
+      <p class="kw-ctx">&ldquo;An 11-year-old boy, named Moises, was rescued after days trapped beneath heavy rubble.&rdquo;</p>
+      <p class="kw-ctx-cn">一名名叫莫伊塞斯的11岁男孩在被困在沉重的瓦砾下数天后获救。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rubble</span>
+        <button class="kw-speak-btn" data-word="rubble" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈrʌbl/ n.</span>
+      </div>
+      <p class="kw-def">碎石，瓦砾</p>
+      <p class="kw-def-en">broken pieces of stone, brick, etc., from a building that has been destroyed</p>
+      <p class="kw-ctx">&ldquo;Some have told the BBC that they can hear people under the rubble, but cannot move the heavy slabs of concrete.&rdquo;</p>
+      <p class="kw-ctx-cn">一些人告诉BBC，他们能听到瓦砾下有人，但无法移动沉重的混凝土板。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">magnitude</span>
+        <button class="kw-speak-btn" data-word="magnitude" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmæɡnɪtjuːd/ n.</span>
+      </div>
+      <p class="kw-def">震级；大小，重要性</p>
+      <p class="kw-def-en">the size or extent of something, especially the strength of an earthquake</p>
+      <p class="kw-ctx">&ldquo;Since the magnitude 7.2 and 7.5 quakes on Wednesday, officials have confirmed at least 1,450 deaths.&rdquo;</p>
+      <p class="kw-ctx-cn">自周三发生7.2级和7.5级地震以来，官方已确认至少1450人死亡。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">survivor</span>
+        <button class="kw-speak-btn" data-word="survivor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sərˈvaɪvər/ n.</span>
+      </div>
+      <p class="kw-def">幸存者</p>
+      <p class="kw-def-en">a person who continues to live after a dangerous event</p>
+      <p class="kw-ctx">&ldquo;However, with tens of thousands of people still missing, hopes of finding more survivors are fading by the hour.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，由于仍有数万人失踪，找到更多幸存者的希望每小时都在减弱。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">makeshift</span>
+        <button class="kw-speak-btn" data-word="makeshift" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmeɪkʃɪft/ adj.</span>
+      </div>
+      <p class="kw-def">临时的，权宜的</p>
+      <p class="kw-def-en">used as a temporary substitute when the proper thing is not available</p>
+      <p class="kw-ctx">&ldquo;Its green lawn, which used to be perfectly manicured, is now a makeshift hospital and donation centre.&rdquo;</p>
+      <p class="kw-ctx-cn">它那曾经修剪整齐的绿色草坪，现在成了一个临时医院和捐赠中心。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [], "total_duration_ms": 0};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "in": "在", "to": "到", "that": "那个", "on": "在", "from": "来自", "people": "人们", "are": "是", "is": "是", "have": "有", "for": "为了", "as": "作为", "was": "是", "said": "说", "been": "已经", "be": "是", "venezuela": "委内瑞拉", "with": "与", "by": "被", "she": "她", "year-old": "岁的", "two": "两个", "had": "有", "hours": "小时", "has": "有", "golf": "高尔夫", "course": "课程", "video": "视频", "not": "不", "sunday": "星期日", "alive": "活着的", "who": "谁", "at": "在", "told": "告诉", "they": "它们", "an": "一个", "boy": "男孩", "rescued": "获救的", "after": "之后", "days": "天", "heavy": "沉重的", "guez": "格兹", "them": "他们", "buildings": "建筑物", "which": "哪个", "bbc": "英国广播公司", "up": "向上", "could": "可能", "out": "出来", "these": "这些", "teams": "团队", "where": "那里", "here": "这里", "can": "可以", "earthquakes": "地震", "pulled": "撤回", "over": "超过", "were": "是", "within": "在内部", "their": "他们的", "loved": "爱过的", "ones": "人们", "some": "一些", "under": "在...之下", "but": "但是", "rescuers": "救援人员", "saying": "说", "his": "他的", "young": "年轻的", "also": "也", "efforts": "努力", "residents": "居民", "response": "回应", "areas": "区域", "one": "一个", "emergency": "紧急", "everything": "一切", "our": "我们的", "this": "这个", "played": "比赛", "named": "名为", "more": "更多", "struck": "击中", "country": "国家", "weekend": "周末", "among": "在...之中", "each": "每个", "thousands": "数千", "still": "仍然", "missing": "失踪", "finding": "发现", "hour": "时刻", "aid": "援助", "crucial": "关键的", "relatives": "亲属", "waiting": "等待", "news": "新闻", "quakes": "地震", "officials": "官员", "inside": "内部", "families": "家庭", "through": "通过", "find": "找到", "found": "发现", "access": "进入", "food": "食物", "social": "社交的", "being": "正在", "covered": "覆盖的", "saturday": "星期六", "reported": "据报道", "every": "每个", "la": "拉", "guaira": "瓜伊拉", "hit": "击中", "feel": "感觉", "mundo": "蒙多", "or": "或者", "now": "现在", "hospital": "医院", "centre": "中心", "lost": "失去", "donated": "捐赠", "part": "部分", "her": "她的", "building": "建筑物", "my": "我的", "we": "我们", "it's": "它是", "clothes": "衣服", "well": "好", "terrible": "糟糕的", "alone": "独自", "international": "国际", "us": "我们", "search": "搜索", "drones": "无人机", "beneath": "在...之下", "stories": "报道", "emerged": "出现", "powerful": "强大的", "interim": "临时的", "president": "总统", "delcy": "德尔西", "boys": "男孩们", "separately": "分别", "collapsed": "倒塌的", "other": "其他", "however": "然而", "hopes": "希望", "survivors": "幸存者", "fading": "消退", "agencies": "机构", "say": "说", "first": "第一轮", "facing": "面临", "fifth": "第五", "night": "晚上", "since": "自从", "wednesday": "星期三", "confirmed": "确认", "least": "至少", "deaths": "死亡", "caused": "导致", "hundreds": "数百", "many": "许多", "remain": "仍然", "desperate": "绝望的", "hand": "手", "trying": "尝试", "hear": "听到", "cannot": "不能", "move": "行动", "concrete": "混凝土", "anxiously": "焦急地", "arrive": "抵达", "though": "尽管", "window": "窗户", "passed": "通过", "given": "给定", "especially": "尤其", "if": "如果", "water": "水", "sharing": "分享", "optimistic": "乐观的", "messages": "信息", "media": "媒体", "including": "包括", "videos": "视频", "shared": "分享", "footage": "视频片段", "eyes": "关注", "protect": "保护", "sun": "太阳", "national": "国家", "unit": "单位", "risk": "风险", "management": "管理", "buried": "埋", "about": "关于", "team": "团队", "spent": "花费", "six": "六", "conducting": "进行", "work": "工作", "reach": "达到", "him": "他", "reuters": "路透社", "near": "附近", "sister": "姐妹", "mother": "母亲", "both": "两者", "died": "死亡", "later": "后来", "posted": "发布", "showing": "表现", "second": "第二", "town": "城镇", "life": "生活", "hope": "希望", "wrote": "写道", "french": "法国的", "american": "美国的", "father": "父亲", "teenage": "青少年的", "son": "儿子", "agency": "机构", "coastal": "沿海的", "region": "地区", "located": "位于", "hardest": "最严重的", "turn": "转变", "honest": "诚实的", "it": "它", "makes": "使得", "you": "你", "kind": "种类", "any": "任何", "little": "很少", "horrible": "可怕的", "bus": "巴士", "frustration": "沮丧", "grown": "长大的", "government's": "政府的", "too": "太", "worst": "最坏的", "such": "如此", "there": "那里", "entire": "整个", "removal": "取消", "yet": "尚未", "started": "开始", "person": "个人", "government": "政府", "actually": "实际上", "affected": "受影响", "closing": "关闭", "roads": "道路", "living": "生活", "cars": "汽车", "places": "地方", "like": "像", "airport": "机场", "away": "离开", "become": "成为", "its": "它的", "green": "绿色", "used": "使用", "clothing": "衣服", "humanitarian": "人道主义的", "another": "另一个", "next": "下一个", "small": "小的", "strip": "地带", "land": "土地", "set": "设定", "helicopters": "直升机", "arriving": "到达", "supplies": "补给", "personnel": "人员", "area": "区域", "surrounding": "围绕", "streets": "街道", "cracked": "开裂的", "marked": "显著的", "dust": "尘埃", "silence": "沉默", "only": "只有", "those": "那些", "searching": "搜寻", "remains": "仍然", "watch": "观看", "club": "俱乐部", "lives": "生命", "few": "少数", "didn't": "没有", "soon": "很快", "take": "采取", "left": "离开", "elderly": "老年人", "thank": "感谢", "god": "上帝", "got": "获得", "can't": "不能", "we're": "我们是", "what": "什么", "matters": "事务", "admitted": "承认", "time": "时间", "lies": "位于", "down": "下来", "thinks": "认为", "shaking": "摇晃", "just": "只是", "me": "我", "process": "过程", "while": "而", "play": "扮演", "separate": "单独的", "message": "信息", "sports": "体育", "complex": "复杂的", "serving": "担任", "pointing": "指出", "armed": "武装的", "forces": "力量", "possible": "可能的", "during": "在期间", "moments": "时刻", "enduring": "持久的", "let": "让", "know": "知道", "no": "没有", "single": "单一的", "family": "家庭", "individual": "个人", "need": "需要", "state": "国家", "protection": "保护", "system": "制度", "recent": "最近", "mexico": "墨西哥", "spain": "西班牙", "qatar": "卡塔尔", "uk": "英国", "arrived": "抵达", "reinforce": "加强", "un's": "联合国的", "tom": "汤姆", "deployed": "部署", "all": "所有", "world": "世界", "consisting": "由…组成", "you're": "你是", "looking": "寻找", "almost": "几乎", "medical": "医疗", "go": "去", "call": "呼吁", "help": "帮助", "calling": "呼吁", "newborn": "新生儿", "baby": "婴儿", "earthquake": "地震", "maps": "地图", "graphics": "图形", "how": "如何", "severe": "严重的", "caraballeda": "卡拉巴耶达", "moises": "莫伊塞斯", "disaster": "灾难", "machinery": "机械", "caribe": "加勒比", "lez": "莱斯", "daughters": "女儿们", "miraculous": "奇迹般的", "tens": "数十", "seconds": "秒", "digging": "挖掘", "slabs": "石板", "rescues": "救援", "twisted": "扭曲的", "colombia's": "哥伦比亚的", "ungrd": "国家风险管理部", "high-precision": "高精度的", "rescuer": "救援人员", "overheard": "无意中听到", "walkie-talkie": "对讲机", "purportedly": "据称", "afp": "法新社", "hampered": "阻碍", "aftershocks": "余震", "terrifying": "可怕的", "nervous": "紧张的", "noise": "噪音", "andueza": "安杜埃萨", "driver": "司机", "slow": "缓慢的", "inefficient": "效率低下的", "tanaguarena": "塔纳瓜雷纳", "hindering": "妨碍", "limiting": "限制", "camping": "露营", "epicentre": "震中", "lawn": "草坪", "perfectly": "完美地", "manicured": "修剪整齐的", "donation": "捐赠", "sifting": "筛选", "piles": "堆", "boxes": "箱子", "lagoon": "泻湖", "landing": "着陆", "pad": "垫", "abroad": "国外", "caraballeda's": "卡拉巴耶达的", "interrupted": "中断的", "milagros": "米拉格罗斯", "fled": "逃离", "refuge": "避难所", "lived": "居住", "wakes": "醒来", "dizzy": "头晕的", "psychologist": "心理学家", "dolls": "玩偶", "mattress": "床垫", "grass": "草", "piling": "堆积", "quez": "克兹", "vargas": "巴尔加斯", "sorting": "分类", "medicine": "药品", "functioning": "运作", "solidarity": "团结", "fletcher": "弗莱彻", "surging": "激增", "dogs": "狗", "micro": "微小的", "cockroach": "蟑螂"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
