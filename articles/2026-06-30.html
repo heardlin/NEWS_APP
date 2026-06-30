@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-06-30</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-06-30</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/cedb/live/3a35ce80-7470-11f1-b8da-6d87dfdc4508.jpg" alt="Starmer trims budgets to fund extra £15bn for defence" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Starmer trims budgets to fund extra £15bn for defence</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cwy0rw5dx1ko?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-06-30.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Prime Minister Sir Keir Starmer has said a Â£15bn increase in military <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> will be funded by cutting <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> budgets in other areas, as he set out the UK's long-delayed plan to invest in <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span>.</span></p>
+        <p class="cn">首相基尔·斯塔默爵士（Sir Keir Starmer）表示，将通过削减其他领域的投资预算来为150亿英镑的军费增长提供资金，他同时公布了英国长期拖延的国防投资计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">In one of his final acts as prime minister, Sir Keir said some road and energy projects would not "go ahead as planned" to help raise <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="funding" data-phonetic="/ˈfʌndɪŋ/" data-pos="n." data-def="资金，经费" data-def-en="Money provided for a particular purpose.">funding</span> to Â£80bn a year by 2029.</span></p>
+        <p class="cn">作为首相的最后举措之一，基尔爵士表示，一些道路和能源项目将不会“按原计划推进”，以帮助在2029年前将国防经费提高到每年800亿英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">He said the plan would be built on by his successor, widely expected to be Andy Burnham, who is yet to comment on the plan.</span></p>
+        <p class="cn">他表示，该计划将由他的继任者（普遍预计是安迪·伯纳姆，Andy Burnham）继续推进，伯纳姆尚未对此计划发表评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Treasury later confirmed only Â£10.3bn in savings had currently been identified, meaning Burnham would have to find the remaining Â£4.7bn in his first <span class="keyword" data-word="budget" data-phonetic="/ˈbʌdʒɪt/" data-pos="n." data-def="预算" data-def-en="A plan of how much money will be spent on different things.">Budget</span> in the autumn.</span></p>
+        <p class="cn">财政部随后确认，目前仅确定了103亿英镑的节余，这意味着伯纳姆必须在秋季的首份预算中自行找到剩余的47亿英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The extra Â£15bn in <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> over the next four years is more than the Â£13.5bn secured by former <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">Defence</span> Secretary John Healey, who resigned earlier this month in protest at the plans, but less than the Â£28bn sought by defence chiefs.</span></p>
+        <p class="cn">未来四年额外增加的150亿英镑支出，超过了前国防大臣约翰·希利（John Healey）本月早些时候因抗议该计划而辞职时所争取的135亿英镑，但低于国防首长们寻求的280亿英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">In a speech, Sir Keir said the <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> plan (DIP), initially expected last autumn, would reverse the "corrosive hollowing out" of the armed forces under the Conservatives.</span></p>
+        <p class="cn">基尔爵士在一次演讲中表示，原定于去年秋季公布的国防投资计划（DIP）将扭转保守党执政期间对军队“腐蚀性的掏空”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sir Keir said he had ruled out further borrowing to fund the increase, and instead the money would be found by cutting the long-term <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> budgets of other government departments by 1%.</span></p>
+        <p class="cn">基尔爵士称，他已排除通过进一步借贷来为增资提供资金的可能性，而是通过将其他政府部门的长期投资预算削减1%来筹集资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The Department for Transport (DfT) is making a further Â£700m in savings from roads projects, with the A38 Derby Junctions and A46 Newark Bypass scheme being considered for cancellation.</span></p>
+        <p class="cn">交通部（DfT）正从道路项目中进一步节省7亿英镑，其中A38德比枢纽和A46纽瓦克绕道项目正在考虑取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The Department for Energy Security and Net Zero (DESNZ) is finding an additional Â£2bn from its <span class="keyword" data-word="budget" data-phonetic="/ˈbʌdʒɪt/" data-pos="n." data-def="预算" data-def-en="A plan of how much money will be spent on different things.">budget</span>.</span> <span class="sentence" data-sentence-index="9">More detailed plans are expected in the autumn.</span></p>
+        <p class="cn">能源安全与净零排放部（DESNZ）正从其预算中额外节省20亿英镑。更详细的计划预计将于秋季公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Some details of planned commitments over the next four years include:</span></p>
+        <p class="cn">未来四年计划承诺的一些细节包括：</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">More than Â£64bn to strengthen the UK's nuclear deterrent, including new submarines and F-35A fighter jets capable of carrying nuclear bombs</span></p>
+        <p class="cn">超过640亿英镑用于加强英国的核威慑力量，包括新型潜艇和能够携带核弹的F-35A战斗机</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Â£5bn to fund a "drone transformation" for the armed forces</span></p>
+        <p class="cn">50亿英镑用于军队的“无人机转型”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">More than Â£8bn for the global combat air programme (Gcap), a scheme to build â¯the next generation of RAF stealth jets, in partnership with Japan and Italy</span></p>
+        <p class="cn">超过80亿英镑用于全球空战计划（Gcap），该计划旨在与日本和意大利合作建造下一代英国皇家空军隐形战斗机</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Plans for the Royal Navy to become a "hybrid navy", using self-controlled vessels and AI alongside warships and aircraft and <span class="keyword" data-word="funding" data-phonetic="/ˈfʌndɪŋ/" data-pos="n." data-def="资金，经费" data-def-en="Money provided for a particular purpose.">funding</span> for six new warships</span></p>
+        <p class="cn">皇家海军计划成为“混合海军”，使用自主舰艇和人工智能，同时配备军舰和飞机，并资助建造六艘新军舰</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">The Royal Air Force will develop <span class="keyword" data-word="autonomous" data-phonetic="/ɔːˈtɒnəməs/" data-pos="adj." data-def="自主的，自动的" data-def-en="Having the ability to operate independently without human control.">autonomous</span> fighter jets and bring its "uncrewed electronic warfare drone system" into service in 2026</span></p>
+        <p class="cn">皇家空军将开发自主战斗机，并于2026年将“无人电子战无人机系统”投入使用</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Watch: Security correspondent Frank Gardner analysis the long-delayed government <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> plan</span></p>
+        <p class="cn">观看：安全事务记者弗兰克·加德纳分析政府长期拖延的国防计划</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">How much more is being spent on <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> and will the UK hit Nato's targets?</span></p>
+        <p class="cn">国防开支实际增加了多少，英国能否达到北约的目标？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Frank Gardner: Key points from government's <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> plan</span></p>
+        <p class="cn">弗兰克·加德纳：政府国防开支计划的要点</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">The DIP also says the Ministry of <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">Defence</span> (MoD) will attempt to make <span class="keyword" data-word="efficiency" data-phonetic="/ɪˈfɪʃənsi/" data-pos="n." data-def="效率" data-def-en="The ability to do something without wasting time, money, or energy.">efficiency</span> savings worth almost Â£11bn by 2030.</span></p>
+        <p class="cn">国防投资计划还指出，国防部（MoD）将力争到2030年实现近110亿英镑的效率节余。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">The MoD is planning to deliver the savings by reducing the civil service workforce, cutting back consultancy <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span>, and expanding the use of technology.</span></p>
+        <p class="cn">国防部计划通过减少公务员队伍、削减咨询支出以及扩大技术使用来实现这些节余。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22"><span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">Defence</span> officials say the increase in defence <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> is not conditional on the savings being made.</span></p>
+        <p class="cn">国防官员表示，国防开支的增加并不以这些节余的实现为条件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">The DIP also says a number of <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> programmes have been scrapped, including Storm Shadow missiles, a new satellite system, and Wildcat utility helicopters, which will now be phased out in favour of an "<span class="keyword" data-word="autonomous" data-phonetic="/ɔːˈtɒnəməs/" data-pos="adj." data-def="自主的，自动的" data-def-en="Having the ability to operate independently without human control.">autonomous</span> replacement".</span></p>
+        <p class="cn">国防投资计划还表示，一些国防项目已被取消，包括风暴阴影导弹、一个新卫星系统以及野猫通用直升机，这些将被逐步淘汰，转而采用“自主替代方案”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Sir Keir has pushed ahead with the DIP despite his impending departure from Downing Street after announcing his resignation last week.</span></p>
+        <p class="cn">尽管基尔爵士上周宣布辞职后即将离开唐宁街，但他仍坚持推进国防投资计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Tense Whitehall negotiations over how to fund it have been ongoing for months.</span></p>
+        <p class="cn">白厅关于如何为其提供资金的紧张谈判已持续数月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26"><span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">Defence</span> Secretary Dan Jarvis told BBC Newsnight he had discussed the <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> plan with Burnham, but it is understood he could not be briefed on certain security issues and did not sign off the full thing.</span></p>
+        <p class="cn">国防大臣丹·贾维斯（Dan Jarvis）告诉BBC《新闻之夜》，他已与伯纳姆讨论了该投资计划，但据了解，他无法就某些安全问题向伯纳姆通报，也没有签署全部内容。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">Jarvis would not confirm if Burnham had been told that he would need to find an additional Â£4.7bn to fund the <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> plan if he becomes prime minister.</span></p>
+        <p class="cn">贾维斯不愿证实伯纳姆是否被告知，如果他成为首相，将需要额外找到47亿英镑来资助国防投资计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">Two <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> ministers quit , with Armed Forces Minister Al Carns joining Healey in resigning over the scale of the proposed uplift.</span></p>
+        <p class="cn">两位国防部长辞职，武装部队部长阿尔·卡恩斯（Al Carns）与希利一同因拟议的增资规模而辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">In his speech, Sir Keir nodded to these difficulties, arguing "the hard truth is that there are no easy answers".</span></p>
+        <p class="cn">基尔爵士在演讲中提到了这些困难，称“残酷的事实是没有简单的答案”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">Sir Keir said the plan would now increase the military <span class="keyword" data-word="budget" data-phonetic="/ˈbʌdʒɪt/" data-pos="n." data-def="预算" data-def-en="A plan of how much money will be spent on different things.">budget</span> to 2.7% of gross domestic product (GDP) by 2029, and put the UK on track to meet Nato's core <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> target of 3.5% of GDP by 2035.</span></p>
+        <p class="cn">基尔爵士表示，该计划将在2029年前将军事预算提高到国内生产总值（GDP）的2.7%，并使英国有望在2035年前达到北约核心国防开支目标，即GDP的3.5%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">The prime minister said the UK was on track to spend 3% of GDP on <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> in the next five-year Parliament - but he did not set a more specific date on this target, something Healey had called for.</span></p>
+        <p class="cn">首相表示，英国有望在下一个五年议会任期内将国防开支提高到GDP的3%——但他没有为此目标设定更具体的日期，而这是希利所呼吁的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">The DIP says the plan to hit the 3% target would be set out at the next <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> review, which is currently scheduled to take place next year.</span></p>
+        <p class="cn">国防投资计划称，实现3%目标的计划将在下一次支出审查中公布，该审查目前定于明年进行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">The DIP follows the wide-ranging Strategic <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">Defence</span> Review (SDR), which was published in June 2025 and pledged billions in extra <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> to fund a shift towards "warfighting readiness".</span></p>
+        <p class="cn">国防投资计划是在2025年6月发布的广泛战略防务评估（SDR）之后制定的，该评估承诺额外支出数十亿英镑，以推动向“战备状态”的转变。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="34">General Sir Richard Barrons, one of authors of SDR, said while the publication of the DIP "does count as progress", it would not "crack the issue" defending the UK "sufficiently well and quickly".</span></p>
+        <p class="cn">战略防务评估的作者之一理查德·巴伦斯爵士（General Sir Richard Barrons）表示，虽然国防投资计划的发布“确实算是一种进展”，但它不会“足够好、足够快地解决”保卫英国的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="35">Speaking earlier, he said: "More has to be done sooner and that requires more money than is currently on the table".</span></p>
+        <p class="cn">他早些时候表示：“必须更快地做更多事情，这需要比目前摆在桌面上的更多的资金。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="36">Shadow <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> secretary James Cartlidge said the prime minister had left a "legacy of failure", an "underfunded defence <span class="keyword" data-word="investment" data-phonetic="/ɪnˈvestmənt/" data-pos="n." data-def="投资" data-def-en="The act of putting money into something to make a profit or achieve a result.">investment</span> plan that's too little, too late".</span></p>
+        <p class="cn">影子国防大臣詹姆斯·卡特利奇（James Cartlidge）表示，首相留下了“失败的遗产”，一个“资金不足的国防投资计划，太少、太迟”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="37">Lib Dem leader Sir Ed Davey said the government had "dangerously short-changed our armed forces", meaning <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> chiefs "have been forced to make hard choices, when they should be given what they need".</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士（Sir Ed Davey）表示，政府“危险地亏待了我们的武装部队”，这意味着国防首长们“被迫做出艰难选择，而他们本应得到所需的一切”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="38">Nato General Secretary Mark Rutte has previously urged the alliance's members to present "clear, concrete and credible plans" for how they will raise <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> <span class="keyword" data-word="spending" data-phonetic="/ˈspendɪŋ/" data-pos="n." data-def="开支，花费" data-def-en="The amount of money that is spent by a government or organization.">spending</span> to 3.5% ahead of a leaders' summit in Turkey next week.</span></p>
+        <p class="cn">北约秘书长马克·吕特（Mark Rutte）此前敦促联盟成员在下周于土耳其举行的领导人峰会之前，就如何将国防开支提高到3.5%提出“明确、具体和可信的计划”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="39">Rutte welcomed the DIP as a "good step" towards the 3.5% target, saying "stronger UK <span class="keyword" data-word="defence" data-phonetic="/dɪˈfens/" data-pos="n." data-def="国防，防御" data-def-en="The system of protecting a country from attack.">defence</span> makes us all safer".</span></p>
+        <p class="cn">吕特对国防投资计划表示欢迎，称这是朝着3.5%目标迈出的“良好一步”，并表示“更强大的英国国防让我们所有人都更安全”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="40">Sign up for our Politics Essential newsletter to read top political analysis, gain insight from across the UK and stay up to speed with the big moments.</span> <span class="sentence" data-sentence-index="41">It'll be delivered straight to your inbox every weekday.</span></p>
+        <p class="cn">订阅我们的《政治要闻》通讯，阅读顶级政治分析，获取英国各地的见解，并随时了解重大事件。它将在每个工作日直接发送到您的收件箱。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spending</span>
+        <button class="kw-speak-btn" data-word="spending" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈspendɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">开支，花费</p>
+      <p class="kw-def-en">The amount of money that is spent by a government or organization.</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Sir Keir Starmer has said a £15bn increase in military spending will be funded by cutting investment budgets in other areas.&rdquo;</p>
+      <p class="kw-ctx-cn">首相基尔·斯塔默爵士表示，150亿英镑的军费增长将通过削减其他领域的投资预算来筹集。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">investment</span>
+        <button class="kw-speak-btn" data-word="investment" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈvestmənt/ n.</span>
+      </div>
+      <p class="kw-def">投资</p>
+      <p class="kw-def-en">The act of putting money into something to make a profit or achieve a result.</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Sir Keir Starmer has said a £15bn increase in military spending will be funded by cutting investment budgets in other areas.&rdquo;</p>
+      <p class="kw-ctx-cn">首相基尔·斯塔默爵士表示，150亿英镑的军费增长将通过削减其他领域的投资预算来筹集。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">budget</span>
+        <button class="kw-speak-btn" data-word="budget" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbʌdʒɪt/ n.</span>
+      </div>
+      <p class="kw-def">预算</p>
+      <p class="kw-def-en">A plan of how much money will be spent on different things.</p>
+      <p class="kw-ctx">&ldquo;The Treasury later confirmed only £10.3bn in savings had currently been identified, meaning Burnham would have to find the remaining £4.7bn in his first Budget in the autumn.&rdquo;</p>
+      <p class="kw-ctx-cn">财政部后来确认目前仅确定了103亿英镑的节余，这意味着伯纳姆必须在秋季的首份预算中找到剩余的47亿英镑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">defence</span>
+        <button class="kw-speak-btn" data-word="defence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈfens/ n.</span>
+      </div>
+      <p class="kw-def">国防，防御</p>
+      <p class="kw-def-en">The system of protecting a country from attack.</p>
+      <p class="kw-ctx">&ldquo;In one of his final acts as prime minister, Sir Keir said some road and energy projects would not "go ahead as planned" to help raise defence funding to £80bn a year by 2029.&rdquo;</p>
+      <p class="kw-ctx-cn">作为首相的最后行动之一，基尔爵士表示，一些道路和能源项目将不会“按计划进行”，以帮助到2029年将国防资金提高到每年800亿英镑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">funding</span>
+        <button class="kw-speak-btn" data-word="funding" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfʌndɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">资金，经费</p>
+      <p class="kw-def-en">Money provided for a particular purpose.</p>
+      <p class="kw-ctx">&ldquo;In one of his final acts as prime minister, Sir Keir said some road and energy projects would not "go ahead as planned" to help raise defence funding to £80bn a year by 2029.&rdquo;</p>
+      <p class="kw-ctx-cn">作为首相的最后行动之一，基尔爵士表示，一些道路和能源项目将不会“按计划进行”，以帮助到2029年将国防资金提高到每年800亿英镑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resign</span>
+        <button class="kw-speak-btn" data-word="resign" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzaɪn/ v.</span>
+      </div>
+      <p class="kw-def">辞职</p>
+      <p class="kw-def-en">To officially leave a job or position.</p>
+      <p class="kw-ctx">&ldquo;The extra £15bn in spending over the next four years is more than the £13.5bn secured by former Defence Secretary John Healey, who resigned earlier this month in protest at the plans.&rdquo;</p>
+      <p class="kw-ctx-cn">未来四年额外增加的150亿英镑支出，超过了前国防大臣约翰·希利争取到的135亿英镑，希利本月早些时候因抗议这些计划而辞职。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">efficiency</span>
+        <button class="kw-speak-btn" data-word="efficiency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈfɪʃənsi/ n.</span>
+      </div>
+      <p class="kw-def">效率</p>
+      <p class="kw-def-en">The ability to do something without wasting time, money, or energy.</p>
+      <p class="kw-ctx">&ldquo;The DIP also says the Ministry of Defence (MoD) will attempt to make efficiency savings worth almost £11bn by 2030.&rdquo;</p>
+      <p class="kw-ctx-cn">国防投资计划还表示，国防部将力争到2030年实现近110亿英镑的效率节余。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">autonomous</span>
+        <button class="kw-speak-btn" data-word="autonomous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɔːˈtɒnəməs/ adj.</span>
+      </div>
+      <p class="kw-def">自主的，自动的</p>
+      <p class="kw-def-en">Having the ability to operate independently without human control.</p>
+      <p class="kw-ctx">&ldquo;The DIP also says a number of defence programmes have been scrapped, including Storm Shadow missiles, a new satellite system, and Wildcat utility helicopters, which will now be phased out in favour of an "autonomous replacement".&rdquo;</p>
+      <p class="kw-ctx-cn">国防投资计划还表示，一些国防项目已被取消，包括风暴阴影导弹、一个新的卫星系统以及野猫通用直升机，这些将被逐步淘汰，转而采用“自主替代品”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Prime Minister Sir Keir Starmer has said a \u00c2\u00a315bn increase in military spending will be funded by cutting investment budgets in other areas, as he set out the UK's long-delayed plan to invest in defence.", "start_ms": 0, "end_ms": 15096, "paragraph_index": 0}, {"index": 1, "text": "In one of his final acts as prime minister, Sir Keir said some road and energy projects would not \"go ahead as planned\" to help raise defence funding to \u00c2\u00a380bn a year by 2029.", "start_ms": 15096, "end_ms": 28464, "paragraph_index": 1}, {"index": 2, "text": "He said the plan would be built on by his successor, widely expected to be Andy Burnham, who is yet to comment on the plan.", "start_ms": 28464, "end_ms": 37176, "paragraph_index": 2}, {"index": 3, "text": "The Treasury later confirmed only \u00c2\u00a310.3bn in savings had currently been identified, meaning Burnham would have to find the remaining \u00c2\u00a34.7bn in his first Budget in the autumn.", "start_ms": 37176, "end_ms": 51768, "paragraph_index": 3}, {"index": 4, "text": "The extra \u00c2\u00a315bn in spending over the next four years is more than the \u00c2\u00a313.5bn secured by former Defence Secretary John Healey, who resigned earlier this month in protest at the plans, but less than the \u00c2\u00a328bn sought by defence chiefs.", "start_ms": 51768, "end_ms": 71328, "paragraph_index": 4}, {"index": 5, "text": "In a speech, Sir Keir said the defence investment plan (DIP), initially expected last autumn, would reverse the \"corrosive hollowing out\" of the armed forces under the Conservatives.", "start_ms": 71328, "end_ms": 83856, "paragraph_index": 5}, {"index": 6, "text": "Sir Keir said he had ruled out further borrowing to fund the increase, and instead the money would be found by cutting the long-term investment budgets of other government departments by 1%.", "start_ms": 83856, "end_ms": 96120, "paragraph_index": 6}, {"index": 7, "text": "The Department for Transport (DfT) is making a further \u00c2\u00a3700m in savings from roads projects, with the A38 Derby Junctions and A46 Newark Bypass scheme being considered for cancellation.", "start_ms": 96120, "end_ms": 111840, "paragraph_index": 7}, {"index": 8, "text": "The Department for Energy Security and Net Zero (DESNZ) is finding an additional \u00c2\u00a32bn from its budget.", "start_ms": 111840, "end_ms": 121464, "paragraph_index": 8}, {"index": 9, "text": "More detailed plans are expected in the autumn.", "start_ms": 121464, "end_ms": 125400, "paragraph_index": 8}, {"index": 10, "text": "Some details of planned commitments over the next four years include:", "start_ms": 125400, "end_ms": 130464, "paragraph_index": 9}, {"index": 11, "text": "More than \u00c2\u00a364bn to strengthen the UK's nuclear deterrent, including new submarines and F-35A fighter jets capable of carrying nuclear bombs", "start_ms": 130464, "end_ms": 142824, "paragraph_index": 10}, {"index": 12, "text": "\u00c2\u00a35bn to fund a \"drone transformation\" for the armed forces", "start_ms": 142824, "end_ms": 148608, "paragraph_index": 11}, {"index": 13, "text": "More than \u00c2\u00a38bn for the global combat air programme (Gcap), a scheme to build \u00e2\u0080\u00afthe next generation of RAF stealth jets, in partnership with Japan and Italy", "start_ms": 148608, "end_ms": 160560, "paragraph_index": 12}, {"index": 14, "text": "Plans for the Royal Navy to become a \"hybrid navy\", using self-controlled vessels and AI alongside warships and aircraft and funding for six new warships", "start_ms": 160560, "end_ms": 171888, "paragraph_index": 13}, {"index": 15, "text": "The Royal Air Force will develop autonomous fighter jets and bring its \"uncrewed electronic warfare drone system\" into service in 2026", "start_ms": 171888, "end_ms": 181944, "paragraph_index": 14}, {"index": 16, "text": "This video can not be played", "start_ms": 181944, "end_ms": 184944, "paragraph_index": 15}, {"index": 17, "text": "Watch: Security correspondent Frank Gardner analysis the long-delayed government defence plan", "start_ms": 184944, "end_ms": 192168, "paragraph_index": 16}, {"index": 18, "text": "How much more is being spent on defence and will the UK hit Nato's targets?", "start_ms": 192168, "end_ms": 197976, "paragraph_index": 17}, {"index": 19, "text": "Frank Gardner: Key points from government's defence spending plan", "start_ms": 197976, "end_ms": 203160, "paragraph_index": 18}, {"index": 20, "text": "The DIP also says the Ministry of Defence (MoD) will attempt to make efficiency savings worth almost \u00c2\u00a311bn by 2030.", "start_ms": 203160, "end_ms": 213576, "paragraph_index": 19}, {"index": 21, "text": "The MoD is planning to deliver the savings by reducing the civil service workforce, cutting back consultancy spending, and expanding the use of technology.", "start_ms": 213576, "end_ms": 224184, "paragraph_index": 20}, {"index": 22, "text": "Defence officials say the increase in defence spending is not conditional on the savings being made.", "start_ms": 224184, "end_ms": 231048, "paragraph_index": 21}, {"index": 23, "text": "The DIP also says a number of defence programmes have been scrapped, including Storm Shadow missiles, a new satellite system, and Wildcat utility helicopters, which will now be phased out in favour of an \"autonomous replacement\".", "start_ms": 231048, "end_ms": 246864, "paragraph_index": 22}, {"index": 24, "text": "Sir Keir has pushed ahead with the DIP despite his impending departure from Downing Street after announcing his resignation last week.", "start_ms": 246864, "end_ms": 255792, "paragraph_index": 23}, {"index": 25, "text": "Tense Whitehall negotiations over how to fund it have been ongoing for months.", "start_ms": 255792, "end_ms": 261384, "paragraph_index": 24}, {"index": 26, "text": "Defence Secretary Dan Jarvis told BBC Newsnight he had discussed the investment plan with Burnham, but it is understood he could not be briefed on certain security issues and did not sign off the full thing.", "start_ms": 261384, "end_ms": 274944, "paragraph_index": 25}, {"index": 27, "text": "Jarvis would not confirm if Burnham had been told that he would need to find an additional \u00c2\u00a34.7bn to fund the defence investment plan if he becomes prime minister.", "start_ms": 274944, "end_ms": 286632, "paragraph_index": 26}, {"index": 28, "text": "Two defence ministers quit , with Armed Forces Minister Al Carns joining Healey in resigning over the scale of the proposed uplift.", "start_ms": 286632, "end_ms": 296088, "paragraph_index": 27}, {"index": 29, "text": "In his speech, Sir Keir nodded to these difficulties, arguing \"the hard truth is that there are no easy answers\".", "start_ms": 296088, "end_ms": 304200, "paragraph_index": 28}, {"index": 30, "text": "Sir Keir said the plan would now increase the military budget to 2.7% of gross domestic product (GDP) by 2029, and put the UK on track to meet Nato's core defence spending target of 3.5% of GDP by 2035.", "start_ms": 304200, "end_ms": 323088, "paragraph_index": 29}, {"index": 31, "text": "The prime minister said the UK was on track to spend 3% of GDP on defence in the next five-year Parliament - but he did not set a more specific date on this target, something Healey had called for.", "start_ms": 323088, "end_ms": 336624, "paragraph_index": 30}, {"index": 32, "text": "The DIP says the plan to hit the 3% target would be set out at the next spending review, which is currently scheduled to take place next year.", "start_ms": 336624, "end_ms": 346488, "paragraph_index": 31}, {"index": 33, "text": "The DIP follows the wide-ranging Strategic Defence Review (SDR), which was published in June 2025 and pledged billions in extra spending to fund a shift towards \"warfighting readiness\".", "start_ms": 346488, "end_ms": 360240, "paragraph_index": 32}, {"index": 34, "text": "General Sir Richard Barrons, one of authors of SDR, said while the publication of the DIP \"does count as progress\", it would not \"crack the issue\" defending the UK \"sufficiently well and quickly\".", "start_ms": 360240, "end_ms": 373704, "paragraph_index": 33}, {"index": 35, "text": "Speaking earlier, he said: \"More has to be done sooner and that requires more money than is currently on the table\".", "start_ms": 373704, "end_ms": 381840, "paragraph_index": 34}, {"index": 36, "text": "Shadow defence secretary James Cartlidge said the prime minister had left a \"legacy of failure\", an \"underfunded defence investment plan that's too little, too late\".", "start_ms": 381840, "end_ms": 393192, "paragraph_index": 35}, {"index": 37, "text": "Lib Dem leader Sir Ed Davey said the government had \"dangerously short-changed our armed forces\", meaning defence chiefs \"have been forced to make hard choices, when they should be given what they need\".", "start_ms": 393192, "end_ms": 406128, "paragraph_index": 36}, {"index": 38, "text": "Nato General Secretary Mark Rutte has previously urged the alliance's members to present \"clear, concrete and credible plans\" for how they will raise defence spending to 3.5% ahead of a leaders' summit in Turkey next week.", "start_ms": 406128, "end_ms": 422016, "paragraph_index": 37}, {"index": 39, "text": "Rutte welcomed the DIP as a \"good step\" towards the 3.5% target, saying \"stronger UK defence makes us all safer\".", "start_ms": 422016, "end_ms": 431448, "paragraph_index": 38}, {"index": 40, "text": "Sign up for our Politics Essential newsletter to read top political analysis, gain insight from across the UK and stay up to speed with the big moments.", "start_ms": 431448, "end_ms": 442440, "paragraph_index": 39}, {"index": 41, "text": "It'll be delivered straight to your inbox every weekday.", "start_ms": 442440, "end_ms": 446736, "paragraph_index": 39}], "total_duration_ms": 446736};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "of": "的", "and": "和", "said": "说", "be": "是", "by": "被", "plan": "计划", "is": "是", "for": "为了", "would": "将", "on": "在", "sir": "爵士", "he": "他", "not": "不", "more": "更多", "dip": "下降", "keir": "基尔", "had": "有", "next": "下一个", "minister": "部长", "will": "将", "his": "他的", "with": "与", "uk": "英国", "prime": "首相", "as": "作为", "out": "出来", "savings": "储蓄", "been": "已经", "than": "比", "fund": "资金", "from": "来自", "has": "有", "increase": "增加", "burnham": "伯纳姆", "have": "有", "over": "超过", "secretary": "秘书", "plans": "计划", "armed": "武装的", "forces": "力量", "an": "一个", "target": "目标", "cutting": "削减", "set": "设定", "ahead": "提前", "expected": "预期", "currently": "目前", "autumn": "秋天", "healey": "希利", "this": "这个", "but": "但是", "government": "政府", "being": "正在", "security": "安全", "new": "新的", "jets": "喷气式飞机", "how": "如何", "says": "表示", "which": "哪个", "it": "它", "that": "那个", "gdp": "国内生产总值", "they": "它们", "military": "军事", "budgets": "预算", "other": "其他", "uk's": "英国的", "long-delayed": "拖延已久的", "one": "一个", "some": "一些", "energy": "能源", "projects": "项目", "planned": "计划中的", "raise": "提高", "year": "年", "who": "谁", "meaning": "意义", "find": "找到", "extra": "额外的", "four": "四", "years": "多年", "earlier": "较早", "at": "在", "chiefs": "首领", "speech": "演讲", "last": "最后", "further": "进一步的", "money": "金钱", "department": "部门", "scheme": "计划", "additional": "额外的", "its": "它的", "are": "是", "nuclear": "核的", "including": "包括", "fighter": "战斗机", "drone": "无人机", "air": "气氛", "royal": "王室的", "navy": "海军", "warships": "军舰", "system": "制度", "service": "服务", "frank": "坦率的", "gardner": "加德纳", "analysis": "分析", "hit": "击中", "nato's": "北约的", "also": "也", "mod": "国防部", "make": "使", "shadow": "阴影", "now": "现在", "week": "周", "jarvis": "贾维斯", "told": "告诉", "did": "做了", "sign": "签署", "if": "如果", "need": "需要", "hard": "艰难的", "track": "轨道", "was": "是", "review": "审查", "sdr": "特别提款权", "towards": "对待", "general": "总", "too": "太", "our": "我们的", "rutte": "吕特", "up": "向上", "starmer": "斯塔默", "funded": "资助的", "areas": "区域", "invest": "投资", "final": "最终", "acts": "行为", "road": "道路", "go": "去", "help": "帮助", "successor": "继任者", "widely": "广泛地", "andy": "安迪", "yet": "尚未", "comment": "评论", "treasury": "财政部", "later": "后来", "confirmed": "确认", "only": "只有", "identified": "被确认", "remaining": "剩余的", "first": "第一轮", "secured": "确保", "former": "前任", "john": "约翰", "resigned": "辞职的", "month": "月份", "protest": "抗议", "less": "更少", "sought": "寻求", "initially": "最初", "reverse": "逆转", "under": "在...之下", "conservatives": "保守党", "ruled": "裁定", "borrowing": "借贷", "instead": "反而", "found": "发现", "long-term": "长期的", "departments": "部门", "transport": "运输", "making": "进行", "roads": "道路", "derby": "德比", "considered": "认为", "net": "球网", "zero": "零", "finding": "发现", "detailed": "详细的", "details": "细节", "commitments": "承诺", "include": "包括", "strengthen": "加强", "submarines": "潜艇", "carrying": "携带", "bombs": "炸弹", "global": "全球", "programme": "节目", "build": "建立", "generation": "一代", "raf": "英国皇家空军", "partnership": "伙伴关系", "japan": "日本", "italy": "意大利", "become": "成为", "using": "使用", "vessels": "船只", "ai": "人工智能", "alongside": "与...一起", "aircraft": "飞机", "six": "六", "force": "力量", "develop": "发展", "bring": "带来", "uncrewed": "无人驾驶的", "warfare": "战争", "into": "进入", "video": "视频", "can": "可以", "played": "比赛", "watch": "观看", "correspondent": "记者", "much": "许多", "spent": "花费", "targets": "目标", "key": "关键", "points": "水平", "government's": "政府的", "ministry": "外交部", "attempt": "企图", "worth": "价值", "almost": "几乎", "planning": "计划", "deliver": "发表", "reducing": "减少", "civil": "民事的", "back": "后退", "expanding": "膨胀", "use": "使用", "technology": "技术", "officials": "官员", "say": "说", "made": "做出", "number": "数量", "programmes": "项目", "scrapped": "废弃的", "storm": "风暴", "missiles": "导弹", "satellite": "卫星", "helicopters": "直升机", "favour": "偏袒", "replacement": "替代者", "pushed": "推动", "despite": "尽管", "impending": "即将来临的", "departure": "离职", "downing": "唐宁", "street": "街", "after": "之后", "announcing": "宣布", "resignation": "辞职", "tense": "紧张的", "whitehall": "白厅", "negotiations": "谈判", "ongoing": "正在进行的", "months": "月", "dan": "丹", "bbc": "英国广播公司", "newsnight": "新闻之夜", "discussed": "讨论", "understood": "理解", "could": "可能", "briefed": "简报", "certain": "某些", "issues": "问题", "off": "离开", "full": "完整", "thing": "事情", "confirm": "确认", "becomes": "成为", "two": "两个", "ministers": "部长", "quit": "辞职", "al": "阿尔", "carns": "卡恩斯", "resigning": "辞职", "scale": "规模", "proposed": "提议的", "these": "这些", "difficulties": "困难", "arguing": "争论", "truth": "真相", "there": "那里", "no": "没有", "easy": "容易的", "gross": "总的", "domestic": "国内的", "product": "产品", "put": "提出", "meet": "会见", "core": "核心", "spend": "花费", "five-year": "五年的", "parliament": "议会", "specific": "具体的", "date": "日期", "something": "某事", "called": "称为", "take": "采取", "place": "地点", "follows": "遵循", "wide-ranging": "广泛的", "strategic": "战略的", "published": "发布", "june": "六月", "pledged": "承诺", "billions": "数十亿", "shift": "转移", "warfighting": "作战", "readiness": "战备状态", "richard": "理查德", "while": "而", "publication": "出版", "does": "做", "count": "计票", "progress": "进展", "issue": "问题", "defending": "辩护", "sufficiently": "足够地", "well": "好", "quickly": "迅速", "speaking": "发言", "done": "完成", "requires": "需要", "james": "詹姆斯", "cartlidge": "卡特利奇", "left": "离开", "failure": "失败", "that's": "那是", "little": "很少", "late": "已故", "lib": "自由", "dem": "民主党", "leader": "领导人", "ed": "编辑", "davey": "戴维", "dangerously": "危险地", "short-changed": "被亏待", "forced": "被迫", "choices": "选择", "when": "当", "should": "应该", "given": "给定", "what": "什么", "nato": "北约", "mark": "标志", "previously": "此前", "urged": "敦促", "alliance's": "联盟的", "members": "成员", "present": "主持", "clear": "明确", "concrete": "混凝土", "credible": "可信的", "leaders": "领导人", "summit": "巅峰", "turkey": "土耳其", "welcomed": "受到欢迎", "good": "良好", "step": "步骤", "saying": "说", "stronger": "更强", "makes": "使得", "us": "我们", "all": "所有", "safer": "更安全", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "read": "阅读", "top": "顶级的", "political": "政治的", "gain": "获得", "insight": "洞察", "across": "跨越", "stay": "保持", "speed": "速度", "big": "大的", "moments": "时刻", "it'll": "它将", "delivered": "递送", "straight": "直接", "your": "你的", "inbox": "收件箱", "every": "每个", "weekday": "工作日", "built": "建造", "corrosive": "腐蚀性的", "hollowing": "掏空", "dft": "英国交通部", "junctions": "交叉口", "newark": "纽瓦克", "bypass": "旁路", "cancellation": "取消", "desnz": "英国能源安全与净零部", "deterrent": "威慑", "f-": "F-", "capable": "有能力的", "transformation": "转型", "combat": "作战", "gcap": "全球作战空中计划", "stealth": "隐形", "hybrid": "混合", "self-controlled": "自控的", "electronic": "电子", "workforce": "劳动力", "consultancy": "咨询", "conditional": "有条件的", "wildcat": "野猫", "utility": "公用事业", "phased": "分阶段的", "joining": "加入", "uplift": "提升", "nodded": "点头", "answers": "答案", "scheduled": "预定", "barrons": "巴伦周刊", "authors": "作者", "crack": "破解", "sooner": "更早", "table": "表格", "legacy": "遗留", "underfunded": "资金不足"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
