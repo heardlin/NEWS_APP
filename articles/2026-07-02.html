@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-02</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-02</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1c79/live/85630fb0-7602-11f1-b976-0b9c15b0ccfc.png" alt="Married at First Sight UK star arrested on suspicion of rape" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Married at First Sight UK star arrested on suspicion of rape</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cn8k774pm3jo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-02.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A <span class="keyword" data-word="cast member" data-phonetic="/kɑːst ˈmembər/" data-pos="n." data-def="剧组人员；演员" data-def-en="a person who is part of the cast of a show or film">cast member</span> from Married at First Sight UK has been arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑；嫌疑" data-def-en="a feeling or belief that something is true, especially something bad">suspicion</span> of rape after a BBC Panorama investigation into the hit reality TV show.</span></p>
+        <p class="cn">英国真人秀节目《一见钟情结婚》的一名演员因涉嫌强奸被捕，此前BBC《全景》栏目对该热门节目进行了调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The individual is not being named.</span> <span class="sentence" data-sentence-index="2">The alleged victim is also not being named; anyone who makes an <span class="keyword" data-word="allegation" data-phonetic="/ˌælɪˈɡeɪʃən/" data-pos="n." data-def="指控；陈述" data-def-en="a claim or statement that someone has done something wrong or illegal, without proof">allegation</span> of rape is entitled to anonymity by law.</span></p>
+        <p class="cn">该演员和据称的受害者均未被点名；任何提出强奸指控的人依法享有匿名权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Panorama programme, broadcast in May, revealed rape allegations from two female cast members on the show , while a third woman alleged a <span class="keyword" data-word="non-consensual" data-phonetic="/ˌnɒn kənˈsenʃuəl/" data-pos="adj." data-def="未经同意的" data-def-en="not given or done with the agreement of all people involved">non-consensual</span> sex act.</span> <span class="sentence" data-sentence-index="4">The men involved have denied all the allegations against them.</span></p>
+        <p class="cn">今年5月播出的《全景》节目揭露了该节目两名女演员的强奸指控，另一名女性则指控遭遇非自愿性行为。涉事男性否认了所有针对他们的指控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="5">Channel 4 has commissioned a review into contributor <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利；安康" data-def-en="the health, happiness, and well-being of a person or group">welfare</span> on the show.</span></p>
+        <p class="cn">第四频道已委托对节目参与者福利进行审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="6">The Dark Side of Married at First Sight</span></p>
+        <p class="cn">《一见钟情结婚的黑暗面》</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">Panorama investigates allegations that raise serious concerns that <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利；安康" data-def-en="the health, happiness, and well-being of a person or group">welfare</span> procedures on Married at First Sight UK have failed contributors, leaving them at risk of harm.</span></p>
+        <p class="cn">《全景》调查的指控引发严重关切，认为《一见钟情结婚》英国版的福利程序未能保护参与者，使他们面临伤害风险。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Following the broadcast of the Panorama episode, the Metropolitan Police encouraged "anyone who believes they have been a victim of sexual assault" after participating on Married at First Sight UK to contact them.</span></p>
+        <p class="cn">在《全景》节目播出后，伦敦警察厅鼓励“任何认为自己参与《一见钟情结婚》英国版后成为性侵受害者的人”与他们联系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">In a new statement to BBC News, the Metropolitan Police said: "This relates to an ongoing investigation, being led by the Met Police.</span></p>
+        <p class="cn">伦敦警察厅在给BBC新闻的一份新声明中表示：“这涉及一项由伦敦警察厅领导的正在进行的调查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">"He has since been bailed while enquiries remain ongoing."</span></p>
+        <p class="cn">“他目前已被保释，调查仍在进行中。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Billed as a "bold social experiment", Married at First Sight UK - known to many as MAFS - sees single people agree to "marry" total strangers, after meeting for the first time at their <span class="keyword" data-word="mock" data-phonetic="/mɒk/" data-pos="adj." data-def="模拟的；假的" data-def-en="not real but intended to be similar to the real thing">mock</span> weddings.</span></p>
+        <p class="cn">《一见钟情结婚》英国版被宣传为“一项大胆的社会实验”，单身人士同意在模拟婚礼上首次见面后与完全陌生的人“结婚”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">The UK version, which has been running for 10 seasons, is one of Channel 4's biggest shows, with audience figures often topping three million.</span></p>
+        <p class="cn">该节目已播出10季，是第四频道最大的节目之一，观众人数常超过300万。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">In May, Channel 4 pulled all episodes of the show from its <span class="keyword" data-word="streaming service" data-phonetic="/ˈstriːmɪŋ ˈsɜːrvɪs/" data-pos="n." data-def="流媒体服务" data-def-en="a service that delivers video or audio content over the internet">streaming service</span> just hours ahead of the transmission of the Panorama investigation.</span></p>
+        <p class="cn">今年5月，第四频道在《全景》调查播出前数小时从其流媒体服务中撤下了该节目的所有剧集。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">No decision has yet been made on whether to broadcast the latest series of the show, which has already been filmed.</span></p>
+        <p class="cn">对于是否播出已拍摄完成的最新一季节目，尚未做出决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">The broadcaster has said its review into MAFS UK is due to be finished later this summer.</span> <span class="sentence" data-sentence-index="16">However, it only intends to publish "a summary of findings", rather than the full report.</span></p>
+        <p class="cn">该广播公司表示，对《一见钟情结婚》英国版的审查将于今年夏末完成。然而，它只打算发布“调查结果摘要”，而非完整报告。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">Lawyers for CPL, the independent production company that makes the UK version of the show, have previously said its <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利；安康" data-def-en="the health, happiness, and well-being of a person or group">welfare</span> system is "gold standard" and industry-leading.</span></p>
+        <p class="cn">制作该节目英国版的独立制作公司CPL的律师此前表示，其福利体系是“黄金标准”且行业领先。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">If you have more information about this story, you can reach Noor by email at noor.nanji@bbc.co.uk</span></p>
+        <p class="cn">如果您对此事有更多信息，可通过电子邮件noor.nanji@bbc.co.uk联系Noor。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Married at First Sight UK brides tell BBC they were raped by on-screen husbands</span></p>
+        <p class="cn">《一见钟情结婚》英国版新娘告诉BBC她们被荧幕丈夫强奸</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Married at First Sight Australia stars not told partners had drug and violence convictions</span></p>
+        <p class="cn">《一见钟情结婚》澳大利亚版明星未被告知伴侣有毒品和暴力犯罪记录</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Was Married at First Sight UK an 'accident waiting to happen'?</span></p>
+        <p class="cn">《一见钟情结婚》英国版是‘迟早要出的事’吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Channel 4 contacted by police after Married at First Sight UK rape claims</span></p>
+        <p class="cn">《一见钟情结婚》英国版强奸指控后警方联系第四频道</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cast member</span>
+        <button class="kw-speak-btn" data-word="cast member" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kɑːst ˈmembər/ n.</span>
+      </div>
+      <p class="kw-def">剧组人员；演员</p>
+      <p class="kw-def-en">a person who is part of the cast of a show or film</p>
+      <p class="kw-ctx">&ldquo;A cast member from Married at First Sight UK has been arrested on suspicion of rape after a BBC Panorama investigation into the hit reality TV show.&rdquo;</p>
+      <p class="kw-ctx-cn">英国《一见钟情结婚》节目的一名演员在BBC《全景》节目对该热门真人秀进行调查后，因涉嫌强奸被捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicion</span>
+        <button class="kw-speak-btn" data-word="suspicion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">怀疑；嫌疑</p>
+      <p class="kw-def-en">a feeling or belief that something is true, especially something bad</p>
+      <p class="kw-ctx">&ldquo;A cast member from Married at First Sight UK has been arrested on suspicion of rape after a BBC Panorama investigation into the hit reality TV show.&rdquo;</p>
+      <p class="kw-ctx-cn">英国《一见钟情结婚》节目的一名演员在BBC《全景》节目对该热门真人秀进行调查后，因涉嫌强奸被捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌælɪˈɡeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">指控；陈述</p>
+      <p class="kw-def-en">a claim or statement that someone has done something wrong or illegal, without proof</p>
+      <p class="kw-ctx">&ldquo;The Panorama programme, broadcast in May, revealed rape allegations from two female cast members on the show, while a third woman alleged a non-consensual sex act.&rdquo;</p>
+      <p class="kw-ctx-cn">5月播出的《全景》节目揭露了该节目两名女演员的强奸指控，而第三名女性则指控了未经同意的性行为。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">non-consensual</span>
+        <button class="kw-speak-btn" data-word="non-consensual" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌnɒn kənˈsenʃuəl/ adj.</span>
+      </div>
+      <p class="kw-def">未经同意的</p>
+      <p class="kw-def-en">not given or done with the agreement of all people involved</p>
+      <p class="kw-ctx">&ldquo;The Panorama programme, broadcast in May, revealed rape allegations from two female cast members on the show, while a third woman alleged a non-consensual sex act.&rdquo;</p>
+      <p class="kw-ctx-cn">5月播出的《全景》节目揭露了该节目两名女演员的强奸指控，而第三名女性则指控了未经同意的性行为。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">welfare</span>
+        <button class="kw-speak-btn" data-word="welfare" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwelfeər/ n.</span>
+      </div>
+      <p class="kw-def">福利；安康</p>
+      <p class="kw-def-en">the health, happiness, and well-being of a person or group</p>
+      <p class="kw-ctx">&ldquo;Channel 4 has commissioned a review into contributor welfare on the show.&rdquo;</p>
+      <p class="kw-ctx-cn">第四频道已委托对该节目参与者的福利进行审查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bail</span>
+        <button class="kw-speak-btn" data-word="bail" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/beɪl/ v.</span>
+      </div>
+      <p class="kw-def">保释</p>
+      <p class="kw-def-en">to release someone from custody on condition that they pay a sum of money and promise to appear in court</p>
+      <p class="kw-ctx">&ldquo;He has since been bailed while enquiries remain ongoing.&rdquo;</p>
+      <p class="kw-ctx-cn">他随后被保释，调查仍在进行中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">mock</span>
+        <button class="kw-speak-btn" data-word="mock" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/mɒk/ adj.</span>
+      </div>
+      <p class="kw-def">模拟的；假的</p>
+      <p class="kw-def-en">not real but intended to be similar to the real thing</p>
+      <p class="kw-ctx">&ldquo;Billed as a 'bold social experiment', Married at First Sight UK - known to many as MAFS - sees single people agree to 'marry' total strangers, after meeting for the first time at their mock weddings.&rdquo;</p>
+      <p class="kw-ctx-cn">被称为“大胆的社会实验”的英国版《一见钟情结婚》（许多人称之为MAFS）让单身人士同意在模拟婚礼上首次见面后与完全陌生的人“结婚”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">streaming service</span>
+        <button class="kw-speak-btn" data-word="streaming service" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstriːmɪŋ ˈsɜːrvɪs/ n.</span>
+      </div>
+      <p class="kw-def">流媒体服务</p>
+      <p class="kw-def-en">a service that delivers video or audio content over the internet</p>
+      <p class="kw-ctx">&ldquo;In May, Channel 4 pulled all episodes of the show from its streaming service just hours ahead of the transmission of the Panorama investigation.&rdquo;</p>
+      <p class="kw-ctx-cn">5月，第四频道在《全景》调查节目播出前几小时从其流媒体服务中撤下了该节目的所有剧集。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A cast member from Married at First Sight UK has been arrested on suspicion of rape after a BBC Panorama investigation into the hit reality TV show.", "start_ms": 0, "end_ms": 11088, "paragraph_index": 0}, {"index": 1, "text": "The individual is not being named.", "start_ms": 11088, "end_ms": 14376, "paragraph_index": 1}, {"index": 2, "text": "The alleged victim is also not being named; anyone who makes an allegation of rape is entitled to anonymity by law.", "start_ms": 14376, "end_ms": 22968, "paragraph_index": 1}, {"index": 3, "text": "The Panorama programme, broadcast in May, revealed rape allegations from two female cast members on the show , while a third woman alleged a non-consensual sex act.", "start_ms": 22968, "end_ms": 34992, "paragraph_index": 2}, {"index": 4, "text": "The men involved have denied all the allegations against them.", "start_ms": 34992, "end_ms": 39648, "paragraph_index": 2}, {"index": 5, "text": "Channel 4 has commissioned a review into contributor welfare on the show.", "start_ms": 39648, "end_ms": 44880, "paragraph_index": 3}, {"index": 6, "text": "The Dark Side of Married at First Sight", "start_ms": 44880, "end_ms": 48384, "paragraph_index": 4}, {"index": 7, "text": "Panorama investigates allegations that raise serious concerns that welfare procedures on Married at First Sight UK have failed contributors, leaving them at risk of harm.", "start_ms": 48384, "end_ms": 60480, "paragraph_index": 5}, {"index": 8, "text": "Following the broadcast of the Panorama episode, the Metropolitan Police encouraged \"anyone who believes they have been a victim of sexual assault\" after participating on Married at First Sight UK to contact them.", "start_ms": 60480, "end_ms": 74472, "paragraph_index": 6}, {"index": 9, "text": "In a new statement to BBC News, the Metropolitan Police said: \"This relates to an ongoing investigation, being led by the Met Police.", "start_ms": 74472, "end_ms": 84528, "paragraph_index": 7}, {"index": 10, "text": "\"He has since been bailed while enquiries remain ongoing.\"", "start_ms": 84528, "end_ms": 89016, "paragraph_index": 8}, {"index": 11, "text": "Billed as a \"bold social experiment\", Married at First Sight UK - known to many as MAFS - sees single people agree to \"marry\" total strangers, after meeting for the first time at their mock weddings.", "start_ms": 89016, "end_ms": 102816, "paragraph_index": 9}, {"index": 12, "text": "The UK version, which has been running for 10 seasons, is one of Channel 4's biggest shows, with audience figures often topping three million.", "start_ms": 102816, "end_ms": 113136, "paragraph_index": 10}, {"index": 13, "text": "In May, Channel 4 pulled all episodes of the show from its streaming service just hours ahead of the transmission of the Panorama investigation.", "start_ms": 113136, "end_ms": 123360, "paragraph_index": 11}, {"index": 14, "text": "No decision has yet been made on whether to broadcast the latest series of the show, which has already been filmed.", "start_ms": 123360, "end_ms": 131088, "paragraph_index": 12}, {"index": 15, "text": "The broadcaster has said its review into MAFS UK is due to be finished later this summer.", "start_ms": 131088, "end_ms": 137712, "paragraph_index": 13}, {"index": 16, "text": "However, it only intends to publish \"a summary of findings\", rather than the full report.", "start_ms": 137712, "end_ms": 144360, "paragraph_index": 13}, {"index": 17, "text": "Lawyers for CPL, the independent production company that makes the UK version of the show, have previously said its welfare system is \"gold standard\" and industry-leading.", "start_ms": 144360, "end_ms": 156360, "paragraph_index": 14}, {"index": 18, "text": "If you have more information about this story, you can reach Noor by email at noor.nanji@bbc.co.uk", "start_ms": 156360, "end_ms": 165624, "paragraph_index": 15}, {"index": 19, "text": "Married at First Sight UK brides tell BBC they were raped by on-screen husbands", "start_ms": 165624, "end_ms": 172224, "paragraph_index": 16}, {"index": 20, "text": "Married at First Sight Australia stars not told partners had drug and violence convictions", "start_ms": 172224, "end_ms": 179016, "paragraph_index": 17}, {"index": 21, "text": "Was Married at First Sight UK an 'accident waiting to happen'?", "start_ms": 179016, "end_ms": 183840, "paragraph_index": 18}, {"index": 22, "text": "Channel 4 contacted by police after Married at First Sight UK rape claims", "start_ms": 183840, "end_ms": 190104, "paragraph_index": 19}], "total_duration_ms": 190104};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "at": "在", "uk": "英国", "first": "第一轮", "to": "到", "married": "已婚的", "sight": "视线", "has": "有", "been": "已经", "on": "在", "show": "显示", "is": "是", "panorama": "全景", "by": "被", "have": "有", "rape": "强奸", "after": "之后", "bbc": "英国广播公司", "channel": "航道", "police": "警方", "from": "来自", "investigation": "调查", "into": "进入", "not": "不", "being": "正在", "an": "一个", "broadcast": "广播", "in": "在", "allegations": "指控", "them": "他们", "that": "那个", "said": "说", "this": "这个", "for": "为了", "its": "它的", "cast": "投下", "named": "名为", "alleged": "据称的", "victim": "受害者", "anyone": "任何人", "who": "谁", "makes": "使得", "may": "可能", "while": "而", "all": "所有", "review": "审查", "metropolitan": "伦敦警察厅", "they": "它们", "ongoing": "正在进行的", "as": "作为", "mafs": "《闪婚》", "version": "版本", "which": "哪个", "and": "和", "you": "你", "member": "成员", "arrested": "被捕", "hit": "击中", "reality": "现实", "tv": "电视", "individual": "个人", "also": "也", "entitled": "有权", "anonymity": "匿名", "law": "法律", "programme": "节目", "revealed": "揭露", "two": "两个", "female": "女性", "members": "成员", "third": "第三", "woman": "女性", "sex": "性", "act": "行为", "men": "男人们", "involved": "涉及的", "denied": "拒绝", "against": "反对", "commissioned": "委托", "dark": "黑暗的", "side": "方面", "raise": "提高", "serious": "严重的", "concerns": "担忧", "procedures": "程序", "failed": "失败", "contributors": "贡献者", "leaving": "离开", "risk": "风险", "harm": "伤害", "following": "随后", "encouraged": "鼓励", "believes": "认为", "sexual": "性的", "assault": "袭击", "participating": "参与", "contact": "接触", "new": "新的", "statement": "声明", "news": "新闻", "relates": "涉及", "led": "带领", "met": "伦敦警察厅", "he": "他", "since": "自从", "enquiries": "询问", "remain": "仍然", "billed": "宣传为", "bold": "大胆的", "social": "社交的", "experiment": "实验", "known": "已知", "many": "许多", "sees": "看到", "single": "单一的", "people": "人们", "agree": "同意", "marry": "结婚", "total": "总体的", "strangers": "陌生人", "meeting": "会议", "time": "时间", "their": "他们的", "weddings": "婚礼", "running": "奔跑", "seasons": "季", "one": "一个", "biggest": "最大的", "shows": "显示", "with": "与", "audience": "观众", "figures": "人物", "often": "经常", "three": "三个", "million": "百万", "pulled": "撤回", "episodes": "剧集", "streaming": "流媒体播放", "service": "服务", "just": "只是", "hours": "小时", "ahead": "提前", "no": "没有", "decision": "决定", "yet": "尚未", "made": "做出", "whether": "是否", "latest": "最新的", "series": "系列", "already": "已经", "filmed": "拍摄了", "broadcaster": "广播公司", "due": "应得", "be": "是", "finished": "完成的", "later": "后来", "summer": "夏天", "however": "然而", "it": "它", "only": "只有", "publish": "发布", "findings": "调查结果", "rather": "宁愿", "than": "比", "full": "完整", "report": "报告", "lawyers": "律师", "cpl": "警察下士", "independent": "独立的", "production": "制作", "company": "公司", "previously": "此前", "system": "制度", "gold": "黄金", "standard": "标准", "industry-leading": "行业领先的", "if": "如果", "more": "更多", "information": "信息", "about": "关于", "story": "故事", "can": "可以", "reach": "达到", "co": "公司", "tell": "告诉", "were": "是", "raped": "强奸了", "australia": "澳大利亚", "stars": "恒星", "told": "告诉", "partners": "伴侣", "had": "有", "violence": "暴力", "convictions": "定罪", "was": "是", "accident": "意外", "waiting": "等待", "happen": "发生", "contacted": "联系", "claims": "声称", "noor": "努尔", "contributor": "撰稿人", "investigates": "调查", "episode": "集", "bailed": "保释", "topping": "超越", "transmission": "传播", "intends": "打算", "summary": "摘要", "email": "电子邮件", "nanji": "南吉", "brides": "新娘", "on-screen": "荧幕上的", "husbands": "丈夫", "drug": "毒品"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
