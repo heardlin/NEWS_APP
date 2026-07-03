@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-03</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-03</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/4d6d/live/57c990d0-772c-11f1-9510-1546718f668b.jpg" alt="Starmer tells of 'intensely personal' decision to quit and warns Burnham in first interview since resigning" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Starmer tells of 'intensely personal' decision to quit and warns Burnham in first interview since resigning</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c0qy2zxjkwvo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-03.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Starmer says you can't separate foreign policy from domestic</span></p>
+        <p class="cn">斯塔默表示，外交政策与国内政策不可分割</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Sir Keir Starmer has warned his likely successor Andy Burnham will have to spend just as much time dealing with global <span class="keyword" data-word="turmoil" data-phonetic="/ˈtɜːrmɔɪl/" data-pos="n." data-def="混乱，动荡" data-def-en="a state of great disturbance, confusion, or uncertainty">turmoil</span> as he has during his time in No 10.</span></p>
+        <p class="cn">基尔·斯塔默爵士警告称，他的潜在继任者安迪·伯纳姆将不得不像他在唐宁街10号期间一样，花费同样多的时间应对全球动荡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In an untypically <span class="keyword" data-word="candid" data-phonetic="/ˈkændɪd/" data-pos="adj." data-def="坦率的，直言不讳的" data-def-en="truthful and straightforward; frank">candid</span> interview, the <span class="keyword" data-word="outgoing" data-phonetic="/ˈaʊtɡoʊɪŋ/" data-pos="adj." data-def="即将离职的" data-def-en="leaving an office or position">outgoing</span> prime minister spoke for the first time about the "<span class="keyword" data-word="intensely" data-phonetic="/ɪnˈtensli/" data-pos="adv." data-def="强烈地，极度地" data-def-en="in a very strong or extreme degree">intensely</span> personal" and "really tough" decision he took alongside his wife and children to accept that his "political career" was "over".</span></p>
+        <p class="cn">在一次异常坦诚的采访中，即将离任的首相首次谈及他与妻子和孩子共同做出的“极其个人化”且“非常艰难”的决定——接受自己的“政治生涯”已经“结束”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Sir Keir told the BBC he had "saved" the Labour Party and been a successful prime minister.</span></p>
+        <p class="cn">基尔爵士告诉BBC，他“拯救”了工党，并成为了一位成功的首相。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">He promised to "keep my mouth shut" under his successor, insisting that he liked Burnham and the pair had "always got on".</span></p>
+        <p class="cn">他承诺在继任者领导下会“保持沉默”，坚称自己喜欢伯纳姆，两人“一直相处融洽”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sir Keir has faced frequent criticism during his two years as prime minister - an anniversary he is marking this weekend - about the amount of time he has spent on the world stage, with critics labelling him "never here Keir".</span></p>
+        <p class="cn">基尔爵士在担任首相的两年间（本周末是他上任两周年纪念日）频繁因花费大量时间在国际舞台上而受到批评，批评者称他为“从不露面的基尔”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Among Burnham's supporters in parliament are those who hope he will be able to focus more on issues in the UK such as the cost of living and public services.</span></p>
+        <p class="cn">在伯纳姆的议会支持者中，有人希望他能更专注于英国国内问题，如生活成本和公共服务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">"It is not sensible to think you can just separate these two things out," Sir Keir said.</span></p>
+        <p class="cn">基尔爵士表示：“认为你可以将这两件事分开是不明智的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Asked if a prime minister could spend less time on diplomacy than him, he replied: "No, I don't think it is possible."</span></p>
+        <p class="cn">当被问及首相是否能在外交上花费比他更少的时间时，他回答：“不，我认为不可能。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">He added: "There's often this discussion - what's the right balance between dealing with international affairs and dealing with domestic affairs?</span> <span class="sentence" data-sentence-index="11">They're one and the same thing."</span></p>
+        <p class="cn">他补充道：“经常有这样的讨论——处理国际事务和国内事务之间的正确平衡是什么？它们是一回事。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Sir Keir continued: "Whoever's my successor is going to face the same global conflict.</span> <span class="sentence" data-sentence-index="13">We keep saying, and it's true, we're in a more dangerous and <span class="keyword" data-word="volatile" data-phonetic="/ˈvɑːlətl/" data-pos="adj." data-def="不稳定的，易变的" data-def-en="likely to change suddenly and unexpectedly, especially for the worse">volatile</span> world than we've been in for probably most of my lifetime.</span> <span class="sentence" data-sentence-index="14">That's not just a phrase, that's reality.</span></p>
+        <p class="cn">基尔爵士继续说道：“无论谁是我的继任者，都将面临同样的全球冲突。我们一直在说，而且这是事实，我们正处于一个比我一生中大部分时间都更危险和动荡的世界。这不仅仅是一句话，这是现实。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">"That's not going to change.</span> <span class="sentence" data-sentence-index="16">And the domestic challenges aren't going to change."</span></p>
+        <p class="cn">“这种情况不会改变。国内挑战也不会改变。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">Andy Burnham has ruled out calling an early general election if he becomes prime minister later this month</span></p>
+        <p class="cn">安迪·伯纳姆排除了在本月晚些时候成为首相后提前举行大选的可能性</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">Having repeatedly vowed to fight on as prime minister, including facing any challengers in a Labour leadership election, Sir Keir ultimately changed his mind and resigned within three days of Burnham's victory in the Makerfield by-election.</span></p>
+        <p class="cn">基尔爵士曾多次誓言要继续担任首相，包括在工党领袖选举中面对任何挑战者，但最终他改变了主意，并在伯纳姆赢得梅克菲尔德补选后的三天内辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">He described it as a "really, really tough" decision which he ultimately came to that weekend with his wife, Victoria, and teenage children at Chequers, the prime minister's countryside residence.</span></p>
+        <p class="cn">他形容这是一个“非常非常艰难”的决定，最终在那个周末与妻子维多利亚和十几岁的孩子们在首相乡间官邸契克斯别墅做出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">"I grappled with what was the best thing to do for me, for the country, for the government," Sir Keir said.</span> <span class="sentence" data-sentence-index="21">"And those discussions inevitably start with many discussions with colleagues, with parliamentary colleagues, with the team here, with my immediate advisers, with trade unions, so many people in that discussion.</span></p>
+        <p class="cn">基尔爵士说：“我努力思考什么是对我、对国家、对政府最有利的做法。这些讨论不可避免地始于与同事、议会同事、这里的团队、我的直接顾问、工会等许多人的多次讨论。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">"But for me, and this may be different for other people, in the end it became an <span class="keyword" data-word="intensely" data-phonetic="/ɪnˈtensli/" data-pos="adv." data-def="强烈地，极度地" data-def-en="in a very strong or extreme degree">intensely</span> personal decision.</span> <span class="sentence" data-sentence-index="23">And that's why it was a decision taken ultimately when Vic and I were away with the kids.</span> <span class="sentence" data-sentence-index="24">We went to Chequers and just spent two days together as a family.</span> <span class="sentence" data-sentence-index="25">And that's when I came to my final decision."</span></p>
+        <p class="cn">“但对我来说，这可能对其他人不同，最终这变成了一个极其个人化的决定。这就是为什么最终决定是在我和维克带着孩子们外出时做出的。我们去了契克斯，一家人一起度过了两天。那时我做出了最终决定。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="26">He added: "Taking the decision that your political career is over, it is an <span class="keyword" data-word="intensely" data-phonetic="/ɪnˈtensli/" data-pos="adv." data-def="强烈地，极度地" data-def-en="in a very strong or extreme degree">intensely</span> personal matter, or at least it was for me.</span> <span class="sentence" data-sentence-index="27">I wanted to do that with Vic, and that's what I did."</span></p>
+        <p class="cn">他补充道：“做出你的政治生涯已经结束的决定，是一件极其个人化的事情，至少对我来说是这样。我想和维克一起做这件事，而我也确实这样做了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="28">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="29">Starmer says decision to step down was '<span class="keyword" data-word="intensely" data-phonetic="/ɪnˈtensli/" data-pos="adv." data-def="强烈地，极度地" data-def-en="in a very strong or extreme degree">intensely</span> personal'</span></p>
+        <p class="cn">斯塔默称辞职决定“极其个人化”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="30">Sir Keir appeared to acknowledge that his successor is almost certain to be Burnham, although at other times he made reference to "whoever my successor is" and said there was "a little bit of process to go".</span></p>
+        <p class="cn">基尔爵士似乎承认他的继任者几乎肯定是伯纳姆，尽管在其他时候他提到了“无论我的继任者是谁”，并表示“还有一些程序要走”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="31">He said he had "never had any personal <span class="keyword" data-word="animosity" data-phonetic="/ˌænɪˈmɑːsəti/" data-pos="n." data-def="敌意，仇恨" data-def-en="strong hostility or dislike">animosity</span>" towards the former Greater Manchester mayor and that he would "do everything I possibly can to make sure" that the next government succeeds.</span></p>
+        <p class="cn">他说自己“从未对这位前大曼彻斯特市长有任何个人敌意”，并且会“尽一切可能确保”下一届政府成功。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="32">Sir Keir committed to remaining an MP until at least the next election but said he would be "keeping my mouth shut, rather than giving constant advice to my successor about what they should be doing".</span></p>
+        <p class="cn">基尔爵士承诺至少留任议员至下次大选，但表示他会“保持沉默，而不是不断给我的继任者提供关于他们应该做什么的建议”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="33">He made clear that he sees his four years as Labour leader in opposition as "absolutely core" to his legacy.</span></p>
+        <p class="cn">他明确表示，他认为自己作为反对党工党领袖的四年是其政治遗产的“绝对核心”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="34">Describing Labour when he became leader as "politically, financially and morally bankrupt", he said it had been "hard and bloody work".</span></p>
+        <p class="cn">在描述他成为领袖时的工党“在政治、财政和道德上破产”时，他说那是“艰苦而血腥的工作”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="35">Sir Keir said that in electoral terms his success should sit alongside Clement Attlee's victory in 1945 and Sir Tony Blair's in 1997.</span></p>
+        <p class="cn">基尔爵士表示，在选举方面，他的成功应与克莱门特·艾德礼在1945年的胜利和托尼·布莱尔爵士在1997年的胜利并列。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="36">He added: "The Labour Party arguably could have been lost, but I stepped up as leader and with others we saved the Labour Party".</span></p>
+        <p class="cn">他补充道：“工党本可能失去，但我作为领袖挺身而出，与其他一起拯救了工党。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="37">But he said he had been ousted because Labour MPs no longer believed he was "the right person to take us into the next election".</span></p>
+        <p class="cn">但他表示，自己被赶下台是因为工党议员不再相信他是“带领我们进入下一次选举的合适人选”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="38">Burnham rules out calling early election as PM</span></p>
+        <p class="cn">伯纳姆排除了作为首相提前举行大选的可能性</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="39">Labour failed to prepare for power, admits PM's former top aide</span></p>
+        <p class="cn">工党未能做好执政准备，首相前高级助手承认</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="40">What are Andy Burnham's potential policies for No 10?</span></p>
+        <p class="cn">安迪·伯纳姆入主唐宁街10号的潜在政策有哪些？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="41">Sir Keir Starmer's premiership in six charts</span></p>
+        <p class="cn">基尔·斯塔默爵士的首相任期：六张图表</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">turmoil</span>
+        <button class="kw-speak-btn" data-word="turmoil" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɜːrmɔɪl/ n.</span>
+      </div>
+      <p class="kw-def">混乱，动荡</p>
+      <p class="kw-def-en">a state of great disturbance, confusion, or uncertainty</p>
+      <p class="kw-ctx">&ldquo;Sir Keir Starmer has warned his likely successor Andy Burnham will have to spend just as much time dealing with global turmoil as he has during his time in No 10.&rdquo;</p>
+      <p class="kw-ctx-cn">基尔·斯塔默爵士警告他可能的继任者安迪·伯纳姆将不得不像他在唐宁街10号期间一样花费大量时间处理全球动荡。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">candid</span>
+        <button class="kw-speak-btn" data-word="candid" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkændɪd/ adj.</span>
+      </div>
+      <p class="kw-def">坦率的，直言不讳的</p>
+      <p class="kw-def-en">truthful and straightforward; frank</p>
+      <p class="kw-ctx">&ldquo;In an untypically candid interview, the outgoing prime minister spoke for the first time about the 'intensely personal' and 'really tough' decision...&rdquo;</p>
+      <p class="kw-ctx-cn">在一次异常坦率的采访中，即将离任的首相首次谈到了这个“极其个人化”且“非常艰难”的决定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">outgoing</span>
+        <button class="kw-speak-btn" data-word="outgoing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈaʊtɡoʊɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">即将离职的</p>
+      <p class="kw-def-en">leaving an office or position</p>
+      <p class="kw-ctx">&ldquo;In an untypically candid interview, the outgoing prime minister spoke for the first time...&rdquo;</p>
+      <p class="kw-ctx-cn">在一次异常坦率的采访中，即将离任的首相首次谈到……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">volatile</span>
+        <button class="kw-speak-btn" data-word="volatile" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɑːlətl/ adj.</span>
+      </div>
+      <p class="kw-def">不稳定的，易变的</p>
+      <p class="kw-def-en">likely to change suddenly and unexpectedly, especially for the worse</p>
+      <p class="kw-ctx">&ldquo;We keep saying, and it's true, we're in a more dangerous and volatile world than we've been in for probably most of my lifetime.&rdquo;</p>
+      <p class="kw-ctx-cn">我们一直在说，而且这是真的，我们正处于一个比我一生中大部分时间都更危险和动荡的世界。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">grapple</span>
+        <button class="kw-speak-btn" data-word="grapple" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡræpl/ v.</span>
+      </div>
+      <p class="kw-def">努力应对，设法解决</p>
+      <p class="kw-def-en">to struggle or contend with a problem or difficult situation</p>
+      <p class="kw-ctx">&ldquo;I grappled with what was the best thing to do for me, for the country, for the government.&rdquo;</p>
+      <p class="kw-ctx-cn">我努力思考什么是对我、对国家、对政府最有利的做法。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intensely</span>
+        <button class="kw-speak-btn" data-word="intensely" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈtensli/ adv.</span>
+      </div>
+      <p class="kw-def">强烈地，极度地</p>
+      <p class="kw-def-en">in a very strong or extreme degree</p>
+      <p class="kw-ctx">&ldquo;Taking the decision that your political career is over, it is an intensely personal matter...&rdquo;</p>
+      <p class="kw-ctx-cn">做出你的政治生涯已经结束的决定，这是一个极其个人化的事情……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">animosity</span>
+        <button class="kw-speak-btn" data-word="animosity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌænɪˈmɑːsəti/ n.</span>
+      </div>
+      <p class="kw-def">敌意，仇恨</p>
+      <p class="kw-def-en">strong hostility or dislike</p>
+      <p class="kw-ctx">&ldquo;He said he had 'never had any personal animosity' towards the former Greater Manchester mayor...&rdquo;</p>
+      <p class="kw-ctx-cn">他说他“从未对这位前大曼彻斯特市长有任何个人敌意”……</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">oust</span>
+        <button class="kw-speak-btn" data-word="oust" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/aʊst/ v.</span>
+      </div>
+      <p class="kw-def">罢免，驱逐</p>
+      <p class="kw-def-en">to remove someone from a position of power or authority</p>
+      <p class="kw-ctx">&ldquo;But he said he had been ousted because Labour MPs no longer believed he was 'the right person to take us into the next election'.&rdquo;</p>
+      <p class="kw-ctx-cn">但他表示，他被罢免是因为工党议员不再相信他是“带领我们进入下一次选举的合适人选”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Starmer says you can't separate foreign policy from domestic", "start_ms": 3000, "end_ms": 7968, "paragraph_index": 1}, {"index": 2, "text": "Sir Keir Starmer has warned his likely successor Andy Burnham will have to spend just as much time dealing with global turmoil as he has during his time in No 10.", "start_ms": 7968, "end_ms": 18936, "paragraph_index": 2}, {"index": 3, "text": "In an untypically candid interview, the outgoing prime minister spoke for the first time about the \"intensely personal\" and \"really tough\" decision he took alongside his wife and children to accept that his \"political career\" was \"over\".", "start_ms": 18936, "end_ms": 33696, "paragraph_index": 3}, {"index": 4, "text": "Sir Keir told the BBC he had \"saved\" the Labour Party and been a successful prime minister.", "start_ms": 33696, "end_ms": 40392, "paragraph_index": 4}, {"index": 5, "text": "He promised to \"keep my mouth shut\" under his successor, insisting that he liked Burnham and the pair had \"always got on\".", "start_ms": 40392, "end_ms": 48624, "paragraph_index": 5}, {"index": 6, "text": "Sir Keir has faced frequent criticism during his two years as prime minister - an anniversary he is marking this weekend - about the amount of time he has spent on the world stage, with critics labelling him \"never here Keir\".", "start_ms": 48624, "end_ms": 63072, "paragraph_index": 6}, {"index": 7, "text": "Among Burnham's supporters in parliament are those who hope he will be able to focus more on issues in the UK such as the cost of living and public services.", "start_ms": 63072, "end_ms": 73080, "paragraph_index": 7}, {"index": 8, "text": "\"It is not sensible to think you can just separate these two things out,\" Sir Keir said.", "start_ms": 73080, "end_ms": 79368, "paragraph_index": 8}, {"index": 9, "text": "Asked if a prime minister could spend less time on diplomacy than him, he replied: \"No, I don't think it is possible.\"", "start_ms": 79368, "end_ms": 87768, "paragraph_index": 9}, {"index": 10, "text": "He added: \"There's often this discussion - what's the right balance between dealing with international affairs and dealing with domestic affairs?", "start_ms": 87768, "end_ms": 97128, "paragraph_index": 10}, {"index": 11, "text": "They're one and the same thing.\"", "start_ms": 97128, "end_ms": 99840, "paragraph_index": 10}, {"index": 12, "text": "Sir Keir continued: \"Whoever's my successor is going to face the same global conflict.", "start_ms": 99840, "end_ms": 106488, "paragraph_index": 11}, {"index": 13, "text": "We keep saying, and it's true, we're in a more dangerous and volatile world than we've been in for probably most of my lifetime.", "start_ms": 106488, "end_ms": 114960, "paragraph_index": 11}, {"index": 14, "text": "That's not just a phrase, that's reality.", "start_ms": 114960, "end_ms": 118704, "paragraph_index": 11}, {"index": 15, "text": "\"That's not going to change.", "start_ms": 118704, "end_ms": 121416, "paragraph_index": 12}, {"index": 16, "text": "And the domestic challenges aren't going to change.\"", "start_ms": 121416, "end_ms": 125400, "paragraph_index": 12}, {"index": 17, "text": "Andy Burnham has ruled out calling an early general election if he becomes prime minister later this month", "start_ms": 125400, "end_ms": 132720, "paragraph_index": 13}, {"index": 18, "text": "Having repeatedly vowed to fight on as prime minister, including facing any challengers in a Labour leadership election, Sir Keir ultimately changed his mind and resigned within three days of Burnham's victory in the Makerfield by-election.", "start_ms": 132720, "end_ms": 148512, "paragraph_index": 14}, {"index": 19, "text": "He described it as a \"really, really tough\" decision which he ultimately came to that weekend with his wife, Victoria, and teenage children at Chequers, the prime minister's countryside residence.", "start_ms": 148512, "end_ms": 161184, "paragraph_index": 15}, {"index": 20, "text": "\"I grappled with what was the best thing to do for me, for the country, for the government,\" Sir Keir said.", "start_ms": 161184, "end_ms": 168192, "paragraph_index": 16}, {"index": 21, "text": "\"And those discussions inevitably start with many discussions with colleagues, with parliamentary colleagues, with the team here, with my immediate advisers, with trade unions, so many people in that discussion.", "start_ms": 168192, "end_ms": 181920, "paragraph_index": 16}, {"index": 22, "text": "\"But for me, and this may be different for other people, in the end it became an intensely personal decision.", "start_ms": 181920, "end_ms": 189456, "paragraph_index": 17}, {"index": 23, "text": "And that's why it was a decision taken ultimately when Vic and I were away with the kids.", "start_ms": 189456, "end_ms": 195480, "paragraph_index": 17}, {"index": 24, "text": "We went to Chequers and just spent two days together as a family.", "start_ms": 195480, "end_ms": 200424, "paragraph_index": 17}, {"index": 25, "text": "And that's when I came to my final decision.\"", "start_ms": 200424, "end_ms": 203976, "paragraph_index": 17}, {"index": 26, "text": "He added: \"Taking the decision that your political career is over, it is an intensely personal matter, or at least it was for me.", "start_ms": 203976, "end_ms": 212688, "paragraph_index": 18}, {"index": 27, "text": "I wanted to do that with Vic, and that's what I did.\"", "start_ms": 212688, "end_ms": 216792, "paragraph_index": 18}, {"index": 28, "text": "This video can not be played", "start_ms": 216792, "end_ms": 219792, "paragraph_index": 19}, {"index": 29, "text": "Starmer says decision to step down was 'intensely personal'", "start_ms": 219792, "end_ms": 224640, "paragraph_index": 20}, {"index": 30, "text": "Sir Keir appeared to acknowledge that his successor is almost certain to be Burnham, although at other times he made reference to \"whoever my successor is\" and said there was \"a little bit of process to go\".", "start_ms": 224640, "end_ms": 237312, "paragraph_index": 21}, {"index": 31, "text": "He said he had \"never had any personal animosity\" towards the former Greater Manchester mayor and that he would \"do everything I possibly can to make sure\" that the next government succeeds.", "start_ms": 237312, "end_ms": 249288, "paragraph_index": 22}, {"index": 32, "text": "Sir Keir committed to remaining an MP until at least the next election but said he would be \"keeping my mouth shut, rather than giving constant advice to my successor about what they should be doing\".", "start_ms": 249288, "end_ms": 261768, "paragraph_index": 23}, {"index": 33, "text": "He made clear that he sees his four years as Labour leader in opposition as \"absolutely core\" to his legacy.", "start_ms": 261768, "end_ms": 269424, "paragraph_index": 24}, {"index": 34, "text": "Describing Labour when he became leader as \"politically, financially and morally bankrupt\", he said it had been \"hard and bloody work\".", "start_ms": 269424, "end_ms": 278520, "paragraph_index": 25}, {"index": 35, "text": "Sir Keir said that in electoral terms his success should sit alongside Clement Attlee's victory in 1945 and Sir Tony Blair's in 1997.", "start_ms": 278520, "end_ms": 289656, "paragraph_index": 26}, {"index": 36, "text": "He added: \"The Labour Party arguably could have been lost, but I stepped up as leader and with others we saved the Labour Party\".", "start_ms": 289656, "end_ms": 298320, "paragraph_index": 27}, {"index": 37, "text": "But he said he had been ousted because Labour MPs no longer believed he was \"the right person to take us into the next election\".", "start_ms": 298320, "end_ms": 306888, "paragraph_index": 28}, {"index": 38, "text": "Burnham rules out calling early election as PM", "start_ms": 306888, "end_ms": 311112, "paragraph_index": 29}, {"index": 39, "text": "Labour failed to prepare for power, admits PM's former top aide", "start_ms": 311112, "end_ms": 316656, "paragraph_index": 30}, {"index": 40, "text": "What are Andy Burnham's potential policies for No 10?", "start_ms": 316656, "end_ms": 321168, "paragraph_index": 31}, {"index": 41, "text": "Sir Keir Starmer's premiership in six charts", "start_ms": 321168, "end_ms": 325392, "paragraph_index": 32}], "total_duration_ms": 325392};
+  const WORD_GLOSS = {"the": "这个", "he": "他", "to": "到", "and": "和", "with": "与", "in": "在", "sir": "爵士", "keir": "基尔", "his": "他的", "as": "作为", "that": "那个", "for": "为了", "labour": "工党", "my": "我的", "is": "是", "it": "它", "said": "说", "be": "是", "prime": "首相", "decision": "决定", "was": "是", "this": "这个", "successor": "继任者", "an": "一个", "minister": "部长", "had": "有", "that's": "那是", "not": "不", "has": "有", "burnham": "伯纳姆", "time": "时间", "personal": "个人", "been": "已经", "on": "在", "of": "的", "election": "选举", "can": "可以", "just": "只是", "no": "没有", "at": "在", "what": "什么", "but": "但是", "starmer": "斯塔默", "domestic": "国内的", "andy": "安迪", "dealing": "处理", "about": "关于", "really": "真正地", "party": "政党", "two": "两个", "burnham's": "伯纳姆的", "out": "出来", "than": "比", "added": "补充", "going": "将要", "we": "我们", "ultimately": "最终", "do": "做", "me": "我", "when": "当", "next": "下一个", "leader": "领导人", "video": "视频", "played": "比赛", "says": "表示", "you": "你", "separate": "单独的", "will": "将", "have": "有", "spend": "花费", "global": "全球", "during": "在期间", "tough": "艰难的", "alongside": "与...一起", "wife": "妻子", "children": "儿童", "political": "政治的", "career": "职业", "over": "超过", "saved": "拯救", "keep": "保持", "shut": "关闭", "years": "多年", "weekend": "周末", "spent": "花费", "world": "世界", "him": "他", "never": "从未", "here": "这里", "are": "是", "those": "那些", "more": "更多", "think": "认为", "if": "如果", "could": "可能", "discussion": "讨论", "right": "正确", "affairs": "事务", "same": "相同", "thing": "事情", "change": "改变", "calling": "呼吁", "early": "早期的", "any": "任何", "days": "天", "victory": "胜利", "came": "到来", "chequers": "契克斯", "government": "政府", "discussions": "讨论", "many": "许多", "colleagues": "同事", "people": "人们", "other": "其他", "became": "成为", "vic": "维克", "least": "至少", "made": "做出", "former": "前任", "would": "将", "should": "应该", "can't": "不能", "foreign": "外交", "policy": "政策", "from": "来自", "warned": "警告", "likely": "可能", "much": "许多", "interview": "采访", "spoke": "发言", "first": "第一轮", "took": "担任", "accept": "接受", "told": "告诉", "bbc": "英国广播公司", "successful": "成功的", "promised": "承诺", "under": "在...之下", "insisting": "坚持", "pair": "一对", "always": "总是", "got": "获得", "faced": "面对", "frequent": "频繁的", "criticism": "批评", "anniversary": "周年纪念", "marking": "纪念", "amount": "数量", "stage": "舞台", "critics": "批评者", "labelling": "标签化", "among": "在...之中", "supporters": "支持者", "parliament": "议会", "who": "谁", "hope": "希望", "able": "能够", "focus": "重点", "issues": "问题", "uk": "英国", "such": "如此", "cost": "成本", "living": "生活", "public": "公众", "services": "服务", "these": "这些", "things": "事情", "asked": "询问", "less": "更少", "diplomacy": "外交", "replied": "回复", "don't": "不要", "possible": "可能的", "there's": "有", "often": "经常", "what's": "什么是", "between": "之间", "international": "国际", "they're": "他们是", "one": "一个", "continued": "持续的", "face": "面临", "conflict": "冲突", "saying": "说", "it's": "它是", "true": "真实", "we're": "我们是", "dangerous": "危险", "we've": "我们已经", "probably": "很可能", "most": "最", "lifetime": "终身", "reality": "现实", "challenges": "挑战", "aren't": "不是", "ruled": "裁定", "general": "总", "becomes": "成为", "later": "后来", "month": "月份", "having": "拥有", "repeatedly": "反复地", "vowed": "发誓", "fight": "斗争", "including": "包括", "facing": "面临", "challengers": "挑战者", "leadership": "领导力", "changed": "改变", "mind": "介意", "resigned": "辞职的", "within": "在内部", "three": "三个", "makerfield": "梅克菲尔德", "by-election": "补选", "described": "描述", "which": "哪个", "victoria": "维多利亚", "teenage": "青少年的", "minister's": "部长的", "residence": "官邸", "best": "最佳", "country": "国家", "inevitably": "不可避免地", "start": "开始", "parliamentary": "议会", "team": "团队", "immediate": "立即的", "advisers": "顾问", "trade": "贸易", "unions": "工会", "so": "所以", "may": "可能", "different": "不同的", "end": "结束", "why": "为何", "taken": "采取", "were": "是", "away": "离开", "kids": "孩子们", "went": "去", "together": "一起", "family": "家庭", "final": "最终", "taking": "采取", "your": "你的", "matter": "事情", "or": "或者", "wanted": "想要", "did": "做了", "step": "步骤", "down": "下来", "appeared": "出现", "almost": "几乎", "certain": "某些", "although": "虽然", "times": "次", "reference": "提及", "there": "那里", "little": "很少", "bit": "一点", "process": "过程", "go": "去", "towards": "对待", "greater": "更大的", "manchester": "曼彻斯特", "mayor": "市长", "everything": "一切", "possibly": "可能", "make": "使", "sure": "确定", "committed": "承诺的", "remaining": "剩余的", "mp": "议员", "until": "直到", "keeping": "保持", "rather": "宁愿", "giving": "给予", "constant": "持续", "advice": "建议", "they": "它们", "doing": "做", "clear": "明确", "sees": "看到", "four": "四", "opposition": "反对党", "absolutely": "绝对", "core": "核心", "legacy": "遗留", "describing": "描述", "politically": "政治上", "financially": "财政上", "morally": "道德上", "bankrupt": "破产的", "hard": "艰难的", "work": "工作", "electoral": "选举的", "terms": "条件", "success": "成功", "sit": "坐", "tony": "托尼", "lost": "失去", "stepped": "迈步", "up": "向上", "others": "其他", "because": "因为", "mps": "议员", "longer": "更长的", "believed": "据信", "person": "个人", "take": "采取", "us": "我们", "into": "进入", "rules": "规则", "pm": "首相", "failed": "失败", "prepare": "准备", "power": "权力", "admits": "承认", "pm's": "首相的", "top": "顶级的", "potential": "潜在", "policies": "政策", "starmer's": "斯塔默的", "premiership": "首相任期", "six": "六", "mouth": "嘴", "untypically": "不典型地", "liked": "喜欢", "sensible": "明智的", "balance": "平衡", "whoever's": "无论谁的", "phrase": "短语", "countryside": "乡村", "grappled": "努力应对", "acknowledge": "承认", "whoever": "无论谁", "succeeds": "成功", "bloody": "该死的", "clement": "温和的", "attlee's": "艾德礼的", "blair's": "布莱尔的", "arguably": "可以说", "ousted": "罢免", "aide": "助手", "charts": "图表"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
