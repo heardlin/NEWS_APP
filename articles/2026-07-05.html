@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-05</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-05</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/2117/live/8c88b0c0-78b8-11f1-a153-7f64e09767e4.jpg" alt="Shelter-in-place order at Azteca over severe weather before Mexico-England" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Shelter-in-place order at Azteca over severe weather before Mexico-England</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/sport/football/articles/clyeegldnmpo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-05.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Mexico are facing England for a place in the World Cup quarter-finals</span></p>
+        <p class="cn">墨西哥队将与英格兰队争夺世界杯四分之一决赛的席位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">A <span class="keyword" data-word="shelter-in-place" data-phonetic="/ˈʃɛltər ɪn pleɪs/" data-pos="adj." data-def="就地避难" data-def-en="requiring people to stay where they are for safety">shelter-in-place</span> order has been issued at Azteca Stadium because of severe weather before the World Cup last-16 tie between Mexico and England.</span></p>
+        <p class="cn">由于墨西哥与英格兰的世界杯16强赛前出现恶劣天气，阿兹特克体育场（Azteca Stadium）已发布就地避难令。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The match in Mexico City is set to kick off at 18:00 local time on Sunday (01:00 BST Monday).</span></p>
+        <p class="cn">这场在墨西哥城举行的比赛定于当地时间周日18:00（北京时间周一01:00）开球。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">There has been heavy rain in the city during the day and reports of lightning above the stadium.</span></p>
+        <p class="cn">当天该市一直下着大雨，并有报道称体育场上空出现闪电。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Fifa held talks with the English and Mexican football associations on Friday after proposing the match be moved to 19:00 BST on Sunday (12:00 local time) before a U-turn resulted in the kick-off time remaining unchanged.</span></p>
+        <p class="cn">国际足联（Fifa）在周五与英格兰和墨西哥足协进行了会谈，此前曾提议将比赛时间改为周日19:00（当地时间12:00），但随后又改变主意，开球时间保持不变。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The match is still currently set to start at the scheduled time, but any lightning strikes in the <span class="keyword" data-word="vicinity" data-phonetic="/vɪˈsɪnəti/" data-pos="n." data-def="附近，邻近地区" data-def-en="the area near or surrounding a particular place">vicinity</span> of the stadium close to kick-off would mean the start of the match being delayed.</span></p>
+        <p class="cn">目前比赛仍按原定时间开始，但如果在开球前体育场附近出现闪电，则意味着比赛将推迟开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The game will be broadcast live on BBC TV, BBC iPlayer, BBC Radio 5 Live and the BBC Sport website and app.</span></p>
+        <p class="cn">比赛将通过BBC电视、BBC iPlayer、BBC广播5台直播（BBC Radio 5 Live）以及BBC体育网站和应用程序进行现场直播。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Five and a half hours that left England's World Cup tie in chaos</span></p>
+        <p class="cn">五个半小时让英格兰的世界杯比赛陷入混乱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">England-Mexico 1am kick-off unchanged after Fifa U-turn</span></p>
+        <p class="cn">英格兰对墨西哥凌晨1点开球时间不变，国际足联改变主意。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">How thunderstorms and lightning could impact games at World Cup</span></p>
+        <p class="cn">雷暴和闪电如何影响世界杯比赛。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Big screens inside the Azteca alerted people that an electrical storm was approaching and to remain in their seats, though many sought cover from the rain.</span></p>
+        <p class="cn">阿兹特克体育场内的巨大屏幕提醒人们，一场雷暴正在逼近，请留在座位上，尽管许多人都在寻找避雨的地方。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Play cannot begin until 30 minutes have passed since lightning was last detected within an eight-mile radius of the stadium.</span></p>
+        <p class="cn">只有在体育场周围8英里范围内最后一次检测到闪电后过去30分钟，比赛才能开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">With regards to delays caused by severe weather, Fifa has no power to make its own rules - it must adhere to the advice of local authorities.</span></p>
+        <p class="cn">对于恶劣天气造成的延误，国际足联无权自行制定规则——它必须遵守地方当局的建议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">In the United States, recommendations of the National Oceanic and Atmospheric Administration (NOAA) are used.</span></p>
+        <p class="cn">在美国，采用国家海洋和大气管理局（NOAA）的建议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">The NOAA says if any lightning strike is detected within eight miles of a stadium the game has to be stopped.</span> <span class="sentence" data-sentence-index="15">The rules are the same in Mexico.</span></p>
+        <p class="cn">NOAA表示，如果在体育场8英里范围内检测到任何闪电，比赛必须停止。墨西哥的规则相同。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">When there is an increased risk of lightning strikes, the safety of players and supporters is given <span class="keyword" data-word="paramount" data-phonetic="/ˈpærəmaʊnt/" data-pos="adj." data-def="最重要的，至高无上的" data-def-en="more important than anything else">paramount</span> importance.</span></p>
+        <p class="cn">当闪电风险增加时，球员和球迷的安全被置于首位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">All players must leave the pitch, and fans must seek shelter away from their seats.</span></p>
+        <p class="cn">所有球员必须离开球场，球迷必须离开座位寻找庇护所。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">A <span class="keyword" data-word="mandatory" data-phonetic="/ˈmændətɔːri/" data-pos="adj." data-def="强制性的，必须的" data-def-en="required by law or rules; compulsory">mandatory</span> 30-minute countdown begins.</span> <span class="sentence" data-sentence-index="19">Each time there is a lightning strike inside the distance, the countdown clock resets to 30 minutes.</span></p>
+        <p class="cn">强制性的30分钟倒计时开始。每次在该距离内出现闪电，倒计时时钟都会重置为30分钟。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">If a full 30 minutes has elapsed, the supporters can go back to their seats and players will have a short warm-up.</span></p>
+        <p class="cn">如果整整30分钟过去，球迷可以回到座位，球员将进行短暂的热身。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Sources told BBC Sport on Saturday that world governing body Fifa had been set to <span class="keyword" data-word="reschedule" data-phonetic="/riːˈʃɛdjuːl/" data-pos="v." data-def="重新安排时间" data-def-en="to change the time or date of a planned event">reschedule</span> the fixture, and confirm in a statement, but news of the proposal angered both English and Mexican officials.</span></p>
+        <p class="cn">BBC体育周六从消息人士处获悉，世界管理机构国际足联原本计划重新安排这场比赛，并在一份声明中确认，但这一提议的消息激怒了英格兰和墨西哥的官员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">The English Football Association (FA) requested time to review the weather forecast in more detail.</span></p>
+        <p class="cn">英格兰足总（FA）要求时间更详细地审查天气预报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">As talks went on, concerns over the impact on player preparation, fan travel and the logistics around moving the staging of such a huge game were discussed.</span></p>
+        <p class="cn">随着谈判的进行，讨论了关于球员准备、球迷出行以及围绕如此重大比赛场地调整的后勤工作的担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">The proposed change was first reported by local media in Mexico.</span></p>
+        <p class="cn">这一提议的变更首先由墨西哥当地媒体报道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">Fifa maintained no decision had been made and - after <span class="keyword" data-word="pushback" data-phonetic="/ˈpʊʃbæk/" data-pos="n." data-def="反对，抵制" data-def-en="resistance or opposition to a plan or idea">pushback</span> from both associations - it was decided to keep the tie at its original kick-off time.</span></p>
+        <p class="cn">国际足联坚称尚未做出任何决定，并且在两个协会的反对下，决定保持比赛原定的开球时间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">We were setting up for a live broadcast outside the stadium among the crowds when the first flash of lightning appeared in the distance.</span></p>
+        <p class="cn">我们正在体育场外的人群中为现场直播做准备，这时远处出现了第一道闪电。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">It seemed quite far away, but within a couple of minutes the cracks of thunder were right overhead.</span> <span class="sentence" data-sentence-index="28">People started to move to find shelter and we made it back to the media centre just as the rain started pouring down and the <span class="keyword" data-word="shelter-in-place" data-phonetic="/ˈʃɛltər ɪn pleɪs/" data-pos="adj." data-def="就地避难" data-def-en="requiring people to stay where they are for safety">shelter-in-place</span> warnings flashed up.</span></p>
+        <p class="cn">它似乎还很远，但几分钟内雷声就在头顶炸响。人们开始寻找避雨处，我们刚回到媒体中心，大雨就开始倾盆而下，就地避难警告也闪烁起来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">The media centre is a huge white tent so we can hear the cracks of thunder outside and rain is pouring down on to the roof.</span> <span class="sentence" data-sentence-index="30">It's a temporary structure and I've felt a couple of raindrops on my head - hoping the roof holds.</span></p>
+        <p class="cn">媒体中心是一个巨大的白色帐篷，所以我们可以听到外面的雷声，雨水倾泻在屋顶上。这是一个临时建筑，我感觉有几滴雨滴落在头上——希望屋顶能撑住。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">What started with an initial clap of thunder in the distance was soon followed by a series of lightning strikes near to the Azteca.</span> <span class="sentence" data-sentence-index="32">The rain then began, soon turning into a <span class="keyword" data-word="deluge" data-phonetic="/ˈdɛljuːdʒ/" data-pos="n." data-def="暴雨，洪水" data-def-en="a severe flood or heavy downpour of rain">deluge</span>.</span></p>
+        <p class="cn">最初远处的一声雷响之后，很快阿兹特克体育场附近就出现了一系列闪电。然后雨开始下，很快变成了倾盆大雨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">With fans of both teams pouring through the gates the stadium was starting to fill up and all fans were soon advised to move inside to the concourse and for the media to return to the main media room.</span></p>
+        <p class="cn">随着两队球迷涌入大门，体育场开始坐满，很快所有球迷都被建议进入室内大厅，媒体则返回主媒体室。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">While there is no news if the match will be delayed, it's clear the threat of the expected storms arrived early and have caused some initial disruption to the build-up for fans.</span> <span class="sentence" data-sentence-index="35">Many locals do say the storms can pass as quickly as they arrive.</span></p>
+        <p class="cn">虽然没有比赛是否会推迟的消息，但很明显，预期的风暴威胁提前到来，并给球迷的赛前准备造成了一些初步干扰。许多当地人确实说风暴来得快去得也快。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">The rain radar seems to be showing the thunderstorms and rain currently affecting Mexico City should ease and move off over the next hour or so.</span></p>
+        <p class="cn">雨雷达似乎显示目前影响墨西哥城的雷暴和降雨应该会在接下来一个小时内减弱并移走。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="37">However, it does look as though further heavy showers are developing nearby and they could move into the <span class="keyword" data-word="vicinity" data-phonetic="/vɪˈsɪnəti/" data-pos="n." data-def="附近，邻近地区" data-def-en="the area near or surrounding a particular place">vicinity</span> of the stadium, so it'll be worth keeping an eye on things.</span></p>
+        <p class="cn">然而，附近似乎正在形成更多强降雨，它们可能会移动到体育场附近，所以值得密切关注。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="38">Might not be out of the woods yet.</span></p>
+        <p class="cn">可能还没有脱离危险。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="39">World Cup 2026 knockout path</span></p>
+        <p class="cn">2026年世界杯淘汰赛路径。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="40">How to watch the World Cup on the BBC and ITV</span></p>
+        <p class="cn">如何在BBC和ITV观看世界杯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="41">Everything you need to know about the World Cup</span></p>
+        <p class="cn">关于世界杯你需要知道的一切。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">shelter-in-place</span>
+        <button class="kw-speak-btn" data-word="shelter-in-place" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈʃɛltər ɪn pleɪs/ adj.</span>
+      </div>
+      <p class="kw-def">就地避难</p>
+      <p class="kw-def-en">requiring people to stay where they are for safety</p>
+      <p class="kw-ctx">&ldquo;A shelter-in-place order has been issued at Azteca Stadium because of severe weather before the World Cup last-16 tie between Mexico and England.&rdquo;</p>
+      <p class="kw-ctx-cn">由于墨西哥对英格兰的世界杯16强赛前天气恶劣，阿兹特克体育场已发布就地避难令。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vicinity</span>
+        <button class="kw-speak-btn" data-word="vicinity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/vɪˈsɪnəti/ n.</span>
+      </div>
+      <p class="kw-def">附近，邻近地区</p>
+      <p class="kw-def-en">the area near or surrounding a particular place</p>
+      <p class="kw-ctx">&ldquo;The match is still currently set to start at the scheduled time, but any lightning strikes in the vicinity of the stadium close to kick-off would mean the start of the match being delayed.&rdquo;</p>
+      <p class="kw-ctx-cn">比赛目前仍按计划时间开始，但开球前体育场附近的任何雷击都意味着比赛将推迟开始。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">paramount</span>
+        <button class="kw-speak-btn" data-word="paramount" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpærəmaʊnt/ adj.</span>
+      </div>
+      <p class="kw-def">最重要的，至高无上的</p>
+      <p class="kw-def-en">more important than anything else</p>
+      <p class="kw-ctx">&ldquo;When there is an increased risk of lightning strikes, the safety of players and supporters is given paramount importance.&rdquo;</p>
+      <p class="kw-ctx-cn">当雷击风险增加时，球员和球迷的安全被赋予至高无上的重要性。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">mandatory</span>
+        <button class="kw-speak-btn" data-word="mandatory" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmændətɔːri/ adj.</span>
+      </div>
+      <p class="kw-def">强制性的，必须的</p>
+      <p class="kw-def-en">required by law or rules; compulsory</p>
+      <p class="kw-ctx">&ldquo;A mandatory 30-minute countdown begins.&rdquo;</p>
+      <p class="kw-ctx-cn">一个强制性的30分钟倒计时开始。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">elapse</span>
+        <button class="kw-speak-btn" data-word="elapse" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈlæps/ v.</span>
+      </div>
+      <p class="kw-def">（时间）过去，消逝</p>
+      <p class="kw-def-en">to pass by (of time)</p>
+      <p class="kw-ctx">&ldquo;If a full 30 minutes has elapsed, the supporters can go back to their seats and players will have a short warm-up.&rdquo;</p>
+      <p class="kw-ctx-cn">如果整整30分钟过去了，球迷可以回到座位，球员将进行短暂的热身。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reschedule</span>
+        <button class="kw-speak-btn" data-word="reschedule" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/riːˈʃɛdjuːl/ v.</span>
+      </div>
+      <p class="kw-def">重新安排时间</p>
+      <p class="kw-def-en">to change the time or date of a planned event</p>
+      <p class="kw-ctx">&ldquo;Sources told BBC Sport on Saturday that world governing body Fifa had been set to reschedule the fixture, and confirm in a statement, but news of the proposal angered both English and Mexican officials.&rdquo;</p>
+      <p class="kw-ctx-cn">消息人士周六告诉BBC体育，世界管理机构国际足联原本打算重新安排比赛时间，并在一份声明中确认，但这一提议的消息激怒了英格兰和墨西哥官员。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pushback</span>
+        <button class="kw-speak-btn" data-word="pushback" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpʊʃbæk/ n.</span>
+      </div>
+      <p class="kw-def">反对，抵制</p>
+      <p class="kw-def-en">resistance or opposition to a plan or idea</p>
+      <p class="kw-ctx">&ldquo;Fifa maintained no decision had been made and - after pushback from both associations - it was decided to keep the tie at its original kick-off time.&rdquo;</p>
+      <p class="kw-ctx-cn">国际足联坚持尚未做出决定，在遭到两个协会的反对后，决定将比赛保持在原定的开球时间。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deluge</span>
+        <button class="kw-speak-btn" data-word="deluge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdɛljuːdʒ/ n.</span>
+      </div>
+      <p class="kw-def">暴雨，洪水</p>
+      <p class="kw-def-en">a severe flood or heavy downpour of rain</p>
+      <p class="kw-ctx">&ldquo;The rain then began, soon turning into a deluge.&rdquo;</p>
+      <p class="kw-ctx-cn">雨开始下，很快变成了倾盆大雨。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Mexico are facing England for a place in the World Cup quarter-finals", "start_ms": 0, "end_ms": 5472, "paragraph_index": 0}, {"index": 1, "text": "A shelter-in-place order has been issued at Azteca Stadium because of severe weather before the World Cup last-16 tie between Mexico and England.", "start_ms": 5472, "end_ms": 15768, "paragraph_index": 1}, {"index": 2, "text": "The match in Mexico City is set to kick off at 18:00 local time on Sunday (01:00 BST Monday).", "start_ms": 15768, "end_ms": 25008, "paragraph_index": 2}, {"index": 3, "text": "There has been heavy rain in the city during the day and reports of lightning above the stadium.", "start_ms": 25008, "end_ms": 31320, "paragraph_index": 3}, {"index": 4, "text": "Fifa held talks with the English and Mexican football associations on Friday after proposing the match be moved to 19:00 BST on Sunday (12:00 local time) before a U-turn resulted in the kick-off time remaining unchanged.", "start_ms": 31320, "end_ms": 48624, "paragraph_index": 4}, {"index": 5, "text": "The match is still currently set to start at the scheduled time, but any lightning strikes in the vicinity of the stadium close to kick-off would mean the start of the match being delayed.", "start_ms": 48624, "end_ms": 59760, "paragraph_index": 5}, {"index": 6, "text": "The game will be broadcast live on BBC TV, BBC iPlayer, BBC Radio 5 Live and the BBC Sport website and app.", "start_ms": 59760, "end_ms": 69984, "paragraph_index": 6}, {"index": 7, "text": "Five and a half hours that left England's World Cup tie in chaos", "start_ms": 69984, "end_ms": 75288, "paragraph_index": 7}, {"index": 8, "text": "England-Mexico 1am kick-off unchanged after Fifa U-turn", "start_ms": 75288, "end_ms": 80616, "paragraph_index": 8}, {"index": 9, "text": "How thunderstorms and lightning could impact games at World Cup", "start_ms": 80616, "end_ms": 85488, "paragraph_index": 9}, {"index": 10, "text": "Big screens inside the Azteca alerted people that an electrical storm was approaching and to remain in their seats, though many sought cover from the rain.", "start_ms": 85488, "end_ms": 95400, "paragraph_index": 10}, {"index": 11, "text": "Play cannot begin until 30 minutes have passed since lightning was last detected within an eight-mile radius of the stadium.", "start_ms": 95400, "end_ms": 103776, "paragraph_index": 11}, {"index": 12, "text": "With regards to delays caused by severe weather, Fifa has no power to make its own rules - it must adhere to the advice of local authorities.", "start_ms": 103776, "end_ms": 113760, "paragraph_index": 12}, {"index": 13, "text": "In the United States, recommendations of the National Oceanic and Atmospheric Administration (NOAA) are used.", "start_ms": 113760, "end_ms": 122352, "paragraph_index": 13}, {"index": 14, "text": "The NOAA says if any lightning strike is detected within eight miles of a stadium the game has to be stopped.", "start_ms": 122352, "end_ms": 129792, "paragraph_index": 14}, {"index": 15, "text": "The rules are the same in Mexico.", "start_ms": 129792, "end_ms": 132936, "paragraph_index": 14}, {"index": 16, "text": "When there is an increased risk of lightning strikes, the safety of players and supporters is given paramount importance.", "start_ms": 132936, "end_ms": 140976, "paragraph_index": 15}, {"index": 17, "text": "All players must leave the pitch, and fans must seek shelter away from their seats.", "start_ms": 140976, "end_ms": 147192, "paragraph_index": 16}, {"index": 18, "text": "A mandatory 30-minute countdown begins.", "start_ms": 147192, "end_ms": 151080, "paragraph_index": 17}, {"index": 19, "text": "Each time there is a lightning strike inside the distance, the countdown clock resets to 30 minutes.", "start_ms": 151080, "end_ms": 158304, "paragraph_index": 17}, {"index": 20, "text": "If a full 30 minutes has elapsed, the supporters can go back to their seats and players will have a short warm-up.", "start_ms": 158304, "end_ms": 166080, "paragraph_index": 18}, {"index": 21, "text": "Sources told BBC Sport on Saturday that world governing body Fifa had been set to reschedule the fixture, and confirm in a statement, but news of the proposal angered both English and Mexican officials.", "start_ms": 166080, "end_ms": 180120, "paragraph_index": 19}, {"index": 22, "text": "The English Football Association (FA) requested time to review the weather forecast in more detail.", "start_ms": 180120, "end_ms": 187848, "paragraph_index": 20}, {"index": 23, "text": "As talks went on, concerns over the impact on player preparation, fan travel and the logistics around moving the staging of such a huge game were discussed.", "start_ms": 187848, "end_ms": 199032, "paragraph_index": 21}, {"index": 24, "text": "The proposed change was first reported by local media in Mexico.", "start_ms": 199032, "end_ms": 204384, "paragraph_index": 22}, {"index": 25, "text": "Fifa maintained no decision had been made and - after pushback from both associations - it was decided to keep the tie at its original kick-off time.", "start_ms": 204384, "end_ms": 214608, "paragraph_index": 23}, {"index": 26, "text": "We were setting up for a live broadcast outside the stadium among the crowds when the first flash of lightning appeared in the distance.", "start_ms": 214608, "end_ms": 223176, "paragraph_index": 24}, {"index": 27, "text": "It seemed quite far away, but within a couple of minutes the cracks of thunder were right overhead.", "start_ms": 223176, "end_ms": 230088, "paragraph_index": 25}, {"index": 28, "text": "People started to move to find shelter and we made it back to the media centre just as the rain started pouring down and the shelter-in-place warnings flashed up.", "start_ms": 230088, "end_ms": 240336, "paragraph_index": 25}, {"index": 29, "text": "The media centre is a huge white tent so we can hear the cracks of thunder outside and rain is pouring down on to the roof.", "start_ms": 240336, "end_ms": 248496, "paragraph_index": 26}, {"index": 30, "text": "It's a temporary structure and I've felt a couple of raindrops on my head - hoping the roof holds.", "start_ms": 248496, "end_ms": 255192, "paragraph_index": 26}, {"index": 31, "text": "What started with an initial clap of thunder in the distance was soon followed by a series of lightning strikes near to the Azteca.", "start_ms": 255192, "end_ms": 263448, "paragraph_index": 27}, {"index": 32, "text": "The rain then began, soon turning into a deluge.", "start_ms": 263448, "end_ms": 267888, "paragraph_index": 27}, {"index": 33, "text": "With fans of both teams pouring through the gates the stadium was starting to fill up and all fans were soon advised to move inside to the concourse and for the media to return to the main media room.", "start_ms": 267888, "end_ms": 280056, "paragraph_index": 28}, {"index": 34, "text": "While there is no news if the match will be delayed, it's clear the threat of the expected storms arrived early and have caused some initial disruption to the build-up for fans.", "start_ms": 280056, "end_ms": 291192, "paragraph_index": 29}, {"index": 35, "text": "Many locals do say the storms can pass as quickly as they arrive.", "start_ms": 291192, "end_ms": 296472, "paragraph_index": 29}, {"index": 36, "text": "The rain radar seems to be showing the thunderstorms and rain currently affecting Mexico City should ease and move off over the next hour or so.", "start_ms": 296472, "end_ms": 306240, "paragraph_index": 30}, {"index": 37, "text": "However, it does look as though further heavy showers are developing nearby and they could move into the vicinity of the stadium, so it'll be worth keeping an eye on things.", "start_ms": 306240, "end_ms": 317064, "paragraph_index": 31}, {"index": 38, "text": "Might not be out of the woods yet.", "start_ms": 317064, "end_ms": 320136, "paragraph_index": 32}, {"index": 39, "text": "World Cup 2026 knockout path", "start_ms": 320136, "end_ms": 324120, "paragraph_index": 33}, {"index": 40, "text": "How to watch the World Cup on the BBC and ITV", "start_ms": 324120, "end_ms": 328536, "paragraph_index": 34}, {"index": 41, "text": "Everything you need to know about the World Cup", "start_ms": 328536, "end_ms": 332208, "paragraph_index": 35}], "total_duration_ms": 332208};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "in": "在", "on": "在", "is": "是", "lightning": "闪电", "world": "世界", "stadium": "体育场", "cup": "杯赛", "time": "时间", "rain": "雨", "be": "是", "mexico": "墨西哥", "bbc": "英国广播公司", "was": "是", "has": "有", "at": "在", "match": "匹配", "an": "一个", "it": "它", "as": "作为", "media": "媒体", "are": "是", "for": "为了", "been": "已经", "local": "当地", "there": "那里", "with": "与", "minutes": "会议记录", "fans": "球迷", "were": "是", "move": "行动", "azteca": "阿兹台克", "weather": "天气", "tie": "领带", "city": "城市", "set": "设定", "english": "英格兰的", "after": "之后", "but": "但是", "strikes": "袭击", "game": "游戏", "will": "将", "live": "生活", "that": "那个", "inside": "内部", "their": "他们的", "seats": "席位", "from": "来自", "have": "有", "within": "在内部", "by": "被", "no": "没有", "must": "必须", "if": "如果", "players": "参与者", "distance": "距离", "can": "可以", "both": "两者", "we": "我们", "up": "向上", "started": "开始", "so": "所以", "soon": "很快", "england": "英格兰", "severe": "严重的", "before": "之前", "off": "离开", "sunday": "星期日", "bst": "英国夏令时", "heavy": "沉重的", "talks": "会谈", "mexican": "墨西哥的", "football": "足球", "associations": "协会", "unchanged": "不变", "currently": "目前", "start": "开始", "any": "任何", "delayed": "延迟的", "broadcast": "广播", "sport": "体育", "how": "如何", "thunderstorms": "雷暴", "could": "可能", "impact": "影响", "people": "人们", "though": "尽管", "many": "许多", "caused": "导致", "its": "它的", "rules": "规则", "strike": "罢工", "when": "当", "supporters": "支持者", "all": "所有", "shelter": "躲避", "away": "离开", "back": "后退", "had": "有", "news": "新闻", "over": "超过", "huge": "巨大的", "first": "第一轮", "made": "做出", "outside": "外部", "couple": "几个", "centre": "中心", "down": "下来", "roof": "顶网", "it's": "它是", "initial": "最初", "into": "进入", "storms": "风暴", "they": "它们", "facing": "面临", "place": "地点", "order": "命令", "issued": "发布", "because": "因为", "last-": "最后", "between": "之间", "kick": "踢", "monday": "星期一", "during": "在期间", "day": "天", "reports": "报道", "above": "超过", "held": "举行", "friday": "星期五", "moved": "移动", "resulted": "导致", "remaining": "剩余的", "still": "仍然", "scheduled": "预定", "close": "密切的", "would": "将", "mean": "意味着", "being": "正在", "tv": "电视", "iplayer": "iPlayer", "radio": "电台", "website": "网站", "app": "应用程序", "five": "五", "half": "一半", "hours": "小时", "left": "离开", "england's": "英格兰的", "chaos": "混乱", "games": "游戏", "big": "大的", "alerted": "警报", "storm": "风暴", "approaching": "接近", "remain": "仍然", "sought": "寻求", "cover": "覆盖", "play": "扮演", "cannot": "不能", "begin": "开始", "until": "直到", "passed": "通过", "since": "自从", "last": "最后", "delays": "延误", "power": "权力", "make": "使", "own": "自己", "advice": "建议", "authorities": "当局", "united": "联合", "states": "国家", "national": "国家", "administration": "政府", "used": "使用", "says": "表示", "eight": "八", "miles": "英里", "stopped": "停止", "same": "相同", "increased": "增加的", "risk": "风险", "safety": "安全", "given": "给定", "importance": "重要性", "leave": "离开", "pitch": "推销", "seek": "寻求", "minute": "分钟", "each": "每个", "clock": "时钟", "full": "完整", "go": "去", "short": "短暂的", "sources": "消息来源", "told": "告诉", "saturday": "星期六", "governing": "治理", "body": "机构", "confirm": "确认", "statement": "声明", "proposal": "提议", "officials": "官员", "association": "协会", "fa": "英足总", "requested": "要求", "review": "审查", "forecast": "预报", "more": "更多", "detail": "细节", "went": "去", "concerns": "担忧", "player": "球员", "fan": "粉丝", "travel": "旅行", "around": "在...周围", "moving": "移动", "such": "如此", "discussed": "讨论", "proposed": "提议的", "change": "改变", "reported": "据报道", "maintained": "保持", "decision": "决定", "decided": "决定", "keep": "保持", "original": "原始的", "setting": "环境", "among": "在...之中", "crowds": "人群", "flash": "闪现", "appeared": "出现", "seemed": "似乎", "quite": "相当", "far": "远", "right": "正确", "overhead": "高架的", "find": "找到", "just": "只是", "warnings": "警告", "white": "白色的", "hear": "听到", "temporary": "临时的", "structure": "结构", "i've": "我已经", "felt": "感觉", "my": "我的", "head": "前往", "hoping": "希望", "holds": "持有", "what": "什么", "followed": "遵循", "series": "系列", "near": "附近", "then": "然后", "began": "开始", "turning": "转向", "teams": "团队", "through": "通过", "starting": "开始", "fill": "填补", "advised": "建议", "return": "返回", "main": "主要的", "room": "房间", "while": "而", "clear": "明确", "threat": "威胁", "expected": "预期", "arrived": "抵达", "early": "早期的", "some": "一些", "disruption": "中断", "build-up": "积累", "do": "做", "say": "说", "pass": "通过", "quickly": "迅速", "arrive": "抵达", "radar": "雷达", "seems": "似乎", "showing": "表现", "should": "应该", "ease": "缓解", "next": "下一个", "hour": "时刻", "or": "或者", "however": "然而", "does": "做", "look": "看起来", "further": "进一步的", "developing": "发展中的", "nearby": "附近", "it'll": "它将", "worth": "价值", "keeping": "保持", "eye": "目光", "things": "事情", "might": "可能", "not": "不", "out": "出来", "yet": "尚未", "knockout": "淘汰赛", "path": "道路", "watch": "观看", "everything": "一切", "you": "你", "need": "需要", "know": "知道", "about": "关于", "fifa": "国际足联", "kick-off": "开球", "thunder": "雷声", "pouring": "倾盆大雨", "u-turn": "掉头", "detected": "检测到", "noaa": "美国国家海洋和大气管理局", "countdown": "倒计时", "cracks": "裂缝", "quarter-finals": "四分之一决赛", "proposing": "提议", "england-mexico": "英格兰对墨西哥", "screens": "屏幕", "electrical": "电的", "eight-mile": "八英里", "radius": "半径", "regards": "关于", "adhere": "遵守", "recommendations": "建议", "oceanic": "海洋的", "atmospheric": "大气的", "begins": "开始", "resets": "重置", "elapsed": "已过去", "warm-up": "热身", "fixture": "赛程", "angered": "激怒", "preparation": "准备", "logistics": "后勤", "staging": "举办", "flashed": "闪现", "tent": "帐篷", "raindrops": "雨滴", "clap": "拍手声", "gates": "大门", "concourse": "大厅", "locals": "当地人", "affecting": "影响", "showers": "阵雨", "woods": "树林", "itv": "独立电视台"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
