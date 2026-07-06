@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-06</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-06</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/94dc/live/8a1615f0-796f-11f1-9290-9b15d0e76459.jpg" alt="Why European backlash over Trump intervention won't worry Infantino" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Why European backlash over Trump intervention won't worry Infantino</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/sport/football/articles/cvgmmmgemd8o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-06.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">President Trump on Balogun red-card suspension</span></p>
+        <p class="cn">特朗普总统谈巴洛贡红牌停赛</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Gianni Infantino has been Fifa president for 10 years.</span></p>
+        <p class="cn">詹尼·因凡蒂诺担任国际足联（Fifa）主席已有10年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Next year, he is up for re-election.</span></p>
+        <p class="cn">明年，他将面临连任选举。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">From the Fifa Peace Prize, to the vastly inflated ticket prices at the World Cup, to the Club World Cup, Infantino's tenure has been increasingly <span class="keyword" data-word="controversial" data-phonetic="/ˌkɒntrəˈvɜːʃl/" data-pos="adj." data-def="有争议的" data-def-en="causing public disagreement or discussion">controversial</span>.</span></p>
+        <p class="cn">从国际足联和平奖（Fifa Peace Prize），到世界杯（World Cup）大幅上涨的票价，再到俱乐部世界杯（Club World Cup），因凡蒂诺的任期日益引发争议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">But could the <span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="史无前例的" data-def-en="never done or known before">unprecedented</span> decision to cancel Folarin Balogun's red-card suspension for the United States' World Cup last-16 tie against Belgium be the tipping point?</span></p>
+        <p class="cn">但取消弗拉林·巴洛贡（Folarin Balogun）在美国队世界杯16强对阵比利时队比赛中的红牌停赛——这一史无前例的决定——会成为转折点吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">In a tournament they have co-hosted, Balogun has been the star man for the US, with three goals so far.</span></p>
+        <p class="cn">在联合主办的世界杯上，巴洛贡是美国队的明星球员，迄今已攻入三球。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Now, despite being sent off, he is available for their next game - even though World Cup rules don't allow appeals against red cards.</span></p>
+        <p class="cn">如今，尽管他被罚下场，他仍可参加下一场比赛——尽管世界杯规则不允许对红牌提出上诉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">On Monday, more than 24 hours after its initial decision, Fifa released an 871-word statement that shed little light on why it made the call.</span> <span class="sentence" data-sentence-index="9">But someone else has.</span></p>
+        <p class="cn">周一，在最初决定做出超过24小时后，国际足联发布了一份871字的声明，但对其做出该决定的原因语焉不详。然而，另一个人却给出了解释。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">"I'm the one that got them to do it," said US President Donald Trump when asked if he had put in calls to Infantino.</span></p>
+        <p class="cn">“是我让他们这么做的，”美国总统唐纳德·特朗普（Donald Trump）在被问及是否曾致电因凡蒂诺时说道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Trump said "all" he did was ask for a review.</span> <span class="sentence" data-sentence-index="12">He said he did not tell Infantino to suspend Balogun's ban.</span></p>
+        <p class="cn">特朗普表示，他所做的“全部”就是要求进行审查。他说他并未告诉因凡蒂诺取消巴洛贡的禁赛。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">But that such an <span class="keyword" data-word="intervention" data-phonetic="/ˌɪntəˈvenʃn/" data-pos="n." data-def="干预，介入" data-def-en="the act of becoming involved in a situation to change it">intervention</span> happened at all is a major concern across football.</span></p>
+        <p class="cn">但此类干预的发生本身，就引起了整个足球界的严重担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">In the US, the narrative has been about unfairness.</span> <span class="sentence" data-sentence-index="15">That Balogun should not miss another game.</span> <span class="sentence" data-sentence-index="16">That being sent off against Bosnia-Herzegovina and missing the rest of that game had been punishment enough.</span></p>
+        <p class="cn">在美国，舆论焦点在于不公平。认为巴洛贡不应再错过比赛。认为在对阵波黑（Bosnia-Herzegovina）时被罚下并缺席剩余比赛已是足够的惩罚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">Those sentiments were echoed by Trump.</span></p>
+        <p class="cn">特朗普也表达了同样的观点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">Infantino rejected any suggestion there was political <span class="keyword" data-word="interference" data-phonetic="/ˌɪntəˈfɪərəns/" data-pos="n." data-def="干涉，干预" data-def-en="the act of getting involved in a situation without being invited">interference</span>, insisting the disciplinary committee was independent.</span></p>
+        <p class="cn">因凡蒂诺否认存在任何政治干预的说法，坚称纪律委员会是独立的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">But perception is just as important.</span></p>
+        <p class="cn">但公众认知同样重要。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">The decision has not benefited just any team.</span> <span class="sentence" data-sentence-index="21">It has gone to the co-hosts.</span> <span class="sentence" data-sentence-index="22">Led by Trump - a man who has stood side by side with Infantino and calls the Fifa president his friend.</span></p>
+        <p class="cn">这一决定并非惠及任何球队，而是落到了联合主办国身上。由特朗普领导——这位曾与因凡蒂诺并肩而立、并称国际足联主席为朋友的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="23">The suspension of the ban felt like a presidential pardon.</span></p>
+        <p class="cn">取消禁赛感觉就像总统特赦。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="24">"This is our sport, not theirs," said former Liverpool boss Jurgen Klopp.</span></p>
+        <p class="cn">“这是我们的运动，不是他们的，”前利物浦（Liverpool）主帅尤尔根·克洛普（Jurgen Klopp）表示。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">"If Donald Trump and Gianni Infantino really sorted this out between themselves, it is madness; it calls everything into question."</span></p>
+        <p class="cn">“如果唐纳德·特朗普和詹尼·因凡蒂诺真的私下解决了这件事，那简直是疯了；这会让一切受到质疑。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="26">Could the <span class="keyword" data-word="fallout" data-phonetic="/ˈfɔːlaʊt/" data-pos="n." data-def="后果，余波" data-def-en="the bad results of a situation or action">fallout</span> create pressure that will put Infantino's position in doubt?</span></p>
+        <p class="cn">这场风波是否会造成压力，使因凡蒂诺的地位受到质疑？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="27">Gianni Infantino has been Fifa president since 2016</span></p>
+        <p class="cn">詹尼·因凡蒂诺自2016年起担任国际足联主席</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="28">Fifa's statutes are clear about political <span class="keyword" data-word="interference" data-phonetic="/ˌɪntəˈfɪərəns/" data-pos="n." data-def="干涉，干预" data-def-en="the act of getting involved in a situation without being invited">interference</span>.</span> <span class="sentence" data-sentence-index="29">It is not permitted.</span></p>
+        <p class="cn">国际足联章程明确禁止政治干预。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="30">Countries are regularly suspended from international football because of government involvement in national football associations.</span></p>
+        <p class="cn">各国常因政府介入本国足协而被暂停参加国际足球赛事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="31">Pakistan, for instance, have been suspended three times in the space of eight years.</span></p>
+        <p class="cn">例如，巴基斯坦（Pakistan）在八年内被暂停了三次。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="32">When it comes to Infantino and Trump, are the rules different?</span></p>
+        <p class="cn">当涉及因凡蒂诺和特朗普时，规则是否有所不同？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="33">The World Cup draw, during which Trump was bestowed with the inaugural Fifa Peace Prize , felt like the culmination of two years of Infantino fostering a close relationship with the US president.</span></p>
+        <p class="cn">世界杯抽签仪式上，特朗普被授予首届国际足联和平奖，这似乎是因凡蒂诺与美国总统建立密切关系两年来的高潮。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="34">"You can always count, Mr President, on my support, on the support of the entire football community to help you make peace and make the world prosper all over the world," Infantino told Trump when presenting the award.</span></p>
+        <p class="cn">“总统先生，您永远可以信赖我的支持，以及整个足球界的支持，帮助您实现和平，让世界繁荣，”因凡蒂诺在颁奖时对特朗普说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="35">Human rights campaign group FairSquare complained to Fifa's ethics committee in December that Infantino broke the governing body's rules on political neutrality in creating the prize.</span></p>
+        <p class="cn">人权运动组织FairSquare于12月向国际足联道德委员会投诉，称因凡蒂诺在设立该奖项时违反了国际足联关于政治中立的规则。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="36">With no response, last month 50 MEPs wrote a new letter to the ethics committee , external demanding action.</span> <span class="sentence" data-sentence-index="37">Like many situations with Fifa, there has been no response.</span></p>
+        <p class="cn">在未得到回应后，50名欧洲议会议员（MEPs）上月致信道德委员会，要求采取行动。与国际足联的许多情况一样，至今没有回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="38">Fast-forward to the tournament, and Trump has not been to a single World Cup match.</span></p>
+        <p class="cn">快进到世界杯赛事，特朗普一场比赛都没看。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="39">But here he was, taking ownership of Balogun's situation.</span></p>
+        <p class="cn">但他却在这里，将巴洛贡事件揽到自己身上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="40">It was another example of football not doing the talking.</span></p>
+        <p class="cn">这是足球未能掌握话语权的又一个例子。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="41">We had seen it with Somali referee Omar Artan.</span></p>
+        <p class="cn">我们曾在索马里裁判奥马尔·阿尔坦（Omar Artan）身上看到过。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="42">Artan was denied access to the US by immigration officials, with Infantino accused of losing control of his own World Cup .</span></p>
+        <p class="cn">阿尔坦被美国移民官员拒绝入境，因凡蒂诺被指责对自己主办的世界杯失去控制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="43">Yet when he faced questions from the media last month - for the first time in over three years - his response was, at best, glib.</span></p>
+        <p class="cn">然而，当他上月面对媒体提问时——三年多来首次——他的回答充其量只是轻描淡写。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="44">"Just, you know, chill, relax," Infantino said of Artan's plight.</span></p>
+        <p class="cn">“只是，你知道，冷静，放松，”因凡蒂诺谈及阿尔坦的困境时说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="45">Controversy has always felt just around the corner.</span> <span class="sentence" data-sentence-index="46">That something was bubbling under the surface.</span></p>
+        <p class="cn">争议似乎总在眼前。有些事暗流涌动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="47">And through it all, rarely have there been answers or <span class="keyword" data-word="transparency" data-phonetic="/trænsˈpærənsi/" data-pos="n." data-def="透明，公开" data-def-en="the quality of being open and honest, without secrets">transparency</span>.</span></p>
+        <p class="cn">而自始至终，很少有答案或透明度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="48">Take Friday's five hours of limbo, when Fifa first decided to change the kick-off time of England's last-16 tie against Mexico, then did a U-turn, while pretending it didn't happen.</span></p>
+        <p class="cn">以周五五个小时的悬而未决为例：国际足联先是决定更改英格兰对阵墨西哥的16强赛开球时间，然后来了个180度大转弯，同时假装什么都没发生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="49">The Balogun situation is out of the same playbook.</span></p>
+        <p class="cn">巴洛贡事件如出一辙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="50">A decision communicated without any reasoning.</span> <span class="sentence" data-sentence-index="51">Football is just told it is happening, and it must accept it.</span></p>
+        <p class="cn">一个决定在没有任何解释的情况下传达。足球界只是被告知事情正在发生，必须接受。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="52">FairSquare believes only 10 people were involved in the creation of the Fifa peace price and the decision was not taken by the Fifa Council</span></p>
+        <p class="cn">FairSquare认为，只有10人参与了国际足联和平奖的设立，且该决定并非由国际足联理事会做出</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="53">If we were to list every recent football controversy, we would be here a long time.</span></p>
+        <p class="cn">如果要列出近期所有足球争议，我们得花很长时间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="54">But let's take the unique allocation of the 2030 and 2034 World Cup finals two years ago, which often goes under the radar.</span></p>
+        <p class="cn">但让我们看看两年前2030年和2034年世界杯决赛圈的独特分配，这往往被忽视。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="55">It was decided the 2030 edition would be staged across three continents - Africa, Europe and South America.</span> <span class="sentence" data-sentence-index="56">That meant the 2034 event had to go to Asia or Oceania.</span></p>
+        <p class="cn">当时决定2030年世界杯将在三大洲——非洲、欧洲和南美洲——举办。这意味着2034年赛事必须由亚洲或大洋洲主办。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="57">With no realistic competition, it effectively guaranteed Saudi Arabia - like Qatar, a country with questions about its human rights record - would host.</span></p>
+        <p class="cn">由于没有实际竞争，这实际上保证了沙特阿拉伯（Saudi Arabia）——像卡塔尔（Qatar）一样，人权记录存疑的国家——将主办。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="58">Saudi Arabia and Fifa, under Infantino, had developed a close relationship .</span></p>
+        <p class="cn">沙特阿拉伯与国际足联在因凡蒂诺领导下建立了密切关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="48">
+        <p class="en"><span class="sentence" data-sentence-index="59">Norway's football federation abstained and argued the bidding process undermined "Fifa's reforms for good governance" and challenged "trust in Fifa".</span></p>
+        <p class="cn">挪威足协投了弃权票，并认为申办过程破坏了“国际足联为良好治理而进行的改革”，挑战了“对国际足联的信任”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="49">
+        <p class="en"><span class="sentence" data-sentence-index="60">We could also reflect on the Club World Cup - what appears to be a largely unwanted summer tournament created by Fifa to stake a claim for a slice of the club game and its riches.</span></p>
+        <p class="cn">我们还可以反思俱乐部世界杯——这似乎是一个国际足联为分一杯羹而创建的大致不受欢迎的夏季赛事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="50">
+        <p class="en"><span class="sentence" data-sentence-index="61">Sergio Marchi - the president of players' global union Fifpro - said last year it had been created "without dialogue, sensitivity, and respect" .</span></p>
+        <p class="cn">球员全球工会Fifpro主席塞尔吉奥·马尔基（Sergio Marchi）去年表示，该赛事是在“没有对话、敏感性和尊重”的情况下创建的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="51">
+        <p class="en"><span class="sentence" data-sentence-index="62">Then we have Balogun - a situation that allowed an unlikely source to take the moral high ground.</span></p>
+        <p class="cn">然后是巴洛贡——一个让意想不到的来源占据道德高地的事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="52">
+        <p class="en"><span class="sentence" data-sentence-index="63">"Football must never become a playground for political power," former Fifa president Sepp Blatter wrote on X.</span></p>
+        <p class="cn">“足球绝不能成为政治权力的游乐场，”前国际足联主席塞普·布拉特（Sepp Blatter）在X上写道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="53">
+        <p class="en"><span class="sentence" data-sentence-index="64">Blatter, remember, was forced to stand down as Fifa president after a corruption scandal - replaced by Infantino in 2016.</span></p>
+        <p class="cn">记住，布拉特是在腐败丑闻后被迫辞去国际足联主席职务的——2016年由因凡蒂诺接替。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="54">
+        <p class="en"><span class="sentence" data-sentence-index="65">Courting controversy and befriending Trump - Fifa's 'unlikely saviour'</span></p>
+        <p class="cn">引发争议并与特朗普交好——国际足联的“意外救星”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="55">
+        <p class="en"><span class="sentence" data-sentence-index="66">Red card system in disarray over Trump, Fifa and Balogun decision</span></p>
+        <p class="cn">红牌制度因特朗普、国际足联和巴洛贡的决定而陷入混乱</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="56">
+        <p class="en"><span class="sentence" data-sentence-index="67">Trump confirms he asked Fifa to review Balogun ban</span></p>
+        <p class="cn">特朗普确认他曾要求国际足联审查巴洛贡禁赛</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="57">
+        <p class="en"><span class="sentence" data-sentence-index="68">Uefa laid down new battles lines on Tuesday, when voicing strong opposition to the Balogun decision.</span></p>
+        <p class="cn">欧足联（Uefa）周二划下新的战线，强烈反对巴洛贡决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="58">
+        <p class="en"><span class="sentence" data-sentence-index="69">European football's governing body said Fifa had "crossed a red line" and described it as an "<span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="史无前例的" data-def-en="never done or known before">unprecedented</span>, incomprehensible and unjustifiable decision".</span></p>
+        <p class="cn">欧洲足球管理机构表示，国际足联“越过了红线”，并将其描述为“史无前例、不可理解且毫无道理的决定”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="59">
+        <p class="en"><span class="sentence" data-sentence-index="70">But this was not the first time Uefa has crossed swords with Fifa.</span></p>
+        <p class="cn">但这并非欧足联首次与国际足联交锋。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="60">
+        <p class="en"><span class="sentence" data-sentence-index="71">In May 2025, Uefa president Aleksander Ceferin led a group of European delegates in staging a walk-out during a break at the Fifa Congress .</span></p>
+        <p class="cn">2025年5月，欧足联主席亚历山大·切费林（Aleksander Ceferin）带领一群欧洲代表在国际足联大会休息期间退场。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="61">
+        <p class="en"><span class="sentence" data-sentence-index="72">Infantino had been on a diplomatic tour of the Middle East alongside Trump and arrived two hours 17 minutes late.</span></p>
+        <p class="cn">因凡蒂诺曾与特朗普一起对中东进行外交访问，迟到了2小时17分钟。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="62">
+        <p class="en"><span class="sentence" data-sentence-index="73">Uefa has looked to score political points during the World Cup, too.</span></p>
+        <p class="cn">欧足联也在世界杯期间寻求政治得分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="63">
+        <p class="en"><span class="sentence" data-sentence-index="74">No sooner had Artan landed at home in Somalia last month than Uefa announced he had been invited to referee the Uefa Super Cup between Paris St-Germain and Aston Villa on 12 August.</span></p>
+        <p class="cn">上月阿尔坦刚回到索马里家中，欧足联就宣布他已受邀执法8月12日巴黎圣日耳曼（Paris St-Germain）对阵阿斯顿维拉（Aston Villa）的欧洲超级杯（Uefa Super Cup）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="64">
+        <p class="en"><span class="sentence" data-sentence-index="75">And throughout this year, Uefa has been eager to point out how cheap Euro 2028 tickets are compared to the World Cup.</span> <span class="sentence" data-sentence-index="76">It will not introduce hydration breaks, or red cards for players who cover their mouth.</span></p>
+        <p class="cn">今年全年，欧足联一直急于指出2028年欧洲杯（Euro 2028）的票价与世界杯相比有多便宜。它不会引入补水暂停，也不会对捂嘴的球员出示红牌。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="65">
+        <p class="en"><span class="sentence" data-sentence-index="77">Infantino, remember, came from Uefa.</span> <span class="sentence" data-sentence-index="78">For many years he was the man who presented the Champions League draws.</span></p>
+        <p class="cn">记住，因凡蒂诺来自欧足联。多年来，他是主持欧冠（Champions League）抽签的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="66">
+        <p class="en"><span class="sentence" data-sentence-index="79">He may not quite be persona non grata there these days - he gave a speech at the Uefa Congress in February - but there is clear <span class="keyword" data-word="friction" data-phonetic="/ˈfrɪkʃn/" data-pos="n." data-def="摩擦，冲突" data-def-en="disagreement or conflict between people or groups">friction</span>.</span></p>
+        <p class="cn">如今他在那里可能并非完全不受欢迎——他曾在2月的欧足联大会上发表演讲——但存在明显的摩擦。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="67">
+        <p class="en"><span class="sentence" data-sentence-index="80">Taking all this into account, Infantino's position must surely be in doubt?</span></p>
+        <p class="cn">考虑到这一切，因凡蒂诺的地位肯定受到质疑了吧？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="68">
+        <p class="en"><span class="sentence" data-sentence-index="81">On the contrary.</span> <span class="sentence" data-sentence-index="82">Infantino is popular with many federations around the world - and a lot of that is down to Fifa's development of the game.</span></p>
+        <p class="cn">恰恰相反。因凡蒂诺在世界许多足协中很受欢迎——这在很大程度上归功于国际足联对足球发展的推动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="69">
+        <p class="en"><span class="sentence" data-sentence-index="83">Infantino's Fifa Forward programme has funded football projects across the globe, and he has created opportunities through the expanded World Cup.</span></p>
+        <p class="cn">因凡蒂诺的国际足联前进计划（Fifa Forward programme）资助了全球的足球项目，他通过扩大的世界杯创造了机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="70">
+        <p class="en"><span class="sentence" data-sentence-index="84">Sixteen extra nations now qualify - the vast majority from the confederations with less depth.</span> <span class="sentence" data-sentence-index="85">Europe only got three of the additional spots.</span></p>
+        <p class="cn">现在有16个额外国家获得资格——绝大多数来自实力较弱的联合会。欧洲只获得了三个额外名额。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="71">
+        <p class="en"><span class="sentence" data-sentence-index="86">This World Cup has shown that, below the top level, Asia and Concacaf have a lot of work to do to be competitive.</span></p>
+        <p class="cn">本届世界杯表明，在顶级水平之下，亚洲和中北美及加勒比海足联（Concacaf）要具备竞争力还有很多工作要做。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="72">
+        <p class="en"><span class="sentence" data-sentence-index="87">But Infantino has provided the dream, the hope that nations who never before could play at the World Cup might just get there.</span> <span class="sentence" data-sentence-index="88">Like Cape Verde, Curacao, Jordan and Uzbekistan.</span></p>
+        <p class="cn">但因凡蒂诺提供了梦想和希望，让从未参加过世界杯的国家有可能实现目标。比如佛得角（Cape Verde）、库拉索（Curacao）、约旦（Jordan）和乌兹别克斯坦（Uzbekistan）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="73">
+        <p class="en"><span class="sentence" data-sentence-index="89">Despite all the criticism over the 48-team format, it gave Cape Verde the chance to live their dream.</span></p>
+        <p class="cn">尽管48队赛制受到批评，但它给了佛得角实现梦想的机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="74">
+        <p class="en"><span class="sentence" data-sentence-index="90">And it will allow less traditional football nations to grow their game and get stronger - and surely that is a positive for football around the world?</span></p>
+        <p class="cn">这将让非传统足球国家发展壮大——这难道不是对世界足球的积极影响吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="75">
+        <p class="en"><span class="sentence" data-sentence-index="91">Tournaments like the World Cup, and the huge ticket prices, pay for these projects.</span></p>
+        <p class="cn">像世界杯这样的赛事以及高昂的票价，为这些项目提供了资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="76">
+        <p class="en"><span class="sentence" data-sentence-index="92">This year, Fifa is expected to bring in $9bn (Â£7.9bn)</span></p>
+        <p class="cn">今年，国际足联预计收入90亿美元（约79亿英镑）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="77">
+        <p class="en"><span class="sentence" data-sentence-index="93">Uefa may oppose much of what Fifa and Infantino stand for, but European football is the rich man of the game.</span> <span class="sentence" data-sentence-index="94">Largely, it can fund itself.</span></p>
+        <p class="cn">欧足联可能反对国际足联和因凡蒂诺的许多主张，但欧洲足球是这项运动的富人。大体上，它可以自给自足。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="78">
+        <p class="en"><span class="sentence" data-sentence-index="95">The rest of the game depends on Infantino and the money Fifa generates.</span></p>
+        <p class="cn">世界其他地区则依赖因凡蒂诺和国际足联产生的资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="79">
+        <p class="en"><span class="sentence" data-sentence-index="96">There are 211 countries within Fifa.</span> <span class="sentence" data-sentence-index="97">Each gets a vote on the presidency, with 106 needed to win an election.</span></p>
+        <p class="cn">国际足联有211个成员国。每个成员国对主席职位有一票，赢得选举需要106票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="80">
+        <p class="en"><span class="sentence" data-sentence-index="98">Let's look at the maths.</span></p>
+        <p class="cn">让我们算算账。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="81">
+        <p class="en"><span class="sentence" data-sentence-index="99">In April, Conmebol - the South American confederation - said its 10 countries would back Infantino.</span></p>
+        <p class="cn">4月，南美足联（Conmebol）表示其10个成员国将支持因凡蒂诺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="82">
+        <p class="en"><span class="sentence" data-sentence-index="100">Three weeks later, the Confederation of African Football (Caf) confirmed unanimous backing from its 54 member associations.</span></p>
+        <p class="cn">三周后，非洲足球联合会（Caf）确认其54个成员协会一致支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="83">
+        <p class="en"><span class="sentence" data-sentence-index="101">Shortly afterwards, the Asian Football Confederation's 47 nations followed suit.</span></p>
+        <p class="cn">不久之后，亚洲足球联合会（Asian Football Confederation）的47个成员国也紧随其后。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="84">
+        <p class="en"><span class="sentence" data-sentence-index="102">Infantino already has 111 votes.</span> <span class="sentence" data-sentence-index="103">He cannot be beaten.</span></p>
+        <p class="cn">因凡蒂诺已经拥有111票。他不可战胜。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="85">
+        <p class="en"><span class="sentence" data-sentence-index="104">Even if Uefa thought it could muster a candidate capable of mounting a challenge, the race is already run.</span></p>
+        <p class="cn">即使欧足联认为可以推出一位能够发起挑战的候选人，比赛也已经结束。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="86">
+        <p class="en"><span class="sentence" data-sentence-index="105">Infantino was re-elected unopposed in 2019 and 2023.</span> <span class="sentence" data-sentence-index="106">It would take something truly remarkable for anyone to stand against him, let alone beat him in 2027.</span></p>
+        <p class="cn">因凡蒂诺在2019年和2023年无对手连任。要有人站出来反对他，更不用说在2027年击败他，需要发生真正非凡的事情。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="87">
+        <p class="en"><span class="sentence" data-sentence-index="107">World Cup 2026 knockout path</span></p>
+        <p class="cn">2026年世界杯淘汰赛路径</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="88">
+        <p class="en"><span class="sentence" data-sentence-index="108">How to watch the World Cup on the BBC and ITV</span></p>
+        <p class="cn">如何在BBC和ITV观看世界杯</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="89">
+        <p class="en"><span class="sentence" data-sentence-index="109">Everything you need to know about the World Cup</span></p>
+        <p class="cn">关于世界杯你需要知道的一切</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">controversial</span>
+        <button class="kw-speak-btn" data-word="controversial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkɒntrəˈvɜːʃl/ adj.</span>
+      </div>
+      <p class="kw-def">有争议的</p>
+      <p class="kw-def-en">causing public disagreement or discussion</p>
+      <p class="kw-ctx">&ldquo;Infantino's tenure has been increasingly controversial.&rdquo;</p>
+      <p class="kw-ctx-cn">因凡蒂诺的任期越来越有争议。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unprecedented</span>
+        <button class="kw-speak-btn" data-word="unprecedented" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈpresɪdentɪd/ adj.</span>
+      </div>
+      <p class="kw-def">史无前例的</p>
+      <p class="kw-def-en">never done or known before</p>
+      <p class="kw-ctx">&ldquo;But could the unprecedented decision to cancel Folarin Balogun's red-card suspension... be the tipping point?&rdquo;</p>
+      <p class="kw-ctx-cn">但取消巴洛贡红牌停赛这一史无前例的决定会成为转折点吗？</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intervention</span>
+        <button class="kw-speak-btn" data-word="intervention" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈvenʃn/ n.</span>
+      </div>
+      <p class="kw-def">干预，介入</p>
+      <p class="kw-def-en">the act of becoming involved in a situation to change it</p>
+      <p class="kw-ctx">&ldquo;But that such an intervention happened at all is a major concern across football.&rdquo;</p>
+      <p class="kw-ctx-cn">但这种干预的发生本身就是整个足球界的一大担忧。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">interference</span>
+        <button class="kw-speak-btn" data-word="interference" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈfɪərəns/ n.</span>
+      </div>
+      <p class="kw-def">干涉，干预</p>
+      <p class="kw-def-en">the act of getting involved in a situation without being invited</p>
+      <p class="kw-ctx">&ldquo;Infantino rejected any suggestion there was political interference, insisting the disciplinary committee was independent.&rdquo;</p>
+      <p class="kw-ctx-cn">因凡蒂诺否认有任何政治干预，坚称纪律委员会是独立的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fallout</span>
+        <button class="kw-speak-btn" data-word="fallout" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfɔːlaʊt/ n.</span>
+      </div>
+      <p class="kw-def">后果，余波</p>
+      <p class="kw-def-en">the bad results of a situation or action</p>
+      <p class="kw-ctx">&ldquo;Could the fallout create pressure that will put Infantino's position in doubt?&rdquo;</p>
+      <p class="kw-ctx-cn">这种后果会带来压力，让因凡蒂诺的地位受到质疑吗？</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">transparency</span>
+        <button class="kw-speak-btn" data-word="transparency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trænsˈpærənsi/ n.</span>
+      </div>
+      <p class="kw-def">透明，公开</p>
+      <p class="kw-def-en">the quality of being open and honest, without secrets</p>
+      <p class="kw-ctx">&ldquo;And through it all, rarely have there been answers or transparency.&rdquo;</p>
+      <p class="kw-ctx-cn">而自始至终，很少有答案或透明度。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">undermine</span>
+        <button class="kw-speak-btn" data-word="undermine" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌndəˈmaɪn/ v.</span>
+      </div>
+      <p class="kw-def">削弱，破坏</p>
+      <p class="kw-def-en">to make something weaker or less effective</p>
+      <p class="kw-ctx">&ldquo;Norway's football federation abstained and argued the bidding process undermined 'Fifa's reforms for good governance' and challenged 'trust in Fifa'.&rdquo;</p>
+      <p class="kw-ctx-cn">挪威足协投了弃权票，并认为申办过程破坏了“国际足联良好治理的改革”，挑战了“对国际足联的信任”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">friction</span>
+        <button class="kw-speak-btn" data-word="friction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfrɪkʃn/ n.</span>
+      </div>
+      <p class="kw-def">摩擦，冲突</p>
+      <p class="kw-def-en">disagreement or conflict between people or groups</p>
+      <p class="kw-ctx">&ldquo;He may not quite be persona non grata there these days... but there is clear friction.&rdquo;</p>
+      <p class="kw-ctx-cn">如今他在那里可能并非完全不受欢迎……但存在明显的摩擦。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "President Trump on Balogun red-card suspension", "start_ms": 3000, "end_ms": 7128, "paragraph_index": 1}, {"index": 2, "text": "Gianni Infantino has been Fifa president for 10 years.", "start_ms": 7128, "end_ms": 12000, "paragraph_index": 2}, {"index": 3, "text": "Next year, he is up for re-election.", "start_ms": 12000, "end_ms": 15528, "paragraph_index": 3}, {"index": 4, "text": "From the Fifa Peace Prize, to the vastly inflated ticket prices at the World Cup, to the Club World Cup, Infantino's tenure has been increasingly controversial.", "start_ms": 15528, "end_ms": 27120, "paragraph_index": 4}, {"index": 5, "text": "But could the unprecedented decision to cancel Folarin Balogun's red-card suspension for the United States' World Cup last-16 tie against Belgium be the tipping point?", "start_ms": 27120, "end_ms": 38568, "paragraph_index": 5}, {"index": 6, "text": "In a tournament they have co-hosted, Balogun has been the star man for the US, with three goals so far.", "start_ms": 38568, "end_ms": 46272, "paragraph_index": 6}, {"index": 7, "text": "Now, despite being sent off, he is available for their next game - even though World Cup rules don't allow appeals against red cards.", "start_ms": 46272, "end_ms": 55560, "paragraph_index": 7}, {"index": 8, "text": "On Monday, more than 24 hours after its initial decision, Fifa released an 871-word statement that shed little light on why it made the call.", "start_ms": 55560, "end_ms": 66792, "paragraph_index": 8}, {"index": 9, "text": "But someone else has.", "start_ms": 66792, "end_ms": 69336, "paragraph_index": 8}, {"index": 10, "text": "\"I'm the one that got them to do it,\" said US President Donald Trump when asked if he had put in calls to Infantino.", "start_ms": 69336, "end_ms": 77184, "paragraph_index": 9}, {"index": 11, "text": "Trump said \"all\" he did was ask for a review.", "start_ms": 77184, "end_ms": 81000, "paragraph_index": 10}, {"index": 12, "text": "He said he did not tell Infantino to suspend Balogun's ban.", "start_ms": 81000, "end_ms": 86016, "paragraph_index": 10}, {"index": 13, "text": "But that such an intervention happened at all is a major concern across football.", "start_ms": 86016, "end_ms": 91680, "paragraph_index": 11}, {"index": 14, "text": "In the US, the narrative has been about unfairness.", "start_ms": 91680, "end_ms": 96048, "paragraph_index": 12}, {"index": 15, "text": "That Balogun should not miss another game.", "start_ms": 96048, "end_ms": 99624, "paragraph_index": 12}, {"index": 16, "text": "That being sent off against Bosnia-Herzegovina and missing the rest of that game had been punishment enough.", "start_ms": 99624, "end_ms": 107040, "paragraph_index": 12}, {"index": 17, "text": "Those sentiments were echoed by Trump.", "start_ms": 107040, "end_ms": 110472, "paragraph_index": 13}, {"index": 18, "text": "Infantino rejected any suggestion there was political interference, insisting the disciplinary committee was independent.", "start_ms": 110472, "end_ms": 119448, "paragraph_index": 14}, {"index": 19, "text": "But perception is just as important.", "start_ms": 119448, "end_ms": 122736, "paragraph_index": 15}, {"index": 20, "text": "The decision has not benefited just any team.", "start_ms": 122736, "end_ms": 126720, "paragraph_index": 16}, {"index": 21, "text": "It has gone to the co-hosts.", "start_ms": 126720, "end_ms": 129456, "paragraph_index": 16}, {"index": 22, "text": "Led by Trump - a man who has stood side by side with Infantino and calls the Fifa president his friend.", "start_ms": 129456, "end_ms": 136944, "paragraph_index": 16}, {"index": 23, "text": "The suspension of the ban felt like a presidential pardon.", "start_ms": 136944, "end_ms": 141408, "paragraph_index": 17}, {"index": 24, "text": "\"This is our sport, not theirs,\" said former Liverpool boss Jurgen Klopp.", "start_ms": 141408, "end_ms": 147096, "paragraph_index": 18}, {"index": 25, "text": "\"If Donald Trump and Gianni Infantino really sorted this out between themselves, it is madness; it calls everything into question.\"", "start_ms": 147096, "end_ms": 156192, "paragraph_index": 19}, {"index": 26, "text": "Could the fallout create pressure that will put Infantino's position in doubt?", "start_ms": 156192, "end_ms": 161640, "paragraph_index": 20}, {"index": 27, "text": "Gianni Infantino has been Fifa president since 2016", "start_ms": 161640, "end_ms": 167064, "paragraph_index": 21}, {"index": 28, "text": "Fifa's statutes are clear about political interference.", "start_ms": 167064, "end_ms": 171672, "paragraph_index": 22}, {"index": 29, "text": "It is not permitted.", "start_ms": 171672, "end_ms": 174000, "paragraph_index": 22}, {"index": 30, "text": "Countries are regularly suspended from international football because of government involvement in national football associations.", "start_ms": 174000, "end_ms": 182688, "paragraph_index": 23}, {"index": 31, "text": "Pakistan, for instance, have been suspended three times in the space of eight years.", "start_ms": 182688, "end_ms": 189216, "paragraph_index": 24}, {"index": 32, "text": "When it comes to Infantino and Trump, are the rules different?", "start_ms": 189216, "end_ms": 193968, "paragraph_index": 25}, {"index": 33, "text": "The World Cup draw, during which Trump was bestowed with the inaugural Fifa Peace Prize , felt like the culmination of two years of Infantino fostering a close relationship with the US president.", "start_ms": 193968, "end_ms": 207288, "paragraph_index": 26}, {"index": 34, "text": "\"You can always count, Mr President, on my support, on the support of the entire football community to help you make peace and make the world prosper all over the world,\" Infantino told Trump when presenting the award.", "start_ms": 207288, "end_ms": 221616, "paragraph_index": 27}, {"index": 35, "text": "Human rights campaign group FairSquare complained to Fifa's ethics committee in December that Infantino broke the governing body's rules on political neutrality in creating the prize.", "start_ms": 221616, "end_ms": 233784, "paragraph_index": 28}, {"index": 36, "text": "With no response, last month 50 MEPs wrote a new letter to the ethics committee , external demanding action.", "start_ms": 233784, "end_ms": 242352, "paragraph_index": 29}, {"index": 37, "text": "Like many situations with Fifa, there has been no response.", "start_ms": 242352, "end_ms": 247272, "paragraph_index": 29}, {"index": 38, "text": "Fast-forward to the tournament, and Trump has not been to a single World Cup match.", "start_ms": 247272, "end_ms": 253392, "paragraph_index": 30}, {"index": 39, "text": "But here he was, taking ownership of Balogun's situation.", "start_ms": 253392, "end_ms": 258480, "paragraph_index": 31}, {"index": 40, "text": "It was another example of football not doing the talking.", "start_ms": 258480, "end_ms": 262896, "paragraph_index": 32}, {"index": 41, "text": "We had seen it with Somali referee Omar Artan.", "start_ms": 262896, "end_ms": 266952, "paragraph_index": 33}, {"index": 42, "text": "Artan was denied access to the US by immigration officials, with Infantino accused of losing control of his own World Cup .", "start_ms": 266952, "end_ms": 276384, "paragraph_index": 34}, {"index": 43, "text": "Yet when he faced questions from the media last month - for the first time in over three years - his response was, at best, glib.", "start_ms": 276384, "end_ms": 285456, "paragraph_index": 35}, {"index": 44, "text": "\"Just, you know, chill, relax,\" Infantino said of Artan's plight.", "start_ms": 285456, "end_ms": 291432, "paragraph_index": 36}, {"index": 45, "text": "Controversy has always felt just around the corner.", "start_ms": 291432, "end_ms": 295584, "paragraph_index": 37}, {"index": 46, "text": "That something was bubbling under the surface.", "start_ms": 295584, "end_ms": 299184, "paragraph_index": 37}, {"index": 47, "text": "And through it all, rarely have there been answers or transparency.", "start_ms": 299184, "end_ms": 304392, "paragraph_index": 38}, {"index": 48, "text": "Take Friday's five hours of limbo, when Fifa first decided to change the kick-off time of England's last-16 tie against Mexico, then did a U-turn, while pretending it didn't happen.", "start_ms": 304392, "end_ms": 317328, "paragraph_index": 39}, {"index": 49, "text": "The Balogun situation is out of the same playbook.", "start_ms": 317328, "end_ms": 321648, "paragraph_index": 40}, {"index": 50, "text": "A decision communicated without any reasoning.", "start_ms": 321648, "end_ms": 325560, "paragraph_index": 41}, {"index": 51, "text": "Football is just told it is happening, and it must accept it.", "start_ms": 325560, "end_ms": 330336, "paragraph_index": 41}, {"index": 52, "text": "FairSquare believes only 10 people were involved in the creation of the Fifa peace price and the decision was not taken by the Fifa Council", "start_ms": 330336, "end_ms": 339552, "paragraph_index": 42}, {"index": 53, "text": "If we were to list every recent football controversy, we would be here a long time.", "start_ms": 339552, "end_ms": 345720, "paragraph_index": 43}, {"index": 54, "text": "But let's take the unique allocation of the 2030 and 2034 World Cup finals two years ago, which often goes under the radar.", "start_ms": 345720, "end_ms": 355440, "paragraph_index": 44}, {"index": 55, "text": "It was decided the 2030 edition would be staged across three continents - Africa, Europe and South America.", "start_ms": 355440, "end_ms": 363648, "paragraph_index": 45}, {"index": 56, "text": "That meant the 2034 event had to go to Asia or Oceania.", "start_ms": 363648, "end_ms": 369096, "paragraph_index": 45}, {"index": 57, "text": "With no realistic competition, it effectively guaranteed Saudi Arabia - like Qatar, a country with questions about its human rights record - would host.", "start_ms": 369096, "end_ms": 379944, "paragraph_index": 46}, {"index": 58, "text": "Saudi Arabia and Fifa, under Infantino, had developed a close relationship .", "start_ms": 379944, "end_ms": 386496, "paragraph_index": 47}, {"index": 59, "text": "Norway's football federation abstained and argued the bidding process undermined \"Fifa's reforms for good governance\" and challenged \"trust in Fifa\".", "start_ms": 386496, "end_ms": 396360, "paragraph_index": 48}, {"index": 60, "text": "We could also reflect on the Club World Cup - what appears to be a largely unwanted summer tournament created by Fifa to stake a claim for a slice of the club game and its riches.", "start_ms": 396360, "end_ms": 407784, "paragraph_index": 49}, {"index": 61, "text": "Sergio Marchi - the president of players' global union Fifpro - said last year it had been created \"without dialogue, sensitivity, and respect\" .", "start_ms": 407784, "end_ms": 418032, "paragraph_index": 50}, {"index": 62, "text": "Then we have Balogun - a situation that allowed an unlikely source to take the moral high ground.", "start_ms": 418032, "end_ms": 424728, "paragraph_index": 51}, {"index": 63, "text": "\"Football must never become a playground for political power,\" former Fifa president Sepp Blatter wrote on X.", "start_ms": 424728, "end_ms": 432720, "paragraph_index": 52}, {"index": 64, "text": "Blatter, remember, was forced to stand down as Fifa president after a corruption scandal - replaced by Infantino in 2016.", "start_ms": 432720, "end_ms": 442752, "paragraph_index": 53}, {"index": 65, "text": "Courting controversy and befriending Trump - Fifa's 'unlikely saviour'", "start_ms": 442752, "end_ms": 448032, "paragraph_index": 54}, {"index": 66, "text": "Red card system in disarray over Trump, Fifa and Balogun decision", "start_ms": 448032, "end_ms": 453888, "paragraph_index": 55}, {"index": 67, "text": "Trump confirms he asked Fifa to review Balogun ban", "start_ms": 453888, "end_ms": 458592, "paragraph_index": 56}, {"index": 68, "text": "Uefa laid down new battles lines on Tuesday, when voicing strong opposition to the Balogun decision.", "start_ms": 458592, "end_ms": 466272, "paragraph_index": 57}, {"index": 69, "text": "European football's governing body said Fifa had \"crossed a red line\" and described it as an \"unprecedented, incomprehensible and unjustifiable decision\".", "start_ms": 466272, "end_ms": 477552, "paragraph_index": 58}, {"index": 70, "text": "But this was not the first time Uefa has crossed swords with Fifa.", "start_ms": 477552, "end_ms": 482616, "paragraph_index": 59}, {"index": 71, "text": "In May 2025, Uefa president Aleksander Ceferin led a group of European delegates in staging a walk-out during a break at the Fifa Congress .", "start_ms": 482616, "end_ms": 493488, "paragraph_index": 60}, {"index": 72, "text": "Infantino had been on a diplomatic tour of the Middle East alongside Trump and arrived two hours 17 minutes late.", "start_ms": 493488, "end_ms": 502248, "paragraph_index": 61}, {"index": 73, "text": "Uefa has looked to score political points during the World Cup, too.", "start_ms": 502248, "end_ms": 507672, "paragraph_index": 62}, {"index": 74, "text": "No sooner had Artan landed at home in Somalia last month than Uefa announced he had been invited to referee the Uefa Super Cup between Paris St-Germain and Aston Villa on 12 August.", "start_ms": 507672, "end_ms": 520800, "paragraph_index": 63}, {"index": 75, "text": "And throughout this year, Uefa has been eager to point out how cheap Euro 2028 tickets are compared to the World Cup.", "start_ms": 520800, "end_ms": 529368, "paragraph_index": 64}, {"index": 76, "text": "It will not introduce hydration breaks, or red cards for players who cover their mouth.", "start_ms": 529368, "end_ms": 535920, "paragraph_index": 64}, {"index": 77, "text": "Infantino, remember, came from Uefa.", "start_ms": 535920, "end_ms": 540144, "paragraph_index": 65}, {"index": 78, "text": "For many years he was the man who presented the Champions League draws.", "start_ms": 540144, "end_ms": 545448, "paragraph_index": 65}, {"index": 79, "text": "He may not quite be persona non grata there these days - he gave a speech at the Uefa Congress in February - but there is clear friction.", "start_ms": 545448, "end_ms": 554376, "paragraph_index": 66}, {"index": 80, "text": "Taking all this into account, Infantino's position must surely be in doubt?", "start_ms": 554376, "end_ms": 560424, "paragraph_index": 67}, {"index": 81, "text": "On the contrary.", "start_ms": 560424, "end_ms": 562656, "paragraph_index": 68}, {"index": 82, "text": "Infantino is popular with many federations around the world - and a lot of that is down to Fifa's development of the game.", "start_ms": 562656, "end_ms": 571104, "paragraph_index": 68}, {"index": 83, "text": "Infantino's Fifa Forward programme has funded football projects across the globe, and he has created opportunities through the expanded World Cup.", "start_ms": 571104, "end_ms": 581400, "paragraph_index": 69}, {"index": 84, "text": "Sixteen extra nations now qualify - the vast majority from the confederations with less depth.", "start_ms": 581400, "end_ms": 588696, "paragraph_index": 70}, {"index": 85, "text": "Europe only got three of the additional spots.", "start_ms": 588696, "end_ms": 592704, "paragraph_index": 70}, {"index": 86, "text": "This World Cup has shown that, below the top level, Asia and Concacaf have a lot of work to do to be competitive.", "start_ms": 592704, "end_ms": 601200, "paragraph_index": 71}, {"index": 87, "text": "But Infantino has provided the dream, the hope that nations who never before could play at the World Cup might just get there.", "start_ms": 601200, "end_ms": 609552, "paragraph_index": 72}, {"index": 88, "text": "Like Cape Verde, Curacao, Jordan and Uzbekistan.", "start_ms": 609552, "end_ms": 614664, "paragraph_index": 72}, {"index": 89, "text": "Despite all the criticism over the 48-team format, it gave Cape Verde the chance to live their dream.", "start_ms": 614664, "end_ms": 622344, "paragraph_index": 73}, {"index": 90, "text": "And it will allow less traditional football nations to grow their game and get stronger - and surely that is a positive for football around the world?", "start_ms": 622344, "end_ms": 631272, "paragraph_index": 74}, {"index": 91, "text": "Tournaments like the World Cup, and the huge ticket prices, pay for these projects.", "start_ms": 631272, "end_ms": 637632, "paragraph_index": 75}, {"index": 92, "text": "This year, Fifa is expected to bring in $9bn (\u00c2\u00a37.9bn)", "start_ms": 637632, "end_ms": 645024, "paragraph_index": 76}, {"index": 93, "text": "Uefa may oppose much of what Fifa and Infantino stand for, but European football is the rich man of the game.", "start_ms": 645024, "end_ms": 653520, "paragraph_index": 77}, {"index": 94, "text": "Largely, it can fund itself.", "start_ms": 653520, "end_ms": 656712, "paragraph_index": 77}, {"index": 95, "text": "The rest of the game depends on Infantino and the money Fifa generates.", "start_ms": 656712, "end_ms": 662304, "paragraph_index": 78}, {"index": 96, "text": "There are 211 countries within Fifa.", "start_ms": 662304, "end_ms": 666360, "paragraph_index": 79}, {"index": 97, "text": "Each gets a vote on the presidency, with 106 needed to win an election.", "start_ms": 666360, "end_ms": 672456, "paragraph_index": 79}, {"index": 98, "text": "Let's look at the maths.", "start_ms": 672456, "end_ms": 674928, "paragraph_index": 80}, {"index": 99, "text": "In April, Conmebol - the South American confederation - said its 10 countries would back Infantino.", "start_ms": 674928, "end_ms": 682464, "paragraph_index": 81}, {"index": 100, "text": "Three weeks later, the Confederation of African Football (Caf) confirmed unanimous backing from its 54 member associations.", "start_ms": 682464, "end_ms": 692520, "paragraph_index": 82}, {"index": 101, "text": "Shortly afterwards, the Asian Football Confederation's 47 nations followed suit.", "start_ms": 692520, "end_ms": 699336, "paragraph_index": 83}, {"index": 102, "text": "Infantino already has 111 votes.", "start_ms": 699336, "end_ms": 703848, "paragraph_index": 84}, {"index": 103, "text": "He cannot be beaten.", "start_ms": 703848, "end_ms": 706152, "paragraph_index": 84}, {"index": 104, "text": "Even if Uefa thought it could muster a candidate capable of mounting a challenge, the race is already run.", "start_ms": 706152, "end_ms": 713544, "paragraph_index": 85}, {"index": 105, "text": "Infantino was re-elected unopposed in 2019 and 2023.", "start_ms": 713544, "end_ms": 719832, "paragraph_index": 86}, {"index": 106, "text": "It would take something truly remarkable for anyone to stand against him, let alone beat him in 2027.", "start_ms": 719832, "end_ms": 727680, "paragraph_index": 86}, {"index": 107, "text": "World Cup 2026 knockout path", "start_ms": 727680, "end_ms": 731664, "paragraph_index": 87}, {"index": 108, "text": "How to watch the World Cup on the BBC and ITV", "start_ms": 731664, "end_ms": 736080, "paragraph_index": 88}, {"index": 109, "text": "Everything you need to know about the World Cup", "start_ms": 736080, "end_ms": 739752, "paragraph_index": 89}], "total_duration_ms": 739752};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "fifa": "国际足联", "it": "它", "world": "世界", "in": "在", "has": "有", "cup": "杯赛", "for": "为了", "is": "是", "on": "在", "he": "他", "that": "那个", "was": "是", "football": "足球", "trump": "特朗普", "been": "已经", "with": "与", "not": "不", "president": "总统", "but": "但是", "had": "有", "be": "是", "this": "这个", "at": "在", "decision": "决定", "game": "游戏", "said": "说", "by": "被", "there": "那里", "years": "多年", "from": "来自", "three": "三个", "when": "当", "all": "所有", "just": "只是", "like": "像", "could": "可能", "against": "反对", "have": "有", "us": "我们", "its": "它的", "an": "一个", "political": "政治的", "are": "是", "we": "我们", "would": "将", "year": "年", "peace": "和平", "man": "男子", "their": "他们的", "red": "红色的", "if": "如果", "about": "关于", "who": "谁", "you": "你", "over": "超过", "no": "没有", "last": "最后", "time": "时间", "take": "采取", "nations": "国家（复数）", "can": "可以", "suspension": "暂停", "club": "俱乐部", "tournament": "锦标赛", "rules": "规则", "hours": "小时", "calls": "呼吁", "did": "做了", "ban": "禁止", "across": "跨越", "were": "是", "any": "任何", "committee": "委员会", "as": "作为", "his": "他的", "felt": "感觉", "out": "出来", "will": "将", "countries": "国家", "during": "在期间", "two": "两个", "response": "回应", "month": "月份", "many": "许多", "situation": "局势", "first": "第一轮", "controversy": "争议", "around": "在...周围", "under": "在...之下", "or": "或者", "must": "必须", "created": "创建", "stand": "立场", "down": "下来", "european": "欧洲的", "may": "可能", "next": "下一个", "ticket": "门票", "prices": "价格", "last-": "最后", "tie": "领带", "point": "点", "now": "现在", "despite": "尽管", "being": "正在", "sent": "派遣", "off": "离开", "even": "甚至", "allow": "允许", "cards": "牌", "than": "比", "after": "之后", "got": "获得", "do": "做", "donald": "唐纳德", "asked": "询问", "put": "提出", "review": "审查", "another": "另一个", "rest": "其余", "team": "团队", "led": "带领", "side": "方面", "former": "前任", "between": "之间", "everything": "一切", "into": "进入", "position": "立场", "doubt": "怀疑", "clear": "明确", "suspended": "暂停", "associations": "协会", "which": "哪个", "close": "密切的", "relationship": "关系", "always": "总是", "support": "支持", "make": "使", "told": "告诉", "human": "人类", "rights": "权利", "group": "团体", "ethics": "道德", "governing": "治理", "wrote": "写道", "new": "新的", "here": "这里", "taking": "采取", "questions": "问题", "know": "知道", "something": "某事", "through": "通过", "decided": "决定", "then": "然后", "without": "没有", "only": "只有", "europe": "欧洲", "south": "韩国", "saudi": "沙特", "arabia": "阿拉伯", "what": "什么", "largely": "很大程度上", "players": "参与者", "unlikely": "不太可能", "never": "从未", "remember": "记住", "crossed": "穿过", "congress": "国会", "how": "如何", "these": "这些", "gave": "给予", "surely": "肯定", "lot": "很多", "projects": "项目", "less": "更少", "get": "得到", "confederation": "联合会", "already": "已经", "him": "他", "video": "视频", "played": "比赛", "up": "向上", "re-election": "连任", "tenure": "任期", "increasingly": "日益", "united": "联合", "states": "国家", "tipping": "倾斜", "they": "它们", "star": "明星", "goals": "进球", "so": "所以", "far": "远", "available": "可获取", "though": "尽管", "don't": "不要", "appeals": "上诉", "monday": "星期一", "more": "更多", "initial": "最初", "released": "释放", "word": "单词", "statement": "声明", "little": "很少", "light": "轻的", "why": "为何", "made": "做出", "call": "呼吁", "someone": "某人", "else": "其他", "i'm": "我是", "one": "一个", "them": "他们", "ask": "询问", "tell": "告诉", "suspend": "暂停", "such": "如此", "happened": "发生", "major": "重大的", "concern": "关切", "narrative": "叙述", "should": "应该", "miss": "错过", "missing": "失踪", "punishment": "惩罚", "enough": "足够", "those": "那些", "sentiments": "情绪", "echoed": "附和", "rejected": "拒绝", "suggestion": "建议", "insisting": "坚持", "disciplinary": "纪律的", "independent": "独立的", "perception": "看法", "important": "重要", "gone": "已去", "co-hosts": "联合主办国", "stood": "站立", "friend": "朋友", "presidential": "总统的", "our": "我们的", "sport": "体育", "liverpool": "利物浦", "boss": "老板", "really": "真正地", "themselves": "他们自己", "question": "问题", "create": "造成", "pressure": "压力", "since": "自从", "regularly": "定期地", "international": "国际", "because": "因为", "government": "政府", "involvement": "参与", "national": "国家", "pakistan": "巴基斯坦", "instance": "实例", "times": "次", "space": "空间", "eight": "八", "comes": "到来", "different": "不同的", "draw": "平局", "count": "计票", "mr": "先生", "my": "我的", "entire": "整个", "community": "社区", "help": "帮助", "award": "奖项", "campaign": "竞选活动", "complained": "抱怨", "december": "十二月", "broke": "打破", "creating": "创造", "letter": "信件", "external": "外部的", "demanding": "要求高的", "action": "行动", "single": "单一的", "match": "匹配", "ownership": "所有权", "example": "例子", "doing": "做", "talking": "谈论", "seen": "被视为", "denied": "拒绝", "access": "进入", "immigration": "移民", "officials": "官员", "accused": "被指控", "losing": "失去", "control": "控制", "own": "自己", "yet": "尚未", "faced": "面对", "media": "媒体", "best": "最佳", "corner": "角球", "rarely": "很少", "answers": "答案", "friday's": "周五的", "five": "五", "change": "改变", "kick-off": "开球", "england's": "英格兰的", "mexico": "墨西哥", "u-turn": "掉头", "while": "而", "didn't": "没有", "happen": "发生", "same": "相同", "communicated": "沟通", "happening": "发生", "accept": "接受", "believes": "认为", "people": "人们", "involved": "涉及的", "creation": "创造", "price": "价格", "taken": "采取", "council": "委员会", "list": "名单", "every": "每个", "recent": "最近", "long": "长久", "finals": "决赛", "ago": "以前", "often": "经常", "goes": "进行", "radar": "雷达", "africa": "非洲", "america": "美国", "meant": "意味着", "event": "事件", "go": "去", "competition": "比赛", "effectively": "实际上", "guaranteed": "保证的", "qatar": "卡塔尔", "country": "国家", "record": "记录", "host": "主持人", "developed": "发展", "argued": "争论", "process": "过程", "undermined": "削弱", "reforms": "改革", "good": "良好", "challenged": "受到挑战", "trust": "信任", "also": "也", "reflect": "反映", "appears": "似乎", "summer": "夏天", "stake": "利害关系", "claim": "声称", "global": "全球", "union": "工会", "respect": "尊重", "allowed": "允许", "source": "来源", "moral": "道德", "high": "高的", "ground": "地面", "become": "成为", "power": "权力", "forced": "被迫", "scandal": "丑闻", "replaced": "取代", "system": "制度", "laid": "布设", "battles": "斗争", "lines": "线", "tuesday": "星期二", "voicing": "表达", "strong": "强烈", "opposition": "反对党", "body": "机构", "line": "界限", "described": "描述", "swords": "剑", "staging": "举办", "break": "突破", "diplomatic": "外交", "middle": "中间", "east": "东部", "alongside": "与...一起", "arrived": "抵达", "minutes": "会议记录", "late": "已故", "looked": "看起来", "score": "得分", "points": "水平", "too": "太", "sooner": "更早", "landed": "降落", "home": "家", "somalia": "索马里", "announced": "宣布", "invited": "邀请", "super": "超级", "paris": "巴黎", "st-germain": "圣日耳曼", "august": "八月", "throughout": "贯穿", "eager": "渴望", "euro": "欧洲杯", "tickets": "车票", "compared": "比较", "introduce": "引入", "breaks": "休息", "cover": "覆盖", "mouth": "嘴", "came": "到来", "presented": "提交", "champions": "冠军", "league": "联赛", "draws": "吸引", "quite": "相当", "persona": "形象", "days": "天", "speech": "演讲", "february": "二月", "account": "责任", "popular": "流行的", "development": "发展", "forward": "向前", "programme": "节目", "funded": "资助的", "globe": "全球", "opportunities": "机会", "expanded": "扩大", "extra": "额外的", "vast": "庞大的", "majority": "多数", "depth": "深度", "additional": "额外的", "spots": "地点", "shown": "表现出", "below": "下方", "top": "顶级的", "level": "水平", "work": "工作", "competitive": "竞争激烈的", "provided": "提供", "hope": "希望", "before": "之前", "play": "扮演", "might": "可能", "criticism": "批评", "format": "格式", "chance": "机会", "live": "生活", "traditional": "传统的", "grow": "增长", "stronger": "更强", "positive": "积极的", "huge": "巨大的", "pay": "支付", "expected": "预期", "bring": "带来", "much": "许多", "rich": "富有的", "fund": "资金", "itself": "自身", "depends": "取决于", "money": "金钱", "generates": "产生", "within": "在内部", "each": "每个", "gets": "得到", "vote": "投票", "needed": "需要", "win": "赢得", "election": "选举", "look": "看起来", "april": "四月", "american": "美国的", "back": "后退", "weeks": "周", "later": "后来", "african": "非洲的", "confirmed": "确认", "backing": "支持", "member": "成员", "shortly": "不久", "afterwards": "之后", "followed": "遵循", "votes": "选票", "cannot": "不能", "beaten": "殴打", "thought": "认为", "candidate": "候选人", "capable": "有能力的", "mounting": "增加的", "challenge": "挑战", "race": "种族", "run": "奔跑", "truly": "真正地", "remarkable": "显著的", "anyone": "任何人", "let": "让", "alone": "独自", "beat": "击败", "knockout": "淘汰赛", "path": "道路", "watch": "观看", "bbc": "英国广播公司", "itv": "独立电视台", "need": "需要", "infantino": "因凡蒂诺", "uefa": "欧足联", "balogun": "巴洛贡", "fifa's": "国际足联的", "infantino's": "因凡蒂诺的", "gianni": "詹尼", "prize": "奖项", "balogun's": "巴洛贡的", "artan": "阿尔坦", "red-card": "红牌", "fairsquare": "公平竞赛", "referee": "裁判", "let's": "让我们", "asia": "亚洲", "blatter": "布拉特", "dream": "梦想", "cape": "开普", "verde": "佛得角", "vastly": "极大地", "inflated": "膨胀的", "cancel": "取消", "folarin": "福拉林", "belgium": "比利时", "co-hosted": "联合主办", "shed": "摆脱", "unfairness": "不公正", "bosnia-herzegovina": "波黑", "benefited": "受益", "pardon": "原谅", "theirs": "他们的", "jurgen": "于尔根", "klopp": "克洛普", "sorted": "解决", "madness": "疯狂", "statutes": "章程", "permitted": "允许", "bestowed": "授予", "inaugural": "首届", "culmination": "高潮", "fostering": "培养", "prosper": "繁荣", "presenting": "呈现", "body's": "机构的", "neutrality": "中立", "meps": "欧洲议会议员", "situations": "情况", "fast-forward": "快进", "somali": "索马里", "omar": "奥马尔", "glib": "油嘴滑舌的", "chill": "冷静", "relax": "放松", "artan's": "阿尔坦的", "plight": "困境", "bubbling": "涌动", "surface": "表面", "limbo": "不确定状态", "pretending": "假装", "playbook": "策略手册", "reasoning": "推理", "unique": "独特的", "allocation": "分配", "edition": "届", "staged": "举办", "continents": "大洲", "oceania": "大洋洲", "realistic": "现实的", "norway's": "挪威的", "federation": "联合会", "abstained": "弃权", "bidding": "申办", "governance": "治理", "unwanted": "不受欢迎的", "slice": "份额", "riches": "财富", "sergio": "塞尔吉奥", "marchi": "马尔基", "fifpro": "国际职业足球运动员联合会", "dialogue": "对话", "sensitivity": "敏感性", "playground": "操场", "sepp": "塞普", "corruption": "腐败", "courting": "讨好", "befriending": "亲近", "saviour": "救世主", "card": "卡片", "disarray": "混乱", "confirms": "确认", "football's": "足球的", "incomprehensible": "不可理解的", "unjustifiable": "不合理的", "aleksander": "亚历山大", "ceferin": "切费林", "delegates": "代表", "walk-out": "退场", "tour": "巡回赛", "aston": "阿斯顿", "villa": "维拉", "cheap": "便宜的", "hydration": "补水", "non": "非", "grata": "不受欢迎的", "contrary": "相反的", "federations": "联合会", "sixteen": "十六", "qualify": "获得资格", "confederations": "联合会", "concacaf": "中北美及加勒比海足联", "curacao": "库拉索", "jordan": "约旦", "uzbekistan": "乌兹别克斯坦", "tournaments": "锦标赛", "oppose": "反对", "presidency": "主席职位", "maths": "数学", "conmebol": "南美足联", "caf": "非洲足联", "unanimous": "一致的", "asian": "亚洲的", "confederation's": "联合会的", "suit": "适合", "muster": "召集", "re-elected": "连任", "unopposed": "无对手的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
