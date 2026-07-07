@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-07</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-07</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/4c70/live/8a9d72b0-7a51-11f1-b726-3d305a892bc6.png" alt="Farage resigns as MP and vows to fight by-election amid finances row" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Farage resigns as MP and vows to fight by-election amid finances row</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c0ly51kzdz3o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-07.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">无法播放此视频</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">In a statement filmed by Reform UK Nigel Farage announces he is resigning as an MP to <span class="keyword" data-word="trigger" data-phonetic="/ˈtrɪɡər/" data-pos="v." data-def="触发" data-def-en="to cause something to start or happen">trigger</span> <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> in which he will stand</span></p>
+        <p class="cn">在改革党拍摄的一份声明中，奈杰尔·法拉奇宣布辞去议员职务，以触发一场补选，他将在其中参选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Nigel Farage says he will <span class="keyword" data-word="resign" data-phonetic="/rɪˈzaɪn/" data-pos="v." data-def="辞职" data-def-en="to give up a job or position">resign</span> as MP for Clacton and stand in the subsequent <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span>, after facing intense <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查" data-def-en="close and critical examination">scrutiny</span> over financial support he has received.</span></p>
+        <p class="cn">奈杰尔·法拉奇表示，在因所获财务支持面临严格审查后，他将辞去克拉克顿选区议员职务并参加随后的补选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Reform UK leader said the "people of Clacton should be the judges of my actions", as he insisted he has done nothing wrong.</span></p>
+        <p class="cn">这位改革党领袖表示，“克拉克顿人民应该评判我的行为”，并坚称自己未做任何错事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">But the Conservatives, Labour, Restore Britain, the Lib Dems and the Greens have ruled out standing candidates against him, in an effective <span class="keyword" data-word="boycott" data-phonetic="/ˈbɔɪkɒt/" data-pos="n." data-def="抵制" data-def-en="a refusal to have dealings with someone or to buy goods as a protest">boycott</span> by his main opponents.</span></p>
+        <p class="cn">但保守党、工党、恢复英国党、自由民主党和绿党已排除推举候选人与其竞争，这实际上是对他的主要对手进行抵制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Farage has been under investigation from Parliament's standards commissioner since May after not declaring a Â£5m gift he received from a billionaire Reform <span class="keyword" data-word="donor" data-phonetic="/ˈdoʊnər/" data-pos="n." data-def="捐赠者" data-def-en="a person who gives money or goods to an organization">donor</span> before he became an MP.</span></p>
+        <p class="cn">自5月以来，法拉奇一直受到议会标准专员的调查，原因是他未申报在成为议员前从一位改革党亿万富翁捐赠者处收到的500万英镑赠礼。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Opposition parties have been calling for a further such probe, after it emerged he did not disclose support reportedly provided by a different political ally.</span></p>
+        <p class="cn">在得知他未披露据称由另一位政治盟友提供的支持后，反对党一直呼吁进行进一步调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Farage claimed parliamentary standards investigations were "now being used as a political tool" and he did not want to be "judged" by the media, before announcing he would force a <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> in which he would stand.</span></p>
+        <p class="cn">法拉奇声称议会标准调查“现在被用作政治工具”，他不希望被媒体“评判”，随后宣布将推动一场补选并参选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">In a live video statement released to the media by Reform, he said the <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> would give voters the chance to "stick two fingers up at the entire establishment".</span></p>
+        <p class="cn">在改革党向媒体发布的一段现场视频声明中，他表示补选将让选民有机会“向整个体制竖中指”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">But Labour has ruled out standing against him, with a spokesperson saying it would not "indulge" the Reform UK leader by standing a candidate "in this circus".</span></p>
+        <p class="cn">但工党已排除与其竞争，一位发言人表示不会通过在这场“闹剧”中推举候选人来“纵容”这位改革党领袖。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Tory leader Badenoch dismissed the <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> as a "<span class="keyword" data-word="gimmick" data-phonetic="/ˈɡɪmɪk/" data-pos="n." data-def="噱头" data-def-en="a trick or device intended to attract attention or publicity">gimmick</span>", adding that Farage had called it to "distract people from what is happening".</span></p>
+        <p class="cn">保守党领袖巴德诺赫将补选斥为“噱头”，并补充说法拉奇发起补选是为了“分散人们对正在发生之事的注意力”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">She added her party would stand instead in a "real <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span>" she hoped would be triggered in the wake of the standards investigation.</span></p>
+        <p class="cn">她补充说，她的政党将转而参加一场“真正的补选”，她希望这场补选能在标准调查之后触发。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Farage's resignation will mean the ongoing investigation by the standards commissioner into the Â£5m gift is suspended.</span> <span class="sentence" data-sentence-index="13">It will be resumed if Farage wins the <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> and returns to Parliament.</span></p>
+        <p class="cn">法拉奇的辞职将意味着标准专员对500万英镑赠礼的持续调查被暂停。如果法拉奇赢得补选并重返议会，调查将恢复。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">One possible outcome of a standards investigation is a suspension which triggers a recall petition.</span> <span class="sentence" data-sentence-index="15">This process enables an MP to be removed and a <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> triggered if 10% of eligible registered voters sign a petition.</span></p>
+        <p class="cn">标准调查的一个可能结果是暂停议员职务，从而触发召回请愿。如果10%的合格登记选民签署请愿书，这一程序可使议员被罢免并触发补选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Farage resigns as MP for Clacton, triggering <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> which he says he will stand in</span></p>
+        <p class="cn">法拉奇辞去克拉克顿选区议员职务，触发补选，他表示将参选</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Farage used his speech to claim "the establishment" had turned to "foul means" to target Reform following the party's rise in popularity.</span></p>
+        <p class="cn">法拉奇在演讲中声称，“体制”已转向“肮脏手段”来针对改革党，因为该党人气上升。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">Changes to political donation rules and the government's decision to delay 30 local council elections in England - a decision it later reversed after a legal challenge from Reform - were among the issues cited by him.</span></p>
+        <p class="cn">他提到的议题包括政治捐款规则的变化，以及政府推迟英格兰30场地方议会选举的决定——该决定在改革党提出法律挑战后被撤销。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">He also said he spent the weekend thinking about his future after complaining about media treatment of his family, following the publication of a story by the Sunday Times on his links to longstanding ally George Cottrell.</span></p>
+        <p class="cn">他还表示，在《星期日泰晤士报》发表关于他与长期盟友乔治·科特雷尔关系的报道后，他抱怨媒体对其家人的对待，并花了一个周末思考自己的未来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">The newspaper said Farage had received support ahead of the 2024 election from Cottrell, who was jailed for eight months in the US in 2017 after pleading guilty to a charge of wire fraud.</span></p>
+        <p class="cn">该报称，法拉奇在2024年大选前得到了科特雷尔的支持，后者于2017年在美国因承认电信欺诈指控被判入狱八个月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">This reportedly included paying for staff who provided Farage's security and worked on his social media content.</span> <span class="sentence" data-sentence-index="22">According to the newspaper, Farage also used a property near Buckingham Palace rented by Cottrell.</span></p>
+        <p class="cn">据报道，这包括支付为法拉奇提供安保并负责其社交媒体内容的工作人员的费用。据该报称，法拉奇还使用了科特雷尔租用的一处靠近白金汉宫的房产。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23"><span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查" data-def-en="close and critical examination">Scrutiny</span> over Farage's finances first hit the headlines earlier this year, after it emerged he had received a Â£5m gift from Christopher Harborne, a Thailand-based British cryptocurrency investor, in April 2024, before he entered Parliament.</span></p>
+        <p class="cn">对法拉奇财务状况的审查今年早些时候首次成为头条新闻，此前有消息称，他在2024年4月进入议会前，从泰国籍英国加密货币投资者克里斯托弗·哈伯恩处收到500万英镑赠礼。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Harborne is one of the party's most important financial backers, having donated Â£15m to Reform since the start of last year.</span></p>
+        <p class="cn">哈伯恩是该党最重要的财务支持者之一，自去年初以来已向改革党捐赠1500万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">Farage said the Â£5m gift was given on an "unconditional basis" and it was needed to help with his personal security in future.</span></p>
+        <p class="cn">法拉奇表示，这500万英镑赠礼是“无条件”给予的，用于帮助他未来的个人安保。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">His team has made a similar argument for why the "in kind" - non-cash - benefits allegedly from Cottrell were not registered.</span></p>
+        <p class="cn">他的团队也提出了类似论点，解释为何据称来自科特雷尔的“实物”（非现金）福利未予登记。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">"Let me be absolutely clear: I have done nothing wrong.</span> <span class="sentence" data-sentence-index="28">I have not broken the law in any way at all.</span> <span class="sentence" data-sentence-index="29">I have not misused public money," he added.</span></p>
+        <p class="cn">“让我明确一点：我没有做错任何事。我完全没有违法。我没有滥用公共资金，”他补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="30">Parliament's rulebook says newly elected MPs have to declare gifts or benefits, including accommodation, received in the 12 months before their election that relate to their "parliamentary or political activities".</span></p>
+        <p class="cn">议会规则手册规定，新当选议员必须申报在选举前12个月内收到的、与其“议会或政治活动”相关的礼物或福利，包括住宿。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="31">There is an <span class="keyword" data-word="exemption" data-phonetic="/ɪɡˈzempʃn/" data-pos="n." data-def="豁免" data-def-en="the act of freeing someone from an obligation or requirement">exemption</span> for gift and benefits that are "purely personal".</span></p>
+        <p class="cn">“纯粹个人”性质的礼物和福利有豁免。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">Farage won Clacton at the 2024 general election, finishing 8,405 votes ahead of the Conservatives.</span> <span class="sentence" data-sentence-index="33">He had previously been unsuccessful on his previous seven times standing to be an MP.</span></p>
+        <p class="cn">法拉奇在2024年大选中赢得克拉克顿选区，以8405票领先保守党。他此前曾七次竞选议员均未成功。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">Farage's resignation will only be confirmed once the government has given him a crown appointment, the mechanism that disqualifies him from being an MP.</span></p>
+        <p class="cn">法拉奇的辞职只有在政府授予他王室任命后才会确认，这一机制将取消其议员资格。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">Liberal Democrat leader Sir Ed Davey called for the government to "block his resignation until the standards commissioner has finished investigating him".</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士呼吁政府“阻止他的辞职，直到标准专员完成对他的调查”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">"If this <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> does go ahead now, we are calling on all parties to stand aside and refuse to give oxygen to Farage's vanity project," he added.</span></p>
+        <p class="cn">“如果这场补选现在进行，我们呼吁所有政党靠边站，拒绝为法拉奇的虚荣项目提供氧气，”他补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="37">Restore Britain leader Rupert Lowe said his party would not stand in the <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> triggered by Farage's resignation, but would if a by-election was ultimately triggered by the standards investigation.</span></p>
+        <p class="cn">恢复英国党领袖鲁珀特·洛表示，他的政党不会参加法拉奇辞职触发的补选，但如果补选最终由标准调查触发，则会参加。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="38">The Green Party said late on Tuesday that they would also not stand, saying "we have no intention of helping to legitimise a <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃn/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> that appears designed not to serve local residents but to serve Nigel Farage's personal political ambitions".</span></p>
+        <p class="cn">绿党周二晚些时候表示，他们也不会参选，称“我们无意帮助合法化一场似乎不是为了服务当地居民，而是为了服务奈杰尔·法拉奇个人政治野心的补选”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="39">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的《政治要闻》通讯，了解威斯敏斯特内外的运作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resign</span>
+        <button class="kw-speak-btn" data-word="resign" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzaɪn/ v.</span>
+      </div>
+      <p class="kw-def">辞职</p>
+      <p class="kw-def-en">to give up a job or position</p>
+      <p class="kw-ctx">&ldquo;Nigel Farage says he will resign as MP for Clacton and stand in the subsequent by-election.&rdquo;</p>
+      <p class="kw-ctx-cn">奈杰尔·法拉奇表示，他将辞去克拉克顿议员的职务，并参加随后的补选。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">by-election</span>
+        <button class="kw-speak-btn" data-word="by-election" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbaɪ ɪˌlekʃn/ n.</span>
+      </div>
+      <p class="kw-def">补选</p>
+      <p class="kw-def-en">an election held to fill a vacancy between regular elections</p>
+      <p class="kw-ctx">&ldquo;Nigel Farage says he will resign as MP for Clacton and stand in the subsequent by-election.&rdquo;</p>
+      <p class="kw-ctx-cn">奈杰尔·法拉奇表示，他将辞去克拉克顿议员的职务，并参加随后的补选。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrutiny</span>
+        <button class="kw-speak-btn" data-word="scrutiny" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskruːtəni/ n.</span>
+      </div>
+      <p class="kw-def">仔细审查</p>
+      <p class="kw-def-en">close and critical examination</p>
+      <p class="kw-ctx">&ldquo;Nigel Farage says he will resign as MP for Clacton and stand in the subsequent by-election, after facing intense scrutiny over financial support he has received.&rdquo;</p>
+      <p class="kw-ctx-cn">奈杰尔·法拉奇表示，在因所获财务支持而面临严格审查后，他将辞去克拉克顿议员的职务，并参加随后的补选。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">donor</span>
+        <button class="kw-speak-btn" data-word="donor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdoʊnər/ n.</span>
+      </div>
+      <p class="kw-def">捐赠者</p>
+      <p class="kw-def-en">a person who gives money or goods to an organization</p>
+      <p class="kw-ctx">&ldquo;Farage has been under investigation from Parliament's standards commissioner since May after not declaring a £5m gift he received from a billionaire Reform donor before he became an MP.&rdquo;</p>
+      <p class="kw-ctx-cn">自5月以来，法拉奇一直受到议会标准专员的调查，原因是他未申报在成为议员前从一位改革党亿万富翁捐赠者那里收到的500万英镑赠礼。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">boycott</span>
+        <button class="kw-speak-btn" data-word="boycott" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbɔɪkɒt/ n.</span>
+      </div>
+      <p class="kw-def">抵制</p>
+      <p class="kw-def-en">a refusal to have dealings with someone or to buy goods as a protest</p>
+      <p class="kw-ctx">&ldquo;But the Conservatives, Labour, Restore Britain, the Lib Dems and the Greens have ruled out standing candidates against him, in an effective boycott by his main opponents.&rdquo;</p>
+      <p class="kw-ctx-cn">但保守党、工党、恢复英国党、自由民主党和绿党已排除推举候选人与他对抗，这实际上是对他的主要对手的抵制。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">gimmick</span>
+        <button class="kw-speak-btn" data-word="gimmick" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡɪmɪk/ n.</span>
+      </div>
+      <p class="kw-def">噱头</p>
+      <p class="kw-def-en">a trick or device intended to attract attention or publicity</p>
+      <p class="kw-ctx">&ldquo;Tory leader Badenoch dismissed the by-election as a "gimmick", adding that Farage had called it to "distract people from what is happening".&rdquo;</p>
+      <p class="kw-ctx-cn">保守党领袖巴德诺赫将这次补选斥为“噱头”，并补充说，法拉奇发起补选是为了“分散人们对正在发生的事情的注意力”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">trigger</span>
+        <button class="kw-speak-btn" data-word="trigger" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrɪɡər/ v.</span>
+      </div>
+      <p class="kw-def">触发</p>
+      <p class="kw-def-en">to cause something to start or happen</p>
+      <p class="kw-ctx">&ldquo;Farage resigns as MP for Clacton, triggering by-election which he says he will stand in.&rdquo;</p>
+      <p class="kw-ctx-cn">法拉奇辞去克拉克顿议员职务，触发补选，他表示将参加该补选。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exemption</span>
+        <button class="kw-speak-btn" data-word="exemption" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪɡˈzempʃn/ n.</span>
+      </div>
+      <p class="kw-def">豁免</p>
+      <p class="kw-def-en">the act of freeing someone from an obligation or requirement</p>
+      <p class="kw-ctx">&ldquo;There is an exemption for gift and benefits that are "purely personal".&rdquo;</p>
+      <p class="kw-ctx-cn">对于“纯属个人”的礼物和福利，存在豁免条款。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "In a statement filmed by Reform UK Nigel Farage announces he is resigning as an MP to trigger by-election in which he will stand", "start_ms": 3000, "end_ms": 12264, "paragraph_index": 1}, {"index": 2, "text": "Nigel Farage says he will resign as MP for Clacton and stand in the subsequent by-election, after facing intense scrutiny over financial support he has received.", "start_ms": 12264, "end_ms": 23928, "paragraph_index": 2}, {"index": 3, "text": "The Reform UK leader said the \"people of Clacton should be the judges of my actions\", as he insisted he has done nothing wrong.", "start_ms": 23928, "end_ms": 32856, "paragraph_index": 3}, {"index": 4, "text": "But the Conservatives, Labour, Restore Britain, the Lib Dems and the Greens have ruled out standing candidates against him, in an effective boycott by his main opponents.", "start_ms": 32856, "end_ms": 44184, "paragraph_index": 4}, {"index": 5, "text": "Farage has been under investigation from Parliament's standards commissioner since May after not declaring a \u00c2\u00a35m gift he received from a billionaire Reform donor before he became an MP.", "start_ms": 44184, "end_ms": 56976, "paragraph_index": 5}, {"index": 6, "text": "Opposition parties have been calling for a further such probe, after it emerged he did not disclose support reportedly provided by a different political ally.", "start_ms": 56976, "end_ms": 67512, "paragraph_index": 6}, {"index": 7, "text": "Farage claimed parliamentary standards investigations were \"now being used as a political tool\" and he did not want to be \"judged\" by the media, before announcing he would force a by-election in which he would stand.", "start_ms": 67512, "end_ms": 81000, "paragraph_index": 7}, {"index": 8, "text": "In a live video statement released to the media by Reform, he said the by-election would give voters the chance to \"stick two fingers up at the entire establishment\".", "start_ms": 81000, "end_ms": 91944, "paragraph_index": 8}, {"index": 9, "text": "But Labour has ruled out standing against him, with a spokesperson saying it would not \"indulge\" the Reform UK leader by standing a candidate \"in this circus\".", "start_ms": 91944, "end_ms": 102552, "paragraph_index": 9}, {"index": 10, "text": "Tory leader Badenoch dismissed the by-election as a \"gimmick\", adding that Farage had called it to \"distract people from what is happening\".", "start_ms": 102552, "end_ms": 111744, "paragraph_index": 10}, {"index": 11, "text": "She added her party would stand instead in a \"real by-election\" she hoped would be triggered in the wake of the standards investigation.", "start_ms": 111744, "end_ms": 120240, "paragraph_index": 11}, {"index": 12, "text": "Farage's resignation will mean the ongoing investigation by the standards commissioner into the \u00c2\u00a35m gift is suspended.", "start_ms": 120240, "end_ms": 129288, "paragraph_index": 12}, {"index": 13, "text": "It will be resumed if Farage wins the by-election and returns to Parliament.", "start_ms": 129288, "end_ms": 135096, "paragraph_index": 12}, {"index": 14, "text": "One possible outcome of a standards investigation is a suspension which triggers a recall petition.", "start_ms": 135096, "end_ms": 142224, "paragraph_index": 13}, {"index": 15, "text": "This process enables an MP to be removed and a by-election triggered if 10% of eligible registered voters sign a petition.", "start_ms": 142224, "end_ms": 151416, "paragraph_index": 13}, {"index": 16, "text": "Farage resigns as MP for Clacton, triggering by-election which he says he will stand in", "start_ms": 151416, "end_ms": 158328, "paragraph_index": 14}, {"index": 17, "text": "Farage used his speech to claim \"the establishment\" had turned to \"foul means\" to target Reform following the party's rise in popularity.", "start_ms": 158328, "end_ms": 167616, "paragraph_index": 15}, {"index": 18, "text": "Changes to political donation rules and the government's decision to delay 30 local council elections in England - a decision it later reversed after a legal challenge from Reform - were among the issues cited by him.", "start_ms": 167616, "end_ms": 181560, "paragraph_index": 16}, {"index": 19, "text": "He also said he spent the weekend thinking about his future after complaining about media treatment of his family, following the publication of a story by the Sunday Times on his links to longstanding ally George Cottrell.", "start_ms": 181560, "end_ms": 195576, "paragraph_index": 17}, {"index": 20, "text": "The newspaper said Farage had received support ahead of the 2024 election from Cottrell, who was jailed for eight months in the US in 2017 after pleading guilty to a charge of wire fraud.", "start_ms": 195576, "end_ms": 209160, "paragraph_index": 18}, {"index": 21, "text": "This reportedly included paying for staff who provided Farage's security and worked on his social media content.", "start_ms": 209160, "end_ms": 217104, "paragraph_index": 19}, {"index": 22, "text": "According to the newspaper, Farage also used a property near Buckingham Palace rented by Cottrell.", "start_ms": 217104, "end_ms": 224472, "paragraph_index": 19}, {"index": 23, "text": "Scrutiny over Farage's finances first hit the headlines earlier this year, after it emerged he had received a \u00c2\u00a35m gift from Christopher Harborne, a Thailand-based British cryptocurrency investor, in April 2024, before he entered Parliament.", "start_ms": 224472, "end_ms": 242760, "paragraph_index": 20}, {"index": 24, "text": "Harborne is one of the party's most important financial backers, having donated \u00c2\u00a315m to Reform since the start of last year.", "start_ms": 242760, "end_ms": 252480, "paragraph_index": 21}, {"index": 25, "text": "Farage said the \u00c2\u00a35m gift was given on an \"unconditional basis\" and it was needed to help with his personal security in future.", "start_ms": 252480, "end_ms": 262008, "paragraph_index": 22}, {"index": 26, "text": "His team has made a similar argument for why the \"in kind\" - non-cash - benefits allegedly from Cottrell were not registered.", "start_ms": 262008, "end_ms": 270696, "paragraph_index": 23}, {"index": 27, "text": "\"Let me be absolutely clear: I have done nothing wrong.", "start_ms": 270696, "end_ms": 275160, "paragraph_index": 24}, {"index": 28, "text": "I have not broken the law in any way at all.", "start_ms": 275160, "end_ms": 278904, "paragraph_index": 24}, {"index": 29, "text": "I have not misused public money,\" he added.", "start_ms": 278904, "end_ms": 282792, "paragraph_index": 24}, {"index": 30, "text": "Parliament's rulebook says newly elected MPs have to declare gifts or benefits, including accommodation, received in the 12 months before their election that relate to their \"parliamentary or political activities\".", "start_ms": 282792, "end_ms": 297360, "paragraph_index": 25}, {"index": 31, "text": "There is an exemption for gift and benefits that are \"purely personal\".", "start_ms": 297360, "end_ms": 302472, "paragraph_index": 26}, {"index": 32, "text": "Farage won Clacton at the 2024 general election, finishing 8,405 votes ahead of the Conservatives.", "start_ms": 302472, "end_ms": 311904, "paragraph_index": 27}, {"index": 33, "text": "He had previously been unsuccessful on his previous seven times standing to be an MP.", "start_ms": 311904, "end_ms": 318432, "paragraph_index": 27}, {"index": 34, "text": "Farage's resignation will only be confirmed once the government has given him a crown appointment, the mechanism that disqualifies him from being an MP.", "start_ms": 318432, "end_ms": 328728, "paragraph_index": 28}, {"index": 35, "text": "Liberal Democrat leader Sir Ed Davey called for the government to \"block his resignation until the standards commissioner has finished investigating him\".", "start_ms": 328728, "end_ms": 338472, "paragraph_index": 29}, {"index": 36, "text": "\"If this by-election does go ahead now, we are calling on all parties to stand aside and refuse to give oxygen to Farage's vanity project,\" he added.", "start_ms": 338472, "end_ms": 349320, "paragraph_index": 30}, {"index": 37, "text": "Restore Britain leader Rupert Lowe said his party would not stand in the by-election triggered by Farage's resignation, but would if a by-election was ultimately triggered by the standards investigation.", "start_ms": 349320, "end_ms": 362112, "paragraph_index": 31}, {"index": 38, "text": "The Green Party said late on Tuesday that they would also not stand, saying \"we have no intention of helping to legitimise a by-election that appears designed not to serve local residents but to serve Nigel Farage's personal political ambitions\".", "start_ms": 362112, "end_ms": 378048, "paragraph_index": 32}, {"index": 39, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 378048, "end_ms": 385488, "paragraph_index": 33}], "total_duration_ms": 385488};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "he": "他", "in": "在", "of": "的", "by": "被", "farage": "法拉奇", "not": "不", "and": "和", "his": "他的", "be": "是", "for": "为了", "would": "将", "reform": "改革", "an": "一个", "stand": "立场", "from": "来自", "mp": "议员", "after": "之后", "has": "有", "said": "说", "have": "有", "standards": "标准", "it": "它", "farage's": "法拉奇的", "this": "这个", "is": "是", "as": "作为", "will": "将", "him": "他", "that": "那个", "on": "在", "received": "受到", "leader": "领导人", "investigation": "调查", "gift": "礼物", "political": "政治的", "had": "有", "which": "哪个", "but": "但是", "standing": "站立", "before": "之前", "media": "媒体", "triggered": "引发", "resignation": "辞职", "if": "如果", "was": "是", "uk": "英国", "nigel": "奈杰尔", "says": "表示", "support": "支持", "been": "已经", "commissioner": "专员", "were": "是", "used": "使用", "up": "向上", "at": "在", "with": "与", "added": "补充", "party": "政党", "also": "也", "ahead": "提前", "election": "选举", "personal": "个人", "benefits": "好处", "video": "视频", "statement": "声明", "over": "超过", "financial": "金融的", "people": "人们", "done": "完成", "nothing": "没有东西", "wrong": "错误的", "conservatives": "保守党", "labour": "工党", "restore": "恢复", "britain": "英国", "ruled": "裁定", "out": "出来", "against": "反对", "since": "自从", "parties": "政党", "calling": "呼吁", "emerged": "出现", "did": "做了", "reportedly": "据报道", "provided": "提供", "ally": "盟友", "parliamentary": "议会", "now": "现在", "being": "正在", "give": "提供", "voters": "选民", "saying": "说", "called": "称为", "she": "她", "parliament": "议会", "one": "一个", "registered": "注册的", "sign": "签署", "following": "随后", "party's": "党的", "decision": "决定", "local": "当地", "about": "关于", "future": "未来", "times": "次", "newspaper": "报纸", "who": "谁", "months": "月", "security": "安全", "year": "年", "given": "给定", "all": "所有", "or": "或者", "their": "他们的", "are": "是", "government": "政府", "we": "我们", "serve": "服务", "can": "可以", "played": "比赛", "filmed": "拍摄了", "resigning": "辞职", "facing": "面临", "intense": "激烈的", "should": "应该", "judges": "法官", "my": "我的", "actions": "行动", "insisted": "坚持", "lib": "自由", "greens": "绿党", "candidates": "候选人", "effective": "有效的", "main": "主要的", "under": "在...之下", "may": "可能", "declaring": "宣布", "billionaire": "亿万富翁", "became": "成为", "opposition": "反对党", "further": "进一步的", "such": "如此", "probe": "调查", "disclose": "披露", "different": "不同的", "claimed": "声称", "investigations": "调查", "want": "想要", "announcing": "宣布", "force": "力量", "live": "生活", "released": "释放", "chance": "机会", "two": "两个", "entire": "整个", "spokesperson": "发言人", "candidate": "候选人", "tory": "保守党", "badenoch": "巴德诺赫", "dismissed": "驳回", "adding": "补充说", "distract": "分散注意力", "what": "什么", "happening": "发生", "her": "她的", "instead": "反而", "real": "真正的", "hoped": "希望", "wake": "醒来", "mean": "意味着", "ongoing": "正在进行的", "into": "进入", "suspended": "暂停", "wins": "获胜", "returns": "返回", "possible": "可能的", "outcome": "结果", "suspension": "暂停", "triggers": "触发", "recall": "召回", "process": "过程", "removed": "移除", "resigns": "辞职", "speech": "演讲", "claim": "声称", "turned": "转向", "means": "意味着", "target": "目标", "rise": "上升", "popularity": "受欢迎程度", "changes": "变化", "donation": "捐赠", "rules": "规则", "government's": "政府的", "delay": "延迟", "council": "委员会", "elections": "选举", "england": "英格兰", "later": "后来", "reversed": "撤销", "legal": "法律的", "challenge": "挑战", "among": "在...之中", "issues": "问题", "cited": "引用", "spent": "花费", "weekend": "周末", "thinking": "思考", "complaining": "抱怨", "treatment": "治疗", "family": "家庭", "publication": "出版", "story": "故事", "sunday": "星期日", "links": "联系", "jailed": "被监禁", "eight": "八", "us": "我们", "guilty": "有罪", "charge": "负责", "wire": "铁丝", "fraud": "欺诈", "included": "包括", "paying": "支付", "staff": "员工", "worked": "工作", "social": "社交的", "content": "内容", "according": "根据", "property": "财产", "near": "附近", "buckingham": "白金汉", "palace": "宫", "rented": "租用的", "finances": "财务", "first": "第一轮", "hit": "击中", "headlines": "头条", "earlier": "较早", "british": "英国的", "cryptocurrency": "加密货币", "investor": "投资者", "april": "四月", "entered": "进入", "most": "最", "important": "重要", "backers": "支持者", "having": "拥有", "donated": "捐赠", "start": "开始", "last": "最后", "unconditional": "无条件的", "basis": "基础", "needed": "需要", "help": "帮助", "team": "团队", "made": "做出", "similar": "类似的", "argument": "争论", "why": "为何", "kind": "种类", "allegedly": "据称", "let": "让", "me": "我", "absolutely": "绝对", "clear": "明确", "broken": "打破的", "law": "法律", "any": "任何", "way": "方式", "public": "公众", "money": "金钱", "rulebook": "规则手册", "newly": "新近", "elected": "当选的", "mps": "议员", "declare": "宣布", "gifts": "礼物", "including": "包括", "relate": "关联", "activities": "活动", "there": "那里", "won": "赢得", "general": "总", "finishing": "完成", "votes": "选票", "previously": "此前", "unsuccessful": "不成功的", "previous": "先前", "seven": "七", "only": "只有", "confirmed": "确认", "once": "一旦", "crown": "王冠", "appointment": "任命", "liberal": "自由", "democrat": "民主党", "sir": "爵士", "ed": "编辑", "davey": "戴维", "block": "阻止", "until": "直到", "finished": "完成的", "investigating": "调查", "does": "做", "go": "去", "aside": "抛开", "refuse": "拒绝", "vanity": "虚荣", "project": "项目", "lowe": "洛", "ultimately": "最终", "green": "绿色", "late": "已故", "tuesday": "星期二", "they": "它们", "no": "没有", "intention": "意图", "helping": "帮助", "appears": "似乎", "designed": "设计的", "residents": "居民", "ambitions": "野心", "our": "我们的", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "westminster": "威斯敏斯特", "beyond": "超出", "clacton": "克拉克顿", "cottrell": "科特雷尔", "parliament's": "议会的", "establishment": "建立", "petition": "请愿", "harborne": "哈伯恩", "announces": "宣布", "subsequent": "随后的", "dems": "民主党人", "opponents": "反对者", "tool": "工具", "judged": "评判", "stick": "坚持", "fingers": "手指", "indulge": "沉溺", "circus": "马戏团", "resumed": "恢复", "enables": "使能够", "eligible": "有资格的", "triggering": "触发", "foul": "犯规", "longstanding": "长期存在的", "george": "乔治", "pleading": "恳求", "christopher": "克里斯托弗", "thailand-based": "位于泰国的", "non-cash": "非现金的", "misused": "滥用", "accommodation": "住宿", "purely": "纯粹地", "mechanism": "机制", "disqualifies": "取消资格", "oxygen": "氧气", "rupert": "鲁珀特", "legitimise": "使合法化"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
