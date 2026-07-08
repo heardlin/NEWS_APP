@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-08</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-08</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/7fa2/live/54d324f0-7ae1-11f1-9a9c-53fd8f110370.jpg" alt="Bowen: For all his bluster, Trump has no better option than talks with Iran" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Bowen: For all his bluster, Trump has no better option than talks with Iran</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cy8we3j14ndo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-08.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Trump on Iran: US will 'probably hit them hard again tonight'</span></p>
+        <p class="cn">特朗普谈伊朗：美国“今晚可能会再次狠狠打击他们”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Donald Trump's latest pronouncements on Iran and the chances of a negotiated agreement have to be taken seriously, as he is after all the president of the United States.</span></p>
+        <p class="cn">唐纳德·特朗普关于伊朗及谈判协议可能性的最新表态必须认真对待，因为他毕竟是美国总统。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">This is what he said at the Nato summit in Turkey.</span></p>
+        <p class="cn">这是他在土耳其北约峰会上说的话。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">"I don't want to deal with them anymore, they're scum.</span> <span class="sentence" data-sentence-index="5">You know what scum is?</span> <span class="sentence" data-sentence-index="6">They're scum.</span> <span class="sentence" data-sentence-index="7">They're sick people.</span> <span class="sentence" data-sentence-index="8">They're led by sick people.</span> <span class="sentence" data-sentence-index="9">And they're <span class="keyword" data-word="vicious" data-phonetic="/ˈvɪʃəs/" data-pos="adj." data-def="恶毒的，凶残的" data-def-en="Deliberately cruel or violent.">vicious</span>, violent people.</span></p>
+        <p class="cn">“我不想再和他们打交道了，他们是渣滓。你知道渣滓是什么吗？他们是渣滓。他们是病态的人。他们由病态的人领导。他们是恶毒、暴力的人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="10">"And if they had a nuclear weapon, they'd use it.</span> <span class="sentence" data-sentence-index="11">As far as I'm concerned, it's over."</span></p>
+        <p class="cn">“如果他们拥有核武器，他们会使用它。在我看来，一切都结束了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="12">But are they his last words on the subject?</span> <span class="sentence" data-sentence-index="13">Certainly not.</span> <span class="sentence" data-sentence-index="14">He has kept up a running commentary on the war and the memorandum of understanding (MOU) that is being negotiated.</span> <span class="sentence" data-sentence-index="15">His words have swerved through claims of victory to threats of annihilating Iranian civilisation to support for negotiations.</span></p>
+        <p class="cn">但这是他关于这个问题的最后言论吗？当然不是。他一直在对战争和正在谈判的谅解备忘录（MOU）进行实时评论。他的言论从宣称胜利，到威胁摧毁伊朗文明，再到支持谈判，摇摆不定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="16">Later he doubled down on his latest threats, saying the US "will probably hit them harder again tonight", adding "I gave them a little warning.</span> <span class="sentence" data-sentence-index="17">We're going to hit them hard again tonight".</span></p>
+        <p class="cn">后来他进一步强调了他最新的威胁，称美国“今晚可能会再次更狠地打击他们”，并补充说“我给了他们一点警告。我们今晚会再次狠狠打击他们”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="18">America's <span class="keyword" data-word="capacity" data-phonetic="/kəˈpæsəti/" data-pos="n." data-def="能力，容量" data-def-en="The ability or power to do something.">capacity</span> to hit Iran, doing great damage, is not in doubt.</span> <span class="sentence" data-sentence-index="19">But what it has not been able to do is to break the will of the regime to drop any of its fundamental demands, starting with control of navigation through the Strait of Hormuz.</span></p>
+        <p class="cn">美国有能力打击伊朗并造成巨大破坏，这一点毋庸置疑。但它未能做到的是打破伊朗政权放弃其基本要求的意志，首先是控制霍尔木兹海峡的航行权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="20">LIVE: Trump threatens to hit Iran 'hard again tonight' after saying ceasefire 'is over'</span></p>
+        <p class="cn">直播：特朗普在称停火“结束”后威胁今晚“再次狠狠打击”伊朗</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="21">US strikes target Iranian military boats</span></p>
+        <p class="cn">美国打击目标为伊朗军用船只</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="22">Huge crowds fill Tehran streets for Khamenei's funeral procession</span></p>
+        <p class="cn">大批民众挤满德黑兰街头参加哈梅内伊葬礼游行</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="23">Buried in his latest verbal <span class="keyword" data-word="onslaught" data-phonetic="/ˈɒnslɔːt/" data-pos="n." data-def="猛攻，抨击" data-def-en="A fierce or destructive attack.">onslaught</span> was an acceptance that the talks will continue.</span> <span class="sentence" data-sentence-index="24">They have been on hold while Iran goes through days of funeral obsequies for its former supreme leader Ayatollah Ali Khamenei, who was killed by Israel and the US on the first day of the war on 28 February.</span></p>
+        <p class="cn">在他最新的口头攻击中，隐藏着对谈判将继续的接受。谈判一直暂停，因为伊朗正在为其前最高领袖阿亚图拉·阿里·哈梅内伊（Ayatollah Ali Khamenei）举行数天的葬礼仪式，他于2月28日战争第一天被以色列和美国杀害。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="25">Trump was asked if the exchange of strikes between the US and Iran - and by extension some of America's Arab allies in the Gulf â meant the talks between them were over.</span></p>
+        <p class="cn">特朗普被问及美伊之间的打击交换——以及由此延伸的美国一些海湾阿拉伯盟友——是否意味着他们之间的谈判结束了。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="26">Referring to his chief negotiators, Steve Witkoff and Jared Kushner, he said "I don't care, they can talk.</span> <span class="sentence" data-sentence-index="27">But I think they're wasting their time."</span></p>
+        <p class="cn">提到他的首席谈判代表史蒂夫·维特科夫（Steve Witkoff）和贾里德·库什纳（Jared Kushner），他说：“我不在乎，他们可以谈。但我认为他们在浪费时间。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="28">Then, on the Iranian regime: "They're a bunch of lying guys."</span></p>
+        <p class="cn">然后，谈到伊朗政权：“他们是一群说谎的家伙。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="29">That can be read as another admission that the president of the US, for all his <span class="keyword" data-word="bluster" data-phonetic="/ˈblʌstə/" data-pos="n." data-def="虚张声势，大话" data-def-en="Loud, aggressive, or indignant talk with little effect.">bluster</span>, does not have a better option than negotiations.</span> <span class="sentence" data-sentence-index="30">With Israel, the US tried and failed to destroy the Iranian regime.</span></p>
+        <p class="cn">这可以被解读为又一次承认，美国总统尽管虚张声势，但除了谈判之外没有更好的选择。与以色列一起，美国试图摧毁伊朗政权但失败了。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="31">But the negotiating process is <span class="keyword" data-word="fragile" data-phonetic="/ˈfrædʒaɪl/" data-pos="adj." data-def="脆弱的，易碎的" data-def-en="Easily broken or damaged.">fragile</span>.</span> <span class="sentence" data-sentence-index="32">A source among the mediators trying to make them work described what has happened as "a setback for sure".</span> <span class="sentence" data-sentence-index="33">The atmosphere is said to be "very tense".</span></p>
+        <p class="cn">但谈判进程很脆弱。一位试图推动谈判的调解人消息人士将所发生的事情描述为“肯定是一次挫折”。据说气氛“非常紧张”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="34">That is a diplomatic way of saying that events of the last few days are a terrible backdrop for talks between two powers that have zero trust that the other will keep its word if a deal is made.</span></p>
+        <p class="cn">这是一种外交说法，意思是过去几天的事件为两个大国之间的谈判提供了可怕的背景，这两个大国之间零信任，不相信对方会在达成协议后信守承诺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="35">The funeral for Iran's late supreme leader Ali Khamenei was held this week after his death in an air strike when the US and Israel attacked Iran in February</span></p>
+        <p class="cn">伊朗已故最高领袖阿里·哈梅内伊的葬礼本周举行，他在2月美国和以色列袭击伊朗时死于空袭</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="36">At the heart of the latest military exchanges between Iran and the US is the Tehran regime's determination not to return to the way things were before the US and Israel attacked on 28 February.</span></p>
+        <p class="cn">伊朗与美国之间最新军事交锋的核心是德黑兰政权决心不回到2月28日美以袭击前的状态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="37">The regime is determined to keep control of the Strait of Hormuz.</span> <span class="sentence" data-sentence-index="38">The ability to stop shipping carrying global essentials including a fifth of the world supply of oil and gas gives it a chokehold on the world economy.</span></p>
+        <p class="cn">该政权决心保持对霍尔木兹海峡的控制。阻止运输包括全球五分之一的石油和天然气供应在内的全球必需品的航运的能力，使其能够扼制世界经济。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="39">It is a much more usable weapon than the possibility that it will try to develop a nuclear weapon.</span></p>
+        <p class="cn">这比它可能试图发展核武器的可能性要实用得多。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="40">Iran will not agree to relinquish control of the Strait of Hormuz.</span> <span class="sentence" data-sentence-index="41">That is why it is prepared to risk the MOU â which is laden with potential sweeteners for Iran â to make the point that there is no going back.</span> <span class="sentence" data-sentence-index="42">It is prepared to gamble on continued war to protect what it believes are its strategic rights in the Strait.</span></p>
+        <p class="cn">伊朗不会同意放弃对霍尔木兹海峡的控制。这就是为什么它准备冒着谅解备忘录（MOU）的风险——该备忘录对伊朗充满潜在好处——来表明没有回头路。它准备赌上持续战争，以保护它认为自己在海峡的战略权利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="43">The regime in Tehran has been emboldened by the failure of the US and Israel to destroy it.</span> <span class="sentence" data-sentence-index="44">The funeral rituals of the supreme leader killed when they launched their campaign have demonstrated that the Islamic regime has a strong core of support.</span></p>
+        <p class="cn">美国和以色列未能摧毁伊朗政权，这让德黑兰政权更加胆大妄为。被杀害的最高领袖在发动战役时的葬礼仪式表明，伊斯兰政权拥有强大的支持核心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="45">Domestic opposition has not gone away.</span> <span class="sentence" data-sentence-index="46">But the regime's ruthless use of force to crush protests, killing thousands, back in January for protesting in the streets means that it is keeping a low profile.</span></p>
+        <p class="cn">国内反对并未消失。但该政权在1月残酷使用武力镇压街头抗议、杀害数千人，意味着反对派保持低调。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="47">If the escalation between the two sides can be stopped, mediators involved in the negotiating process believe it is possible to do a deal with Iran that will allow shipping to transit the Strait.</span> <span class="sentence" data-sentence-index="48">It would have to be part of a wider agreement that unfreezes Iranian assets held abroad, allows Iran to sell its oil and most critically for the regime acknowledges Iran's authority over the Strait.</span></p>
+        <p class="cn">如果双方之间的升级能够停止，参与谈判进程的调解人认为有可能与伊朗达成协议，允许航运通过海峡。这必须成为更广泛协议的一部分，该协议解冻伊朗在国外的资产，允许伊朗出售石油，并且对政权最关键的是，承认伊朗对海峡的权威。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="49">In return Iran would have to accept limits on enriching uranium, allow UN nuclear inspectors back in, and to account for stocks of what Trump calls "nuclear dust" â in other words uranium already enriched close to levels that could be used to make a nuclear weapon.</span></p>
+        <p class="cn">作为回报，伊朗必须接受浓缩铀的限制，允许联合国核检查员返回，并说明特朗普所称的“核尘埃”——即已经浓缩到接近可用于制造核武器水平的铀——的库存。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="50">But events of the last 24 hours show how hard that will be.</span></p>
+        <p class="cn">但过去24小时的事件表明这将有多难。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="51">Resistance and revenge - Iran wanted to send a message with its farewell to Khamenei</span></p>
+        <p class="cn">抵抗与复仇——伊朗想通过告别哈梅内伊传递信息</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="52">How Iran's new regime is very different to what came before</span></p>
+        <p class="cn">伊朗新政权与之前有何不同</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="53">Iran's supreme leader absent as senior officials attend ayatollah's funeral</span></p>
+        <p class="cn">伊朗最高领袖缺席，高级官员出席阿亚图拉葬礼</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pronouncement</span>
+        <button class="kw-speak-btn" data-word="pronouncement" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈnaʊnsmənt/ n.</span>
+      </div>
+      <p class="kw-def">声明，公告</p>
+      <p class="kw-def-en">A formal or authoritative statement.</p>
+      <p class="kw-ctx">&ldquo;Donald Trump's latest pronouncements on Iran and the chances of a negotiated agreement have to be taken seriously, as he is after all the president of the United States.&rdquo;</p>
+      <p class="kw-ctx-cn">唐纳德·特朗普关于伊朗及谈判协议可能性的最新声明必须认真对待，因为他毕竟是美国总统。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vicious</span>
+        <button class="kw-speak-btn" data-word="vicious" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɪʃəs/ adj.</span>
+      </div>
+      <p class="kw-def">恶毒的，凶残的</p>
+      <p class="kw-def-en">Deliberately cruel or violent.</p>
+      <p class="kw-ctx">&ldquo;And they're vicious, violent people.&rdquo;</p>
+      <p class="kw-ctx-cn">而且他们是恶毒、暴力的人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">annihilate</span>
+        <button class="kw-speak-btn" data-word="annihilate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈnaɪəleɪt/ v.</span>
+      </div>
+      <p class="kw-def">彻底消灭，毁灭</p>
+      <p class="kw-def-en">To destroy completely.</p>
+      <p class="kw-ctx">&ldquo;His words have swerved through claims of victory to threats of annihilating Iranian civilisation to support for negotiations.&rdquo;</p>
+      <p class="kw-ctx-cn">他的言论从声称胜利转向威胁摧毁伊朗文明，再到支持谈判。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">capacity</span>
+        <button class="kw-speak-btn" data-word="capacity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈpæsəti/ n.</span>
+      </div>
+      <p class="kw-def">能力，容量</p>
+      <p class="kw-def-en">The ability or power to do something.</p>
+      <p class="kw-ctx">&ldquo;America's capacity to hit Iran, doing great damage, is not in doubt.&rdquo;</p>
+      <p class="kw-ctx-cn">美国打击伊朗并造成巨大破坏的能力毋庸置疑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">onslaught</span>
+        <button class="kw-speak-btn" data-word="onslaught" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɒnslɔːt/ n.</span>
+      </div>
+      <p class="kw-def">猛攻，抨击</p>
+      <p class="kw-def-en">A fierce or destructive attack.</p>
+      <p class="kw-ctx">&ldquo;Buried in his latest verbal onslaught was an acceptance that the talks will continue.&rdquo;</p>
+      <p class="kw-ctx-cn">在他最近的口头抨击中，隐含着他承认会谈将继续进行。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bluster</span>
+        <button class="kw-speak-btn" data-word="bluster" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈblʌstə/ n.</span>
+      </div>
+      <p class="kw-def">虚张声势，大话</p>
+      <p class="kw-def-en">Loud, aggressive, or indignant talk with little effect.</p>
+      <p class="kw-ctx">&ldquo;That can be read as another admission that the president of the US, for all his bluster, does not have a better option than negotiations.&rdquo;</p>
+      <p class="kw-ctx-cn">这可以解读为又一次承认，美国总统尽管虚张声势，但除了谈判别无更好选择。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fragile</span>
+        <button class="kw-speak-btn" data-word="fragile" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfrædʒaɪl/ adj.</span>
+      </div>
+      <p class="kw-def">脆弱的，易碎的</p>
+      <p class="kw-def-en">Easily broken or damaged.</p>
+      <p class="kw-ctx">&ldquo;But the negotiating process is fragile.&rdquo;</p>
+      <p class="kw-ctx-cn">但谈判进程是脆弱的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">embolden</span>
+        <button class="kw-speak-btn" data-word="embolden" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈbəʊldən/ v.</span>
+      </div>
+      <p class="kw-def">使有胆量，鼓励</p>
+      <p class="kw-def-en">To give someone the courage or confidence to do something.</p>
+      <p class="kw-ctx">&ldquo;The regime in Tehran has been emboldened by the failure of the US and Israel to destroy it.&rdquo;</p>
+      <p class="kw-ctx-cn">德黑兰政权因美国和以色列未能摧毁它而变得胆大。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Trump on Iran: US will 'probably hit them hard again tonight'", "start_ms": 3000, "end_ms": 8232, "paragraph_index": 1}, {"index": 2, "text": "Donald Trump's latest pronouncements on Iran and the chances of a negotiated agreement have to be taken seriously, as he is after all the president of the United States.", "start_ms": 8232, "end_ms": 19728, "paragraph_index": 2}, {"index": 3, "text": "This is what he said at the Nato summit in Turkey.", "start_ms": 19728, "end_ms": 23640, "paragraph_index": 3}, {"index": 4, "text": "\"I don't want to deal with them anymore, they're scum.", "start_ms": 23640, "end_ms": 27576, "paragraph_index": 4}, {"index": 5, "text": "You know what scum is?", "start_ms": 27576, "end_ms": 29928, "paragraph_index": 4}, {"index": 6, "text": "They're scum.", "start_ms": 29928, "end_ms": 31872, "paragraph_index": 4}, {"index": 7, "text": "They're sick people.", "start_ms": 31872, "end_ms": 34080, "paragraph_index": 4}, {"index": 8, "text": "They're led by sick people.", "start_ms": 34080, "end_ms": 36720, "paragraph_index": 4}, {"index": 9, "text": "And they're vicious, violent people.", "start_ms": 36720, "end_ms": 39912, "paragraph_index": 4}, {"index": 10, "text": "\"And if they had a nuclear weapon, they'd use it.", "start_ms": 39912, "end_ms": 43920, "paragraph_index": 5}, {"index": 11, "text": "As far as I'm concerned, it's over.\"", "start_ms": 43920, "end_ms": 47280, "paragraph_index": 5}, {"index": 12, "text": "But are they his last words on the subject?", "start_ms": 47280, "end_ms": 50808, "paragraph_index": 6}, {"index": 13, "text": "Certainly not.", "start_ms": 50808, "end_ms": 52968, "paragraph_index": 6}, {"index": 14, "text": "He has kept up a running commentary on the war and the memorandum of understanding (MOU) that is being negotiated.", "start_ms": 52968, "end_ms": 61416, "paragraph_index": 6}, {"index": 15, "text": "His words have swerved through claims of victory to threats of annihilating Iranian civilisation to support for negotiations.", "start_ms": 61416, "end_ms": 70032, "paragraph_index": 6}, {"index": 16, "text": "Later he doubled down on his latest threats, saying the US \"will probably hit them harder again tonight\", adding \"I gave them a little warning.", "start_ms": 70032, "end_ms": 79680, "paragraph_index": 7}, {"index": 17, "text": "We're going to hit them hard again tonight\".", "start_ms": 79680, "end_ms": 82968, "paragraph_index": 7}, {"index": 18, "text": "America's capacity to hit Iran, doing great damage, is not in doubt.", "start_ms": 82968, "end_ms": 88896, "paragraph_index": 8}, {"index": 19, "text": "But what it has not been able to do is to break the will of the regime to drop any of its fundamental demands, starting with control of navigation through the Strait of Hormuz.", "start_ms": 88896, "end_ms": 99960, "paragraph_index": 8}, {"index": 20, "text": "LIVE: Trump threatens to hit Iran 'hard again tonight' after saying ceasefire 'is over'", "start_ms": 99960, "end_ms": 106848, "paragraph_index": 9}, {"index": 21, "text": "US strikes target Iranian military boats", "start_ms": 106848, "end_ms": 111096, "paragraph_index": 10}, {"index": 22, "text": "Huge crowds fill Tehran streets for Khamenei's funeral procession", "start_ms": 111096, "end_ms": 116328, "paragraph_index": 11}, {"index": 23, "text": "Buried in his latest verbal onslaught was an acceptance that the talks will continue.", "start_ms": 116328, "end_ms": 122160, "paragraph_index": 12}, {"index": 24, "text": "They have been on hold while Iran goes through days of funeral obsequies for its former supreme leader Ayatollah Ali Khamenei, who was killed by Israel and the US on the first day of the war on 28 February.", "start_ms": 122160, "end_ms": 135960, "paragraph_index": 12}, {"index": 25, "text": "Trump was asked if the exchange of strikes between the US and Iran - and by extension some of America's Arab allies in the Gulf \u00e2\u0080\u0093 meant the talks between them were over.", "start_ms": 135960, "end_ms": 147144, "paragraph_index": 13}, {"index": 26, "text": "Referring to his chief negotiators, Steve Witkoff and Jared Kushner, he said \"I don't care, they can talk.", "start_ms": 147144, "end_ms": 155160, "paragraph_index": 14}, {"index": 27, "text": "But I think they're wasting their time.\"", "start_ms": 155160, "end_ms": 158184, "paragraph_index": 14}, {"index": 28, "text": "Then, on the Iranian regime: \"They're a bunch of lying guys.\"", "start_ms": 158184, "end_ms": 163032, "paragraph_index": 15}, {"index": 29, "text": "That can be read as another admission that the president of the US, for all his bluster, does not have a better option than negotiations.", "start_ms": 163032, "end_ms": 172464, "paragraph_index": 16}, {"index": 30, "text": "With Israel, the US tried and failed to destroy the Iranian regime.", "start_ms": 172464, "end_ms": 178152, "paragraph_index": 16}, {"index": 31, "text": "But the negotiating process is fragile.", "start_ms": 178152, "end_ms": 181728, "paragraph_index": 17}, {"index": 32, "text": "A source among the mediators trying to make them work described what has happened as \"a setback for sure\".", "start_ms": 181728, "end_ms": 188640, "paragraph_index": 17}, {"index": 33, "text": "The atmosphere is said to be \"very tense\".", "start_ms": 188640, "end_ms": 192192, "paragraph_index": 17}, {"index": 34, "text": "That is a diplomatic way of saying that events of the last few days are a terrible backdrop for talks between two powers that have zero trust that the other will keep its word if a deal is made.", "start_ms": 192192, "end_ms": 204288, "paragraph_index": 18}, {"index": 35, "text": "The funeral for Iran's late supreme leader Ali Khamenei was held this week after his death in an air strike when the US and Israel attacked Iran in February", "start_ms": 204288, "end_ms": 215040, "paragraph_index": 19}, {"index": 36, "text": "At the heart of the latest military exchanges between Iran and the US is the Tehran regime's determination not to return to the way things were before the US and Israel attacked on 28 February.", "start_ms": 215040, "end_ms": 228264, "paragraph_index": 20}, {"index": 37, "text": "The regime is determined to keep control of the Strait of Hormuz.", "start_ms": 228264, "end_ms": 233112, "paragraph_index": 21}, {"index": 38, "text": "The ability to stop shipping carrying global essentials including a fifth of the world supply of oil and gas gives it a chokehold on the world economy.", "start_ms": 233112, "end_ms": 243048, "paragraph_index": 21}, {"index": 39, "text": "It is a much more usable weapon than the possibility that it will try to develop a nuclear weapon.", "start_ms": 243048, "end_ms": 249480, "paragraph_index": 22}, {"index": 40, "text": "Iran will not agree to relinquish control of the Strait of Hormuz.", "start_ms": 249480, "end_ms": 254448, "paragraph_index": 23}, {"index": 41, "text": "That is why it is prepared to risk the MOU \u00e2\u0080\u0093 which is laden with potential sweeteners for Iran \u00e2\u0080\u0093 to make the point that there is no going back.", "start_ms": 254448, "end_ms": 264192, "paragraph_index": 23}, {"index": 42, "text": "It is prepared to gamble on continued war to protect what it believes are its strategic rights in the Strait.", "start_ms": 264192, "end_ms": 271488, "paragraph_index": 23}, {"index": 43, "text": "The regime in Tehran has been emboldened by the failure of the US and Israel to destroy it.", "start_ms": 271488, "end_ms": 278184, "paragraph_index": 24}, {"index": 44, "text": "The funeral rituals of the supreme leader killed when they launched their campaign have demonstrated that the Islamic regime has a strong core of support.", "start_ms": 278184, "end_ms": 287904, "paragraph_index": 24}, {"index": 45, "text": "Domestic opposition has not gone away.", "start_ms": 287904, "end_ms": 291576, "paragraph_index": 25}, {"index": 46, "text": "But the regime's ruthless use of force to crush protests, killing thousands, back in January for protesting in the streets means that it is keeping a low profile.", "start_ms": 291576, "end_ms": 302808, "paragraph_index": 25}, {"index": 47, "text": "If the escalation between the two sides can be stopped, mediators involved in the negotiating process believe it is possible to do a deal with Iran that will allow shipping to transit the Strait.", "start_ms": 302808, "end_ms": 315456, "paragraph_index": 26}, {"index": 48, "text": "It would have to be part of a wider agreement that unfreezes Iranian assets held abroad, allows Iran to sell its oil and most critically for the regime acknowledges Iran's authority over the Strait.", "start_ms": 315456, "end_ms": 328344, "paragraph_index": 26}, {"index": 49, "text": "In return Iran would have to accept limits on enriching uranium, allow UN nuclear inspectors back in, and to account for stocks of what Trump calls \"nuclear dust\" \u00e2\u0080\u0093 in other words uranium already enriched close to levels that could be used to make a nuclear weapon.", "start_ms": 328344, "end_ms": 346128, "paragraph_index": 27}, {"index": 50, "text": "But events of the last 24 hours show how hard that will be.", "start_ms": 346128, "end_ms": 350928, "paragraph_index": 28}, {"index": 51, "text": "Resistance and revenge - Iran wanted to send a message with its farewell to Khamenei", "start_ms": 350928, "end_ms": 357048, "paragraph_index": 29}, {"index": 52, "text": "How Iran's new regime is very different to what came before", "start_ms": 357048, "end_ms": 361752, "paragraph_index": 30}, {"index": 53, "text": "Iran's supreme leader absent as senior officials attend ayatollah's funeral", "start_ms": 361752, "end_ms": 367608, "paragraph_index": 31}], "total_duration_ms": 367608};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "of": "的", "is": "是", "and": "和", "that": "那个", "iran": "伊朗", "in": "在", "on": "在", "it": "它", "us": "我们", "for": "为了", "will": "将", "not": "不", "be": "是", "have": "有", "regime": "政权", "them": "他们", "what": "什么", "they're": "他们是", "his": "他的", "as": "作为", "with": "与", "but": "但是", "has": "有", "its": "它的", "strait": "海峡", "hit": "击中", "he": "他", "they": "它们", "nuclear": "核的", "iranian": "伊朗的", "israel": "以色列", "between": "之间", "can": "可以", "trump": "特朗普", "hard": "艰难的", "again": "再次", "tonight": "今晚", "latest": "最新的", "by": "被", "if": "如果", "weapon": "武器", "over": "超过", "was": "是", "supreme": "最高", "leader": "领导人", "iran's": "伊朗的", "this": "这个", "after": "之后", "said": "说", "deal": "协议", "people": "人们", "are": "是", "last": "最后", "words": "言辞", "war": "战争", "through": "通过", "saying": "说", "been": "已经", "control": "控制", "hormuz": "霍尔木兹", "tehran": "德黑兰", "talks": "会谈", "february": "二月", "make": "使", "back": "后退", "probably": "很可能", "negotiated": "谈判的", "agreement": "协议", "all": "所有", "president": "总统", "at": "在", "don't": "不要", "sick": "恶心的", "use": "使用", "mou": "谅解备忘录", "threats": "威胁", "support": "支持", "negotiations": "谈判", "going": "将要", "america's": "美国的", "do": "做", "strikes": "袭击", "military": "军事", "streets": "街道", "an": "一个", "days": "天", "killed": "杀死", "were": "是", "their": "他们的", "than": "比", "destroy": "摧毁", "negotiating": "谈判", "process": "过程", "very": "非常", "way": "方式", "events": "事件", "two": "两个", "other": "其他", "keep": "保持", "held": "举行", "when": "当", "attacked": "袭击", "regime's": "政权的", "return": "返回", "before": "之前", "shipping": "航运", "world": "世界", "oil": "石油", "prepared": "准备好的", "allow": "允许", "would": "将", "uranium": "铀", "how": "如何", "video": "视频", "played": "比赛", "donald": "唐纳德", "trump's": "特朗普的", "pronouncements": "声明", "chances": "机会", "taken": "采取", "seriously": "认真地", "united": "联合", "states": "国家", "nato": "北约", "summit": "巅峰", "turkey": "土耳其", "want": "想要", "you": "你", "know": "知道", "led": "带领", "violent": "暴力的", "had": "有", "far": "远", "i'm": "我是", "concerned": "担忧的", "it's": "它是", "subject": "主题", "certainly": "当然", "kept": "保留", "up": "向上", "running": "奔跑", "memorandum": "备忘录", "understanding": "谅解", "being": "正在", "claims": "声称", "victory": "胜利", "civilisation": "文明", "later": "后来", "down": "下来", "harder": "更努力地", "adding": "补充说", "gave": "给予", "little": "很少", "warning": "警告", "we're": "我们是", "doing": "做", "great": "伟大的", "damage": "损坏", "doubt": "怀疑", "able": "能够", "break": "突破", "drop": "放下", "any": "任何", "fundamental": "根本的", "demands": "要求", "starting": "开始", "navigation": "航行", "live": "生活", "ceasefire": "停火", "target": "目标", "boats": "船只", "huge": "巨大的", "crowds": "人群", "fill": "填补", "buried": "埋", "continue": "继续", "hold": "追究", "while": "而", "goes": "进行", "former": "前任", "who": "谁", "first": "第一轮", "day": "天", "asked": "询问", "exchange": "交换", "extension": "延期", "some": "一些", "arab": "阿拉伯", "allies": "盟友", "gulf": "海湾", "meant": "意味着", "referring": "提及", "chief": "首席", "negotiators": "谈判代表", "steve": "史蒂夫", "witkoff": "威特科夫", "jared": "贾里德", "kushner": "库什纳", "care": "照顾", "talk": "会谈", "think": "认为", "wasting": "浪费", "time": "时间", "then": "然后", "lying": "撒谎", "guys": "家伙们", "read": "阅读", "another": "另一个", "admission": "承认", "does": "做", "better": "更好的", "option": "选项", "tried": "试图", "failed": "失败", "source": "来源", "among": "在...之中", "trying": "尝试", "work": "工作", "described": "描述", "happened": "发生", "sure": "确定", "atmosphere": "气氛", "tense": "紧张的", "diplomatic": "外交", "few": "少数", "terrible": "糟糕的", "backdrop": "背景", "powers": "权力", "zero": "零", "trust": "信任", "word": "单词", "made": "做出", "late": "已故", "week": "周", "death": "死亡", "air": "气氛", "strike": "罢工", "heart": "核心", "things": "事情", "determined": "坚定的", "ability": "能力", "stop": "停止", "carrying": "携带", "global": "全球", "essentials": "必需品", "including": "包括", "fifth": "第五", "supply": "供应", "gas": "气体", "gives": "给予", "economy": "经济", "much": "许多", "more": "更多", "possibility": "可能性", "try": "审判", "develop": "发展", "agree": "同意", "why": "为何", "risk": "风险", "which": "哪个", "potential": "潜在", "point": "点", "there": "那里", "no": "没有", "continued": "持续的", "protect": "保护", "believes": "认为", "strategic": "战略的", "rights": "权利", "failure": "失败", "launched": "发起", "campaign": "竞选活动", "demonstrated": "展示", "islamic": "伊斯兰", "strong": "强烈", "core": "核心", "domestic": "国内的", "opposition": "反对党", "gone": "已去", "away": "离开", "force": "力量", "protests": "抗议活动", "killing": "杀害", "thousands": "数千", "january": "一月", "means": "意味着", "keeping": "保持", "low": "低的", "sides": "各方", "stopped": "停止", "involved": "涉及的", "believe": "认为", "possible": "可能的", "transit": "过境", "part": "部分", "wider": "更广泛的", "assets": "资产", "abroad": "国外", "sell": "卖出", "most": "最", "authority": "权威", "accept": "接受", "un": "联合国", "account": "责任", "calls": "呼吁", "dust": "尘埃", "already": "已经", "enriched": "浓缩的", "close": "密切的", "levels": "水平", "could": "可能", "used": "使用", "hours": "小时", "show": "显示", "resistance": "抵抗", "wanted": "想要", "send": "发送", "message": "信息", "new": "新的", "different": "不同的", "came": "到来", "senior": "高级", "officials": "官员", "attend": "出席", "funeral": "葬礼", "scum": "渣滓", "khamenei": "哈梅内伊", "ali": "阿里", "mediators": "调解人", "anymore": "不再", "they'd": "他们会", "commentary": "评论", "swerved": "突然转向", "annihilating": "消灭", "doubled": "加倍", "threatens": "威胁", "khamenei's": "哈梅内伊的", "procession": "游行队伍", "verbal": "口头的", "acceptance": "接受", "obsequies": "葬礼", "ayatollah": "阿亚图拉", "bunch": "一群", "setback": "挫折", "exchanges": "交流", "determination": "决心", "chokehold": "扼制", "usable": "可用的", "relinquish": "放弃", "laden": "满载的", "sweeteners": "甜头", "gamble": "赌博", "emboldened": "壮胆的", "rituals": "仪式", "ruthless": "无情的", "crush": "镇压", "protesting": "抗议", "profile": "形象", "escalation": "升级", "unfreezes": "解冻", "allows": "允许", "critically": "关键地", "acknowledges": "承认", "limits": "限制", "enriching": "浓缩", "inspectors": "检查员", "stocks": "库存", "revenge": "报复", "farewell": "告别", "absent": "缺席的", "ayatollah's": "阿亚图拉的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
