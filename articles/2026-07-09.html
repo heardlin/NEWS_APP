@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-09</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-09</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/0e57/live/85fb5d00-7b71-11f1-9af8-1139253a4180.jpg" alt="Burnham set to be next PM as 322 Labour MPs back him in first nomination tally" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Burnham set to be next PM as 322 Labour MPs back him in first nomination tally</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c77y0n7k801o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-09.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Andy Burnham has taken another step towards becoming the next Labour leader and prime minister, after the vast majority of Labour MPs nominated him to replace Sir Keir Starmer.</span></p>
+        <p class="cn">安迪·伯纳姆（Andy Burnham）在成为下一任工党领袖和首相的道路上又迈出了一步，此前绝大多数工党议员提名他接替基尔·斯塔默爵士（Sir Keir Starmer）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Burnham's Labour leadership bid has been backed by 322 Labour MPs as he remains the only declared candidate after nominations began on Thursday.</span></p>
+        <p class="cn">伯纳姆的工党领袖竞选已获得322名工党议员的支持，自周四提名开始以来，他仍是唯一宣布参选的候选人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">It makes him just one short of the 323 needed before it is mathematically impossible for a <span class="keyword" data-word="rival" data-phonetic="/ˈraɪvəl/" data-pos="n." data-def="竞争对手" data-def-en="a person or thing competing with another">rival</span> to run against him.</span> <span class="sentence" data-sentence-index="3">Some MPs say they were not able to vote on Thursday but will <span class="keyword" data-word="back" data-phonetic="/bæk/" data-pos="v." data-def="支持" data-def-en="to support or endorse someone or something">back</span> Burnham once they are back in Parliament.</span></p>
+        <p class="cn">这使他距离323票仅差一票，一旦达到这个数字，对手在数学上就不可能与他竞争。一些议员表示，他们周四无法投票，但一旦回到议会，就会支持伯纳姆。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">If no one else enters the <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="a competition for a position or prize">contest</span>, as expected, Burnham will be declared Labour leader next week before taking office as prime minister on 20 July.</span></p>
+        <p class="cn">如果不出意外，没有其他人参选，伯纳姆将于下周被宣布为工党领袖，并于7月20日就任首相。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">It would mark an extraordinary rise to power following the former Greater Manchester mayor's <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃən/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> win in Makerfield just weeks ago.</span></p>
+        <p class="cn">这将标志着这位前大曼彻斯特市长在几周前赢得梅克菲尔德（Makerfield）补选后，权力迅速崛起。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">In a statement, Burnham said he was "deeply <span class="keyword" data-word="grateful" data-phonetic="/ˈɡreɪtfəl/" data-pos="adj." data-def="感激的" data-def-en="feeling or showing thanks">grateful</span>" to the Labour MPs who had nominated him to be leader of the party.</span></p>
+        <p class="cn">在一份声明中，伯纳姆表示，他对提名他担任党领袖的工党议员“深表感激”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">He said the support had come from across the party and reflected a "shared belief that Britain needs a new approach to politics".</span></p>
+        <p class="cn">他说，支持来自党内各个派别，反映了“一种共同信念，即英国需要一种新的政治方式”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">"That is the <span class="keyword" data-word="circuit breaker" data-phonetic="/ˈsɜːkɪt ˈbreɪkər/" data-pos="n." data-def="断路器；打破僵局的事物" data-def-en="something that interrupts a process or pattern">circuit breaker</span> I am offering: power out of Westminster, an economy rewired for ordinary people, and good growth in every postcode," Burnham said.</span></p>
+        <p class="cn">“这就是我提供的‘断路器’：将权力从威斯敏斯特（Westminster）下放，为普通人重新调整经济，并在每个地区实现良好增长，”伯纳姆说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Burnham's <span class="keyword" data-word="by-election" data-phonetic="/ˈbaɪ ɪˌlekʃən/" data-pos="n." data-def="补选" data-def-en="an election held to fill a vacancy between regular elections">by-election</span> victory and heavy Labour losses in May's local elections left Sir Keir facing calls from his own MPs for him to <span class="keyword" data-word="stand aside" data-phonetic="/stænd əˈsaɪd/" data-pos="phr." data-def="退让，让位" data-def-en="to withdraw from a position or competition">stand aside</span> and allow Burnham to replace him.</span></p>
+        <p class="cn">伯纳姆在补选中获胜，而工党在5月的地方选举中遭受重大损失，这导致斯塔默面临自己议员的呼吁，要求他让位，让伯纳姆接替他。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Sir Keir quit as Labour leader on the same day Burnham was sworn in as an MP, saying in his resignation speech he had heard the answer to the question of whether "I am best placed to lead us into the next general election".</span></p>
+        <p class="cn">在伯纳姆宣誓就任议员的同一天，斯塔默辞去了工党领袖职务，他在辞职演讲中说，他已经听到了关于“我是否是带领我们进入下一次大选的最佳人选”这个问题的答案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Candidates have until Wednesday next week to gather the required backing of 81 Labour MPs in order to take part in the leadership race.</span></p>
+        <p class="cn">候选人必须在周三之前获得81名工党议员的支持，才能参加领袖竞选。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">As well as 323 nominations - which is when no one else can reach the 81-MP threshold needed to run against him - Burnham would also need to garner nominations next week from at least three of the 31 socialist societies and trade unions affiliated to the party, although this is expected to be a formality for him.</span></p>
+        <p class="cn">除了获得323项提名（届时无人能达到与他竞争的81名议员门槛）外，伯纳姆还需要在下周获得至少三个隶属于工党的31个社会主义团体和工会的提名，尽管这对他来说预计只是形式。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Burnham would then become Labour leader and be propelled into Downing Street without the need for a vote over the summer among party members and affiliated trade union supporters.</span></p>
+        <p class="cn">伯纳姆随后将成为工党领袖，并进入唐宁街（Downing Street），无需在夏季进行党员和附属工会支持者的投票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">A few dozen MPs had already posted on social media to confirm they were nominating the former mayor.</span></p>
+        <p class="cn">已有数十名议员在社交媒体上发帖，确认他们正在提名这位前市长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">This included Burnham himself, who joked that it would be "hopefully third time lucky" for him, referring to his two previous failed bids for the leadership in 2010 and 2015.</span></p>
+        <p class="cn">这包括伯纳姆本人，他开玩笑说，这将是“希望第三次幸运”，指的是他之前在2010年和2015年两次竞选领袖失败。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Burnham's route to running unopposed was confirmed on Wednesday evening, when former defence minister Al Carns, who had suggested he could throw his hat into the ring, ruled himself out .</span></p>
+        <p class="cn">伯纳姆无对手参选的路线在周三晚上得到确认，当时前国防部长阿尔·卡恩斯（Al Carns）曾暗示他可能参选，但后来排除了自己。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">But the possibility of Burnham getting the top job without a <span class="keyword" data-word="contest" data-phonetic="/ˈkɒntest/" data-pos="n." data-def="竞争，比赛" data-def-en="a competition for a position or prize">contest</span> has already led to some calls within Labour for the ex-mayor to set out further details of the policies he intends to pursue in office.</span></p>
+        <p class="cn">但伯纳姆无需竞争就能获得最高职位的可能性，已经在工党内部引发了一些呼声，要求这位前市长进一步阐述他打算在任内推行的政策细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Burnham left Westminster in 2017, limiting his opportunities to forge strong relationships with Labour MPs elected since then, who now make up the bulk of the party's contingent in the House of Commons.</span></p>
+        <p class="cn">伯纳姆于2017年离开威斯敏斯特，这限制了他与此后当选的工党议员建立牢固关系的机会，而这些议员现在构成了工党在下议院（House of Commons）的大部分力量。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">As things stand he would be the only participant in an official parliamentary hustings scheduled for Monday next week, at which he would field questions from fellow Labour MPs about his plans for power.</span></p>
+        <p class="cn">就目前情况而言，他将是定于下周一举行的正式议会竞选活动的唯一参与者，届时他将回答工党同僚关于他执政计划的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">"Access talks" with civil servants about his policy proposals are ongoing, run by Cabinet Secretary Antonia Romeo, the UK's most senior official.</span></p>
+        <p class="cn">与公务员就其政策建议进行的“准入谈判”正在进行，由英国最高级官员、内阁秘书安东尼娅·罗密欧（Antonia Romeo）主持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">As Labour leadership nominations formally opened on Thursday, Sir Keir said Burnham would make a good prime minister.</span></p>
+        <p class="cn">随着工党领袖提名于周四正式开放，斯塔默表示，伯纳姆会成为一名好首相。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">"I have known him a long time, I've worked with him when I first came to Parliament, in his team directly," Sir Keir said.</span></p>
+        <p class="cn">“我认识他很久了，我最初进入议会时就与他共事，直接在他的团队中工作，”斯塔默说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Burnham apologises for Labour's initial response to Gaza war</span></p>
+        <p class="cn">伯纳姆为工党最初对加沙战争的反应道歉</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Burnham offered some details of his blueprint for office in a speech in Manchester last week, including proposals to establish a new No 10 unit in the city.</span></p>
+        <p class="cn">伯纳姆上周在曼彻斯特的一次演讲中提供了一些执政蓝图的细节，包括提议在该市设立一个新的唐宁街10号办公室。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">He has suggested the unit will be tasked with handing local government more control in areas including housing and transport.</span></p>
+        <p class="cn">他建议，该办公室的任务是在住房和交通等领域赋予地方政府更多控制权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">A central part of his policy offering is a pledge to give all parts of the UK "greater public control" of the water and energy sectors, although he is yet to spell out what this would mean in practice.</span></p>
+        <p class="cn">他政策主张的一个核心部分是承诺让英国所有地区“对水和能源部门拥有更大的公共控制权”，尽管他尚未阐明这在实践中意味着什么。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">In a video posted to X earlier, Burnham apologised for Labour's initial response to Israel's military action in Gaza , saying the party "didn't get it right" and needs to do better under his leadership.</span></p>
+        <p class="cn">在早些时候发布在X上的一段视频中，伯纳姆为工党最初对以色列在加沙军事行动的反应道歉，称该党“做得不对”，需要在他的领导下做得更好。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">And in a Times article on Thursday , external , he also confirmed he wanted to keep Sir Keir's national security adviser Jonathan Powell, a former Blair aide, in post.</span></p>
+        <p class="cn">在周四《泰晤士报》（The Times）的一篇文章中，他还证实，他希望保留斯塔默的国家安全顾问乔纳森·鲍威尔（Jonathan Powell），一位前布莱尔助手。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">He also said he wanted to see a "sustained increase" in defence investment, without committing to a specific target, whilst being "more open with the public" about cost overruns or delays to military procurement.</span></p>
+        <p class="cn">他还表示，他希望看到国防投资“持续增加”，但没有承诺具体目标，同时“对公众更加公开”军事采购的成本超支或延误。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">In one of his final decisions as prime minister, Sir Keir announced a plan to increase military spending by Â£15bn over the next four years by cutting spending in other parts of government, whilst leaving the details to his successor.</span></p>
+        <p class="cn">作为首相的最后决定之一，斯塔默宣布了一项计划，通过削减政府其他部门的开支，在未来四年内将军事开支增加150亿英镑，同时将细节留给他的继任者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">Burnham planning for No 10 for at least a year, key ally says</span></p>
+        <p class="cn">伯纳姆计划至少一年内入主唐宁街10号，关键盟友表示</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">Andy Burnham's path to becoming prime minister</span></p>
+        <p class="cn">安迪·伯纳姆成为首相的路径</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">What we know about Andy Burnham's policies</span></p>
+        <p class="cn">我们对安迪·伯纳姆政策的了解</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">nominate</span>
+        <button class="kw-speak-btn" data-word="nominate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈnɒmɪneɪt/ v.</span>
+      </div>
+      <p class="kw-def">提名</p>
+      <p class="kw-def-en">to officially suggest someone for a position or award</p>
+      <p class="kw-ctx">&ldquo;Andy Burnham has taken another step towards becoming the next Labour leader and prime minister, after the vast majority of Labour MPs nominated him to replace Sir Keir Starmer.&rdquo;</p>
+      <p class="kw-ctx-cn">在绝大多数工党议员提名他接替基尔·斯塔默爵士后，安迪·伯纳姆在成为下一任工党领袖和首相的道路上又迈出了一步。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">back</span>
+        <button class="kw-speak-btn" data-word="back" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bæk/ v.</span>
+      </div>
+      <p class="kw-def">支持</p>
+      <p class="kw-def-en">to support or endorse someone or something</p>
+      <p class="kw-ctx">&ldquo;Burnham's Labour leadership bid has been backed by 322 Labour MPs as he remains the only declared candidate after nominations began on Thursday.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆的工党领袖竞选已获得322名工党议员的支持，自周四提名开始以来，他仍是唯一宣布的候选人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rival</span>
+        <button class="kw-speak-btn" data-word="rival" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈraɪvəl/ n.</span>
+      </div>
+      <p class="kw-def">竞争对手</p>
+      <p class="kw-def-en">a person or thing competing with another</p>
+      <p class="kw-ctx">&ldquo;It makes him just one short of the 323 needed before it is mathematically impossible for a rival to run against him.&rdquo;</p>
+      <p class="kw-ctx-cn">这使他仅差一票就能达到323票，届时对手在数学上就不可能与他竞争。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">contest</span>
+        <button class="kw-speak-btn" data-word="contest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒntest/ n.</span>
+      </div>
+      <p class="kw-def">竞争，比赛</p>
+      <p class="kw-def-en">a competition for a position or prize</p>
+      <p class="kw-ctx">&ldquo;If no one else enters the contest, as expected, Burnham will be declared Labour leader next week before taking office as prime minister on 20 July.&rdquo;</p>
+      <p class="kw-ctx-cn">如果如预期那样没有其他人参选，伯纳姆将于下周被宣布为工党领袖，并于7月20日就任首相。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">by-election</span>
+        <button class="kw-speak-btn" data-word="by-election" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbaɪ ɪˌlekʃən/ n.</span>
+      </div>
+      <p class="kw-def">补选</p>
+      <p class="kw-def-en">an election held to fill a vacancy between regular elections</p>
+      <p class="kw-ctx">&ldquo;It would mark an extraordinary rise to power following the former Greater Manchester mayor's by-election win in Makerfield just weeks ago.&rdquo;</p>
+      <p class="kw-ctx-cn">这将标志着这位前大曼彻斯特市长在几周前于梅克菲尔德赢得补选后，权力地位的非凡崛起。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">grateful</span>
+        <button class="kw-speak-btn" data-word="grateful" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡreɪtfəl/ adj.</span>
+      </div>
+      <p class="kw-def">感激的</p>
+      <p class="kw-def-en">feeling or showing thanks</p>
+      <p class="kw-ctx">&ldquo;In a statement, Burnham said he was "deeply grateful" to the Labour MPs who had nominated him to be leader of the party.&rdquo;</p>
+      <p class="kw-ctx-cn">在一份声明中，伯纳姆表示他“深深感谢”提名他担任党领袖的工党议员。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">circuit breaker</span>
+        <button class="kw-speak-btn" data-word="circuit breaker" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsɜːkɪt ˈbreɪkər/ n.</span>
+      </div>
+      <p class="kw-def">断路器；打破僵局的事物</p>
+      <p class="kw-def-en">something that interrupts a process or pattern</p>
+      <p class="kw-ctx">&ldquo;"That is the circuit breaker I am offering: power out of Westminster, an economy rewired for ordinary people, and good growth in every postcode," Burnham said.&rdquo;</p>
+      <p class="kw-ctx-cn">“这就是我提供的断路器：权力从威斯敏斯特下放，为普通人重新调整经济，以及每个地区的良好增长，”伯纳姆说。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stand aside</span>
+        <button class="kw-speak-btn" data-word="stand aside" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/stænd əˈsaɪd/ phr.</span>
+      </div>
+      <p class="kw-def">退让，让位</p>
+      <p class="kw-def-en">to withdraw from a position or competition</p>
+      <p class="kw-ctx">&ldquo;Burnham's by-election victory and heavy Labour losses in May's local elections left Sir Keir facing calls from his own MPs for him to stand aside and allow Burnham to replace him.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆的补选胜利以及工党在五月地方选举中的惨败，使得基尔爵士面临自己议员的呼声，要求他让位，让伯纳姆接替他。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Andy Burnham has taken another step towards becoming the next Labour leader and prime minister, after the vast majority of Labour MPs nominated him to replace Sir Keir Starmer.", "start_ms": 0, "end_ms": 12096, "paragraph_index": 0}, {"index": 1, "text": "Burnham's Labour leadership bid has been backed by 322 Labour MPs as he remains the only declared candidate after nominations began on Thursday.", "start_ms": 12096, "end_ms": 23088, "paragraph_index": 1}, {"index": 2, "text": "It makes him just one short of the 323 needed before it is mathematically impossible for a rival to run against him.", "start_ms": 23088, "end_ms": 31824, "paragraph_index": 2}, {"index": 3, "text": "Some MPs say they were not able to vote on Thursday but will back Burnham once they are back in Parliament.", "start_ms": 31824, "end_ms": 38928, "paragraph_index": 2}, {"index": 4, "text": "If no one else enters the contest, as expected, Burnham will be declared Labour leader next week before taking office as prime minister on 20 July.", "start_ms": 38928, "end_ms": 49896, "paragraph_index": 3}, {"index": 5, "text": "It would mark an extraordinary rise to power following the former Greater Manchester mayor's by-election win in Makerfield just weeks ago.", "start_ms": 49896, "end_ms": 59232, "paragraph_index": 4}, {"index": 6, "text": "In a statement, Burnham said he was \"deeply grateful\" to the Labour MPs who had nominated him to be leader of the party.", "start_ms": 59232, "end_ms": 67512, "paragraph_index": 5}, {"index": 7, "text": "He said the support had come from across the party and reflected a \"shared belief that Britain needs a new approach to politics\".", "start_ms": 67512, "end_ms": 75720, "paragraph_index": 6}, {"index": 8, "text": "\"That is the circuit breaker I am offering: power out of Westminster, an economy rewired for ordinary people, and good growth in every postcode,\" Burnham said.", "start_ms": 75720, "end_ms": 86832, "paragraph_index": 7}, {"index": 9, "text": "Burnham's by-election victory and heavy Labour losses in May's local elections left Sir Keir facing calls from his own MPs for him to stand aside and allow Burnham to replace him.", "start_ms": 86832, "end_ms": 99168, "paragraph_index": 8}, {"index": 10, "text": "Sir Keir quit as Labour leader on the same day Burnham was sworn in as an MP, saying in his resignation speech he had heard the answer to the question of whether \"I am best placed to lead us into the next general election\".", "start_ms": 99168, "end_ms": 113040, "paragraph_index": 9}, {"index": 11, "text": "Candidates have until Wednesday next week to gather the required backing of 81 Labour MPs in order to take part in the leadership race.", "start_ms": 113040, "end_ms": 122520, "paragraph_index": 10}, {"index": 12, "text": "As well as 323 nominations - which is when no one else can reach the 81-MP threshold needed to run against him - Burnham would also need to garner nominations next week from at least three of the 31 socialist societies and trade unions affiliated to the party, although this is expected to be a formality for him.", "start_ms": 122520, "end_ms": 144024, "paragraph_index": 11}, {"index": 13, "text": "Burnham would then become Labour leader and be propelled into Downing Street without the need for a vote over the summer among party members and affiliated trade union supporters.", "start_ms": 144024, "end_ms": 154800, "paragraph_index": 12}, {"index": 14, "text": "A few dozen MPs had already posted on social media to confirm they were nominating the former mayor.", "start_ms": 154800, "end_ms": 162192, "paragraph_index": 13}, {"index": 15, "text": "This included Burnham himself, who joked that it would be \"hopefully third time lucky\" for him, referring to his two previous failed bids for the leadership in 2010 and 2015.", "start_ms": 162192, "end_ms": 175080, "paragraph_index": 14}, {"index": 16, "text": "Burnham's route to running unopposed was confirmed on Wednesday evening, when former defence minister Al Carns, who had suggested he could throw his hat into the ring, ruled himself out .", "start_ms": 175080, "end_ms": 187584, "paragraph_index": 15}, {"index": 17, "text": "But the possibility of Burnham getting the top job without a contest has already led to some calls within Labour for the ex-mayor to set out further details of the policies he intends to pursue in office.", "start_ms": 187584, "end_ms": 200592, "paragraph_index": 16}, {"index": 18, "text": "Burnham left Westminster in 2017, limiting his opportunities to forge strong relationships with Labour MPs elected since then, who now make up the bulk of the party's contingent in the House of Commons.", "start_ms": 200592, "end_ms": 215256, "paragraph_index": 17}, {"index": 19, "text": "As things stand he would be the only participant in an official parliamentary hustings scheduled for Monday next week, at which he would field questions from fellow Labour MPs about his plans for power.", "start_ms": 215256, "end_ms": 228360, "paragraph_index": 18}, {"index": 20, "text": "\"Access talks\" with civil servants about his policy proposals are ongoing, run by Cabinet Secretary Antonia Romeo, the UK's most senior official.", "start_ms": 228360, "end_ms": 239688, "paragraph_index": 19}, {"index": 21, "text": "As Labour leadership nominations formally opened on Thursday, Sir Keir said Burnham would make a good prime minister.", "start_ms": 239688, "end_ms": 247944, "paragraph_index": 20}, {"index": 22, "text": "\"I have known him a long time, I've worked with him when I first came to Parliament, in his team directly,\" Sir Keir said.", "start_ms": 247944, "end_ms": 255960, "paragraph_index": 21}, {"index": 23, "text": "Burnham apologises for Labour's initial response to Gaza war", "start_ms": 255960, "end_ms": 261000, "paragraph_index": 22}, {"index": 24, "text": "Burnham offered some details of his blueprint for office in a speech in Manchester last week, including proposals to establish a new No 10 unit in the city.", "start_ms": 261000, "end_ms": 272064, "paragraph_index": 23}, {"index": 25, "text": "He has suggested the unit will be tasked with handing local government more control in areas including housing and transport.", "start_ms": 272064, "end_ms": 280632, "paragraph_index": 24}, {"index": 26, "text": "A central part of his policy offering is a pledge to give all parts of the UK \"greater public control\" of the water and energy sectors, although he is yet to spell out what this would mean in practice.", "start_ms": 280632, "end_ms": 293424, "paragraph_index": 25}, {"index": 27, "text": "In a video posted to X earlier, Burnham apologised for Labour's initial response to Israel's military action in Gaza , saying the party \"didn't get it right\" and needs to do better under his leadership.", "start_ms": 293424, "end_ms": 307296, "paragraph_index": 26}, {"index": 28, "text": "And in a Times article on Thursday , external , he also confirmed he wanted to keep Sir Keir's national security adviser Jonathan Powell, a former Blair aide, in post.", "start_ms": 307296, "end_ms": 319416, "paragraph_index": 27}, {"index": 29, "text": "He also said he wanted to see a \"sustained increase\" in defence investment, without committing to a specific target, whilst being \"more open with the public\" about cost overruns or delays to military procurement.", "start_ms": 319416, "end_ms": 333600, "paragraph_index": 28}, {"index": 30, "text": "In one of his final decisions as prime minister, Sir Keir announced a plan to increase military spending by \u00c2\u00a315bn over the next four years by cutting spending in other parts of government, whilst leaving the details to his successor.", "start_ms": 333600, "end_ms": 349968, "paragraph_index": 29}, {"index": 31, "text": "Burnham planning for No 10 for at least a year, key ally says", "start_ms": 349968, "end_ms": 355200, "paragraph_index": 30}, {"index": 32, "text": "Andy Burnham's path to becoming prime minister", "start_ms": 355200, "end_ms": 359136, "paragraph_index": 31}, {"index": 33, "text": "What we know about Andy Burnham's policies", "start_ms": 359136, "end_ms": 362832, "paragraph_index": 32}], "total_duration_ms": 362832};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "burnham": "伯纳姆", "of": "的", "for": "为了", "labour": "工党", "he": "他", "and": "和", "his": "他的", "him": "他", "as": "作为", "mps": "议员", "on": "在", "would": "将", "next": "下一个", "sir": "爵士", "be": "是", "minister": "部长", "keir": "基尔", "is": "是", "said": "说", "leader": "领导人", "prime": "首相", "burnham's": "伯纳姆的", "leadership": "领导力", "it": "它", "week": "周", "had": "有", "party": "政党", "with": "与", "has": "有", "by": "被", "nominations": "提名", "thursday": "星期四", "one": "一个", "no": "没有", "an": "一个", "former": "前任", "who": "谁", "from": "来自", "out": "出来", "about": "关于", "andy": "安迪", "run": "奔跑", "some": "一些", "they": "它们", "will": "将", "office": "办公室", "power": "权力", "was": "是", "that": "那个", "into": "进入", "when": "当", "also": "也", "at": "在", "this": "这个", "without": "没有", "details": "细节", "military": "军事", "becoming": "变得", "after": "之后", "replace": "取代", "only": "只有", "declared": "宣布", "just": "只是", "needed": "需要", "before": "之前", "against": "反对", "were": "是", "vote": "投票", "but": "但是", "are": "是", "parliament": "议会", "else": "其他", "expected": "预期", "greater": "更大的", "manchester": "曼彻斯特", "needs": "需要", "new": "新的", "am": "是", "offering": "提供", "westminster": "威斯敏斯特", "good": "良好", "local": "当地", "left": "离开", "calls": "呼吁", "stand": "立场", "mp": "议员", "saying": "说", "speech": "演讲", "have": "有", "wednesday": "星期三", "part": "部分", "which": "哪个", "need": "需要", "least": "至少", "trade": "贸易", "affiliated": "附属的", "although": "虽然", "then": "然后", "over": "超过", "already": "已经", "posted": "发布", "himself": "他自己", "time": "时间", "confirmed": "确认", "defence": "国防", "suggested": "建议", "policies": "政策", "make": "使", "official": "官方", "policy": "政策", "proposals": "提议", "labour's": "工党的", "initial": "最初", "response": "回应", "gaza": "加沙", "including": "包括", "unit": "单位", "government": "政府", "more": "更多", "control": "控制", "parts": "部分", "public": "公众", "what": "什么", "wanted": "想要", "increase": "增加", "whilst": "当", "spending": "支出", "taken": "采取", "another": "另一个", "step": "步骤", "towards": "对待", "vast": "庞大的", "majority": "多数", "starmer": "斯塔默", "bid": "努力", "been": "已经", "backed": "支持", "remains": "仍然", "candidate": "候选人", "began": "开始", "makes": "使得", "short": "短暂的", "impossible": "不可能的", "say": "说", "not": "不", "able": "能够", "once": "一旦", "if": "如果", "taking": "采取", "july": "七月", "mark": "标志", "extraordinary": "非凡的", "rise": "上升", "following": "随后", "win": "赢得", "makerfield": "梅克菲尔德", "weeks": "周", "ago": "以前", "statement": "声明", "deeply": "深深地", "support": "支持", "come": "到来", "across": "跨越", "shared": "分享", "belief": "信仰", "britain": "英国", "approach": "方法", "politics": "政治", "economy": "经济", "ordinary": "普通的", "people": "人们", "growth": "增长", "every": "每个", "victory": "胜利", "heavy": "沉重的", "losses": "损失", "may's": "五月的", "elections": "选举", "facing": "面临", "own": "自己", "aside": "抛开", "allow": "允许", "quit": "辞职", "same": "相同", "day": "天", "sworn": "宣誓就职的", "resignation": "辞职", "heard": "听到", "answer": "回答", "question": "问题", "whether": "是否", "best": "最佳", "placed": "放置", "lead": "导致", "us": "我们", "general": "总", "election": "选举", "candidates": "候选人", "until": "直到", "gather": "聚集", "required": "需要", "backing": "支持", "order": "命令", "take": "采取", "race": "种族", "well": "好", "can": "可以", "reach": "达到", "threshold": "门槛", "three": "三个", "societies": "社会", "unions": "工会", "become": "成为", "downing": "唐宁", "street": "街", "summer": "夏天", "among": "在...之中", "members": "成员", "union": "工会", "supporters": "支持者", "few": "少数", "dozen": "一打", "social": "社交的", "media": "媒体", "confirm": "确认", "mayor": "市长", "included": "包括", "joked": "开玩笑说", "third": "第三", "lucky": "幸运的", "referring": "提及", "two": "两个", "previous": "先前", "failed": "失败", "route": "航线", "running": "奔跑", "unopposed": "无对手的", "evening": "晚上", "al": "阿尔", "carns": "卡恩斯", "could": "可能", "throw": "投掷", "ruled": "裁定", "possibility": "可能性", "getting": "获得", "top": "顶级的", "job": "工作", "led": "带领", "within": "在内部", "set": "设定", "further": "进一步的", "intends": "打算", "pursue": "追求", "limiting": "限制", "opportunities": "机会", "forge": "锻造", "strong": "强烈", "relationships": "关系", "elected": "当选的", "since": "自从", "now": "现在", "up": "向上", "party's": "党的", "house": "议院", "commons": "下议院", "things": "事情", "parliamentary": "议会", "scheduled": "预定", "monday": "星期一", "field": "领域", "questions": "问题", "fellow": "同事", "plans": "计划", "access": "进入", "talks": "会谈", "civil": "民事的", "servants": "公务员", "ongoing": "正在进行的", "cabinet": "内阁", "secretary": "秘书", "uk's": "英国的", "most": "最", "senior": "高级", "formally": "正式", "opened": "开火", "known": "已知", "long": "长久", "i've": "我已经", "worked": "工作", "first": "第一轮", "came": "到来", "team": "团队", "directly": "直接地", "war": "战争", "offered": "提供", "blueprint": "蓝图", "last": "最后", "establish": "确定", "city": "城市", "tasked": "委派任务", "areas": "区域", "housing": "住房", "transport": "运输", "central": "中央的", "give": "提供", "all": "所有", "uk": "英国", "water": "水", "energy": "能源", "yet": "尚未", "spell": "一段时间", "mean": "意味着", "practice": "实践", "video": "视频", "earlier": "较早", "apologised": "道歉", "israel's": "以色列的", "action": "行动", "didn't": "没有", "get": "得到", "right": "正确", "do": "做", "better": "更好的", "under": "在...之下", "times": "次", "article": "文章", "external": "外部的", "keep": "保持", "keir's": "基尔的", "national": "国家", "security": "安全", "adviser": "顾问", "jonathan": "乔纳森", "powell": "鲍威尔", "aide": "助手", "post": "职位", "see": "看到", "sustained": "持续的", "investment": "投资", "specific": "具体的", "target": "目标", "being": "正在", "open": "开放", "cost": "成本", "or": "或者", "delays": "延误", "final": "最终", "decisions": "决定", "announced": "宣布", "plan": "计划", "four": "四", "years": "多年", "cutting": "削减", "other": "其他", "leaving": "离开", "successor": "继任者", "planning": "计划", "year": "年", "key": "关键", "ally": "盟友", "says": "表示", "path": "道路", "we": "我们", "know": "知道", "nominated": "被提名的", "mathematically": "数学上", "enters": "进入", "mayor's": "市长的", "reflected": "反映", "circuit": "电路", "breaker": "断路器", "rewired": "重新布线", "postcode": "邮政编码", "garner": "获得", "socialist": "社会主义者", "formality": "形式", "propelled": "推动", "nominating": "提名", "hopefully": "希望", "bids": "投标", "hat": "帽子", "ring": "戒指", "ex-mayor": "前市长", "bulk": "大部分", "contingent": "代表团", "participant": "参与者", "hustings": "竞选活动", "antonia": "安东尼娅", "romeo": "罗密欧", "apologises": "道歉", "handing": "递交", "pledge": "承诺", "sectors": "部门", "blair": "布莱尔", "committing": "承诺", "overruns": "超支", "procurement": "采购"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
