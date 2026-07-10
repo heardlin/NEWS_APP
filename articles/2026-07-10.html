@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-10</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-10</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/8694/live/49a69120-7c8a-11f1-a046-0508c8c5d104.png" alt="Man arrested on suspicion of murder after death of Ann Widdecombe" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Man arrested on suspicion of murder after death of Ann Widdecombe</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cvg50lk22jpo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-10.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A 26-year-old man has been <span class="keyword" data-word="arrested" data-phonetic="/əˈrestɪd/" data-pos="v." data-def="逮捕" data-def-en="to take someone into <span class="keyword" data-word="custody" data-phonetic="/ˈkʌstədi/" data-pos="n." data-def="拘留，羁押" data-def-en="the state of being kept in prison or police control">custody</span> by legal authority">arrested</span> on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃn/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling or belief that someone is guilty of something">suspicion</span> of murder following the death of former MP and government minister Ann Widdecombe.</span></p>
+        <p class="cn">一名26岁男子因涉嫌谋杀前议员和政府部长安·威德库姆（Ann Widdecombe）而被捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Devon and Cornwall Police confirmed the man, who is a white British national, was <span class="keyword" data-word="arrested" data-phonetic="/əˈrestɪd/" data-pos="v." data-def="逮捕" data-def-en="to take someone into <span class="keyword" data-word="custody" data-phonetic="/ˈkʌstədi/" data-pos="n." data-def="拘留，羁押" data-def-en="the state of being kept in prison or police control">custody</span> by legal authority">arrested</span> at an address in Newton Abbot, Devon, on Friday and is in custody.</span></p>
+        <p class="cn">德文郡和康沃尔郡警方证实，这名英国白人男子于周五在德文郡牛顿阿伯特的某地址被捕，目前被拘留。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The body of the 78-year-old former Conservative minister and Reform UK spokesperson was found by police with serious injuries at her home in Haytor, a rural village on Dartmoor in Devon, at about 11:40 BST on Thursday.</span></p>
+        <p class="cn">这位78岁的前保守党部长和改革英国党（Reform UK）发言人的尸体于周四英国夏令时约11:40在德文郡达特穆尔乡村海托尔的家中被警方发现，身上有重伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The incident is not being <span class="keyword" data-word="treated" data-phonetic="/triːtɪd/" data-pos="v." data-def="对待，处理" data-def-en="to deal with or regard in a certain way">treated</span> as terrorism, after counter-terror policing was involved as part of "initial enquiries".</span></p>
+        <p class="cn">尽管反恐警务参与了“初步调查”，但该事件不被视为恐怖主义行为。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Assistant Chief Constable Matt Longman told a news conference on Friday they currently have "no information to believe that that is a <span class="keyword" data-word="politically motivated" data-phonetic="/pəˈlɪtɪkli ˈmoʊtɪveɪtɪd/" data-pos="adj." data-def="出于政治动机的" data-def-en="done for political reasons">politically motivated</span> crime" - and it was "too early" to comment on whether or not the suspect was known to Widdecombe.</span></p>
+        <p class="cn">助理警长马特·朗曼（Matt Longman）在周五的新闻发布会上表示，他们目前“没有信息认为这是一起政治动机犯罪”，并且评论嫌疑人是否认识威德库姆“为时过早”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">He said the investigation was in the early stages and urged anyone with information to come forward.</span></p>
+        <p class="cn">他说调查处于早期阶段，并敦促任何有信息的人站出来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Widdecombe's next of kin have been informed and are being supported by specially trained officers.</span></p>
+        <p class="cn">威德库姆的近亲已被告知，并得到受过专门训练的警员的支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The prime minister and other political leaders said they were <span class="keyword" data-word="stunned" data-phonetic="/stʌnd/" data-pos="adj." data-def="震惊的" data-def-en="very shocked or surprised">stunned</span> by the development on Friday afternoon.</span></p>
+        <p class="cn">首相和其他政治领袖表示，他们对周五下午的这一进展感到震惊。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Sir Keir Starmer said it was "really shocking", while Conservative leader Kemi Badenoch said she was "<span class="keyword" data-word="stunned" data-phonetic="/stʌnd/" data-pos="adj." data-def="震惊的" data-def-en="very shocked or surprised">stunned</span> to hear this awful news".</span></p>
+        <p class="cn">基尔·斯塔默爵士（Sir Keir Starmer）称这“非常令人震惊”，而保守党领袖凯米·巴德诺赫（Kemi Badenoch）表示她“听到这个可怕的消息感到震惊”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Reform UK leader Nigel Farage said he was "deeply, deeply upset by the nature of her death".</span></p>
+        <p class="cn">改革英国党领袖奈杰尔·法拉奇（Nigel Farage）表示，他“对威德库姆的死亡方式深感悲痛”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Strictly Come Dancing co-star reacts</span></p>
+        <p class="cn">《舞动奇迹》（Strictly Come Dancing）前搭档回应</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Widdecombe's political career <span class="keyword" data-word="spanned" data-phonetic="/spænd/" data-pos="v." data-def="跨越，持续" data-def-en="to extend across or cover a period of time">spanned</span> decades.</span> <span class="sentence" data-sentence-index="12">She served as MP for Maidstone in Kent for 23 years, and worked as a Home Office and employment minister in Sir John Major's government between 1994 to 1997.</span></p>
+        <p class="cn">威德库姆的政治生涯跨越数十年。她担任肯特郡梅德斯通选区议员23年，并在约翰·梅杰爵士政府中于1994年至1997年担任内政部和就业部长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">After leaving Parliament she <span class="keyword" data-word="embarked on" data-phonetic="/ɪmˈbɑːrkt ɒn/" data-pos="v." data-def="开始，从事" data-def-en="to start a new project or activity">embarked on</span> a showbiz career, appearing on Strictly Come Dancing in 2010 and Celebrity Big Brother in 2018.</span></p>
+        <p class="cn">离开议会后，她开始了演艺生涯，2010年参加《舞动奇迹》，2018年参加《名人老大哥》（Celebrity Big Brother）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">A staunch supporter of the UK's departure from the EU, she became an MEP for the Brexit Party, representing South West England in the European Parliament between 2019 and 2020.</span></p>
+        <p class="cn">作为英国脱欧的坚定支持者，她成为脱欧党（Brexit Party）的欧洲议会议员，在2019年至2020年间代表英格兰西南部在欧洲议会任职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">In 2023, Widdecombe joined Farage's Reform UK party, after it changed its name from the Brexit Party, and made a number of appearances as the party's immigration and justice spokesperson.</span></p>
+        <p class="cn">2023年，威德库姆加入法拉奇的改革英国党（该党由脱欧党更名而来），并多次以该党移民和司法发言人的身份亮相。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Police outside the house of Ann Widdecombe in Haytor in Dartmoor</span></p>
+        <p class="cn">警方在达特穆尔海托尔的安·威德库姆住宅外</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Widdecombe's body was found at her home, a detached house in a rural location surrounded by fields and a few houses.</span> <span class="sentence" data-sentence-index="18">Police had been called to the scene by the ambulance service.</span></p>
+        <p class="cn">威德库姆的尸体在她家中被发现，这是一栋位于乡村的独立房屋，周围是田野和几栋房子。警方是由救护服务呼叫到现场的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">In an earlier statement, Det Ch Insp Ilona Rosson said: "This is an extremely tragic incident and our thoughts are very much with the family and friends of Ann Widdecombe at this difficult time."</span></p>
+        <p class="cn">在早些时候的一份声明中，侦探总督察伊洛娜·罗森（Ilona Rosson）说：“这是一起极其悲惨的事件，我们非常关心安·威德库姆的家人和朋友在这个艰难时刻的感受。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">A cordon remains in place at the property, with forensic investigations being carried out.</span> <span class="sentence" data-sentence-index="21">Officers are going door-to-door in the area and carrying out CCTV enquiries.</span></p>
+        <p class="cn">现场仍设有警戒线，正在进行法医调查。警员在该地区挨家挨户走访，并查看闭路电视。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">"We are particularly keen to hear from anyone who may have seen anything suspicious in the vicinity of Haytor Vale, Haytor, or anyone with CCTV, doorbell or dashcam footage which could assist with our investigation," Rosson said.</span></p>
+        <p class="cn">罗森说：“我们特别希望听到任何在海托尔谷、海托尔附近看到可疑情况的人，或者任何拥有可能有助于我们调查的闭路电视、门铃或行车记录仪录像的人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">A statement released by Widdecombe's agent announcing her death on Friday morning made no mention of the specific circumstances of her death.</span></p>
+        <p class="cn">威德库姆的经纪人周五上午发布声明宣布她的死讯，但未提及具体死亡情况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">In a follow-up statement later on Friday, Widdecombe's management said: "We are absolutely devastated by this news following a very traumatic and upsetting 24 hours."</span></p>
+        <p class="cn">在周五晚些时候的后续声明中，威德库姆的管理团队表示：“在经历了非常痛苦和令人不安的24小时后，我们对这个消息感到极度震惊。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">"We fully support the police in their investigations and we reiterate the family's desire not to be contacted at this difficult time."</span></p>
+        <p class="cn">“我们全力支持警方的调查，并重申家属希望在这个艰难时刻不要被打扰。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The investigation is being carried out by the Force Major Crime Investigation Team, which is a county level police unit and responsible for investigating the most serious crimes.</span></p>
+        <p class="cn">调查由部队重大犯罪调查组（Force Major Crime Investigation Team）进行，这是一个县级警察单位，负责调查最严重的犯罪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">The uniformed police presence has been increased in the area to support the investigation and provide reassurance to residents.</span></p>
+        <p class="cn">该地区已增加穿制服的警力，以支持调查并为居民提供 reassurance。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Rosson asked the public not to speculate about the circumstances of Widdecombe's death, especially on social media.</span></p>
+        <p class="cn">罗森要求公众不要猜测威德库姆的死亡情况，尤其是在社交媒体上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">"This is not only potentially harmful to our investigation but also deeply distressing for family and friends of Ann Widdecombe," she said.</span></p>
+        <p class="cn">她说：“这不仅可能对我们的调查造成伤害，也会给安·威德库姆的家人和朋友带来深深的痛苦。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Susan Coish, Widdecombe's neighbour, told the BBC she is "devastated" to hear news of her death, saying she was a "character" and a "lovely lady".</span></p>
+        <p class="cn">威德库姆的邻居苏珊·科伊什（Susan Coish）告诉BBC，她听到她的死讯感到“震惊”，称她是一个“有个性的人”和“可爱的女士”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">"I can't see why anybody would want to hurt her...</span> <span class="sentence" data-sentence-index="32">it hasn't sunk in yet actually," she said.</span></p>
+        <p class="cn">她说：“我不明白为什么会有人想伤害她……实际上我还没缓过来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">Widdecombe had remained active in the media and appeared on TalkTV on Wednesday, the day before her death.</span></p>
+        <p class="cn">威德库姆一直活跃在媒体上，并在周三（她去世前一天）出现在TalkTV上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">Widdecombe's last public appearance</span></p>
+        <p class="cn">威德库姆最后一次公开露面</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">Anton Du Beke, who was her partner on Strictly Come Dancing in 2010, said he was devastated by her death, which he called the "saddest of news".</span></p>
+        <p class="cn">安东·杜贝克（Anton Du Beke）在2010年《舞动奇迹》中曾是她的舞伴，他说他对她的死感到震惊，称之为“最悲伤的消息”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">Sir Keir said it was "really shocking news", adding that "my thoughts, I think all of our thoughts, will be with the family and friends of Ann Widdecombe at this awful time for them".</span></p>
+        <p class="cn">基尔爵士说这是“非常令人震惊的消息”，并补充说“我的思绪，我想我们所有人的思绪，都将与安·威德库姆的家人和朋友同在，在这个对他们来说可怕的时刻”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">The prime minister said he had spoken to Badenoch, Farage, MP Andy Burnham, and House Speaker Lindsay Hoyle, adding it was important that this was a moment where "we rise above any political differences".</span></p>
+        <p class="cn">首相表示他已与巴德诺赫、法拉奇、议员安迪·伯纳姆（Andy Burnham）和议长林赛·霍伊尔（Lindsay Hoyle）通话，并补充说重要的是这是一个“我们超越任何政治分歧”的时刻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Home Secretary Shabana Mahmood said she was "deeply saddened to hear of the death of Ann Widdecombe".</span></p>
+        <p class="cn">内政大臣沙巴纳·马哈茂德（Shabana Mahmood）表示她“对安·威德库姆的去世深感悲痛”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">"The circumstances of her death are extremely distressing and my thoughts are with Ann's family and loved ones."</span></p>
+        <p class="cn">“她的死亡情况极其令人痛苦，我的心与安的家人和亲人同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="41">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="42">Watch: Starmer, Badenoch and Farage respond</span></p>
+        <p class="cn">观看：斯塔默、巴德诺赫和法拉奇回应</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="43">The prime minister and the home secretary said they had spoken to the Chief Constable of Devon and Cornwall Police, and Mahmood added that her department was able to provide whatever assistance necessary.</span></p>
+        <p class="cn">首相和内政大臣表示，他们已与德文郡和康沃尔郡警察局长通话，马哈茂德补充说，她的部门可以提供任何必要的协助。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="44">Badenoch said she was "<span class="keyword" data-word="stunned" data-phonetic="/stʌnd/" data-pos="adj." data-def="震惊的" data-def-en="very shocked or surprised">stunned</span> to hear this awful news".</span></p>
+        <p class="cn">巴德诺赫表示她“听到这个可怕的消息感到震惊”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="45">"My heart is breaking for her family," she said.</span></p>
+        <p class="cn">她说：“我为她的家人心碎。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="46">Speaking in a video posted to social media, Farage said: "Our nation is a much, much poorer place without her.</span> <span class="sentence" data-sentence-index="47">Reform UK is certainly a much worse place without her.</span> <span class="sentence" data-sentence-index="48">I was expecting to see her in Clacton over the course of the next few days.</span> <span class="sentence" data-sentence-index="49">Sadly, that is not going to happen."</span></p>
+        <p class="cn">法拉奇在社交媒体上发布的视频中说：“没有她，我们的国家变得贫乏得多。改革英国党当然也因失去她而变得更糟。我原本期待在未来几天在克拉克顿见到她。遗憾的是，这不会发生了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="50">Liberal Democrat leader Sir Ed Davey posted on social media that he was "really shocked and distressed" at the news.</span> <span class="sentence" data-sentence-index="51">He described Widdecombe as a "woman of deep faith who devoted her life to public service".</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士（Sir Ed Davey）在社交媒体上发帖称，他对这个消息感到“非常震惊和痛苦”。他形容威德库姆是一位“有深厚信仰、毕生致力于公共服务的女性”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="52">Ann Widdecombe obituary: Brexit-backing former minister turned Strictly star</span></p>
+        <p class="cn">安·威德库姆讣告：支持脱欧的前部长转型为《舞动奇迹》明星</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">arrested</span>
+        <button class="kw-speak-btn" data-word="arrested" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈrestɪd/ v.</span>
+      </div>
+      <p class="kw-def">逮捕</p>
+      <p class="kw-def-en">to take someone into custody by legal authority</p>
+      <p class="kw-ctx">&ldquo;A 26-year-old man has been arrested on suspicion of murder following the death of former MP and government minister Ann Widdecombe.&rdquo;</p>
+      <p class="kw-ctx-cn">一名26岁男子因涉嫌谋杀前议员和政府部长安·威德科姆而被捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicion</span>
+        <button class="kw-speak-btn" data-word="suspicion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">怀疑，嫌疑</p>
+      <p class="kw-def-en">a feeling or belief that someone is guilty of something</p>
+      <p class="kw-ctx">&ldquo;A 26-year-old man has been arrested on suspicion of murder following the death of former MP and government minister Ann Widdecombe.&rdquo;</p>
+      <p class="kw-ctx-cn">一名26岁男子因涉嫌谋杀前议员和政府部长安·威德科姆而被捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">custody</span>
+        <button class="kw-speak-btn" data-word="custody" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkʌstədi/ n.</span>
+      </div>
+      <p class="kw-def">拘留，羁押</p>
+      <p class="kw-def-en">the state of being kept in prison or police control</p>
+      <p class="kw-ctx">&ldquo;Devon and Cornwall Police confirmed the man, who is a white British national, was arrested at an address in Newton Abbot, Devon, on Friday and is in custody.&rdquo;</p>
+      <p class="kw-ctx-cn">德文郡和康沃尔郡警方证实，这名英国白人男子于周五在德文郡牛顿阿伯特的某地址被捕，目前被拘留。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">treated</span>
+        <button class="kw-speak-btn" data-word="treated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/triːtɪd/ v.</span>
+      </div>
+      <p class="kw-def">对待，处理</p>
+      <p class="kw-def-en">to deal with or regard in a certain way</p>
+      <p class="kw-ctx">&ldquo;The incident is not being treated as terrorism, after counter-terror policing was involved as part of 'initial enquiries'.&rdquo;</p>
+      <p class="kw-ctx-cn">该事件不被视为恐怖主义，此前反恐警察参与了“初步调查”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">politically motivated</span>
+        <button class="kw-speak-btn" data-word="politically motivated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pəˈlɪtɪkli ˈmoʊtɪveɪtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">出于政治动机的</p>
+      <p class="kw-def-en">done for political reasons</p>
+      <p class="kw-ctx">&ldquo;Assistant Chief Constable Matt Longman told a news conference on Friday they currently have 'no information to believe that that is a politically motivated crime'.&rdquo;</p>
+      <p class="kw-ctx-cn">助理警长马特·朗曼在周五的新闻发布会上表示，他们目前“没有信息认为这是一起出于政治动机的犯罪”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stunned</span>
+        <button class="kw-speak-btn" data-word="stunned" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/stʌnd/ adj.</span>
+      </div>
+      <p class="kw-def">震惊的</p>
+      <p class="kw-def-en">very shocked or surprised</p>
+      <p class="kw-ctx">&ldquo;The prime minister and other political leaders said they were stunned by the development on Friday afternoon.&rdquo;</p>
+      <p class="kw-ctx-cn">首相和其他政治领导人表示，他们对周五下午的事态发展感到震惊。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spanned</span>
+        <button class="kw-speak-btn" data-word="spanned" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/spænd/ v.</span>
+      </div>
+      <p class="kw-def">跨越，持续</p>
+      <p class="kw-def-en">to extend across or cover a period of time</p>
+      <p class="kw-ctx">&ldquo;Widdecombe's political career spanned decades.&rdquo;</p>
+      <p class="kw-ctx-cn">威德科姆的政治生涯跨越了几十年。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">embarked on</span>
+        <button class="kw-speak-btn" data-word="embarked on" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈbɑːrkt ɒn/ v.</span>
+      </div>
+      <p class="kw-def">开始，从事</p>
+      <p class="kw-def-en">to start a new project or activity</p>
+      <p class="kw-ctx">&ldquo;After leaving Parliament she embarked on a showbiz career, appearing on Strictly Come Dancing in 2010 and Celebrity Big Brother in 2018.&rdquo;</p>
+      <p class="kw-ctx-cn">离开议会后，她开始了演艺生涯，2010年参加了《舞动奇迹》，2018年参加了《名人老大哥》。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A 26-year-old man has been arrested on suspicion of murder following the death of former MP and government minister Ann Widdecombe.", "start_ms": 0, "end_ms": 9336, "paragraph_index": 0}, {"index": 1, "text": "Devon and Cornwall Police confirmed the man, who is a white British national, was arrested at an address in Newton Abbot, Devon, on Friday and is in custody.", "start_ms": 9336, "end_ms": 20520, "paragraph_index": 1}, {"index": 2, "text": "The body of the 78-year-old former Conservative minister and Reform UK spokesperson was found by police with serious injuries at her home in Haytor, a rural village on Dartmoor in Devon, at about 11:40 BST on Thursday.", "start_ms": 20520, "end_ms": 37056, "paragraph_index": 2}, {"index": 3, "text": "The incident is not being treated as terrorism, after counter-terror policing was involved as part of \"initial enquiries\".", "start_ms": 37056, "end_ms": 45696, "paragraph_index": 3}, {"index": 4, "text": "Assistant Chief Constable Matt Longman told a news conference on Friday they currently have \"no information to believe that that is a politically motivated crime\" - and it was \"too early\" to comment on whether or not the suspect was known to Widdecombe.", "start_ms": 45696, "end_ms": 60864, "paragraph_index": 4}, {"index": 5, "text": "He said the investigation was in the early stages and urged anyone with information to come forward.", "start_ms": 60864, "end_ms": 67992, "paragraph_index": 5}, {"index": 6, "text": "Widdecombe's next of kin have been informed and are being supported by specially trained officers.", "start_ms": 67992, "end_ms": 74736, "paragraph_index": 6}, {"index": 7, "text": "The prime minister and other political leaders said they were stunned by the development on Friday afternoon.", "start_ms": 74736, "end_ms": 81672, "paragraph_index": 7}, {"index": 8, "text": "Sir Keir Starmer said it was \"really shocking\", while Conservative leader Kemi Badenoch said she was \"stunned to hear this awful news\".", "start_ms": 81672, "end_ms": 90552, "paragraph_index": 8}, {"index": 9, "text": "Reform UK leader Nigel Farage said he was \"deeply, deeply upset by the nature of her death\".", "start_ms": 90552, "end_ms": 97800, "paragraph_index": 9}, {"index": 10, "text": "Strictly Come Dancing co-star reacts", "start_ms": 97800, "end_ms": 101520, "paragraph_index": 10}, {"index": 11, "text": "Widdecombe's political career spanned decades.", "start_ms": 101520, "end_ms": 105672, "paragraph_index": 11}, {"index": 12, "text": "She served as MP for Maidstone in Kent for 23 years, and worked as a Home Office and employment minister in Sir John Major's government between 1994 to 1997.", "start_ms": 105672, "end_ms": 118944, "paragraph_index": 11}, {"index": 13, "text": "After leaving Parliament she embarked on a showbiz career, appearing on Strictly Come Dancing in 2010 and Celebrity Big Brother in 2018.", "start_ms": 118944, "end_ms": 129696, "paragraph_index": 12}, {"index": 14, "text": "A staunch supporter of the UK's departure from the EU, she became an MEP for the Brexit Party, representing South West England in the European Parliament between 2019 and 2020.", "start_ms": 129696, "end_ms": 143256, "paragraph_index": 13}, {"index": 15, "text": "In 2023, Widdecombe joined Farage's Reform UK party, after it changed its name from the Brexit Party, and made a number of appearances as the party's immigration and justice spokesperson.", "start_ms": 143256, "end_ms": 157224, "paragraph_index": 14}, {"index": 16, "text": "Police outside the house of Ann Widdecombe in Haytor in Dartmoor", "start_ms": 157224, "end_ms": 161784, "paragraph_index": 15}, {"index": 17, "text": "Widdecombe's body was found at her home, a detached house in a rural location surrounded by fields and a few houses.", "start_ms": 161784, "end_ms": 170280, "paragraph_index": 16}, {"index": 18, "text": "Police had been called to the scene by the ambulance service.", "start_ms": 170280, "end_ms": 174600, "paragraph_index": 16}, {"index": 19, "text": "In an earlier statement, Det Ch Insp Ilona Rosson said: \"This is an extremely tragic incident and our thoughts are very much with the family and friends of Ann Widdecombe at this difficult time.\"", "start_ms": 174600, "end_ms": 187128, "paragraph_index": 17}, {"index": 20, "text": "A cordon remains in place at the property, with forensic investigations being carried out.", "start_ms": 187128, "end_ms": 193848, "paragraph_index": 18}, {"index": 21, "text": "Officers are going door-to-door in the area and carrying out CCTV enquiries.", "start_ms": 193848, "end_ms": 200256, "paragraph_index": 18}, {"index": 22, "text": "\"We are particularly keen to hear from anyone who may have seen anything suspicious in the vicinity of Haytor Vale, Haytor, or anyone with CCTV, doorbell or dashcam footage which could assist with our investigation,\" Rosson said.", "start_ms": 200256, "end_ms": 216192, "paragraph_index": 19}, {"index": 23, "text": "A statement released by Widdecombe's agent announcing her death on Friday morning made no mention of the specific circumstances of her death.", "start_ms": 216192, "end_ms": 225360, "paragraph_index": 20}, {"index": 24, "text": "In a follow-up statement later on Friday, Widdecombe's management said: \"We are absolutely devastated by this news following a very traumatic and upsetting 24 hours.\"", "start_ms": 225360, "end_ms": 237312, "paragraph_index": 21}, {"index": 25, "text": "\"We fully support the police in their investigations and we reiterate the family's desire not to be contacted at this difficult time.\"", "start_ms": 237312, "end_ms": 246120, "paragraph_index": 22}, {"index": 26, "text": "The investigation is being carried out by the Force Major Crime Investigation Team, which is a county level police unit and responsible for investigating the most serious crimes.", "start_ms": 246120, "end_ms": 258264, "paragraph_index": 23}, {"index": 27, "text": "The uniformed police presence has been increased in the area to support the investigation and provide reassurance to residents.", "start_ms": 258264, "end_ms": 266904, "paragraph_index": 24}, {"index": 28, "text": "Rosson asked the public not to speculate about the circumstances of Widdecombe's death, especially on social media.", "start_ms": 266904, "end_ms": 274992, "paragraph_index": 25}, {"index": 29, "text": "\"This is not only potentially harmful to our investigation but also deeply distressing for family and friends of Ann Widdecombe,\" she said.", "start_ms": 274992, "end_ms": 284376, "paragraph_index": 26}, {"index": 30, "text": "Susan Coish, Widdecombe's neighbour, told the BBC she is \"devastated\" to hear news of her death, saying she was a \"character\" and a \"lovely lady\".", "start_ms": 284376, "end_ms": 294528, "paragraph_index": 27}, {"index": 31, "text": "\"I can't see why anybody would want to hurt her...", "start_ms": 294528, "end_ms": 298224, "paragraph_index": 28}, {"index": 32, "text": "it hasn't sunk in yet actually,\" she said.", "start_ms": 298224, "end_ms": 302016, "paragraph_index": 28}, {"index": 33, "text": "Widdecombe had remained active in the media and appeared on TalkTV on Wednesday, the day before her death.", "start_ms": 302016, "end_ms": 309456, "paragraph_index": 29}, {"index": 34, "text": "This video can not be played", "start_ms": 309456, "end_ms": 312456, "paragraph_index": 30}, {"index": 35, "text": "Widdecombe's last public appearance", "start_ms": 312456, "end_ms": 315816, "paragraph_index": 31}, {"index": 36, "text": "Anton Du Beke, who was her partner on Strictly Come Dancing in 2010, said he was devastated by her death, which he called the \"saddest of news\".", "start_ms": 315816, "end_ms": 326208, "paragraph_index": 32}, {"index": 37, "text": "Sir Keir said it was \"really shocking news\", adding that \"my thoughts, I think all of our thoughts, will be with the family and friends of Ann Widdecombe at this awful time for them\".", "start_ms": 326208, "end_ms": 337584, "paragraph_index": 33}, {"index": 38, "text": "The prime minister said he had spoken to Badenoch, Farage, MP Andy Burnham, and House Speaker Lindsay Hoyle, adding it was important that this was a moment where \"we rise above any political differences\".", "start_ms": 337584, "end_ms": 351456, "paragraph_index": 34}, {"index": 39, "text": "Home Secretary Shabana Mahmood said she was \"deeply saddened to hear of the death of Ann Widdecombe\".", "start_ms": 351456, "end_ms": 358152, "paragraph_index": 35}, {"index": 40, "text": "\"The circumstances of her death are extremely distressing and my thoughts are with Ann's family and loved ones.\"", "start_ms": 358152, "end_ms": 365568, "paragraph_index": 36}, {"index": 41, "text": "This video can not be played", "start_ms": 365568, "end_ms": 368568, "paragraph_index": 37}, {"index": 42, "text": "Watch: Starmer, Badenoch and Farage respond", "start_ms": 368568, "end_ms": 373368, "paragraph_index": 38}, {"index": 43, "text": "The prime minister and the home secretary said they had spoken to the Chief Constable of Devon and Cornwall Police, and Mahmood added that her department was able to provide whatever assistance necessary.", "start_ms": 373368, "end_ms": 386448, "paragraph_index": 39}, {"index": 44, "text": "Badenoch said she was \"stunned to hear this awful news\".", "start_ms": 386448, "end_ms": 390792, "paragraph_index": 40}, {"index": 45, "text": "\"My heart is breaking for her family,\" she said.", "start_ms": 390792, "end_ms": 394704, "paragraph_index": 41}, {"index": 46, "text": "Speaking in a video posted to social media, Farage said: \"Our nation is a much, much poorer place without her.", "start_ms": 394704, "end_ms": 402912, "paragraph_index": 42}, {"index": 47, "text": "Reform UK is certainly a much worse place without her.", "start_ms": 402912, "end_ms": 407376, "paragraph_index": 42}, {"index": 48, "text": "I was expecting to see her in Clacton over the course of the next few days.", "start_ms": 407376, "end_ms": 412776, "paragraph_index": 42}, {"index": 49, "text": "Sadly, that is not going to happen.\"", "start_ms": 412776, "end_ms": 416160, "paragraph_index": 42}, {"index": 50, "text": "Liberal Democrat leader Sir Ed Davey posted on social media that he was \"really shocked and distressed\" at the news.", "start_ms": 416160, "end_ms": 424128, "paragraph_index": 43}, {"index": 51, "text": "He described Widdecombe as a \"woman of deep faith who devoted her life to public service\".", "start_ms": 424128, "end_ms": 430368, "paragraph_index": 43}, {"index": 52, "text": "Ann Widdecombe obituary: Brexit-backing former minister turned Strictly star", "start_ms": 430368, "end_ms": 436560, "paragraph_index": 44}], "total_duration_ms": 436560};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "in": "在", "of": "的", "to": "到", "was": "是", "said": "说", "her": "她的", "on": "在", "is": "是", "she": "她", "this": "这个", "death": "死亡", "by": "被", "at": "在", "police": "警方", "with": "与", "not": "不", "news": "新闻", "minister": "部长", "that": "那个", "he": "他", "are": "是", "for": "为了", "as": "作为", "it": "它", "investigation": "调查", "friday": "星期五", "home": "家", "hear": "听到", "our": "我们的", "family": "家庭", "we": "我们", "been": "已经", "devon": "德文郡", "who": "谁", "an": "一个", "reform": "改革", "uk": "英国", "being": "正在", "come": "到来", "sir": "爵士", "badenoch": "巴德诺赫", "farage": "法拉奇", "deeply": "深深地", "strictly": "严格地", "had": "有", "thoughts": "想法", "much": "许多", "be": "是", "media": "媒体", "former": "前任", "mp": "议员", "after": "之后", "they": "它们", "have": "有", "or": "或者", "anyone": "任何人", "prime": "首相", "political": "政治的", "really": "真正地", "leader": "领导人", "awful": "糟糕的", "from": "来自", "party": "政党", "house": "议院", "statement": "声明", "friends": "朋友", "time": "时间", "place": "地点", "out": "出来", "which": "哪个", "circumstances": "情况", "public": "公众", "social": "社交的", "video": "视频", "my": "我的", "year-old": "岁的", "man": "男子", "has": "有", "following": "随后", "government": "政府", "cornwall": "康沃尔", "body": "机构", "conservative": "保守党", "spokesperson": "发言人", "found": "发现", "serious": "严重的", "rural": "乡村的", "dartmoor": "达特穆尔", "about": "关于", "incident": "事件", "enquiries": "询问", "chief": "首席", "constable": "警察", "told": "告诉", "no": "没有", "information": "信息", "crime": "犯罪", "early": "早期的", "next": "下一个", "officers": "官员", "keir": "基尔", "starmer": "斯塔默", "shocking": "令人震惊的", "career": "职业", "between": "之间", "parliament": "议会", "brexit": "英国脱欧", "made": "做出", "few": "少数", "called": "称为", "service": "服务", "extremely": "极其", "very": "非常", "difficult": "困难的", "investigations": "调查", "carried": "进行", "going": "将要", "area": "区域", "cctv": "闭路电视", "support": "支持", "provide": "提供", "distressing": "令人痛苦的", "see": "看到", "can": "可以", "played": "比赛", "adding": "补充说", "spoken": "发言", "secretary": "秘书", "mahmood": "马哈茂德", "posted": "发布", "without": "没有", "murder": "谋杀", "confirmed": "确认", "white": "白色的", "british": "英国的", "national": "国家", "address": "地址", "injuries": "受伤", "village": "村庄", "bst": "英国夏令时", "thursday": "星期四", "terrorism": "恐怖主义", "counter-terror": "反恐", "policing": "警务", "involved": "涉及的", "part": "部分", "initial": "最初", "assistant": "助理", "matt": "马特", "conference": "会议", "currently": "目前", "believe": "认为", "politically": "政治上", "motivated": "有动机的", "too": "太", "comment": "评论", "whether": "是否", "suspect": "嫌疑人", "known": "已知", "urged": "敦促", "forward": "向前", "informed": "告知", "supported": "支持", "trained": "训练有素的", "other": "其他", "leaders": "领导人", "were": "是", "development": "发展", "afternoon": "下午", "while": "而", "kemi": "凯米", "nigel": "奈杰尔", "upset": "不安", "nature": "性质", "decades": "数十年", "served": "服役", "kent": "肯特", "years": "多年", "worked": "工作", "office": "办公室", "employment": "就业", "john": "约翰", "leaving": "离开", "appearing": "出现", "big": "大的", "brother": "兄弟", "uk's": "英国的", "departure": "离职", "eu": "欧盟", "became": "成为", "south": "韩国", "west": "西部", "england": "英格兰", "european": "欧洲的", "joined": "加入", "farage's": "法拉奇的", "changed": "改变", "its": "它的", "name": "名字", "number": "数量", "party's": "党的", "immigration": "移民", "justice": "正义", "outside": "外部", "location": "地点", "surrounded": "被环绕的", "houses": "房屋", "scene": "现场", "ambulance": "救护车", "earlier": "较早", "det": "侦探", "ch": "警司", "insp": "督察", "tragic": "悲惨的", "remains": "仍然", "property": "财产", "forensic": "法医的", "carrying": "携带", "particularly": "尤其", "may": "可能", "seen": "被视为", "anything": "任何事", "footage": "视频片段", "could": "可能", "released": "释放", "agent": "特工", "announcing": "宣布", "morning": "上午", "mention": "提及", "specific": "具体的", "follow-up": "后续", "later": "后来", "management": "管理", "absolutely": "绝对", "upsetting": "令人不安的", "hours": "小时", "fully": "完全地", "their": "他们的", "family's": "家庭的", "desire": "渴望", "contacted": "联系", "force": "力量", "major": "重大的", "team": "团队", "county": "郡", "level": "水平", "unit": "单位", "responsible": "负责的", "investigating": "调查", "most": "最", "crimes": "罪行", "presence": "存在", "increased": "增加的", "reassurance": "保证", "residents": "居民", "asked": "询问", "especially": "尤其", "only": "只有", "potentially": "可能地", "harmful": "有害的", "but": "但是", "also": "也", "neighbour": "邻居", "bbc": "英国广播公司", "saying": "说", "character": "特征", "lovely": "可爱的", "lady": "女士", "can't": "不能", "why": "为何", "anybody": "任何人", "would": "将", "want": "想要", "hurt": "伤害", "hasn't": "没有", "yet": "尚未", "actually": "实际上", "remained": "仍然是", "active": "现役的", "appeared": "出现", "wednesday": "星期三", "day": "天", "before": "之前", "last": "最后", "appearance": "出现", "partner": "伴侣", "think": "认为", "all": "所有", "will": "将", "them": "他们", "andy": "安迪", "burnham": "伯纳姆", "speaker": "议长", "important": "重要", "moment": "时刻", "where": "那里", "rise": "上升", "above": "超过", "any": "任何", "differences": "差异", "shabana": "沙巴娜", "loved": "爱过的", "ones": "人们", "watch": "观看", "respond": "回应", "added": "补充", "department": "部门", "able": "能够", "whatever": "无论什么", "assistance": "援助", "necessary": "必要的", "heart": "核心", "breaking": "打破", "speaking": "发言", "nation": "国家", "certainly": "当然", "worse": "更糟", "expecting": "期待", "clacton": "克拉克顿", "over": "超过", "course": "课程", "days": "天", "sadly": "可悲地", "happen": "发生", "liberal": "自由", "democrat": "民主党", "ed": "编辑", "davey": "戴维", "shocked": "震惊", "distressed": "痛苦的", "described": "描述", "woman": "女性", "deep": "深切", "faith": "信仰", "life": "生活", "turned": "转向", "star": "明星", "widdecombe": "威德科姆", "widdecombe's": "威德科姆的", "ann": "安", "haytor": "海托尔", "dancing": "跳舞", "rosson": "罗森", "devastated": "震惊的", "newton": "牛顿", "abbot": "阿博特", "longman": "朗曼", "stages": "阶段", "kin": "亲属", "specially": "特别地", "co-star": "联合主演", "reacts": "反应", "maidstone": "梅德斯通", "major's": "少校的", "embarked": "开始", "showbiz": "娱乐圈", "celebrity": "名人", "staunch": "坚定的", "supporter": "支持者", "mep": "欧洲议会议员", "representing": "代表", "appearances": "露面", "detached": "超然的", "fields": "田野", "ilona": "伊洛娜", "cordon": "警戒线", "door-to-door": "挨家挨户的", "keen": "热衷的", "suspicious": "可疑的", "vicinity": "附近", "vale": "山谷", "doorbell": "门铃", "dashcam": "行车记录仪", "assist": "协助", "traumatic": "创伤性的", "reiterate": "重申", "uniformed": "穿制服的", "speculate": "推测", "susan": "苏珊", "coish": "科伊什", "sunk": "沉没", "talktv": "TalkTV", "anton": "安东", "du": "杜", "beke": "贝克", "saddest": "最悲伤的", "lindsay": "林赛", "hoyle": "霍伊尔", "saddened": "感到悲伤的", "ann's": "安的", "poorer": "更贫穷的", "devoted": "忠诚的", "obituary": "讣告", "brexit-backing": "支持脱欧的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
