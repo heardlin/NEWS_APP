@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-14</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-14</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/3198/live/f1c6b920-7fa5-11f1-a5f4-433bb9aa2e5a.jpg" alt="Police say Ann Widdecombe killed in 'targeted attack' as motive investigated" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Police say Ann Widdecombe killed in 'targeted attack' as motive investigated</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c0ryr74zjzvo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-14.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Attack was '<span class="keyword" data-word="targeted" data-phonetic="/ˈtɑːɡɪtɪd/" data-pos="adj." data-def="有针对性的" data-def-en="Directed at a specific person or group.">targeted</span>' - Counter Terrorism Police</span></p>
+        <p class="cn">反恐警察称袭击是“有针对性的”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Ann Widdecombe was killed in a "<span class="keyword" data-word="targeted" data-phonetic="/ˈtɑːɡɪtɪd/" data-pos="adj." data-def="有针对性的" data-def-en="Directed at a specific person or group.">targeted</span> attack" and detectives are still working to understand the <span class="keyword" data-word="motive" data-phonetic="/ˈməʊtɪv/" data-pos="n." data-def="动机" data-def-en="A reason for doing something, especially one that is hidden or not obvious.">motive</span>, police have said.</span></p>
+        <p class="cn">警方表示，安·威德库姆（Ann Widdecombe）死于一场“有针对性的袭击”，侦探们仍在努力查明动机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Assistant Commissioner Laurence Taylor, Head of Counter Terrorism Policing, said the appearance of the former Conservative minister turned Reform UK spokeswoman on Talk TV on the morning she was killed at her home in Devon is being looked into as part of the investigation.</span></p>
+        <p class="cn">反恐警务负责人劳伦斯·泰勒（Laurence Taylor）助理专员表示，这位前保守党部长转投改革党（Reform UK）发言人，在德文郡家中遇害当天早上出现在Talk TV上的情况，正在作为调查的一部分进行审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">In an update at New Scotland Yard, he also said he did not want to rule anything out when asked if the killer could have been targeting other Reform figures.</span></p>
+        <p class="cn">在伦敦警察厅（New Scotland Yard）的最新通报中，他还表示，当被问及凶手是否可能针对其他改革党人物时，他不愿排除任何可能性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Detectives have obtained a <span class="keyword" data-word="warrant" data-phonetic="/ˈwɒrənt/" data-pos="n." data-def="逮捕令" data-def-en="A legal document issued by a judge authorizing the police to arrest someone.">warrant</span> under the Terrorism Act to hold the 28-year-old <span class="keyword" data-word="suspect" data-phonetic="/səˈspekt/" data-pos="n." data-def="嫌疑犯" data-def-en="A person thought to be guilty of a crime or offense.">suspect</span> arrested in Rotherham on suspicion of murder for up to seven days.</span></p>
+        <p class="cn">侦探们已根据《反恐法》（Terrorism Act）获得逮捕令，可将这名在罗瑟勒姆（Rotherham）因涉嫌谋杀被捕的28岁嫌疑人拘留最多七天。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The body of Widdecombe, 78, was discovered on Thursday 9 July at her home in Haytor.</span> <span class="sentence" data-sentence-index="7">She had sustained serious injuries in an attack police believe took place the previous day.</span></p>
+        <p class="cn">78岁的威德库姆的尸体于7月9日星期四在位于海托尔（Haytor）的家中被发现。她在一次袭击中受了重伤，警方认为袭击发生在前一天。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">A white British man, 28, was arrested on Saturday.</span> <span class="sentence" data-sentence-index="9">He was re-arrested on Monday on suspicion of the commission, preparation or <span class="keyword" data-word="instigation" data-phonetic="/ˌɪnstɪˈɡeɪʃən/" data-pos="n." data-def="煽动" data-def-en="The act of causing something to happen, especially something bad.">instigation</span> of acts of terrorism.</span></p>
+        <p class="cn">一名28岁的白人英国男子于周六被捕。他于周一因涉嫌实施、准备或煽动恐怖主义行为再次被捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Taylor said a counter-terrorism investigation is "running in <span class="keyword" data-word="parallel" data-phonetic="/ˈpærəlel/" data-pos="adj." data-def="并行的" data-def-en="Occurring at the same time and in a similar way.">parallel</span>" to the murder investigation but the suspected killing "has not been declared a terrorist incident at this stage".</span></p>
+        <p class="cn">泰勒表示，反恐调查与谋杀调查“并行进行”，但涉嫌杀人事件“现阶段尚未被宣布为恐怖事件”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">He told reporters: "It is clear that this was a <span class="keyword" data-word="targeted" data-phonetic="/ˈtɑːɡɪtɪd/" data-pos="adj." data-def="有针对性的" data-def-en="Directed at a specific person or group.">targeted</span> attack.</span> <span class="sentence" data-sentence-index="12">We are still working to understand the extent of any planning or preparation, and the motivation that sits behind that attack.</span></p>
+        <p class="cn">他告诉记者：“很明显，这是一次有针对性的袭击。我们仍在努力了解任何计划或准备的程度，以及袭击背后的动机。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">"I wouldn't want to comment on what that motivation was."</span></p>
+        <p class="cn">“我不想评论那是什么动机。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">Taylor added: "There are multiple lines of inquiry that we are pursuing expeditiously, and that includes a number of digital <span class="keyword" data-word="forensic" data-phonetic="/fəˈrensɪk/" data-pos="adj." data-def="法医的" data-def-en="Relating to the use of scientific methods to investigate crimes.">forensic</span> examinations."</span></p>
+        <p class="cn">泰勒补充道：“我们正在迅速推进多条调查线索，其中包括一些数字取证检查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Widdecombe served as MP for Maidstone in Kent for 23 years</span></p>
+        <p class="cn">威德库姆曾担任肯特郡梅德斯通（Maidstone）议员23年</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">The counter terrorism police chief also said he would not comment on whether they were investigating whether a foreign state was involved or on details about the planning and preparation of the attack.</span></p>
+        <p class="cn">反恐警察负责人还表示，他不会评论他们是否在调查是否有外国参与，也不会评论袭击的计划和准备细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">"We are working through what the motivation for the attack currently is," he said.</span></p>
+        <p class="cn">他说：“我们正在努力查明袭击目前的动机。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">On Monday, Home Secretary Shabana Mahmood told the House of Commons the <span class="keyword" data-word="suspect" data-phonetic="/səˈspekt/" data-pos="n." data-def="嫌疑犯" data-def-en="A person thought to be guilty of a crime or offense.">suspect</span> was not known to the government's Prevent anti-terror scheme.</span></p>
+        <p class="cn">周一，内政大臣沙巴纳·马哈茂德（Shabana Mahmood）告诉下议院，嫌疑人并不为政府的预防反恐计划（Prevent）所知。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Taylor would not comment on whether the arrest on suspicion of terror offences means the <span class="keyword" data-word="suspect" data-phonetic="/səˈspekt/" data-pos="n." data-def="嫌疑犯" data-def-en="A person thought to be guilty of a crime or offense.">suspect</span> potentially committed terrorism offences separate to the murder case, or whether any other politicians were potential targets.</span></p>
+        <p class="cn">泰勒不愿评论因涉嫌恐怖罪行被捕是否意味着嫌疑人可能犯下了与谋杀案无关的恐怖主义罪行，或者是否有其他政客是潜在目标。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">He said: "This is a murder investigation following a brutal attack on a 78-year-old woman in her own home."</span></p>
+        <p class="cn">他说：“这是一起针对一名78岁女性在其家中遭受野蛮袭击的谋杀调查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">There has been a "deeply distressing impact on Miss Widdecombe's family", he added.</span></p>
+        <p class="cn">他补充说，这对威德库姆的家人造成了“极其痛苦的影响”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">On Widdecombe's Talk TV appearance, Taylor said: "We are exploring all lines of inquiry and that is one of the lines of inquiry that we'll be exploring."</span></p>
+        <p class="cn">关于威德库姆在Talk TV上的露面，泰勒说：“我们正在探索所有调查线索，这是我们将要探索的线索之一。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">He said: "My request is that we don't over <span class="keyword" data-word="speculate" data-phonetic="/ˈspekjuleɪt/" data-pos="v." data-def="推测" data-def-en="To form opinions about something without having definite knowledge.">speculate</span> and that we go where the investigation takes us.</span> <span class="sentence" data-sentence-index="24">In terms of <span class="keyword" data-word="motive" data-phonetic="/ˈməʊtɪv/" data-pos="n." data-def="动机" data-def-en="A reason for doing something, especially one that is hidden or not obvious.">motive</span> it would be wrong for me to ascribe either an ideology, or what the motivation might be at this stage."</span></p>
+        <p class="cn">他说：“我的要求是不要过度猜测，而是跟随调查的进展。关于动机，现阶段我既不能归因于某种意识形态，也不能说明动机可能是什么。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">Counter-terror police took over the investigation into Widdecombe's death from Devon and Cornwall police on Monday.</span></p>
+        <p class="cn">反恐警察周一从德文郡和康沃尔郡警方（Devon and Cornwall Police）接手了威德库姆死亡案的调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">The development followed an earlier statement from Devon and Cornwall Police that, while they were keeping an open mind, there was "nothing to suggest" the murder was politically motivated.</span></p>
+        <p class="cn">此前，德文郡和康沃尔郡警方曾发表声明称，尽管他们持开放态度，但“没有迹象表明”谋杀是出于政治动机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">Taylor told reporters: "Based on new information we felt it was appropriate that we took over the investigation."</span></p>
+        <p class="cn">泰勒告诉记者：“根据新信息，我们认为接手调查是合适的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">In an earlier statement, Devon and Cornwall's police and crime commissioner defended the force after the investigation was handed over to counter-terror officers.</span></p>
+        <p class="cn">在调查移交给反恐人员后，德文郡和康沃尔郡的警察与犯罪专员在一份早期声明中为该警队进行了辩护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Alison Hernandez acknowledged "commentary" about the way police communicated during the early stages of the case, but described the force's response as "substantial and professional" and said it was "not unusual" for counter-terror police to become involved later.</span></p>
+        <p class="cn">艾莉森·埃尔南德斯（Alison Hernandez）承认了关于警方在案件初期沟通方式的“评论”，但称警方的反应是“实质性和专业的”，并表示反恐警察后来介入“并不罕见”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Ann Widdecombe seen in unaired interview believed have been recorded 20 minutes before attack</span></p>
+        <p class="cn">安·威德库姆出现在一段未播出的采访中，据信是在袭击发生前20分钟录制的</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">It has also emerged that Widdecombe, who served as Conservative MP for Maidstone in Kent for 23 years,  gave a pre-recorded radio interview about 20 minutes before police believe she was attacked.</span></p>
+        <p class="cn">此外，据透露，威德库姆在警方认为她遭到袭击前约20分钟，接受了一次预先录制的电台采访。她曾担任肯特郡梅德斯通保守党议员23年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">She spoke to British Christian radio station TWR-UK for about nine minutes via video link, but the interview was not broadcast.</span></p>
+        <p class="cn">她通过视频连线与英国基督教电台TWR-UK交谈了大约九分钟，但采访并未播出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">The station later shared part of the recording with Times Radio, which first aired the interview on Tuesday.</span></p>
+        <p class="cn">该电台后来与Times Radio分享了部分录音，Times Radio于周二首次播出了这段采访。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">In the interview, she spoke about her support for Reform UK leader Nigel Farage following his decision to re-fight his Essex seat in a by-election, amid scrutiny over his finances and a parliamentary investigation.</span></p>
+        <p class="cn">在采访中，她谈到了对改革党领袖奈杰尔·法拉奇（Nigel Farage）的支持，此前他决定在补选中重新争夺埃塞克斯（Essex）席位，当时他的财务问题正受到审查，并面临议会调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">Police continue to question murder <span class="keyword" data-word="suspect" data-phonetic="/səˈspekt/" data-pos="n." data-def="嫌疑犯" data-def-en="A person thought to be guilty of a crime or offense.">suspect</span> over Ann Widdecombe's killing</span></p>
+        <p class="cn">警方继续就安·威德库姆被杀案讯问谋杀嫌疑人</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">Widdecombe seen in interview believed to be 20 minutes before attack</span></p>
+        <p class="cn">威德库姆出现在采访中，据信是在袭击前20分钟</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Police commissioner defends force after Widdecombe investigation 'commentary'</span></p>
+        <p class="cn">在威德库姆调查引发“评论”后，警察专员为警队辩护</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Ann Widdecombe obituary: Brexit-backing former minister turned Strictly star</span></p>
+        <p class="cn">安·威德库姆讣告：支持脱欧的前部长转型为《舞动奇迹》（Strictly）明星</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">targeted</span>
+        <button class="kw-speak-btn" data-word="targeted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɑːɡɪtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">有针对性的</p>
+      <p class="kw-def-en">Directed at a specific person or group.</p>
+      <p class="kw-ctx">&ldquo;It is clear that this was a targeted attack.&rdquo;</p>
+      <p class="kw-ctx-cn">很明显，这是一次有针对性的袭击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">motive</span>
+        <button class="kw-speak-btn" data-word="motive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈməʊtɪv/ n.</span>
+      </div>
+      <p class="kw-def">动机</p>
+      <p class="kw-def-en">A reason for doing something, especially one that is hidden or not obvious.</p>
+      <p class="kw-ctx">&ldquo;Detectives are still working to understand the motive.&rdquo;</p>
+      <p class="kw-ctx-cn">侦探们仍在努力查明动机。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspect</span>
+        <button class="kw-speak-btn" data-word="suspect" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspekt/ n.</span>
+      </div>
+      <p class="kw-def">嫌疑犯</p>
+      <p class="kw-def-en">A person thought to be guilty of a crime or offense.</p>
+      <p class="kw-ctx">&ldquo;The 28-year-old suspect arrested in Rotherham on suspicion of murder.&rdquo;</p>
+      <p class="kw-ctx-cn">在罗瑟勒姆因涉嫌谋杀被捕的28岁嫌疑犯。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">warrant</span>
+        <button class="kw-speak-btn" data-word="warrant" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwɒrənt/ n.</span>
+      </div>
+      <p class="kw-def">逮捕令</p>
+      <p class="kw-def-en">A legal document issued by a judge authorizing the police to arrest someone.</p>
+      <p class="kw-ctx">&ldquo;Detectives have obtained a warrant under the Terrorism Act to hold the suspect.&rdquo;</p>
+      <p class="kw-ctx-cn">侦探们根据《反恐法》获得了逮捕令，以拘留该嫌疑犯。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">instigation</span>
+        <button class="kw-speak-btn" data-word="instigation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪnstɪˈɡeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">煽动</p>
+      <p class="kw-def-en">The act of causing something to happen, especially something bad.</p>
+      <p class="kw-ctx">&ldquo;He was re-arrested on suspicion of the commission, preparation or instigation of acts of terrorism.&rdquo;</p>
+      <p class="kw-ctx-cn">他因涉嫌实施、准备或煽动恐怖主义行为再次被捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">parallel</span>
+        <button class="kw-speak-btn" data-word="parallel" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpærəlel/ adj.</span>
+      </div>
+      <p class="kw-def">并行的</p>
+      <p class="kw-def-en">Occurring at the same time and in a similar way.</p>
+      <p class="kw-ctx">&ldquo;A counter-terrorism investigation is running in parallel to the murder investigation.&rdquo;</p>
+      <p class="kw-ctx-cn">反恐调查与谋杀调查同时进行。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">forensic</span>
+        <button class="kw-speak-btn" data-word="forensic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fəˈrensɪk/ adj.</span>
+      </div>
+      <p class="kw-def">法医的</p>
+      <p class="kw-def-en">Relating to the use of scientific methods to investigate crimes.</p>
+      <p class="kw-ctx">&ldquo;That includes a number of digital forensic examinations.&rdquo;</p>
+      <p class="kw-ctx-cn">这包括多项数字法医检查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">speculate</span>
+        <button class="kw-speak-btn" data-word="speculate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈspekjuleɪt/ v.</span>
+      </div>
+      <p class="kw-def">推测</p>
+      <p class="kw-def-en">To form opinions about something without having definite knowledge.</p>
+      <p class="kw-ctx">&ldquo;My request is that we don't over speculate.&rdquo;</p>
+      <p class="kw-ctx-cn">我的要求是我们不要过度推测。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Attack was 'targeted' - Counter Terrorism Police", "start_ms": 3000, "end_ms": 7152, "paragraph_index": 1}, {"index": 2, "text": "Ann Widdecombe was killed in a \"targeted attack\" and detectives are still working to understand the motive, police have said.", "start_ms": 7152, "end_ms": 15288, "paragraph_index": 2}, {"index": 3, "text": "Assistant Commissioner Laurence Taylor, Head of Counter Terrorism Policing, said the appearance of the former Conservative minister turned Reform UK spokeswoman on Talk TV on the morning she was killed at her home in Devon is being looked into as part of the investigation.", "start_ms": 15288, "end_ms": 32616, "paragraph_index": 3}, {"index": 4, "text": "In an update at New Scotland Yard, he also said he did not want to rule anything out when asked if the killer could have been targeting other Reform figures.", "start_ms": 32616, "end_ms": 42504, "paragraph_index": 4}, {"index": 5, "text": "Detectives have obtained a warrant under the Terrorism Act to hold the 28-year-old suspect arrested in Rotherham on suspicion of murder for up to seven days.", "start_ms": 42504, "end_ms": 53088, "paragraph_index": 5}, {"index": 6, "text": "The body of Widdecombe, 78, was discovered on Thursday 9 July at her home in Haytor.", "start_ms": 53088, "end_ms": 60384, "paragraph_index": 6}, {"index": 7, "text": "She had sustained serious injuries in an attack police believe took place the previous day.", "start_ms": 60384, "end_ms": 66840, "paragraph_index": 6}, {"index": 8, "text": "A white British man, 28, was arrested on Saturday.", "start_ms": 66840, "end_ms": 71880, "paragraph_index": 7}, {"index": 9, "text": "He was re-arrested on Monday on suspicion of the commission, preparation or instigation of acts of terrorism.", "start_ms": 71880, "end_ms": 79944, "paragraph_index": 7}, {"index": 10, "text": "Taylor said a counter-terrorism investigation is \"running in parallel\" to the murder investigation but the suspected killing \"has not been declared a terrorist incident at this stage\".", "start_ms": 79944, "end_ms": 91608, "paragraph_index": 8}, {"index": 11, "text": "He told reporters: \"It is clear that this was a targeted attack.", "start_ms": 91608, "end_ms": 96792, "paragraph_index": 9}, {"index": 12, "text": "We are still working to understand the extent of any planning or preparation, and the motivation that sits behind that attack.", "start_ms": 96792, "end_ms": 105576, "paragraph_index": 9}, {"index": 13, "text": "\"I wouldn't want to comment on what that motivation was.\"", "start_ms": 105576, "end_ms": 109728, "paragraph_index": 10}, {"index": 14, "text": "Taylor added: \"There are multiple lines of inquiry that we are pursuing expeditiously, and that includes a number of digital forensic examinations.\"", "start_ms": 109728, "end_ms": 120048, "paragraph_index": 11}, {"index": 15, "text": "Widdecombe served as MP for Maidstone in Kent for 23 years", "start_ms": 120048, "end_ms": 125400, "paragraph_index": 12}, {"index": 16, "text": "The counter terrorism police chief also said he would not comment on whether they were investigating whether a foreign state was involved or on details about the planning and preparation of the attack.", "start_ms": 125400, "end_ms": 137640, "paragraph_index": 13}, {"index": 17, "text": "\"We are working through what the motivation for the attack currently is,\" he said.", "start_ms": 137640, "end_ms": 143232, "paragraph_index": 14}, {"index": 18, "text": "On Monday, Home Secretary Shabana Mahmood told the House of Commons the suspect was not known to the government's Prevent anti-terror scheme.", "start_ms": 143232, "end_ms": 153024, "paragraph_index": 15}, {"index": 19, "text": "Taylor would not comment on whether the arrest on suspicion of terror offences means the suspect potentially committed terrorism offences separate to the murder case, or whether any other politicians were potential targets.", "start_ms": 153024, "end_ms": 167472, "paragraph_index": 16}, {"index": 20, "text": "He said: \"This is a murder investigation following a brutal attack on a 78-year-old woman in her own home.\"", "start_ms": 167472, "end_ms": 175560, "paragraph_index": 17}, {"index": 21, "text": "There has been a \"deeply distressing impact on Miss Widdecombe's family\", he added.", "start_ms": 175560, "end_ms": 181512, "paragraph_index": 18}, {"index": 22, "text": "On Widdecombe's Talk TV appearance, Taylor said: \"We are exploring all lines of inquiry and that is one of the lines of inquiry that we'll be exploring.\"", "start_ms": 181512, "end_ms": 191760, "paragraph_index": 19}, {"index": 23, "text": "He said: \"My request is that we don't over speculate and that we go where the investigation takes us.", "start_ms": 191760, "end_ms": 198816, "paragraph_index": 20}, {"index": 24, "text": "In terms of motive it would be wrong for me to ascribe either an ideology, or what the motivation might be at this stage.\"", "start_ms": 198816, "end_ms": 207024, "paragraph_index": 20}, {"index": 25, "text": "Counter-terror police took over the investigation into Widdecombe's death from Devon and Cornwall police on Monday.", "start_ms": 207024, "end_ms": 214752, "paragraph_index": 21}, {"index": 26, "text": "The development followed an earlier statement from Devon and Cornwall Police that, while they were keeping an open mind, there was \"nothing to suggest\" the murder was politically motivated.", "start_ms": 214752, "end_ms": 226296, "paragraph_index": 22}, {"index": 27, "text": "Taylor told reporters: \"Based on new information we felt it was appropriate that we took over the investigation.\"", "start_ms": 226296, "end_ms": 234024, "paragraph_index": 23}, {"index": 28, "text": "In an earlier statement, Devon and Cornwall's police and crime commissioner defended the force after the investigation was handed over to counter-terror officers.", "start_ms": 234024, "end_ms": 244944, "paragraph_index": 24}, {"index": 29, "text": "Alison Hernandez acknowledged \"commentary\" about the way police communicated during the early stages of the case, but described the force's response as \"substantial and professional\" and said it was \"not unusual\" for counter-terror police to become involved later.", "start_ms": 244944, "end_ms": 261432, "paragraph_index": 25}, {"index": 30, "text": "This video can not be played", "start_ms": 261432, "end_ms": 264432, "paragraph_index": 26}, {"index": 31, "text": "Ann Widdecombe seen in unaired interview believed have been recorded 20 minutes before attack", "start_ms": 264432, "end_ms": 271080, "paragraph_index": 27}, {"index": 32, "text": "It has also emerged that Widdecombe, who served as Conservative MP for Maidstone in Kent for 23 years,  gave a pre-recorded radio interview about 20 minutes before police believe she was attacked.", "start_ms": 271080, "end_ms": 284928, "paragraph_index": 28}, {"index": 33, "text": "She spoke to British Christian radio station TWR-UK for about nine minutes via video link, but the interview was not broadcast.", "start_ms": 284928, "end_ms": 294816, "paragraph_index": 29}, {"index": 34, "text": "The station later shared part of the recording with Times Radio, which first aired the interview on Tuesday.", "start_ms": 294816, "end_ms": 302400, "paragraph_index": 30}, {"index": 35, "text": "In the interview, she spoke about her support for Reform UK leader Nigel Farage following his decision to re-fight his Essex seat in a by-election, amid scrutiny over his finances and a parliamentary investigation.", "start_ms": 302400, "end_ms": 317640, "paragraph_index": 31}, {"index": 36, "text": "Police continue to question murder suspect over Ann Widdecombe's killing", "start_ms": 317640, "end_ms": 323064, "paragraph_index": 32}, {"index": 37, "text": "Widdecombe seen in interview believed to be 20 minutes before attack", "start_ms": 323064, "end_ms": 328368, "paragraph_index": 33}, {"index": 38, "text": "Police commissioner defends force after Widdecombe investigation 'commentary'", "start_ms": 328368, "end_ms": 334152, "paragraph_index": 34}, {"index": 39, "text": "Ann Widdecombe obituary: Brexit-backing former minister turned Strictly star", "start_ms": 334152, "end_ms": 340344, "paragraph_index": 35}], "total_duration_ms": 340344};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "on": "在", "was": "是", "to": "到", "in": "在", "police": "警方", "and": "和", "that": "那个", "attack": "袭击", "said": "说", "investigation": "调查", "for": "为了", "not": "不", "he": "他", "widdecombe": "威德科姆", "we": "我们", "is": "是", "this": "这个", "be": "是", "terrorism": "恐怖主义", "are": "是", "taylor": "泰勒", "an": "一个", "murder": "谋杀", "over": "超过", "interview": "采访", "she": "她", "at": "在", "or": "或者", "it": "它", "about": "关于", "ann": "安", "have": "有", "her": "她的", "home": "家", "devon": "德文郡", "as": "作为", "been": "已经", "motivation": "动力", "whether": "是否", "widdecombe's": "威德科姆的", "minutes": "会议记录", "video": "视频", "counter": "反制", "working": "工作", "commissioner": "专员", "reform": "改革", "also": "也", "suspicion": "嫌疑", "took": "担任", "monday": "星期一", "preparation": "准备", "but": "但是", "has": "有", "told": "告诉", "comment": "评论", "what": "什么", "there": "那里", "lines": "线", "inquiry": "调查", "would": "将", "were": "是", "counter-terror": "反恐", "before": "之前", "radio": "电台", "his": "他的", "can": "可以", "played": "比赛", "killed": "杀死", "detectives": "侦探", "still": "仍然", "understand": "理解", "appearance": "出现", "former": "前任", "conservative": "保守党", "minister": "部长", "turned": "转向", "uk": "英国", "talk": "会谈", "tv": "电视", "into": "进入", "part": "部分", "new": "新的", "want": "想要", "other": "其他", "year-old": "岁的", "arrested": "被捕", "believe": "认为", "british": "英国的", "killing": "杀害", "stage": "舞台", "reporters": "记者们", "any": "任何", "planning": "计划", "added": "补充", "served": "服役", "mp": "议员", "maidstone": "梅德斯通", "kent": "肯特", "years": "多年", "they": "它们", "involved": "涉及的", "offences": "罪行", "case": "案例", "following": "随后", "from": "来自", "cornwall": "康沃尔", "earlier": "较早", "statement": "声明", "force": "力量", "after": "之后", "commentary": "评论", "later": "后来", "seen": "被视为", "believed": "据信", "spoke": "发言", "station": "站点", "assistant": "助理", "laurence": "劳伦斯", "head": "前往", "policing": "警务", "spokeswoman": "女发言人", "morning": "上午", "being": "正在", "looked": "看起来", "update": "更新", "scotland": "苏格兰", "yard": "场", "did": "做了", "rule": "统治", "anything": "任何事", "out": "出来", "when": "当", "asked": "询问", "if": "如果", "killer": "杀手", "could": "可能", "targeting": "针对", "figures": "人物", "under": "在...之下", "act": "行为", "hold": "追究", "rotherham": "罗瑟勒姆", "up": "向上", "seven": "七", "days": "天", "body": "机构", "discovered": "发现", "thursday": "星期四", "july": "七月", "haytor": "海托尔", "had": "有", "sustained": "持续的", "serious": "严重的", "injuries": "受伤", "place": "地点", "previous": "先前", "day": "天", "white": "白色的", "man": "男子", "saturday": "星期六", "re-arrested": "再次被捕", "commission": "委员会", "acts": "行为", "counter-terrorism": "反恐", "running": "奔跑", "suspected": "涉嫌", "declared": "宣布", "terrorist": "恐怖分子", "incident": "事件", "clear": "明确", "extent": "程度", "sits": "位于", "behind": "在...后面", "wouldn't": "不会", "multiple": "多条", "includes": "包括", "number": "数量", "digital": "数字的", "chief": "首席", "investigating": "调查", "foreign": "外交", "state": "国家", "details": "细节", "through": "通过", "currently": "目前", "secretary": "秘书", "shabana": "沙巴娜", "mahmood": "马哈茂德", "house": "议院", "commons": "下议院", "known": "已知", "government's": "政府的", "prevent": "防止", "anti-terror": "反恐", "scheme": "计划", "arrest": "逮捕", "terror": "恐怖", "means": "意味着", "potentially": "可能地", "committed": "承诺的", "separate": "单独的", "politicians": "政治家", "potential": "潜在", "targets": "目标", "brutal": "残忍的", "woman": "女性", "own": "自己", "deeply": "深深地", "distressing": "令人痛苦的", "impact": "影响", "miss": "错过", "family": "家庭", "all": "所有", "one": "一个", "we'll": "我们将", "my": "我的", "request": "请求", "don't": "不要", "go": "去", "where": "那里", "takes": "担任", "us": "我们", "terms": "条件", "wrong": "错误的", "me": "我", "either": "要么", "ideology": "意识形态", "might": "可能", "death": "死亡", "development": "发展", "followed": "遵循", "while": "而", "keeping": "保持", "open": "开放", "mind": "介意", "nothing": "没有东西", "suggest": "表明", "politically": "政治上", "motivated": "有动机的", "based": "基于", "information": "信息", "felt": "感觉", "appropriate": "合适", "crime": "犯罪", "defended": "辩护", "handed": "交给", "officers": "官员", "alison": "艾莉森", "hernandez": "埃尔南德斯", "acknowledged": "承认", "way": "方式", "communicated": "沟通", "during": "在期间", "early": "早期的", "stages": "阶段", "described": "描述", "force's": "警方的", "response": "回应", "professional": "专业的", "unusual": "不寻常的", "become": "成为", "recorded": "记录", "emerged": "出现", "who": "谁", "gave": "给予", "attacked": "袭击", "nine": "九", "via": "通过", "link": "联系", "broadcast": "广播", "shared": "分享", "recording": "记录", "with": "与", "times": "次", "which": "哪个", "first": "第一轮", "aired": "播出", "tuesday": "星期二", "support": "支持", "leader": "领导人", "nigel": "奈杰尔", "farage": "法拉奇", "decision": "决定", "essex": "埃塞克斯", "seat": "席位", "by-election": "补选", "amid": "在…中", "scrutiny": "审查", "finances": "财务", "parliamentary": "议会", "continue": "继续", "question": "问题", "obituary": "讣告", "brexit-backing": "支持脱欧的", "strictly": "严格地", "star": "明星", "exploring": "探索", "obtained": "获得", "pursuing": "追求", "expeditiously": "迅速地", "examinations": "考试", "ascribe": "归因于", "cornwall's": "康沃尔的", "substantial": "大量的", "unaired": "未播出的", "pre-recorded": "预先录制的", "christian": "基督教的", "twr-uk": "TWR-UK", "re-fight": "重新争论", "defends": "辩护"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
