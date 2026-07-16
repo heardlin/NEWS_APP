@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-16</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-16</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/08c1/live/24189380-813b-11f1-b525-63787292c170.jpg" alt="Sadiq Khan among 26 new peers to enter the Lords" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Sadiq Khan among 26 new peers to enter the Lords</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cglj25k94r9o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-16.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">London Mayor Sir Sadiq Khan is one of 26 new peers to be given seats in the House of Lords in one of Sir Keir Starmer's last acts as prime minister.</span></p>
+        <p class="cn">伦敦市长萨迪克·汗爵士（Sir Sadiq Khan）是基尔·斯塔默爵士（Sir Keir Starmer）作为首相的最后举措之一中，获得上议院席位的26位新贵族之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Sir Sadiq has been nominated to become a Labour Lord alongside 15 others, including broadcaster June Sarpong and former union chief Christina McAnea.</span></p>
+        <p class="cn">萨迪克爵士被提名为工党贵族，与另外15人一同入选，包括广播员琼·萨蓬（June Sarpong）和前工会领袖克里斯蒂娜·麦卡尼亚（Christina McAnea）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Joining the Lords would allow Sir Sadiq to become a government minister but the BBC understands he is not seeking a role in Andy Burnham's incoming government.</span></p>
+        <p class="cn">加入上议院将使萨迪克爵士能够成为政府部长，但BBC了解到他并未寻求在安迪·伯纳姆（Andy Burnham）即将上任的政府中担任职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The government has also announced five new peers from the Liberal Democrats, three from the Conservatives and two <span class="keyword" data-word="cross-bench" data-phonetic="/ˈkrɒs bentʃ/" data-pos="adj." data-def="中立议员的；无党派议员的" data-def-en="Relating to members of a legislature who are not aligned with any political party.">cross-bench</span> members, the former cabinet secretary Sir Chris Wormald and Sir Brian Leveson, a retired senior judge.</span></p>
+        <p class="cn">政府还宣布了来自自由民主党的五位新贵族、保守党的三位以及两位中立议员：前内阁秘书克里斯·沃莫尔德爵士（Sir Chris Wormald）和退休高级法官布莱恩·莱维森爵士（Sir Brian Leveson）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Downing Street published a list of the nominations , external and said the King "has been graciously pleased to signify his intention of conferring peerages".</span></p>
+        <p class="cn">唐宁街公布了一份提名名单，并表示国王“已欣然表示其授予爵位的意向”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The nominations come as Sir Keir prepares to leave office on Monday, when Burnham is due to become the next prime minister.</span></p>
+        <p class="cn">这些提名是在基尔爵士准备于周一离任之际公布的，届时伯纳姆将成为下一任首相。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Sir Sadiq's nomination was among the most eye-catching on the list.</span></p>
+        <p class="cn">萨迪克爵士的提名是名单中最引人注目的之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The former Labour MP is mid-way through his third term as London mayor, having first been elected in 2016.</span> <span class="sentence" data-sentence-index="8">The BBC has been told he has not yet decided whether he wants to seek a fourth term as mayor in 2028.</span></p>
+        <p class="cn">这位前工党议员正处于他作为伦敦市长的第三个任期中期，他于2016年首次当选。BBC被告知，他尚未决定是否想在2028年寻求第四个市长任期。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">A government source praised Sir Sadiq as "a brilliant mayor who has transformed London for the better" and said his <span class="keyword" data-word="peerage" data-phonetic="/ˈpɪərɪdʒ/" data-pos="n." data-def="贵族爵位；贵族身份" data-def-en="The rank or title of a peer (a member of the nobility).">peerage</span> was "thoroughly deserved".</span></p>
+        <p class="cn">一位政府消息人士称赞萨迪克爵士是“一位出色的市长，使伦敦变得更好”，并称他的爵位“完全应得”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">"He has cut violent crime to record lows, cleaned up the capital's air, delivered the Elizabeth Line, and got London building council homes again," the source said.</span></p>
+        <p class="cn">“他将暴力犯罪降至历史最低，净化了首都的空气，交付了伊丽莎白线，并让伦敦再次建造市政住房，”该消息人士说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">A spokesperson for the mayor said Sir Sadiq was "honoured to be given a <span class="keyword" data-word="peerage" data-phonetic="/ˈpɪərɪdʒ/" data-pos="n." data-def="贵族爵位；贵族身份" data-def-en="The rank or title of a peer (a member of the nobility).">peerage</span>".</span></p>
+        <p class="cn">市长的一位发言人表示，萨迪克爵士“很荣幸获得爵位”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">"He is excited about what more can be delivered in the years ahead and he will devote his time and energy to standing up for our city and building a fairer, safer and greener London for everyone," the mayor's spokesperson said.</span></p>
+        <p class="cn">“他对未来几年能取得的成就感到兴奋，并将投入时间和精力为我们的城市发声，为每个人建设一个更公平、更安全、更绿色的伦敦，”市长发言人说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">The BBC has been told this was a cross-party list of nominations that was being worked on before Sir Keir announced his <span class="keyword" data-word="resignation" data-phonetic="/ˌrezɪɡˈneɪʃn/" data-pos="n." data-def="辞职；辞呈" data-def-en="The act of giving up a job or position.">resignation</span> as Labour leader last month.</span></p>
+        <p class="cn">BBC被告知，这是一份跨党派的提名名单，在基尔爵士上月宣布辞去工党领袖职务之前就已着手制定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">It is a list of "political peerages" rather than <span class="keyword" data-word="resignation" data-phonetic="/ˌrezɪɡˈneɪʃn/" data-pos="n." data-def="辞职；辞呈" data-def-en="The act of giving up a job or position.">resignation</span> honours prime ministers usually grant on their departure from office.</span></p>
+        <p class="cn">这是一份“政治爵位”名单，而非首相通常在离任时授予的辞职荣誉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">It comes after Sir Keir signalled he could hand out <span class="keyword" data-word="resignation" data-phonetic="/ˌrezɪɡˈneɪʃn/" data-pos="n." data-def="辞职；辞呈" data-def-en="The act of giving up a job or position.">resignation</span> honours when he leaves Downing Street, despite saying in 2023 he found giving out such awards "very hard to justify".</span></p>
+        <p class="cn">此前，基尔爵士表示他可能在离开唐宁街时授予辞职荣誉，尽管他在2023年曾表示很难证明授予此类奖项的合理性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">June Sarpong attending London Fashion Week with the prime minister's wife Victoria Starmer in 2024</span></p>
+        <p class="cn">2024年，琼·萨蓬与首相夫人维多利亚·斯塔默（Victoria Starmer）一同出席伦敦时装周。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Reform UK was not granted any peerages in the list published on Thursday.</span></p>
+        <p class="cn">改革党（Reform UK）在周四公布的名单中未获得任何爵位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Reform UK leader Nigel Farage said the appointments were "the uniparty writ large".</span></p>
+        <p class="cn">改革党领袖奈杰尔·法拉奇（Nigel Farage）表示，这些任命是“统一党的大规模体现”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">"Once again there is nothing for Reform and we get an even more unrepresentative upper house," Farage said.</span></p>
+        <p class="cn">“改革党再次一无所获，我们得到了一个更不具代表性的上议院，”法拉奇说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Liberal Democrat leader Sir Ed Davey said he was "delighted" agricultural economist Julia Aglionby, former Barnsley councillor Hannah Kitching, economist Tim Leunig, campaigns director Dave McCobb and offshore wind entrepreneur Mark Petterson would be joining his party's ranks in the Lords.</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士（Sir Ed Davey）表示，他“很高兴”农业经济学家朱莉娅·阿格利翁比（Julia Aglionby）、前巴恩斯利议员汉娜·基钦（Hannah Kitching）、经济学家蒂姆·勒尼格（Tim Leunig）、竞选总监戴夫·麦考布（Dave McCobb）和海上风电企业家马克·佩特森（Mark Petterson）将加入该党在上议院的队伍。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">"Each of them has the right skills, experience and values to help us hold the Government to account, deliver the change people need, and fix our broken politics, including reforming the House of Lords," Sir Ed said.</span></p>
+        <p class="cn">“他们每个人都拥有合适的技能、经验和价值观，能够帮助我们追究政府的责任，实现人们所需的变革，并修复我们破碎的政治，包括改革上议院，”埃德爵士说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">The former head of the army, General Sir Patrick Sanders, has been made a Conservative peer alongside Carphone Warehouse co-founder David Ross and Swaran Singh, professor of social and community psychiatry at the University of Warwick.</span></p>
+        <p class="cn">前陆军总司令帕特里克·桑德斯爵士（General Sir Patrick Sanders）与Carphone Warehouse联合创始人戴维·罗斯（David Ross）以及华威大学社会与社区精神病学教授斯瓦兰·辛格（Swaran Singh）一同被任命为保守党贵族。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">A Conservative Party spokesman said: "We are delighted that David, Sir Patrick and Professor Singh will be joining the Conservative team in the House of Lords.</span></p>
+        <p class="cn">一位保守党发言人表示：“我们很高兴戴维、帕特里克爵士和辛格教授将加入上议院的保守党团队。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">"They each bring immense experience from the worlds of business, defence and healthcare."</span></p>
+        <p class="cn">“他们每个人都从商业、国防和医疗领域带来了丰富的经验。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Members of the House of Lords are generally appointed by the King on the advice of the prime minister.</span></p>
+        <p class="cn">上议院议员通常由国王根据首相的建议任命。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Once a nominee passes <span class="keyword" data-word="vetting" data-phonetic="/ˈvetɪŋ/" data-pos="n." data-def="审查；审核" data-def-en="The process of examining someone or something carefully for suitability or approval.">vetting</span>, appointments to the Lords are formalised by the King.</span></p>
+        <p class="cn">一旦提名人通过审查，上议院的任命将由国王正式确定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">In 2022, Labour said it planned to abolish the Lords, replacing it with a "new, reformed upper chamber".</span></p>
+        <p class="cn">2022年，工党表示计划废除上议院，代之以“一个新的、经过改革的上院”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">But this was watered down, with Labour committing to consider plans for an alternative second chamber, whilst immediately axing the 92 places for <span class="keyword" data-word="hereditary" data-phonetic="/həˈredɪtri/" data-pos="adj." data-def="世袭的；遗传的" data-def-en="Passed down from one generation to another, especially by inheritance.">hereditary</span> peers, which it did this year.</span></p>
+        <p class="cn">但这被弱化了，工党承诺考虑替代第二议院的计划，同时立即取消92个世袭贵族席位，并于今年实施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">Burnham has called for a complete <span class="keyword" data-word="overhaul" data-phonetic="/ˈəʊvəhɔːl/" data-pos="n." data-def="彻底改革；全面检修" data-def-en="A thorough examination and repair or reform of a system.">overhaul</span> of the unelected Lords.</span></p>
+        <p class="cn">伯纳姆呼吁对非选举产生的上议院进行全面改革。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">"I don't think we can justify half of our national legislature being unelected," Burnham told The House magazine last month.</span></p>
+        <p class="cn">“我认为我们无法证明国家立法机构的一半是非选举产生的，”伯纳姆上月告诉《议院》杂志。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">"I think this is something that is, in many ways, quite scandalous."</span></p>
+        <p class="cn">“我认为这在很多方面是相当可耻的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">The Electoral Reform Society campaign said Labour's supporters would be baffled by the latest appointments to the Lords given its plans to reform the chamber.</span></p>
+        <p class="cn">选举改革协会（Electoral Reform Society）的活动人士表示，鉴于工党改革上议院的计划，其支持者会对最新的任命感到困惑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">"The next prime minister needs to make good on the promise of reform and turn the Lords into a smaller, democratic chamber that is more representative of and <span class="keyword" data-word="accountable" data-phonetic="/əˈkaʊntəbl/" data-pos="adj." data-def="负有责任的；可解释的" data-def-en="Required to explain or justify actions; responsible.">accountable</span> to the people of this country," said Darren Hughes, chief executive of the Electoral Reform Society.</span></p>
+        <p class="cn">“下一任首相需要兑现改革承诺，将上议院变成一个更小、更民主的议院，更能代表这个国家的人民并对其负责，”选举改革协会首席执行官达伦·休斯（Darren Hughes）说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="34">Peers face new attendance rules under proposed House of Lords changes</span></p>
+        <p class="cn">根据拟议的上议院改革，贵族们面临新的出勤规则。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="35"><span class="keyword" data-word="hereditary" data-phonetic="/həˈredɪtri/" data-pos="adj." data-def="世袭的；遗传的" data-def-en="Passed down from one generation to another, especially by inheritance.">Hereditary</span> peers to be removed from Lords as bill passes</span></p>
+        <p class="cn">世袭贵族将被逐出上议院，法案已通过。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">peerage</span>
+        <button class="kw-speak-btn" data-word="peerage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɪərɪdʒ/ n.</span>
+      </div>
+      <p class="kw-def">贵族爵位；贵族身份</p>
+      <p class="kw-def-en">The rank or title of a peer (a member of the nobility).</p>
+      <p class="kw-ctx">&ldquo;A government source praised Sir Sadiq as 'a brilliant mayor who has transformed London for the better' and said his peerage was 'thoroughly deserved'.&rdquo;</p>
+      <p class="kw-ctx-cn">一位政府消息人士称赞萨迪克爵士是'一位出色的市长，他让伦敦变得更好'，并表示他的贵族爵位'完全应得'。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">nominate</span>
+        <button class="kw-speak-btn" data-word="nominate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈnɒmɪneɪt/ v.</span>
+      </div>
+      <p class="kw-def">提名；任命</p>
+      <p class="kw-def-en">To formally suggest someone for a position or honor.</p>
+      <p class="kw-ctx">&ldquo;Sir Sadiq has been nominated to become a Labour Lord alongside 15 others, including broadcaster June Sarpong and former union chief Christina McAnea.&rdquo;</p>
+      <p class="kw-ctx-cn">萨迪克爵士已被提名为工党贵族，同行的还有15人，包括广播员琼·萨蓬和前工会领袖克里斯蒂娜·麦克阿尼亚。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cross-bench</span>
+        <button class="kw-speak-btn" data-word="cross-bench" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkrɒs bentʃ/ adj.</span>
+      </div>
+      <p class="kw-def">中立议员的；无党派议员的</p>
+      <p class="kw-def-en">Relating to members of a legislature who are not aligned with any political party.</p>
+      <p class="kw-ctx">&ldquo;The government has also announced five new peers from the Liberal Democrats, three from the Conservatives and two cross-bench members, the former cabinet secretary Sir Chris Wormald and Sir Brian Leveson, a retired senior judge.&rdquo;</p>
+      <p class="kw-ctx-cn">政府还宣布了来自自由民主党的五名新贵族、来自保守党的三名新贵族以及两名中立议员：前内阁秘书克里斯·沃莫尔德爵士和退休高级法官布莱恩·莱维森爵士。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resignation</span>
+        <button class="kw-speak-btn" data-word="resignation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌrezɪɡˈneɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">辞职；辞呈</p>
+      <p class="kw-def-en">The act of giving up a job or position.</p>
+      <p class="kw-ctx">&ldquo;The BBC has been told this was a cross-party list of nominations that was being worked on before Sir Keir announced his resignation as Labour leader last month.&rdquo;</p>
+      <p class="kw-ctx-cn">BBC获悉，这是一份跨党派提名名单，在基尔爵士上个月宣布辞去工党领袖职务之前就已经在拟定中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overhaul</span>
+        <button class="kw-speak-btn" data-word="overhaul" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈəʊvəhɔːl/ n.</span>
+      </div>
+      <p class="kw-def">彻底改革；全面检修</p>
+      <p class="kw-def-en">A thorough examination and repair or reform of a system.</p>
+      <p class="kw-ctx">&ldquo;Burnham has called for a complete overhaul of the unelected Lords.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆呼吁对非选举产生的上议院进行全面改革。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">accountable</span>
+        <button class="kw-speak-btn" data-word="accountable" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈkaʊntəbl/ adj.</span>
+      </div>
+      <p class="kw-def">负有责任的；可解释的</p>
+      <p class="kw-def-en">Required to explain or justify actions; responsible.</p>
+      <p class="kw-ctx">&ldquo;The next prime minister needs to make good on the promise of reform and turn the Lords into a smaller, democratic chamber that is more representative of and accountable to the people of this country.&rdquo;</p>
+      <p class="kw-ctx-cn">下一任首相需要兑现改革承诺，将上议院变成一个更小、更民主的议院，更能代表这个国家的人民并对他们负责。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vetting</span>
+        <button class="kw-speak-btn" data-word="vetting" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvetɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">审查；审核</p>
+      <p class="kw-def-en">The process of examining someone or something carefully for suitability or approval.</p>
+      <p class="kw-ctx">&ldquo;Once a nominee passes vetting, appointments to the Lords are formalised by the King.&rdquo;</p>
+      <p class="kw-ctx-cn">一旦被提名者通过审查，上议院的任命将由国王正式确定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hereditary</span>
+        <button class="kw-speak-btn" data-word="hereditary" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/həˈredɪtri/ adj.</span>
+      </div>
+      <p class="kw-def">世袭的；遗传的</p>
+      <p class="kw-def-en">Passed down from one generation to another, especially by inheritance.</p>
+      <p class="kw-ctx">&ldquo;But this was watered down, with Labour committing to consider plans for an alternative second chamber, whilst immediately axing the 92 places for hereditary peers, which it did this year.&rdquo;</p>
+      <p class="kw-ctx-cn">但这一承诺被淡化，工党承诺考虑替代第二议院的计划，同时立即取消92个世袭贵族席位，并于今年实施了这一举措。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "London Mayor Sir Sadiq Khan is one of 26 new peers to be given seats in the House of Lords in one of Sir Keir Starmer's last acts as prime minister.", "start_ms": 0, "end_ms": 10608, "paragraph_index": 0}, {"index": 1, "text": "Sir Sadiq has been nominated to become a Labour Lord alongside 15 others, including broadcaster June Sarpong and former union chief Christina McAnea.", "start_ms": 10608, "end_ms": 21984, "paragraph_index": 1}, {"index": 2, "text": "Joining the Lords would allow Sir Sadiq to become a government minister but the BBC understands he is not seeking a role in Andy Burnham's incoming government.", "start_ms": 21984, "end_ms": 32688, "paragraph_index": 2}, {"index": 3, "text": "The government has also announced five new peers from the Liberal Democrats, three from the Conservatives and two cross-bench members, the former cabinet secretary Sir Chris Wormald and Sir Brian Leveson, a retired senior judge.", "start_ms": 32688, "end_ms": 47976, "paragraph_index": 3}, {"index": 4, "text": "Downing Street published a list of the nominations , external and said the King \"has been graciously pleased to signify his intention of conferring peerages\".", "start_ms": 47976, "end_ms": 58392, "paragraph_index": 4}, {"index": 5, "text": "The nominations come as Sir Keir prepares to leave office on Monday, when Burnham is due to become the next prime minister.", "start_ms": 58392, "end_ms": 66960, "paragraph_index": 5}, {"index": 6, "text": "Sir Sadiq's nomination was among the most eye-catching on the list.", "start_ms": 66960, "end_ms": 71976, "paragraph_index": 6}, {"index": 7, "text": "The former Labour MP is mid-way through his third term as London mayor, having first been elected in 2016.", "start_ms": 71976, "end_ms": 80688, "paragraph_index": 7}, {"index": 8, "text": "The BBC has been told he has not yet decided whether he wants to seek a fourth term as mayor in 2028.", "start_ms": 80688, "end_ms": 88632, "paragraph_index": 7}, {"index": 9, "text": "A government source praised Sir Sadiq as \"a brilliant mayor who has transformed London for the better\" and said his peerage was \"thoroughly deserved\".", "start_ms": 88632, "end_ms": 98064, "paragraph_index": 8}, {"index": 10, "text": "\"He has cut violent crime to record lows, cleaned up the capital's air, delivered the Elizabeth Line, and got London building council homes again,\" the source said.", "start_ms": 98064, "end_ms": 109416, "paragraph_index": 9}, {"index": 11, "text": "A spokesperson for the mayor said Sir Sadiq was \"honoured to be given a peerage\".", "start_ms": 109416, "end_ms": 115104, "paragraph_index": 10}, {"index": 12, "text": "\"He is excited about what more can be delivered in the years ahead and he will devote his time and energy to standing up for our city and building a fairer, safer and greener London for everyone,\" the mayor's spokesperson said.", "start_ms": 115104, "end_ms": 129240, "paragraph_index": 11}, {"index": 13, "text": "The BBC has been told this was a cross-party list of nominations that was being worked on before Sir Keir announced his resignation as Labour leader last month.", "start_ms": 129240, "end_ms": 139824, "paragraph_index": 12}, {"index": 14, "text": "It is a list of \"political peerages\" rather than resignation honours prime ministers usually grant on their departure from office.", "start_ms": 139824, "end_ms": 148584, "paragraph_index": 13}, {"index": 15, "text": "It comes after Sir Keir signalled he could hand out resignation honours when he leaves Downing Street, despite saying in 2023 he found giving out such awards \"very hard to justify\".", "start_ms": 148584, "end_ms": 161136, "paragraph_index": 14}, {"index": 16, "text": "June Sarpong attending London Fashion Week with the prime minister's wife Victoria Starmer in 2024", "start_ms": 161136, "end_ms": 168888, "paragraph_index": 15}, {"index": 17, "text": "Reform UK was not granted any peerages in the list published on Thursday.", "start_ms": 168888, "end_ms": 174840, "paragraph_index": 16}, {"index": 18, "text": "Reform UK leader Nigel Farage said the appointments were \"the uniparty writ large\".", "start_ms": 174840, "end_ms": 181200, "paragraph_index": 17}, {"index": 19, "text": "\"Once again there is nothing for Reform and we get an even more unrepresentative upper house,\" Farage said.", "start_ms": 181200, "end_ms": 188712, "paragraph_index": 18}, {"index": 20, "text": "Liberal Democrat leader Sir Ed Davey said he was \"delighted\" agricultural economist Julia Aglionby, former Barnsley councillor Hannah Kitching, economist Tim Leunig, campaigns director Dave McCobb and offshore wind entrepreneur Mark Petterson would be joining his party's ranks in the Lords.", "start_ms": 188712, "end_ms": 208296, "paragraph_index": 19}, {"index": 21, "text": "\"Each of them has the right skills, experience and values to help us hold the Government to account, deliver the change people need, and fix our broken politics, including reforming the House of Lords,\" Sir Ed said.", "start_ms": 208296, "end_ms": 223200, "paragraph_index": 20}, {"index": 22, "text": "The former head of the army, General Sir Patrick Sanders, has been made a Conservative peer alongside Carphone Warehouse co-founder David Ross and Swaran Singh, professor of social and community psychiatry at the University of Warwick.", "start_ms": 223200, "end_ms": 239496, "paragraph_index": 21}, {"index": 23, "text": "A Conservative Party spokesman said: \"We are delighted that David, Sir Patrick and Professor Singh will be joining the Conservative team in the House of Lords.", "start_ms": 239496, "end_ms": 249936, "paragraph_index": 22}, {"index": 24, "text": "\"They each bring immense experience from the worlds of business, defence and healthcare.\"", "start_ms": 249936, "end_ms": 256152, "paragraph_index": 23}, {"index": 25, "text": "Members of the House of Lords are generally appointed by the King on the advice of the prime minister.", "start_ms": 256152, "end_ms": 262776, "paragraph_index": 24}, {"index": 26, "text": "Once a nominee passes vetting, appointments to the Lords are formalised by the King.", "start_ms": 262776, "end_ms": 269136, "paragraph_index": 25}, {"index": 27, "text": "In 2022, Labour said it planned to abolish the Lords, replacing it with a \"new, reformed upper chamber\".", "start_ms": 269136, "end_ms": 277296, "paragraph_index": 26}, {"index": 28, "text": "But this was watered down, with Labour committing to consider plans for an alternative second chamber, whilst immediately axing the 92 places for hereditary peers, which it did this year.", "start_ms": 277296, "end_ms": 290304, "paragraph_index": 27}, {"index": 29, "text": "Burnham has called for a complete overhaul of the unelected Lords.", "start_ms": 290304, "end_ms": 295344, "paragraph_index": 28}, {"index": 30, "text": "\"I don't think we can justify half of our national legislature being unelected,\" Burnham told The House magazine last month.", "start_ms": 295344, "end_ms": 303792, "paragraph_index": 29}, {"index": 31, "text": "\"I think this is something that is, in many ways, quite scandalous.\"", "start_ms": 303792, "end_ms": 309144, "paragraph_index": 30}, {"index": 32, "text": "The Electoral Reform Society campaign said Labour's supporters would be baffled by the latest appointments to the Lords given its plans to reform the chamber.", "start_ms": 309144, "end_ms": 319320, "paragraph_index": 31}, {"index": 33, "text": "\"The next prime minister needs to make good on the promise of reform and turn the Lords into a smaller, democratic chamber that is more representative of and accountable to the people of this country,\" said Darren Hughes, chief executive of the Electoral Reform Society.", "start_ms": 319320, "end_ms": 336216, "paragraph_index": 32}, {"index": 34, "text": "Peers face new attendance rules under proposed House of Lords changes", "start_ms": 336216, "end_ms": 341688, "paragraph_index": 33}, {"index": 35, "text": "Hereditary peers to be removed from Lords as bill passes", "start_ms": 341688, "end_ms": 346656, "paragraph_index": 34}], "total_duration_ms": 346656};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "and": "和", "sir": "爵士", "in": "在", "lords": "贵族", "said": "说", "has": "有", "is": "是", "he": "他", "was": "是", "for": "为了", "be": "是", "house": "议院", "as": "作为", "on": "在", "reform": "改革", "london": "伦敦", "prime": "首相", "been": "已经", "his": "他的", "mayor": "市长", "sadiq": "萨迪克", "peers": "同行", "minister": "部长", "labour": "工党", "former": "前任", "government": "政府", "from": "来自", "list": "名单", "this": "这个", "it": "它", "new": "新的", "keir": "基尔", "that": "那个", "chamber": "议院", "given": "给定", "last": "最后", "become": "成为", "joining": "加入", "would": "将", "bbc": "英国广播公司", "not": "不", "nominations": "提名", "king": "国王", "burnham": "伯纳姆", "told": "告诉", "more": "更多", "our": "我们的", "leader": "领导人", "with": "与", "appointments": "任命", "we": "我们", "conservative": "保守党", "are": "是", "by": "被", "one": "一个", "alongside": "与...一起", "including": "包括", "june": "六月", "chief": "首席", "but": "但是", "announced": "宣布", "liberal": "自由", "members": "成员", "downing": "唐宁", "street": "街", "published": "发布", "office": "办公室", "when": "当", "next": "下一个", "term": "术语", "source": "来源", "up": "向上", "delivered": "递送", "building": "建筑物", "again": "再次", "spokesperson": "发言人", "can": "可以", "will": "将", "being": "正在", "month": "月份", "out": "出来", "uk": "英国", "farage": "法拉奇", "once": "一旦", "an": "一个", "ed": "编辑", "each": "每个", "experience": "经历", "people": "人们", "patrick": "帕特里克", "david": "大卫", "singh": "辛格", "professor": "教授", "passes": "通过", "plans": "计划", "think": "认为", "electoral": "选举的", "society": "社会", "khan": "汗", "seats": "席位", "starmer's": "斯塔默的", "acts": "行为", "nominated": "被提名的", "lord": "勋爵", "others": "其他", "broadcaster": "广播公司", "union": "工会", "allow": "允许", "understands": "理解", "seeking": "寻求", "role": "角色", "andy": "安迪", "burnham's": "伯纳姆的", "also": "也", "five": "五", "democrats": "民主党人", "three": "三个", "conservatives": "保守党", "two": "两个", "cabinet": "内阁", "secretary": "秘书", "chris": "克里斯", "wormald": "沃莫尔德", "retired": "退役的", "senior": "高级", "judge": "法官", "external": "外部的", "pleased": "高兴", "intention": "意图", "come": "到来", "leave": "离开", "monday": "星期一", "due": "应得", "among": "在...之中", "most": "最", "mp": "议员", "through": "通过", "third": "第三", "having": "拥有", "first": "第一轮", "elected": "当选的", "yet": "尚未", "decided": "决定", "whether": "是否", "wants": "想要", "seek": "寻求", "fourth": "第四", "praised": "赞扬", "brilliant": "出色的", "who": "谁", "transformed": "转变", "better": "更好的", "thoroughly": "彻底地", "deserved": "应得的", "cut": "削减", "violent": "暴力的", "crime": "犯罪", "record": "记录", "capital's": "首都的", "air": "气氛", "elizabeth": "伊丽莎白", "line": "界限", "got": "获得", "council": "委员会", "homes": "家", "about": "关于", "what": "什么", "years": "多年", "ahead": "提前", "time": "时间", "energy": "能源", "standing": "站立", "city": "城市", "fairer": "更公平的", "safer": "更安全", "everyone": "每个人", "mayor's": "市长的", "worked": "工作", "before": "之前", "political": "政治的", "rather": "宁愿", "than": "比", "ministers": "部长", "usually": "通常", "grant": "授予", "their": "他们的", "departure": "离职", "comes": "到来", "after": "之后", "signalled": "发出信号", "could": "可能", "hand": "手", "leaves": "离开", "despite": "尽管", "saying": "说", "found": "发现", "giving": "给予", "such": "如此", "very": "非常", "hard": "艰难的", "attending": "出席", "fashion": "方式", "week": "周", "minister's": "部长的", "wife": "妻子", "victoria": "维多利亚", "starmer": "斯塔默", "granted": "授予", "any": "任何", "thursday": "星期四", "nigel": "奈杰尔", "were": "是", "large": "大的", "there": "那里", "nothing": "没有东西", "get": "得到", "even": "甚至", "democrat": "民主党", "davey": "戴维", "councillor": "议员", "tim": "蒂姆", "director": "局长", "offshore": "离岸", "wind": "风", "mark": "标志", "party's": "党的", "them": "他们", "right": "正确", "skills": "技能", "values": "价值观", "help": "帮助", "us": "我们", "hold": "追究", "account": "责任", "deliver": "发表", "change": "改变", "need": "需要", "fix": "修复", "broken": "打破的", "politics": "政治", "head": "前往", "army": "军队", "general": "总", "sanders": "桑德斯", "made": "做出", "peer": "同行", "social": "社交的", "community": "社区", "at": "在", "university": "大学", "party": "政党", "spokesman": "发言人", "team": "团队", "they": "它们", "bring": "带来", "business": "事务", "defence": "国防", "generally": "通常", "appointed": "任命", "advice": "建议", "planned": "计划中的", "abolish": "废除", "reformed": "改革宗", "down": "下来", "committing": "承诺", "consider": "考虑", "second": "第二", "whilst": "当", "immediately": "立即", "places": "地方", "which": "哪个", "did": "做了", "year": "年", "called": "称为", "complete": "完全的", "don't": "不要", "half": "一半", "national": "国家", "something": "某事", "many": "许多", "ways": "方式", "quite": "相当", "campaign": "竞选活动", "labour's": "工党的", "supporters": "支持者", "latest": "最新的", "its": "它的", "needs": "需要", "make": "使", "good": "良好", "promise": "承诺", "turn": "转变", "into": "进入", "democratic": "民主的", "representative": "代表", "country": "国家", "darren": "达伦", "hughes": "休斯", "executive": "行政的", "face": "面临", "attendance": "出席", "rules": "规则", "under": "在...之下", "proposed": "提议的", "changes": "变化", "removed": "移除", "bill": "法案", "peerages": "贵族爵位", "sarpong": "萨蓬", "honours": "荣誉", "justify": "证明合理", "upper": "上层的", "delighted": "高兴的", "economist": "经济学家", "unelected": "非选举的", "christina": "克里斯蒂娜", "mcanea": "麦卡内亚", "incoming": "即将上任的", "brian": "布赖恩", "leveson": "莱韦森", "graciously": "优雅地", "signify": "表示", "conferring": "授予", "prepares": "准备", "sadiq's": "萨迪克的", "nomination": "提名", "eye-catching": "引人注目的", "mid-way": "中途的", "lows": "低点", "cleaned": "清理过的", "honoured": "感到荣幸的", "excited": "兴奋的", "devote": "致力于", "greener": "更环保的", "cross-party": "跨党派的", "awards": "奖项", "uniparty": "单一政党", "writ": "令状", "unrepresentative": "不具代表性的", "agricultural": "农业的", "julia": "朱莉娅", "aglionby": "阿格利翁比", "barnsley": "巴恩斯利", "hannah": "汉娜", "kitching": "基钦", "leunig": "勒尼格", "campaigns": "运动", "dave": "戴夫", "mccobb": "麦考布", "entrepreneur": "企业家", "petterson": "佩特森", "ranks": "等级", "reforming": "改革", "carphone": "卡丰", "warehouse": "仓库", "co-founder": "联合创始人", "ross": "罗斯", "swaran": "斯瓦兰", "psychiatry": "精神病学", "warwick": "华威", "immense": "巨大的", "worlds": "世界", "healthcare": "医疗保健", "nominee": "被提名者", "formalised": "正式化的", "replacing": "取代", "watered": "掺水的", "alternative": "替代的", "axing": "取消", "legislature": "立法机构", "magazine": "杂志", "scandalous": "可耻的", "baffled": "困惑的", "smaller": "较小的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
