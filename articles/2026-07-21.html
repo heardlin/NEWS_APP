@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-21</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-21</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/46ee/live/0e6c41b0-8511-11f1-926f-c90d1bcfbc84.jpg" alt="Ann Widdecombe was hit on head 21 times with hammer, prosecutors say" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Ann Widdecombe was hit on head 21 times with hammer, prosecutors say</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cj03r77n07jo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-21.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Ann Widdecombe was found dead in her home in Haytor, Devon, last week</span></p>
+        <p class="cn">安·威德库姆（Ann Widdecombe）上周被发现死于德文郡海托尔的家中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Ann Widdecombe was hit on the head with a hammer 21 times at her home as she ate lunch in an attack that was caught on camera, prosecutors have told Westminster Magistrates' Court.</span></p>
+        <p class="cn">检察官告诉威斯敏斯特地方法院，安·威德库姆在家吃午饭时，被锤子击打头部21次，袭击过程被摄像头拍下。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2"><span class="keyword" data-word="prosecutor" data-phonetic="/ˈprɒsɪkjuːtə/" data-pos="n." data-def="检察官，公诉人" data-def-en="A lawyer who conducts a case against a defendant in a court of law.">Prosecutor</span> Kashif Malik said the man charged with her murder, Joshua Kerry, arrived at her house on 8 July in a red Vauxhall Corsa and entered through the front door.</span></p>
+        <p class="cn">检察官卡西夫·马利克（Kashif Malik）表示，被控谋杀她的约书亚·克里（Joshua Kerry）于7月8日驾驶一辆红色沃克斯豪尔科萨（Vauxhall Corsa）到达她家，并从正门进入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Kerry, who prosecutors say was in the property for two minutes and was wearing black gloves, then allegedly hit Widdecombe repeatedly with a hammer in her kitchen, tipped her from her chair and took her wallet before driving off.</span></p>
+        <p class="cn">检察官称，克里在屋内停留了两分钟，戴着黑色手套，随后在厨房用锤子多次击打威德库姆，将她从椅子上掀翻，拿走她的钱包后驾车离开。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The 28-year-old from South Yorkshire later also appeared at the Old Bailey and was remanded in custody.</span></p>
+        <p class="cn">这名来自南约克郡的28岁男子随后也在老贝利（Old Bailey）出庭，并被还押候审。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">At the Old Bailey hearing, <span class="keyword" data-word="prosecutor" data-phonetic="/ˈprɒsɪkjuːtə/" data-pos="n." data-def="检察官，公诉人" data-def-en="A lawyer who conducts a case against a defendant in a court of law.">prosecutor</span> Alistair Richardson said the attack on Widdecombe had been carried out with a "<span class="keyword" data-word="ferocity" data-phonetic="/fəˈrɒsəti/" data-pos="n." data-def="凶猛，残暴" data-def-en="The state or quality of being fierce or violent.">ferocity</span> of violence".</span></p>
+        <p class="cn">在老贝利的听证会上，检察官阿利斯泰尔·理查森（Alistair Richardson）表示，对威德库姆的袭击“暴力程度极其猛烈”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Malik told the court that Widdecombe did not attend a <span class="keyword" data-word="pre-arranged" data-phonetic="/ˌpriː əˈreɪndʒd/" data-pos="adj." data-def="预先安排的" data-def-en="Arranged or planned in advance.">pre-arranged</span> online interview with Channel 5's Matt Allwright show that had been scheduled for just before 13:00 BST on 8 July.</span></p>
+        <p class="cn">马利克告诉法庭，威德库姆未能参加原定于7月8日英国夏令时13:00前与第五频道（Channel 5）《马特·奥尔赖特秀》（Matt Allwright show）的预先安排在线采访。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The show's production team tried to contact Widdecombe through her personal assistant, who then asked Widdecombe's gardener to check on her, the court heard.</span></p>
+        <p class="cn">法庭获悉，该节目的制作团队试图通过她的私人助理联系威德库姆，助理随后请威德库姆的园丁去查看她的情况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Prosecutors said the gardener entered the house via the open front door on 9 July and found Widdecombe lying face down on her kitchen floor with a serious head injury.</span></p>
+        <p class="cn">检察官称，园丁于7月9日通过敞开的正门进入房屋，发现威德库姆脸朝下躺在厨房地板上，头部严重受伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Joshua Kerry, 28, is charged with Widdecombe's murder</span></p>
+        <p class="cn">28岁的约书亚·克里被控谋杀威德库姆。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Malik told the chief magistrate that security camera <span class="keyword" data-word="footage" data-phonetic="/ˈfʊtɪdʒ/" data-pos="n." data-def="镜头，录像片段" data-def-en="A length of film or video recording, especially one showing a particular event.">footage</span> from her home in Haytor, Devon, showed she had been fatally attacked the day before.</span></p>
+        <p class="cn">马利克告诉首席地方法官，来自她德文郡海托尔家中的监控录像显示，她在前一天遭到了致命袭击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">He added that police were still investigating whether there was a terrorism connection or political motivation for the attack.</span></p>
+        <p class="cn">他补充说，警方仍在调查此次袭击是否与恐怖主义有关或存在政治动机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Kerry, from Rotherham, was charged with one count of murder on Monday night following an investigation led by counter-terrorism detectives.</span></p>
+        <p class="cn">来自罗瑟勒姆（Rotherham）的克里在反恐侦探领导的调查后，于周一晚被控一项谋杀罪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">He appeared emotionless in the dock and spoke only to confirm his name, date of birth and address during the short hearing at Westminster Magistrates' Court.</span> <span class="sentence" data-sentence-index="14">He was not asked to indicate a plea.</span></p>
+        <p class="cn">在威斯敏斯特地方法院的简短听证会上，他在被告席上面无表情，只开口确认了自己的姓名、出生日期和地址。他没有被要求表明是否认罪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">Later on Tuesday, he also appeared at the Old Bailey.</span> <span class="sentence" data-sentence-index="16">It is expected that he will be remanded at HMP Belmarsh in south-east London.</span></p>
+        <p class="cn">周二晚些时候，他也在老贝利出庭。预计他将在伦敦东南部的贝尔马什监狱（HMP Belmarsh）被还押。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">He will next appear at the same court on 9 October for a case management hearing.</span></p>
+        <p class="cn">他将于10月9日再次在同一法院出席案件管理听证会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">A <span class="keyword" data-word="provisional" data-phonetic="/prəˈvɪʒənl/" data-pos="adj." data-def="临时的，暂定的" data-def-en="Arranged or existing for the present, possibly to be changed later.">provisional</span> trial date has been listed for 8 June 2027.</span></p>
+        <p class="cn">暂定审判日期为2027年6月8日。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">The court heard that a <span class="keyword" data-word="pathologist" data-phonetic="/pəˈθɒlədʒɪst/" data-pos="n." data-def="病理学家" data-def-en="A medical specialist who studies the causes and effects of diseases, especially by examining body tissues and fluids.">pathologist</span> had given a <span class="keyword" data-word="provisional" data-phonetic="/prəˈvɪʒənl/" data-pos="adj." data-def="临时的，暂定的" data-def-en="Arranged or existing for the present, possibly to be changed later.">provisional</span> cause of Widdecombe's death as a blunt force injury to the head.</span></p>
+        <p class="cn">法庭获悉，病理学家给出的威德库姆临时死因是头部钝器伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">An earlier <span class="keyword" data-word="inquest" data-phonetic="/ˈɪŋkwest/" data-pos="n." data-def="死因调查，验尸" data-def-en="A legal inquiry into the cause of a person's death, especially when it is sudden or suspicious.">inquest</span> hearing, that was opened and adjourned on Tuesday, heard that emergency services were called on the day Widdecombe was found, but she was pronounced dead at 12:20.</span></p>
+        <p class="cn">周二开庭并休庭的早期死因调查听证会获悉，发现威德库姆当天紧急服务部门接到报警，但她在12:20被宣布死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">The hearing was also told that while a post-mortem examination had taken place, "at this stage the precise medical cause of death has yet to be established".</span></p>
+        <p class="cn">听证会还被告知，虽然已进行尸检，“但现阶段确切的医学死因尚未确定”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">Widdecombe's career in politics spanned decades.</span></p>
+        <p class="cn">威德库姆的政治生涯跨越数十年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">She served as Conservative MP for Maidstone in Kent for 23 years and was appointed to ministerial roles in Sir John Major's government in the 1990s.</span></p>
+        <p class="cn">她曾担任肯特郡梅德斯通（Maidstone）的保守党议员23年，并在1990年代被任命为约翰·梅杰爵士（Sir John Major）政府中的部长职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">Following her departure from the Commons, Widdecombe appeared on the BBC's Strictly Come Dancing in 2010 and was a runner-up on Celebrity Big Brother eight years later.</span></p>
+        <p class="cn">离开下议院后，威德库姆于2010年参加了BBC的《舞动奇迹》（Strictly Come Dancing），并在八年后成为《名人老大哥》（Celebrity Big Brother）的亚军。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">She later represented South West England as a Member of the European Parliament (MEP) for the Brexit Party and in 2023 she joined Reform UK as a party spokeswoman.</span></p>
+        <p class="cn">后来，她作为脱欧党（Brexit Party）的欧洲议会议员（MEP）代表英格兰西南部，并于2023年加入改革英国党（Reform UK）担任政党发言人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">Cause of Ann Widdecombe's death not yet established, <span class="keyword" data-word="inquest" data-phonetic="/ˈɪŋkwest/" data-pos="n." data-def="死因调查，验尸" data-def-en="A legal inquiry into the cause of a person's death, especially when it is sudden or suspicious.">inquest</span> hears</span></p>
+        <p class="cn">死因调查听证会获悉，安·威德库姆的死因尚未确定。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">prosecutor</span>
+        <button class="kw-speak-btn" data-word="prosecutor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈprɒsɪkjuːtə/ n.</span>
+      </div>
+      <p class="kw-def">检察官，公诉人</p>
+      <p class="kw-def-en">A lawyer who conducts a case against a defendant in a court of law.</p>
+      <p class="kw-ctx">&ldquo;Prosecutor Kashif Malik said the man charged with her murder, Joshua Kerry, arrived at her house on 8 July in a red Vauxhall Corsa and entered through the front door.&rdquo;</p>
+      <p class="kw-ctx-cn">检察官卡西夫·马利克表示，被指控谋杀她的男子约书亚·克里于7月8日驾驶一辆红色沃克斯豪尔科萨抵达她的房子，并从前门进入。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">remand</span>
+        <button class="kw-speak-btn" data-word="remand" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈmɑːnd/ v.</span>
+      </div>
+      <p class="kw-def">还押，送回羁押</p>
+      <p class="kw-def-en">To send a defendant back into custody to await trial.</p>
+      <p class="kw-ctx">&ldquo;The 28-year-old from South Yorkshire later also appeared at the Old Bailey and was remanded in custody.&rdquo;</p>
+      <p class="kw-ctx-cn">这名来自南约克郡的28岁男子后来也在老贝利出庭，并被还押候审。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ferocity</span>
+        <button class="kw-speak-btn" data-word="ferocity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fəˈrɒsəti/ n.</span>
+      </div>
+      <p class="kw-def">凶猛，残暴</p>
+      <p class="kw-def-en">The state or quality of being fierce or violent.</p>
+      <p class="kw-ctx">&ldquo;At the Old Bailey hearing, prosecutor Alistair Richardson said the attack on Widdecombe had been carried out with a 'ferocity of violence'.&rdquo;</p>
+      <p class="kw-ctx-cn">在老贝利的听证会上，检察官阿利斯泰尔·理查森表示，对威德科姆的袭击是“极其凶残”的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pre-arranged</span>
+        <button class="kw-speak-btn" data-word="pre-arranged" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌpriː əˈreɪndʒd/ adj.</span>
+      </div>
+      <p class="kw-def">预先安排的</p>
+      <p class="kw-def-en">Arranged or planned in advance.</p>
+      <p class="kw-ctx">&ldquo;Malik told the court that Widdecombe did not attend a pre-arranged online interview with Channel 5's Matt Allwright show that had been scheduled for just before 13:00 BST on 8 July.&rdquo;</p>
+      <p class="kw-ctx-cn">马利克告诉法庭，威德科姆没有参加原定于7月8日英国夏令时13:00前与第五频道马特·奥尔赖特节目的预先安排的在线采访。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">footage</span>
+        <button class="kw-speak-btn" data-word="footage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfʊtɪdʒ/ n.</span>
+      </div>
+      <p class="kw-def">镜头，录像片段</p>
+      <p class="kw-def-en">A length of film or video recording, especially one showing a particular event.</p>
+      <p class="kw-ctx">&ldquo;Malik told the chief magistrate that security camera footage from her home in Haytor, Devon, showed she had been fatally attacked the day before.&rdquo;</p>
+      <p class="kw-ctx-cn">马利克告诉首席地方法官，来自她位于德文郡海托尔家中的安全摄像头录像显示，她在前一天遭到了致命袭击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">provisional</span>
+        <button class="kw-speak-btn" data-word="provisional" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈvɪʒənl/ adj.</span>
+      </div>
+      <p class="kw-def">临时的，暂定的</p>
+      <p class="kw-def-en">Arranged or existing for the present, possibly to be changed later.</p>
+      <p class="kw-ctx">&ldquo;A provisional trial date has been listed for 8 June 2027.&rdquo;</p>
+      <p class="kw-ctx-cn">暂定的审判日期已列为2027年6月8日。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pathologist</span>
+        <button class="kw-speak-btn" data-word="pathologist" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pəˈθɒlədʒɪst/ n.</span>
+      </div>
+      <p class="kw-def">病理学家</p>
+      <p class="kw-def-en">A medical specialist who studies the causes and effects of diseases, especially by examining body tissues and fluids.</p>
+      <p class="kw-ctx">&ldquo;The court heard that a pathologist had given a provisional cause of Widdecombe's death as a blunt force injury to the head.&rdquo;</p>
+      <p class="kw-ctx-cn">法庭获悉，一名病理学家给出的威德科姆死亡的临时原因是头部受到钝器伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inquest</span>
+        <button class="kw-speak-btn" data-word="inquest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪŋkwest/ n.</span>
+      </div>
+      <p class="kw-def">死因调查，验尸</p>
+      <p class="kw-def-en">A legal inquiry into the cause of a person's death, especially when it is sudden or suspicious.</p>
+      <p class="kw-ctx">&ldquo;An earlier inquest hearing, that was opened and adjourned on Tuesday, heard that emergency services were called on the day Widdecombe was found, but she was pronounced dead at 12:20.&rdquo;</p>
+      <p class="kw-ctx-cn">周二开始并休会的较早的死因调查听证会获悉，在发现威德科姆的当天，紧急服务部门被叫到现场，但她在12:20被宣布死亡。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Ann Widdecombe was found dead in her home in Haytor, Devon, last week", "start_ms": 0, "end_ms": 5400, "paragraph_index": 0}, {"index": 1, "text": "Ann Widdecombe was hit on the head with a hammer 21 times at her home as she ate lunch in an attack that was caught on camera, prosecutors have told Westminster Magistrates' Court.", "start_ms": 5400, "end_ms": 17256, "paragraph_index": 1}, {"index": 2, "text": "Prosecutor Kashif Malik said the man charged with her murder, Joshua Kerry, arrived at her house on 8 July in a red Vauxhall Corsa and entered through the front door.", "start_ms": 17256, "end_ms": 29112, "paragraph_index": 2}, {"index": 3, "text": "Kerry, who prosecutors say was in the property for two minutes and was wearing black gloves, then allegedly hit Widdecombe repeatedly with a hammer in her kitchen, tipped her from her chair and took her wallet before driving off.", "start_ms": 29112, "end_ms": 43560, "paragraph_index": 3}, {"index": 4, "text": "The 28-year-old from South Yorkshire later also appeared at the Old Bailey and was remanded in custody.", "start_ms": 43560, "end_ms": 50808, "paragraph_index": 4}, {"index": 5, "text": "At the Old Bailey hearing, prosecutor Alistair Richardson said the attack on Widdecombe had been carried out with a \"ferocity of violence\".", "start_ms": 50808, "end_ms": 60168, "paragraph_index": 5}, {"index": 6, "text": "Malik told the court that Widdecombe did not attend a pre-arranged online interview with Channel 5's Matt Allwright show that had been scheduled for just before 13:00 BST on 8 July.", "start_ms": 60168, "end_ms": 73800, "paragraph_index": 6}, {"index": 7, "text": "The show's production team tried to contact Widdecombe through her personal assistant, who then asked Widdecombe's gardener to check on her, the court heard.", "start_ms": 73800, "end_ms": 83616, "paragraph_index": 7}, {"index": 8, "text": "Prosecutors said the gardener entered the house via the open front door on 9 July and found Widdecombe lying face down on her kitchen floor with a serious head injury.", "start_ms": 83616, "end_ms": 94752, "paragraph_index": 8}, {"index": 9, "text": "Joshua Kerry, 28, is charged with Widdecombe's murder", "start_ms": 94752, "end_ms": 99960, "paragraph_index": 9}, {"index": 10, "text": "Malik told the chief magistrate that security camera footage from her home in Haytor, Devon, showed she had been fatally attacked the day before.", "start_ms": 99960, "end_ms": 109704, "paragraph_index": 10}, {"index": 11, "text": "He added that police were still investigating whether there was a terrorism connection or political motivation for the attack.", "start_ms": 109704, "end_ms": 117744, "paragraph_index": 11}, {"index": 12, "text": "Kerry, from Rotherham, was charged with one count of murder on Monday night following an investigation led by counter-terrorism detectives.", "start_ms": 117744, "end_ms": 127632, "paragraph_index": 12}, {"index": 13, "text": "He appeared emotionless in the dock and spoke only to confirm his name, date of birth and address during the short hearing at Westminster Magistrates' Court.", "start_ms": 127632, "end_ms": 137784, "paragraph_index": 13}, {"index": 14, "text": "He was not asked to indicate a plea.", "start_ms": 137784, "end_ms": 141120, "paragraph_index": 13}, {"index": 15, "text": "Later on Tuesday, he also appeared at the Old Bailey.", "start_ms": 141120, "end_ms": 145656, "paragraph_index": 14}, {"index": 16, "text": "It is expected that he will be remanded at HMP Belmarsh in south-east London.", "start_ms": 145656, "end_ms": 151728, "paragraph_index": 14}, {"index": 17, "text": "He will next appear at the same court on 9 October for a case management hearing.", "start_ms": 151728, "end_ms": 157656, "paragraph_index": 15}, {"index": 18, "text": "A provisional trial date has been listed for 8 June 2027.", "start_ms": 157656, "end_ms": 163416, "paragraph_index": 16}, {"index": 19, "text": "The court heard that a pathologist had given a provisional cause of Widdecombe's death as a blunt force injury to the head.", "start_ms": 163416, "end_ms": 171336, "paragraph_index": 17}, {"index": 20, "text": "An earlier inquest hearing, that was opened and adjourned on Tuesday, heard that emergency services were called on the day Widdecombe was found, but she was pronounced dead at 12:20.", "start_ms": 171336, "end_ms": 183816, "paragraph_index": 18}, {"index": 21, "text": "The hearing was also told that while a post-mortem examination had taken place, \"at this stage the precise medical cause of death has yet to be established\".", "start_ms": 183816, "end_ms": 194472, "paragraph_index": 19}, {"index": 22, "text": "Widdecombe's career in politics spanned decades.", "start_ms": 194472, "end_ms": 198720, "paragraph_index": 20}, {"index": 23, "text": "She served as Conservative MP for Maidstone in Kent for 23 years and was appointed to ministerial roles in Sir John Major's government in the 1990s.", "start_ms": 198720, "end_ms": 209952, "paragraph_index": 21}, {"index": 24, "text": "Following her departure from the Commons, Widdecombe appeared on the BBC's Strictly Come Dancing in 2010 and was a runner-up on Celebrity Big Brother eight years later.", "start_ms": 209952, "end_ms": 221448, "paragraph_index": 22}, {"index": 25, "text": "She later represented South West England as a Member of the European Parliament (MEP) for the Brexit Party and in 2023 she joined Reform UK as a party spokeswoman.", "start_ms": 221448, "end_ms": 234096, "paragraph_index": 23}, {"index": 26, "text": "Cause of Ann Widdecombe's death not yet established, inquest hears", "start_ms": 234096, "end_ms": 239376, "paragraph_index": 24}], "total_duration_ms": 239376};
+  const WORD_GLOSS = {"the": "这个", "in": "在", "was": "是", "on": "在", "her": "她的", "and": "和", "at": "在", "that": "那个", "widdecombe": "威德科姆", "with": "与", "for": "为了", "of": "的", "to": "到", "she": "她", "court": "法庭", "he": "他", "as": "作为", "from": "来自", "hearing": "听证会", "had": "有", "widdecombe's": "威德科姆的", "told": "告诉", "kerry": "凯里", "later": "后来", "appeared": "出现", "been": "已经", "ann": "安", "found": "发现", "home": "家", "head": "前往", "an": "一个", "attack": "袭击", "prosecutors": "检察官", "said": "说", "charged": "指控", "murder": "谋杀", "july": "七月", "before": "之前", "also": "也", "old": "旧的", "bailey": "贝利", "not": "不", "heard": "听到", "cause": "事业", "death": "死亡", "dead": "死亡", "haytor": "海托尔", "devon": "德文郡", "hit": "击中", "camera": "摄像机", "westminster": "威斯敏斯特", "house": "议院", "entered": "进入", "through": "通过", "front": "前线", "door": "门", "who": "谁", "then": "然后", "kitchen": "基钦", "south": "韩国", "remanded": "还押", "asked": "询问", "injury": "受伤", "is": "是", "day": "天", "were": "是", "following": "随后", "date": "日期", "tuesday": "星期二", "will": "将", "be": "是", "has": "有", "yet": "尚未", "years": "多年", "party": "政党", "last": "最后", "week": "周", "times": "次", "caught": "被卷入", "have": "有", "man": "男子", "arrived": "抵达", "red": "红色的", "say": "说", "property": "财产", "two": "两个", "minutes": "会议记录", "wearing": "穿着", "black": "黑色", "allegedly": "据称", "repeatedly": "反复地", "chair": "主席", "took": "担任", "driving": "推动", "off": "离开", "year-old": "岁的", "yorkshire": "约克郡", "custody": "羁押", "carried": "进行", "out": "出来", "violence": "暴力", "did": "做了", "attend": "出席", "online": "在线", "interview": "采访", "channel": "航道", "matt": "马特", "show": "显示", "scheduled": "预定", "just": "只是", "bst": "英国夏令时", "show's": "节目的", "production": "制作", "team": "团队", "tried": "试图", "contact": "接触", "personal": "个人", "assistant": "助理", "check": "支票", "via": "通过", "open": "开放", "lying": "撒谎", "face": "面临", "down": "下来", "floor": "楼层", "serious": "严重的", "chief": "首席", "security": "安全", "showed": "显示", "fatally": "致命地", "attacked": "袭击", "added": "补充", "police": "警方", "still": "仍然", "investigating": "调查", "whether": "是否", "there": "那里", "terrorism": "恐怖主义", "connection": "联系", "or": "或者", "political": "政治的", "motivation": "动力", "rotherham": "罗瑟勒姆", "one": "一个", "count": "计票", "monday": "星期一", "night": "晚上", "investigation": "调查", "led": "带领", "by": "被", "counter-terrorism": "反恐", "detectives": "侦探", "dock": "靠港", "spoke": "发言", "only": "只有", "confirm": "确认", "his": "他的", "name": "名字", "address": "地址", "during": "在期间", "short": "短暂的", "indicate": "表明", "plea": "抗辩", "it": "它", "expected": "预期", "south-east": "东南部", "london": "伦敦", "next": "下一个", "appear": "出现", "same": "相同", "october": "十月", "case": "案例", "management": "管理", "trial": "审判", "listed": "列出", "june": "六月", "given": "给定", "force": "力量", "earlier": "较早", "opened": "开火", "emergency": "紧急", "services": "服务", "called": "称为", "but": "但是", "while": "而", "examination": "审查", "taken": "采取", "place": "地点", "this": "这个", "stage": "舞台", "precise": "精确的", "medical": "医疗", "career": "职业", "politics": "政治", "spanned": "跨越", "decades": "数十年", "served": "服役", "conservative": "保守党", "mp": "议员", "maidstone": "梅德斯通", "kent": "肯特", "appointed": "任命", "ministerial": "部长级", "roles": "角色", "sir": "爵士", "john": "约翰", "major's": "少校的", "government": "政府", "departure": "离职", "commons": "下议院", "bbc's": "英国广播公司的", "strictly": "严格地", "come": "到来", "dancing": "跳舞", "runner-up": "亚军", "celebrity": "名人", "big": "大的", "brother": "兄弟", "eight": "八", "represented": "代表", "west": "西部", "england": "英格兰", "member": "成员", "european": "欧洲的", "parliament": "议会", "mep": "欧洲议会议员", "brexit": "英国脱欧", "joined": "加入", "reform": "改革", "uk": "英国", "spokeswoman": "女发言人", "malik": "马利克", "hammer": "锤子", "magistrates": "地方法官", "joshua": "约书亚", "gardener": "园丁", "established": "已确立的", "ate": "吃", "lunch": "午餐", "kashif": "卡希夫", "vauxhall": "沃克斯豪尔", "corsa": "科萨", "gloves": "手套", "tipped": "倾斜的", "wallet": "钱包", "alistair": "阿利斯泰尔", "richardson": "理查森", "allwright": "奥尔赖特", "magistrate": "地方法官", "emotionless": "面无表情的", "birth": "出生", "hmp": "女王陛下监狱", "belmarsh": "贝尔马什", "blunt": "直率的", "adjourned": "休庭的", "pronounced": "宣布的", "post-mortem": "尸检", "hears": "审理"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
