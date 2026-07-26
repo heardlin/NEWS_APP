@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-26</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-26</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/7731/live/42f6c270-8921-11f1-ba41-9bff51dd5d72.jpg" alt="Firefighters battle wildfire as tens of thousands evacuated near Bordeaux" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Firefighters battle wildfire as tens of thousands evacuated near Bordeaux</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/clyj8k4nn5jo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-26.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: Firefighters tackle wildfires in Ares and aerial footage shows destruction in Le Porge</span></p>
+        <p class="cn">观看：消防员在阿雷斯扑灭野火，航拍画面显示勒波尔日的破坏情况</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Firefighters are battling to <span class="keyword" data-word="contain" data-phonetic="/kənˈteɪn/" data-pos="v." data-def="控制，遏制" data-def-en="to keep something harmful within limits; to prevent from spreading">contain</span> wildfires burning near the city of Bordeaux as tens of thousands of people have been evacuated from the surrounding region.</span></p>
+        <p class="cn">消防员正在努力控制波尔多市附近燃烧的野火，已有数万人从周边地区撤离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">France's Interior Minister Laurent NuÃ±ez said the situation in the region remained "very unfavourable" and the fire was "moving erratically towards" Bordeaux, though officials downplayed the possibility of evacuation.</span></p>
+        <p class="cn">法国内政部长洛朗·努涅斯表示，该地区的局势仍然“非常不利”，火势“不规则地向”波尔多移动，尽管官员们淡化了疏散的可能性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Overnight into Sunday, about 55,000 people were evacuated from villages to the south of the city in the Gironde region, famed for its vineyards.</span></p>
+        <p class="cn">截至周日凌晨，吉伦特地区（以葡萄园闻名）波尔多以南的村庄约有5.5万人被疏散。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Wildfires have raged across Europe over the past week, primarily in France and Spain, where more than 330,000 people have been evacuated.</span></p>
+        <p class="cn">过去一周，野火肆虐欧洲，主要发生在法国和西班牙，已有超过33万人被疏散。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">France has been one of worst affected regions, with an area of 42,000 hectares burnt in the south-west, making it one of the largest forest fires since World War Two.</span> <span class="sentence" data-sentence-index="7">About 98,000 hectares have burnt across the country since the start of the year.</span></p>
+        <p class="cn">法国是受影响最严重的地区之一，西南部有4.2万公顷土地被烧毁，成为二战以来最大的森林火灾之一。自年初以来，全国约有9.8万公顷土地被烧毁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">In total, more than 220,000 people have been evacuated in the south-west of the country.</span></p>
+        <p class="cn">该国有超过22万人从西南部撤离。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Captain Nicolas Braz, one of the leaders of the firefighting operation, said the fire had created "its own winds - complete with whirlwinds", adding it was "<span class="keyword" data-word="erratic" data-phonetic="/ɪˈrætɪk/" data-pos="adj." data-def="不稳定的，飘忽不定的" data-def-en="not regular or predictable; moving in an irregular way">erratic</span> and unmanageable".</span></p>
+        <p class="cn">消防行动负责人之一尼古拉斯·布拉兹上尉表示，大火产生了“自己的风——伴有旋风”，并补充说火势“不规则且难以控制”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Residents in Le Porge, one of the coastal towns hit by the fires, have set up an <span class="keyword" data-word="improvised" data-phonetic="/ˈɪmprəvaɪzd/" data-pos="adj." data-def="临时凑成的，即兴的" data-def-en="made or done without preparation, using whatever is available">improvised</span> volunteer network to support exhausted firefighters, cooking them meals and offering a place to rest in between shifts.</span></p>
+        <p class="cn">受火灾影响的沿海城镇之一勒波尔日的居民建立了一个临时志愿者网络，为疲惫的消防员提供支持，为他们做饭，并在轮班间隙提供休息场所。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">"I think many of them have never experienced a fire of this <span class="keyword" data-word="magnitude" data-phonetic="/ˈmæɡnɪtjuːd/" data-pos="n." data-def="巨大，重要性" data-def-en="the great size or extent of something">magnitude</span> before," volunteer Nathalie Augonnet said.</span></p>
+        <p class="cn">志愿者娜塔莉·奥贡内特说：“我认为他们中许多人以前从未经历过如此规模的火灾。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">More than 150 houses have been destroyed in the town of 3,500 inhabitants.</span></p>
+        <p class="cn">在这个有3500名居民的小镇，已有150多所房屋被毁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Several houses in Le Porge, in the Gironde region, have been destroyed by a fire</span></p>
+        <p class="cn">吉伦特地区勒波尔日的几所房屋被大火烧毁</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">"I'm a little <span class="keyword" data-word="devastated" data-phonetic="/ˈdevəsteɪtɪd/" data-pos="adj." data-def="极度震惊的，被摧毁的" data-def-en="extremely shocked and upset; destroyed">devastated</span> for this beautiful town, for its forests, its wildlife and for the people who have lost so much," Augonnet said.</span></p>
+        <p class="cn">奥贡内特说：“我对这个美丽的小镇、它的森林、野生动物以及失去太多的人们感到有些心碎。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"Right now, we're focused on taking action, so we don't really have time to think.</span> <span class="sentence" data-sentence-index="16">I think the difficult part will come afterwards, during the reconstruction."</span></p>
+        <p class="cn">“现在，我们专注于采取行动，所以没有时间思考。我认为困难的部分将在之后，在重建过程中到来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Meanwhile in Spain, fires continue to spread, with more than 90,000 evacuated from the regions around Madrid and Ãvila.</span></p>
+        <p class="cn">与此同时，西班牙的火势继续蔓延，马德里和阿维拉周边地区已有超过9万人被疏散。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">Around 77,000 hectares have been affected by the fires in Spain, minister for ecological transition, Sara Aagesen, said on Sunday.</span></p>
+        <p class="cn">西班牙生态转型部长萨拉·阿格森周日表示，西班牙约有7.7万公顷土地受到火灾影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">She added that the wildfire burning in the Ãvila region is the largest in the country's recent history.</span></p>
+        <p class="cn">她补充说，阿维拉地区燃烧的野火是该国近代史上最大的一次。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">Among the residents evacuating surrounding areas is Olga Congacha, 50, who had to flee her village of Robledo de Chavela west of Madrid in a haste.</span></p>
+        <p class="cn">在疏散周边地区的居民中，50岁的奥尔加·孔加查不得不匆忙逃离她位于马德里以西的罗夫莱多德查韦拉村。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">She said she felt "panicked" when she was told to leave her home.</span></p>
+        <p class="cn">她说，当被告知离开家时，她感到“恐慌”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">"I didn't know whether to cry or what.</span> <span class="sentence" data-sentence-index="23">It was a moment when you feel awful," she added.</span></p>
+        <p class="cn">她补充说：“我不知道是该哭还是怎样。那是一个让你感觉糟糕的时刻。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Returning to her home briefly on Sunday to get medicine, she said the streets were deserted and her house covered in ash.</span></p>
+        <p class="cn">周日她短暂回家取药，说街道空无一人，她的房子覆盖着灰烬。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">Tourists in Madrid have reported seeing the fire and smoke near the airport, with one couple from New Zealand describing also smelling the smoke from their hotel in the city.</span></p>
+        <p class="cn">马德里的游客报告说看到机场附近有火和烟，一对来自新西兰的夫妇还描述说从他们在市区的酒店闻到了烟味。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Canadian tourist Letisha Lucas said the smell was immediately obvious on arrival in Madrid "and very irritating on the throat".</span></p>
+        <p class="cn">加拿大游客莱蒂莎·卢卡斯说，抵达马德里时气味立即明显，“而且对喉咙非常刺激”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">Robledo de Chavela, a small town 50km (30 miles) west of Madrid, has been ravaged by a forest fire</span></p>
+        <p class="cn">罗夫莱多德查韦拉，马德里以西50公里（30英里）的一个小镇，已被森林大火摧毁</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Overnight into Sunday, a new front also opened up near the coastal city of Valencia.</span></p>
+        <p class="cn">截至周日凌晨，沿海城市瓦伦西亚附近也出现了一个新的火线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Speaking to reporters late on Saturday, Valencia's regional President Juanfran PÃ©rez Llorca said: "The fire is beyond our capacity to extinguish."</span></p>
+        <p class="cn">瓦伦西亚地区主席胡安弗兰·佩雷斯·洛尔卡周六晚对记者说：“火势超出了我们的扑灭能力。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Pilar Bernabe, the central government's delegate to Valencia, said conditions in the region were likely to worsen throughout Sunday.</span></p>
+        <p class="cn">中央政府驻瓦伦西亚代表皮拉尔·贝尔纳贝表示，该地区的条件可能在周日全天恶化。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">Sunday is expected to bring high temperatures and low humidity, potentially allowing the fire to spread further.</span></p>
+        <p class="cn">预计周日将出现高温和低湿度，可能使火势进一步蔓延。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">On Saturday, one civilian was killed in a smaller fire in the Valencia region - the only civilian death so far reported.</span></p>
+        <p class="cn">周六，瓦伦西亚地区一场较小的火灾造成一名平民死亡——这是迄今为止报告的唯一平民死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">Earlier in the week, two firefighters were killed fighting the blaze near to Bordeaux in France.</span></p>
+        <p class="cn">本周早些时候，两名消防员在法国波尔多附近扑救大火时丧生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">Speaking on Sunday during a visit to an area hit by wildfires to the west of Madrid, the country's Prime Minister Pedro Sanchez said "difficult hours lie ahead" but added there were "positive" indications overnight towards containing the blaze.</span></p>
+        <p class="cn">西班牙首相佩德罗·桑切斯周日访问马德里以西受野火影响的地区时表示，“未来将是艰难的时刻”，但补充说，夜间有“积极”迹象表明火势得到控制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">He also said there needed to be "a major public pact on the climate emergency".</span></p>
+        <p class="cn">他还表示，需要“就气候紧急情况达成一项重大公共协议”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">Madrid's regional president Isabel DÃ­az Ayuso described the situation as the "worst fire in the history of the region".</span></p>
+        <p class="cn">马德里地区主席伊莎贝尔·迪亚斯·阿尤索称这是“该地区历史上最严重的火灾”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Rescue efforts in France's Gironde region involve 2,500 firefighters, including a Swiss team, 1,500 military personnel and almost 1,200 police and gendarmes, who are carrying out evacuations and helping with rescue and securing operations.</span></p>
+        <p class="cn">法国吉伦特地区的救援工作涉及2500名消防员（包括一个瑞士团队）、1500名军事人员和近1200名警察和宪兵，他们正在执行疏散任务，并协助救援和安全行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="38">Dry vegetation and brisk winds are causing the fire to spread, with 60km (37 miles) of the A63 motorway, which leads to Spain, having been closed.</span></p>
+        <p class="cn">干燥的植被和疾风导致火势蔓延，通往西班牙的A63高速公路60公里（37英里）路段已关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="39">On Sunday afternoon, Bordeaux Airport's departures and arrivals boards were showing delays to every flight from 17:15 onwards.</span></p>
+        <p class="cn">周日下午，波尔多机场的出发和到达信息板显示，从17:15起所有航班均有延误。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="40">Some 28 Easyjet flights alone were delayed, many with no new departure or arrival time given, and five cancelled including UK flights.</span></p>
+        <p class="cn">仅易捷航空就有约28个航班延误，许多航班未给出新的出发或到达时间，5个航班取消，包括飞往英国的航班。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="41">Bordeaux Airport told BBC News air traffic control restrictions had been put in place "to facilitate the work of the emergency services" in fighting the fires, with all commercial flights affected.</span></p>
+        <p class="cn">波尔多机场告诉BBC新闻，已实施空中交通管制限制，“以方便紧急服务部门”扑救火灾，所有商业航班均受影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="42">It is unclear how long the delays will last, the airport added.</span></p>
+        <p class="cn">机场补充说，目前尚不清楚延误将持续多久。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="43">The final stage of the Tour de France was shortened on Sunday from 133km to 89km (from 82 miles to 55) to allow security forces to be redeployed to the firefighting effort.</span></p>
+        <p class="cn">周日，环法自行车赛的最后一段从133公里缩短至89公里（从82英里缩短至55英里），以便安全部队重新部署到消防工作中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="44">President Emmanuel Macron said France would "rebuild" and his government would "be there for as long as is needed".</span></p>
+        <p class="cn">总统埃马纽埃尔·马克龙表示，法国将“重建”，他的政府将“在需要的时候一直存在”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="45">A convention centre in Bordeaux has been converted into a refuge for evacuees</span></p>
+        <p class="cn">波尔多的一个会议中心已被改造成疏散人员的避难所</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="46">Are you in an affected region?</span> <span class="sentence" data-sentence-index="47">If itâs safe to do so, get in touch.</span></p>
+        <p class="cn">您在受影响的地区吗？如果安全，请与我们联系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="48">Tourists tell BBC how their holiday turned into race to escape fires</span></p>
+        <p class="cn">游客告诉BBC，他们的假期如何变成逃离火灾的竞赛</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="49">'Upheaval' - French wildfire evacuations in the middle of the night</span></p>
+        <p class="cn">'剧变'——法国野火疏散在半夜进行</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散，撤离</p>
+      <p class="kw-def-en">to move people from a dangerous place to a safer one</p>
+      <p class="kw-ctx">&ldquo;Firefighters are battling to contain wildfires burning near the city of Bordeaux as tens of thousands of people have been evacuated from the surrounding region.&rdquo;</p>
+      <p class="kw-ctx-cn">消防员正在努力控制波尔多市附近燃烧的野火，数万人已从周边地区疏散。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">contain</span>
+        <button class="kw-speak-btn" data-word="contain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈteɪn/ v.</span>
+      </div>
+      <p class="kw-def">控制，遏制</p>
+      <p class="kw-def-en">to keep something harmful within limits; to prevent from spreading</p>
+      <p class="kw-ctx">&ldquo;Firefighters are battling to contain wildfires burning near the city of Bordeaux as tens of thousands of people have been evacuated from the surrounding region.&rdquo;</p>
+      <p class="kw-ctx-cn">消防员正在努力控制波尔多市附近燃烧的野火，数万人已从周边地区疏散。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">erratic</span>
+        <button class="kw-speak-btn" data-word="erratic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈrætɪk/ adj.</span>
+      </div>
+      <p class="kw-def">不稳定的，飘忽不定的</p>
+      <p class="kw-def-en">not regular or predictable; moving in an irregular way</p>
+      <p class="kw-ctx">&ldquo;France's Interior Minister Laurent Nuñez said the situation in the region remained 'very unfavourable' and the fire was 'moving erratically towards' Bordeaux, though officials downplayed the possibility of evacuation.&rdquo;</p>
+      <p class="kw-ctx-cn">法国内政部长洛朗·努涅斯表示，该地区局势仍然“非常不利”，火势“飘忽不定地向”波尔多移动，尽管官员们淡化了疏散的可能性。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">downplay</span>
+        <button class="kw-speak-btn" data-word="downplay" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdaʊnˈpleɪ/ v.</span>
+      </div>
+      <p class="kw-def">淡化，轻描淡写</p>
+      <p class="kw-def-en">to make something seem less important than it really is</p>
+      <p class="kw-ctx">&ldquo;France's Interior Minister Laurent Nuñez said the situation in the region remained 'very unfavourable' and the fire was 'moving erratically towards' Bordeaux, though officials downplayed the possibility of evacuation.&rdquo;</p>
+      <p class="kw-ctx-cn">法国内政部长洛朗·努涅斯表示，该地区局势仍然“非常不利”，火势“飘忽不定地向”波尔多移动，尽管官员们淡化了疏散的可能性。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rage</span>
+        <button class="kw-speak-btn" data-word="rage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/reɪdʒ/ v.</span>
+      </div>
+      <p class="kw-def">肆虐，猛烈持续</p>
+      <p class="kw-def-en">to continue with great force or violence</p>
+      <p class="kw-ctx">&ldquo;Wildfires have raged across Europe over the past week, primarily in France and Spain, where more than 330,000 people have been evacuated.&rdquo;</p>
+      <p class="kw-ctx-cn">过去一周，野火肆虐欧洲，主要在法国和西班牙，已有超过33万人被疏散。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">improvised</span>
+        <button class="kw-speak-btn" data-word="improvised" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪmprəvaɪzd/ adj.</span>
+      </div>
+      <p class="kw-def">临时凑成的，即兴的</p>
+      <p class="kw-def-en">made or done without preparation, using whatever is available</p>
+      <p class="kw-ctx">&ldquo;Residents in Le Porge, one of the coastal towns hit by the fires, have set up an improvised volunteer network to support exhausted firefighters, cooking them meals and offering a place to rest in between shifts.&rdquo;</p>
+      <p class="kw-ctx-cn">受火灾影响的沿海城镇之一勒波尔日的居民建立了一个临时志愿者网络，为疲惫的消防员提供餐食和轮班休息的地方。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">magnitude</span>
+        <button class="kw-speak-btn" data-word="magnitude" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmæɡnɪtjuːd/ n.</span>
+      </div>
+      <p class="kw-def">巨大，重要性</p>
+      <p class="kw-def-en">the great size or extent of something</p>
+      <p class="kw-ctx">&ldquo;'I think many of them have never experienced a fire of this magnitude before,' volunteer Nathalie Augonnet said.&rdquo;</p>
+      <p class="kw-ctx-cn">“我认为他们中许多人从未经历过如此规模的火灾，”志愿者娜塔莉·奥戈内说。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devastated</span>
+        <button class="kw-speak-btn" data-word="devastated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdevəsteɪtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">极度震惊的，被摧毁的</p>
+      <p class="kw-def-en">extremely shocked and upset; destroyed</p>
+      <p class="kw-ctx">&ldquo;'I'm a little devastated for this beautiful town, for its forests, its wildlife and for the people who have lost so much,' Augonnet said.&rdquo;</p>
+      <p class="kw-ctx-cn">“我为这个美丽的小镇、它的森林、野生动物以及失去太多的人们感到有些崩溃，”奥戈内说。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Firefighters tackle wildfires in Ares and aerial footage shows destruction in Le Porge", "start_ms": 3000, "end_ms": 10704, "paragraph_index": 1}, {"index": 2, "text": "Firefighters are battling to contain wildfires burning near the city of Bordeaux as tens of thousands of people have been evacuated from the surrounding region.", "start_ms": 10704, "end_ms": 20904, "paragraph_index": 2}, {"index": 3, "text": "France's Interior Minister Laurent Nu\u00c3\u00b1ez said the situation in the region remained \"very unfavourable\" and the fire was \"moving erratically towards\" Bordeaux, though officials downplayed the possibility of evacuation.", "start_ms": 20904, "end_ms": 36240, "paragraph_index": 3}, {"index": 4, "text": "Overnight into Sunday, about 55,000 people were evacuated from villages to the south of the city in the Gironde region, famed for its vineyards.", "start_ms": 36240, "end_ms": 47016, "paragraph_index": 4}, {"index": 5, "text": "Wildfires have raged across Europe over the past week, primarily in France and Spain, where more than 330,000 people have been evacuated.", "start_ms": 47016, "end_ms": 57960, "paragraph_index": 5}, {"index": 6, "text": "France has been one of worst affected regions, with an area of 42,000 hectares burnt in the south-west, making it one of the largest forest fires since World War Two.", "start_ms": 57960, "end_ms": 69864, "paragraph_index": 6}, {"index": 7, "text": "About 98,000 hectares have burnt across the country since the start of the year.", "start_ms": 69864, "end_ms": 75768, "paragraph_index": 6}, {"index": 8, "text": "In total, more than 220,000 people have been evacuated in the south-west of the country.", "start_ms": 75768, "end_ms": 82776, "paragraph_index": 7}, {"index": 9, "text": "Captain Nicolas Braz, one of the leaders of the firefighting operation, said the fire had created \"its own winds - complete with whirlwinds\", adding it was \"erratic and unmanageable\".", "start_ms": 82776, "end_ms": 95472, "paragraph_index": 8}, {"index": 10, "text": "Residents in Le Porge, one of the coastal towns hit by the fires, have set up an improvised volunteer network to support exhausted firefighters, cooking them meals and offering a place to rest in between shifts.", "start_ms": 95472, "end_ms": 110184, "paragraph_index": 9}, {"index": 11, "text": "\"I think many of them have never experienced a fire of this magnitude before,\" volunteer Nathalie Augonnet said.", "start_ms": 110184, "end_ms": 118152, "paragraph_index": 10}, {"index": 12, "text": "More than 150 houses have been destroyed in the town of 3,500 inhabitants.", "start_ms": 118152, "end_ms": 125328, "paragraph_index": 11}, {"index": 13, "text": "Several houses in Le Porge, in the Gironde region, have been destroyed by a fire", "start_ms": 125328, "end_ms": 131616, "paragraph_index": 12}, {"index": 14, "text": "\"I'm a little devastated for this beautiful town, for its forests, its wildlife and for the people who have lost so much,\" Augonnet said.", "start_ms": 131616, "end_ms": 141000, "paragraph_index": 13}, {"index": 15, "text": "\"Right now, we're focused on taking action, so we don't really have time to think.", "start_ms": 141000, "end_ms": 146928, "paragraph_index": 14}, {"index": 16, "text": "I think the difficult part will come afterwards, during the reconstruction.\"", "start_ms": 146928, "end_ms": 152328, "paragraph_index": 14}, {"index": 17, "text": "Meanwhile in Spain, fires continue to spread, with more than 90,000 evacuated from the regions around Madrid and \u00c3\u0081vila.", "start_ms": 152328, "end_ms": 161952, "paragraph_index": 15}, {"index": 18, "text": "Around 77,000 hectares have been affected by the fires in Spain, minister for ecological transition, Sara Aagesen, said on Sunday.", "start_ms": 161952, "end_ms": 173064, "paragraph_index": 16}, {"index": 19, "text": "She added that the wildfire burning in the \u00c3\u0081vila region is the largest in the country's recent history.", "start_ms": 173064, "end_ms": 180048, "paragraph_index": 17}, {"index": 20, "text": "Among the residents evacuating surrounding areas is Olga Congacha, 50, who had to flee her village of Robledo de Chavela west of Madrid in a haste.", "start_ms": 180048, "end_ms": 191256, "paragraph_index": 18}, {"index": 21, "text": "She said she felt \"panicked\" when she was told to leave her home.", "start_ms": 191256, "end_ms": 195768, "paragraph_index": 19}, {"index": 22, "text": "\"I didn't know whether to cry or what.", "start_ms": 195768, "end_ms": 198936, "paragraph_index": 20}, {"index": 23, "text": "It was a moment when you feel awful,\" she added.", "start_ms": 198936, "end_ms": 202944, "paragraph_index": 20}, {"index": 24, "text": "Returning to her home briefly on Sunday to get medicine, she said the streets were deserted and her house covered in ash.", "start_ms": 202944, "end_ms": 211224, "paragraph_index": 21}, {"index": 25, "text": "Tourists in Madrid have reported seeing the fire and smoke near the airport, with one couple from New Zealand describing also smelling the smoke from their hotel in the city.", "start_ms": 211224, "end_ms": 222456, "paragraph_index": 22}, {"index": 26, "text": "Canadian tourist Letisha Lucas said the smell was immediately obvious on arrival in Madrid \"and very irritating on the throat\".", "start_ms": 222456, "end_ms": 231144, "paragraph_index": 23}, {"index": 27, "text": "Robledo de Chavela, a small town 50km (30 miles) west of Madrid, has been ravaged by a forest fire", "start_ms": 231144, "end_ms": 240528, "paragraph_index": 24}, {"index": 28, "text": "Overnight into Sunday, a new front also opened up near the coastal city of Valencia.", "start_ms": 240528, "end_ms": 247152, "paragraph_index": 25}, {"index": 29, "text": "Speaking to reporters late on Saturday, Valencia's regional President Juanfran P\u00c3\u00a9rez Llorca said: \"The fire is beyond our capacity to extinguish.\"", "start_ms": 247152, "end_ms": 259176, "paragraph_index": 26}, {"index": 30, "text": "Pilar Bernabe, the central government's delegate to Valencia, said conditions in the region were likely to worsen throughout Sunday.", "start_ms": 259176, "end_ms": 268176, "paragraph_index": 27}, {"index": 31, "text": "Sunday is expected to bring high temperatures and low humidity, potentially allowing the fire to spread further.", "start_ms": 268176, "end_ms": 276216, "paragraph_index": 28}, {"index": 32, "text": "On Saturday, one civilian was killed in a smaller fire in the Valencia region - the only civilian death so far reported.", "start_ms": 276216, "end_ms": 285072, "paragraph_index": 29}, {"index": 33, "text": "Earlier in the week, two firefighters were killed fighting the blaze near to Bordeaux in France.", "start_ms": 285072, "end_ms": 291768, "paragraph_index": 30}, {"index": 34, "text": "Speaking on Sunday during a visit to an area hit by wildfires to the west of Madrid, the country's Prime Minister Pedro Sanchez said \"difficult hours lie ahead\" but added there were \"positive\" indications overnight towards containing the blaze.", "start_ms": 291768, "end_ms": 307728, "paragraph_index": 31}, {"index": 35, "text": "He also said there needed to be \"a major public pact on the climate emergency\".", "start_ms": 307728, "end_ms": 313464, "paragraph_index": 32}, {"index": 36, "text": "Madrid's regional president Isabel D\u00c3\u00adaz Ayuso described the situation as the \"worst fire in the history of the region\".", "start_ms": 313464, "end_ms": 321888, "paragraph_index": 33}, {"index": 37, "text": "Rescue efforts in France's Gironde region involve 2,500 firefighters, including a Swiss team, 1,500 military personnel and almost 1,200 police and gendarmes, who are carrying out evacuations and helping with rescue and securing operations.", "start_ms": 321888, "end_ms": 342552, "paragraph_index": 34}, {"index": 38, "text": "Dry vegetation and brisk winds are causing the fire to spread, with 60km (37 miles) of the A63 motorway, which leads to Spain, having been closed.", "start_ms": 342552, "end_ms": 355296, "paragraph_index": 35}, {"index": 39, "text": "On Sunday afternoon, Bordeaux Airport's departures and arrivals boards were showing delays to every flight from 17:15 onwards.", "start_ms": 355296, "end_ms": 365088, "paragraph_index": 36}, {"index": 40, "text": "Some 28 Easyjet flights alone were delayed, many with no new departure or arrival time given, and five cancelled including UK flights.", "start_ms": 365088, "end_ms": 375936, "paragraph_index": 37}, {"index": 41, "text": "Bordeaux Airport told BBC News air traffic control restrictions had been put in place \"to facilitate the work of the emergency services\" in fighting the fires, with all commercial flights affected.", "start_ms": 375936, "end_ms": 388968, "paragraph_index": 38}, {"index": 42, "text": "It is unclear how long the delays will last, the airport added.", "start_ms": 388968, "end_ms": 394104, "paragraph_index": 39}, {"index": 43, "text": "The final stage of the Tour de France was shortened on Sunday from 133km to 89km (from 82 miles to 55) to allow security forces to be redeployed to the firefighting effort.", "start_ms": 394104, "end_ms": 409752, "paragraph_index": 40}, {"index": 44, "text": "President Emmanuel Macron said France would \"rebuild\" and his government would \"be there for as long as is needed\".", "start_ms": 409752, "end_ms": 417000, "paragraph_index": 41}, {"index": 45, "text": "A convention centre in Bordeaux has been converted into a refuge for evacuees", "start_ms": 417000, "end_ms": 423120, "paragraph_index": 42}, {"index": 46, "text": "Are you in an affected region?", "start_ms": 423120, "end_ms": 425856, "paragraph_index": 43}, {"index": 47, "text": "If it\u00e2\u0080\u0099s safe to do so, get in touch.", "start_ms": 425856, "end_ms": 429840, "paragraph_index": 43}, {"index": 48, "text": "Tourists tell BBC how their holiday turned into race to escape fires", "start_ms": 429840, "end_ms": 435600, "paragraph_index": 44}, {"index": 49, "text": "'Upheaval' - French wildfire evacuations in the middle of the night", "start_ms": 435600, "end_ms": 440808, "paragraph_index": 45}], "total_duration_ms": 440808};
+  const WORD_GLOSS = {"the": "这个", "in": "在", "to": "到", "of": "的", "and": "和", "have": "有", "said": "说", "been": "已经", "fire": "射击", "on": "在", "region": "地区", "sunday": "星期日", "from": "来自", "with": "与", "was": "是", "were": "是", "for": "为了", "one": "一个", "fires": "火灾", "madrid": "马德里", "she": "她", "is": "是", "firefighters": "消防员", "people": "人们", "evacuated": "撤离", "france": "法国", "by": "被", "be": "是", "are": "是", "near": "附近", "city": "城市", "as": "作为", "into": "进入", "its": "它的", "spain": "西班牙", "more": "更多", "than": "比", "affected": "受影响", "an": "一个", "it": "它", "so": "所以", "added": "补充", "her": "她的", "this": "这个", "le": "勒", "minister": "部长", "overnight": "夜间", "has": "有", "had": "有", "think": "认为", "town": "城镇", "who": "谁", "spread": "传播", "de": "实际上", "west": "西部", "airport": "机场", "new": "新的", "also": "也", "miles": "英里", "president": "总统", "there": "那里", "flights": "航班", "surrounding": "围绕", "situation": "局势", "very": "非常", "towards": "对待", "about": "关于", "across": "跨越", "week": "周", "worst": "最坏的", "regions": "地区", "area": "区域", "south-west": "西南部", "largest": "最大的", "forest": "森林", "since": "自从", "two": "两个", "country": "国家", "residents": "居民", "coastal": "沿海的", "hit": "击中", "up": "向上", "volunteer": "志愿者", "them": "他们", "place": "地点", "many": "许多", "houses": "房屋", "destroyed": "被毁的", "time": "时间", "difficult": "困难的", "will": "将", "during": "在期间", "around": "在...周围", "country's": "国家的", "history": "历史", "when": "当", "told": "告诉", "home": "家", "or": "或者", "you": "你", "get": "得到", "reported": "据报道", "smoke": "烟雾", "their": "他们的", "arrival": "到达", "speaking": "发言", "saturday": "星期六", "regional": "地区的", "killed": "杀死", "fighting": "战斗", "needed": "需要", "emergency": "紧急", "rescue": "救援", "including": "包括", "evacuations": "撤离", "delays": "延误", "bbc": "英国广播公司", "how": "如何", "long": "长久", "would": "将", "video": "视频", "can": "可以", "not": "不", "played": "比赛", "watch": "观看", "tackle": "应对", "aerial": "空中的", "footage": "视频片段", "shows": "显示", "destruction": "破坏", "battling": "斗争", "tens": "数十", "thousands": "数千", "remained": "仍然是", "moving": "移动", "though": "尽管", "officials": "官员", "possibility": "可能性", "villages": "村庄", "south": "韩国", "europe": "欧洲", "over": "超过", "past": "过去", "primarily": "主要地", "where": "那里", "making": "进行", "world": "世界", "war": "战争", "start": "开始", "year": "年", "total": "总体的", "captain": "船长", "leaders": "领导人", "operation": "行动", "created": "创建", "own": "自己", "complete": "完全的", "adding": "补充说", "towns": "城镇", "set": "设定", "network": "网络", "support": "支持", "meals": "餐食", "offering": "提供", "rest": "其余", "between": "之间", "shifts": "转变", "never": "从未", "experienced": "经历", "before": "之前", "several": "数个", "i'm": "我是", "little": "很少", "beautiful": "美丽", "lost": "失去", "much": "许多", "right": "正确", "now": "现在", "we're": "我们是", "focused": "专注的", "taking": "采取", "action": "行动", "we": "我们", "don't": "不要", "really": "真正地", "part": "部分", "come": "到来", "afterwards": "之后", "meanwhile": "与此同时", "continue": "继续", "transition": "过渡", "that": "那个", "recent": "最近", "among": "在...之中", "areas": "区域", "flee": "逃离", "village": "村庄", "felt": "感觉", "panicked": "惊慌", "leave": "离开", "didn't": "没有", "know": "知道", "whether": "是否", "cry": "哭泣", "what": "什么", "moment": "时刻", "feel": "感觉", "awful": "糟糕的", "returning": "返回", "briefly": "短暂地", "medicine": "药品", "streets": "街道", "house": "议院", "covered": "覆盖的", "seeing": "看到", "couple": "几个", "describing": "描述", "hotel": "酒店", "canadian": "加拿大的", "smell": "闻到", "immediately": "立即", "obvious": "明显的", "small": "小的", "front": "前线", "opened": "开火", "reporters": "记者们", "late": "已故", "rez": "雷兹", "beyond": "超出", "our": "我们的", "capacity": "容量", "central": "中央的", "government's": "政府的", "conditions": "条件", "likely": "可能", "throughout": "贯穿", "expected": "预期", "bring": "带来", "high": "高的", "temperatures": "温度", "low": "低的", "humidity": "湿度", "potentially": "可能地", "allowing": "允许", "further": "进一步的", "smaller": "较小的", "only": "只有", "death": "死亡", "far": "远", "earlier": "较早", "visit": "访问", "prime": "首相", "hours": "小时", "lie": "在于", "ahead": "提前", "but": "但是", "positive": "积极的", "containing": "包含", "he": "他", "major": "重大的", "public": "公众", "climate": "气候", "described": "描述", "efforts": "努力", "involve": "涉及", "team": "团队", "military": "军事", "personnel": "人员", "almost": "几乎", "police": "警方", "carrying": "携带", "out": "出来", "helping": "帮助", "securing": "确保", "operations": "行动", "vegetation": "植被", "causing": "导致", "motorway": "高速公路", "which": "哪个", "leads": "领先", "having": "拥有", "closed": "关闭", "afternoon": "下午", "showing": "表现", "every": "每个", "flight": "航班", "some": "一些", "alone": "独自", "delayed": "延迟的", "no": "没有", "departure": "离职", "given": "给定", "five": "五", "cancelled": "取消", "uk": "英国", "news": "新闻", "air": "气氛", "traffic": "交通", "control": "控制", "restrictions": "限制", "put": "提出", "facilitate": "促进", "work": "工作", "services": "服务", "all": "所有", "commercial": "商业", "unclear": "不清楚的", "last": "最后", "final": "最终", "stage": "舞台", "tour": "巡回赛", "allow": "允许", "security": "安全", "forces": "力量", "effort": "射门", "rebuild": "重建", "his": "他的", "government": "政府", "centre": "中心", "converted": "改建的", "refuge": "避难所", "evacuees": "撤离人员", "if": "如果", "safe": "安全", "do": "做", "tell": "告诉", "holiday": "假期", "turned": "转向", "race": "种族", "escape": "逃离", "french": "法国的", "middle": "中间", "night": "晚上", "bordeaux": "波尔多", "wildfires": "野火", "porge": "波尔热", "gironde": "吉伦特省", "hectares": "公顷", "valencia": "巴伦西亚", "burning": "燃烧", "france's": "法国的", "burnt": "烧毁", "firefighting": "消防", "winds": "风", "augonnet": "奥戈内", "vila": "维拉", "wildfire": "野火", "robledo": "罗夫莱多", "chavela": "查韦拉", "tourists": "游客", "civilian": "平民", "blaze": "大火", "ares": "阿雷斯", "interior": "内政", "laurent": "洛朗", "ez": "埃兹", "unfavourable": "不利的", "erratically": "不稳定地", "downplayed": "淡化", "evacuation": "疏散", "famed": "著名的", "vineyards": "葡萄园", "raged": "肆虐", "nicolas": "尼古拉", "braz": "布拉兹", "whirlwinds": "旋风", "unmanageable": "难以控制", "exhausted": "筋疲力尽", "cooking": "烹饪", "nathalie": "纳塔莉", "inhabitants": "居民", "forests": "森林", "wildlife": "野生动物", "reconstruction": "重建", "ecological": "生态的", "sara": "萨拉", "aagesen": "奥格森", "evacuating": "疏散", "olga": "奥尔加", "congacha": "孔加查", "haste": "匆忙", "deserted": "空无一人的", "ash": "灰烬", "zealand": "西兰", "smelling": "有气味", "tourist": "游客", "letisha": "莱蒂莎", "lucas": "卢卡斯", "irritating": "刺激的", "throat": "喉咙", "ravaged": "蹂躏", "valencia's": "巴伦西亚的", "juanfran": "胡安弗兰", "llorca": "略尔卡", "extinguish": "扑灭", "pilar": "皮拉尔", "bernabe": "贝尔纳韦", "delegate": "代表", "worsen": "恶化", "pedro": "佩德罗", "sanchez": "桑切斯", "indications": "迹象", "pact": "协议", "madrid's": "马德里的", "isabel": "伊莎贝尔", "az": "阿斯", "ayuso": "阿尤索", "swiss": "瑞士的", "gendarmes": "宪兵", "dry": "干燥", "brisk": "轻快的", "airport's": "机场的", "departures": "出发", "arrivals": "到达", "boards": "显示板", "onwards": "向前", "easyjet": "易捷航空", "shortened": "缩短", "redeployed": "重新部署", "emmanuel": "埃马纽埃尔", "macron": "马克龙", "convention": "大会", "touch": "接触", "upheaval": "剧变"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
