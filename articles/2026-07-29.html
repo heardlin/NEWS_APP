@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-07-29</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-07-29</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/dc76/live/f8213680-8b65-11f1-a7ab-8b30adf0800a.jpg" alt="More than half of England in drought, Environment Agency declares" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>More than half of England in drought, Environment Agency declares</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/ckg35n7yny3o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-07-29.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Dorset is just one of the areas <span class="keyword" data-word="declared" data-phonetic="/dɪˈkleəd/" data-pos="v." data-def="宣布，声明" data-def-en="to officially announce something">declared</span> to be in <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> on Wednesday</span></p>
+        <p class="cn">多塞特郡（Dorset）只是周三被宣布进入干旱状态的地区之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1"><span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">Drought</span> has been <span class="keyword" data-word="declared" data-phonetic="/dɪˈkleəd/" data-pos="v." data-def="宣布，声明" data-def-en="to officially announce something">declared</span> across more than half of England as hot, dry weather takes its toll on the country's water supplies.</span></p>
+        <p class="cn">由于炎热干燥的天气对英国供水造成影响，英格兰超过一半的地区已宣布进入干旱状态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The Environment Agency (EA) announcement covers much of central, eastern and southern England, and is a public sign that further <span class="keyword" data-word="restrictions" data-phonetic="/rɪˈstrɪkʃənz/" data-pos="n." data-def="限制，约束" data-def-en="rules that limit what you can do">restrictions</span> on water use might follow.</span></p>
+        <p class="cn">英国环境署（Environment Agency, EA）的公告涵盖英格兰中部、东部和南部大部分地区，这是一个公开信号，表明可能进一步限制用水。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">It added that the <span class="keyword" data-word="impacts" data-phonetic="/ˈɪmpækts/" data-pos="n." data-def="影响，冲击" data-def-en="the effects or consequences of something">impacts</span> are already being felt, including low river flows, early harvests and high risk of wildfires.</span> <span class="sentence" data-sentence-index="4">More than 20 million people are already under hosepipe bans.</span></p>
+        <p class="cn">该机构补充说，影响已经显现，包括河流流量低、提前收获和野火风险高。已有超过2000万人受到软管禁令限制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">North Wales and the Upper Severn river basin entered <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> conditions last week, Natural Resources Wales said.</span></p>
+        <p class="cn">威尔士自然资源局（Natural Resources Wales）表示，北威尔士和上塞文河流域（Upper Severn river basin）上周已进入干旱状态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Scotland does not declare <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> but monitors "water scarcity".</span> <span class="sentence" data-sentence-index="7">Some parts of eastern Scotland are in the most extreme category of "significant scarcity", according to the Scottish Environment Protection Agency.</span></p>
+        <p class="cn">苏格兰不宣布干旱，但监测“水资源短缺”。根据苏格兰环境保护局（Scottish Environment Protection Agency）的数据，苏格兰东部部分地区处于“严重短缺”的最极端类别。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Northern Ireland is not currently in <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span>.</span></p>
+        <p class="cn">北爱尔兰目前未处于干旱状态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">In pictures: Scale of <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> across England as rivers dry up</span></p>
+        <p class="cn">图片：英格兰干旱规模，河流干涸。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Hosepipe ban in force as <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> threatens - is your area affected?</span></p>
+        <p class="cn">干旱威胁下软管禁令生效——你的地区受影响了吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">How climate change worsens heatwaves, droughts, wildfires and floods</span></p>
+        <p class="cn">气候变化如何加剧热浪、干旱、野火和洪水。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">The full list of English regions in <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> conditions are:</span></p>
+        <p class="cn">英格兰进入干旱状态的地区完整列表如下：</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">Hertfordshire and the whole of London</span></p>
+        <p class="cn">赫特福德郡（Hertfordshire）和整个伦敦（London）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">Hampshire and the Isle of Wight</span></p>
+        <p class="cn">汉普郡（Hampshire）和怀特岛（Isle of Wight）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">Wessex, covering Dorset, Somerset, Wiltshire, and South Gloucestershire</span></p>
+        <p class="cn">韦塞克斯（Wessex），涵盖多塞特、萨默塞特（Somerset）、威尔特郡（Wiltshire）和南格洛斯特郡（South Gloucestershire）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">There is no single definition of <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span>, but it usually refers to a period of prolonged unusually dry weather that can have <span class="keyword" data-word="impacts" data-phonetic="/ˈɪmpækts/" data-pos="n." data-def="影响，冲击" data-def-en="the effects or consequences of something">impacts</span> on people, nature and the environment.</span></p>
+        <p class="cn">干旱没有单一的定义，但通常指一段持续时间异常干燥的天气，可能对人类、自然和环境产生影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">The EA considers all of these factors before deciding whether to declare a <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> in England.</span></p>
+        <p class="cn">环境署在决定是否宣布英格兰干旱时会考虑所有这些因素。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">The declaration is a public sign that the EA is stepping up its response to the dry conditions, including increased monitoring and controls on how much water can be taken from rivers and groundwater.</span></p>
+        <p class="cn">这一宣布是一个公开信号，表明环境署正在加强对干旱条件的应对，包括增加监测和对河流及地下水取水量的控制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">It can mean hosepipe bans being introduced if they are not already in place.</span></p>
+        <p class="cn">这可能意味着如果尚未实施软管禁令，将会引入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">"The hot and dry weather means we are currently using water faster than nature can <span class="keyword" data-word="replenish" data-phonetic="/rɪˈplenɪʃ/" data-pos="v." data-def="补充，重新装满" data-def-en="to fill something up again">replenish</span> it," said Helen Wakeham, director of water at the Environment Agency and chair of the National <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">Drought</span> Group.</span></p>
+        <p class="cn">环境署水务主任兼国家干旱小组（National Drought Group）主席海伦·韦克汉姆（Helen Wakeham）表示：“炎热干燥的天气意味着我们目前用水的速度超过了自然补充的速度。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">This year's <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> is somewhat unusual because January and February were very wet for much of the UK, helping to <span class="keyword" data-word="replenish" data-phonetic="/rɪˈplenɪʃ/" data-pos="v." data-def="补充，重新装满" data-def-en="to fill something up again">replenish</span> reservoirs and groundwater.</span></p>
+        <p class="cn">今年的干旱有些不同寻常，因为1月和2月英国大部分地区非常潮湿，有助于补充水库和地下水。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">But late spring and summer have been exceptionally hot and dry.</span> <span class="sentence" data-sentence-index="23">The quick switch between wet and dry conditions is sometimes called "climate whiplash".</span></p>
+        <p class="cn">但春末和夏季异常炎热干燥。干湿条件的快速转换有时被称为“气候鞭打”（climate whiplash）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">In particular, July has seen 7% of the average levels of rainfall in England so far, with just 1% across southern England.</span> <span class="sentence" data-sentence-index="25">Some parts of Devon and Hampshire have gone more than a month without rain.</span></p>
+        <p class="cn">特别是，7月份英格兰降雨量仅为平均水平的7%，英格兰南部仅为1%。德文郡（Devon）和汉普郡部分地区已超过一个月无雨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">"The warm and exceptionally dry conditions experienced across much of England over recent months are continuing to have a significant impact," said Will Lang, chief meteorologist at the Met Office.</span></p>
+        <p class="cn">英国气象局（Met Office）首席气象学家威尔·朗（Will Lang）表示：“近几个月英格兰大部分地区经历的温暖和异常干燥条件持续产生重大影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">Early August could bring some rain to parts of the country, but the Met Office has said there is no sign of sustained rainfall that would make a significant difference to the dry conditions.</span></p>
+        <p class="cn">8月初可能给英国部分地区带来一些降雨，但气象局表示，没有迹象表明会有持续降雨显著改善干燥状况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">The combination of low rainfall and prolonged high temperatures - meaning greater <span class="keyword" data-word="evaporation" data-phonetic="/ɪˌvæpəˈreɪʃən/" data-pos="n." data-def="蒸发，挥发" data-def-en="the process of a liquid turning into a gas">evaporation</span> of moisture - has quickly <span class="keyword" data-word="depleted" data-phonetic="/dɪˈpliːtɪd/" data-pos="v." data-def="耗尽，减少" data-def-en="to reduce the amount of something">depleted</span> water reserves in soils, vegetation and rivers.</span></p>
+        <p class="cn">低降雨量和长时间高温（意味着水分蒸发更多）的结合迅速耗尽了土壤、植被和河流中的水资源储备。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">These conditions have led to a "flash <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span>", the EA has said.</span> <span class="sentence" data-sentence-index="30">This is where <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> begins suddenly rather than over many months or years.</span></p>
+        <p class="cn">环境署表示，这些条件导致了“闪旱”（flash drought）。这是指干旱突然开始，而不是持续数月或数年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="31">Today's announcement means there have been three droughts in the past five years â 2022, 2025 and now 2026.</span></p>
+        <p class="cn">今天的公告意味着过去五年中发生了三次干旱——2022年、2025年和现在的2026年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">While droughts happen naturally, scientists say that climate change is raising the risks, with higher summer temperatures drying out soils more quickly.</span> <span class="sentence" data-sentence-index="33">This can lead to more severe and longer-lasting droughts.</span></p>
+        <p class="cn">虽然干旱自然发生，但科学家表示，气候变化正在增加风险，夏季气温升高使土壤更快干燥。这可能导致更严重和更持久的干旱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">Some researchers have also highlighted underinvestment in water <span class="keyword" data-word="infrastructure" data-phonetic="/ˈɪnfrəstrʌktʃər/" data-pos="n." data-def="基础设施" data-def-en="the basic systems and services of a country or organization">infrastructure</span> as an issue .</span></p>
+        <p class="cn">一些研究人员还强调，对水基础设施投资不足是一个问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">The EA has previously warned that England's public water supplies could face a shortfall of 5 billion litres per day by the middle of the century without urgent action.</span></p>
+        <p class="cn">环境署此前警告称，如果不采取紧急行动，到本世纪中叶，英格兰的公共供水可能面临每天50亿升的短缺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="36">"This <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> isn't just about a lack of rain," said Prof Hayley Fowler of Newcastle University.</span> <span class="sentence" data-sentence-index="37">"It's the result of hotter temperatures from a warming climate, rising water demand, ageing <span class="keyword" data-word="infrastructure" data-phonetic="/ˈɪnfrəstrʌktʃər/" data-pos="n." data-def="基础设施" data-def-en="the basic systems and services of a country or organization">infrastructure</span> and too much water being lost through leaks."</span></p>
+        <p class="cn">纽卡斯尔大学（Newcastle University）的海莉·福勒教授（Prof Hayley Fowler）表示：“这场干旱不仅仅是缺乏降雨。它是气候变暖导致气温升高、用水需求上升、基础设施老化和过多水通过泄漏流失的结果。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="38">The government has committed to improving the water industry and water companies have announced plans for investment, but bills are rising as a result .</span></p>
+        <p class="cn">政府已承诺改善水务行业，水务公司也宣布了投资计划，但因此账单正在上涨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="39">The dry conditions have consequences for nature, with Atlantic salmon unable to move upstream where river flows are low.</span> <span class="sentence" data-sentence-index="40">Agriculture has also taken a hit.</span></p>
+        <p class="cn">干燥条件对自然产生影响，大西洋鲑鱼（Atlantic salmon）无法在河流流量低的地方向上游移动。农业也受到打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="41">Paul Tompkins, deputy president of the National Farmers' Union of England and Wales (NFU), said: "Farmers and growers have always had to contend with the weather, but what they are experiencing now is climate change in action.</span> <span class="sentence" data-sentence-index="42">More extreme conditions [are] making it harder, riskier and more costly to produce the nation's food."</span></p>
+        <p class="cn">英格兰和威尔士全国农民联盟（National Farmers' Union of England and Wales, NFU）副主席保罗·汤普金斯（Paul Tompkins）表示：“农民和种植者一直需要应对天气，但他们现在经历的是气候变化在行动。更极端的条件使生产国家粮食变得更困难、更冒险和更昂贵。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="43">He added the issue of <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> is something that "should matter to everyone" as it affects the country's food security.</span></p>
+        <p class="cn">他补充说，干旱问题是“每个人都应该关心的事情”，因为它影响国家的粮食安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="44">Some areas of the country have now entered their fourth heatwave of the year.</span></p>
+        <p class="cn">英国一些地区现已进入今年的第四次热浪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="45">Amber and yellow heat health alerts have come into force for parts of the UK, with temperatures potentially peaking at 35C in parts of south-east England on Wednesday.</span></p>
+        <p class="cn">琥珀色和黄色高温健康警报已在英国部分地区生效，周三英格兰东南部部分地区气温可能达到35摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="46">The hot, dry weather has created ideal conditions for wildfires to spread.</span> <span class="sentence" data-sentence-index="47">The National Fire Chiefs Council has warned that wildfire risk "remains elevated across the UK".</span></p>
+        <p class="cn">炎热干燥的天气为野火蔓延创造了理想条件。国家消防局长委员会（National Fire Chiefs Council）警告称，野火风险“在英国各地仍然较高”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="48">More than 200 wildfire incidents have been reported in England and Wales over the past two weeks, it said.</span></p>
+        <p class="cn">该机构表示，过去两周，英格兰和威尔士报告了200多起野火事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="49">The Met Office has separately announced that the new June temperature record set last month was even higher than previously thought, following verification processes.</span></p>
+        <p class="cn">气象局另外宣布，经过验证程序，上月创下的6月气温新纪录比之前认为的还要高。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="50">The previously-reported figure of 37.7C in Lingwood, Norfolk, on 26 June 2026 has been updated to 38.0C â smashing the UK's previous June high of 35.6C.</span></p>
+        <p class="cn">此前报道的2026年6月26日诺福克（Norfolk）林伍德（Lingwood）37.7摄氏度的数据已更新为38.0摄氏度——打破了英国此前6月最高气温35.6摄氏度的纪录。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="51">Additional reporting by Jess Carr</span></p>
+        <p class="cn">杰斯·卡尔（Jess Carr）补充报道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="52">Do you live in one of the affected regions?</span> <span class="sentence" data-sentence-index="53">Share your experiences.</span></p>
+        <p class="cn">你住在受影响地区之一吗？分享你的经历。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="54">Sign up for our Future Earth newsletter to keep up with the latest climate and environment stories with the BBC's Justin Rowlatt.</span> <span class="sentence" data-sentence-index="55">Outside the UK?</span> <span class="sentence" data-sentence-index="56">Sign up to our international newsletter here .</span></p>
+        <p class="cn">订阅我们的“未来地球”（Future Earth）新闻通讯，了解BBC贾斯汀·罗兰（Justin Rowlatt）的最新气候和环境故事。在英国境外？在此处订阅我们的国际新闻通讯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="57">Wildfires and record dry conditions trigger <span class="keyword" data-word="drought" data-phonetic="/draʊt/" data-pos="n." data-def="干旱，旱灾" data-def-en="a long period of unusually dry weather">drought</span> in parts of Wales</span></p>
+        <p class="cn">野火和创纪录的干燥条件引发威尔士部分地区干旱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="58">Fourth heatwave grips parts of UK with 35C forecast</span></p>
+        <p class="cn">第四次热浪席卷英国部分地区，预报35摄氏度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="59">'Apocalyptic' damage as Cairngorms wildfire burns for two weeks</span></p>
+        <p class="cn">凯恩戈姆（Cairngorms）野火燃烧两周造成“末日”破坏。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">drought</span>
+        <button class="kw-speak-btn" data-word="drought" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/draʊt/ n.</span>
+      </div>
+      <p class="kw-def">干旱，旱灾</p>
+      <p class="kw-def-en">a long period of unusually dry weather</p>
+      <p class="kw-ctx">&ldquo;Drought has been declared across more than half of England as hot, dry weather takes its toll on the country's water supplies.&rdquo;</p>
+      <p class="kw-ctx-cn">由于炎热干燥的天气对英国的水资源供应造成影响，英格兰一半以上的地区已宣布进入干旱状态。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">declared</span>
+        <button class="kw-speak-btn" data-word="declared" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈkleəd/ v.</span>
+      </div>
+      <p class="kw-def">宣布，声明</p>
+      <p class="kw-def-en">to officially announce something</p>
+      <p class="kw-ctx">&ldquo;Drought has been declared across more than half of England as hot, dry weather takes its toll on the country's water supplies.&rdquo;</p>
+      <p class="kw-ctx-cn">由于炎热干燥的天气对英国的水资源供应造成影响，英格兰一半以上的地区已宣布进入干旱状态。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">restrictions</span>
+        <button class="kw-speak-btn" data-word="restrictions" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈstrɪkʃənz/ n.</span>
+      </div>
+      <p class="kw-def">限制，约束</p>
+      <p class="kw-def-en">rules that limit what you can do</p>
+      <p class="kw-ctx">&ldquo;The Environment Agency (EA) announcement covers much of central, eastern and southern England, and is a public sign that further restrictions on water use might follow.&rdquo;</p>
+      <p class="kw-ctx-cn">环境署的公告覆盖了英格兰中部、东部和南部的大部分地区，这是一个公开信号，表明可能会进一步限制用水。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">impacts</span>
+        <button class="kw-speak-btn" data-word="impacts" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪmpækts/ n.</span>
+      </div>
+      <p class="kw-def">影响，冲击</p>
+      <p class="kw-def-en">the effects or consequences of something</p>
+      <p class="kw-ctx">&ldquo;It added that the impacts are already being felt, including low river flows, early harvests and high risk of wildfires.&rdquo;</p>
+      <p class="kw-ctx-cn">它补充说，影响已经显现，包括河流流量低、收获提前以及野火风险高。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">replenish</span>
+        <button class="kw-speak-btn" data-word="replenish" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈplenɪʃ/ v.</span>
+      </div>
+      <p class="kw-def">补充，重新装满</p>
+      <p class="kw-def-en">to fill something up again</p>
+      <p class="kw-ctx">&ldquo;"The hot and dry weather means we are currently using water faster than nature can replenish it," said Helen Wakeham.&rdquo;</p>
+      <p class="kw-ctx-cn">环境署水事务主任兼国家干旱小组主席海伦·韦克姆说：“炎热干燥的天气意味着我们目前用水的速度超过了自然补充的速度。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evaporation</span>
+        <button class="kw-speak-btn" data-word="evaporation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˌvæpəˈreɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">蒸发，挥发</p>
+      <p class="kw-def-en">the process of a liquid turning into a gas</p>
+      <p class="kw-ctx">&ldquo;The combination of low rainfall and prolonged high temperatures - meaning greater evaporation of moisture - has quickly depleted water reserves in soils, vegetation and rivers.&rdquo;</p>
+      <p class="kw-ctx-cn">低降雨量和长时间高温的结合——意味着水分蒸发更多——迅速耗尽了土壤、植被和河流中的水资源储备。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">depleted</span>
+        <button class="kw-speak-btn" data-word="depleted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈpliːtɪd/ v.</span>
+      </div>
+      <p class="kw-def">耗尽，减少</p>
+      <p class="kw-def-en">to reduce the amount of something</p>
+      <p class="kw-ctx">&ldquo;The combination of low rainfall and prolonged high temperatures - meaning greater evaporation of moisture - has quickly depleted water reserves in soils, vegetation and rivers.&rdquo;</p>
+      <p class="kw-ctx-cn">低降雨量和长时间高温的结合——意味着水分蒸发更多——迅速耗尽了土壤、植被和河流中的水资源储备。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">infrastructure</span>
+        <button class="kw-speak-btn" data-word="infrastructure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnfrəstrʌktʃər/ n.</span>
+      </div>
+      <p class="kw-def">基础设施</p>
+      <p class="kw-def-en">the basic systems and services of a country or organization</p>
+      <p class="kw-ctx">&ldquo;Some researchers have also highlighted underinvestment in water infrastructure as an issue.&rdquo;</p>
+      <p class="kw-ctx-cn">一些研究人员还强调，对水基础设施的投资不足是一个问题。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Dorset is just one of the areas declared to be in drought on Wednesday", "start_ms": 0, "end_ms": 5184, "paragraph_index": 0}, {"index": 1, "text": "Drought has been declared across more than half of England as hot, dry weather takes its toll on the country's water supplies.", "start_ms": 5184, "end_ms": 13488, "paragraph_index": 1}, {"index": 2, "text": "The Environment Agency (EA) announcement covers much of central, eastern and southern England, and is a public sign that further restrictions on water use might follow.", "start_ms": 13488, "end_ms": 25224, "paragraph_index": 2}, {"index": 3, "text": "It added that the impacts are already being felt, including low river flows, early harvests and high risk of wildfires.", "start_ms": 25224, "end_ms": 34608, "paragraph_index": 3}, {"index": 4, "text": "More than 20 million people are already under hosepipe bans.", "start_ms": 34608, "end_ms": 39624, "paragraph_index": 3}, {"index": 5, "text": "North Wales and the Upper Severn river basin entered drought conditions last week, Natural Resources Wales said.", "start_ms": 39624, "end_ms": 47736, "paragraph_index": 4}, {"index": 6, "text": "Scotland does not declare drought but monitors \"water scarcity\".", "start_ms": 47736, "end_ms": 52824, "paragraph_index": 5}, {"index": 7, "text": "Some parts of eastern Scotland are in the most extreme category of \"significant scarcity\", according to the Scottish Environment Protection Agency.", "start_ms": 52824, "end_ms": 63072, "paragraph_index": 5}, {"index": 8, "text": "Northern Ireland is not currently in drought.", "start_ms": 63072, "end_ms": 66888, "paragraph_index": 6}, {"index": 9, "text": "In pictures: Scale of drought across England as rivers dry up", "start_ms": 66888, "end_ms": 72168, "paragraph_index": 7}, {"index": 10, "text": "Hosepipe ban in force as drought threatens - is your area affected?", "start_ms": 72168, "end_ms": 77160, "paragraph_index": 8}, {"index": 11, "text": "How climate change worsens heatwaves, droughts, wildfires and floods", "start_ms": 77160, "end_ms": 83208, "paragraph_index": 9}, {"index": 12, "text": "The full list of English regions in drought conditions are:", "start_ms": 83208, "end_ms": 87456, "paragraph_index": 10}, {"index": 13, "text": "Hertfordshire and the whole of London", "start_ms": 87456, "end_ms": 90696, "paragraph_index": 11}, {"index": 14, "text": "Hampshire and the Isle of Wight", "start_ms": 90696, "end_ms": 93672, "paragraph_index": 12}, {"index": 15, "text": "Wessex, covering Dorset, Somerset, Wiltshire, and South Gloucestershire", "start_ms": 93672, "end_ms": 99768, "paragraph_index": 13}, {"index": 16, "text": "There is no single definition of drought, but it usually refers to a period of prolonged unusually dry weather that can have impacts on people, nature and the environment.", "start_ms": 99768, "end_ms": 111456, "paragraph_index": 14}, {"index": 17, "text": "The EA considers all of these factors before deciding whether to declare a drought in England.", "start_ms": 111456, "end_ms": 118128, "paragraph_index": 15}, {"index": 18, "text": "The declaration is a public sign that the EA is stepping up its response to the dry conditions, including increased monitoring and controls on how much water can be taken from rivers and groundwater.", "start_ms": 118128, "end_ms": 131304, "paragraph_index": 16}, {"index": 19, "text": "It can mean hosepipe bans being introduced if they are not already in place.", "start_ms": 131304, "end_ms": 136776, "paragraph_index": 17}, {"index": 20, "text": "\"The hot and dry weather means we are currently using water faster than nature can replenish it,\" said Helen Wakeham, director of water at the Environment Agency and chair of the National Drought Group.", "start_ms": 136776, "end_ms": 149688, "paragraph_index": 18}, {"index": 21, "text": "This year's drought is somewhat unusual because January and February were very wet for much of the UK, helping to replenish reservoirs and groundwater.", "start_ms": 149688, "end_ms": 160440, "paragraph_index": 19}, {"index": 22, "text": "But late spring and summer have been exceptionally hot and dry.", "start_ms": 160440, "end_ms": 165048, "paragraph_index": 20}, {"index": 23, "text": "The quick switch between wet and dry conditions is sometimes called \"climate whiplash\".", "start_ms": 165048, "end_ms": 171096, "paragraph_index": 20}, {"index": 24, "text": "In particular, July has seen 7% of the average levels of rainfall in England so far, with just 1% across southern England.", "start_ms": 171096, "end_ms": 181320, "paragraph_index": 21}, {"index": 25, "text": "Some parts of Devon and Hampshire have gone more than a month without rain.", "start_ms": 181320, "end_ms": 186336, "paragraph_index": 21}, {"index": 26, "text": "\"The warm and exceptionally dry conditions experienced across much of England over recent months are continuing to have a significant impact,\" said Will Lang, chief meteorologist at the Met Office.", "start_ms": 186336, "end_ms": 199584, "paragraph_index": 22}, {"index": 27, "text": "Early August could bring some rain to parts of the country, but the Met Office has said there is no sign of sustained rainfall that would make a significant difference to the dry conditions.", "start_ms": 199584, "end_ms": 211128, "paragraph_index": 23}, {"index": 28, "text": "The combination of low rainfall and prolonged high temperatures - meaning greater evaporation of moisture - has quickly depleted water reserves in soils, vegetation and rivers.", "start_ms": 211128, "end_ms": 223656, "paragraph_index": 24}, {"index": 29, "text": "These conditions have led to a \"flash drought\", the EA has said.", "start_ms": 223656, "end_ms": 228840, "paragraph_index": 25}, {"index": 30, "text": "This is where drought begins suddenly rather than over many months or years.", "start_ms": 228840, "end_ms": 234216, "paragraph_index": 25}, {"index": 31, "text": "Today's announcement means there have been three droughts in the past five years \u00e2\u0080\u0093 2022, 2025 and now 2026.", "start_ms": 234216, "end_ms": 244032, "paragraph_index": 26}, {"index": 32, "text": "While droughts happen naturally, scientists say that climate change is raising the risks, with higher summer temperatures drying out soils more quickly.", "start_ms": 244032, "end_ms": 254256, "paragraph_index": 27}, {"index": 33, "text": "This can lead to more severe and longer-lasting droughts.", "start_ms": 254256, "end_ms": 258744, "paragraph_index": 27}, {"index": 34, "text": "Some researchers have also highlighted underinvestment in water infrastructure as an issue .", "start_ms": 258744, "end_ms": 265320, "paragraph_index": 28}, {"index": 35, "text": "The EA has previously warned that England's public water supplies could face a shortfall of 5 billion litres per day by the middle of the century without urgent action.", "start_ms": 265320, "end_ms": 276552, "paragraph_index": 29}, {"index": 36, "text": "\"This drought isn't just about a lack of rain,\" said Prof Hayley Fowler of Newcastle University.", "start_ms": 276552, "end_ms": 283752, "paragraph_index": 30}, {"index": 37, "text": "\"It's the result of hotter temperatures from a warming climate, rising water demand, ageing infrastructure and too much water being lost through leaks.\"", "start_ms": 283752, "end_ms": 294144, "paragraph_index": 30}, {"index": 38, "text": "The government has committed to improving the water industry and water companies have announced plans for investment, but bills are rising as a result .", "start_ms": 294144, "end_ms": 303840, "paragraph_index": 31}, {"index": 39, "text": "The dry conditions have consequences for nature, with Atlantic salmon unable to move upstream where river flows are low.", "start_ms": 303840, "end_ms": 312480, "paragraph_index": 32}, {"index": 40, "text": "Agriculture has also taken a hit.", "start_ms": 312480, "end_ms": 315912, "paragraph_index": 32}, {"index": 41, "text": "Paul Tompkins, deputy president of the National Farmers' Union of England and Wales (NFU), said: \"Farmers and growers have always had to contend with the weather, but what they are experiencing now is climate change in action.", "start_ms": 315912, "end_ms": 331200, "paragraph_index": 33}, {"index": 42, "text": "More extreme conditions [are] making it harder, riskier and more costly to produce the nation's food.\"", "start_ms": 331200, "end_ms": 338808, "paragraph_index": 33}, {"index": 43, "text": "He added the issue of drought is something that \"should matter to everyone\" as it affects the country's food security.", "start_ms": 338808, "end_ms": 346128, "paragraph_index": 34}, {"index": 44, "text": "Some areas of the country have now entered their fourth heatwave of the year.", "start_ms": 346128, "end_ms": 351408, "paragraph_index": 35}, {"index": 45, "text": "Amber and yellow heat health alerts have come into force for parts of the UK, with temperatures potentially peaking at 35C in parts of south-east England on Wednesday.", "start_ms": 351408, "end_ms": 362928, "paragraph_index": 36}, {"index": 46, "text": "The hot, dry weather has created ideal conditions for wildfires to spread.", "start_ms": 362928, "end_ms": 369000, "paragraph_index": 37}, {"index": 47, "text": "The National Fire Chiefs Council has warned that wildfire risk \"remains elevated across the UK\".", "start_ms": 369000, "end_ms": 376392, "paragraph_index": 37}, {"index": 48, "text": "More than 200 wildfire incidents have been reported in England and Wales over the past two weeks, it said.", "start_ms": 376392, "end_ms": 384336, "paragraph_index": 38}, {"index": 49, "text": "The Met Office has separately announced that the new June temperature record set last month was even higher than previously thought, following verification processes.", "start_ms": 384336, "end_ms": 395160, "paragraph_index": 39}, {"index": 50, "text": "The previously-reported figure of 37.7C in Lingwood, Norfolk, on 26 June 2026 has been updated to 38.0C \u00e2\u0080\u0093 smashing the UK's previous June high of 35.6C.", "start_ms": 395160, "end_ms": 411552, "paragraph_index": 40}, {"index": 51, "text": "Additional reporting by Jess Carr", "start_ms": 411552, "end_ms": 414816, "paragraph_index": 41}, {"index": 52, "text": "Do you live in one of the affected regions?", "start_ms": 414816, "end_ms": 418272, "paragraph_index": 42}, {"index": 53, "text": "Share your experiences.", "start_ms": 418272, "end_ms": 421080, "paragraph_index": 42}, {"index": 54, "text": "Sign up for our Future Earth newsletter to keep up with the latest climate and environment stories with the BBC's Justin Rowlatt.", "start_ms": 421080, "end_ms": 429984, "paragraph_index": 43}, {"index": 55, "text": "Outside the UK?", "start_ms": 429984, "end_ms": 432360, "paragraph_index": 43}, {"index": 56, "text": "Sign up to our international newsletter here .", "start_ms": 432360, "end_ms": 436152, "paragraph_index": 43}, {"index": 57, "text": "Wildfires and record dry conditions trigger drought in parts of Wales", "start_ms": 436152, "end_ms": 441624, "paragraph_index": 44}, {"index": 58, "text": "Fourth heatwave grips parts of UK with 35C forecast", "start_ms": 441624, "end_ms": 447024, "paragraph_index": 45}, {"index": 59, "text": "'Apocalyptic' damage as Cairngorms wildfire burns for two weeks", "start_ms": 447024, "end_ms": 452520, "paragraph_index": 46}], "total_duration_ms": 452520};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "in": "在", "is": "是", "water": "水", "have": "有", "has": "有", "dry": "干燥", "are": "是", "conditions": "条件", "england": "英格兰", "that": "那个", "more": "更多", "said": "说", "with": "与", "on": "在", "than": "比", "as": "作为", "it": "它", "parts": "部分", "for": "为了", "but": "但是", "climate": "气候", "been": "已经", "across": "跨越", "weather": "天气", "environment": "环境", "much": "许多", "sign": "签署", "wales": "威尔士", "some": "一些", "up": "向上", "can": "可以", "uk": "英国", "hot": "热门的", "wildfires": "野火", "this": "这个", "temperatures": "温度", "just": "只是", "agency": "机构", "public": "公众", "already": "已经", "being": "正在", "low": "低的", "river": "河", "high": "高的", "not": "不", "significant": "重大", "rivers": "河流", "change": "改变", "there": "那里", "nature": "性质", "at": "在", "national": "国家", "rainfall": "降雨量", "rain": "雨", "over": "超过", "met": "伦敦警察厅", "office": "办公室", "now": "现在", "wildfire": "野火", "june": "六月", "one": "一个", "areas": "区域", "be": "是", "wednesday": "星期三", "its": "它的", "country's": "国家的", "supplies": "补给", "announcement": "公告", "eastern": "东部的", "southern": "南部的", "added": "补充", "including": "包括", "flows": "流动", "early": "早期的", "risk": "风险", "people": "人们", "bans": "禁令", "entered": "进入", "last": "最后", "scotland": "苏格兰", "declare": "宣布", "scarcity": "稀缺", "extreme": "极端的", "currently": "目前", "force": "力量", "your": "你的", "affected": "受影响", "how": "如何", "regions": "地区", "hampshire": "汉普郡", "no": "没有", "these": "这些", "taken": "采取", "from": "来自", "they": "它们", "means": "意味着", "summer": "夏天", "exceptionally": "异常地", "month": "月份", "without": "没有", "months": "月", "could": "可能", "country": "国家", "quickly": "迅速", "where": "那里", "years": "多年", "past": "过去", "higher": "更高的", "also": "也", "issue": "问题", "previously": "此前", "warned": "警告", "by": "被", "action": "行动", "result": "结果", "rising": "上升的", "announced": "宣布", "food": "食物", "fourth": "第四", "heatwave": "热浪", "two": "两个", "weeks": "周", "record": "记录", "our": "我们的", "newsletter": "新闻简报", "half": "一半", "takes": "担任", "toll": "代价", "covers": "涵盖", "central": "中央的", "further": "进一步的", "use": "使用", "might": "可能", "follow": "关注", "felt": "感觉", "million": "百万", "under": "在...之下", "north": "北部", "upper": "上层的", "week": "周", "natural": "天然", "resources": "资源", "does": "做", "monitors": "监控", "most": "最", "category": "类别", "according": "根据", "scottish": "苏格兰的", "protection": "保护", "northern": "北部的", "ireland": "爱尔兰", "pictures": "照片", "scale": "规模", "ban": "禁止", "threatens": "威胁", "area": "区域", "heatwaves": "热浪", "full": "完整", "list": "名单", "english": "英格兰的", "hertfordshire": "赫特福德郡", "whole": "整个", "london": "伦敦", "isle": "岛", "wight": "怀特岛", "covering": "涵盖", "south": "韩国", "single": "单一的", "definition": "定义", "usually": "通常", "refers": "指的是", "period": "时期", "all": "所有", "before": "之前", "deciding": "决定", "whether": "是否", "declaration": "宣言", "stepping": "迈步", "response": "回应", "increased": "增加的", "monitoring": "监控", "mean": "意味着", "introduced": "介绍", "if": "如果", "place": "地点", "we": "我们", "using": "使用", "helen": "海伦", "director": "局长", "chair": "主席", "group": "团体", "year's": "今年的", "somewhat": "有点", "unusual": "不寻常的", "because": "因为", "january": "一月", "february": "二月", "were": "是", "very": "非常", "helping": "帮助", "reservoirs": "水库", "late": "已故", "spring": "春天", "quick": "迅速", "switch": "切换", "between": "之间", "sometimes": "有时", "called": "称为", "particular": "特定", "july": "七月", "seen": "被视为", "average": "平均", "levels": "水平", "so": "所以", "far": "远", "devon": "德文郡", "gone": "已去", "warm": "温暖的", "experienced": "经历", "recent": "最近", "continuing": "持续", "impact": "影响", "will": "将", "chief": "首席", "meteorologist": "气象学家", "august": "八月", "bring": "带来", "sustained": "持续的", "would": "将", "make": "使", "difference": "差异", "combination": "组合", "meaning": "意义", "greater": "更大的", "vegetation": "植被", "led": "带领", "flash": "闪现", "begins": "开始", "suddenly": "突然", "rather": "宁愿", "many": "许多", "or": "或者", "today's": "当今的", "three": "三个", "five": "五", "while": "而", "happen": "发生", "naturally": "自然地", "scientists": "科学家", "say": "说", "raising": "提出", "risks": "风险", "out": "出来", "lead": "导致", "severe": "严重的", "researchers": "研究人员", "highlighted": "强调", "an": "一个", "england's": "英格兰的", "face": "面临", "billion": "十亿", "per": "每", "day": "天", "middle": "中间", "century": "世纪", "urgent": "紧急的", "isn't": "不是", "about": "关于", "lack": "缺乏", "prof": "教授", "newcastle": "纽卡斯尔", "university": "大学", "it's": "它是", "hotter": "更热", "warming": "变暖", "demand": "要求", "ageing": "老化的", "too": "太", "lost": "失去", "through": "通过", "leaks": "泄露", "government": "政府", "committed": "承诺的", "improving": "改善", "industry": "行业", "companies": "公司", "plans": "计划", "investment": "投资", "bills": "法案", "consequences": "后果", "atlantic": "大西洋", "unable": "无法", "move": "行动", "hit": "击中", "paul": "保罗", "deputy": "副手", "president": "总统", "union": "工会", "always": "总是", "had": "有", "what": "什么", "experiencing": "经历", "making": "进行", "harder": "更努力地", "costly": "代价高昂的", "produce": "产生", "he": "他", "something": "某事", "should": "应该", "matter": "事情", "everyone": "每个人", "security": "安全", "their": "他们的", "year": "年", "amber": "琥珀色", "yellow": "黄色", "heat": "高温", "health": "健康", "alerts": "警报", "come": "到来", "into": "进入", "potentially": "可能地", "south-east": "东南部", "created": "创建", "spread": "传播", "fire": "射击", "chiefs": "首领", "council": "委员会", "remains": "仍然", "elevated": "高架的", "incidents": "事件", "reported": "据报道", "separately": "分别", "new": "新的", "temperature": "温度", "set": "设定", "was": "是", "even": "甚至", "thought": "认为", "following": "随后", "verification": "验证", "processes": "过程", "figure": "人物", "norfolk": "诺福克", "updated": "更新", "uk's": "英国的", "previous": "先前", "additional": "额外的", "reporting": "报道", "jess": "杰丝", "do": "做", "you": "你", "live": "生活", "share": "分享", "future": "未来", "keep": "保持", "latest": "最新的", "stories": "报道", "bbc's": "英国广播公司的", "outside": "外部", "international": "国际", "here": "这里", "trigger": "触发", "forecast": "预报", "apocalyptic": "灾难性的", "damage": "损坏", "ea": "环境署", "droughts": "干旱", "hosepipe": "软管", "dorset": "多塞特郡", "prolonged": "持久的", "groundwater": "地下水", "wet": "湿润的", "soils": "土壤", "farmers": "农民", "harvests": "收成", "severn": "塞文河", "basin": "流域", "worsens": "恶化", "floods": "洪水", "wessex": "韦塞克斯", "somerset": "萨默塞特郡", "wiltshire": "威尔特郡", "gloucestershire": "格洛斯特郡", "unusually": "异常地", "considers": "考虑", "factors": "因素", "controls": "控制措施", "faster": "更快地", "wakeham": "韦克姆", "whiplash": "鞭打效应", "lang": "朗", "moisture": "水分", "reserves": "储备", "drying": "变干", "longer-lasting": "更持久的", "underinvestment": "投资不足", "shortfall": "短缺", "litres": "升", "hayley": "海莉", "fowler": "福勒", "salmon": "鲑鱼", "upstream": "上游", "agriculture": "农业", "tompkins": "汤普金斯", "nfu": "全国农民联盟", "growers": "种植者", "contend": "应对", "riskier": "风险更大的", "nation's": "国家的", "affects": "影响", "peaking": "达到峰值", "ideal": "理想的", "previously-reported": "先前报道的", "lingwood": "林伍德", "smashing": "打破", "carr": "卡尔", "experiences": "经历", "earth": "地球", "justin": "贾斯汀", "rowlatt": "罗拉特", "grips": "控制", "cairngorms": "凯恩戈姆山脉", "burns": "烧伤"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
