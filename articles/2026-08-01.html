@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-01</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-01</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/394b/live/4f569510-8dd9-11f1-b2ab-0dd01740f9f6.jpg" alt="EU calls emergency meeting to discuss Ceuta migrant crossings" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>EU calls emergency meeting to discuss Ceuta migrant crossings</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cz7d17r455go?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-01.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: Migrants started to return to Morocco after thousands entered Spain's Ceuta on 30 July</span></p>
+        <p class="cn">观看：数千名移民于7月30日进入西班牙的休达后，开始返回摩洛哥</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The European Union will hold emergency talks on Tuesday to discuss the migration crisis in Ceuta after tense exchanges between Spain and other member states.</span></p>
+        <p class="cn">在西班牙与其他成员国关系紧张之后，欧盟将于周二召开紧急会谈，讨论休达的移民危机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Twenty-two member states issued a joint letter calling for co-ordinated action and the strengthening of the EU's external borders, after some 60,000 migrants entered the Spanish <span class="keyword" data-word="enclave" data-phonetic="/ˈenkleɪv/" data-pos="n." data-def="飞地；被包围的领土" data-def-en="a territory surrounded by another country">enclave</span> from Morocco.</span></p>
+        <p class="cn">在约6万名移民从摩洛哥进入西班牙飞地后，22个成员国发表联合信函，呼吁采取协调行动并加强欧盟外部边界。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Spain condemned "selfish, <span class="keyword" data-word="polarising" data-phonetic="/ˈpəʊləraɪzɪŋ/" data-pos="adj." data-def="两极分化的；引起对立的" data-def-en="causing division or opposition">polarising</span> and unlawful" reaction to the crisis after Italy suspended the EU's border-free Schengen arrangement with Spain - a move backed by Finland and Denmark.</span></p>
+        <p class="cn">在意大利暂停与西班牙的欧盟无边境申根协议后——此举得到芬兰和丹麦的支持——西班牙谴责了对危机的“自私、两极分化和非法”反应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Officials say almost all those who reached Ceuta on 30 July have returned, while deaths from the surge in crossings had risen to at least 67.</span></p>
+        <p class="cn">官员们表示，7月30日抵达休达的几乎所有移民都已返回，而因越境激增导致的死亡人数已升至至少67人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The EU members' letter addresses concerns around "<span class="keyword" data-word="hybrid" data-phonetic="/ˈhaɪbrɪd/" data-pos="adj." data-def="混合的；杂合的" data-def-en="combining two different things">hybrid</span> threats to create the perception that illegal entry into the European Union is possible," adding that the perception "would encourage further attempts, <span class="keyword" data-word="undermine" data-phonetic="/ˌʌndəˈmaɪn/" data-pos="v." data-def="逐渐削弱；破坏" data-def-en="to weaken or damage gradually">undermine</span> confidence in our common migration policy and have repercussions for all Member States".</span></p>
+        <p class="cn">欧盟成员国的信函表达了对“混合威胁制造非法进入欧盟可能的印象”的担忧，并补充说，这种印象“将鼓励进一步尝试，削弱对我们共同移民政策的信心，并对所有成员国产生影响”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Leaders of the Netherlands, Finland and Belgium are among 22 signatures on the letter, addressed to EU President Antonio Costa, president of the European Commission Ursula von der Leyen and Taoiseach Michael Martin, as Ireland currently holds the presidency of the Council of the European Union.</span></p>
+        <p class="cn">荷兰、芬兰和比利时的领导人是致欧盟主席安东尼奥·科斯塔、欧盟委员会主席乌尔苏拉·冯德莱恩以及总理迈克尔·马丁的联名信的22个签署方之一，因为爱尔兰目前担任欧盟理事会主席国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">In a separate letter to von der Leyen, Spanish Prime Minister Pedro SÃ¡nchez said he had "serious concerns" about some European governments.</span></p>
+        <p class="cn">在给冯德莱恩的另一封信中，西班牙首相佩德罗·桑切斯表示，他对一些欧洲政府“严重关切”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">He said the Spanish government had fully restored control over the border and prevented any "unauthorised onward movement towards continental Europe" in less than 48 hours.</span></p>
+        <p class="cn">他说，西班牙政府在不到48小时内完全恢复了对边界的控制，并阻止了任何“未经授权向欧洲大陆的进一步移动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">While most had shown "support and <span class="keyword" data-word="solidarity" data-phonetic="/ˌsɒlɪˈdærəti/" data-pos="n." data-def="团结；一致" data-def-en="unity or agreement of feeling">solidarity</span>", SÃ¡nchez said other European governments had chosen to attack Spain, "driven by prejudice, fake news, ignorance, or political interest", and pointed out that Ceuta was not part of the Schengen area.</span></p>
+        <p class="cn">虽然大多数国家表现出“支持和团结”，但桑切斯表示，其他欧洲政府选择攻击西班牙，“出于偏见、假新闻、无知或政治利益”，并指出休达不属于申根区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Police have been escorting migrants off the Spanish territory on Saturday</span></p>
+        <p class="cn">周六，警察一直在护送移民离开西班牙领土</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">On Friday, SÃ¡nchez accused migrant traffickers of exploiting a decision recently made by the country's supreme court which constrained the government's right to immediately deport people who had arrived by sea.</span></p>
+        <p class="cn">周五，桑切斯指责移民贩运者利用该国最高法院最近做出的一项决定，该决定限制了政府立即驱逐乘海抵达者的权利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">The country's Interior Minister, Fernando Grande-Marlaska, said in a news conference on Saturday that the situation had almost returned to normal and the country was working on inflatable barrier to prevent illegal migration via the water.</span></p>
+        <p class="cn">西班牙内政部长费尔南多·格兰德-马拉斯卡在周六的新闻发布会上表示，局势几乎恢复正常，该国正在研制充气屏障，以防止通过水路非法移民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">"Almost all of [the migrants] have already left Ceuta," he said adding that businesses there had now reopened.</span></p>
+        <p class="cn">“几乎所有（移民）都已离开休达，”他说，并补充说那里的企业现已重新开业。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Influx of migrants to Ceuta gives Spain diplomatic headache</span></p>
+        <p class="cn">移民涌入休达给西班牙带来外交难题</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Some criticism of the situation has involved concerns over the Schengen Area - an agreement which eliminates border checks  and now encompasses more than 450 million people and 29 countries in Europe.</span></p>
+        <p class="cn">对局势的一些批评涉及对申根区的担忧——申根区是一项取消边境检查的协议，目前涵盖欧洲超过4.5亿人口和29个国家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">In addition to Italian Prime Minister Giorgia Meloni suspending Italy's Schengen agreement with Spain for a month, Finland, France and Portugal have all said they were either looking at, or considering, border checks.</span></p>
+        <p class="cn">除了意大利总理乔治亚·梅洛尼暂停意大利与西班牙的申根协议一个月外，芬兰、法国和葡萄牙都表示正在考虑或研究边境检查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Danish Prime Minister Mette Frederiksen urged the EU to "consider all options, including a suspension of Schengen co-operation".</span></p>
+        <p class="cn">丹麦首相梅特·弗雷德里克森敦促欧盟“考虑所有选项，包括暂停申根合作”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">Von der Leyen said the images from Ceuta were "unacceptable".</span> <span class="sentence" data-sentence-index="20">Writing on social media, she said: "We cannot allow anyone to come to our Union without abiding by our rules."</span></p>
+        <p class="cn">冯德莱恩表示，来自休达的画面“不可接受”。她在社交媒体上写道：“我们不能允许任何人不遵守我们的规则就进入我们的联盟。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">German Chancellor Friedrich Merz  demanded that Morocco "take back illegal migrants immediately", while on Saturday, UK Prime Minister Andy Burnham said he had spoken to SÃ¡nchez and the UK was "providing what help we can".</span></p>
+        <p class="cn">德国总理弗里德里希·默茨要求摩洛哥“立即接回非法移民”，而周六，英国首相安迪·伯纳姆表示，他已与桑切斯通话，英国正在“提供我们能提供的帮助”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Morocco  witnessed several Gen Z anti-government protests last year, with young people demanding better opportunities and improvements to public services.</span></p>
+        <p class="cn">摩洛哥去年发生了多次Z世代反政府抗议活动，年轻人要求更好的机会和改善公共服务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Together with Melilla, Ceuta forms the European Union's only land borders with Africa.</span> <span class="sentence" data-sentence-index="24">Migrants can enter the <span class="keyword" data-word="enclave" data-phonetic="/ˈenkleɪv/" data-pos="n." data-def="飞地；被包围的领土" data-def-en="a territory surrounded by another country">enclave</span> by swimming several kilometres.</span></p>
+        <p class="cn">休达与梅利利亚一起构成了欧盟与非洲仅有的陆地边界。移民可以游几公里进入飞地。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">While the surge of migrants this year is extraordinary, Ceuta has long been a focal point for migrants attempting to reach Europe.</span> <span class="sentence" data-sentence-index="26">During the summer months, there is often a big push to reach Ceuta, typically organised over social media.</span></p>
+        <p class="cn">虽然今年的移民激增非同寻常，但休达长期以来一直是试图抵达欧洲的移民的焦点。在夏季月份，通常通过社交媒体组织大规模前往休达的行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">In 2021, about 8,000 people entered Ceuta over a matter of days, exacerbating Spain's diplomatic tensions with Morocco.</span></p>
+        <p class="cn">2021年，约8000人在几天内进入休达，加剧了西班牙与摩洛哥的外交紧张局势。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Spain has a relatively friendly approach to immigration.</span> <span class="sentence" data-sentence-index="29">In April, the government approved plans to give legal status to 500,000 undocumented migrants , allowing them to be formally integrated into the workforce.</span></p>
+        <p class="cn">西班牙对移民采取相对友好的态度。4月，政府批准计划给予50万无证移民合法身份，使他们正式融入劳动力市场。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">Spain's PM blames traffickers after 60,000 migrants reach Ceuta from Morocco</span></p>
+        <p class="cn">西班牙首相在6万移民从摩洛哥抵达休达后指责贩运者</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Ceuta, Melilla profile</span></p>
+        <p class="cn">休达、梅利利亚概况</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">Why two parts of Africa are still in Spanish hands</span></p>
+        <p class="cn">为什么非洲的两个部分仍在西班牙手中</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enclave</span>
+        <button class="kw-speak-btn" data-word="enclave" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈenkleɪv/ n.</span>
+      </div>
+      <p class="kw-def">飞地；被包围的领土</p>
+      <p class="kw-def-en">a territory surrounded by another country</p>
+      <p class="kw-ctx">&ldquo;Some 60,000 migrants entered the Spanish enclave from Morocco.&rdquo;</p>
+      <p class="kw-ctx-cn">大约6万名移民从摩洛哥进入西班牙飞地。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">polarising</span>
+        <button class="kw-speak-btn" data-word="polarising" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpəʊləraɪzɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">两极分化的；引起对立的</p>
+      <p class="kw-def-en">causing division or opposition</p>
+      <p class="kw-ctx">&ldquo;Spain condemned "selfish, polarising and unlawful" reaction to the crisis.&rdquo;</p>
+      <p class="kw-ctx-cn">西班牙谴责对危机的“自私、两极分化和非法”反应。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hybrid</span>
+        <button class="kw-speak-btn" data-word="hybrid" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhaɪbrɪd/ adj.</span>
+      </div>
+      <p class="kw-def">混合的；杂合的</p>
+      <p class="kw-def-en">combining two different things</p>
+      <p class="kw-ctx">&ldquo;The EU members' letter addresses concerns around "hybrid threats to create the perception that illegal entry into the European Union is possible."&rdquo;</p>
+      <p class="kw-ctx-cn">欧盟成员国的信函涉及“混合威胁，制造非法进入欧盟可能的看法”的担忧。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">undermine</span>
+        <button class="kw-speak-btn" data-word="undermine" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌndəˈmaɪn/ v.</span>
+      </div>
+      <p class="kw-def">逐渐削弱；破坏</p>
+      <p class="kw-def-en">to weaken or damage gradually</p>
+      <p class="kw-ctx">&ldquo;The perception "would encourage further attempts, undermine confidence in our common migration policy."&rdquo;</p>
+      <p class="kw-ctx-cn">这种看法“会鼓励进一步的尝试，削弱对我们共同移民政策的信心。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">repercussion</span>
+        <button class="kw-speak-btn" data-word="repercussion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːpəˈkʌʃn/ n.</span>
+      </div>
+      <p class="kw-def">反响；后果</p>
+      <p class="kw-def-en">an indirect effect or consequence</p>
+      <p class="kw-ctx">&ldquo;The perception "would have repercussions for all Member States."&rdquo;</p>
+      <p class="kw-ctx-cn">这种看法“会对所有成员国产生反响。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">solidarity</span>
+        <button class="kw-speak-btn" data-word="solidarity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌsɒlɪˈdærəti/ n.</span>
+      </div>
+      <p class="kw-def">团结；一致</p>
+      <p class="kw-def-en">unity or agreement of feeling</p>
+      <p class="kw-ctx">&ldquo;While most had shown "support and solidarity", SÃ¡nchez said other European governments had chosen to attack Spain.&rdquo;</p>
+      <p class="kw-ctx-cn">虽然大多数表现出“支持和团结”，桑切斯说其他欧洲政府选择攻击西班牙。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">trafficker</span>
+        <button class="kw-speak-btn" data-word="trafficker" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtræfɪkə(r)/ n.</span>
+      </div>
+      <p class="kw-def">贩子；非法交易者</p>
+      <p class="kw-def-en">a person who deals in illegal goods</p>
+      <p class="kw-ctx">&ldquo;SÃ¡nchez accused migrant traffickers of exploiting a decision recently made by the country's supreme court.&rdquo;</p>
+      <p class="kw-ctx-cn">桑切斯指责移民贩子利用该国最高法院最近做出的决定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exacerbate</span>
+        <button class="kw-speak-btn" data-word="exacerbate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪɡˈzæsəbeɪt/ v.</span>
+      </div>
+      <p class="kw-def">使恶化；加剧</p>
+      <p class="kw-def-en">to make worse</p>
+      <p class="kw-ctx">&ldquo;In 2021, about 8,000 people entered Ceuta over a matter of days, exacerbating Spain's diplomatic tensions with Morocco.&rdquo;</p>
+      <p class="kw-ctx-cn">2021年，大约8000人在几天内进入休达，加剧了西班牙与摩洛哥的外交紧张关系。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Migrants started to return to Morocco after thousands entered Spain's Ceuta on 30 July", "start_ms": 3000, "end_ms": 10776, "paragraph_index": 1}, {"index": 2, "text": "The European Union will hold emergency talks on Tuesday to discuss the migration crisis in Ceuta after tense exchanges between Spain and other member states.", "start_ms": 10776, "end_ms": 22152, "paragraph_index": 2}, {"index": 3, "text": "Twenty-two member states issued a joint letter calling for co-ordinated action and the strengthening of the EU's external borders, after some 60,000 migrants entered the Spanish enclave from Morocco.", "start_ms": 22152, "end_ms": 35832, "paragraph_index": 3}, {"index": 4, "text": "Spain condemned \"selfish, polarising and unlawful\" reaction to the crisis after Italy suspended the EU's border-free Schengen arrangement with Spain - a move backed by Finland and Denmark.", "start_ms": 35832, "end_ms": 49152, "paragraph_index": 4}, {"index": 5, "text": "Officials say almost all those who reached Ceuta on 30 July have returned, while deaths from the surge in crossings had risen to at least 67.", "start_ms": 49152, "end_ms": 59640, "paragraph_index": 5}, {"index": 6, "text": "The EU members' letter addresses concerns around \"hybrid threats to create the perception that illegal entry into the European Union is possible,\" adding that the perception \"would encourage further attempts, undermine confidence in our common migration policy and have repercussions for all Member States\".", "start_ms": 59640, "end_ms": 79152, "paragraph_index": 6}, {"index": 7, "text": "Leaders of the Netherlands, Finland and Belgium are among 22 signatures on the letter, addressed to EU President Antonio Costa, president of the European Commission Ursula von der Leyen and Taoiseach Michael Martin, as Ireland currently holds the presidency of the Council of the European Union.", "start_ms": 79152, "end_ms": 99456, "paragraph_index": 7}, {"index": 8, "text": "In a separate letter to von der Leyen, Spanish Prime Minister Pedro S\u00c3\u00a1nchez said he had \"serious concerns\" about some European governments.", "start_ms": 99456, "end_ms": 110232, "paragraph_index": 8}, {"index": 9, "text": "He said the Spanish government had fully restored control over the border and prevented any \"unauthorised onward movement towards continental Europe\" in less than 48 hours.", "start_ms": 110232, "end_ms": 121920, "paragraph_index": 9}, {"index": 10, "text": "While most had shown \"support and solidarity\", S\u00c3\u00a1nchez said other European governments had chosen to attack Spain, \"driven by prejudice, fake news, ignorance, or political interest\", and pointed out that Ceuta was not part of the Schengen area.", "start_ms": 121920, "end_ms": 140136, "paragraph_index": 10}, {"index": 11, "text": "Police have been escorting migrants off the Spanish territory on Saturday", "start_ms": 140136, "end_ms": 145512, "paragraph_index": 11}, {"index": 12, "text": "On Friday, S\u00c3\u00a1nchez accused migrant traffickers of exploiting a decision recently made by the country's supreme court which constrained the government's right to immediately deport people who had arrived by sea.", "start_ms": 145512, "end_ms": 159624, "paragraph_index": 12}, {"index": 13, "text": "The country's Interior Minister, Fernando Grande-Marlaska, said in a news conference on Saturday that the situation had almost returned to normal and the country was working on inflatable barrier to prevent illegal migration via the water.", "start_ms": 159624, "end_ms": 175392, "paragraph_index": 13}, {"index": 14, "text": "\"Almost all of [the migrants] have already left Ceuta,\" he said adding that businesses there had now reopened.", "start_ms": 175392, "end_ms": 183408, "paragraph_index": 14}, {"index": 15, "text": "Influx of migrants to Ceuta gives Spain diplomatic headache", "start_ms": 183408, "end_ms": 188424, "paragraph_index": 15}, {"index": 16, "text": "Some criticism of the situation has involved concerns over the Schengen Area - an agreement which eliminates border checks  and now encompasses more than 450 million people and 29 countries in Europe.", "start_ms": 188424, "end_ms": 202656, "paragraph_index": 16}, {"index": 17, "text": "In addition to Italian Prime Minister Giorgia Meloni suspending Italy's Schengen agreement with Spain for a month, Finland, France and Portugal have all said they were either looking at, or considering, border checks.", "start_ms": 202656, "end_ms": 217200, "paragraph_index": 17}, {"index": 18, "text": "Danish Prime Minister Mette Frederiksen urged the EU to \"consider all options, including a suspension of Schengen co-operation\".", "start_ms": 217200, "end_ms": 226776, "paragraph_index": 18}, {"index": 19, "text": "Von der Leyen said the images from Ceuta were \"unacceptable\".", "start_ms": 226776, "end_ms": 231528, "paragraph_index": 19}, {"index": 20, "text": "Writing on social media, she said: \"We cannot allow anyone to come to our Union without abiding by our rules.\"", "start_ms": 231528, "end_ms": 239736, "paragraph_index": 19}, {"index": 21, "text": "German Chancellor Friedrich Merz  demanded that Morocco \"take back illegal migrants immediately\", while on Saturday, UK Prime Minister Andy Burnham said he had spoken to S\u00c3\u00a1nchez and the UK was \"providing what help we can\".", "start_ms": 239736, "end_ms": 255744, "paragraph_index": 20}, {"index": 22, "text": "Morocco  witnessed several Gen Z anti-government protests last year, with young people demanding better opportunities and improvements to public services.", "start_ms": 255744, "end_ms": 266712, "paragraph_index": 21}, {"index": 23, "text": "Together with Melilla, Ceuta forms the European Union's only land borders with Africa.", "start_ms": 266712, "end_ms": 273792, "paragraph_index": 22}, {"index": 24, "text": "Migrants can enter the enclave by swimming several kilometres.", "start_ms": 273792, "end_ms": 278832, "paragraph_index": 22}, {"index": 25, "text": "While the surge of migrants this year is extraordinary, Ceuta has long been a focal point for migrants attempting to reach Europe.", "start_ms": 278832, "end_ms": 287616, "paragraph_index": 23}, {"index": 26, "text": "During the summer months, there is often a big push to reach Ceuta, typically organised over social media.", "start_ms": 287616, "end_ms": 295488, "paragraph_index": 23}, {"index": 27, "text": "In 2021, about 8,000 people entered Ceuta over a matter of days, exacerbating Spain's diplomatic tensions with Morocco.", "start_ms": 295488, "end_ms": 305736, "paragraph_index": 24}, {"index": 28, "text": "Spain has a relatively friendly approach to immigration.", "start_ms": 305736, "end_ms": 310368, "paragraph_index": 25}, {"index": 29, "text": "In April, the government approved plans to give legal status to 500,000 undocumented migrants , allowing them to be formally integrated into the workforce.", "start_ms": 310368, "end_ms": 321960, "paragraph_index": 25}, {"index": 30, "text": "Spain's PM blames traffickers after 60,000 migrants reach Ceuta from Morocco", "start_ms": 321960, "end_ms": 328872, "paragraph_index": 26}, {"index": 31, "text": "Ceuta, Melilla profile", "start_ms": 328872, "end_ms": 331992, "paragraph_index": 27}, {"index": 32, "text": "Why two parts of Africa are still in Spanish hands", "start_ms": 331992, "end_ms": 336432, "paragraph_index": 28}], "total_duration_ms": 336432};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "ceuta": "休达", "migrants": "移民", "in": "在", "on": "在", "had": "有", "said": "说", "european": "欧洲的", "spain": "西班牙", "morocco": "摩洛哥", "with": "与", "by": "被", "that": "那个", "after": "之后", "spanish": "西班牙的", "schengen": "申根", "all": "所有", "have": "有", "minister": "部长", "union": "工会", "letter": "信件", "for": "为了", "from": "来自", "while": "而", "prime": "首相", "nchez": "桑切斯", "he": "他", "over": "超过", "people": "人们", "can": "可以", "entered": "进入", "spain's": "西班牙的", "migration": "迁移", "member": "成员", "states": "国家", "some": "一些", "almost": "几乎", "eu": "欧盟", "concerns": "担忧", "illegal": "非法的", "is": "是", "our": "我们的", "von": "冯", "der": "德", "leyen": "莱恩", "border": "边界", "europe": "欧洲", "was": "是", "saturday": "星期六", "has": "有", "reach": "达到", "this": "这个", "not": "不", "be": "是", "july": "七月", "crisis": "危机", "other": "其他", "eu's": "欧盟的", "borders": "边境", "who": "谁", "returned": "返回", "surge": "飙升", "at": "在", "perception": "看法", "into": "进入", "adding": "补充说", "are": "是", "president": "总统", "about": "关于", "governments": "政府", "government": "政府", "than": "比", "news": "新闻", "or": "或者", "area": "区域", "been": "已经", "country's": "国家的", "which": "哪个", "immediately": "立即", "situation": "局势", "there": "那里", "now": "现在", "diplomatic": "外交", "agreement": "协议", "checks": "审查", "were": "是", "social": "社交的", "media": "媒体", "we": "我们", "uk": "英国", "several": "数个", "year": "年", "melilla": "梅利利亚", "africa": "非洲", "video": "视频", "played": "比赛", "watch": "观看", "started": "开始", "return": "返回", "thousands": "数千", "will": "将", "hold": "追究", "emergency": "紧急", "talks": "会谈", "tuesday": "星期二", "discuss": "讨论", "tense": "紧张的", "exchanges": "交流", "between": "之间", "twenty-two": "二十二", "issued": "发布", "joint": "联合的", "calling": "呼吁", "action": "行动", "strengthening": "加强", "external": "外部的", "condemned": "谴责", "unlawful": "非法的", "reaction": "反应", "italy": "意大利", "suspended": "暂停", "border-free": "无边境的", "arrangement": "安排", "move": "行动", "backed": "支持", "officials": "官员", "say": "说", "those": "那些", "reached": "达成", "deaths": "死亡", "crossings": "过境", "risen": "上升", "least": "至少", "members": "成员", "addresses": "处理", "around": "在...周围", "threats": "威胁", "create": "造成", "entry": "条目", "possible": "可能的", "would": "将", "encourage": "鼓励", "further": "进一步的", "attempts": "尝试", "confidence": "信任", "common": "共同的", "policy": "政策", "repercussions": "反响", "leaders": "领导人", "netherlands": "荷兰", "belgium": "比利时", "among": "在...之中", "addressed": "处理", "costa": "科斯塔", "commission": "委员会", "ursula": "乌尔苏拉", "michael": "迈克尔", "martin": "马丁", "as": "作为", "ireland": "爱尔兰", "currently": "目前", "holds": "持有", "presidency": "主席职位", "council": "委员会", "separate": "单独的", "pedro": "佩德罗", "serious": "严重的", "fully": "完全地", "control": "控制", "prevented": "阻止", "any": "任何", "unauthorised": "未经授权的", "movement": "运动", "towards": "对待", "less": "更少", "hours": "小时", "most": "最", "shown": "表现出", "support": "支持", "chosen": "被选中的", "attack": "袭击", "driven": "驱动", "fake": "虚假的", "political": "政治的", "interest": "兴趣", "pointed": "指出", "out": "出来", "part": "部分", "police": "警方", "off": "离开", "territory": "领土", "friday": "星期五", "accused": "被指控", "migrant": "移民", "exploiting": "利用", "decision": "决定", "recently": "最近", "made": "做出", "supreme": "最高", "court": "法庭", "government's": "政府的", "right": "正确", "arrived": "抵达", "sea": "海域", "interior": "内政", "conference": "会议", "normal": "正常", "country": "国家", "working": "工作", "barrier": "障碍", "prevent": "防止", "via": "通过", "water": "水", "already": "已经", "left": "离开", "businesses": "企业", "reopened": "重新开放", "gives": "给予", "headache": "头痛", "criticism": "批评", "involved": "涉及的", "an": "一个", "more": "更多", "million": "百万", "countries": "国家", "italian": "意大利的", "giorgia": "乔治亚", "meloni": "梅洛尼", "suspending": "暂停", "italy's": "意大利的", "month": "月份", "france": "法国", "they": "它们", "either": "要么", "looking": "寻找", "considering": "考虑", "urged": "敦促", "consider": "考虑", "options": "期权", "including": "包括", "suspension": "暂停", "co-operation": "合作", "images": "图像", "unacceptable": "不可接受", "writing": "写作", "she": "她", "cannot": "不能", "allow": "允许", "anyone": "任何人", "come": "到来", "without": "没有", "rules": "规则", "german": "德国的", "chancellor": "总理", "friedrich": "弗里德里希", "merz": "默茨", "demanded": "要求", "take": "采取", "back": "后退", "andy": "安迪", "burnham": "伯纳姆", "spoken": "发言", "providing": "提供", "what": "什么", "help": "帮助", "witnessed": "目睹", "gen": "根", "anti-government": "反政府的", "protests": "抗议活动", "last": "最后", "young": "年轻的", "demanding": "要求高的", "better": "更好的", "opportunities": "机会", "improvements": "改进", "public": "公众", "services": "服务", "together": "一起", "forms": "形式", "union's": "联盟的", "only": "只有", "land": "土地", "enter": "提出", "swimming": "游泳", "kilometres": "公里", "extraordinary": "非凡的", "long": "长久", "point": "点", "attempting": "试图", "during": "在期间", "summer": "夏天", "months": "月", "often": "经常", "big": "大的", "push": "推动", "typically": "通常", "organised": "有组织的", "matter": "事情", "days": "天", "tensions": "紧张局势", "relatively": "相对地", "friendly": "友好的", "approach": "方法", "immigration": "移民", "april": "四月", "approved": "批准", "plans": "计划", "give": "提供", "legal": "法律的", "status": "状态", "allowing": "允许", "them": "他们", "formally": "正式", "workforce": "劳动力", "pm": "首相", "profile": "形象", "why": "为何", "two": "两个", "parts": "部分", "still": "仍然", "hands": "双手", "finland": "芬兰", "traffickers": "人口贩子", "co-ordinated": "协调的", "selfish": "自私的", "denmark": "丹麦", "signatures": "签名", "antonio": "安东尼奥", "taoiseach": "爱尔兰总理", "restored": "恢复", "onward": "向前的", "continental": "大陆的", "prejudice": "偏见", "ignorance": "无知", "escorting": "护送", "constrained": "受限制的", "deport": "驱逐出境", "fernando": "费尔南多", "grande-marlaska": "格兰德-马拉斯卡", "inflatable": "充气的", "influx": "涌入", "eliminates": "消除", "encompasses": "包含", "addition": "增加", "portugal": "葡萄牙", "danish": "丹麦的", "mette": "梅特", "frederiksen": "弗雷泽里克森", "abiding": "遵守的", "focal": "焦点的", "exacerbating": "加剧", "undocumented": "无证的", "integrated": "融入的", "blames": "归咎于"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
