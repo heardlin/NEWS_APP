@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-03</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-03</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/9e43/live/e99c5fb0-8f6e-11f1-8f4e-3510a1b37663.jpg" alt="Rapists and child sex offenders to be barred from early release scheme" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Rapists and child sex offenders to be barred from early release scheme</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c20e15d0z6zo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-03.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Prisoners who committed rape, grooming, and serious child sex offences will be excluded from the forthcoming early release scheme for England and Wales, the government has said.</span></p>
+        <p class="cn">政府表示，英格兰和威尔士即将实施的提前释放计划将排除犯有强奸、诱骗和严重儿童性犯罪的囚犯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Prime Minister Andy Burnham paused plans to release some prisoners in September as part of a bid to stop unprecedented prison <span class="keyword" data-word="overcrowding" data-phonetic="/ˌoʊvərˈkraʊdɪŋ/" data-pos="n." data-def="过度拥挤" data-def-en="the state of being too crowded, with too many people in a space">overcrowding</span> after <span class="keyword" data-word="backlash" data-phonetic="/ˈbæklæʃ/" data-pos="n." data-def="强烈反对； backlash" data-def-en="a strong negative reaction against a recent event or decision">backlash</span> from survivors and victims.</span> <span class="sentence" data-sentence-index="2">The scheme will now restart in October.</span></p>
+        <p class="cn">首相安迪·伯纳姆（Andy Burnham）在受到幸存者和受害者强烈反对后，暂停了9月释放部分囚犯的计划，以阻止前所未有的监狱过度拥挤。该计划将于10月重新启动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="3">Burnham said he "wanted to go even further", but that would not be possible without the prison system collapsing and putting the public "at much greater risk".</span></p>
+        <p class="cn">伯纳姆表示，他“希望更进一步”，但如果不让监狱系统崩溃并让公众“面临更大风险”，这是不可能的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Lissie Harper, the widow of police officer Andrew Harper, said it was "disgusting" that his killers could be <span class="keyword" data-word="eligible" data-phonetic="/ˈelɪdʒəbl/" data-pos="adj." data-def="有资格的；合格的" data-def-en="having the right to do or receive something">eligible</span> for early release.</span></p>
+        <p class="cn">警察安德鲁·哈珀（Andrew Harper）的遗孀莉西·哈珀（Lissie Harper）表示，杀害她丈夫的凶手可能有资格提前释放，这“令人作呕”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">PC Harper, 28, was killed in 2019 when he was dragged by a car down a country road as three teenagers fled the scene of the quad bike theft in Berkshire.</span></p>
+        <p class="cn">28岁的警察哈珀于2019年在伯克郡（Berkshire）一辆四轮摩托车被盗现场，三名青少年逃离时被一辆汽车拖拽在乡村道路上致死。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">His family previously said they had received a letter from the Ministry of Justice (MoJ) confirming the offenders who killed the officer could be included in the scheme.</span></p>
+        <p class="cn">他的家人此前表示，他们收到了司法部（Ministry of Justice，MoJ）的一封信，确认杀害这名警察的罪犯可能被纳入该计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Burnham had paused the scheme on 23 July to conduct an urgent review.</span></p>
+        <p class="cn">伯纳姆于7月23日暂停了该计划，以进行紧急审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">In a statement announcing the changes on Monday, he said: "I fully understand the anger, anxiety and distress that's been caused.</span> <span class="sentence" data-sentence-index="9">I've heard that loud and clear."</span></p>
+        <p class="cn">在周一宣布变更的声明中，他说：“我完全理解由此引起的愤怒、焦虑和痛苦。我已经清楚地听到了这些声音。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">But Lissie Harper said that she was "beyond appalled and bristling with anger to hear that Andrew's killers are soon to be free to roam the streets".</span></p>
+        <p class="cn">但莉西·哈珀表示，她“听到安德鲁的凶手即将自由漫步街头，感到无比震惊和愤怒”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Under the government's changes, it also announced an extra Â£10 million will go to frontline victim support services, including a new national helpline.</span></p>
+        <p class="cn">根据政府的变更，还宣布额外投入1000万英镑用于一线受害者支持服务，包括一个新的全国热线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">The Sentencing Act was amended in January, with the eligibility for early release based on the length of fixed sentence, rather than the type of offence.</span></p>
+        <p class="cn">《量刑法》（Sentencing Act）于1月进行了修订，提前释放的资格基于固定刑期的长度，而非罪行类型。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">The act already excluded some of the most serious and dangerous offenders, such as murderers serving life sentences or those on extended sentences.</span></p>
+        <p class="cn">该法案已经排除了某些最严重和危险的罪犯，如终身监禁的谋杀犯或延长刑期的罪犯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">Under Burnham's announced changes, rape and child sexual offences will now also be excluded.</span></p>
+        <p class="cn">根据伯纳姆宣布的变更，强奸和儿童性犯罪现在也将被排除在外。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">The government said this move does not require changes to the existing legislation before October, though it may make amendments in the future to <span class="keyword" data-word="exclude" data-phonetic="/ɪkˈskluːd/" data-pos="v." data-def="排除；不包括" data-def-en="to prevent someone or something from being included">exclude</span> certain offenders from being released.</span></p>
+        <p class="cn">政府表示，这一举措在10月前不需要修改现有立法，尽管未来可能会进行修订，以排除某些罪犯被释放。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">Offenders of other crimes serving longer sentences of four years or more will be <span class="keyword" data-word="eligible" data-phonetic="/ˈelɪdʒəbl/" data-pos="adj." data-def="有资格的；合格的" data-def-en="having the right to do or receive something">eligible</span> for release halfway through their sentences rather than two-thirds as had previously been the case.</span></p>
+        <p class="cn">其他犯罪刑期四年或以上的罪犯，将在服刑一半时间后有资格获释，而非之前的三分之二。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="17">Those serving less serious sentences could be freed after a third of their time, rather than half.</span></p>
+        <p class="cn">刑期较轻的罪犯可能在服刑三分之一时间后获释，而非一半。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">The changes are due to be phased in, beginning with prisoners serving sentences of less than 575 days, going up to inmates jailed for 12 years or more being <span class="keyword" data-word="eligible" data-phonetic="/ˈelɪdʒəbl/" data-pos="adj." data-def="有资格的；合格的" data-def-en="having the right to do or receive something">eligible</span> for early release in June 2027.</span></p>
+        <p class="cn">这些变更将分阶段实施，从服刑少于575天的囚犯开始，逐步到2027年6月服刑12年或以上的囚犯有资格提前释放。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">The "presumption" will be that offenders are tagged and will face longer periods of <span class="keyword" data-word="supervision" data-phonetic="/ˌsuːpərˈvɪʒn/" data-pos="n." data-def="监督；管理" data-def-en="the act of watching over someone or something to ensure safety or compliance">supervision</span> and tough new rules including "restriction zones", Burnham said.</span></p>
+        <p class="cn">伯纳姆表示，“推定”是罪犯将被佩戴电子标签，并面临更长的监督期和严格的新规定，包括“限制区域”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">The number of individuals released each time will depend on the make-up of the prison population, which the government says will evolve between now and implementation.</span></p>
+        <p class="cn">每次释放的人数将取决于监狱人口的构成，政府表示，从现在到实施期间，这一构成将发生变化。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">Reacting to the announcement, a prison officer told the BBC that they were "creaking at the seams" and that "delaying the releases until October could mean we simply run out of space".</span></p>
+        <p class="cn">一名监狱官员在回应这一公告时告诉BBC，他们“不堪重负”，“将释放推迟到10月可能意味着我们根本没有空间”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">A probation officer said it is "not clear there's anything actually new here in terms of how probation staff are going to manage people being released earlier".</span></p>
+        <p class="cn">一名缓刑官表示，“目前尚不清楚缓刑工作人员将如何管理提前释放的人员，这里是否真的有什么新东西”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">Separately, those who serve the full sentence and are convicted of rape or serious child sex offences will face stronger surveillance after leaving prison, the government said.</span></p>
+        <p class="cn">此外，政府表示，那些服满刑期并被判犯有强奸或严重儿童性犯罪的罪犯，出狱后将面临更严格的监控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">This includes 12 months of GPS monitoring and strengthened community <span class="keyword" data-word="supervision" data-phonetic="/ˌsuːpərˈvɪʒn/" data-pos="n." data-def="监督；管理" data-def-en="the act of watching over someone or something to ensure safety or compliance">supervision</span>.</span></p>
+        <p class="cn">这包括12个月的GPS监控和加强的社区监督。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">Calling the announcement a "U-turn", Shadow Justice Secretary Nick Timothy said it "doesn't go far enough".</span></p>
+        <p class="cn">影子司法大臣尼克·蒂莫西（Nick Timothy）称这一公告是“180度大转弯”，并表示“这还不够”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">"Some child sex offenders and killers ...</span> <span class="sentence" data-sentence-index="27">will still be released early.</span> <span class="sentence" data-sentence-index="28">And the trauma of victims being told their abusers may be released can't be undone," he said.</span></p>
+        <p class="cn">他说：“一些儿童性犯罪者和杀人犯……仍将被提前释放。受害者被告知施虐者可能获释的创伤无法抹去。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Domestic Abuse Commissioner Dame Nicole Jacobs criticised the decision to not <span class="keyword" data-word="exclude" data-phonetic="/ɪkˈskluːd/" data-pos="v." data-def="排除；不包括" data-def-en="to prevent someone or something from being included">exclude</span> domestic abuse perpetrators.</span></p>
+        <p class="cn">家庭暴力专员妮可·雅各布斯女爵士（Dame Nicole Jacobs）批评了不排除家庭暴力施暴者的决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">"It is critical that no abuser is released in October unless I am confident that victims' safety is not being compromised," she said.</span></p>
+        <p class="cn">她说：“除非我确信受害者的安全不会受到损害，否则至关重要的是，10月不得释放任何施暴者。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">What could happen to prisoner early release scheme now PM has paused it?</span></p>
+        <p class="cn">首相暂停提前释放计划后，囚犯提前释放计划可能发生什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">Large rise in offenders sent back to prison, figures reveal</span></p>
+        <p class="cn">数据显示，被送回监狱的罪犯大幅增加。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exclude</span>
+        <button class="kw-speak-btn" data-word="exclude" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈskluːd/ v.</span>
+      </div>
+      <p class="kw-def">排除；不包括</p>
+      <p class="kw-def-en">to prevent someone or something from being included</p>
+      <p class="kw-ctx">&ldquo;Prisoners who committed rape, grooming, and serious child sex offences will be excluded from the forthcoming early release scheme for England and Wales, the government has said.&rdquo;</p>
+      <p class="kw-ctx-cn">政府表示，犯有强奸、诱骗和严重儿童性犯罪的囚犯将被排除在英格兰和威尔士即将推出的提前释放计划之外。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overcrowding</span>
+        <button class="kw-speak-btn" data-word="overcrowding" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌoʊvərˈkraʊdɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">过度拥挤</p>
+      <p class="kw-def-en">the state of being too crowded, with too many people in a space</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Andy Burnham paused plans to release some prisoners in September as part of a bid to stop unprecedented prison overcrowding after backlash from survivors and victims.&rdquo;</p>
+      <p class="kw-ctx-cn">首相安迪·伯纳姆暂停了9月释放部分囚犯的计划，以阻止前所未有的监狱过度拥挤，此前该计划遭到幸存者和受害者的强烈反对。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">backlash</span>
+        <button class="kw-speak-btn" data-word="backlash" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbæklæʃ/ n.</span>
+      </div>
+      <p class="kw-def">强烈反对； backlash</p>
+      <p class="kw-def-en">a strong negative reaction against a recent event or decision</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Andy Burnham paused plans to release some prisoners in September as part of a bid to stop unprecedented prison overcrowding after backlash from survivors and victims.&rdquo;</p>
+      <p class="kw-ctx-cn">首相安迪·伯纳姆暂停了9月释放部分囚犯的计划，以阻止前所未有的监狱过度拥挤，此前该计划遭到幸存者和受害者的强烈反对。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">eligible</span>
+        <button class="kw-speak-btn" data-word="eligible" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈelɪdʒəbl/ adj.</span>
+      </div>
+      <p class="kw-def">有资格的；合格的</p>
+      <p class="kw-def-en">having the right to do or receive something</p>
+      <p class="kw-ctx">&ldquo;Lissie Harper, the widow of police officer Andrew Harper, said it was "disgusting" that his killers could be eligible for early release.&rdquo;</p>
+      <p class="kw-ctx-cn">警察安德鲁·哈珀的遗孀莉西·哈珀表示，他的凶手可能有资格获得提前释放，这“令人作呕”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">drag</span>
+        <button class="kw-speak-btn" data-word="drag" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dræɡ/ v.</span>
+      </div>
+      <p class="kw-def">拖拽；拖</p>
+      <p class="kw-def-en">to pull something or someone along the ground, often with effort</p>
+      <p class="kw-ctx">&ldquo;PC Harper, 28, was killed in 2019 when he was dragged by a car down a country road as three teenagers fled the scene of the quad bike theft in Berkshire.&rdquo;</p>
+      <p class="kw-ctx-cn">28岁的警察哈珀于2019年遇害，当时三名青少年在伯克希尔偷窃四轮摩托车后逃离现场，他被一辆汽车拖拽在乡间小路上。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">amend</span>
+        <button class="kw-speak-btn" data-word="amend" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈmend/ v.</span>
+      </div>
+      <p class="kw-def">修改；修订</p>
+      <p class="kw-def-en">to make changes to a law, document, or plan</p>
+      <p class="kw-ctx">&ldquo;The Sentencing Act was amended in January, with the eligibility for early release based on the length of fixed sentence, rather than the type of offence.&rdquo;</p>
+      <p class="kw-ctx-cn">《量刑法案》于1月修订，提前释放的资格基于固定刑期的长度，而非罪行类型。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">phase in</span>
+        <button class="kw-speak-btn" data-word="phase in" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/feɪz ɪn/ v. phr.</span>
+      </div>
+      <p class="kw-def">逐步引入；分阶段实施</p>
+      <p class="kw-def-en">to introduce something gradually in stages</p>
+      <p class="kw-ctx">&ldquo;The changes are due to be phased in, beginning with prisoners serving sentences of less than 575 days, going up to inmates jailed for 12 years or more being eligible for early release in June 2027.&rdquo;</p>
+      <p class="kw-ctx-cn">这些变化将分阶段实施，从服刑不足575天的囚犯开始，到2027年6月，刑期12年或以上的囚犯将有资格获得提前释放。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">supervision</span>
+        <button class="kw-speak-btn" data-word="supervision" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌsuːpərˈvɪʒn/ n.</span>
+      </div>
+      <p class="kw-def">监督；管理</p>
+      <p class="kw-def-en">the act of watching over someone or something to ensure safety or compliance</p>
+      <p class="kw-ctx">&ldquo;The "presumption" will be that offenders are tagged and will face longer periods of supervision and tough new rules including "restriction zones", Burnham said.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆表示，“推定”是罪犯将被佩戴电子标签，并面临更长的监督期和严格的新规定，包括“限制区域”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Prisoners who committed rape, grooming, and serious child sex offences will be excluded from the forthcoming early release scheme for England and Wales, the government has said.", "start_ms": 0, "end_ms": 11640, "paragraph_index": 0}, {"index": 1, "text": "Prime Minister Andy Burnham paused plans to release some prisoners in September as part of a bid to stop unprecedented prison overcrowding after backlash from survivors and victims.", "start_ms": 11640, "end_ms": 23952, "paragraph_index": 1}, {"index": 2, "text": "The scheme will now restart in October.", "start_ms": 23952, "end_ms": 27432, "paragraph_index": 1}, {"index": 3, "text": "Burnham said he \"wanted to go even further\", but that would not be possible without the prison system collapsing and putting the public \"at much greater risk\".", "start_ms": 27432, "end_ms": 37464, "paragraph_index": 2}, {"index": 4, "text": "Lissie Harper, the widow of police officer Andrew Harper, said it was \"disgusting\" that his killers could be eligible for early release.", "start_ms": 37464, "end_ms": 46656, "paragraph_index": 3}, {"index": 5, "text": "PC Harper, 28, was killed in 2019 when he was dragged by a car down a country road as three teenagers fled the scene of the quad bike theft in Berkshire.", "start_ms": 46656, "end_ms": 58632, "paragraph_index": 4}, {"index": 6, "text": "His family previously said they had received a letter from the Ministry of Justice (MoJ) confirming the offenders who killed the officer could be included in the scheme.", "start_ms": 58632, "end_ms": 69600, "paragraph_index": 5}, {"index": 7, "text": "Burnham had paused the scheme on 23 July to conduct an urgent review.", "start_ms": 69600, "end_ms": 75312, "paragraph_index": 6}, {"index": 8, "text": "In a statement announcing the changes on Monday, he said: \"I fully understand the anger, anxiety and distress that's been caused.", "start_ms": 75312, "end_ms": 84720, "paragraph_index": 7}, {"index": 9, "text": "I've heard that loud and clear.\"", "start_ms": 84720, "end_ms": 87528, "paragraph_index": 7}, {"index": 10, "text": "But Lissie Harper said that she was \"beyond appalled and bristling with anger to hear that Andrew's killers are soon to be free to roam the streets\".", "start_ms": 87528, "end_ms": 96384, "paragraph_index": 8}, {"index": 11, "text": "Under the government's changes, it also announced an extra \u00c2\u00a310 million will go to frontline victim support services, including a new national helpline.", "start_ms": 96384, "end_ms": 107856, "paragraph_index": 9}, {"index": 12, "text": "The Sentencing Act was amended in January, with the eligibility for early release based on the length of fixed sentence, rather than the type of offence.", "start_ms": 107856, "end_ms": 118392, "paragraph_index": 10}, {"index": 13, "text": "The act already excluded some of the most serious and dangerous offenders, such as murderers serving life sentences or those on extended sentences.", "start_ms": 118392, "end_ms": 128856, "paragraph_index": 11}, {"index": 14, "text": "Under Burnham's announced changes, rape and child sexual offences will now also be excluded.", "start_ms": 128856, "end_ms": 136056, "paragraph_index": 12}, {"index": 15, "text": "The government said this move does not require changes to the existing legislation before October, though it may make amendments in the future to exclude certain offenders from being released.", "start_ms": 136056, "end_ms": 148128, "paragraph_index": 13}, {"index": 16, "text": "Offenders of other crimes serving longer sentences of four years or more will be eligible for release halfway through their sentences rather than two-thirds as had previously been the case.", "start_ms": 148128, "end_ms": 159960, "paragraph_index": 14}, {"index": 17, "text": "Those serving less serious sentences could be freed after a third of their time, rather than half.", "start_ms": 159960, "end_ms": 166824, "paragraph_index": 15}, {"index": 18, "text": "The changes are due to be phased in, beginning with prisoners serving sentences of less than 575 days, going up to inmates jailed for 12 years or more being eligible for early release in June 2027.", "start_ms": 166824, "end_ms": 182400, "paragraph_index": 16}, {"index": 19, "text": "The \"presumption\" will be that offenders are tagged and will face longer periods of supervision and tough new rules including \"restriction zones\", Burnham said.", "start_ms": 182400, "end_ms": 192744, "paragraph_index": 17}, {"index": 20, "text": "The number of individuals released each time will depend on the make-up of the prison population, which the government says will evolve between now and implementation.", "start_ms": 192744, "end_ms": 203448, "paragraph_index": 18}, {"index": 21, "text": "Reacting to the announcement, a prison officer told the BBC that they were \"creaking at the seams\" and that \"delaying the releases until October could mean we simply run out of space\".", "start_ms": 203448, "end_ms": 214968, "paragraph_index": 19}, {"index": 22, "text": "A probation officer said it is \"not clear there's anything actually new here in terms of how probation staff are going to manage people being released earlier\".", "start_ms": 214968, "end_ms": 225096, "paragraph_index": 20}, {"index": 23, "text": "Separately, those who serve the full sentence and are convicted of rape or serious child sex offences will face stronger surveillance after leaving prison, the government said.", "start_ms": 225096, "end_ms": 236712, "paragraph_index": 21}, {"index": 24, "text": "This includes 12 months of GPS monitoring and strengthened community supervision.", "start_ms": 236712, "end_ms": 243096, "paragraph_index": 22}, {"index": 25, "text": "Calling the announcement a \"U-turn\", Shadow Justice Secretary Nick Timothy said it \"doesn't go far enough\".", "start_ms": 243096, "end_ms": 250536, "paragraph_index": 23}, {"index": 26, "text": "\"Some child sex offenders and killers ...", "start_ms": 250536, "end_ms": 253968, "paragraph_index": 24}, {"index": 27, "text": "will still be released early.", "start_ms": 253968, "end_ms": 256752, "paragraph_index": 24}, {"index": 28, "text": "And the trauma of victims being told their abusers may be released can't be undone,\" he said.", "start_ms": 256752, "end_ms": 263376, "paragraph_index": 24}, {"index": 29, "text": "Domestic Abuse Commissioner Dame Nicole Jacobs criticised the decision to not exclude domestic abuse perpetrators.", "start_ms": 263376, "end_ms": 271752, "paragraph_index": 25}, {"index": 30, "text": "\"It is critical that no abuser is released in October unless I am confident that victims' safety is not being compromised,\" she said.", "start_ms": 271752, "end_ms": 280824, "paragraph_index": 26}, {"index": 31, "text": "What could happen to prisoner early release scheme now PM has paused it?", "start_ms": 280824, "end_ms": 286008, "paragraph_index": 27}, {"index": 32, "text": "Large rise in offenders sent back to prison, figures reveal", "start_ms": 286008, "end_ms": 291144, "paragraph_index": 28}], "total_duration_ms": 291144};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "be": "是", "said": "说", "in": "在", "will": "将", "that": "那个", "release": "发布", "it": "它", "offenders": "罪犯", "early": "早期的", "for": "为了", "prison": "监狱", "sentences": "刑期", "released": "释放", "scheme": "计划", "not": "不", "was": "是", "could": "可能", "on": "在", "changes": "变化", "are": "是", "being": "正在", "serious": "严重的", "child": "孩子", "from": "来自", "government": "政府", "burnham": "伯纳姆", "as": "作为", "now": "现在", "october": "十月", "he": "他", "harper": "哈珀", "officer": "警官", "than": "比", "serving": "担任", "or": "或者", "is": "是", "prisoners": "囚犯", "who": "谁", "rape": "强奸", "sex": "性", "offences": "罪行", "paused": "暂停", "some": "一些", "after": "之后", "victims": "受害者", "go": "去", "killers": "杀手", "had": "有", "with": "与", "new": "新的", "rather": "宁愿", "those": "那些", "their": "他们的", "has": "有", "but": "但是", "at": "在", "lissie": "利西", "his": "他的", "killed": "杀死", "previously": "此前", "they": "它们", "justice": "正义", "an": "一个", "anger": "愤怒", "been": "已经", "clear": "明确", "she": "她", "under": "在...之下", "also": "也", "announced": "宣布", "including": "包括", "act": "行为", "sentence": "判决", "this": "这个", "may": "可能", "longer": "更长的", "years": "多年", "more": "更多", "less": "更少", "time": "时间", "going": "将要", "face": "面临", "announcement": "公告", "told": "告诉", "domestic": "国内的", "abuse": "滥用", "committed": "承诺的", "grooming": "培养", "england": "英格兰", "wales": "威尔士", "prime": "首相", "minister": "部长", "andy": "安迪", "plans": "计划", "september": "九月", "part": "部分", "bid": "努力", "stop": "停止", "survivors": "幸存者", "wanted": "想要", "even": "甚至", "further": "进一步的", "would": "将", "possible": "可能的", "without": "没有", "system": "制度", "putting": "放置", "public": "公众", "much": "许多", "greater": "更大的", "risk": "风险", "widow": "寡妇", "police": "警方", "andrew": "安德鲁", "disgusting": "令人作呕的", "pc": "个人电脑", "when": "当", "dragged": "拖累", "by": "被", "car": "汽车", "down": "下来", "country": "国家", "road": "道路", "three": "三个", "teenagers": "青少年", "fled": "逃离", "scene": "现场", "berkshire": "伯克郡", "family": "家庭", "received": "受到", "letter": "信件", "ministry": "外交部", "included": "包括", "july": "七月", "conduct": "行为", "urgent": "紧急的", "review": "审查", "statement": "声明", "announcing": "宣布", "monday": "星期一", "fully": "完全地", "understand": "理解", "anxiety": "焦虑", "that's": "那是", "caused": "导致", "i've": "我已经", "heard": "听到", "loud": "大声的", "beyond": "超出", "appalled": "震惊的", "hear": "听到", "soon": "很快", "free": "自由的", "streets": "街道", "government's": "政府的", "extra": "额外的", "million": "百万", "victim": "受害者", "support": "支持", "services": "服务", "national": "国家", "sentencing": "判刑", "amended": "修正", "january": "一月", "based": "基于", "length": "长度", "fixed": "固定的", "type": "类型", "offence": "罪行", "already": "已经", "most": "最", "dangerous": "危险", "such": "如此", "life": "生活", "extended": "延长", "burnham's": "伯纳姆的", "sexual": "性的", "move": "行动", "does": "做", "require": "要求", "existing": "现有的", "legislation": "立法", "before": "之前", "though": "尽管", "make": "使", "future": "未来", "certain": "某些", "other": "其他", "crimes": "罪行", "four": "四", "through": "通过", "two-thirds": "三分之二", "case": "案例", "freed": "被释放的", "third": "第三", "half": "一半", "due": "应得", "phased": "分阶段的", "beginning": "开始", "days": "天", "up": "向上", "inmates": "囚犯", "jailed": "被监禁", "june": "六月", "periods": "时期", "tough": "艰难的", "rules": "规则", "number": "数量", "individuals": "个人", "each": "每个", "population": "人口", "which": "哪个", "says": "表示", "between": "之间", "reacting": "反应", "bbc": "英国广播公司", "were": "是", "releases": "释放", "until": "直到", "mean": "意味着", "we": "我们", "simply": "仅仅", "run": "奔跑", "out": "出来", "space": "空间", "there's": "有", "anything": "任何事", "actually": "实际上", "here": "这里", "terms": "条件", "how": "如何", "staff": "员工", "manage": "管理", "people": "人们", "earlier": "较早", "separately": "分别", "serve": "服务", "full": "完整", "convicted": "被定罪", "stronger": "更强", "surveillance": "监视", "leaving": "离开", "includes": "包括", "months": "月", "monitoring": "监控", "strengthened": "加强的", "community": "社区", "calling": "呼吁", "u-turn": "掉头", "shadow": "阴影", "secretary": "秘书", "nick": "尼克", "timothy": "蒂莫西", "doesn't": "不", "far": "远", "enough": "足够", "still": "仍然", "trauma": "创伤", "can't": "不能", "commissioner": "专员", "dame": "女爵士", "criticised": "批评", "decision": "决定", "perpetrators": "施暴者", "critical": "关键", "no": "没有", "unless": "除非", "am": "是", "confident": "自信", "safety": "安全", "what": "什么", "happen": "发生", "prisoner": "囚犯", "pm": "首相", "large": "大的", "rise": "上升", "sent": "派遣", "back": "后退", "figures": "人物", "reveal": "揭露", "excluded": "被排除的", "probation": "缓刑", "forthcoming": "即将到来的", "unprecedented": "史无前例的", "restart": "重新启动", "collapsing": "崩溃的", "quad": "四轮车", "bike": "自行车", "theft": "盗窃", "moj": "司法部", "confirming": "确认", "distress": "痛苦", "bristling": "充满的", "andrew's": "安德鲁的", "roam": "漫游", "frontline": "一线", "helpline": "求助热线", "eligibility": "资格", "murderers": "杀人犯", "amendments": "修正案", "halfway": "中途的", "presumption": "推定", "tagged": "标记的", "restriction": "限制", "zones": "区域", "depend": "依赖", "make-up": "构成", "evolve": "演变", "implementation": "实施", "creaking": "吱吱作响的", "seams": "接缝", "delaying": "延迟", "gps": "全球定位系统", "abusers": "施虐者", "undone": "未完成的", "nicole": "妮可", "jacobs": "雅各布斯", "abuser": "施虐者", "compromised": "受损的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
