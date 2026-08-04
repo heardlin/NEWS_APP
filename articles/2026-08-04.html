@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-04</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-04</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/8528/live/11898c20-9026-11f1-b2ab-0dd01740f9f6.jpg" alt="Video shows Russian drone chasing Ukrainian street vendor in 'human safari' attack" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Video shows Russian drone chasing Ukrainian street vendor in 'human safari' attack</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cn4n03xg981o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-04.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Ukrainian vegetable seller targeted in 'human <span class="keyword" data-word="safari" data-phonetic="/səˈfɑːri/" data-pos="n." data-def="狩猎远征；猎杀行动" data-def-en="An expedition to observe or hunt animals, here used metaphorically for hunting people.">safari</span>' <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> attack</span></p>
+        <p class="cn">乌克兰菜贩遭“人类狩猎”无人机袭击</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Ukraine's President Volodymyr Zelensky has shared a video on social media of a <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> hunting down a man in southern Ukraine, saying it showed an instance of a Russian "<span class="keyword" data-word="safari" data-phonetic="/səˈfɑːri/" data-pos="n." data-def="狩猎远征；猎杀行动" data-def-en="An expedition to observe or hunt animals, here used metaphorically for hunting people.">safari</span>" attack against civilians.</span></p>
+        <p class="cn">乌克兰总统泽连斯基（Volodymyr Zelensky）在社交媒体上分享了一段视频，显示一架无人机在乌克兰南部追捕一名男子，称这展示了俄罗斯对平民发动“狩猎”式袭击的一个实例。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The video shows the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> pursuing a street vendor on a city street in the Kherson region.</span> <span class="sentence" data-sentence-index="4">The man moves away from the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> hovering above, before it chases him as he runs around a white van.</span> <span class="sentence" data-sentence-index="5">Eventually, the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> swoops down on him and explodes on impact.</span></p>
+        <p class="cn">视频显示，在赫尔松地区的一条城市街道上，无人机追逐一名街头小贩。该男子躲避着悬停在上方的无人机，随后无人机在他绕着一辆白色货车奔跑时追赶他。最终，无人机俯冲向他并撞击爆炸。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="6">The man escaped with multiple <span class="keyword" data-word="shrapnel" data-phonetic="/ˈʃræpnəl/" data-pos="n." data-def="弹片，榴霰弹" data-def-en="Fragments of a bomb, shell, or other object thrown out by an explosion.">shrapnel</span> wounds, <span class="keyword" data-word="concussion" data-phonetic="/kənˈkʌʃn/" data-pos="n." data-def="脑震荡" data-def-en="Temporary unconsciousness or confusion caused by a blow to the head.">concussion</span> and <span class="keyword" data-word="trauma" data-phonetic="/ˈtrɔːmə/" data-pos="n." data-def="创伤；精神创伤" data-def-en="Physical injury or emotional shock following a stressful event.">trauma</span>, a doctor said.</span></p>
+        <p class="cn">一名医生表示，该男子多处弹片伤、脑震荡和外伤，但幸免于难。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">Sometimes called "human <span class="keyword" data-word="safari" data-phonetic="/səˈfɑːri/" data-pos="n." data-def="狩猎远征；猎杀行动" data-def-en="An expedition to observe or hunt animals, here used metaphorically for hunting people.">safari</span>", the deployment of remotely-operated drones against civilians has often been used by Russians to terrify residents of front line areas in Ukraine.</span></p>
+        <p class="cn">这种被称为“人类狩猎”的战术，即使用远程操控无人机袭击平民，常被俄罗斯用来恐吓乌克兰前线地区的居民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">"The world must see this," Zelensky wrote on Telegram.</span> <span class="sentence" data-sentence-index="9">"It must see every piece of evidence that Russia has gone mad, and every fact that Russian soldiers are enjoying killings and tormenting people."</span></p>
+        <p class="cn">泽连斯基在Telegram上写道：“世界必须看到这一点。它必须看到俄罗斯已经疯狂的每一份证据，以及俄罗斯士兵以杀戮和折磨人民为乐的每一个事实。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="10">The video showed a "<span class="keyword" data-word="barbaric" data-phonetic="/bɑːrˈbærɪk/" data-pos="adj." data-def="野蛮的，残暴的" data-def-en="Savagely cruel, exceedingly brutal.">barbaric</span> war crime", said Ukraine's Foreign Minister Andrii Sybiha.</span></p>
+        <p class="cn">乌克兰外长安德里·西比哈（Andrii Sybiha）表示，该视频展示了一场“野蛮的战争罪行”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">The safaris were a "deliberate and systemic Russian strategy," Sybiha said.</span> <span class="sentence" data-sentence-index="12">"The sadist operating this <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> knows full well that he is targeting a <span class="keyword" data-word="civilian" data-phonetic="/sɪˈvɪljən/" data-pos="n." data-def="平民，百姓" data-def-en="A person not in the armed services or the police force.">civilian</span>."</span></p>
+        <p class="cn">西比哈称，这些“狩猎”是“俄罗斯蓄意且系统性的战略”。他说：“操作这架无人机的虐待狂完全清楚他正在瞄准一名平民。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="13">He added the attack was part of a deliberate Russian campaign to <span class="keyword" data-word="intimidate" data-phonetic="/ɪnˈtɪmɪdeɪt/" data-pos="v." data-def="恐吓，威胁" data-def-en="To frighten or overawe someone, especially in order to make them do what one wants.">intimidate</span> civilians and demanded international condemnation.</span></p>
+        <p class="cn">他补充说，这次袭击是俄罗斯蓄意恐吓平民行动的一部分，并呼吁国际社会予以谴责。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="14">The Kherson regional governor later posted a video showing the man - identified as Yuriy, a 52-year-old street vegetable vendor - speaking from a hospital bed following the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> attack.</span></p>
+        <p class="cn">赫尔松地区州长随后发布了一段视频，显示该男子——被确认为尤里（Yuriy），一名52岁的街头蔬菜小贩——在无人机袭击后于医院病床上讲话。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="15">Yuriy said he and his wife had started to lay out crates of vegetables next to his van when he heard a distinctive buzzing sound overhead.</span></p>
+        <p class="cn">尤里说，他和妻子刚开始在货车旁摆放蔬菜箱，就听到头顶传来明显的嗡嗡声。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="16">When his wife ran away, the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span> turned to him instead.</span> <span class="sentence" data-sentence-index="17">He held up some heads of garlic towards the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control.">drone</span>'s camera to show the operator that he was not trying to film it.</span></p>
+        <p class="cn">当他的妻子跑开时，无人机转而瞄准了他。他举起几头大蒜对着无人机的摄像头，以向操作员表明他并非试图拍摄它。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="18">"It could see that I had tomatoes out, some cucumbers and eggplants laid out on the floor," Yuriy said.</span> <span class="sentence" data-sentence-index="19">"It even ducked under the umbrella when I was running away round the other side."</span></p>
+        <p class="cn">尤里说：“它能看到我摆出了西红柿、一些黄瓜和茄子在地上。当我绕到另一边跑时，它甚至钻到了伞下。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="20">BBC Verify geolocated the video to a market space beside a roundabout in the Tavriiskyi district in northern Kherson.</span> <span class="sentence" data-sentence-index="21">It is not clear who filmed the attack, or how - but the earliest public copy BBC Verify found was shared by a pro-Ukrainian Instagram account on Tuesday morning.</span></p>
+        <p class="cn">BBC Verify（英国广播公司核实部）将该视频定位到赫尔松北部塔夫里斯基区一个环岛旁的集市空间。目前尚不清楚是谁拍摄了这次袭击，以及如何拍摄的——但BBC Verify发现的最早公开副本是周二上午由一个亲乌克兰的Instagram账号分享的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="22">"<span class="keyword" data-word="safari" data-phonetic="/səˈfɑːri/" data-pos="n." data-def="狩猎远征；猎杀行动" data-def-en="An expedition to observe or hunt animals, here used metaphorically for hunting people.">Safari</span>" attacks have long been carried out by Russian troops in Kherson, which sits only a few miles from the front line.</span></p>
+        <p class="cn">长期以来，俄罗斯军队一直在赫尔松实施“狩猎”袭击，该地距离前线仅几英里。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="23">A 2025 UN report said it had found Russian armed forces "recurrently killed and injured civilians" in the area by using drones to target them.</span></p>
+        <p class="cn">2025年联合国的一份报告称，俄罗斯武装部队在该地区“经常使用无人机瞄准并杀害和伤害平民”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="24">The videos filmed by the drones before they explode on to their targets are often posted online, allowing thousands to witness the last moments of the terrified victims.</span></p>
+        <p class="cn">无人机在撞击目标前拍摄的视频经常被发布到网上，使成千上万的人目睹惊恐受害者的最后时刻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="25">"Posting videos of civilians being killed and injured amounts to the war crime of outrages upon personal dignity," the UN said.</span></p>
+        <p class="cn">联合国表示：“发布平民被杀和受伤的视频相当于犯下侵犯个人尊严的战争罪。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="26">Russia launched a full-scale invasion of Ukraine in February 2022 and denies targeting civilians.</span></p>
+        <p class="cn">俄罗斯于2022年2月对乌克兰发动全面入侵，并否认以平民为目标。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="27">Additional reporting by Richard Irvine-Brown, BBC Verify</span></p>
+        <p class="cn">理查德·欧文-布朗（Richard Irvine-Brown），BBC Verify，补充报道</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="28">Russian drones hunt civilians, evidence suggests</span></p>
+        <p class="cn">证据表明俄罗斯无人机追捕平民</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">safari</span>
+        <button class="kw-speak-btn" data-word="safari" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈfɑːri/ n.</span>
+      </div>
+      <p class="kw-def">狩猎远征；猎杀行动</p>
+      <p class="kw-def-en">An expedition to observe or hunt animals, here used metaphorically for hunting people.</p>
+      <p class="kw-ctx">&ldquo;Ukrainian vegetable seller targeted in 'human safari' drone attack&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰菜贩在‘人类狩猎’无人机袭击中成为目标</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">drone</span>
+        <button class="kw-speak-btn" data-word="drone" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/droʊn/ n.</span>
+      </div>
+      <p class="kw-def">无人机</p>
+      <p class="kw-def-en">An unmanned aircraft or ship guided by remote control.</p>
+      <p class="kw-ctx">&ldquo;The video shows the drone pursuing a street vendor on a city street in the Kherson region.&rdquo;</p>
+      <p class="kw-ctx-cn">视频显示，一架无人机在赫尔松地区的一条城市街道上追赶一名街头小贩。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">civilian</span>
+        <button class="kw-speak-btn" data-word="civilian" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sɪˈvɪljən/ n.</span>
+      </div>
+      <p class="kw-def">平民，百姓</p>
+      <p class="kw-def-en">A person not in the armed services or the police force.</p>
+      <p class="kw-ctx">&ldquo;The deployment of remotely-operated drones against civilians has often been used by Russians to terrify residents of front line areas in Ukraine.&rdquo;</p>
+      <p class="kw-ctx-cn">俄罗斯人经常使用远程操控的无人机对付平民，以恐吓乌克兰前线地区的居民。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">shrapnel</span>
+        <button class="kw-speak-btn" data-word="shrapnel" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈʃræpnəl/ n.</span>
+      </div>
+      <p class="kw-def">弹片，榴霰弹</p>
+      <p class="kw-def-en">Fragments of a bomb, shell, or other object thrown out by an explosion.</p>
+      <p class="kw-ctx">&ldquo;The man escaped with multiple shrapnel wounds, concussion and trauma, a doctor said.&rdquo;</p>
+      <p class="kw-ctx-cn">一名医生说，这名男子多处弹片伤、脑震荡和创伤，但幸免于难。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">concussion</span>
+        <button class="kw-speak-btn" data-word="concussion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈkʌʃn/ n.</span>
+      </div>
+      <p class="kw-def">脑震荡</p>
+      <p class="kw-def-en">Temporary unconsciousness or confusion caused by a blow to the head.</p>
+      <p class="kw-ctx">&ldquo;The man escaped with multiple shrapnel wounds, concussion and trauma, a doctor said.&rdquo;</p>
+      <p class="kw-ctx-cn">一名医生说，这名男子多处弹片伤、脑震荡和创伤，但幸免于难。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">trauma</span>
+        <button class="kw-speak-btn" data-word="trauma" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrɔːmə/ n.</span>
+      </div>
+      <p class="kw-def">创伤；精神创伤</p>
+      <p class="kw-def-en">Physical injury or emotional shock following a stressful event.</p>
+      <p class="kw-ctx">&ldquo;The man escaped with multiple shrapnel wounds, concussion and trauma, a doctor said.&rdquo;</p>
+      <p class="kw-ctx-cn">一名医生说，这名男子多处弹片伤、脑震荡和创伤，但幸免于难。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">barbaric</span>
+        <button class="kw-speak-btn" data-word="barbaric" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bɑːrˈbærɪk/ adj.</span>
+      </div>
+      <p class="kw-def">野蛮的，残暴的</p>
+      <p class="kw-def-en">Savagely cruel, exceedingly brutal.</p>
+      <p class="kw-ctx">&ldquo;The video showed a "barbaric war crime", said Ukraine's Foreign Minister Andrii Sybiha.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰外交部长安德烈·西比哈表示，该视频显示了一场“野蛮的战争罪行”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intimidate</span>
+        <button class="kw-speak-btn" data-word="intimidate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈtɪmɪdeɪt/ v.</span>
+      </div>
+      <p class="kw-def">恐吓，威胁</p>
+      <p class="kw-def-en">To frighten or overawe someone, especially in order to make them do what one wants.</p>
+      <p class="kw-ctx">&ldquo;He added the attack was part of a deliberate Russian campaign to intimidate civilians and demanded international condemnation.&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，这次袭击是俄罗斯蓄意恐吓平民运动的一部分，并要求国际社会予以谴责。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Ukrainian vegetable seller targeted in 'human safari' drone attack", "start_ms": 3000, "end_ms": 8568, "paragraph_index": 1}, {"index": 2, "text": "Ukraine's President Volodymyr Zelensky has shared a video on social media of a drone hunting down a man in southern Ukraine, saying it showed an instance of a Russian \"safari\" attack against civilians.", "start_ms": 8568, "end_ms": 22104, "paragraph_index": 2}, {"index": 3, "text": "The video shows the drone pursuing a street vendor on a city street in the Kherson region.", "start_ms": 22104, "end_ms": 28392, "paragraph_index": 3}, {"index": 4, "text": "The man moves away from the drone hovering above, before it chases him as he runs around a white van.", "start_ms": 28392, "end_ms": 35616, "paragraph_index": 3}, {"index": 5, "text": "Eventually, the drone swoops down on him and explodes on impact.", "start_ms": 35616, "end_ms": 40968, "paragraph_index": 3}, {"index": 6, "text": "The man escaped with multiple shrapnel wounds, concussion and trauma, a doctor said.", "start_ms": 40968, "end_ms": 47568, "paragraph_index": 4}, {"index": 7, "text": "Sometimes called \"human safari\", the deployment of remotely-operated drones against civilians has often been used by Russians to terrify residents of front line areas in Ukraine.", "start_ms": 47568, "end_ms": 60264, "paragraph_index": 5}, {"index": 8, "text": "\"The world must see this,\" Zelensky wrote on Telegram.", "start_ms": 60264, "end_ms": 64848, "paragraph_index": 6}, {"index": 9, "text": "\"It must see every piece of evidence that Russia has gone mad, and every fact that Russian soldiers are enjoying killings and tormenting people.\"", "start_ms": 64848, "end_ms": 74640, "paragraph_index": 6}, {"index": 10, "text": "The video showed a \"barbaric war crime\", said Ukraine's Foreign Minister Andrii Sybiha.", "start_ms": 74640, "end_ms": 81312, "paragraph_index": 7}, {"index": 11, "text": "The safaris were a \"deliberate and systemic Russian strategy,\" Sybiha said.", "start_ms": 81312, "end_ms": 87096, "paragraph_index": 8}, {"index": 12, "text": "\"The sadist operating this drone knows full well that he is targeting a civilian.\"", "start_ms": 87096, "end_ms": 92856, "paragraph_index": 8}, {"index": 13, "text": "He added the attack was part of a deliberate Russian campaign to intimidate civilians and demanded international condemnation.", "start_ms": 92856, "end_ms": 101496, "paragraph_index": 9}, {"index": 14, "text": "The Kherson regional governor later posted a video showing the man - identified as Yuriy, a 52-year-old street vegetable vendor - speaking from a hospital bed following the drone attack.", "start_ms": 101496, "end_ms": 114288, "paragraph_index": 10}, {"index": 15, "text": "Yuriy said he and his wife had started to lay out crates of vegetables next to his van when he heard a distinctive buzzing sound overhead.", "start_ms": 114288, "end_ms": 123168, "paragraph_index": 11}, {"index": 16, "text": "When his wife ran away, the drone turned to him instead.", "start_ms": 123168, "end_ms": 127752, "paragraph_index": 12}, {"index": 17, "text": "He held up some heads of garlic towards the drone's camera to show the operator that he was not trying to film it.", "start_ms": 127752, "end_ms": 135120, "paragraph_index": 12}, {"index": 18, "text": "\"It could see that I had tomatoes out, some cucumbers and eggplants laid out on the floor,\" Yuriy said.", "start_ms": 135120, "end_ms": 142440, "paragraph_index": 13}, {"index": 19, "text": "\"It even ducked under the umbrella when I was running away round the other side.\"", "start_ms": 142440, "end_ms": 147672, "paragraph_index": 13}, {"index": 20, "text": "BBC Verify geolocated the video to a market space beside a roundabout in the Tavriiskyi district in northern Kherson.", "start_ms": 147672, "end_ms": 156648, "paragraph_index": 14}, {"index": 21, "text": "It is not clear who filmed the attack, or how - but the earliest public copy BBC Verify found was shared by a pro-Ukrainian Instagram account on Tuesday morning.", "start_ms": 156648, "end_ms": 167976, "paragraph_index": 14}, {"index": 22, "text": "\"Safari\" attacks have long been carried out by Russian troops in Kherson, which sits only a few miles from the front line.", "start_ms": 167976, "end_ms": 176256, "paragraph_index": 15}, {"index": 23, "text": "A 2025 UN report said it had found Russian armed forces \"recurrently killed and injured civilians\" in the area by using drones to target them.", "start_ms": 176256, "end_ms": 186720, "paragraph_index": 16}, {"index": 24, "text": "The videos filmed by the drones before they explode on to their targets are often posted online, allowing thousands to witness the last moments of the terrified victims.", "start_ms": 186720, "end_ms": 198288, "paragraph_index": 17}, {"index": 25, "text": "\"Posting videos of civilians being killed and injured amounts to the war crime of outrages upon personal dignity,\" the UN said.", "start_ms": 198288, "end_ms": 207480, "paragraph_index": 18}, {"index": 26, "text": "Russia launched a full-scale invasion of Ukraine in February 2022 and denies targeting civilians.", "start_ms": 207480, "end_ms": 215424, "paragraph_index": 19}, {"index": 27, "text": "Additional reporting by Richard Irvine-Brown, BBC Verify", "start_ms": 215424, "end_ms": 220704, "paragraph_index": 20}, {"index": 28, "text": "Russian drones hunt civilians, evidence suggests", "start_ms": 220704, "end_ms": 225216, "paragraph_index": 21}], "total_duration_ms": 225216};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "and": "和", "in": "在", "on": "在", "it": "它", "russian": "俄罗斯的", "he": "他", "said": "说", "video": "视频", "by": "被", "attack": "袭击", "that": "那个", "man": "男子", "drones": "无人机", "was": "是", "out": "出来", "this": "这个", "not": "不", "has": "有", "ukraine": "乌克兰", "street": "街", "away": "离开", "from": "来自", "him": "他", "see": "看到", "his": "他的", "had": "有", "when": "当", "bbc": "英国广播公司", "verify": "核实", "human": "人类", "shared": "分享", "down": "下来", "showed": "显示", "against": "反对", "before": "之前", "as": "作为", "van": "货车", "often": "经常", "been": "已经", "front": "前线", "line": "界限", "must": "必须", "every": "每个", "evidence": "证据", "russia": "俄罗斯", "are": "是", "war": "战争", "crime": "犯罪", "deliberate": "故意", "is": "是", "targeting": "针对", "posted": "发布", "wife": "妻子", "some": "一些", "filmed": "拍摄了", "found": "发现", "un": "联合国", "killed": "杀死", "injured": "受伤", "videos": "视频", "can": "可以", "be": "是", "played": "比赛", "ukrainian": "乌克兰的", "targeted": "针对", "president": "总统", "social": "社交的", "media": "媒体", "southern": "南部的", "saying": "说", "an": "一个", "instance": "实例", "shows": "显示", "pursuing": "追求", "city": "城市", "region": "地区", "moves": "行动", "above": "超过", "runs": "奔跑（第三人称）", "around": "在...周围", "white": "白色的", "eventually": "最终", "impact": "影响", "escaped": "逃脱", "with": "与", "multiple": "多条", "doctor": "医生", "sometimes": "有时", "called": "称为", "used": "使用", "russians": "俄罗斯人", "residents": "居民", "areas": "区域", "world": "世界", "wrote": "写道", "telegram": "电报", "piece": "文章", "gone": "已去", "mad": "疯狂的", "fact": "事实", "soldiers": "士兵", "people": "人们", "foreign": "外交", "minister": "部长", "were": "是", "strategy": "策略", "operating": "操作", "knows": "知道", "full": "完整", "well": "好", "added": "补充", "part": "部分", "campaign": "竞选活动", "demanded": "要求", "international": "国际", "regional": "地区的", "later": "后来", "showing": "表现", "identified": "被确认", "year-old": "岁的", "speaking": "发言", "hospital": "医院", "bed": "床", "following": "随后", "started": "开始", "lay": "躺", "next": "下一个", "heard": "听到", "buzzing": "热闹", "sound": "声音", "overhead": "高架的", "ran": "运行", "turned": "转向", "instead": "反而", "held": "举行", "up": "向上", "heads": "领导", "towards": "对待", "camera": "摄像机", "show": "显示", "operator": "运营商", "trying": "尝试", "could": "可能", "laid": "布设", "floor": "楼层", "even": "甚至", "under": "在...之下", "running": "奔跑", "round": "轮", "other": "其他", "side": "方面", "market": "市场", "space": "空间", "beside": "在...旁边", "roundabout": "环岛", "district": "地区", "northern": "北部的", "clear": "明确", "who": "谁", "or": "或者", "how": "如何", "but": "但是", "earliest": "最早", "public": "公众", "instagram": "Instagram", "account": "责任", "tuesday": "星期二", "morning": "上午", "attacks": "袭击", "have": "有", "long": "长久", "carried": "进行", "troops": "部队", "which": "哪个", "sits": "位于", "only": "只有", "few": "少数", "miles": "英里", "report": "报告", "armed": "武装的", "forces": "力量", "area": "区域", "using": "使用", "target": "目标", "them": "他们", "they": "它们", "explode": "爆炸", "their": "他们的", "targets": "目标", "online": "在线", "allowing": "允许", "thousands": "数千", "last": "最后", "moments": "时刻", "terrified": "恐惧的", "victims": "受害者", "posting": "发帖", "being": "正在", "amounts": "数量", "upon": "在…上", "personal": "个人", "dignity": "尊严", "launched": "发起", "full-scale": "全面的", "invasion": "入侵", "february": "二月", "denies": "否认", "additional": "额外的", "reporting": "报道", "richard": "理查德", "hunt": "追捕", "suggests": "表明", "civilians": "平民", "kherson": "赫尔松", "yuriy": "尤里", "vegetable": "蔬菜", "ukraine's": "乌克兰的", "zelensky": "泽连斯基", "vendor": "摊贩", "sybiha": "西比哈", "seller": "卖家", "volodymyr": "弗拉基米尔", "hunting": "狩猎", "hovering": "盘旋", "chases": "追逐", "swoops": "俯冲", "explodes": "爆炸", "wounds": "伤害", "deployment": "部署", "remotely-operated": "远程操作的", "terrify": "恐吓", "enjoying": "享受", "killings": "杀戮", "tormenting": "折磨", "andrii": "安德烈", "safaris": "游猎", "systemic": "系统性的", "sadist": "虐待狂", "condemnation": "谴责", "governor": "州长", "crates": "板条箱", "vegetables": "蔬菜", "distinctive": "独特的", "garlic": "大蒜", "drone's": "无人机的", "film": "拍摄", "tomatoes": "西红柿", "cucumbers": "黄瓜", "eggplants": "茄子", "ducked": "躲避", "umbrella": "雨伞", "geolocated": "定位", "tavriiskyi": "塔夫里斯基", "copy": "复制", "pro-ukrainian": "亲乌克兰的", "recurrently": "反复地", "witness": "目击者", "outrages": "暴行", "irvine-brown": "欧文-布朗"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
