@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-08</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-08</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/88c5/live/13d4b140-926e-11f1-a7ab-8b30adf0800a.jpg" alt="Victims urged to come forward as police accused of 'litany of failures' over murderer and rapist" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Victims urged to come forward as police accused of 'litany of failures' over murderer and rapist</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cewr8egkelwo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-08.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch footage from a Levy sexual assault victim that was passed to police</span></p>
+        <p class="cn">观看一段由利维性侵受害者提供给警方的视频</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Police have urged more victims of Simon Levy to come forward, as London's victims' commissioner said a "<span class="keyword" data-word="litany" data-phonetic="/ˈlɪtəni/" data-pos="n." data-def="冗长乏味的列举" data-def-en="a long, tedious recital or list">litany</span> of failures" had allowed him to kill two women and rape a third.</span></p>
+        <p class="cn">警方敦促更多西蒙·利维的受害者站出来，同时伦敦受害者专员表示，一系列“失职”使他得以杀害两名女性并强奸第三名女性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Andrea Simon called for a review on the "failure to monitor him appropriately" when the 40-year-old was known to police as a sexual <span class="keyword" data-word="predator" data-phonetic="/ˈpredətər/" data-pos="n." data-def="掠夺者；捕食者" data-def-en="a person who exploits or victimizes others">predator</span>.</span></p>
+        <p class="cn">安德烈娅·西蒙呼吁对“未能适当监控他”一事进行审查，当时这名40岁的男子已被警方认定为性侵犯者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">British Transport Police said women who recognised Levy as their attacker should report it, while the Met Police said it had investigated whether he had more victims, including further murders.</span></p>
+        <p class="cn">英国交通警察表示，认出利维是袭击者的女性应报案，而伦敦警察厅则表示已调查他是否还有其他受害者，包括更多谋杀案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Meanwhile, the Independent Office of Police Conduct (IOPC) said a police constable is under investigation for <span class="keyword" data-word="gross" data-phonetic="/ɡroʊs/" data-pos="adj." data-def="严重的；粗俗的" data-def-en="very obvious and unacceptable; serious">gross</span> misconduct, and a detective sergeant is facing a misconduct investigation.</span></p>
+        <p class="cn">与此同时，警察行为独立办公室（IOPC）表示，一名警员正因严重不当行为接受调查，一名警长面临不当行为调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">On Friday, Levy was found guilty of murdering two women and raping a third in London while he was being monitored by the Met Police for being a convicted sex offender.</span> <span class="sentence" data-sentence-index="7">He had previously committed a string of sex attacks.</span></p>
+        <p class="cn">周五，利维被判犯有谋杀两名女性及强奸第三名女性的罪行，作案时他正因被定罪的性犯罪者身份而受到伦敦警察厅的监控。他此前曾犯下多起性侵案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">The BBC reported how a series of grave failings by police, prosecutors and the courts left Levy free to murder, rape and sexually assault women .</span></p>
+        <p class="cn">BBC报道了警方、检察官和法院的一系列严重失职如何让利维得以自由地谋杀、强奸和性侵女性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Levy is due to be sentenced on Wednesday.</span></p>
+        <p class="cn">利维将于周三被判刑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Police failings revealed as sex offender left free to murder and attack women</span></p>
+        <p class="cn">警方失职曝光：性犯罪者未被限制，得以自由谋杀和袭击女性</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Watch: How one of the most âdangerous and predatoryâ men was left free to kill</span></p>
+        <p class="cn">观看：一个最“危险且具有掠夺性”的男人如何未被限制而得以杀人</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">The Met, British Transport Police (BTP) and Crown Prosecution Service (CPS) have all admitted failures in how Levy was monitored between his first conviction in September 2021 on sexual assault charges and his arrest for murder in September 2025.</span></p>
+        <p class="cn">伦敦警察厅、英国交通警察（BTP）和皇家检察署（CPS）均承认，在利维于2021年9月首次因性侵指控被定罪至2025年9月因谋杀被捕期间，对其监控存在失职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">On Saturday, Simons told BBC Breakfast a "multi-agency review" was needed, saying: "There was a lack of restrictions that could have been placed on him and a failure to monitor him appropriately - so all of those things, I think, we need answers to now."</span></p>
+        <p class="cn">周六，西蒙斯告诉BBC早餐节目，需要进行“多机构审查”，她说：“本可以对他施加限制，但缺乏限制，且未能适当监控他——所以我认为，我们现在需要所有这些问题的答案。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Simons said public services "have to get better at recognising patterns of offending" before attackers become "<span class="keyword" data-word="emboldened" data-phonetic="/ɪmˈboʊldənd/" data-pos="adj." data-def="受到鼓舞的；大胆的" data-def-en="made brave or confident">emboldened</span>".</span></p>
+        <p class="cn">西蒙斯表示，公共服务“必须更好地识别犯罪模式”，以防攻击者变得“胆大妄为”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">The Met said its detectives had "<span class="keyword" data-word="exhausted" data-phonetic="/ɪɡˈzɔːstɪd/" data-pos="v." data-def="用尽；耗尽" data-def-en="used up all of something">exhausted</span> numerous lines of enquiry - including working with coroners â to identify whether Levy is responsible for any similar, <span class="keyword" data-word="unsolved" data-phonetic="/ʌnˈsɒlvd/" data-pos="adj." data-def="未解决的；未侦破的" data-def-en="not having been resolved or explained">unsolved</span> incidents, including deaths".</span></p>
+        <p class="cn">伦敦警察厅表示，其侦探“已穷尽多条调查线索——包括与验尸官合作——以确定利维是否应对任何类似的未破案件（包括死亡事件）负责”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">No further victims have been identified so far but the force urged "anyone who believes they may be a victim of his to contact police".</span></p>
+        <p class="cn">目前尚未发现更多受害者，但警方敦促“任何认为自己可能是其受害者的人与警方联系”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Levy is known to have attacked at least 10 women on public transport in London, seeking out busy carriages to assault passengers.</span></p>
+        <p class="cn">据悉，利维在伦敦公共交通上至少袭击了10名女性，专门寻找拥挤的车厢对乘客进行性侵。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">BTP said more women "may recognise [Levy] and have not yet reported what has happened to them".</span></p>
+        <p class="cn">英国交通警察表示，更多女性“可能认出利维，但尚未报告发生在她们身上的事”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Levy was found guilty of murdering Sheryl Wilkins (l), 39, and Carmenza Valencia-Trujillo, 53</span></p>
+        <p class="cn">利维被判谋杀谢丽尔·威尔金斯（左，39岁）和卡门萨·瓦伦西亚-特鲁希略（53岁）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Levy was on bail and being monitored by police when he committed a violent rape in January 2025.</span></p>
+        <p class="cn">利维在2025年1月犯下暴力强奸案时，正处于保释期间并受警方监控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">He went on to kill Carmenza Valencia-Trujillo, 53, in March of that year and Sheryl Wilkins, 39, five months later.</span></p>
+        <p class="cn">同年3月，他杀害了53岁的卡门萨·瓦伦西亚-特鲁希略，五个月后又杀害了39岁的谢丽尔·威尔金斯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Earlier this year he was found guilty by a jury at Inner London Crown Court of groping 10 women on the Tube and an 11th while in prison, but details of that case could only be reported this week at the conclusion of his murder trial.</span></p>
+        <p class="cn">今年早些时候，他被伦敦内城刑事法院的陪审团判定在地铁上猥亵10名女性，并在监狱中猥亵第11名女性，但该案细节直到本周其谋杀案审判结束才得以报道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">The offence in the prison took place on April 2022.</span> <span class="sentence" data-sentence-index="24">The Tube assaults then occurred between 24 October 2023 and May 2025.</span></p>
+        <p class="cn">监狱中的犯罪行为发生在2022年4月。地铁袭击则发生在2023年10月24日至2025年5月之间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">He had already been convicted of sexually assaulting two women in 2018, which he was jailed for in 2021.</span></p>
+        <p class="cn">他此前已于2018年因性侵两名女性被定罪，并于2021年入狱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">BTP has confirmed two officers have been moved to other roles due to "<span class="keyword" data-word="incompetence" data-phonetic="/ɪnˈkɒmpɪtəns/" data-pos="n." data-def="无能力；不胜任" data-def-en="lack of ability or skill to do something properly">incompetence</span>" in handling investigations into Levy's transport assaults.</span></p>
+        <p class="cn">英国交通警察已确认，两名警官因在处理利维交通袭击调查中“无能”而被调任其他职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">Lisa Ramsarran, chief crown prosecutor for the CPS, said: "Our actions fell short of the standards that victims, families and the public are entitled to expect."</span></p>
+        <p class="cn">皇家检察署首席检察官丽莎·拉姆萨兰表示：“我们的行为未达到受害者、家属和公众有权期望的标准。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">Lisa Squire, whose daughter Libby was murdered by a man who had previously committed a string of sex crimes, told the BBC that a "catalogue of disasters" had led to Levy's murders.</span></p>
+        <p class="cn">丽莎·斯夸尔的女儿利比被一名曾犯下多起性犯罪的男子谋杀，她告诉BBC，一系列“灾难”导致了利维的谋杀案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">She told BBC Radio 4's Today programme "the patterns were there, he was flying those red flags", and said there were "<span class="keyword" data-word="precursor" data-phonetic="/priːˈkɜːrsər/" data-pos="n." data-def="前兆；先驱" data-def-en="a person or thing that comes before another of the same kind; a forerunner">precursor</span> offences" for which he could have stopped by police.</span></p>
+        <p class="cn">她告诉BBC广播4台《今日》节目，“模式就在那里，他挥舞着那些红旗”，并说存在“前兆犯罪”，警方本可以阻止他。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">"At the moment, the message going out, in my opinion, is that women's safety is not important," she continued.</span></p>
+        <p class="cn">“目前，在我看来，传递出的信息是女性的安全并不重要，”她继续说道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">ZoÃ« Billingham, a former independent police inspector who pushed for reforms on how violence against women in girls is policed, said that "too often in cases like this the dots aren't being joined up".</span></p>
+        <p class="cn">前独立警察监察员佐伊·比林厄姆曾推动改革针对女性暴力行为的警务方式，她说：“在这种案件中，往往没有将线索串联起来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">She added: "It's not one or two missed opportunities that could have brought him to justice, that could have had him locked up and behind bars and no longer a threat to women and girls.</span> <span class="sentence" data-sentence-index="33">It was an extraordinary succession."</span></p>
+        <p class="cn">她补充说：“不是一两次错失的机会本可以让他受到法律制裁，本可以让他被关进监狱，不再对女性构成威胁。这是一连串的失职。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">Police officers investigated over handling of sex offender who murdered two women</span></p>
+        <p class="cn">警方调查人员因处理性犯罪者（其谋杀两名女性）案件而受到调查</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">Serial sex offender guilty of double murder and rape</span></p>
+        <p class="cn">连环性犯罪者被判双重谋杀和强奸罪</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">Simon Levy found guilty of double murder and rape</span></p>
+        <p class="cn">西蒙·利维被判双重谋杀和强奸罪</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">litany</span>
+        <button class="kw-speak-btn" data-word="litany" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlɪtəni/ n.</span>
+      </div>
+      <p class="kw-def">冗长乏味的列举</p>
+      <p class="kw-def-en">a long, tedious recital or list</p>
+      <p class="kw-ctx">&ldquo;Police have urged more victims of Simon Levy to come forward, as London's victims' commissioner said a "litany of failures" had allowed him to kill two women and rape a third.&rdquo;</p>
+      <p class="kw-ctx-cn">警方敦促更多西蒙·利维的受害者站出来，伦敦受害者专员表示，一系列失败让他得以杀害两名女性并强奸第三名。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">predator</span>
+        <button class="kw-speak-btn" data-word="predator" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpredətər/ n.</span>
+      </div>
+      <p class="kw-def">掠夺者；捕食者</p>
+      <p class="kw-def-en">a person who exploits or victimizes others</p>
+      <p class="kw-ctx">&ldquo;Andrea Simon called for a review on the "failure to monitor him appropriately" when the 40-year-old was known to police as a sexual predator.&rdquo;</p>
+      <p class="kw-ctx-cn">安德烈亚·西蒙呼吁对“未能适当监控他”进行审查，当时这名40岁男子已被警方视为性侵犯者。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">gross</span>
+        <button class="kw-speak-btn" data-word="gross" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɡroʊs/ adj.</span>
+      </div>
+      <p class="kw-def">严重的；粗俗的</p>
+      <p class="kw-def-en">very obvious and unacceptable; serious</p>
+      <p class="kw-ctx">&ldquo;Meanwhile, the Independent Office of Police Conduct (IOPC) said a police constable is under investigation for gross misconduct, and a detective sergeant is facing a misconduct investigation.&rdquo;</p>
+      <p class="kw-ctx-cn">与此同时，警察行为独立办公室表示，一名警员因严重不当行为正在接受调查，一名警长面临不当行为调查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">emboldened</span>
+        <button class="kw-speak-btn" data-word="emboldened" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈboʊldənd/ adj.</span>
+      </div>
+      <p class="kw-def">受到鼓舞的；大胆的</p>
+      <p class="kw-def-en">made brave or confident</p>
+      <p class="kw-ctx">&ldquo;Simons said public services "have to get better at recognising patterns of offending" before attackers become "emboldened".&rdquo;</p>
+      <p class="kw-ctx-cn">西蒙斯表示，公共服务“必须更好地识别犯罪模式”，以免攻击者变得“胆大妄为”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exhausted</span>
+        <button class="kw-speak-btn" data-word="exhausted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪɡˈzɔːstɪd/ v.</span>
+      </div>
+      <p class="kw-def">用尽；耗尽</p>
+      <p class="kw-def-en">used up all of something</p>
+      <p class="kw-ctx">&ldquo;The Met said its detectives had "exhausted numerous lines of enquiry - including working with coroners – to identify whether Levy is responsible for any similar, unsolved incidents, including deaths".&rdquo;</p>
+      <p class="kw-ctx-cn">伦敦警察厅表示，其侦探“已用尽多种调查途径——包括与验尸官合作——以确定利维是否应对任何类似的未解决事件（包括死亡事件）负责”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unsolved</span>
+        <button class="kw-speak-btn" data-word="unsolved" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈsɒlvd/ adj.</span>
+      </div>
+      <p class="kw-def">未解决的；未侦破的</p>
+      <p class="kw-def-en">not having been resolved or explained</p>
+      <p class="kw-ctx">&ldquo;The Met said its detectives had "exhausted numerous lines of enquiry - including working with coroners – to identify whether Levy is responsible for any similar, unsolved incidents, including deaths".&rdquo;</p>
+      <p class="kw-ctx-cn">伦敦警察厅表示，其侦探“已用尽多种调查途径——包括与验尸官合作——以确定利维是否应对任何类似的未解决事件（包括死亡事件）负责”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incompetence</span>
+        <button class="kw-speak-btn" data-word="incompetence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkɒmpɪtəns/ n.</span>
+      </div>
+      <p class="kw-def">无能力；不胜任</p>
+      <p class="kw-def-en">lack of ability or skill to do something properly</p>
+      <p class="kw-ctx">&ldquo;BTP has confirmed two officers have been moved to other roles due to "incompetence" in handling investigations into Levy's transport assaults.&rdquo;</p>
+      <p class="kw-ctx-cn">英国交通警察已确认，两名警官因在处理利维交通袭击案调查中“无能”而被调往其他岗位。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">precursor</span>
+        <button class="kw-speak-btn" data-word="precursor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/priːˈkɜːrsər/ n.</span>
+      </div>
+      <p class="kw-def">前兆；先驱</p>
+      <p class="kw-def-en">a person or thing that comes before another of the same kind; a forerunner</p>
+      <p class="kw-ctx">&ldquo;She told BBC Radio 4's Today programme "the patterns were there, he was flying those red flags", and said there were "precursor offences" for which he could have stopped by police.&rdquo;</p>
+      <p class="kw-ctx-cn">她告诉BBC广播4台的《今日》节目，“模式就在那里，他在挥舞那些红旗”，并说有一些“前兆性罪行”，警方本可以借此阻止他。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch footage from a Levy sexual assault victim that was passed to police", "start_ms": 3000, "end_ms": 8376, "paragraph_index": 1}, {"index": 2, "text": "Police have urged more victims of Simon Levy to come forward, as London's victims' commissioner said a \"litany of failures\" had allowed him to kill two women and rape a third.", "start_ms": 8376, "end_ms": 19656, "paragraph_index": 2}, {"index": 3, "text": "Andrea Simon called for a review on the \"failure to monitor him appropriately\" when the 40-year-old was known to police as a sexual predator.", "start_ms": 19656, "end_ms": 28944, "paragraph_index": 3}, {"index": 4, "text": "British Transport Police said women who recognised Levy as their attacker should report it, while the Met Police said it had investigated whether he had more victims, including further murders.", "start_ms": 28944, "end_ms": 41400, "paragraph_index": 4}, {"index": 5, "text": "Meanwhile, the Independent Office of Police Conduct (IOPC) said a police constable is under investigation for gross misconduct, and a detective sergeant is facing a misconduct investigation.", "start_ms": 41400, "end_ms": 55608, "paragraph_index": 5}, {"index": 6, "text": "On Friday, Levy was found guilty of murdering two women and raping a third in London while he was being monitored by the Met Police for being a convicted sex offender.", "start_ms": 55608, "end_ms": 66648, "paragraph_index": 6}, {"index": 7, "text": "He had previously committed a string of sex attacks.", "start_ms": 66648, "end_ms": 70872, "paragraph_index": 6}, {"index": 8, "text": "The BBC reported how a series of grave failings by police, prosecutors and the courts left Levy free to murder, rape and sexually assault women .", "start_ms": 70872, "end_ms": 81720, "paragraph_index": 7}, {"index": 9, "text": "Levy is due to be sentenced on Wednesday.", "start_ms": 81720, "end_ms": 85344, "paragraph_index": 8}, {"index": 10, "text": "Police failings revealed as sex offender left free to murder and attack women", "start_ms": 85344, "end_ms": 91176, "paragraph_index": 9}, {"index": 11, "text": "Watch: How one of the most \u00e2\u0080\u009cdangerous and predatory\u00e2\u0080\u009d men was left free to kill", "start_ms": 91176, "end_ms": 97440, "paragraph_index": 10}, {"index": 12, "text": "The Met, British Transport Police (BTP) and Crown Prosecution Service (CPS) have all admitted failures in how Levy was monitored between his first conviction in September 2021 on sexual assault charges and his arrest for murder in September 2025.", "start_ms": 97440, "end_ms": 116904, "paragraph_index": 11}, {"index": 13, "text": "On Saturday, Simons told BBC Breakfast a \"multi-agency review\" was needed, saying: \"There was a lack of restrictions that could have been placed on him and a failure to monitor him appropriately - so all of those things, I think, we need answers to now.\"", "start_ms": 116904, "end_ms": 133872, "paragraph_index": 12}, {"index": 14, "text": "Simons said public services \"have to get better at recognising patterns of offending\" before attackers become \"emboldened\".", "start_ms": 133872, "end_ms": 142152, "paragraph_index": 13}, {"index": 15, "text": "The Met said its detectives had \"exhausted numerous lines of enquiry - including working with coroners \u00e2\u0080\u0093 to identify whether Levy is responsible for any similar, unsolved incidents, including deaths\".", "start_ms": 142152, "end_ms": 155976, "paragraph_index": 14}, {"index": 16, "text": "No further victims have been identified so far but the force urged \"anyone who believes they may be a victim of his to contact police\".", "start_ms": 155976, "end_ms": 165120, "paragraph_index": 15}, {"index": 17, "text": "Levy is known to have attacked at least 10 women on public transport in London, seeking out busy carriages to assault passengers.", "start_ms": 165120, "end_ms": 174240, "paragraph_index": 16}, {"index": 18, "text": "BTP said more women \"may recognise [Levy] and have not yet reported what has happened to them\".", "start_ms": 174240, "end_ms": 181560, "paragraph_index": 17}, {"index": 19, "text": "Levy was found guilty of murdering Sheryl Wilkins (l), 39, and Carmenza Valencia-Trujillo, 53", "start_ms": 181560, "end_ms": 190656, "paragraph_index": 18}, {"index": 20, "text": "Levy was on bail and being monitored by police when he committed a violent rape in January 2025.", "start_ms": 190656, "end_ms": 198336, "paragraph_index": 19}, {"index": 21, "text": "He went on to kill Carmenza Valencia-Trujillo, 53, in March of that year and Sheryl Wilkins, 39, five months later.", "start_ms": 198336, "end_ms": 208248, "paragraph_index": 20}, {"index": 22, "text": "Earlier this year he was found guilty by a jury at Inner London Crown Court of groping 10 women on the Tube and an 11th while in prison, but details of that case could only be reported this week at the conclusion of his murder trial.", "start_ms": 208248, "end_ms": 223104, "paragraph_index": 21}, {"index": 23, "text": "The offence in the prison took place on April 2022.", "start_ms": 223104, "end_ms": 227808, "paragraph_index": 22}, {"index": 24, "text": "The Tube assaults then occurred between 24 October 2023 and May 2025.", "start_ms": 227808, "end_ms": 235320, "paragraph_index": 22}, {"index": 25, "text": "He had already been convicted of sexually assaulting two women in 2018, which he was jailed for in 2021.", "start_ms": 235320, "end_ms": 243840, "paragraph_index": 23}, {"index": 26, "text": "BTP has confirmed two officers have been moved to other roles due to \"incompetence\" in handling investigations into Levy's transport assaults.", "start_ms": 243840, "end_ms": 253968, "paragraph_index": 24}, {"index": 27, "text": "Lisa Ramsarran, chief crown prosecutor for the CPS, said: \"Our actions fell short of the standards that victims, families and the public are entitled to expect.\"", "start_ms": 253968, "end_ms": 265848, "paragraph_index": 25}, {"index": 28, "text": "Lisa Squire, whose daughter Libby was murdered by a man who had previously committed a string of sex crimes, told the BBC that a \"catalogue of disasters\" had led to Levy's murders.", "start_ms": 265848, "end_ms": 278304, "paragraph_index": 26}, {"index": 29, "text": "She told BBC Radio 4's Today programme \"the patterns were there, he was flying those red flags\", and said there were \"precursor offences\" for which he could have stopped by police.", "start_ms": 278304, "end_ms": 290304, "paragraph_index": 27}, {"index": 30, "text": "\"At the moment, the message going out, in my opinion, is that women's safety is not important,\" she continued.", "start_ms": 290304, "end_ms": 298344, "paragraph_index": 28}, {"index": 31, "text": "Zo\u00c3\u00ab Billingham, a former independent police inspector who pushed for reforms on how violence against women in girls is policed, said that \"too often in cases like this the dots aren't being joined up\".", "start_ms": 298344, "end_ms": 311616, "paragraph_index": 29}, {"index": 32, "text": "She added: \"It's not one or two missed opportunities that could have brought him to justice, that could have had him locked up and behind bars and no longer a threat to women and girls.", "start_ms": 311616, "end_ms": 322968, "paragraph_index": 30}, {"index": 33, "text": "It was an extraordinary succession.\"", "start_ms": 322968, "end_ms": 326232, "paragraph_index": 30}, {"index": 34, "text": "Police officers investigated over handling of sex offender who murdered two women", "start_ms": 326232, "end_ms": 332424, "paragraph_index": 31}, {"index": 35, "text": "Serial sex offender guilty of double murder and rape", "start_ms": 332424, "end_ms": 337056, "paragraph_index": 32}, {"index": 36, "text": "Simon Levy found guilty of double murder and rape", "start_ms": 337056, "end_ms": 341496, "paragraph_index": 33}], "total_duration_ms": 341496};
+  const WORD_GLOSS = {"to": "到", "of": "的", "the": "这个", "and": "和", "police": "警方", "was": "是", "in": "在", "levy": "征收", "women": "女性", "on": "在", "have": "有", "that": "那个", "said": "说", "he": "他", "had": "有", "for": "为了", "is": "是", "him": "他", "two": "两个", "by": "被", "sex": "性", "murder": "谋杀", "victims": "受害者", "rape": "强奸", "who": "谁", "guilty": "有罪", "could": "可能", "at": "在", "this": "这个", "not": "不", "be": "是", "assault": "袭击", "as": "作为", "transport": "运输", "met": "伦敦警察厅", "found": "发现", "being": "正在", "offender": "罪犯", "bbc": "英国广播公司", "how": "如何", "his": "他的", "been": "已经", "sexual": "性的", "more": "更多", "simon": "西蒙", "kill": "杀死", "it": "它", "while": "而", "including": "包括", "london": "伦敦", "monitored": "监测", "committed": "承诺的", "reported": "据报道", "left": "离开", "free": "自由的", "btp": "英国交通警察", "crown": "王冠", "told": "告诉", "there": "那里", "public": "公众", "may": "可能", "she": "她", "watch": "观看", "victim": "受害者", "urged": "敦促", "failures": "失败", "third": "第三", "review": "审查", "failure": "失败", "appropriately": "适当地", "when": "当", "known": "已知", "british": "英国的", "investigated": "被调查", "whether": "是否", "further": "进一步的", "murders": "谋杀案", "independent": "独立的", "investigation": "调查", "misconduct": "不当行为", "murdering": "谋杀", "convicted": "被定罪", "previously": "此前", "string": "一连串", "failings": "过失", "sexually": "性方面", "due": "应得", "one": "一个", "cps": "加拿大儿科协会", "all": "所有", "between": "之间", "september": "九月", "simons": "西蒙斯", "so": "所以", "those": "那些", "no": "没有", "but": "但是", "out": "出来", "has": "有", "sheryl": "谢丽尔", "wilkins": "威尔金斯", "carmenza": "卡门萨", "valencia-trujillo": "巴伦西亚-特鲁希略", "year": "年", "tube": "地铁", "an": "一个", "prison": "监狱", "assaults": "袭击", "which": "哪个", "officers": "官员", "handling": "处理", "levy's": "利维的", "lisa": "丽莎", "murdered": "被谋杀的", "were": "是", "girls": "女孩", "up": "向上", "double": "双重", "video": "视频", "can": "可以", "played": "比赛", "footage": "视频片段", "from": "来自", "passed": "通过", "come": "到来", "forward": "向前", "london's": "伦敦的", "commissioner": "专员", "allowed": "允许", "called": "称为", "year-old": "岁的", "recognised": "认出", "their": "他们的", "attacker": "袭击者", "should": "应该", "report": "报告", "meanwhile": "与此同时", "office": "办公室", "conduct": "行为", "iopc": "警察行为独立办公室", "constable": "警察", "under": "在...之下", "facing": "面临", "friday": "星期五", "raping": "强奸", "attacks": "袭击", "series": "系列", "prosecutors": "检察官", "courts": "法院", "sentenced": "判刑", "wednesday": "星期三", "revealed": "揭露", "attack": "袭击", "most": "最", "dangerous": "危险", "men": "男人们", "prosecution": "起诉", "service": "服务", "admitted": "承认", "first": "第一轮", "conviction": "定罪", "charges": "指控", "arrest": "逮捕", "saturday": "星期六", "breakfast": "早餐", "needed": "需要", "saying": "说", "lack": "缺乏", "restrictions": "限制", "placed": "放置", "things": "事情", "think": "认为", "we": "我们", "need": "需要", "answers": "答案", "now": "现在", "services": "服务", "get": "得到", "better": "更好的", "offending": "冒犯", "before": "之前", "become": "成为", "its": "它的", "detectives": "侦探", "numerous": "众多的", "lines": "线", "enquiry": "调查", "working": "工作", "with": "与", "identify": "识别", "responsible": "负责的", "any": "任何", "similar": "类似的", "incidents": "事件", "deaths": "死亡", "identified": "被确认", "far": "远", "force": "力量", "anyone": "任何人", "believes": "认为", "they": "它们", "contact": "接触", "attacked": "袭击", "least": "至少", "seeking": "寻求", "busy": "繁忙的", "carriages": "车厢", "passengers": "乘客", "recognise": "认出", "yet": "尚未", "what": "什么", "happened": "发生", "them": "他们", "bail": "保释", "violent": "暴力的", "january": "一月", "went": "去", "march": "三月", "five": "五", "months": "月", "later": "后来", "earlier": "较早", "jury": "陪审团", "inner": "内部的", "court": "法庭", "groping": "猥亵", "details": "细节", "case": "案例", "only": "只有", "week": "周", "conclusion": "结论", "trial": "审判", "offence": "罪行", "took": "担任", "place": "地点", "april": "四月", "then": "然后", "occurred": "发生", "october": "十月", "already": "已经", "assaulting": "袭击", "jailed": "被监禁", "confirmed": "确认", "moved": "移动", "other": "其他", "roles": "角色", "investigations": "调查", "into": "进入", "ramsarran": "拉姆萨兰", "chief": "首席", "prosecutor": "检察官", "our": "我们的", "actions": "行动", "fell": "倒下", "short": "短暂的", "standards": "标准", "families": "家庭", "are": "是", "entitled": "有权", "expect": "期望", "whose": "谁的", "man": "男子", "crimes": "罪行", "led": "带领", "radio": "电台", "today": "今天", "programme": "节目", "flying": "飞行的", "red": "红色的", "flags": "标志", "offences": "罪行", "stopped": "停止", "moment": "时刻", "message": "信息", "going": "将要", "my": "我的", "opinion": "意见", "women's": "女性的", "safety": "安全", "important": "重要", "continued": "持续的", "former": "前任", "pushed": "推动", "reforms": "改革", "violence": "暴力", "against": "反对", "policed": "监管", "too": "太", "often": "经常", "cases": "情况", "like": "像", "aren't": "不是", "joined": "加入", "added": "补充", "it's": "它是", "or": "或者", "missed": "未击中", "opportunities": "机会", "brought": "带来", "justice": "正义", "locked": "锁定", "behind": "在...后面", "bars": "酒吧", "longer": "更长的", "threat": "威胁", "extraordinary": "非凡的", "succession": "继任", "over": "超过", "serial": "连环的", "monitor": "监控", "patterns": "模式", "andrea": "安德烈娅", "detective": "侦探", "sergeant": "警佐", "grave": "坟墓", "multi-agency": "多机构", "recognising": "识别", "attackers": "攻击者", "coroners": "验尸官", "squire": "乡绅", "daughter": "女儿", "libby": "利比", "catalogue": "目录", "disasters": "灾难", "billingham": "比林厄姆", "inspector": "督察", "dots": "点"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
