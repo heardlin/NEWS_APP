@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-12</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-12</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/548e/live/e3a91030-9694-11f1-870d-5d08c49babb2.jpg" alt="Once-in-a-generation solar eclipse wows millions in UK and Europe" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Once-in-a-generation solar eclipse wows millions in UK and Europe</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/ckgdp4923rdo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-12.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Moments before the total solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> in the sky above Arcos de las Salinas, near Spain plunging the skywatchers into darkness</span></p>
+        <p class="cn">在西班牙阿尔科斯-德拉斯萨利纳斯上空，日全食即将发生前的片刻，天空陷入黑暗，观天者被笼罩其中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The UK and Europe have enjoyed their most dramatic solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> for nearly 30 years, with millions thought to have witnessed the once-in-a-generation event.</span></p>
+        <p class="cn">英国和欧洲经历了近30年来最壮观的日食，据估计有数百万人目睹了这一千载难逢的天文奇观。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Those watching the astronomical phenomenon from the UK were treated to a <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> which peaked shortly after 19:00 BST, when most saw more than 90% of the Sun covered by the Moon.</span></p>
+        <p class="cn">从英国观看这一天文现象的人们欣赏到了一次日偏食，其峰值出现在英国夏令时19:00刚过，当时大多数人看到太阳被月亮遮住了90%以上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">But parts of Greenland, Iceland and Spain experienced the complete darkness and <span class="keyword" data-word="spectacle" data-phonetic="/ˈspektəkl/" data-pos="n." data-def="奇观；壮观的景象" data-def-en="a very impressive show or scene">spectacle</span> of a total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span>.</span></p>
+        <p class="cn">但格陵兰岛、冰岛和西班牙的部分地区则体验到了日全食的完全黑暗与壮丽景象。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Large crowds at viewing sites across the UK and Europe reacted with gasps and cheers, with astronomy enthusiasts saying it serves as a reminder of how "amazing" the universe is.</span></p>
+        <p class="cn">英国和欧洲各地的观测点聚集了大量人群，他们发出惊叹和欢呼，天文学爱好者表示，这提醒人们宇宙是多么“神奇”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The path of the total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> began at the northern tip of Siberia in Russia, far away from crowds and telescopes.</span></p>
+        <p class="cn">日全食的路径始于俄罗斯西伯利亚的最北端，远离人群和望远镜。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">But it soon began curving around the Arctic Ocean arriving in Iceland in the early evening before sweeping southwards to treat the UK to part of its wonder.</span></p>
+        <p class="cn">但它很快开始沿着北冰洋弯曲，傍晚时分抵达冰岛，然后向南移动，让英国也领略了部分奇观。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> began at about 18:00 BST in northern Scotland and just before 18:20 on the south coast of England.</span></p>
+        <p class="cn">日偏食于英国夏令时约18:00在苏格兰北部开始，英格兰南海岸则在18:20之前开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">It was imperceivable at first, but for those blessed with cloud-free skies, crowds noticed the Moon nibbling away at the Sun.</span></p>
+        <p class="cn">起初难以察觉，但对于那些有幸看到无云天空的人来说，人群注意到月亮正在一点点“蚕食”太阳。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">The Moon began its journey across the Sun for the <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> as seen from Asten, Netherlands</span></p>
+        <p class="cn">从荷兰阿斯滕看到的日偏食，月亮开始横穿太阳。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Much of central and southern England and Wales enjoyed perfect clear skies giving them an unrivalled view as the Moon moved slowly across the Sun over the course of an hour.</span></p>
+        <p class="cn">英格兰中部和南部以及威尔士的大部分地区天气晴朗，为人们提供了绝佳的视野，月亮在一个小时内缓缓移过太阳。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Northern England, Scotland and Northern Ireland were cloudier, but it did not stop crowds turning out at famous landmarks across the country.</span></p>
+        <p class="cn">英格兰北部、苏格兰和北爱尔兰云层较多，但这并没有阻止人们涌向全国各地的著名地标。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Some had been successful in acquiring solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> glasses, but the vital eye protectors were in short supply in the run-up to the event with opticians, hardware shops and bakeries all selling out.</span></p>
+        <p class="cn">有些人成功购得了日食眼镜，但这种重要的护眼装备在活动前夕供不应求，眼镜店、五金店和面包店都已售罄。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">But that did not deter people - colanders, cereal boxes and pieces of paper were deployed to offer them a glimpse of the <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> safely.</span></p>
+        <p class="cn">但这并没有阻止人们——滤锅、麦片盒和纸张都被用来安全地瞥见日偏食。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Large crowds gathered at Calton Hill, Edinburgh, but had to negotiate cloudy skies</span></p>
+        <p class="cn">爱丁堡卡尔顿山聚集了大量人群，但不得不面对多云的天空。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">A solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> happens when the Moon passes between the Sun and Earth, blocking some or all of the Sun's light and casting a shadow on our planet.</span></p>
+        <p class="cn">日食发生时，月亮位于太阳和地球之间，遮挡部分或全部太阳光，并在地球上投下阴影。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">As time ticked by, slowly but surely the Moon obscured more of the Sun - acting like a dimmer switch as it did so.</span></p>
+        <p class="cn">随着时间的推移，月亮慢慢地、但确定地遮住了更多的太阳，就像调光开关一样。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">As seen from the UK, the Sun, Moon and Earth were not quite directly in line.</span></p>
+        <p class="cn">从英国看，太阳、月亮和地球并未完全排成一线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">The result was a <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span>, with the Moon covering about 90% of the Sun for most of the UK - the country's most dramatic eclipse since 1999.</span> <span class="sentence" data-sentence-index="19">In Cornwall, this was as high as 95%.</span></p>
+        <p class="cn">结果是日偏食，月亮覆盖了英国大部分地区约90%的太阳——这是自1999年以来该国最壮观的日食。在康沃尔，覆盖率高达95%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Parts of Spain got to experience something even more magical.</span></p>
+        <p class="cn">西班牙部分地区体验到了更加神奇的现象。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">At roughly 19:30 BST (20:30 local time), the Sun, Moon and Earth were perfectly aligned - a total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span>.</span></p>
+        <p class="cn">大约在英国夏令时19:30（当地时间20:30），太阳、月亮和地球完美对齐——日全食。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Composite image showing the process of a total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> over an hour as seen from Arija, Spain</span></p>
+        <p class="cn">这张合成图像显示了从西班牙阿里哈看到的一小时内日全食的过程。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Chilean scientist Yasmin Catricheo, travelled thousands of miles to A CoruÃ±a, north-west Spain for the event.</span></p>
+        <p class="cn">智利科学家亚斯明·卡特里切奥（Yasmin Catricheo）不远万里来到西班牙西北部的拉科鲁尼亚（A Coruña）观看这一事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">"At the totality, everyone was cheering and sharing the excitement of what we were seeing.</span> <span class="sentence" data-sentence-index="25">No words could describe the feeling," she said.</span></p>
+        <p class="cn">她说：“在全食时，每个人都在欢呼，分享我们所见的兴奋。没有语言能描述那种感觉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">"The universe is amazing."</span></p>
+        <p class="cn">“宇宙太神奇了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">A total solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> happens somewhere on Earth every 18 months or so.</span></p>
+        <p class="cn">日全食大约每18个月在地球某个地方发生一次。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">But they are much rarer for any given place, only occurring once in roughly 400 years.</span></p>
+        <p class="cn">但对于任何特定地点来说，它们要罕见得多，大约每400年才发生一次。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">Crowds along the path of the total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> in Spain were treated to that rare event - with the red glow of the Sun behind the Moon to go with it.</span></p>
+        <p class="cn">西班牙日全食路径上的观众有幸目睹了这一罕见事件——伴随着月亮背后太阳的红色光芒。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">The light coming from the darkness was the Sun's <span class="keyword" data-word="corona" data-phonetic="/kəˈroʊnə/" data-pos="n." data-def="日冕；冠状物" data-def-en="the outer atmosphere of the sun, visible during a total eclipse">corona</span> - superheated jets of gas thrown thousands of miles out into space.</span></p>
+        <p class="cn">黑暗中发出的光是太阳的日冕——过热的气体喷流被抛向太空数千英里。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">And for those looking closely they may have seen small loops of pink gas called prominences following the Sun's turbulent magnetic field.</span></p>
+        <p class="cn">对于那些仔细观察的人来说，他们可能看到了称为日珥的粉色气体环，它们沿着太阳湍流的磁场延伸。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">The Sun's atmosphere and pink loops of gas can be seen bending out from the Sun's surface during totality in Bergos, Spain</span></p>
+        <p class="cn">在西班牙贝尔戈斯，日全食期间可以看到太阳大气和粉色气体环从太阳表面弯曲出来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">And then, the Moon began to reveal the Sun that it had hidden.</span></p>
+        <p class="cn">然后，月亮开始露出它隐藏的太阳。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="34">The total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> lasted for less than two minutes - but for many it was unforgettable.</span></p>
+        <p class="cn">日全食持续了不到两分钟——但对许多人来说，这是难忘的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="35">The fact that we get to experience a total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> at all is an incredible cosmological coincidence.</span></p>
+        <p class="cn">我们能够经历日全食，这本身就是一个不可思议的宇宙巧合。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="36">The Sun is 150 million kilometres (93 million miles) away from the Earth - 400 times further away than the Moon.</span></p>
+        <p class="cn">太阳距离地球1.5亿公里（9300万英里），是月球距离的400倍。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="37">But because the diameter of the Moon is 400 times less than the Sun's, they appear exactly the same size in our sky.</span></p>
+        <p class="cn">但由于月球的直径是太阳的1/400，它们在我们的天空中看起来大小完全相同。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="38">If the Moon was slightly smaller or its orbit was a little further away from the Earth then we would never see a total <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span>.</span></p>
+        <p class="cn">如果月球稍小一些，或者其轨道离地球稍远一些，我们就永远不会看到日全食。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="39">People turned out in towns across Europe, including Herten, Germany for what could be their best <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> for 50 years.</span></p>
+        <p class="cn">欧洲各地的城镇，包括德国赫尔滕，人们纷纷出动，这可能是他们50年来最好的日偏食。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="40">We're about to enter a "golden age" of total solar eclipses between 2026 and 2028.</span></p>
+        <p class="cn">我们即将在2026年至2028年间进入日全食的“黄金时代”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="41"><span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">Eclipse</span> chasers can travel around the world to be wowed by the <span class="keyword" data-word="spectacle" data-phonetic="/ˈspektəkl/" data-pos="n." data-def="奇观；壮观的景象" data-def-en="a very impressive show or scene">spectacle</span> of three total solar eclipses in the next couple of years.</span></p>
+        <p class="cn">追逐日食的人可以环游世界，在未来几年内被三次日全食的壮观景象所震撼。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="42">But none of these are visible in the UK.</span> <span class="sentence" data-sentence-index="43">The best the country will see is a <span class="keyword" data-word="partial" data-phonetic="/ˈpɑːrʃl/" data-pos="adj." data-def="部分的；不完全的" data-def-en="not complete; happening only in part">partial</span> <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> in 2027 when there will be about 45% coverage in some regions.</span></p>
+        <p class="cn">但这些在英国都看不到。英国最好的情况是在2027年看到一次日偏食，届时部分地区覆盖率约为45%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="44">It will be decades until the UK experiences a fuller solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> than today.</span></p>
+        <p class="cn">英国要经历比今天更完整的日食，还要等上几十年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="45">The Moon continued on its journey as the <span class="keyword" data-word="spectacle" data-phonetic="/ˈspektəkl/" data-pos="n." data-def="奇观；壮观的景象" data-def-en="a very impressive show or scene">spectacle</span> of the <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> drew to a close in around Europe</span></p>
+        <p class="cn">随着日食奇观在欧洲各地接近尾声，月亮继续它的旅程。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="46">That will be in 2081, where up to 99% of the Sun will be covered.</span></p>
+        <p class="cn">那将是2081年，届时太阳将被遮住高达99%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="47">And the UK's next total solar <span class="keyword" data-word="eclipse" data-phonetic="/ɪˈklɪps/" data-pos="n." data-def="日食；月食" data-def-en="an occasion when the moon or sun is partly or completely hidden from view">eclipse</span> will be in 2090.</span></p>
+        <p class="cn">而英国的下一场日全食将在2090年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="48">Additional reporting George Burke</span></p>
+        <p class="cn">乔治·伯克补充报道。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">eclipse</span>
+        <button class="kw-speak-btn" data-word="eclipse" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈklɪps/ n.</span>
+      </div>
+      <p class="kw-def">日食；月食</p>
+      <p class="kw-def-en">an occasion when the moon or sun is partly or completely hidden from view</p>
+      <p class="kw-ctx">&ldquo;Moments before the total solar eclipse in the sky above Arcos de las Salinas, near Spain plunging the skywatchers into darkness&rdquo;</p>
+      <p class="kw-ctx-cn">在西班牙附近的阿科斯·德拉斯萨利纳斯上空，日全食发生前的瞬间，将观天者带入黑暗之中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">partial</span>
+        <button class="kw-speak-btn" data-word="partial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɑːrʃl/ adj.</span>
+      </div>
+      <p class="kw-def">部分的；不完全的</p>
+      <p class="kw-def-en">not complete; happening only in part</p>
+      <p class="kw-ctx">&ldquo;Those watching the astronomical phenomenon from the UK were treated to a partial eclipse which peaked shortly after 19:00 BST&rdquo;</p>
+      <p class="kw-ctx-cn">从英国观看这一天文现象的人们看到了一次日偏食，它在英国夏令时19:00后不久达到顶峰。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spectacle</span>
+        <button class="kw-speak-btn" data-word="spectacle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈspektəkl/ n.</span>
+      </div>
+      <p class="kw-def">奇观；壮观的景象</p>
+      <p class="kw-def-en">a very impressive show or scene</p>
+      <p class="kw-ctx">&ldquo;But parts of Greenland, Iceland and Spain experienced the complete darkness and spectacle of a total eclipse.&rdquo;</p>
+      <p class="kw-ctx-cn">但格陵兰岛、冰岛和西班牙的部分地区经历了日全食的完全黑暗和壮观景象。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enthusiast</span>
+        <button class="kw-speak-btn" data-word="enthusiast" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈθuːziæst/ n.</span>
+      </div>
+      <p class="kw-def">爱好者；热心者</p>
+      <p class="kw-def-en">a person who is very interested in and excited about something</p>
+      <p class="kw-ctx">&ldquo;Large crowds at viewing sites across the UK and Europe reacted with gasps and cheers, with astronomy enthusiasts saying it serves as a reminder of how "amazing" the universe is.&rdquo;</p>
+      <p class="kw-ctx-cn">英国和欧洲各地的观测点人群发出惊叹和欢呼，天文学爱好者表示，这提醒人们宇宙是多么“神奇”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">obscure</span>
+        <button class="kw-speak-btn" data-word="obscure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əbˈskjʊr/ v.</span>
+      </div>
+      <p class="kw-def">遮蔽；使模糊</p>
+      <p class="kw-def-en">to make something difficult to see or understand</p>
+      <p class="kw-ctx">&ldquo;As time ticked by, slowly but surely the Moon obscured more of the Sun - acting like a dimmer switch as it did so.&rdquo;</p>
+      <p class="kw-ctx-cn">随着时间推移，月亮缓慢而确定地遮住了更多太阳——就像调光开关一样。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">align</span>
+        <button class="kw-speak-btn" data-word="align" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈlaɪn/ v.</span>
+      </div>
+      <p class="kw-def">使成一条直线；对齐</p>
+      <p class="kw-def-en">to arrange things in a straight line or in correct relative positions</p>
+      <p class="kw-ctx">&ldquo;At roughly 19:30 BST (20:30 local time), the Sun, Moon and Earth were perfectly aligned - a total eclipse.&rdquo;</p>
+      <p class="kw-ctx-cn">大约在英国夏令时19:30（当地时间20:30），太阳、月亮和地球完美对齐——形成日全食。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">corona</span>
+        <button class="kw-speak-btn" data-word="corona" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈroʊnə/ n.</span>
+      </div>
+      <p class="kw-def">日冕；冠状物</p>
+      <p class="kw-def-en">the outer atmosphere of the sun, visible during a total eclipse</p>
+      <p class="kw-ctx">&ldquo;The light coming from the darkness was the Sun's corona - superheated jets of gas thrown thousands of miles out into space.&rdquo;</p>
+      <p class="kw-ctx-cn">从黑暗中发出的光就是太阳的日冕——超热的气体喷射到数千英里外的太空。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">prominence</span>
+        <button class="kw-speak-btn" data-word="prominence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈprɑːmɪnəns/ n.</span>
+      </div>
+      <p class="kw-def">日珥；突出物</p>
+      <p class="kw-def-en">a large, bright feature extending outward from the sun's surface, often seen during an eclipse</p>
+      <p class="kw-ctx">&ldquo;And for those looking closely they may have seen small loops of pink gas called prominences following the Sun's turbulent magnetic field.&rdquo;</p>
+      <p class="kw-ctx-cn">对于那些仔细观察的人来说，他们可能看到了称为日珥的粉色气体小环，它们沿着太阳湍流的磁场运动。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Moments before the total solar eclipse in the sky above Arcos de las Salinas, near Spain plunging the skywatchers into darkness", "start_ms": 0, "end_ms": 9480, "paragraph_index": 0}, {"index": 1, "text": "The UK and Europe have enjoyed their most dramatic solar eclipse for nearly 30 years, with millions thought to have witnessed the once-in-a-generation event.", "start_ms": 9480, "end_ms": 19944, "paragraph_index": 1}, {"index": 2, "text": "Those watching the astronomical phenomenon from the UK were treated to a partial eclipse which peaked shortly after 19:00 BST, when most saw more than 90% of the Sun covered by the Moon.", "start_ms": 19944, "end_ms": 34248, "paragraph_index": 2}, {"index": 3, "text": "But parts of Greenland, Iceland and Spain experienced the complete darkness and spectacle of a total eclipse.", "start_ms": 34248, "end_ms": 42096, "paragraph_index": 3}, {"index": 4, "text": "Large crowds at viewing sites across the UK and Europe reacted with gasps and cheers, with astronomy enthusiasts saying it serves as a reminder of how \"amazing\" the universe is.", "start_ms": 42096, "end_ms": 54192, "paragraph_index": 4}, {"index": 5, "text": "The path of the total eclipse began at the northern tip of Siberia in Russia, far away from crowds and telescopes.", "start_ms": 54192, "end_ms": 62616, "paragraph_index": 5}, {"index": 6, "text": "But it soon began curving around the Arctic Ocean arriving in Iceland in the early evening before sweeping southwards to treat the UK to part of its wonder.", "start_ms": 62616, "end_ms": 72888, "paragraph_index": 6}, {"index": 7, "text": "The partial eclipse began at about 18:00 BST in northern Scotland and just before 18:20 on the south coast of England.", "start_ms": 72888, "end_ms": 82896, "paragraph_index": 7}, {"index": 8, "text": "It was imperceivable at first, but for those blessed with cloud-free skies, crowds noticed the Moon nibbling away at the Sun.", "start_ms": 82896, "end_ms": 91440, "paragraph_index": 8}, {"index": 9, "text": "The Moon began its journey across the Sun for the partial eclipse as seen from Asten, Netherlands", "start_ms": 91440, "end_ms": 98352, "paragraph_index": 9}, {"index": 10, "text": "Much of central and southern England and Wales enjoyed perfect clear skies giving them an unrivalled view as the Moon moved slowly across the Sun over the course of an hour.", "start_ms": 98352, "end_ms": 109464, "paragraph_index": 10}, {"index": 11, "text": "Northern England, Scotland and Northern Ireland were cloudier, but it did not stop crowds turning out at famous landmarks across the country.", "start_ms": 109464, "end_ms": 119496, "paragraph_index": 11}, {"index": 12, "text": "Some had been successful in acquiring solar eclipse glasses, but the vital eye protectors were in short supply in the run-up to the event with opticians, hardware shops and bakeries all selling out.", "start_ms": 119496, "end_ms": 132888, "paragraph_index": 12}, {"index": 13, "text": "But that did not deter people - colanders, cereal boxes and pieces of paper were deployed to offer them a glimpse of the partial eclipse safely.", "start_ms": 132888, "end_ms": 142536, "paragraph_index": 13}, {"index": 14, "text": "Large crowds gathered at Calton Hill, Edinburgh, but had to negotiate cloudy skies", "start_ms": 142536, "end_ms": 149232, "paragraph_index": 14}, {"index": 15, "text": "A solar eclipse happens when the Moon passes between the Sun and Earth, blocking some or all of the Sun's light and casting a shadow on our planet.", "start_ms": 149232, "end_ms": 159120, "paragraph_index": 15}, {"index": 16, "text": "As time ticked by, slowly but surely the Moon obscured more of the Sun - acting like a dimmer switch as it did so.", "start_ms": 159120, "end_ms": 167160, "paragraph_index": 16}, {"index": 17, "text": "As seen from the UK, the Sun, Moon and Earth were not quite directly in line.", "start_ms": 167160, "end_ms": 173352, "paragraph_index": 17}, {"index": 18, "text": "The result was a partial eclipse, with the Moon covering about 90% of the Sun for most of the UK - the country's most dramatic eclipse since 1999.", "start_ms": 173352, "end_ms": 184584, "paragraph_index": 18}, {"index": 19, "text": "In Cornwall, this was as high as 95%.", "start_ms": 184584, "end_ms": 189024, "paragraph_index": 18}, {"index": 20, "text": "Parts of Spain got to experience something even more magical.", "start_ms": 189024, "end_ms": 193824, "paragraph_index": 19}, {"index": 21, "text": "At roughly 19:30 BST (20:30 local time), the Sun, Moon and Earth were perfectly aligned - a total eclipse.", "start_ms": 193824, "end_ms": 203928, "paragraph_index": 20}, {"index": 22, "text": "Composite image showing the process of a total eclipse over an hour as seen from Arija, Spain", "start_ms": 203928, "end_ms": 211152, "paragraph_index": 21}, {"index": 23, "text": "Chilean scientist Yasmin Catricheo, travelled thousands of miles to A Coru\u00c3\u00b1a, north-west Spain for the event.", "start_ms": 211152, "end_ms": 220704, "paragraph_index": 22}, {"index": 24, "text": "\"At the totality, everyone was cheering and sharing the excitement of what we were seeing.", "start_ms": 220704, "end_ms": 226872, "paragraph_index": 23}, {"index": 25, "text": "No words could describe the feeling,\" she said.", "start_ms": 226872, "end_ms": 230736, "paragraph_index": 23}, {"index": 26, "text": "\"The universe is amazing.\"", "start_ms": 230736, "end_ms": 233376, "paragraph_index": 24}, {"index": 27, "text": "A total solar eclipse happens somewhere on Earth every 18 months or so.", "start_ms": 233376, "end_ms": 239112, "paragraph_index": 25}, {"index": 28, "text": "But they are much rarer for any given place, only occurring once in roughly 400 years.", "start_ms": 239112, "end_ms": 246000, "paragraph_index": 26}, {"index": 29, "text": "Crowds along the path of the total eclipse in Spain were treated to that rare event - with the red glow of the Sun behind the Moon to go with it.", "start_ms": 246000, "end_ms": 255240, "paragraph_index": 27}, {"index": 30, "text": "The light coming from the darkness was the Sun's corona - superheated jets of gas thrown thousands of miles out into space.", "start_ms": 255240, "end_ms": 263640, "paragraph_index": 28}, {"index": 31, "text": "And for those looking closely they may have seen small loops of pink gas called prominences following the Sun's turbulent magnetic field.", "start_ms": 263640, "end_ms": 272784, "paragraph_index": 29}, {"index": 32, "text": "The Sun's atmosphere and pink loops of gas can be seen bending out from the Sun's surface during totality in Bergos, Spain", "start_ms": 272784, "end_ms": 281448, "paragraph_index": 30}, {"index": 33, "text": "And then, the Moon began to reveal the Sun that it had hidden.", "start_ms": 281448, "end_ms": 286104, "paragraph_index": 31}, {"index": 34, "text": "The total eclipse lasted for less than two minutes - but for many it was unforgettable.", "start_ms": 286104, "end_ms": 292152, "paragraph_index": 32}, {"index": 35, "text": "The fact that we get to experience a total eclipse at all is an incredible cosmological coincidence.", "start_ms": 292152, "end_ms": 299376, "paragraph_index": 33}, {"index": 36, "text": "The Sun is 150 million kilometres (93 million miles) away from the Earth - 400 times further away than the Moon.", "start_ms": 299376, "end_ms": 309360, "paragraph_index": 34}, {"index": 37, "text": "But because the diameter of the Moon is 400 times less than the Sun's, they appear exactly the same size in our sky.", "start_ms": 309360, "end_ms": 318000, "paragraph_index": 35}, {"index": 38, "text": "If the Moon was slightly smaller or its orbit was a little further away from the Earth then we would never see a total eclipse.", "start_ms": 318000, "end_ms": 325992, "paragraph_index": 36}, {"index": 39, "text": "People turned out in towns across Europe, including Herten, Germany for what could be their best partial eclipse for 50 years.", "start_ms": 325992, "end_ms": 334896, "paragraph_index": 37}, {"index": 40, "text": "We're about to enter a \"golden age\" of total solar eclipses between 2026 and 2028.", "start_ms": 334896, "end_ms": 342528, "paragraph_index": 38}, {"index": 41, "text": "Eclipse chasers can travel around the world to be wowed by the spectacle of three total solar eclipses in the next couple of years.", "start_ms": 342528, "end_ms": 351480, "paragraph_index": 39}, {"index": 42, "text": "But none of these are visible in the UK.", "start_ms": 351480, "end_ms": 354864, "paragraph_index": 40}, {"index": 43, "text": "The best the country will see is a partial eclipse in 2027 when there will be about 45% coverage in some regions.", "start_ms": 354864, "end_ms": 363672, "paragraph_index": 40}, {"index": 44, "text": "It will be decades until the UK experiences a fuller solar eclipse than today.", "start_ms": 363672, "end_ms": 369768, "paragraph_index": 41}, {"index": 45, "text": "The Moon continued on its journey as the spectacle of the eclipse drew to a close in around Europe", "start_ms": 369768, "end_ms": 376536, "paragraph_index": 42}, {"index": 46, "text": "That will be in 2081, where up to 99% of the Sun will be covered.", "start_ms": 376536, "end_ms": 382752, "paragraph_index": 43}, {"index": 47, "text": "And the UK's next total solar eclipse will be in 2090.", "start_ms": 382752, "end_ms": 387720, "paragraph_index": 44}, {"index": 48, "text": "Additional reporting George Burke", "start_ms": 387720, "end_ms": 390912, "paragraph_index": 45}], "total_duration_ms": 390912};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "in": "在", "and": "和", "to": "到", "moon": "月球", "total": "总体的", "sun": "太阳", "but": "但是", "for": "为了", "at": "在", "as": "作为", "from": "来自", "it": "它", "uk": "英国", "with": "与", "were": "是", "was": "是", "be": "是", "spain": "西班牙", "crowds": "人群", "is": "是", "earth": "地球", "will": "将", "than": "比", "across": "跨越", "began": "开始", "away": "离开", "seen": "被视为", "out": "出来", "that": "那个", "europe": "欧洲", "most": "最", "years": "多年", "event": "事件", "northern": "北部的", "its": "它的", "about": "关于", "on": "在", "an": "一个", "before": "之前", "have": "有", "those": "那些", "bst": "英国夏令时", "when": "当", "more": "更多", "by": "被", "around": "在...周围", "england": "英格兰", "did": "做了", "not": "不", "some": "一些", "had": "有", "all": "所有", "or": "或者", "miles": "英里", "we": "我们", "they": "它们", "gas": "气体", "sky": "天空", "into": "进入", "enjoyed": "享有", "their": "他们的", "dramatic": "戏剧性的", "treated": "接受治疗", "covered": "覆盖的", "parts": "部分", "iceland": "冰岛", "large": "大的", "amazing": "惊人的", "universe": "宇宙", "path": "道路", "scotland": "苏格兰", "journey": "旅程", "much": "许多", "them": "他们", "slowly": "缓慢地", "over": "超过", "hour": "时刻", "country": "国家", "people": "人们", "happens": "发生", "between": "之间", "light": "轻的", "our": "我们的", "time": "时间", "so": "所以", "experience": "经历", "roughly": "大约", "thousands": "数千", "what": "什么", "could": "可能", "are": "是", "can": "可以", "then": "然后", "less": "更少", "million": "百万", "times": "次", "further": "进一步的", "see": "看到", "best": "最佳", "next": "下一个", "moments": "时刻", "above": "超过", "de": "实际上", "near": "附近", "nearly": "几乎", "millions": "数百万", "thought": "认为", "witnessed": "目睹", "watching": "关注", "which": "哪个", "peaked": "达到峰值", "shortly": "不久", "after": "之后", "saw": "看到", "experienced": "经历", "complete": "完全的", "viewing": "观看", "sites": "网站", "reacted": "反应", "cheers": "欢呼", "saying": "说", "reminder": "提醒", "how": "如何", "tip": "提示", "russia": "俄罗斯", "far": "远", "soon": "很快", "arctic": "北极", "ocean": "海洋", "arriving": "到达", "early": "早期的", "evening": "晚上", "sweeping": "横扫", "treat": "对待", "part": "部分", "wonder": "想知道", "just": "只是", "south": "韩国", "coast": "海岸", "first": "第一轮", "noticed": "注意到", "netherlands": "荷兰", "central": "中央的", "southern": "南部的", "wales": "威尔士", "clear": "明确", "giving": "给予", "view": "看法", "moved": "移动", "course": "课程", "ireland": "爱尔兰", "stop": "停止", "turning": "转向", "been": "已经", "successful": "成功的", "vital": "至关重要的", "eye": "目光", "short": "短暂的", "supply": "供应", "run-up": "前期", "selling": "销售", "deter": "威慑", "boxes": "箱子", "pieces": "碎片", "paper": "报纸", "deployed": "部署", "offer": "提供", "safely": "安全地", "gathered": "聚集", "hill": "山丘", "edinburgh": "爱丁堡", "passes": "通过", "blocking": "阻碍", "casting": "选角", "shadow": "阴影", "ticked": "打勾", "surely": "肯定", "acting": "代理", "like": "像", "switch": "切换", "quite": "相当", "directly": "直接地", "line": "界限", "result": "结果", "covering": "涵盖", "country's": "国家的", "since": "自从", "cornwall": "康沃尔", "this": "这个", "high": "高的", "got": "获得", "something": "某事", "even": "甚至", "magical": "神奇的", "local": "当地", "perfectly": "完美地", "image": "画面", "showing": "表现", "process": "过程", "scientist": "科学家", "yasmin": "亚斯明", "travelled": "旅行", "north-west": "西北部", "everyone": "每个人", "cheering": "欢呼", "sharing": "分享", "seeing": "看到", "no": "没有", "words": "言辞", "describe": "描述", "feeling": "感觉", "she": "她", "said": "说", "somewhere": "某处", "every": "每个", "months": "月", "any": "任何", "given": "给定", "place": "地点", "only": "只有", "once": "一旦", "along": "一起", "rare": "罕见的", "red": "红色的", "behind": "在...后面", "go": "去", "coming": "即将到来的", "jets": "喷气式飞机", "thrown": "投掷", "space": "空间", "looking": "寻找", "closely": "密切", "may": "可能", "small": "小的", "called": "称为", "following": "随后", "field": "领域", "atmosphere": "气氛", "surface": "表面", "during": "在期间", "reveal": "揭露", "lasted": "持续", "two": "两个", "minutes": "会议记录", "many": "许多", "fact": "事实", "get": "得到", "incredible": "难以置信", "kilometres": "公里", "because": "因为", "appear": "出现", "exactly": "确切地", "same": "相同", "size": "大小", "if": "如果", "slightly": "稍微", "smaller": "较小的", "orbit": "轨道", "little": "很少", "would": "将", "never": "从未", "turned": "转向", "towns": "城镇", "including": "包括", "germany": "德国", "we're": "我们是", "enter": "提出", "golden": "金靴", "age": "年龄", "travel": "旅行", "world": "世界", "three": "三个", "couple": "几个", "none": "没有一个", "these": "这些", "visible": "可见的", "there": "那里", "coverage": "报道", "regions": "地区", "decades": "数十年", "until": "直到", "experiences": "经历", "today": "今天", "continued": "持续的", "drew": "吸引", "close": "密切的", "where": "那里", "up": "向上", "uk's": "英国的", "additional": "额外的", "reporting": "报道", "george": "乔治", "solar": "太阳的", "sun's": "太阳的", "darkness": "黑暗", "skies": "天空", "totality": "全食", "loops": "环", "pink": "粉红色", "eclipses": "日食", "arcos": "弧", "las": "拉斯", "salinas": "萨利纳斯", "plunging": "陷入", "skywatchers": "观天者", "once-in-a-generation": "一代一次", "astronomical": "天文的", "phenomenon": "现象", "greenland": "格陵兰", "gasps": "惊叹", "astronomy": "天文学", "enthusiasts": "爱好者", "serves": "服务", "siberia": "西伯利亚", "telescopes": "望远镜", "curving": "弯曲", "southwards": "向南", "imperceivable": "难以察觉", "blessed": "幸运的", "cloud-free": "无云", "nibbling": "啃食", "asten": "阿斯滕", "perfect": "完美", "unrivalled": "无与伦比", "cloudier": "多云", "famous": "著名", "landmarks": "地标", "acquiring": "获得", "glasses": "眼镜", "protectors": "防护镜", "opticians": "眼镜商", "hardware": "五金", "shops": "商店", "bakeries": "面包店", "colanders": "漏勺", "cereal": "麦片", "glimpse": "一瞥", "calton": "卡尔顿", "negotiate": "协商", "cloudy": "多云", "planet": "行星", "obscured": "遮蔽", "dimmer": "更暗", "aligned": "对齐", "composite": "合成", "arija": "阿里哈", "chilean": "智利的", "catricheo": "卡特里切奥", "excitement": "兴奋", "rarer": "更罕见", "occurring": "发生", "glow": "光辉", "superheated": "过热", "prominences": "日珥", "turbulent": "湍流", "magnetic": "磁的", "bending": "弯曲", "bergos": "贝尔戈斯", "hidden": "隐藏", "unforgettable": "难忘", "cosmological": "宇宙学的", "coincidence": "巧合", "diameter": "直径", "herten": "赫尔滕", "chasers": "追逐者", "wowed": "惊叹", "fuller": "更满", "burke": "伯克"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
