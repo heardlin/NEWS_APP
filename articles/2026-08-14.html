@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-14</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-14</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e1f2/live/c7b603c0-91a2-11f1-964d-6f76397ea067.jpg" alt="Jason Arday, ex-Cambridge professor at centre of plagiarism row, found dead" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Jason Arday, ex-Cambridge professor at centre of plagiarism row, found dead</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c1j1ye6n30no?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-14.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Jason Arday, the former University of Cambridge professor at the centre of a <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> row, has been found dead.</span></p>
+        <p class="cn">前剑桥大学教授杰森·阿尔迪（Jason Arday）因抄袭争议成为焦点，现已被发现死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Emergency services said a man was found "<span class="keyword" data-word="unresponsive" data-phonetic="/ˌʌnrɪˈspɒnsɪv/" data-pos="adj." data-def="无反应的，昏迷的" data-def-en="Not responding to stimulation or treatment; not reacting.">unresponsive</span>" at an address in Battersea, south London, on Friday afternoon.</span></p>
+        <p class="cn">紧急服务部门表示，周五下午在伦敦南部巴特西（Battersea）的一个地址发现一名男子“无反应”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Arday resigned as a Cambridge professor of sociology of education last week after allegations of <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> and questions about some of his achievements.</span> <span class="sentence" data-sentence-index="3">He had denied the claims.</span></p>
+        <p class="cn">阿尔迪上周辞去了剑桥大学教育社会学教授职务，此前有指控称其存在抄袭行为，并对其部分成就提出质疑。他否认了这些指控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Arday's family said in a statement that they were "in shock to have lost this amazing father, partner, brother, uncle and son".</span></p>
+        <p class="cn">阿尔迪的家人在一份声明中表示，他们“对失去这位了不起的父亲、伴侣、兄弟、叔叔和儿子感到震惊”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">They added: "The campaign of misinformation was too much for Jason, who was a gentle man and who always wanted to see the best in everyone."</span></p>
+        <p class="cn">他们补充说：“错误信息的运动对杰森来说太过分了，他是一个温和的人，总是希望看到每个人最好的一面。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Earlier on Friday, police officers were called to an address in Battersea by the London Ambulance Service.</span></p>
+        <p class="cn">周五早些时候，伦敦救护车服务中心呼叫警察前往巴特西的一个地址。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">In a statement, the Metropolitan Police said: "At this time his death is being treated as unexpected, but is not believed to be suspicious."</span></p>
+        <p class="cn">伦敦警察厅在一份声明中表示：“目前，他的死亡被视为意外，但据信没有可疑之处。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">Cambridge University vice-chancellor Professor Deborah Prentice said: "We are desperately saddened to hear this tragic news".</span></p>
+        <p class="cn">剑桥大学副校长黛博拉·普伦蒂斯教授（Professor Deborah Prentice）表示：“听到这个悲惨的消息，我们感到非常悲痛。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">"Our heartfelt sympathies go to Jason Arday's family and friends at this incredibly difficult time", she said.</span></p>
+        <p class="cn">她说：“在这个极其困难的时刻，我们向杰森·阿尔迪的家人和朋友表示衷心的同情。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Education Secretary Lucy Powell said she was "deeply shocked and saddened" to hear about the death and she urged people to "remember there are real people with loved ones involved".</span></p>
+        <p class="cn">教育大臣露西·鲍威尔（Lucy Powell）表示，听到这一死亡消息她“深感震惊和悲痛”，并敦促人们“记住，有真实的人，他们有所爱之人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Arday, 41, had denied any <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> - but admitted errors in his work - and last week said the recent <span class="keyword" data-word="controversy" data-phonetic="/ˈkɒntrəvɜːsi/" data-pos="n." data-def="争议，争论" data-def-en="A prolonged public disagreement or heated discussion.">controversy</span> about his work had led to "an unrelenting level of public <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查，详细检查" data-def-en="Critical observation or examination.">scrutiny</span> and personal attack".</span></p>
+        <p class="cn">41岁的阿尔迪否认有任何抄袭行为，但承认其工作中存在错误，上周他表示，最近关于其工作的争议导致了“无情的公众审视和个人攻击”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">The row first erupted after another academic - self-defined "race realist" Nathan Cofnas, who was sacked from his Cambridge role in 2024 - said he found numerous instances of <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> in the professor's work.</span></p>
+        <p class="cn">这场争议最初是由另一位学者——自称“种族现实主义者”的内森·科夫纳斯（Nathan Cofnas）引发的，他于2024年被剑桥大学解雇，他表示在阿尔迪教授的工作中发现了大量抄袭实例。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Arday said some errors in his early academic work arose because of his autism, as he relied on using mimicry to make sense of information.</span> <span class="sentence" data-sentence-index="14">Similar <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查，详细检查" data-def-en="Critical observation or examination.">scrutiny</span> would find similar errors in work by other academics, he said.</span></p>
+        <p class="cn">阿尔迪表示，他早期学术工作中的一些错误是由于他的自闭症造成的，因为他依赖模仿来理解信息。他说，对其他学者的工作进行类似的审查也会发现类似的错误。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">"We're talking about academia here.</span> <span class="sentence" data-sentence-index="16">I didn't murder somebody.</span> <span class="sentence" data-sentence-index="17">I think the cruelty that I've experienced and the positioning of me as this kind of liar and fantasist is totally unacceptable," he told the Times newspaper , external earlier this month.</span></p>
+        <p class="cn">“我们在这里谈论的是学术界。我没有杀人。我认为我所经历的残忍以及将我定位为这种骗子和幻想家是完全不可接受的，”他本月早些时候告诉《泰晤士报》。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">Arday carried the Olympic Flame on the 2012 Torch Relay leg between Sutton and Merton in London</span></p>
+        <p class="cn">阿尔迪曾在2012年伦敦奥运火炬传递中，在萨顿（Sutton）和默顿（Merton）之间传递奥运火炬。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">Arday's appointment as Cambridge's youngest ever black professor at the age of 37 in 2023 was hailed at the time as a progressive moment.</span></p>
+        <p class="cn">2023年，37岁的阿尔迪被任命为剑桥大学有史以来最年轻的黑人教授，当时被誉为进步的时刻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">Announcing his resignation last week , Arday said the "personal cost" of the <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="仔细审查，详细检查" data-def-en="Critical observation or examination.">scrutiny</span> of him had become "too great".</span></p>
+        <p class="cn">上周宣布辞职时，阿尔迪表示，对他的审视的“个人代价”已经变得“太大”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="21">He said: "While criticism is an inevitable part of academic life, what I have experienced has gone far beyond scholarly disagreement.</span></p>
+        <p class="cn">他说：“虽然批评是学术生活中不可避免的一部分，但我所经历的远远超出了学术分歧。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="22">"The relentless accusations, speculation and public commentary have taken a profound <span class="keyword" data-word="toll" data-phonetic="/toʊl/" data-pos="n." data-def="代价，伤亡人数" data-def-en="The cost or damage resulting from something, often in terms of lives lost or harm done.">toll</span> on me and on those I love."</span></p>
+        <p class="cn">“无情的指控、猜测和公开评论对我以及我所爱的人造成了深远的伤害。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="23">He stressed that his resignation should not "be mistaken for an acceptance of the narratives that have surrounded me".</span></p>
+        <p class="cn">他强调，他的辞职不应“被误解为接受围绕我的叙事”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="24">Cambridge initially said claims of <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> regarding Arday's thesis and some journal publications had been investigated by Liverpool John Moores University (LJMU) and the journals in question.</span></p>
+        <p class="cn">剑桥大学最初表示，关于阿尔迪论文和一些期刊出版物的抄袭指控已由利物浦约翰摩尔斯大学（LJMU）和相关期刊进行调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">LJMU - which awarded Arday his PhD in 2015 - concluded that he had not plagiarised work.</span></p>
+        <p class="cn">LJMU（于2015年授予阿尔迪博士学位）得出结论，他没有抄袭作品。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">Earlier this week, Cambridge announced an independent investigation into his appointment.</span></p>
+        <p class="cn">本周早些时候，剑桥大学宣布对他的任命进行独立调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">In a letter to university staff at the time, Prof Prentice said: "I fully understand the concerns being raised across the university and well beyond it, regarding Jason Arday's appointment and I share them...</span></p>
+        <p class="cn">当时，普伦蒂斯教授在给大学员工的一封信中说：“我完全理解大学内外对杰森·阿尔迪任命的担忧，我也同样担忧……”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">"That investigation, as you say, should be thorough and transparent, and will be carried out independently by senior academics from within and beyond Cambridge."</span></p>
+        <p class="cn">“正如你所说，这项调查应该是彻底和透明的，并将由剑桥内外的资深学者独立进行。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Cambridge celebrated Arday's appointment as a young black professor, one of a tiny and visible majority in academia.</span> <span class="sentence" data-sentence-index="30">Only one per cent of professors in UK universities are black, making each appointment hugely significant.</span></p>
+        <p class="cn">剑桥大学庆祝阿尔迪被任命为年轻黑人教授，这是学术界中少数但可见的群体之一。英国大学教授中只有1%是黑人，这使得每次任命都意义重大。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="31">The university will have to answer bigger questions including about its duty of care after it put him into a very prominent position.</span></p>
+        <p class="cn">大学将不得不回答更大的问题，包括在将他置于非常显眼的位置后，其注意义务的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">It may also find itself the lightning rod for anger from several different quarters,  including those who feel Arday was persecuted publicly and those who question whether he should ever have been appointed.</span></p>
+        <p class="cn">它也可能成为来自不同方面的愤怒的避雷针，包括那些认为阿尔迪受到公开迫害的人，以及那些质疑他是否应该被任命的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">Jolyon Maugham from campaign group Good Law Project said Arday's death was "a tragedy".</span></p>
+        <p class="cn">竞选组织“良好法律项目”的乔利恩·莫姆（Jolyon Maugham）表示，阿尔迪的死是“一场悲剧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">"I do not understand what the public interest was in continuing to hound him after he resigned as a professor and I do not understand what risk assessments media outlets did", Maugham added.</span></p>
+        <p class="cn">莫姆补充说：“我不明白在他辞去教授职务后继续追捕他的公共利益是什么，我也不明白媒体机构做了什么风险评估。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">Arday originally worked as a PE teacher before earning his doctorate at LMJU and going on to become an associate professor at Durham University and professor of sociology of education at the University of Glasgow.</span></p>
+        <p class="cn">阿尔迪最初是一名体育教师，后来在LJMU获得博士学位，并成为杜伦大学（Durham University）的副教授和格拉斯哥大学（University of Glasgow）的教育社会学教授。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">Glasgow university also announced a review into Arday's previous academic work.</span></p>
+        <p class="cn">格拉斯哥大学也宣布对阿尔迪之前的学术工作进行审查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">When news of his death emerged, the university said in a statement it was "shocked and saddened" by the death of a former colleague.</span></p>
+        <p class="cn">当他的死讯传出时，该大学在一份声明中表示，对前同事的去世感到“震惊和悲痛”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">"Our thoughts and deepest sympathies are with his friends and family at this desperately sad time." it added.</span></p>
+        <p class="cn">它补充说：“在这个极其悲伤的时刻，我们的心与他的朋友和家人同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">Durham University, another of Arday's former employers, described him as "a kind and warm person, who actively sought to promote opportunities for PhD students".</span></p>
+        <p class="cn">阿尔迪的另一位前雇主杜伦大学将他描述为“一个善良温暖的人，积极寻求为博士生创造机会”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">Last weekend, Arday cancelled an event promoting his memoir.</span></p>
+        <p class="cn">上周末，阿尔迪取消了一场宣传其回忆录的活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">Publisher Simon & Schuster previously said that the book, Great And Unfortunate Things, would be published in the UK on 27 August.</span> <span class="sentence" data-sentence-index="42">It was released in the US earlier this week.</span></p>
+        <p class="cn">出版商西蒙与舒斯特（Simon & Schuster）此前表示，这本书《伟大而不幸的事情》（Great And Unfortunate Things）将于8月27日在英国出版。本周早些时候在美国发行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="43">The book tells the story of his life from being non-verbal until the age of 11 and unable to read or write until 18, then going through a series of "improbable triumphs and heartbreaking setbacks", before being appointed professor of sociology of education at Cambridge.</span></p>
+        <p class="cn">这本书讲述了他从11岁前不会说话、18岁前不会读写，到经历一系列“不可能的胜利和令人心碎的挫折”，最终被任命为剑桥大学教育社会学教授的人生故事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="44">Additional reporting by Branwen Jeffreys</span></p>
+        <p class="cn">布兰文·杰弗里斯（Branwen Jeffreys）补充报道</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="45">Ex-Cambridge professor Jason Arday cancels live event after <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> row</span></p>
+        <p class="cn">前剑桥教授杰森·阿尔迪在抄袭争议后取消现场活动</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="46">Belfast university to investigate work co-authored by academic in <span class="keyword" data-word="plagiarism" data-phonetic="/ˈpleɪdʒərɪzəm/" data-pos="n." data-def="剽窃，抄袭" data-def-en="The practice of taking someone else's work or ideas and passing them off as one's own.">plagiarism</span> row</span></p>
+        <p class="cn">贝尔法斯特大学将调查抄袭争议中学术合著的作品</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">plagiarism</span>
+        <button class="kw-speak-btn" data-word="plagiarism" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpleɪdʒərɪzəm/ n.</span>
+      </div>
+      <p class="kw-def">剽窃，抄袭</p>
+      <p class="kw-def-en">The practice of taking someone else's work or ideas and passing them off as one's own.</p>
+      <p class="kw-ctx">&ldquo;Jason Arday, the former University of Cambridge professor at the centre of a plagiarism row, has been found dead.&rdquo;</p>
+      <p class="kw-ctx-cn">前剑桥大学教授、身陷剽窃争议中心的杰森·阿迪已被发现死亡。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌælɪˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">指控，断言</p>
+      <p class="kw-def-en">A claim or assertion that someone has done something illegal or wrong, typically one made without proof.</p>
+      <p class="kw-ctx">&ldquo;Arday resigned as a Cambridge professor of sociology of education last week after allegations of plagiarism and questions about some of his achievements.&rdquo;</p>
+      <p class="kw-ctx-cn">在受到剽窃指控以及对其一些成就的质疑后，阿迪上周辞去了剑桥大学教育社会学教授一职。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrutiny</span>
+        <button class="kw-speak-btn" data-word="scrutiny" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskruːtəni/ n.</span>
+      </div>
+      <p class="kw-def">仔细审查，详细检查</p>
+      <p class="kw-def-en">Critical observation or examination.</p>
+      <p class="kw-ctx">&ldquo;The recent controversy about his work had led to "an unrelenting level of public scrutiny and personal attack".&rdquo;</p>
+      <p class="kw-ctx-cn">最近关于他工作的争议导致了“无情的公众审查和个人攻击”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unresponsive</span>
+        <button class="kw-speak-btn" data-word="unresponsive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌnrɪˈspɒnsɪv/ adj.</span>
+      </div>
+      <p class="kw-def">无反应的，昏迷的</p>
+      <p class="kw-def-en">Not responding to stimulation or treatment; not reacting.</p>
+      <p class="kw-ctx">&ldquo;Emergency services said a man was found "unresponsive" at an address in Battersea, south London, on Friday afternoon.&rdquo;</p>
+      <p class="kw-ctx-cn">紧急服务部门称，周五下午在伦敦南部巴特西的一个地址发现一名男子“无反应”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resign</span>
+        <button class="kw-speak-btn" data-word="resign" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzaɪn/ v.</span>
+      </div>
+      <p class="kw-def">辞职，放弃</p>
+      <p class="kw-def-en">To voluntarily leave a job or position.</p>
+      <p class="kw-ctx">&ldquo;Arday resigned as a Cambridge professor of sociology of education last week after allegations of plagiarism and questions about some of his achievements.&rdquo;</p>
+      <p class="kw-ctx-cn">在受到剽窃指控以及对其一些成就的质疑后，阿迪上周辞去了剑桥大学教育社会学教授一职。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">toll</span>
+        <button class="kw-speak-btn" data-word="toll" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/toʊl/ n.</span>
+      </div>
+      <p class="kw-def">代价，伤亡人数</p>
+      <p class="kw-def-en">The cost or damage resulting from something, often in terms of lives lost or harm done.</p>
+      <p class="kw-ctx">&ldquo;The relentless accusations, speculation and public commentary have taken a profound toll on me and on those I love.&rdquo;</p>
+      <p class="kw-ctx-cn">无情的指控、猜测和公开评论对我以及我所爱的人造成了深重的伤害。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">controversy</span>
+        <button class="kw-speak-btn" data-word="controversy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒntrəvɜːsi/ n.</span>
+      </div>
+      <p class="kw-def">争议，争论</p>
+      <p class="kw-def-en">A prolonged public disagreement or heated discussion.</p>
+      <p class="kw-ctx">&ldquo;The recent controversy about his work had led to "an unrelenting level of public scrutiny and personal attack".&rdquo;</p>
+      <p class="kw-ctx-cn">最近关于他工作的争议导致了“无情的公众审查和个人攻击”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">persecute</span>
+        <button class="kw-speak-btn" data-word="persecute" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɜːsɪkjuːt/ v.</span>
+      </div>
+      <p class="kw-def">迫害，纠缠</p>
+      <p class="kw-def-en">To subject someone to hostility and ill-treatment, especially because of their race or political or religious beliefs.</p>
+      <p class="kw-ctx">&ldquo;Those who feel Arday was persecuted publicly and those who question whether he should ever have been appointed.&rdquo;</p>
+      <p class="kw-ctx-cn">那些认为阿迪受到公开迫害的人，以及那些质疑他是否应该被任命的人。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Jason Arday, the former University of Cambridge professor at the centre of a plagiarism row, has been found dead.", "start_ms": 0, "end_ms": 8496, "paragraph_index": 0}, {"index": 1, "text": "Emergency services said a man was found \"unresponsive\" at an address in Battersea, south London, on Friday afternoon.", "start_ms": 8496, "end_ms": 17304, "paragraph_index": 1}, {"index": 2, "text": "Arday resigned as a Cambridge professor of sociology of education last week after allegations of plagiarism and questions about some of his achievements.", "start_ms": 17304, "end_ms": 27528, "paragraph_index": 2}, {"index": 3, "text": "He had denied the claims.", "start_ms": 27528, "end_ms": 30168, "paragraph_index": 2}, {"index": 4, "text": "Arday's family said in a statement that they were \"in shock to have lost this amazing father, partner, brother, uncle and son\".", "start_ms": 30168, "end_ms": 39360, "paragraph_index": 3}, {"index": 5, "text": "They added: \"The campaign of misinformation was too much for Jason, who was a gentle man and who always wanted to see the best in everyone.\"", "start_ms": 39360, "end_ms": 48840, "paragraph_index": 4}, {"index": 6, "text": "Earlier on Friday, police officers were called to an address in Battersea by the London Ambulance Service.", "start_ms": 48840, "end_ms": 56376, "paragraph_index": 5}, {"index": 7, "text": "In a statement, the Metropolitan Police said: \"At this time his death is being treated as unexpected, but is not believed to be suspicious.\"", "start_ms": 56376, "end_ms": 65928, "paragraph_index": 6}, {"index": 8, "text": "Cambridge University vice-chancellor Professor Deborah Prentice said: \"We are desperately saddened to hear this tragic news\".", "start_ms": 65928, "end_ms": 74136, "paragraph_index": 7}, {"index": 9, "text": "\"Our heartfelt sympathies go to Jason Arday's family and friends at this incredibly difficult time\", she said.", "start_ms": 74136, "end_ms": 81816, "paragraph_index": 8}, {"index": 10, "text": "Education Secretary Lucy Powell said she was \"deeply shocked and saddened\" to hear about the death and she urged people to \"remember there are real people with loved ones involved\".", "start_ms": 81816, "end_ms": 93240, "paragraph_index": 9}, {"index": 11, "text": "Arday, 41, had denied any plagiarism - but admitted errors in his work - and last week said the recent controversy about his work had led to \"an unrelenting level of public scrutiny and personal attack\".", "start_ms": 93240, "end_ms": 107472, "paragraph_index": 10}, {"index": 12, "text": "The row first erupted after another academic - self-defined \"race realist\" Nathan Cofnas, who was sacked from his Cambridge role in 2024 - said he found numerous instances of plagiarism in the professor's work.", "start_ms": 107472, "end_ms": 122208, "paragraph_index": 11}, {"index": 13, "text": "Arday said some errors in his early academic work arose because of his autism, as he relied on using mimicry to make sense of information.", "start_ms": 122208, "end_ms": 132192, "paragraph_index": 12}, {"index": 14, "text": "Similar scrutiny would find similar errors in work by other academics, he said.", "start_ms": 132192, "end_ms": 138456, "paragraph_index": 12}, {"index": 15, "text": "\"We're talking about academia here.", "start_ms": 138456, "end_ms": 141672, "paragraph_index": 13}, {"index": 16, "text": "I didn't murder somebody.", "start_ms": 141672, "end_ms": 144312, "paragraph_index": 13}, {"index": 17, "text": "I think the cruelty that I've experienced and the positioning of me as this kind of liar and fantasist is totally unacceptable,\" he told the Times newspaper , external earlier this month.", "start_ms": 144312, "end_ms": 156672, "paragraph_index": 13}, {"index": 18, "text": "Arday carried the Olympic Flame on the 2012 Torch Relay leg between Sutton and Merton in London", "start_ms": 156672, "end_ms": 164112, "paragraph_index": 14}, {"index": 19, "text": "Arday's appointment as Cambridge's youngest ever black professor at the age of 37 in 2023 was hailed at the time as a progressive moment.", "start_ms": 164112, "end_ms": 174240, "paragraph_index": 15}, {"index": 20, "text": "Announcing his resignation last week , Arday said the \"personal cost\" of the scrutiny of him had become \"too great\".", "start_ms": 174240, "end_ms": 182112, "paragraph_index": 16}, {"index": 21, "text": "He said: \"While criticism is an inevitable part of academic life, what I have experienced has gone far beyond scholarly disagreement.", "start_ms": 182112, "end_ms": 191640, "paragraph_index": 17}, {"index": 22, "text": "\"The relentless accusations, speculation and public commentary have taken a profound toll on me and on those I love.\"", "start_ms": 191640, "end_ms": 200280, "paragraph_index": 18}, {"index": 23, "text": "He stressed that his resignation should not \"be mistaken for an acceptance of the narratives that have surrounded me\".", "start_ms": 200280, "end_ms": 207552, "paragraph_index": 19}, {"index": 24, "text": "Cambridge initially said claims of plagiarism regarding Arday's thesis and some journal publications had been investigated by Liverpool John Moores University (LJMU) and the journals in question.", "start_ms": 207552, "end_ms": 221472, "paragraph_index": 20}, {"index": 25, "text": "LJMU - which awarded Arday his PhD in 2015 - concluded that he had not plagiarised work.", "start_ms": 221472, "end_ms": 229752, "paragraph_index": 21}, {"index": 26, "text": "Earlier this week, Cambridge announced an independent investigation into his appointment.", "start_ms": 229752, "end_ms": 236280, "paragraph_index": 22}, {"index": 27, "text": "In a letter to university staff at the time, Prof Prentice said: \"I fully understand the concerns being raised across the university and well beyond it, regarding Jason Arday's appointment and I share them...", "start_ms": 236280, "end_ms": 250128, "paragraph_index": 23}, {"index": 28, "text": "\"That investigation, as you say, should be thorough and transparent, and will be carried out independently by senior academics from within and beyond Cambridge.\"", "start_ms": 250128, "end_ms": 261312, "paragraph_index": 24}, {"index": 29, "text": "Cambridge celebrated Arday's appointment as a young black professor, one of a tiny and visible majority in academia.", "start_ms": 261312, "end_ms": 269904, "paragraph_index": 25}, {"index": 30, "text": "Only one per cent of professors in UK universities are black, making each appointment hugely significant.", "start_ms": 269904, "end_ms": 278040, "paragraph_index": 25}, {"index": 31, "text": "The university will have to answer bigger questions including about its duty of care after it put him into a very prominent position.", "start_ms": 278040, "end_ms": 286896, "paragraph_index": 26}, {"index": 32, "text": "It may also find itself the lightning rod for anger from several different quarters,  including those who feel Arday was persecuted publicly and those who question whether he should ever have been appointed.", "start_ms": 286896, "end_ms": 299760, "paragraph_index": 27}, {"index": 33, "text": "Jolyon Maugham from campaign group Good Law Project said Arday's death was \"a tragedy\".", "start_ms": 299760, "end_ms": 306048, "paragraph_index": 28}, {"index": 34, "text": "\"I do not understand what the public interest was in continuing to hound him after he resigned as a professor and I do not understand what risk assessments media outlets did\", Maugham added.", "start_ms": 306048, "end_ms": 318336, "paragraph_index": 29}, {"index": 35, "text": "Arday originally worked as a PE teacher before earning his doctorate at LMJU and going on to become an associate professor at Durham University and professor of sociology of education at the University of Glasgow.", "start_ms": 318336, "end_ms": 333600, "paragraph_index": 30}, {"index": 36, "text": "Glasgow university also announced a review into Arday's previous academic work.", "start_ms": 333600, "end_ms": 339984, "paragraph_index": 31}, {"index": 37, "text": "When news of his death emerged, the university said in a statement it was \"shocked and saddened\" by the death of a former colleague.", "start_ms": 339984, "end_ms": 348456, "paragraph_index": 32}, {"index": 38, "text": "\"Our thoughts and deepest sympathies are with his friends and family at this desperately sad time.\" it added.", "start_ms": 348456, "end_ms": 355512, "paragraph_index": 33}, {"index": 39, "text": "Durham University, another of Arday's former employers, described him as \"a kind and warm person, who actively sought to promote opportunities for PhD students\".", "start_ms": 355512, "end_ms": 367416, "paragraph_index": 34}, {"index": 40, "text": "Last weekend, Arday cancelled an event promoting his memoir.", "start_ms": 367416, "end_ms": 372432, "paragraph_index": 35}, {"index": 41, "text": "Publisher Simon & Schuster previously said that the book, Great And Unfortunate Things, would be published in the UK on 27 August.", "start_ms": 372432, "end_ms": 382296, "paragraph_index": 36}, {"index": 42, "text": "It was released in the US earlier this week.", "start_ms": 382296, "end_ms": 386064, "paragraph_index": 36}, {"index": 43, "text": "The book tells the story of his life from being non-verbal until the age of 11 and unable to read or write until 18, then going through a series of \"improbable triumphs and heartbreaking setbacks\", before being appointed professor of sociology of education at Cambridge.", "start_ms": 386064, "end_ms": 403992, "paragraph_index": 37}, {"index": 44, "text": "Additional reporting by Branwen Jeffreys", "start_ms": 403992, "end_ms": 407712, "paragraph_index": 38}, {"index": 45, "text": "Ex-Cambridge professor Jason Arday cancels live event after plagiarism row", "start_ms": 407712, "end_ms": 413880, "paragraph_index": 39}, {"index": 46, "text": "Belfast university to investigate work co-authored by academic in plagiarism row", "start_ms": 413880, "end_ms": 420432, "paragraph_index": 40}], "total_duration_ms": 420432};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "in": "在", "said": "说", "to": "到", "his": "他的", "university": "大学", "at": "在", "was": "是", "as": "作为", "professor": "教授", "he": "他", "this": "这个", "an": "一个", "on": "在", "work": "工作", "that": "那个", "by": "被", "had": "有", "have": "有", "who": "谁", "it": "它", "jason": "杰森", "week": "周", "after": "之后", "about": "关于", "time": "时间", "death": "死亡", "not": "不", "be": "是", "academic": "学术的", "from": "来自", "appointment": "任命", "row": "争吵", "education": "教育", "last": "最后", "for": "为了", "earlier": "较早", "is": "是", "being": "正在", "are": "是", "him": "他", "former": "前任", "been": "已经", "found": "发现", "london": "伦敦", "some": "一些", "family": "家庭", "statement": "声明", "added": "补充", "saddened": "感到悲伤的", "she": "她", "errors": "错误", "public": "公众", "me": "我", "black": "黑色", "what": "什么", "beyond": "超出", "those": "那些", "should": "应该", "into": "进入", "understand": "理解", "has": "有", "man": "男子", "address": "地址", "friday": "星期五", "resigned": "辞职的", "questions": "问题", "denied": "拒绝", "claims": "声称", "they": "它们", "were": "是", "campaign": "竞选活动", "too": "太", "police": "警方", "but": "但是", "desperately": "拼命地", "hear": "听到", "news": "新闻", "our": "我们的", "friends": "朋友", "shocked": "震惊", "people": "人们", "with": "与", "personal": "个人", "another": "另一个", "similar": "类似的", "would": "将", "find": "找到", "experienced": "经历", "kind": "种类", "carried": "进行", "ever": "曾经", "age": "年龄", "resignation": "辞职", "become": "成为", "great": "伟大的", "life": "生活", "regarding": "关于", "question": "问题", "announced": "宣布", "investigation": "调查", "will": "将", "one": "一个", "uk": "英国", "including": "包括", "also": "也", "appointed": "任命", "do": "做", "before": "之前", "going": "将要", "event": "事件", "book": "预订", "until": "直到", "centre": "中心", "dead": "死亡", "emergency": "紧急", "services": "服务", "south": "韩国", "afternoon": "下午", "allegations": "指控", "achievements": "成就", "shock": "震惊", "lost": "失去", "amazing": "惊人的", "father": "父亲", "partner": "伴侣", "brother": "兄弟", "son": "儿子", "misinformation": "错误信息", "much": "许多", "gentle": "温和的", "always": "总是", "wanted": "想要", "see": "看到", "best": "最佳", "everyone": "每个人", "officers": "官员", "called": "称为", "ambulance": "救护车", "service": "服务", "metropolitan": "伦敦警察厅", "treated": "接受治疗", "unexpected": "意外的", "believed": "据信", "suspicious": "可疑的", "we": "我们", "tragic": "悲惨的", "heartfelt": "衷心的", "go": "去", "incredibly": "极其", "difficult": "困难的", "secretary": "秘书", "lucy": "露西", "powell": "鲍威尔", "deeply": "深深地", "urged": "敦促", "remember": "记住", "there": "那里", "real": "真正的", "loved": "爱过的", "ones": "人们", "involved": "涉及的", "any": "任何", "admitted": "承认", "recent": "最近", "led": "带领", "level": "水平", "attack": "袭击", "first": "第一轮", "erupted": "爆发", "race": "种族", "sacked": "解雇", "role": "角色", "numerous": "众多的", "instances": "事例", "early": "早期的", "because": "因为", "using": "使用", "make": "使", "sense": "感觉", "information": "信息", "other": "其他", "we're": "我们是", "talking": "谈论", "here": "这里", "didn't": "没有", "murder": "谋杀", "somebody": "某人", "think": "认为", "i've": "我已经", "totally": "完全地", "unacceptable": "不可接受", "told": "告诉", "times": "次", "newspaper": "报纸", "external": "外部的", "month": "月份", "leg": "腿", "between": "之间", "moment": "时刻", "announcing": "宣布", "cost": "成本", "while": "而", "criticism": "批评", "inevitable": "不可避免的", "part": "部分", "gone": "已去", "far": "远", "accusations": "指控", "speculation": "猜测", "commentary": "评论", "taken": "采取", "profound": "深刻的", "love": "爱", "stressed": "强调", "acceptance": "接受", "narratives": "叙事", "surrounded": "被环绕的", "initially": "最初", "journal": "期刊", "publications": "出版物", "investigated": "被调查", "liverpool": "利物浦", "john": "约翰", "which": "哪个", "awarded": "被授予", "concluded": "得出结论", "independent": "独立的", "letter": "信件", "staff": "员工", "prof": "教授", "fully": "完全地", "concerns": "担忧", "raised": "提出的", "across": "跨越", "well": "好", "share": "分享", "them": "他们", "you": "你", "say": "说", "thorough": "彻底的", "out": "出来", "independently": "独立地", "senior": "高级", "within": "在内部", "celebrated": "庆祝的", "young": "年轻的", "tiny": "微小的", "visible": "可见的", "majority": "多数", "only": "只有", "per": "每", "making": "进行", "each": "每个", "hugely": "极其", "significant": "重大", "answer": "回答", "bigger": "更大的", "its": "它的", "duty": "职责", "care": "照顾", "put": "提出", "very": "非常", "prominent": "著名的", "position": "立场", "may": "可能", "itself": "自身", "lightning": "闪电", "anger": "愤怒", "several": "数个", "different": "不同的", "feel": "感觉", "publicly": "公开地", "whether": "是否", "group": "团体", "good": "良好", "law": "法律", "project": "项目", "tragedy": "悲剧", "interest": "兴趣", "continuing": "持续", "risk": "风险", "media": "媒体", "outlets": "出口", "did": "做了", "originally": "最初", "worked": "工作", "pe": "体育课", "teacher": "教师", "earning": "赚取", "associate": "关联", "review": "审查", "previous": "先前", "when": "当", "emerged": "出现", "thoughts": "想法", "deepest": "最深切的", "sad": "悲伤的", "employers": "雇主", "described": "描述", "warm": "温暖的", "person": "个人", "sought": "寻求", "promote": "促进", "opportunities": "机会", "students": "学生", "weekend": "周末", "cancelled": "取消", "promoting": "宣传", "memoir": "回忆录", "simon": "西蒙", "previously": "此前", "unfortunate": "不幸", "things": "事情", "published": "发布", "august": "八月", "released": "释放", "us": "我们", "tells": "告诉", "story": "故事", "unable": "无法", "read": "阅读", "or": "或者", "write": "写", "then": "然后", "through": "通过", "series": "系列", "heartbreaking": "令人心碎的", "additional": "额外的", "reporting": "报道", "live": "生活", "belfast": "贝尔法斯特", "investigate": "调查", "co-authored": "合著", "arday": "阿迪", "cambridge": "剑桥", "arday's": "阿迪的", "sociology": "社会学", "battersea": "巴特西", "prentice": "普伦蒂斯", "sympathies": "同情", "academics": "学者", "academia": "学术界", "ljmu": "利物浦约翰摩尔斯大学", "phd": "博士", "maugham": "毛姆", "durham": "达勒姆", "glasgow": "格拉斯哥", "uncle": "叔叔", "vice-chancellor": "副校长", "deborah": "黛博拉", "unrelenting": "不懈的", "self-defined": "自我定义的", "realist": "现实主义者", "nathan": "内森", "cofnas": "科夫纳斯", "professor's": "教授的", "arose": "出现", "autism": "自闭症", "relied": "依赖", "mimicry": "模仿", "cruelty": "残忍", "positioning": "定位", "liar": "说谎者", "fantasist": "幻想家", "olympic": "奥运", "flame": "火焰", "torch": "火炬", "relay": "接力", "sutton": "萨顿", "merton": "默顿", "cambridge's": "剑桥的", "youngest": "最年轻的", "hailed": "被誉为", "progressive": "进步的", "scholarly": "学术的", "disagreement": "分歧", "relentless": "无情的", "mistaken": "错误的", "thesis": "论文", "moores": "穆尔斯", "journals": "期刊", "plagiarised": "剽窃", "transparent": "透明的", "cent": "分", "professors": "教授们", "universities": "大学", "rod": "杆", "quarters": "四分之一", "persecuted": "被迫害", "jolyon": "乔利昂", "hound": "猎犬", "assessments": "评估", "doctorate": "博士学位", "lmju": "LMJU", "colleague": "同事", "actively": "积极地", "publisher": "出版商", "schuster": "舒斯特", "non-verbal": "非语言的", "improbable": "不可能的", "triumphs": "胜利", "setbacks": "挫折", "branwen": "布兰文", "jeffreys": "杰弗里斯", "ex-cambridge": "前剑桥", "cancels": "取消"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
