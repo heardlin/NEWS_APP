@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-16</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-16</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6b3a/live/65ee2c30-99a4-11f1-a10a-71ff76b28954.jpg" alt="Trump envoy Kushner meets Hamas leader to push Gaza peace plan" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump envoy Kushner meets Hamas leader to push Gaza peace plan</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c77gg5vn44yo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-16.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The UN estimates that about 1.9 million people - 90% of Gaza's population - have been <span class="keyword" data-word="displaced" data-phonetic="/dɪsˈpleɪst/" data-pos="adj." data-def="流离失所的" data-def-en="forced to leave one's home, typically due to war or disaster">displaced</span> since the war started</span></p>
+        <p class="cn">联合国估计，自战争开始以来，加沙约有190万人（占人口的90%）流离失所。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">US President Donald Trump's Middle East <span class="keyword" data-word="envoy" data-phonetic="/ˈenvɔɪ/" data-pos="n." data-def="特使，使节" data-def-en="a person sent on a diplomatic mission">envoy</span> Jared Kushner has held rare talks with Hamas to discuss the <span class="keyword" data-word="implementation" data-phonetic="/ˌɪmplɪmenˈteɪʃn/" data-pos="n." data-def="实施，执行" data-def-en="the process of putting a plan or decision into effect">implementation</span> of the US-backed Gaza peace plan.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普的中东特使贾里德·库什纳与哈马斯举行了罕见会谈，讨论实施美国支持的加沙和平计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">A Palestinian official told the BBC Trump's son-in-law met a delegation led by Hamas's new leader Khalil al-Hayya in Egypt on Sunday.</span></p>
+        <p class="cn">一名巴勒斯坦官员告诉BBC，特朗普的女婿于周日（4月6日）在埃及会见了由哈马斯新领导人哈利勒·哈亚率领的代表团。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Last month, Trump's Board of Peace said it had reached agreement for the "complete <span class="keyword" data-word="disarmament" data-phonetic="/dɪsˈɑːməmənt/" data-pos="n." data-def="解除武装，裁军" data-def-en="the reduction or withdrawal of military forces and weapons">disarmament</span>" of Hamas and other armed group in Gaza.</span> <span class="sentence" data-sentence-index="4">Last week, Israel rejected Trump's 15-point plan which also calls for Israeli troops to <span class="keyword" data-word="withdraw" data-phonetic="/wɪðˈdrɔː/" data-pos="v." data-def="撤退，撤出" data-def-en="to remove or take back troops or forces from a place">withdraw</span> and for Gaza to be rebuilt under a new civilian Palestinian administration.</span></p>
+        <p class="cn">上个月，特朗普的和平委员会表示，已就哈马斯及其他加沙武装组织的“彻底解除武装”达成协议。上周，以色列拒绝了特朗普的15点计划，该计划还要求以色列军队撤出，并在新的巴勒斯坦文职政府下重建加沙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Eight Muslim countries issued a statement on Sunday <span class="keyword" data-word="condemning" data-phonetic="/kənˈdemɪŋ/" data-pos="v." data-def="谴责" data-def-en="expressing strong disapproval of something">condemning</span> Israel's rejection.</span></p>
+        <p class="cn">八个穆斯林国家周日发表声明，谴责以色列的拒绝。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Trump leads the Board of Peace - created as an international organisation originally intended to bring peace to Gaza, but later expanded to include conflicts worldwide.</span></p>
+        <p class="cn">特朗普领导和平委员会——该委员会最初作为国际组织成立，旨在为加沙带来和平，但后来扩展至处理全球冲突。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Kushner's meeting with Hayya is said to be the first at this level since last year's agreement of a ceasefire for the Gaza Strip.</span></p>
+        <p class="cn">据称，库什纳与哈亚的会晤是自去年加沙停火协议达成以来首次此级别的接触。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">According to reports, Board of Peace envoys Nickolay Mladenov and UK ex-Prime Minister Tony Blair were also part of the meeting - alongside representatives of Egypt, Qatar and Turkey, which have mediated in the peace efforts.</span></p>
+        <p class="cn">据报道，和平委员会特使尼科莱·姆拉德诺夫和英国前首相托尼·布莱尔也参加了会议，此外还有埃及、卡塔尔和土耳其的代表，这些国家一直在调解和平努力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">No official statement has been released of the talks reportedly focusing on concrete actions to <span class="keyword" data-word="decommission" data-phonetic="/ˌdiːkəˈmɪʃn/" data-pos="v." data-def="使退役，拆除" data-def-en="to take equipment or weapons out of service">decommission</span> Hamas's weapons - as well as the withdrawal of Israeli troops and humanitarian efforts.</span></p>
+        <p class="cn">目前尚未发布官方声明，据报道会谈聚焦于解除哈马斯武装的具体行动，以及以色列军队撤出和人道主义努力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Jared Kushner also met Egyptian President Abdel Fattah al-Sisi on Sunday</span></p>
+        <p class="cn">贾里德·库什纳周日还会见了埃及总统阿卜杜勒·法塔赫·塞西。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Whilst in Egypt, Kushner also met Egyptian President Abdel Fattah al-Sisi.</span> <span class="sentence" data-sentence-index="12">According to Israeli media reports, Kushner, Mladenov and Blair will meet Netanyahu on Monday with the aim of advancing Trump's plan.</span></p>
+        <p class="cn">在埃及期间，库什纳还会见了埃及总统阿卜杜勒·法塔赫·塞西。据以色列媒体报道，库什纳、姆拉德诺夫和布莱尔将于周一与内塔尼亚胡会面，旨在推进特朗普的计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">The Israeli prime minister has said he wants a full Hamas <span class="keyword" data-word="disarmament" data-phonetic="/dɪsˈɑːməmənt/" data-pos="n." data-def="解除武装，裁军" data-def-en="the reduction or withdrawal of military forces and weapons">disarmament</span> first in order to implement the deal.</span></p>
+        <p class="cn">以色列总理表示，他希望哈马斯首先全面解除武装，以实施该协议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">"Israel rejects the Board of Peace's 15-point document on Gaza.</span> <span class="sentence" data-sentence-index="15">The IDF will not carry out any withdrawal until Hamas is genuinely disarmed," Netanyahu said last week defying Israel's closest ally.</span></p>
+        <p class="cn">内塔尼亚胡上周表示：“以色列拒绝和平委员会关于加沙的15点文件。在哈马斯真正解除武装之前，以色列国防军不会进行任何撤军。”这公然违背了以色列最亲密盟友的意愿。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">In a joint statement on Sunday, Egypt, UAE, Qatar, Saudi Arabia, Jordan, Turkey, Pakistan and Indonesia said Israel's rejection of the US plan threatened Trump's efforts for peace.</span></p>
+        <p class="cn">在周日的一份联合声明中，埃及、阿联酋、卡塔尔、沙特阿拉伯、约旦、土耳其、巴基斯坦和印度尼西亚表示，以色列拒绝美国计划威胁了特朗普的和平努力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">The ceasefire, which came into effect on 10 October last year, remains in place.</span></p>
+        <p class="cn">停火协议于去年10月10日生效，目前仍然有效。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">However, the Israel Defense Forces have carried out several strikes in Gaza since then - the latest on "terrorists" in Khan Yunis and Nuseirat areas of Gaza - accusing Hamas of breaking the <span class="keyword" data-word="truce" data-phonetic="/truːs/" data-pos="n." data-def="停战，休战" data-def-en="an agreement between enemies to stop fighting for a period of time">truce</span>.</span></p>
+        <p class="cn">然而，自那时起，以色列国防军在加沙进行了多次打击——最近一次是针对加沙汗尤尼斯和努塞拉特地区的“恐怖分子”——指责哈马斯违反停火协议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">The war was triggered by the Hamas-led attack on southern Israel on 7 October 2023, in which about 1,200 people were killed and 251 others were taken hostage.</span></p>
+        <p class="cn">这场战争是由哈马斯领导的袭击引发的，2023年10月7日，哈马斯袭击以色列南部，造成约1200人死亡，251人被扣为人质。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Israel responded to the attack by launching a military campaign in Gaza, during which more than 73,000 people have been killed, according to the territory's health ministry, whose figures are considered reliable by the UN.</span></p>
+        <p class="cn">以色列对袭击的回应是在加沙发动军事行动，据该地区卫生部称，已有超过7.3万人被杀，联合国认为该数据可靠。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">The UN estimates that about 1.9 million people - 90% of Gaza's population - have been <span class="keyword" data-word="displaced" data-phonetic="/dɪsˈpleɪst/" data-pos="adj." data-def="流离失所的" data-def-en="forced to leave one's home, typically due to war or disaster">displaced</span> since the war started.</span></p>
+        <p class="cn">联合国估计，自战争开始以来，加沙约有190万人（占人口的90%）流离失所。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Netanyahu's rejection of Trump's 15-point Gaza plan unlikely to be final word</span></p>
+        <p class="cn">内塔尼亚胡拒绝特朗普的15点加沙计划不太可能是最终决定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">Who is on Trump's 'Board of Peace' overseeing Gaza's reconstruction?</span></p>
+        <p class="cn">特朗普的“和平委员会”中谁在监督加沙重建？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Hamas names Khalil al-Hayya as new overall leader</span></p>
+        <p class="cn">哈马斯任命哈利勒·哈亚为新任最高领导人。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">displaced</span>
+        <button class="kw-speak-btn" data-word="displaced" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈpleɪst/ adj.</span>
+      </div>
+      <p class="kw-def">流离失所的</p>
+      <p class="kw-def-en">forced to leave one's home, typically due to war or disaster</p>
+      <p class="kw-ctx">&ldquo;The UN estimates that about 1.9 million people - 90% of Gaza's population - have been displaced since the war started.&rdquo;</p>
+      <p class="kw-ctx-cn">联合国估计，自战争开始以来，约有190万人——占加沙人口的90%——流离失所。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">envoy</span>
+        <button class="kw-speak-btn" data-word="envoy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈenvɔɪ/ n.</span>
+      </div>
+      <p class="kw-def">特使，使节</p>
+      <p class="kw-def-en">a person sent on a diplomatic mission</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump's Middle East envoy Jared Kushner has held rare talks with Hamas to discuss the implementation of the US-backed Gaza peace plan.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统特朗普的中东特使贾里德·库什纳与哈马斯举行了罕见会谈，讨论实施美国支持的加沙和平计划。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">implementation</span>
+        <button class="kw-speak-btn" data-word="implementation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪmplɪmenˈteɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">实施，执行</p>
+      <p class="kw-def-en">the process of putting a plan or decision into effect</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump's Middle East envoy Jared Kushner has held rare talks with Hamas to discuss the implementation of the US-backed Gaza peace plan.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统特朗普的中东特使贾里德·库什纳与哈马斯举行了罕见会谈，讨论实施美国支持的加沙和平计划。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disarmament</span>
+        <button class="kw-speak-btn" data-word="disarmament" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈɑːməmənt/ n.</span>
+      </div>
+      <p class="kw-def">解除武装，裁军</p>
+      <p class="kw-def-en">the reduction or withdrawal of military forces and weapons</p>
+      <p class="kw-ctx">&ldquo;Last month, Trump's Board of Peace said it had reached agreement for the "complete disarmament" of Hamas and other armed group in Gaza.&rdquo;</p>
+      <p class="kw-ctx-cn">上个月，特朗普的和平委员会表示，已就哈马斯和加沙其他武装组织的“完全解除武装”达成协议。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">withdraw</span>
+        <button class="kw-speak-btn" data-word="withdraw" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/wɪðˈdrɔː/ v.</span>
+      </div>
+      <p class="kw-def">撤退，撤出</p>
+      <p class="kw-def-en">to remove or take back troops or forces from a place</p>
+      <p class="kw-ctx">&ldquo;Last week, Israel rejected Trump's 15-point plan which also calls for Israeli troops to withdraw and for Gaza to be rebuilt under a new civilian Palestinian administration.&rdquo;</p>
+      <p class="kw-ctx-cn">上周，以色列拒绝了特朗普的15点计划，该计划还要求以色列军队撤出，并在新的巴勒斯坦文职政府下重建加沙。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">condemning</span>
+        <button class="kw-speak-btn" data-word="condemning" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈdemɪŋ/ v.</span>
+      </div>
+      <p class="kw-def">谴责</p>
+      <p class="kw-def-en">expressing strong disapproval of something</p>
+      <p class="kw-ctx">&ldquo;Eight Muslim countries issued a statement on Sunday condemning Israel's rejection.&rdquo;</p>
+      <p class="kw-ctx-cn">八个穆斯林国家周日发表声明，谴责以色列的拒绝。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">decommission</span>
+        <button class="kw-speak-btn" data-word="decommission" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdiːkəˈmɪʃn/ v.</span>
+      </div>
+      <p class="kw-def">使退役，拆除</p>
+      <p class="kw-def-en">to take equipment or weapons out of service</p>
+      <p class="kw-ctx">&ldquo;No official statement has been released of the talks reportedly focusing on concrete actions to decommission Hamas's weapons - as well as the withdrawal of Israeli troops and humanitarian efforts.&rdquo;</p>
+      <p class="kw-ctx-cn">据报道，会谈聚焦于解除哈马斯武器的具体行动，以及以色列军队撤出和人道主义努力，但尚未发布官方声明。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">truce</span>
+        <button class="kw-speak-btn" data-word="truce" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/truːs/ n.</span>
+      </div>
+      <p class="kw-def">停战，休战</p>
+      <p class="kw-def-en">an agreement between enemies to stop fighting for a period of time</p>
+      <p class="kw-ctx">&ldquo;However, the Israel Defense Forces have carried out several strikes in Gaza since then - the latest on "terrorists" in Khan Yunis and Nuseirat areas of Gaza - accusing Hamas of breaking the truce.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，以色列国防军此后在加沙进行了多次打击——最近一次是针对加沙汗尤尼斯和努塞拉特地区的“恐怖分子”——指责哈马斯破坏停战。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The UN estimates that about 1.9 million people - 90% of Gaza's population - have been displaced since the war started", "start_ms": 0, "end_ms": 9552, "paragraph_index": 0}, {"index": 1, "text": "US President Donald Trump's Middle East envoy Jared Kushner has held rare talks with Hamas to discuss the implementation of the US-backed Gaza peace plan.", "start_ms": 9552, "end_ms": 20400, "paragraph_index": 1}, {"index": 2, "text": "A Palestinian official told the BBC Trump's son-in-law met a delegation led by Hamas's new leader Khalil al-Hayya in Egypt on Sunday.", "start_ms": 20400, "end_ms": 30480, "paragraph_index": 2}, {"index": 3, "text": "Last month, Trump's Board of Peace said it had reached agreement for the \"complete disarmament\" of Hamas and other armed group in Gaza.", "start_ms": 30480, "end_ms": 39288, "paragraph_index": 3}, {"index": 4, "text": "Last week, Israel rejected Trump's 15-point plan which also calls for Israeli troops to withdraw and for Gaza to be rebuilt under a new civilian Palestinian administration.", "start_ms": 39288, "end_ms": 51912, "paragraph_index": 3}, {"index": 5, "text": "Eight Muslim countries issued a statement on Sunday condemning Israel's rejection.", "start_ms": 51912, "end_ms": 57912, "paragraph_index": 4}, {"index": 6, "text": "Trump leads the Board of Peace - created as an international organisation originally intended to bring peace to Gaza, but later expanded to include conflicts worldwide.", "start_ms": 57912, "end_ms": 69696, "paragraph_index": 5}, {"index": 7, "text": "Kushner's meeting with Hayya is said to be the first at this level since last year's agreement of a ceasefire for the Gaza Strip.", "start_ms": 69696, "end_ms": 77808, "paragraph_index": 6}, {"index": 8, "text": "According to reports, Board of Peace envoys Nickolay Mladenov and UK ex-Prime Minister Tony Blair were also part of the meeting - alongside representatives of Egypt, Qatar and Turkey, which have mediated in the peace efforts.", "start_ms": 77808, "end_ms": 93456, "paragraph_index": 7}, {"index": 9, "text": "No official statement has been released of the talks reportedly focusing on concrete actions to decommission Hamas's weapons - as well as the withdrawal of Israeli troops and humanitarian efforts.", "start_ms": 93456, "end_ms": 106464, "paragraph_index": 8}, {"index": 10, "text": "Jared Kushner also met Egyptian President Abdel Fattah al-Sisi on Sunday", "start_ms": 106464, "end_ms": 112656, "paragraph_index": 9}, {"index": 11, "text": "Whilst in Egypt, Kushner also met Egyptian President Abdel Fattah al-Sisi.", "start_ms": 112656, "end_ms": 119112, "paragraph_index": 10}, {"index": 12, "text": "According to Israeli media reports, Kushner, Mladenov and Blair will meet Netanyahu on Monday with the aim of advancing Trump's plan.", "start_ms": 119112, "end_ms": 128928, "paragraph_index": 10}, {"index": 13, "text": "The Israeli prime minister has said he wants a full Hamas disarmament first in order to implement the deal.", "start_ms": 128928, "end_ms": 136152, "paragraph_index": 11}, {"index": 14, "text": "\"Israel rejects the Board of Peace's 15-point document on Gaza.", "start_ms": 136152, "end_ms": 141552, "paragraph_index": 12}, {"index": 15, "text": "The IDF will not carry out any withdrawal until Hamas is genuinely disarmed,\" Netanyahu said last week defying Israel's closest ally.", "start_ms": 141552, "end_ms": 152088, "paragraph_index": 12}, {"index": 16, "text": "In a joint statement on Sunday, Egypt, UAE, Qatar, Saudi Arabia, Jordan, Turkey, Pakistan and Indonesia said Israel's rejection of the US plan threatened Trump's efforts for peace.", "start_ms": 152088, "end_ms": 166848, "paragraph_index": 13}, {"index": 17, "text": "The ceasefire, which came into effect on 10 October last year, remains in place.", "start_ms": 166848, "end_ms": 173304, "paragraph_index": 14}, {"index": 18, "text": "However, the Israel Defense Forces have carried out several strikes in Gaza since then - the latest on \"terrorists\" in Khan Yunis and Nuseirat areas of Gaza - accusing Hamas of breaking the truce.", "start_ms": 173304, "end_ms": 186840, "paragraph_index": 15}, {"index": 19, "text": "The war was triggered by the Hamas-led attack on southern Israel on 7 October 2023, in which about 1,200 people were killed and 251 others were taken hostage.", "start_ms": 186840, "end_ms": 200616, "paragraph_index": 16}, {"index": 20, "text": "Israel responded to the attack by launching a military campaign in Gaza, during which more than 73,000 people have been killed, according to the territory's health ministry, whose figures are considered reliable by the UN.", "start_ms": 200616, "end_ms": 216048, "paragraph_index": 17}, {"index": 21, "text": "The UN estimates that about 1.9 million people - 90% of Gaza's population - have been displaced since the war started.", "start_ms": 216048, "end_ms": 225600, "paragraph_index": 18}, {"index": 22, "text": "Netanyahu's rejection of Trump's 15-point Gaza plan unlikely to be final word", "start_ms": 225600, "end_ms": 232176, "paragraph_index": 19}, {"index": 23, "text": "Who is on Trump's 'Board of Peace' overseeing Gaza's reconstruction?", "start_ms": 232176, "end_ms": 237024, "paragraph_index": 20}, {"index": 24, "text": "Hamas names Khalil al-Hayya as new overall leader", "start_ms": 237024, "end_ms": 241560, "paragraph_index": 21}], "total_duration_ms": 241560};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "on": "在", "in": "在", "gaza": "加沙", "and": "和", "trump's": "特朗普的", "peace": "和平", "have": "有", "plan": "计划", "last": "最后", "board": "董事会", "said": "说", "for": "为了", "israel": "以色列", "which": "哪个", "people": "人们", "been": "已经", "since": "自从", "kushner": "库什纳", "by": "被", "egypt": "埃及", "sunday": "星期日", "also": "也", "israeli": "以色列的", "as": "作为", "un": "联合国", "about": "关于", "war": "战争", "president": "总统", "has": "有", "with": "与", "met": "伦敦警察厅", "new": "新的", "point": "点", "be": "是", "statement": "声明", "israel's": "以色列的", "rejection": "拒绝", "is": "是", "according": "根据", "were": "是", "efforts": "努力", "estimates": "估计", "that": "那个", "million": "百万", "population": "人口", "started": "开始", "us": "我们", "jared": "贾里德", "talks": "会谈", "palestinian": "巴勒斯坦的", "official": "官方", "leader": "领导人", "agreement": "协议", "week": "周", "troops": "部队", "meeting": "会议", "first": "第一轮", "ceasefire": "停火", "reports": "报道", "minister": "部长", "blair": "布莱尔", "qatar": "卡塔尔", "turkey": "土耳其", "withdrawal": "撤军", "will": "将", "netanyahu": "内塔尼亚胡", "out": "出来", "october": "十月", "attack": "袭击", "killed": "杀死", "donald": "唐纳德", "middle": "中间", "east": "东部", "held": "举行", "rare": "罕见的", "discuss": "讨论", "told": "告诉", "bbc": "英国广播公司", "son-in-law": "女婿", "delegation": "代表团", "led": "带领", "month": "月份", "it": "它", "had": "有", "reached": "达成", "complete": "完全的", "other": "其他", "armed": "武装的", "group": "团体", "rejected": "拒绝", "calls": "呼吁", "under": "在...之下", "civilian": "平民", "administration": "政府", "eight": "八", "muslim": "穆斯林", "countries": "国家", "issued": "发布", "trump": "特朗普", "leads": "领先", "created": "创建", "an": "一个", "international": "国际", "organisation": "组织", "originally": "最初", "intended": "打算的", "bring": "带来", "but": "但是", "later": "后来", "expanded": "扩大", "include": "包括", "conflicts": "冲突", "at": "在", "this": "这个", "level": "水平", "year's": "今年的", "strip": "地带", "uk": "英国", "tony": "托尼", "part": "部分", "alongside": "与...一起", "representatives": "代表", "mediated": "调解的", "no": "没有", "released": "释放", "reportedly": "据报道", "focusing": "聚焦", "concrete": "混凝土", "actions": "行动", "weapons": "武器", "well": "好", "humanitarian": "人道主义的", "whilst": "当", "media": "媒体", "meet": "会见", "monday": "星期一", "aim": "目标", "prime": "首相", "he": "他", "wants": "想要", "full": "完整", "order": "命令", "implement": "实施", "deal": "协议", "document": "文件", "not": "不", "carry": "携带", "any": "任何", "until": "直到", "closest": "最亲密的", "ally": "盟友", "joint": "联合的", "uae": "阿联酋", "saudi": "沙特", "arabia": "阿拉伯", "jordan": "约旦", "pakistan": "巴基斯坦", "indonesia": "印度尼西亚", "threatened": "威胁", "came": "到来", "into": "进入", "effect": "效果", "year": "年", "remains": "仍然", "place": "地点", "however": "然而", "forces": "力量", "carried": "进行", "several": "数个", "strikes": "袭击", "then": "然后", "latest": "最新的", "terrorists": "恐怖分子", "khan": "汗", "areas": "区域", "accusing": "指责", "breaking": "打破", "was": "是", "triggered": "引发", "southern": "南部的", "others": "其他", "taken": "采取", "hostage": "人质", "responded": "回应", "launching": "发起", "military": "军事", "campaign": "竞选活动", "during": "在期间", "more": "更多", "than": "比", "health": "健康", "ministry": "外交部", "whose": "谁的", "figures": "人物", "are": "是", "considered": "认为", "reliable": "可靠的", "unlikely": "不太可能", "final": "最终", "word": "单词", "who": "谁", "reconstruction": "重建", "names": "名字", "overall": "总体", "hamas": "哈马斯", "gaza's": "加沙的", "hamas's": "哈马斯的", "khalil": "哈利勒", "al-hayya": "哈亚", "mladenov": "姆拉德诺夫", "egyptian": "埃及的", "abdel": "阿卜杜勒", "fattah": "法塔赫", "al-sisi": "塞西", "us-backed": "美国支持的", "rebuilt": "重建的", "worldwide": "全球的", "kushner's": "库什纳的", "hayya": "哈亚", "envoys": "特使", "nickolay": "尼古拉", "ex-prime": "前总理", "advancing": "推进", "rejects": "拒绝", "peace's": "和平的", "idf": "以色列国防军", "genuinely": "真正地", "disarmed": "解除武装的", "defying": "违抗", "defense": "国防", "yunis": "尤尼斯", "nuseirat": "努塞拉特", "hamas-led": "哈马斯领导的", "territory's": "领土的", "netanyahu's": "内塔尼亚胡的", "overseeing": "监督"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
