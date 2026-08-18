@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-18</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-18</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/12c7/live/b5979a20-9b4b-11f1-a4d5-27953a73ef84.jpg" alt="Three dead after family get into difficulty in sea" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Three dead after family get into difficulty in sea</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cm2gmjd36pvo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-18.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Emergency services at scene of Shoreham <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件，事故" data-def-en="an event, especially one that is unusual or unpleasant">incident</span></span></p>
+        <p class="cn">肖勒姆事件现场的应急服务</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Three members of the same family have died after getting into difficulty in the water off Shoreham-by-Sea.</span></p>
+        <p class="cn">同一家庭的三名成员在肖勒姆海上遇险后不幸身亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Sussex Police said three people - a man, a woman, and a teenage girl - had died, while a younger girl from the same family was in hospital in a <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous; at a point of crisis">critical</span> condition.</span></p>
+        <p class="cn">苏塞克斯警方表示，三人——一名男子、一名女子和一名少女——已经死亡，而同家庭的另一名较年幼女孩正在医院接受治疗，情况危急。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Emergency services were called shortly after 15:00 BST on Tuesday to reports of four people in difficulty in the sea close to Shoreham Port.</span></p>
+        <p class="cn">周二英国夏令时15:00刚过，应急服务接到报告称有四人肖勒姆港附近海域遇险，随即赶往现场。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Witnesses described seeing large numbers of emergency vehicles and helicopters arriving at the seafront as coastguard crews, RNLI lifeboats, air ambulances, police officers and ambulance crews responded.</span></p>
+        <p class="cn">目击者描述看到大量应急车辆和直升机抵达海滨，海岸警卫队、皇家全国救生艇协会（RNLI）救生艇、空中救护车、警察和救护人员均作出响应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Ch Supt James Collis said relatives had been informed and were being supported by specialist officers.</span></p>
+        <p class="cn">总警司詹姆斯·科利斯表示，已通知遇难者亲属，并由专业警员提供支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"At this point, we believe all four entered the water from the land for a swim, and sadly got into difficulty," he said.</span></p>
+        <p class="cn">他说：“目前我们认为，这四人是从岸边下水游泳，不幸遇险。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Coastguards have completed an <span class="keyword" data-word="extensive" data-phonetic="/ɪkˈstensɪv/" data-pos="adj." data-def="广泛的，大规模的" data-def-en="covering a large area; having a great range or scope">extensive</span> search of the water and are not searching for anyone else, he said.</span></p>
+        <p class="cn">他表示，海岸警卫队已完成对水域的全面搜索，并未在寻找其他人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">He said the <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件，事故" data-def-en="an event, especially one that is unusual or unpleasant">incident</span> had had a <span class="keyword" data-word="profound" data-phonetic="/prəˈfaʊnd/" data-pos="adj." data-def="深刻的，深远的" data-def-en="very great or intense; having a deep effect">profound</span> effect on the local community.</span></p>
+        <p class="cn">他说，这一事件对当地社区产生了深远影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Appealing for witnesses, he said inquiries were ongoing to understand the full details.</span></p>
+        <p class="cn">他呼吁目击者提供信息，并表示调查正在进行，以了解全部细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">A spokesperson for Air Ambulance Charity Kent Surrey Sussex said both of its helicopters and <span class="keyword" data-word="critical" data-phonetic="/ˈkrɪtɪkl/" data-pos="adj." data-def="危急的，关键的" data-def-en="extremely serious or dangerous; at a point of crisis">critical</span> care team had been sent to the scene as part of the response, and Shoreham RNLI said its lifeboat had beencalled out at 15:00 BST.</span></p>
+        <p class="cn">肯特、萨里和苏塞克斯空中救护慈善机构发言人表示，作为响应的一部分，其两架直升机和重症监护团队已被派往现场，肖勒姆皇家全国救生艇协会（RNLI）表示其救生艇于英国夏令时15:00出动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">South East Coast Ambulance Service (Secamb) said it had been called to "reports of four people in need of medical attention".</span></p>
+        <p class="cn">东南海岸救护车服务（Secamb）表示，他们接到“四人需要医疗救助”的报告。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">A section of the A259 â a main commuter road which runs through Brighton, Shoreham and Worthing â was closed.</span></p>
+        <p class="cn">A259公路——一条贯穿布莱顿、肖勒姆和沃辛的主要通勤道路——的部分路段被封闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">BBC reporter Callum French said despite warm weather, sea conditions had been "pretty rough" because of high winds, describing the response as " the biggest turnout [of emergency services] I have seen ".</span></p>
+        <p class="cn">BBC记者卡勒姆·弗伦奇表示，尽管天气温暖，但由于强风，海况“相当恶劣”，并将此次响应描述为“我所见过的（应急服务）最大规模出动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Witnesses described seeing large numbers of emergency vehicles and helicopters arriving at the seafront.</span></p>
+        <p class="cn">目击者描述看到大量应急车辆和直升机抵达海滨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Resident Shirley Pumfrey said: "I have never seen them do that.</span> <span class="sentence" data-sentence-index="17">The whole road was just full of emergency services.</span></p>
+        <p class="cn">居民雪莉·庞弗雷说：“我从未见过他们这样。整条路上都是应急服务车辆。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">"It was horrific and quite scary to see that many."</span></p>
+        <p class="cn">“看到这么多，真是可怕又吓人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Steve Chapman, who lives opposite the beach, said he couldn't get into his road because it was cordoned off.</span></p>
+        <p class="cn">住在海滩对面的史蒂夫·查普曼说，他无法进入自己的街道，因为已被封锁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">"There were all sorts of rumours flying around, it was very upsetting," he said.</span></p>
+        <p class="cn">他说：“各种谣言四起，非常令人不安。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Another resident, Pete Book, said he was walking home from the pub when he saw ambulances, coastguard crews and helicopters converging on the area.</span></p>
+        <p class="cn">另一位居民皮特·布克说，他正从酒吧步行回家时，看到救护车、海岸警卫队和直升机聚集在该地区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Shelley Ayres, who also lives opposite the beach at Shoreham, said: "The sea has been very calm for months and months, but today it has got a lot rougher."</span></p>
+        <p class="cn">同样住在肖勒姆海滩对面的雪莉·艾尔斯说：“几个月来海面一直很平静，但今天变得汹涌多了。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Tom Rutland, East Worthing and Shoreham MP, earlier urged people to stay away from the area while emergency services dealt with the <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件，事故" data-def-en="an event, especially one that is unusual or unpleasant">incident</span>.</span></p>
+        <p class="cn">东沃辛和肖勒姆议员汤姆·拉特兰早些时候敦促人们在应急服务处理事件期间远离该地区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">After news emerged of the deaths, he said his thoughts were with the family and friends of those who had died and he added: "I know the whole community here in Shoreham will be hoping and praying for the recovery of the young girl , external receiving medical treatment in hospital."</span></p>
+        <p class="cn">在死亡消息传出后，他表示对遇难者的家人和朋友表示慰问，并补充说：“我知道肖勒姆整个社区都会为正在医院接受治疗的年轻女孩祈祷，希望她康复。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Shoreham Port said it was working with multiple agencies and also urged the public to avoid the area.</span></p>
+        <p class="cn">肖勒姆港表示正在与多个机构合作，并敦促公众避开该地区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">A huge response from emergency services was launched to the waterfront at Shoreham on Tuesday afternoon</span></p>
+        <p class="cn">周二下午，应急服务对肖勒姆海滨展开了大规模响应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">Follow BBC Sussex on Facebook , external , X , external , and Instagram , external and listen to BBC Radio Sussex on Sounds .</span> <span class="sentence" data-sentence-index="28">Send your story ideas to southeasttoday@bbc.co.uk , external or WhatsApp us on 08081 002250.</span></p>
+        <p class="cn">在Facebook、X、Instagram上关注BBC苏塞克斯，并在Sounds上收听BBC苏塞克斯电台。将您的故事创意发送至southeasttoday@bbc.co.uk，或通过WhatsApp联系我们，号码为08081 002250。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">Emergency services respond after four people in difficulty in water near Shoreham</span></p>
+        <p class="cn">应急服务对肖勒姆附近四人水中遇险事件作出响应</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">Air Ambulance Charity Kent Surrey Sussex</span></p>
+        <p class="cn">肯特、萨里和苏塞克斯空中救护慈善机构</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">Maritime and Coastguard Agency</span></p>
+        <p class="cn">海事和海岸警卫队机构</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">South East Coast Ambulance Service</span></p>
+        <p class="cn">东南海岸救护车服务</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incident</span>
+        <button class="kw-speak-btn" data-word="incident" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnsɪdənt/ n.</span>
+      </div>
+      <p class="kw-def">事件，事故</p>
+      <p class="kw-def-en">an event, especially one that is unusual or unpleasant</p>
+      <p class="kw-ctx">&ldquo;Emergency services at scene of Shoreham incident&rdquo;</p>
+      <p class="kw-ctx-cn">紧急服务部门在肖勒姆事件现场</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">critical</span>
+        <button class="kw-speak-btn" data-word="critical" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkrɪtɪkl/ adj.</span>
+      </div>
+      <p class="kw-def">危急的，关键的</p>
+      <p class="kw-def-en">extremely serious or dangerous; at a point of crisis</p>
+      <p class="kw-ctx">&ldquo;a younger girl from the same family was in hospital in a critical condition.&rdquo;</p>
+      <p class="kw-ctx-cn">同一家庭的一个年幼女孩在医院情况危急。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">witness</span>
+        <button class="kw-speak-btn" data-word="witness" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwɪtnəs/ n.</span>
+      </div>
+      <p class="kw-def">目击者，证人</p>
+      <p class="kw-def-en">a person who sees an event, typically a crime or accident, and can describe it</p>
+      <p class="kw-ctx">&ldquo;Witnesses described seeing large numbers of emergency vehicles and helicopters arriving at the seafront.&rdquo;</p>
+      <p class="kw-ctx-cn">目击者描述看到大量紧急车辆和直升机抵达海滨。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">extensive</span>
+        <button class="kw-speak-btn" data-word="extensive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈstensɪv/ adj.</span>
+      </div>
+      <p class="kw-def">广泛的，大规模的</p>
+      <p class="kw-def-en">covering a large area; having a great range or scope</p>
+      <p class="kw-ctx">&ldquo;Coastguards have completed an extensive search of the water.&rdquo;</p>
+      <p class="kw-ctx-cn">海岸警卫队已完成对水域的广泛搜索。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">profound</span>
+        <button class="kw-speak-btn" data-word="profound" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈfaʊnd/ adj.</span>
+      </div>
+      <p class="kw-def">深刻的，深远的</p>
+      <p class="kw-def-en">very great or intense; having a deep effect</p>
+      <p class="kw-ctx">&ldquo;He said the incident had had a profound effect on the local community.&rdquo;</p>
+      <p class="kw-ctx-cn">他说这一事件对当地社区产生了深远的影响。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">appeal</span>
+        <button class="kw-speak-btn" data-word="appeal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈpiːl/ v.</span>
+      </div>
+      <p class="kw-def">呼吁，恳求</p>
+      <p class="kw-def-en">to make a serious or urgent request for help or information</p>
+      <p class="kw-ctx">&ldquo;Appealing for witnesses, he said inquiries were ongoing to understand the full details.&rdquo;</p>
+      <p class="kw-ctx-cn">他呼吁目击者提供信息，并表示调查正在进行以了解全部细节。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cordon</span>
+        <button class="kw-speak-btn" data-word="cordon" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɔːrdn/ v.</span>
+      </div>
+      <p class="kw-def">封锁，隔离</p>
+      <p class="kw-def-en">to prevent people from entering an area by surrounding it with barriers</p>
+      <p class="kw-ctx">&ldquo;he couldn't get into his road because it was cordoned off.&rdquo;</p>
+      <p class="kw-ctx-cn">他无法进入他所在的街道，因为那里已被封锁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">converge</span>
+        <button class="kw-speak-btn" data-word="converge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈvɜːrdʒ/ v.</span>
+      </div>
+      <p class="kw-def">聚集，会合</p>
+      <p class="kw-def-en">to come together from different directions to meet at a point</p>
+      <p class="kw-ctx">&ldquo;he saw ambulances, coastguard crews and helicopters converging on the area.&rdquo;</p>
+      <p class="kw-ctx-cn">他看到救护车、海岸警卫队人员和直升机聚集在该地区。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Emergency services at scene of Shoreham incident", "start_ms": 3000, "end_ms": 7224, "paragraph_index": 1}, {"index": 2, "text": "Three members of the same family have died after getting into difficulty in the water off Shoreham-by-Sea.", "start_ms": 7224, "end_ms": 14424, "paragraph_index": 2}, {"index": 3, "text": "Sussex Police said three people - a man, a woman, and a teenage girl - had died, while a younger girl from the same family was in hospital in a critical condition.", "start_ms": 14424, "end_ms": 25800, "paragraph_index": 3}, {"index": 4, "text": "Emergency services were called shortly after 15:00 BST on Tuesday to reports of four people in difficulty in the sea close to Shoreham Port.", "start_ms": 25800, "end_ms": 37032, "paragraph_index": 4}, {"index": 5, "text": "Witnesses described seeing large numbers of emergency vehicles and helicopters arriving at the seafront as coastguard crews, RNLI lifeboats, air ambulances, police officers and ambulance crews responded.", "start_ms": 37032, "end_ms": 52104, "paragraph_index": 5}, {"index": 6, "text": "Ch Supt James Collis said relatives had been informed and were being supported by specialist officers.", "start_ms": 52104, "end_ms": 59712, "paragraph_index": 6}, {"index": 7, "text": "\"At this point, we believe all four entered the water from the land for a swim, and sadly got into difficulty,\" he said.", "start_ms": 59712, "end_ms": 68208, "paragraph_index": 7}, {"index": 8, "text": "Coastguards have completed an extensive search of the water and are not searching for anyone else, he said.", "start_ms": 68208, "end_ms": 75528, "paragraph_index": 8}, {"index": 9, "text": "He said the incident had had a profound effect on the local community.", "start_ms": 75528, "end_ms": 80568, "paragraph_index": 9}, {"index": 10, "text": "Appealing for witnesses, he said inquiries were ongoing to understand the full details.", "start_ms": 80568, "end_ms": 87312, "paragraph_index": 10}, {"index": 11, "text": "A spokesperson for Air Ambulance Charity Kent Surrey Sussex said both of its helicopters and critical care team had been sent to the scene as part of the response, and Shoreham RNLI said its lifeboat had beencalled out at 15:00 BST.", "start_ms": 87312, "end_ms": 104136, "paragraph_index": 11}, {"index": 12, "text": "South East Coast Ambulance Service (Secamb) said it had been called to \"reports of four people in need of medical attention\".", "start_ms": 104136, "end_ms": 112560, "paragraph_index": 12}, {"index": 13, "text": "A section of the A259 \u00e2\u0080\u0093 a main commuter road which runs through Brighton, Shoreham and Worthing \u00e2\u0080\u0093 was closed.", "start_ms": 112560, "end_ms": 120936, "paragraph_index": 13}, {"index": 14, "text": "BBC reporter Callum French said despite warm weather, sea conditions had been \"pretty rough\" because of high winds, describing the response as \" the biggest turnout [of emergency services] I have seen \".", "start_ms": 120936, "end_ms": 134856, "paragraph_index": 14}, {"index": 15, "text": "Witnesses described seeing large numbers of emergency vehicles and helicopters arriving at the seafront.", "start_ms": 134856, "end_ms": 142248, "paragraph_index": 15}, {"index": 16, "text": "Resident Shirley Pumfrey said: \"I have never seen them do that.", "start_ms": 142248, "end_ms": 147336, "paragraph_index": 16}, {"index": 17, "text": "The whole road was just full of emergency services.", "start_ms": 147336, "end_ms": 151560, "paragraph_index": 16}, {"index": 18, "text": "\"It was horrific and quite scary to see that many.\"", "start_ms": 151560, "end_ms": 155544, "paragraph_index": 17}, {"index": 19, "text": "Steve Chapman, who lives opposite the beach, said he couldn't get into his road because it was cordoned off.", "start_ms": 155544, "end_ms": 162720, "paragraph_index": 18}, {"index": 20, "text": "\"There were all sorts of rumours flying around, it was very upsetting,\" he said.", "start_ms": 162720, "end_ms": 168624, "paragraph_index": 19}, {"index": 21, "text": "Another resident, Pete Book, said he was walking home from the pub when he saw ambulances, coastguard crews and helicopters converging on the area.", "start_ms": 168624, "end_ms": 179304, "paragraph_index": 20}, {"index": 22, "text": "Shelley Ayres, who also lives opposite the beach at Shoreham, said: \"The sea has been very calm for months and months, but today it has got a lot rougher.\"", "start_ms": 179304, "end_ms": 189768, "paragraph_index": 21}, {"index": 23, "text": "Tom Rutland, East Worthing and Shoreham MP, earlier urged people to stay away from the area while emergency services dealt with the incident.", "start_ms": 189768, "end_ms": 199536, "paragraph_index": 22}, {"index": 24, "text": "After news emerged of the deaths, he said his thoughts were with the family and friends of those who had died and he added: \"I know the whole community here in Shoreham will be hoping and praying for the recovery of the young girl , external receiving medical treatment in hospital.\"", "start_ms": 199536, "end_ms": 216168, "paragraph_index": 23}, {"index": 25, "text": "Shoreham Port said it was working with multiple agencies and also urged the public to avoid the area.", "start_ms": 216168, "end_ms": 223464, "paragraph_index": 24}, {"index": 26, "text": "A huge response from emergency services was launched to the waterfront at Shoreham on Tuesday afternoon", "start_ms": 223464, "end_ms": 230808, "paragraph_index": 25}, {"index": 27, "text": "Follow BBC Sussex on Facebook , external , X , external , and Instagram , external and listen to BBC Radio Sussex on Sounds .", "start_ms": 230808, "end_ms": 241608, "paragraph_index": 26}, {"index": 28, "text": "Send your story ideas to southeasttoday@bbc.co.uk , external or WhatsApp us on 08081 002250.", "start_ms": 241608, "end_ms": 254064, "paragraph_index": 26}, {"index": 29, "text": "Emergency services respond after four people in difficulty in water near Shoreham", "start_ms": 254064, "end_ms": 260448, "paragraph_index": 27}, {"index": 30, "text": "Air Ambulance Charity Kent Surrey Sussex", "start_ms": 260448, "end_ms": 264264, "paragraph_index": 28}, {"index": 31, "text": "Maritime and Coastguard Agency", "start_ms": 264264, "end_ms": 267696, "paragraph_index": 29}, {"index": 32, "text": "South East Coast Ambulance Service", "start_ms": 267696, "end_ms": 271056, "paragraph_index": 30}], "total_duration_ms": 271056};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "said": "说", "to": "到", "in": "在", "he": "他", "emergency": "紧急", "had": "有", "was": "是", "services": "服务", "at": "在", "on": "在", "for": "为了", "it": "它", "sussex": "萨塞克斯", "people": "人们", "from": "来自", "were": "是", "ambulance": "救护车", "been": "已经", "external": "外部的", "have": "有", "after": "之后", "difficulty": "困难", "water": "水", "four": "四", "helicopters": "直升机", "bbc": "英国广播公司", "family": "家庭", "died": "死亡", "into": "进入", "girl": "女孩", "sea": "海域", "witnesses": "目击者", "as": "作为", "crews": "工作人员", "air": "气氛", "response": "回应", "east": "东部", "road": "道路", "who": "谁", "area": "区域", "with": "与", "this": "这个", "not": "不", "be": "是", "scene": "现场", "three": "三个", "same": "相同", "off": "离开", "police": "警方", "while": "而", "hospital": "医院", "called": "称为", "bst": "英国夏令时", "tuesday": "星期二", "reports": "报道", "port": "港口", "described": "描述", "seeing": "看到", "large": "大的", "numbers": "数字", "vehicles": "车辆", "arriving": "到达", "ambulances": "救护车", "officers": "官员", "all": "所有", "got": "获得", "community": "社区", "full": "完整", "charity": "慈善机构", "kent": "肯特", "surrey": "萨里郡", "its": "它的", "south": "韩国", "coast": "海岸", "service": "服务", "medical": "医疗", "because": "因为", "seen": "被视为", "resident": "居民", "that": "那个", "whole": "整个", "lives": "生命", "opposite": "相反的", "beach": "海滩", "his": "他的", "very": "非常", "also": "也", "has": "有", "months": "月", "urged": "敦促", "video": "视频", "can": "可以", "played": "比赛", "members": "成员", "getting": "获得", "man": "男子", "woman": "女性", "teenage": "青少年的", "condition": "状况", "shortly": "不久", "close": "密切的", "responded": "回应", "ch": "警司", "supt": "警司", "james": "詹姆斯", "relatives": "亲属", "informed": "告知", "being": "正在", "supported": "支持", "by": "被", "specialist": "专家", "point": "点", "we": "我们", "believe": "认为", "entered": "进入", "land": "土地", "swim": "游泳", "sadly": "可悲地", "completed": "完成", "an": "一个", "search": "搜索", "are": "是", "searching": "搜寻", "anyone": "任何人", "else": "其他", "effect": "效果", "local": "当地", "appealing": "上诉", "inquiries": "询问", "ongoing": "正在进行的", "understand": "理解", "details": "细节", "spokesperson": "发言人", "both": "两者", "care": "照顾", "team": "团队", "sent": "派遣", "part": "部分", "out": "出来", "need": "需要", "attention": "关注", "section": "部分", "main": "主要的", "which": "哪个", "runs": "奔跑（第三人称）", "through": "通过", "closed": "关闭", "reporter": "记者", "french": "法国的", "despite": "尽管", "warm": "温暖的", "weather": "天气", "conditions": "条件", "pretty": "相当", "rough": "粗暴的", "high": "高的", "winds": "风", "describing": "描述", "biggest": "最大的", "never": "从未", "them": "他们", "do": "做", "just": "只是", "horrific": "可怕的", "quite": "相当", "scary": "可怕的", "see": "看到", "many": "许多", "steve": "史蒂夫", "couldn't": "不能", "get": "得到", "cordoned": "被封锁的", "there": "那里", "sorts": "种类", "flying": "飞行的", "around": "在...周围", "upsetting": "令人不安的", "another": "另一个", "pete": "皮特", "book": "预订", "walking": "行走", "home": "家", "pub": "酒吧", "when": "当", "saw": "看到", "converging": "汇聚", "calm": "平静的", "but": "但是", "today": "今天", "lot": "很多", "tom": "汤姆", "mp": "议员", "earlier": "较早", "stay": "保持", "away": "离开", "dealt": "处理", "news": "新闻", "emerged": "出现", "deaths": "死亡", "thoughts": "想法", "friends": "朋友", "those": "那些", "added": "补充", "know": "知道", "here": "这里", "will": "将", "hoping": "希望", "recovery": "恢复", "young": "年轻的", "receiving": "接收", "treatment": "治疗", "working": "工作", "multiple": "多条", "agencies": "机构", "public": "公众", "avoid": "避免", "huge": "巨大的", "launched": "发起", "afternoon": "下午", "follow": "关注", "facebook": "脸书", "instagram": "Instagram", "listen": "倾听", "radio": "电台", "sounds": "听起来", "send": "发送", "your": "你的", "story": "故事", "ideas": "想法", "southeasttoday": "东南今日", "co": "公司", "uk": "英国", "or": "或者", "whatsapp": "WhatsApp", "us": "我们", "respond": "回应", "near": "附近", "maritime": "海上", "agency": "机构", "shoreham": "肖勒姆", "coastguard": "海岸警卫队", "seafront": "海滨", "rnli": "皇家救生艇协会", "worthing": "沃辛", "shoreham-by-sea": "滨海肖勒姆", "younger": "较年轻的", "lifeboats": "救生艇", "collis": "科利斯", "coastguards": "海岸警卫队员", "lifeboat": "救生艇", "beencalled": "已被召集", "secamb": "东南海岸救护车服务", "commuter": "通勤者", "brighton": "布莱顿", "callum": "卡勒姆", "turnout": "出动", "shirley": "雪莉", "pumfrey": "庞弗雷", "chapman": "查普曼", "rumours": "谣言", "shelley": "雪莱", "ayres": "艾尔斯", "rougher": "更汹涌的", "rutland": "拉特兰", "praying": "祈祷", "waterfront": "滨水区"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
