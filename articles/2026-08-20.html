@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-20</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-20</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/534c/live/9495e5d0-9ca3-11f1-a291-b542ee92de7c.jpg" alt="Harry and Meghan's return to UK reignites questions over security" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Harry and Meghan's return to UK reignites questions over security</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cr59yg34r4mo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-20.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Prince Harry and Meghan are expected to remain as private individuals but security has long been a point of tension.</span></p>
+        <p class="cn">哈里王子和梅根预计将保持私人身份，但安全问题长期以来一直是紧张关系的焦点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The Duke and Duchess of Sussex's surprise announcement that they will return to the UK this month has reignited questions over the level of their publicly funded security in Britain.</span></p>
+        <p class="cn">苏塞克斯公爵和公爵夫人意外宣布本月将返回英国，这重新引发了关于他们在英国公共资助安全水平的质疑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Prince Harry and Meghan plan to relocate from the US to a private, non-royal residence outside London, with their children, Prince Archie, seven, and Princess Lilibet, five, enrolled to start at school in September.</span></p>
+        <p class="cn">哈里王子和梅根计划从美国搬到伦敦以外的一处私人非王室住所，他们的孩子阿奇王子（七岁）和莉莉贝特公主（五岁）将于九月入学。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Their UK security was downgraded after they stopped being working royals in 2020 and moved to the US, where they have paid for their own protection.</span></p>
+        <p class="cn">自2020年他们停止担任在职王室成员并移居美国后，他们在英国的安全级别被降级，在美国他们自费保护自己。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">The Royal and VIP Executive Committee (Ravec), an independent body overseen by the Home Office, will now have to make a new decision as previous arrangements were based on the Sussexes not living in the UK permanently.</span></p>
+        <p class="cn">由内政部监督的独立机构——王室和贵宾执行委员会（Ravec）现在必须做出新的决定，因为之前的安排是基于苏塞克斯夫妇不长期居住在英国的情况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Prince Harry and Meghan moving back to UK later this month</span></p>
+        <p class="cn">哈里王子和梅根本月晚些时候将搬回英国</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Harry and Meghan are experts in surprise - but why are they returning to UK now?</span></p>
+        <p class="cn">哈里和梅根是制造惊喜的专家——但他们现在为何返回英国？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Ravec had concluded that because Prince Harry was going to be an <span class="keyword" data-word="infrequent" data-phonetic="/ɪnˈfriːkwənt/" data-pos="adj." data-def="不频繁的；罕见的" data-def-en="not happening often; rare">infrequent</span> visitor to the UK, his security needs would be assessed on a case-by-case basis.</span></p>
+        <p class="cn">Ravec曾得出结论，由于哈里王子将不常访问英国，他的安全需求将逐案评估。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Earlier on Thursday, Prime Minister Andy Burnham said the couple's security arrangements were a "private matter".</span></p>
+        <p class="cn">周四早些时候，首相安迪·伯纳姆表示，这对夫妇的安全安排是“私事”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Burnham, who does not decide about security for the Royal Family, added: "It's a matter for Harry and for Meghan, and we wish them well in the move that they are making."</span></p>
+        <p class="cn">伯纳姆不负责决定王室成员的安全问题，他补充说：“这是哈里和梅根的事情，我们祝愿他们搬家顺利。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">The Home Office has said the UK's protective security system was <span class="keyword" data-word="rigorous" data-phonetic="/ˈrɪɡərəs/" data-pos="adj." data-def="严格的；严谨的" data-def-en="careful, thorough, and exact; strict">rigorous</span> and <span class="keyword" data-word="proportionate" data-phonetic="/prəˈpɔːrʃənət/" data-pos="adj." data-def="成比例的；相称的" data-def-en="appropriate in size or amount in relation to something else">proportionate</span>, but "it is our long-standing policy not to provide detailed information on those arrangements, as doing so could <span class="keyword" data-word="compromise" data-phonetic="/ˈkɑːmprəmaɪz/" data-pos="v." data-def="损害；危及" data-def-en="to damage or weaken something such as a principle or a person's safety">compromise</span> their integrity and affect individuals' security".</span></p>
+        <p class="cn">内政部表示，英国的保护性安全系统是严格且相称的，但“我们的长期政策是不提供有关这些安排的详细信息，因为这样做可能会损害其完整性并影响个人安全”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Security for the couple has long been a point of tension, with Prince Harry losing a legal challenge last year over how much he and his family were entitled to when visiting the UK.</span></p>
+        <p class="cn">这对夫妇的安全问题长期以来一直是紧张关系的焦点，去年哈里王子在关于他和家人在访问英国时有权获得多少安全保护的法律挑战中败诉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">The Sussexes left the UK and stepped back from their royal duties in early 2020, before they settled in California, where they have employed a private security team to protect them.</span></p>
+        <p class="cn">苏塞克斯夫妇于2020年初离开英国并退出王室职责，之后定居加利福尼亚，在那里他们雇佣了私人安全团队保护他们。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">They offered no comment when asked by the BBC whether that team would be moving to the UK with them.</span></p>
+        <p class="cn">当BBC询问该团队是否会随他们搬到英国时，他们没有发表评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Depending on Ravec's reassessment of the couple's new permanent circumstances in the UK, the pair could now get the level of taxpayer-funded security they always wanted.</span></p>
+        <p class="cn">根据Ravec对这对夫妇在英国新永久情况的重新评估，他们现在可能获得他们一直想要的纳税人资助的安全级别。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">But there is no suggestion the couple are going to become full-time working royals again, so they may not qualify for the levels of security Prince Harry had before he and his wife left the UK six years ago.</span></p>
+        <p class="cn">但没有迹象表明这对夫妇将重新成为全职在职王室成员，因此他们可能不符合哈里王子六年前与妻子离开英国前所拥有的安全级别。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Other non-working royals get only limited security, and if that happens to Prince Harry, it could be the source of further tensions.</span></p>
+        <p class="cn">其他非在职王室成员只获得有限的安全保护，如果这种情况发生在哈里王子身上，可能会引发进一步的紧张关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">Watch: Timeline of Prince Harry and Meghan leaving UK</span></p>
+        <p class="cn">观看：哈里王子和梅根离开英国的时间线</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">The Sussexes are high-profile public figures, with close links to the King and Prince Harry's military service in Afghanistan also remains an important consideration.</span></p>
+        <p class="cn">苏塞克斯夫妇是高调的公众人物，与国王关系密切，哈里王子在阿富汗的军事服役也是一个重要的考虑因素。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">If Prince Harry does not get the taxpayer-funded security that he has always asked for since stepping down as a working royal, he would have to top up any security he might be given out of his own pocket.</span></p>
+        <p class="cn">如果哈里王子没有得到他自卸任在职王室成员以来一直要求的纳税人资助的安全保护，他将不得不自掏腰包补充可能获得的安全措施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">Last year, when Prince Harry lost his bid to overturn a decision that had downgraded his security after his move to the US, he told the BBC that he "can't see a world" in which he would bring his family to the UK due to the downgrading of his protection.</span></p>
+        <p class="cn">去年，哈里王子在试图推翻其移居美国后安全级别被降级的决定时败诉，他告诉BBC，由于保护级别被降级，他“无法想象”会把家人带到英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">In terms of why they were moving now, a source close to the couple said the "stars had aligned" at this time to make the move work for their family.</span></p>
+        <p class="cn">至于他们现在搬回的原因，一位接近这对夫妇的消息人士表示，此时“星象已对齐”，使搬家对他们的家庭有利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">They are described by the source as an international couple who love to travel - and for the next while they are going to be based in the UK.</span></p>
+        <p class="cn">消息人士称他们是一对喜欢旅行的国际夫妇，接下来一段时间他们将定居英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="25">As well as surprising the world's media, it was also news to King Charles, who was told about the move on Sunday.</span> <span class="sentence" data-sentence-index="26">He is said to be looking forward to seeing them more often.</span></p>
+        <p class="cn">这一消息不仅让世界媒体感到意外，对查尔斯国王来说也是新闻，他在周日得知了搬家计划。据说他期待更频繁地见到他们。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">The decision follows a visit in July by Prince Harry, Meghan and their children to see the King at his Highgrove home in Gloucestershire.</span></p>
+        <p class="cn">这一决定是在7月哈里王子、梅根和他们的孩子前往格洛斯特郡的海格罗夫庄园看望国王之后做出的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">It was the first time the King had seen his grandchildren in person in more than four years, and the couple's first visit to the UK together since 2022.</span></p>
+        <p class="cn">这是国王四年多来第一次亲眼见到孙辈，也是这对夫妇自2022年以来首次一起访问英国。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">It has also been two-and-a-half years since the King was diagnosed with cancer and in Prince Harry's BBC interview last year, he spoke of wanting to spend more time with his father.</span></p>
+        <p class="cn">距离国王被诊断出癌症已经两年半了，在哈里王子去年的BBC采访中，他谈到想花更多时间陪伴父亲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">Prince Harry tells BBC he wants 'reconciliation' with Royal Family</span></p>
+        <p class="cn">哈里王子告诉BBC他希望与王室“和解”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">Highgrove has the feel of a family home rather than a royal palace - and royal author Valentine Low says a key driver of their return has been the chance for Harry to rebuild links to his family and particularly to "repair his relationship with his father".</span></p>
+        <p class="cn">海格罗夫给人的感觉是家庭住宅而非皇家宫殿——王室作家瓦伦丁·洛表示，他们回归的一个关键驱动因素是哈里有机会重建与家人的联系，特别是“修复与父亲的关系”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">The couple will still keep their California home and Meghan's work in the media and her online food business, As Ever, can be carried out from a base in the UK as readily as in the US.</span></p>
+        <p class="cn">这对夫妇仍将保留他们在加利福尼亚的家，梅根在媒体方面的工作和她的在线食品生意As Ever可以像在美国一样从英国基地开展。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">Next year, Prince Harry's Invictus Games are being held in Birmingham, which would have meant extensive travelling to meetings and events in the UK.</span></p>
+        <p class="cn">明年，哈里王子的“不可征服运动会”将在伯明翰举行，这意味着他需要频繁前往英国参加会议和活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="34">It will also mark the 30th anniversary of the death of his mother, Princess Diana, which will bring commemorations and events in the UK.</span></p>
+        <p class="cn">这也将是他母亲戴安娜王妃去世30周年，英国将举行纪念活动和仪式。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="35">This summer saw Prince Harry and his family staying at the Spencer family home at Althorp and returning to the UK will be a chance to be closer to his mother's side of his family.</span></p>
+        <p class="cn">今年夏天，哈里王子和家人住在奥尔索普的斯宾塞家族宅邸，返回英国将是一个更接近母亲家族亲人的机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="36">Sign up here to get the latest royal stories and analysis every week with our Royal Watch newsletter.</span> <span class="sentence" data-sentence-index="37">Those outside the UK can sign up on this site .</span></p>
+        <p class="cn">在此注册，每周通过我们的《皇家观察》通讯获取最新的王室故事和分析。英国以外的读者可以在本网站注册。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reignite</span>
+        <button class="kw-speak-btn" data-word="reignite" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːɪɡˈnaɪt/ v.</span>
+      </div>
+      <p class="kw-def">重新点燃；再次激起</p>
+      <p class="kw-def-en">to make something start burning again or to cause a feeling to become strong again</p>
+      <p class="kw-ctx">&ldquo;The Duke and Duchess of Sussex's surprise announcement that they will return to the UK this month has reignited questions over the level of their publicly funded security in Britain.&rdquo;</p>
+      <p class="kw-ctx-cn">苏塞克斯公爵和公爵夫人本月将返回英国的意外宣布，重新引发了关于他们在英国公共资助安全水平的质疑。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">downgrade</span>
+        <button class="kw-speak-btn" data-word="downgrade" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdaʊnɡreɪd/ v.</span>
+      </div>
+      <p class="kw-def">降低；降级</p>
+      <p class="kw-def-en">to reduce something such as a person's job or status to a lower level</p>
+      <p class="kw-ctx">&ldquo;Their UK security was downgraded after they stopped being working royals in 2020 and moved to the US, where they have paid for their own protection.&rdquo;</p>
+      <p class="kw-ctx-cn">在2020年停止担任在职王室成员并移居美国后，他们在英国的安全保护被降级，在美国他们自费保护自己。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">oversee</span>
+        <button class="kw-speak-btn" data-word="oversee" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌoʊvərˈsiː/ v.</span>
+      </div>
+      <p class="kw-def">监督；监管</p>
+      <p class="kw-def-en">to watch over and manage a process or group of people</p>
+      <p class="kw-ctx">&ldquo;The Royal and VIP Executive Committee (Ravec), an independent body overseen by the Home Office, will now have to make a new decision as previous arrangements were based on the Sussexes not living in the UK permanently.&rdquo;</p>
+      <p class="kw-ctx-cn">由内政部监督的独立机构——王室和贵宾执行委员会（Ravec）现在必须做出新的决定，因为之前的安排是基于苏塞克斯夫妇不长期居住在英国。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">infrequent</span>
+        <button class="kw-speak-btn" data-word="infrequent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈfriːkwənt/ adj.</span>
+      </div>
+      <p class="kw-def">不频繁的；罕见的</p>
+      <p class="kw-def-en">not happening often; rare</p>
+      <p class="kw-ctx">&ldquo;Ravec had concluded that because Prince Harry was going to be an infrequent visitor to the UK, his security needs would be assessed on a case-by-case basis.&rdquo;</p>
+      <p class="kw-ctx-cn">Ravec曾得出结论，由于哈里王子将不频繁访问英国，他的安全需求将根据具体情况进行评估。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">rigorous</span>
+        <button class="kw-speak-btn" data-word="rigorous" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈrɪɡərəs/ adj.</span>
+      </div>
+      <p class="kw-def">严格的；严谨的</p>
+      <p class="kw-def-en">careful, thorough, and exact; strict</p>
+      <p class="kw-ctx">&ldquo;The Home Office has said the UK's protective security system was rigorous and proportionate, but "it is our long-standing policy not to provide detailed information on those arrangements, as doing so could compromise their integrity and affect individuals' security".&rdquo;</p>
+      <p class="kw-ctx-cn">内政部表示，英国的保护安全系统是严格且相称的，但“我们长期以来的政策是不提供这些安排的详细信息，因为这样做可能会损害其完整性并影响个人安全”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">proportionate</span>
+        <button class="kw-speak-btn" data-word="proportionate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈpɔːrʃənət/ adj.</span>
+      </div>
+      <p class="kw-def">成比例的；相称的</p>
+      <p class="kw-def-en">appropriate in size or amount in relation to something else</p>
+      <p class="kw-ctx">&ldquo;The Home Office has said the UK's protective security system was rigorous and proportionate, but "it is our long-standing policy not to provide detailed information on those arrangements, as doing so could compromise their integrity and affect individuals' security".&rdquo;</p>
+      <p class="kw-ctx-cn">内政部表示，英国的保护安全系统是严格且相称的，但“我们长期以来的政策是不提供这些安排的详细信息，因为这样做可能会损害其完整性并影响个人安全”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compromise</span>
+        <button class="kw-speak-btn" data-word="compromise" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɑːmprəmaɪz/ v.</span>
+      </div>
+      <p class="kw-def">损害；危及</p>
+      <p class="kw-def-en">to damage or weaken something such as a principle or a person's safety</p>
+      <p class="kw-ctx">&ldquo;The Home Office has said the UK's protective security system was rigorous and proportionate, but "it is our long-standing policy not to provide detailed information on those arrangements, as doing so could compromise their integrity and affect individuals' security".&rdquo;</p>
+      <p class="kw-ctx-cn">内政部表示，英国的保护安全系统是严格且相称的，但“我们长期以来的政策是不提供这些安排的详细信息，因为这样做可能会损害其完整性并影响个人安全”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">align</span>
+        <button class="kw-speak-btn" data-word="align" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈlaɪn/ v.</span>
+      </div>
+      <p class="kw-def">使一致；使结盟</p>
+      <p class="kw-def-en">to arrange something in a straight line or to make two things agree or match</p>
+      <p class="kw-ctx">&ldquo;In terms of why they were moving now, a source close to the couple said the "stars had aligned" at this time to make the move work for their family.&rdquo;</p>
+      <p class="kw-ctx-cn">至于他们为什么现在搬家，接近这对夫妇的消息人士表示，此时“星辰对齐”，使这一举动对他们的家庭有利。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Prince Harry and Meghan are expected to remain as private individuals but security has long been a point of tension.", "start_ms": 3000, "end_ms": 10896, "paragraph_index": 1}, {"index": 2, "text": "The Duke and Duchess of Sussex's surprise announcement that they will return to the UK this month has reignited questions over the level of their publicly funded security in Britain.", "start_ms": 10896, "end_ms": 22368, "paragraph_index": 2}, {"index": 3, "text": "Prince Harry and Meghan plan to relocate from the US to a private, non-royal residence outside London, with their children, Prince Archie, seven, and Princess Lilibet, five, enrolled to start at school in September.", "start_ms": 22368, "end_ms": 38040, "paragraph_index": 3}, {"index": 4, "text": "Their UK security was downgraded after they stopped being working royals in 2020 and moved to the US, where they have paid for their own protection.", "start_ms": 38040, "end_ms": 48336, "paragraph_index": 4}, {"index": 5, "text": "The Royal and VIP Executive Committee (Ravec), an independent body overseen by the Home Office, will now have to make a new decision as previous arrangements were based on the Sussexes not living in the UK permanently.", "start_ms": 48336, "end_ms": 63456, "paragraph_index": 5}, {"index": 6, "text": "Prince Harry and Meghan moving back to UK later this month", "start_ms": 63456, "end_ms": 68232, "paragraph_index": 6}, {"index": 7, "text": "Harry and Meghan are experts in surprise - but why are they returning to UK now?", "start_ms": 68232, "end_ms": 74232, "paragraph_index": 7}, {"index": 8, "text": "Ravec had concluded that because Prince Harry was going to be an infrequent visitor to the UK, his security needs would be assessed on a case-by-case basis.", "start_ms": 74232, "end_ms": 84936, "paragraph_index": 8}, {"index": 9, "text": "Earlier on Thursday, Prime Minister Andy Burnham said the couple's security arrangements were a \"private matter\".", "start_ms": 84936, "end_ms": 92832, "paragraph_index": 9}, {"index": 10, "text": "Burnham, who does not decide about security for the Royal Family, added: \"It's a matter for Harry and for Meghan, and we wish them well in the move that they are making.\"", "start_ms": 92832, "end_ms": 103848, "paragraph_index": 10}, {"index": 11, "text": "The Home Office has said the UK's protective security system was rigorous and proportionate, but \"it is our long-standing policy not to provide detailed information on those arrangements, as doing so could compromise their integrity and affect individuals' security\".", "start_ms": 103848, "end_ms": 121440, "paragraph_index": 11}, {"index": 12, "text": "Security for the couple has long been a point of tension, with Prince Harry losing a legal challenge last year over how much he and his family were entitled to when visiting the UK.", "start_ms": 121440, "end_ms": 133056, "paragraph_index": 12}, {"index": 13, "text": "The Sussexes left the UK and stepped back from their royal duties in early 2020, before they settled in California, where they have employed a private security team to protect them.", "start_ms": 133056, "end_ms": 145512, "paragraph_index": 13}, {"index": 14, "text": "They offered no comment when asked by the BBC whether that team would be moving to the UK with them.", "start_ms": 145512, "end_ms": 152208, "paragraph_index": 14}, {"index": 15, "text": "Depending on Ravec's reassessment of the couple's new permanent circumstances in the UK, the pair could now get the level of taxpayer-funded security they always wanted.", "start_ms": 152208, "end_ms": 163872, "paragraph_index": 15}, {"index": 16, "text": "But there is no suggestion the couple are going to become full-time working royals again, so they may not qualify for the levels of security Prince Harry had before he and his wife left the UK six years ago.", "start_ms": 163872, "end_ms": 177288, "paragraph_index": 16}, {"index": 17, "text": "Other non-working royals get only limited security, and if that happens to Prince Harry, it could be the source of further tensions.", "start_ms": 177288, "end_ms": 186384, "paragraph_index": 17}, {"index": 18, "text": "This video can not be played", "start_ms": 186384, "end_ms": 189384, "paragraph_index": 18}, {"index": 19, "text": "Watch: Timeline of Prince Harry and Meghan leaving UK", "start_ms": 189384, "end_ms": 194232, "paragraph_index": 19}, {"index": 20, "text": "The Sussexes are high-profile public figures, with close links to the King and Prince Harry's military service in Afghanistan also remains an important consideration.", "start_ms": 194232, "end_ms": 205896, "paragraph_index": 20}, {"index": 21, "text": "If Prince Harry does not get the taxpayer-funded security that he has always asked for since stepping down as a working royal, he would have to top up any security he might be given out of his own pocket.", "start_ms": 205896, "end_ms": 219024, "paragraph_index": 21}, {"index": 22, "text": "Last year, when Prince Harry lost his bid to overturn a decision that had downgraded his security after his move to the US, he told the BBC that he \"can't see a world\" in which he would bring his family to the UK due to the downgrading of his protection.", "start_ms": 219024, "end_ms": 235416, "paragraph_index": 22}, {"index": 23, "text": "In terms of why they were moving now, a source close to the couple said the \"stars had aligned\" at this time to make the move work for their family.", "start_ms": 235416, "end_ms": 244512, "paragraph_index": 23}, {"index": 24, "text": "They are described by the source as an international couple who love to travel - and for the next while they are going to be based in the UK.", "start_ms": 244512, "end_ms": 253200, "paragraph_index": 24}, {"index": 25, "text": "As well as surprising the world's media, it was also news to King Charles, who was told about the move on Sunday.", "start_ms": 253200, "end_ms": 261408, "paragraph_index": 25}, {"index": 26, "text": "He is said to be looking forward to seeing them more often.", "start_ms": 261408, "end_ms": 265632, "paragraph_index": 25}, {"index": 27, "text": "The decision follows a visit in July by Prince Harry, Meghan and their children to see the King at his Highgrove home in Gloucestershire.", "start_ms": 265632, "end_ms": 274488, "paragraph_index": 26}, {"index": 28, "text": "It was the first time the King had seen his grandchildren in person in more than four years, and the couple's first visit to the UK together since 2022.", "start_ms": 274488, "end_ms": 285024, "paragraph_index": 27}, {"index": 29, "text": "It has also been two-and-a-half years since the King was diagnosed with cancer and in Prince Harry's BBC interview last year, he spoke of wanting to spend more time with his father.", "start_ms": 285024, "end_ms": 296664, "paragraph_index": 28}, {"index": 30, "text": "Prince Harry tells BBC he wants 'reconciliation' with Royal Family", "start_ms": 296664, "end_ms": 302280, "paragraph_index": 29}, {"index": 31, "text": "Highgrove has the feel of a family home rather than a royal palace - and royal author Valentine Low says a key driver of their return has been the chance for Harry to rebuild links to his family and particularly to \"repair his relationship with his father\".", "start_ms": 302280, "end_ms": 318288, "paragraph_index": 30}, {"index": 32, "text": "The couple will still keep their California home and Meghan's work in the media and her online food business, As Ever, can be carried out from a base in the UK as readily as in the US.", "start_ms": 318288, "end_ms": 330816, "paragraph_index": 31}, {"index": 33, "text": "Next year, Prince Harry's Invictus Games are being held in Birmingham, which would have meant extensive travelling to meetings and events in the UK.", "start_ms": 330816, "end_ms": 340680, "paragraph_index": 32}, {"index": 34, "text": "It will also mark the 30th anniversary of the death of his mother, Princess Diana, which will bring commemorations and events in the UK.", "start_ms": 340680, "end_ms": 350664, "paragraph_index": 33}, {"index": 35, "text": "This summer saw Prince Harry and his family staying at the Spencer family home at Althorp and returning to the UK will be a chance to be closer to his mother's side of his family.", "start_ms": 350664, "end_ms": 361800, "paragraph_index": 34}, {"index": 36, "text": "Sign up here to get the latest royal stories and analysis every week with our Royal Watch newsletter.", "start_ms": 361800, "end_ms": 368856, "paragraph_index": 35}, {"index": 37, "text": "Those outside the UK can sign up on this site .", "start_ms": 368856, "end_ms": 373080, "paragraph_index": 35}], "total_duration_ms": 373080};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "in": "在", "uk": "英国", "his": "他的", "of": "的", "prince": "王子", "harry": "哈里", "security": "安全", "they": "它们", "be": "是", "he": "他", "as": "作为", "their": "他们的", "for": "为了", "family": "家庭", "are": "是", "with": "与", "royal": "王室的", "has": "有", "that": "那个", "this": "这个", "not": "不", "meghan": "梅根", "was": "是", "on": "在", "will": "将", "home": "家", "it": "它", "at": "在", "have": "有", "had": "有", "would": "将", "couple": "几个", "king": "国王", "can": "可以", "private": "私人的", "but": "但是", "been": "已经", "us": "我们", "an": "一个", "by": "被", "now": "现在", "were": "是", "said": "说", "them": "他们", "move": "行动", "year": "年", "bbc": "英国广播公司", "get": "得到", "also": "也", "from": "来自", "working": "工作", "royals": "王室成员", "decision": "决定", "arrangements": "安排", "sussexes": "苏塞克斯夫妇", "moving": "移动", "going": "将要", "couple's": "夫妇的", "who": "谁", "is": "是", "could": "可能", "last": "最后", "when": "当", "years": "多年", "source": "来源", "since": "自从", "up": "向上", "which": "哪个", "time": "时间", "more": "更多", "video": "视频", "played": "比赛", "individuals": "个人", "long": "长久", "point": "点", "tension": "紧张", "surprise": "惊喜", "return": "返回", "month": "月份", "over": "超过", "level": "水平", "outside": "外部", "children": "儿童", "princess": "公主", "downgraded": "降级的", "after": "之后", "being": "正在", "where": "那里", "own": "自己", "protection": "保护", "ravec": "拉韦克", "office": "办公室", "make": "使", "new": "新的", "based": "基于", "back": "后退", "why": "为何", "returning": "返回", "burnham": "伯纳姆", "matter": "事情", "does": "做", "about": "关于", "well": "好", "our": "我们的", "those": "那些", "so": "所以", "left": "离开", "before": "之前", "california": "加利福尼亚", "team": "团队", "no": "没有", "asked": "询问", "always": "总是", "if": "如果", "watch": "观看", "close": "密切的", "links": "联系", "out": "出来", "told": "告诉", "see": "看到", "bring": "带来", "work": "工作", "next": "下一个", "media": "媒体", "visit": "访问", "highgrove": "海格罗夫", "first": "第一轮", "than": "比", "father": "父亲", "chance": "机会", "events": "事件", "sign": "签署", "expected": "预期", "remain": "仍然", "duke": "公爵", "duchess": "公爵夫人", "sussex's": "苏塞克斯的", "announcement": "公告", "reignited": "重燃", "questions": "问题", "publicly": "公开地", "funded": "资助的", "britain": "英国", "plan": "计划", "relocate": "搬迁", "non-royal": "非王室的", "residence": "官邸", "london": "伦敦", "archie": "阿奇", "seven": "七", "lilibet": "莉莉贝特", "five": "五", "enrolled": "注册入学", "start": "开始", "school": "学校", "september": "九月", "stopped": "停止", "moved": "移动", "paid": "支付", "vip": "贵宾", "executive": "行政的", "committee": "委员会", "independent": "独立的", "body": "机构", "previous": "先前", "living": "生活", "permanently": "永久地", "later": "后来", "experts": "专家", "concluded": "得出结论", "because": "因为", "visitor": "访客", "needs": "需要", "assessed": "评估", "case-by-case": "逐案", "basis": "基础", "earlier": "较早", "thursday": "星期四", "prime": "首相", "minister": "部长", "andy": "安迪", "decide": "决定", "added": "补充", "it's": "它是", "we": "我们", "wish": "希望", "making": "进行", "uk's": "英国的", "protective": "防护的", "system": "制度", "policy": "政策", "provide": "提供", "detailed": "详细的", "information": "信息", "doing": "做", "affect": "影响", "losing": "失去", "legal": "法律的", "challenge": "挑战", "how": "如何", "much": "许多", "entitled": "有权", "visiting": "访问", "stepped": "迈步", "duties": "职责", "early": "早期的", "settled": "落定", "protect": "保护", "offered": "提供", "comment": "评论", "whether": "是否", "depending": "取决于", "ravec's": "拉韦克的", "permanent": "永久的", "circumstances": "情况", "pair": "一对", "wanted": "想要", "there": "那里", "suggestion": "建议", "become": "成为", "full-time": "全场比赛结束", "again": "再次", "may": "可能", "qualify": "获得资格", "levels": "水平", "wife": "妻子", "six": "六", "ago": "以前", "other": "其他", "only": "只有", "limited": "有限的", "happens": "发生", "further": "进一步的", "tensions": "紧张局势", "leaving": "离开", "high-profile": "高调的", "public": "公众", "figures": "人物", "military": "军事", "service": "服务", "remains": "仍然", "important": "重要", "consideration": "考虑", "stepping": "迈步", "down": "下来", "top": "顶级的", "any": "任何", "might": "可能", "given": "给定", "pocket": "口袋", "lost": "失去", "bid": "努力", "can't": "不能", "world": "世界", "due": "应得", "terms": "条件", "stars": "恒星", "aligned": "对齐", "described": "描述", "international": "国际", "love": "爱", "travel": "旅行", "while": "而", "world's": "世界的", "news": "新闻", "charles": "查尔斯", "sunday": "星期日", "looking": "寻找", "forward": "向前", "seeing": "看到", "often": "经常", "follows": "遵循", "july": "七月", "gloucestershire": "格洛斯特郡", "seen": "被视为", "grandchildren": "孙辈", "person": "个人", "four": "四", "together": "一起", "diagnosed": "被诊断", "cancer": "癌症", "interview": "采访", "spoke": "发言", "wanting": "想要", "spend": "花费", "tells": "告诉", "wants": "想要", "reconciliation": "和解", "feel": "感觉", "rather": "宁愿", "palace": "宫", "author": "作者", "low": "低的", "says": "表示", "key": "关键", "driver": "司机", "rebuild": "重建", "particularly": "尤其", "repair": "修复", "relationship": "关系", "still": "仍然", "keep": "保持", "her": "她的", "online": "在线", "food": "食物", "business": "事务", "ever": "曾经", "carried": "进行", "base": "基地", "games": "游戏", "held": "举行", "birmingham": "伯明翰", "meant": "意味着", "extensive": "广泛的", "travelling": "旅行", "meetings": "会议", "mark": "标志", "anniversary": "周年纪念", "death": "死亡", "mother": "母亲", "summer": "夏天", "saw": "看到", "staying": "保持", "closer": "更近的", "mother's": "母亲的", "side": "方面", "here": "这里", "latest": "最新的", "stories": "报道", "analysis": "分析", "every": "每个", "week": "周", "newsletter": "新闻简报", "site": "网站", "harry's": "哈里的", "taxpayer-funded": "纳税人资助的", "overseen": "监督的", "long-standing": "长期的", "integrity": "诚信", "employed": "雇佣的", "reassessment": "重新评估", "non-working": "不工作的", "timeline": "时间线", "afghanistan": "阿富汗", "overturn": "推翻", "downgrading": "降级", "surprising": "令人惊讶的", "two-and-a-half": "两年半", "valentine": "情人节", "meghan's": "梅根的", "readily": "轻易地", "invictus": "不屈", "diana": "戴安娜", "commemorations": "纪念活动", "spencer": "斯宾塞", "althorp": "奥尔索普"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
