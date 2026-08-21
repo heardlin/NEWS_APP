@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-21</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-21</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/8911/live/1fc38590-9da8-11f1-95ab-d3b679e2384a.jpg" alt="Girl, 6, dies days after Shoreham sea tragedy killed three family members" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Girl, 6, dies days after Shoreham sea tragedy killed three family members</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c629y0kx8gyo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-21.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">A huge <span class="keyword" data-word="emergency" data-phonetic="/ɪˈmɜːdʒənsi/" data-pos="n." data-def="紧急情况，突发事件" data-def-en="a sudden serious and dangerous event or situation that needs immediate action">emergency</span> response was seen at Shoreham after the family was reported to be in difficulty in the sea</span></p>
+        <p class="cn">在肖勒姆，一家人被报告在海中遇险后，出现了大规模的紧急响应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">A six-year-old girl has died in hospital after getting into difficulty in the sea off Shoreham in West Sussex, in an <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件，事故" data-def-en="an event, especially one that is unusual, serious, or violent">incident</span> which also killed her father, mother and sister.</span></p>
+        <p class="cn">一名六岁女孩在进入西萨塞克斯郡肖勒姆附近海域遇险后，在医院死亡，该事件还夺去了她父亲、母亲和姐姐的生命。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Saja El-Khawas, a British Palestinian from London, was pulled from the sea by <span class="keyword" data-word="emergency" data-phonetic="/ɪˈmɜːdʒənsi/" data-pos="n." data-def="紧急情况，突发事件" data-def-en="a sudden serious and dangerous event or situation that needs immediate action">emergency</span> crews on Tuesday.</span></p>
+        <p class="cn">萨贾·埃尔-哈瓦斯（Saja El-Khawas），一名来自伦敦的英籍巴勒斯坦人，于周二被紧急救援人员从海中救起。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Her father Hassan El Khawas, 55, mother Zeina Alayn, 37, and 14-year-old sister Sara, died despite the efforts of paramedics at the scene.</span></p>
+        <p class="cn">她的父亲哈桑·埃尔·哈瓦斯（Hassan El Khawas，55岁）、母亲泽娜·阿莱恩（Zeina Alayn，37岁）和14岁的姐姐萨拉（Sara）尽管现场急救人员努力施救，仍不幸身亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4"><span class="keyword" data-word="emergency" data-phonetic="/ɪˈmɜːdʒənsi/" data-pos="n." data-def="紧急情况，突发事件" data-def-en="a sudden serious and dangerous event or situation that needs immediate action">Emergency</span> services were called to the sea off Shoreham Fort at about 14:40 BST on Tuesday to a report of four people in difficulty in the water.</span></p>
+        <p class="cn">周二英国夏令时约14:40，紧急服务部门接到报告称有四人水中遇险，随即赶往肖勒姆堡附近海域。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Saja's parents and elder sister died on Tuesday despite attempts to <span class="keyword" data-word="resuscitate" data-phonetic="/rɪˈsʌsɪteɪt/" data-pos="v." data-def="使复苏，救活" data-def-en="to make someone breathe again or become conscious again after they have almost died">resuscitate</span> them</span></p>
+        <p class="cn">萨贾的父母和姐姐于周二去世，尽管尝试了心肺复苏。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">In a statement, Sussex Police said the family had travelled down from their home in London to visit Shoreham that day.</span></p>
+        <p class="cn">苏塞克斯警方在一份声明中表示，这家人当天从伦敦的家中前往肖勒姆游玩。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The force said the family had entered the water from the beach at Shoreham Fort about 14:00 before getting into trouble.</span></p>
+        <p class="cn">警方称，这家人约14:00从肖勒姆堡的海滩进入水中，随后陷入困境。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">A significant <span class="keyword" data-word="emergency" data-phonetic="/ɪˈmɜːdʒənsi/" data-pos="n." data-def="紧急情况，突发事件" data-def-en="a sudden serious and dangerous event or situation that needs immediate action">emergency</span> service response followed including HM Coastguard, the RNLI and South East Coast Ambulance Service and Sussex Police.</span></p>
+        <p class="cn">随后进行了大规模的紧急服务响应，包括英国海岸警卫队（HM Coastguard）、皇家全国救生艇协会（RNLI）、东南海岸救护车服务和苏塞克斯警方。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"The investigation into the <span class="keyword" data-word="incident" data-phonetic="/ˈɪnsɪdənt/" data-pos="n." data-def="事件，事故" data-def-en="an event, especially one that is unusual, serious, or violent">incident</span> remains open, but following review of CCTV footage and initial witness accounts, the current <span class="keyword" data-word="hypothesis" data-phonetic="/haɪˈpɒθəsɪs/" data-pos="n." data-def="假说，假设" data-def-en="an idea or explanation for something that is based on known facts but has not yet been proven">hypothesis</span> is that this was a tragic accident, with no third-party involvement," a police spokesperson said.</span></p>
+        <p class="cn">警方发言人表示：“对该事件的调查仍在进行中，但根据监控录像和初步目击者陈述的审查，目前的假设是这是一起悲剧性事故，没有第三方参与。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">They added that a file will be prepared for the <span class="keyword" data-word="coroner" data-phonetic="/ˈkɒrənə(r)/" data-pos="n." data-def="验尸官" data-def-en="an official who investigates deaths, especially those that are not clearly natural">coroner</span> ahead of an inquest.</span></p>
+        <p class="cn">他们补充说，将在验尸前为验尸官准备一份文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Ch Supt James Collis said: "This heartbreaking update is one we all feared in the <span class="keyword" data-word="aftermath" data-phonetic="/ˈɑːftəmæθ/" data-pos="n." data-def="后果，余波" data-def-en="the situation that exists after a bad event such as a war, accident, etc.">aftermath</span> of Tuesday's tragic events.</span></p>
+        <p class="cn">总警司詹姆斯·科利斯（James Collis）说：“这个令人心碎的最新消息是我们在周二悲剧事件发生后都害怕听到的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">"The impact of this tragedy has been felt across the country, and I know the Shoreham community, <span class="keyword" data-word="emergency" data-phonetic="/ɪˈmɜːdʒənsi/" data-pos="n." data-def="紧急情况，突发事件" data-def-en="a sudden serious and dangerous event or situation that needs immediate action">emergency</span> responders and all involved will continue to be affected for a long time to come.</span></p>
+        <p class="cn">“这场悲剧的影响已经波及全国，我知道肖勒姆社区、应急响应人员以及所有相关人员将在未来很长一段时间内继续受到影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">"I would like to thank all of the public who have shared their sympathies and kind words."</span></p>
+        <p class="cn">“我要感谢所有表达同情和善意话语的公众。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Follow BBC Sussex on Facebook , external , X , external , and on Instagram , external and listen to BBC Radio Sussex on Sounds .</span> <span class="sentence" data-sentence-index="15">Send your story ideas to southeasttoday@bbc.co.uk , external or WhatsApp us on 08081 002250.</span></p>
+        <p class="cn">在Facebook、X和Instagram上关注BBC苏塞克斯，并在Sounds上收听BBC广播苏塞克斯。将您的故事想法发送至southeasttoday@bbc.co.uk，或通过WhatsApp联系我们，号码为08081 002250。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Three dead after family get into difficulty in sea</span></p>
+        <p class="cn">一家人在海中遇险后三人死亡</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Family named after three die in sea off Shoreham</span></p>
+        <p class="cn">在肖勒姆海域三人死亡后，家属身份公布</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">emergency</span>
+        <button class="kw-speak-btn" data-word="emergency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈmɜːdʒənsi/ n.</span>
+      </div>
+      <p class="kw-def">紧急情况，突发事件</p>
+      <p class="kw-def-en">a sudden serious and dangerous event or situation that needs immediate action</p>
+      <p class="kw-ctx">&ldquo;A huge emergency response was seen at Shoreham after the family was reported to be in difficulty in the sea.&rdquo;</p>
+      <p class="kw-ctx-cn">据报道这家人海上遇险后，肖勒姆出现了大规模的紧急响应。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">incident</span>
+        <button class="kw-speak-btn" data-word="incident" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnsɪdənt/ n.</span>
+      </div>
+      <p class="kw-def">事件，事故</p>
+      <p class="kw-def-en">an event, especially one that is unusual, serious, or violent</p>
+      <p class="kw-ctx">&ldquo;A six-year-old girl has died in hospital after getting into difficulty in the sea off Shoreham in West Sussex, in an incident which also killed her father, mother and sister.&rdquo;</p>
+      <p class="kw-ctx-cn">一名六岁女孩在西萨塞克斯郡肖勒姆附近海域遇险后在医院死亡，该事件还夺走了她父亲、母亲和姐姐的生命。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">paramedic</span>
+        <button class="kw-speak-btn" data-word="paramedic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌpærəˈmedɪk/ n.</span>
+      </div>
+      <p class="kw-def">护理人员，急救人员</p>
+      <p class="kw-def-en">a person who is trained to give emergency medical care to people who are injured or ill</p>
+      <p class="kw-ctx">&ldquo;Her father Hassan El Khawas, 55, mother Zeina Alayn, 37, and 14-year-old sister Sara, died despite the efforts of paramedics at the scene.&rdquo;</p>
+      <p class="kw-ctx-cn">她的父亲哈桑·埃尔·哈瓦斯（55岁）、母亲泽娜·阿莱恩（37岁）和14岁的姐姐萨拉，尽管现场急救人员努力抢救，仍不幸身亡。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resuscitate</span>
+        <button class="kw-speak-btn" data-word="resuscitate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈsʌsɪteɪt/ v.</span>
+      </div>
+      <p class="kw-def">使复苏，救活</p>
+      <p class="kw-def-en">to make someone breathe again or become conscious again after they have almost died</p>
+      <p class="kw-ctx">&ldquo;Saja's parents and elder sister died on Tuesday despite attempts to resuscitate them.&rdquo;</p>
+      <p class="kw-ctx-cn">尽管试图复苏，萨贾的父母和姐姐于周二去世。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hypothesis</span>
+        <button class="kw-speak-btn" data-word="hypothesis" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/haɪˈpɒθəsɪs/ n.</span>
+      </div>
+      <p class="kw-def">假说，假设</p>
+      <p class="kw-def-en">an idea or explanation for something that is based on known facts but has not yet been proven</p>
+      <p class="kw-ctx">&ldquo;The investigation into the incident remains open, but following review of CCTV footage and initial witness accounts, the current hypothesis is that this was a tragic accident, with no third-party involvement.&rdquo;</p>
+      <p class="kw-ctx-cn">对该事件的调查仍在进行中，但根据监控录像和初步目击者陈述的审查，目前的假设是这是一场悲剧性事故，没有第三方参与。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">coroner</span>
+        <button class="kw-speak-btn" data-word="coroner" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɒrənə(r)/ n.</span>
+      </div>
+      <p class="kw-def">验尸官</p>
+      <p class="kw-def-en">an official who investigates deaths, especially those that are not clearly natural</p>
+      <p class="kw-ctx">&ldquo;They added that a file will be prepared for the coroner ahead of an inquest.&rdquo;</p>
+      <p class="kw-ctx-cn">他们补充说，将在调查前为验尸官准备一份档案。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">aftermath</span>
+        <button class="kw-speak-btn" data-word="aftermath" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɑːftəmæθ/ n.</span>
+      </div>
+      <p class="kw-def">后果，余波</p>
+      <p class="kw-def-en">the situation that exists after a bad event such as a war, accident, etc.</p>
+      <p class="kw-ctx">&ldquo;This heartbreaking update is one we all feared in the aftermath of Tuesday's tragic events.&rdquo;</p>
+      <p class="kw-ctx-cn">这个令人心碎的更新是我们在周二悲剧事件发生后都担心的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sympathy</span>
+        <button class="kw-speak-btn" data-word="sympathy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsɪmpəθi/ n.</span>
+      </div>
+      <p class="kw-def">同情，慰问</p>
+      <p class="kw-def-en">the feeling of being sorry for someone who is in a bad situation</p>
+      <p class="kw-ctx">&ldquo;I would like to thank all of the public who have shared their sympathies and kind words.&rdquo;</p>
+      <p class="kw-ctx-cn">我要感谢所有表达同情和善意话语的公众。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "A huge emergency response was seen at Shoreham after the family was reported to be in difficulty in the sea", "start_ms": 0, "end_ms": 7488, "paragraph_index": 0}, {"index": 1, "text": "A six-year-old girl has died in hospital after getting into difficulty in the sea off Shoreham in West Sussex, in an incident which also killed her father, mother and sister.", "start_ms": 7488, "end_ms": 19104, "paragraph_index": 1}, {"index": 2, "text": "Saja El-Khawas, a British Palestinian from London, was pulled from the sea by emergency crews on Tuesday.", "start_ms": 19104, "end_ms": 27312, "paragraph_index": 2}, {"index": 3, "text": "Her father Hassan El Khawas, 55, mother Zeina Alayn, 37, and 14-year-old sister Sara, died despite the efforts of paramedics at the scene.", "start_ms": 27312, "end_ms": 39312, "paragraph_index": 3}, {"index": 4, "text": "Emergency services were called to the sea off Shoreham Fort at about 14:40 BST on Tuesday to a report of four people in difficulty in the water.", "start_ms": 39312, "end_ms": 50232, "paragraph_index": 4}, {"index": 5, "text": "Saja's parents and elder sister died on Tuesday despite attempts to resuscitate them", "start_ms": 50232, "end_ms": 56664, "paragraph_index": 5}, {"index": 6, "text": "In a statement, Sussex Police said the family had travelled down from their home in London to visit Shoreham that day.", "start_ms": 56664, "end_ms": 64584, "paragraph_index": 6}, {"index": 7, "text": "The force said the family had entered the water from the beach at Shoreham Fort about 14:00 before getting into trouble.", "start_ms": 64584, "end_ms": 72912, "paragraph_index": 7}, {"index": 8, "text": "A significant emergency service response followed including HM Coastguard, the RNLI and South East Coast Ambulance Service and Sussex Police.", "start_ms": 72912, "end_ms": 84024, "paragraph_index": 8}, {"index": 9, "text": "\"The investigation into the incident remains open, but following review of CCTV footage and initial witness accounts, the current hypothesis is that this was a tragic accident, with no third-party involvement,\" a police spokesperson said.", "start_ms": 84024, "end_ms": 100464, "paragraph_index": 9}, {"index": 10, "text": "They added that a file will be prepared for the coroner ahead of an inquest.", "start_ms": 100464, "end_ms": 105888, "paragraph_index": 10}, {"index": 11, "text": "Ch Supt James Collis said: \"This heartbreaking update is one we all feared in the aftermath of Tuesday's tragic events.", "start_ms": 105888, "end_ms": 114816, "paragraph_index": 11}, {"index": 12, "text": "\"The impact of this tragedy has been felt across the country, and I know the Shoreham community, emergency responders and all involved will continue to be affected for a long time to come.", "start_ms": 114816, "end_ms": 127200, "paragraph_index": 12}, {"index": 13, "text": "\"I would like to thank all of the public who have shared their sympathies and kind words.\"", "start_ms": 127200, "end_ms": 132888, "paragraph_index": 13}, {"index": 14, "text": "Follow BBC Sussex on Facebook , external , X , external , and on Instagram , external and listen to BBC Radio Sussex on Sounds .", "start_ms": 132888, "end_ms": 143832, "paragraph_index": 14}, {"index": 15, "text": "Send your story ideas to southeasttoday@bbc.co.uk , external or WhatsApp us on 08081 002250.", "start_ms": 143832, "end_ms": 156288, "paragraph_index": 14}, {"index": 16, "text": "Three dead after family get into difficulty in sea", "start_ms": 156288, "end_ms": 160608, "paragraph_index": 15}, {"index": 17, "text": "Family named after three die in sea off Shoreham", "start_ms": 160608, "end_ms": 164688, "paragraph_index": 16}], "total_duration_ms": 164688};
+  const WORD_GLOSS = {"the": "这个", "in": "在", "and": "和", "to": "到", "shoreham": "肖勒姆", "on": "在", "of": "的", "sea": "海域", "family": "家庭", "sussex": "萨塞克斯", "was": "是", "at": "在", "after": "之后", "difficulty": "困难", "into": "进入", "from": "来自", "said": "说", "external": "外部的", "be": "是", "died": "死亡", "off": "离开", "sister": "姐妹", "tuesday": "星期二", "police": "警方", "that": "那个", "this": "这个", "all": "所有", "bbc": "英国广播公司", "response": "回应", "has": "有", "getting": "获得", "an": "一个", "her": "她的", "father": "父亲", "mother": "母亲", "london": "伦敦", "despite": "尽管", "about": "关于", "water": "水", "had": "有", "their": "他们的", "service": "服务", "is": "是", "tragic": "悲惨的", "will": "将", "for": "为了", "three": "三个", "huge": "巨大的", "seen": "被视为", "reported": "据报道", "six-year-old": "六岁儿童", "girl": "女孩", "hospital": "医院", "west": "西部", "which": "哪个", "also": "也", "killed": "杀死", "british": "英国的", "palestinian": "巴勒斯坦的", "pulled": "撤回", "by": "被", "crews": "工作人员", "el": "埃尔", "year-old": "岁的", "sara": "萨拉", "efforts": "努力", "scene": "现场", "services": "服务", "were": "是", "called": "称为", "bst": "英国夏令时", "report": "报告", "four": "四", "people": "人们", "parents": "家长", "attempts": "尝试", "them": "他们", "statement": "声明", "travelled": "旅行", "down": "下来", "home": "家", "visit": "访问", "day": "天", "force": "力量", "entered": "进入", "beach": "海滩", "before": "之前", "trouble": "麻烦", "significant": "重大", "followed": "遵循", "including": "包括", "hm": "陛下", "coastguard": "海岸警卫队", "rnli": "皇家救生艇协会", "south": "韩国", "east": "东部", "coast": "海岸", "ambulance": "救护车", "investigation": "调查", "remains": "仍然", "open": "开放", "but": "但是", "following": "随后", "review": "审查", "cctv": "闭路电视", "footage": "视频片段", "initial": "最初", "witness": "目击者", "accounts": "账户", "current": "当前的", "accident": "意外", "with": "与", "no": "没有", "involvement": "参与", "spokesperson": "发言人", "they": "它们", "added": "补充", "file": "提交", "prepared": "准备好的", "ahead": "提前", "ch": "警司", "supt": "警司", "james": "詹姆斯", "collis": "科利斯", "heartbreaking": "令人心碎的", "update": "更新", "one": "一个", "we": "我们", "feared": "担心", "tuesday's": "周二的", "events": "事件", "impact": "影响", "tragedy": "悲剧", "been": "已经", "felt": "感觉", "across": "跨越", "country": "国家", "know": "知道", "community": "社区", "responders": "响应者", "involved": "涉及的", "continue": "继续", "affected": "受影响", "long": "长久", "time": "时间", "come": "到来", "would": "将", "like": "像", "thank": "感谢", "public": "公众", "who": "谁", "have": "有", "shared": "分享", "sympathies": "同情", "kind": "种类", "words": "言辞", "follow": "关注", "facebook": "脸书", "instagram": "Instagram", "listen": "倾听", "radio": "电台", "sounds": "听起来", "send": "发送", "your": "你的", "story": "故事", "ideas": "想法", "southeasttoday": "东南今日", "co": "公司", "uk": "英国", "or": "或者", "whatsapp": "WhatsApp", "us": "我们", "dead": "死亡", "get": "得到", "named": "名为", "die": "死亡", "fort": "堡垒", "saja": "萨贾", "el-khawas": "埃尔-哈瓦斯", "hassan": "哈桑", "khawas": "哈瓦斯", "zeina": "泽娜", "alayn": "阿莱恩", "paramedics": "护理人员", "saja's": "萨贾的", "elder": "年长的", "third-party": "第三方", "inquest": "调查"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
