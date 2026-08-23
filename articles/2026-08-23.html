@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-23</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-23</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/68ab/live/93348dd0-9f24-11f1-b109-879e35c24276.png" alt="Families of two police officers killed in crash say they were heroes" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Families of two police officers killed in crash say they were heroes</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c4gvgy3de37o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-23.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">PC Matthew Blades (left) and PC Tom Clough were killed in a crash near Middlesbrough on Saturday</span></p>
+        <p class="cn">PC Matthew Blades（左）和PC Tom Clough在周六米德尔斯堡附近的一场车祸中丧生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Two police officers who died when a car travelling the wrong way down a dual carriageway crashed into their vehicle have been hailed as heroes by their families.</span></p>
+        <p class="cn">两名警察在一条双车道公路上被一辆逆行汽车撞上后殉职，他们的家人称赞他们为英雄。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">PC Tom Clough, 38, and PC Matthew Blades, 37, died when a Volkswagen Passat, which officers had been pursuing until seconds before , collided with their marked armed response car on the A66 near Middlesbrough on Saturday.</span></p>
+        <p class="cn">38岁的PC Tom Clough和37岁的PC Matthew Blades在周六米德尔斯堡附近的A66公路上，一辆大众帕萨特（Volkswagen Passat）撞上了他们标记的武装响应车辆，导致两人死亡。此前，警察一直在追捕这辆帕萨特，直到事故发生前几秒。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Passat's occupants Michael Robert Cahill, 23, Jacob Matusiak, 23, Theo Rae, 17, Makai Saddington, 18, and Cole Robert Worthy, 17, also died.</span></p>
+        <p class="cn">帕萨特车上的乘客Michael Robert Cahill（23岁）、Jacob Matusiak（23岁）、Theo Rae（17岁）、Makai Saddington（18岁）和Cole Robert Worthy（17岁）也一同遇难。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">In tributes released by Cleveland Police, PC Clough's family said he was "willing to help anyone", while PC Blades' wife described him as "loved beyond words".</span></p>
+        <p class="cn">在克利夫兰警方发布的悼念中，PC Clough的家人称他“愿意帮助任何人”，而PC Blades的妻子则形容他“被爱无法用言语表达”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">"No words will ever feel like the right words to honour our Matt," she said, adding he was a "beloved husband" and the "most <span class="keyword" data-word="devoted" data-phonetic="/dɪˈvoʊtɪd/" data-pos="adj." data-def="忠诚的，挚爱的" data-def-en="very loving and loyal">devoted</span> father" to their two young sons who would grow up knowing what an "incredible" dad he was.</span></p>
+        <p class="cn">“任何言语都无法恰当地纪念我们的Matt，”她说，并补充道，他是“挚爱的丈夫”，也是他们两个年幼儿子“最尽职的父亲”，孩子们长大后会知道他是多么“了不起”的爸爸。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"He gave his life in the line of duty, protecting and serving others with courage, dedication and <span class="keyword" data-word="selflessness" data-phonetic="/ˈselfləsnəs/" data-pos="n." data-def="无私，忘我" data-def-en="the quality of caring more about others than yourself">selflessness</span>," she said.</span></p>
+        <p class="cn">“他在执行任务时献出了生命，以勇气、奉献和无私精神保护和服务他人，”她说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"The pain of losing him is beyond words, and our lives will never be the same.</span></p>
+        <p class="cn">“失去他的痛苦无法言喻，我们的生活将永远改变。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">"Neither will the love he gave us ever fade.</span></p>
+        <p class="cn">“但他给予我们的爱永远不会消逝。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"He may have left this world committed to the duty he believed in, but his greatest <span class="keyword" data-word="legacy" data-phonetic="/ˈleɡəsi/" data-pos="n." data-def="遗产，遗赠" data-def-en="something that is left or handed down from a person, especially from the past">legacy</span> will always be the love he gave to his family."</span></p>
+        <p class="cn">“他可能带着他所信仰的职责离开了这个世界，但他最伟大的遗产将永远是他给予家人的爱。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">She ended the <span class="keyword" data-word="tribute" data-phonetic="/ˈtrɪbjuːt/" data-pos="n." data-def="悼念，致敬" data-def-en="something that you say or do to show respect or admiration for someone">tribute</span> to her husband: "Forever loved.</span> <span class="sentence" data-sentence-index="11">Forever missed.</span> <span class="sentence" data-sentence-index="12">Forever our superhero.</span> <span class="sentence" data-sentence-index="13">Our Matt and Dad."</span></p>
+        <p class="cn">她以这样的话结束了对丈夫的悼念：“永远被爱。永远被怀念。永远是我们的超级英雄。我们的Matt和爸爸。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Watch: Police officers leave floral tributes near the scene of the crash</span></p>
+        <p class="cn">观看：警察在事故现场附近献上鲜花</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">PC Clough's family said he had a "fantastic sense of humour" and "jumped into action whenever needed", adding he was "our hero" and always "willing to help anyone for any reason".</span></p>
+        <p class="cn">PC Clough的家人表示，他有“极好的幽默感”，并且“在需要时总是立即行动”，并补充说他是“我们的英雄”，总是“愿意为任何人提供任何帮助”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">They also said he "proudly fought for his country to make the world a better place" and was "always on public duty throughout his short life".</span></p>
+        <p class="cn">他们还表示，他“自豪地为国家而战，让世界变得更美好”，并且“在他短暂的一生中始终履行公共职责”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">In other tributes, a man who knew PC Clough posted on social media he was a "true friend, fantastic soldier and I have no doubt even better police officer".</span></p>
+        <p class="cn">在其他悼念中，一位认识PC Clough的男子在社交媒体上发帖称，他是“真正的朋友，出色的士兵，我毫不怀疑他更是优秀的警察”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Seaton Carew FC, where PC Blades had recently become a coach and was preparing for his first season with its under-sevens team, said the officer and his family were "much loved members" of the club.</span></p>
+        <p class="cn">Seaton Carew FC表示，PC Blades最近成为该俱乐部的教练，并正准备带领其七岁以下球队参加首个赛季，这位警官和他的家人是俱乐部“深受喜爱的成员”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">FC Hartlepool, where PC Blades had coached the under-10s team, said he was a "role model, mentor [and] friend" who the children "looked up to and admired".</span></p>
+        <p class="cn">FC Hartlepool表示，PC Blades曾执教其十岁以下球队，他是孩子们的“榜样、导师和朋友”，孩子们“敬仰和钦佩他”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">"His kindness, patience, and infectious personality made him loved by all who had the privilege of knowing him," the club added.</span></p>
+        <p class="cn">俱乐部补充说：“他的善良、耐心和富有感染力的个性使他受到所有有幸认识他的人的喜爱。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Carmel College in Darlington, where PC Blades taught English before joining the police, said he was an "intelligent, kind an approachable teacher" who "gave generously of himself to the young people in his care".</span></p>
+        <p class="cn">达灵顿的Carmel College表示，PC Blades在加入警队前曾在该校教授英语，他是一位“聪明、善良且平易近人的老师”，他“慷慨地奉献自己，关怀他所照顾的年轻人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">On Sunday evening more than Â£180,000 had been pledged for the officers' families in an online <span class="keyword" data-word="fundraiser" data-phonetic="/ˈfʌndreɪzər/" data-pos="n." data-def="筹款活动" data-def-en="an event or activity to collect money for a particular purpose">fundraiser</span> set up by Cleveland Police Federation, who said the two officers had "paid the ultimate sacrifice in the line of duty".</span></p>
+        <p class="cn">周日晚，由克利夫兰警察联合会设立的在线筹款活动已为殉职警察的家属筹集了超过18万英镑，该联合会表示，这两名警察“在执行任务时做出了最大的牺牲”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">"They leave behind heartbroken loved ones who will struggle to come to terms with the loss of their loved one," the federation said, adding the organisation would support the families "at this unfathomable moment" with the money to be used "as they so wish".</span></p>
+        <p class="cn">联合会表示：“他们留下了心碎的亲人，这些亲人将难以接受失去至亲的事实。”并补充说，该组织将在“这个难以理解的时刻”支持这些家庭，这笔钱将“按照他们的意愿”使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">Earlier a group of police officers laid floral tributes at the police cordon on Eston Road.</span></p>
+        <p class="cn">早些时候，一群警察在Eston Road的警戒线处献上鲜花。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Some removed their hats and bowed their heads and took a brief moment of silence to remember their colleagues.</span></p>
+        <p class="cn">一些人脱下帽子，低头默哀片刻，以纪念他们的同事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">They spoke briefly to other officers at the scene before leaving, with some hugging each other as they walked away.</span></p>
+        <p class="cn">他们与现场的其他人简短交谈后离开，离开时有些人互相拥抱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">'Devastating': Residents speak of fatal A66 crash</span></p>
+        <p class="cn">“毁灭性的”：居民谈论致命的A66车祸</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Local residents Elisia and Vincent Haarhoff also went to the scene to express their solidarity with the police.</span></p>
+        <p class="cn">当地居民Elisia和Vincent Haarhoff也前往现场表达对警方的支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">"No family deserves that," Elisia said, adding: "God bless all the families, honestly.</span></p>
+        <p class="cn">“没有家庭应该经历这些，”Elisia说，并补充道：“上帝保佑所有家庭，真的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">"We wanted to come...</span> <span class="sentence" data-sentence-index="33">[the police here have] always been so lovely."</span></p>
+        <p class="cn">“我们想来……（这里的警察）一直都非常友善。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">The Independent Office for Police Conduct (IOPC), which is investigating the crash, said the officers who died were "in the area to assist in a search" for the Passat.</span></p>
+        <p class="cn">正在调查这起事故的独立警察行为办公室（IOPC）表示，殉职的警察当时“在该地区协助搜索”那辆帕萨特。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">Cleveland Police had received reports linking the car, which was believed to be using cloned registration plates that activated an ANPR camera, to "numerous incidents", the watchdog said.</span></p>
+        <p class="cn">该监督机构表示，克利夫兰警方收到报告，称这辆汽车涉嫌使用克隆车牌，触发了ANPR摄像头，并与“多起事件”有关。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">Officers were pursuing it for almost seven minutes before the Passat turned the wrong-way on to the A66, the IOPC spokesman said.</span></p>
+        <p class="cn">IOPC发言人称，警方追捕了这辆车近七分钟，随后帕萨特逆行转入A66。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">About 10 seconds later, at 03:39 BST, the car hit the officers' vehicle which was on the correct side of the dual carriageway, the IOPC said.</span></p>
+        <p class="cn">IOPC表示，大约10秒后，即英国夏令时03:39，该车撞上了位于双车道正确一侧的警车。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Security footage from a house on Lime Road in Middlesbrough appears to show a car being pursued by police vehicles three minutes before the crash.</span></p>
+        <p class="cn">米德尔斯堡Lime Road一处住宅的监控录像似乎显示，在事故发生前三分钟，一辆汽车正被警车追捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">Watch: Video appears to show police pursuit minutes before fatal crash</span></p>
+        <p class="cn">观看：视频显示致命车祸发生前几分钟的警方追捕</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="41">Redcar and Cleveland Borough Council said the section of A66 in South Bank between Eston Road and Normanby Road would remain closed until Monday while repairs were carried out on the carriageway.</span></p>
+        <p class="cn">雷德卡和克利夫兰自治市议会表示，A66南岸Eston Road和Normanby Road之间的路段将关闭至周一，以便对车道进行维修。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="42">Follow BBC Tees on X, , external Facebook , external , Nextdoor and Instagram , external and listen to Radio Tees on BBC Sounds .</span></p>
+        <p class="cn">在X、Facebook、Nextdoor和Instagram上关注BBC Tees，并在BBC Sounds上收听Radio Tees。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="43">Do you have a story suggestion for BBC Tees?</span></p>
+        <p class="cn">您有BBC Tees的故事建议吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="44">Pursuit 'abandoned' seconds before crash killed seven</span></p>
+        <p class="cn">车祸发生前几秒追捕被“放弃”，造成七人死亡</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="45">Two police officers among seven killed in wrong-way car crash</span></p>
+        <p class="cn">逆行车祸致七人死亡，其中包括两名警察</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hail</span>
+        <button class="kw-speak-btn" data-word="hail" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/heɪl/ v.</span>
+      </div>
+      <p class="kw-def">赞扬，称颂</p>
+      <p class="kw-def-en">to praise or acclaim someone or something</p>
+      <p class="kw-ctx">&ldquo;Two police officers who died when a car travelling the wrong way down a dual carriageway crashed into their vehicle have been hailed as heroes by their families.&rdquo;</p>
+      <p class="kw-ctx-cn">两名警察在一辆汽车逆行撞上他们的车辆时丧生，被家人誉为英雄。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pursue</span>
+        <button class="kw-speak-btn" data-word="pursue" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pərˈsuː/ v.</span>
+      </div>
+      <p class="kw-def">追捕，追赶</p>
+      <p class="kw-def-en">to follow someone or something in order to catch them</p>
+      <p class="kw-ctx">&ldquo;PC Tom Clough, 38, and PC Matthew Blades, 37, died when a Volkswagen Passat, which officers had been pursuing until seconds before, collided with their marked armed response car on the A66 near Middlesbrough on Saturday.&rdquo;</p>
+      <p class="kw-ctx-cn">38岁的汤姆·克拉夫警员和37岁的马修·布莱兹警员在周六米德尔斯堡附近的A66公路上，一辆大众帕萨特与他们的武装响应警车相撞，两人丧生，此前警员们一直在追捕这辆帕萨特，直到事故发生前几秒。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">collide</span>
+        <button class="kw-speak-btn" data-word="collide" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈlaɪd/ v.</span>
+      </div>
+      <p class="kw-def">碰撞，相撞</p>
+      <p class="kw-def-en">to crash into each other with force</p>
+      <p class="kw-ctx">&ldquo;PC Tom Clough, 38, and PC Matthew Blades, 37, died when a Volkswagen Passat, which officers had been pursuing until seconds before, collided with their marked armed response car on the A66 near Middlesbrough on Saturday.&rdquo;</p>
+      <p class="kw-ctx-cn">38岁的汤姆·克拉夫警员和37岁的马修·布莱兹警员在周六米德尔斯堡附近的A66公路上，一辆大众帕萨特与他们的武装响应警车相撞，两人丧生，此前警员们一直在追捕这辆帕萨特，直到事故发生前几秒。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tribute</span>
+        <button class="kw-speak-btn" data-word="tribute" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrɪbjuːt/ n.</span>
+      </div>
+      <p class="kw-def">悼念，致敬</p>
+      <p class="kw-def-en">something that you say or do to show respect or admiration for someone</p>
+      <p class="kw-ctx">&ldquo;In tributes released by Cleveland Police, PC Clough's family said he was "willing to help anyone", while PC Blades' wife described him as "loved beyond words".&rdquo;</p>
+      <p class="kw-ctx-cn">在克利夫兰警方发布的悼念中，克拉夫警员的家人说他“愿意帮助任何人”，而布莱兹警员的妻子则形容他“被爱得无法用言语形容”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devoted</span>
+        <button class="kw-speak-btn" data-word="devoted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈvoʊtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">忠诚的，挚爱的</p>
+      <p class="kw-def-en">very loving and loyal</p>
+      <p class="kw-ctx">&ldquo;She said he was a "beloved husband" and the "most devoted father" to their two young sons who would grow up knowing what an "incredible" dad he was.&rdquo;</p>
+      <p class="kw-ctx-cn">她说他是“挚爱的丈夫”，也是两个年幼儿子“最忠诚的父亲”，孩子们长大后会知道他是多么“了不起”的爸爸。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">selflessness</span>
+        <button class="kw-speak-btn" data-word="selflessness" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈselfləsnəs/ n.</span>
+      </div>
+      <p class="kw-def">无私，忘我</p>
+      <p class="kw-def-en">the quality of caring more about others than yourself</p>
+      <p class="kw-ctx">&ldquo;He gave his life in the line of duty, protecting and serving others with courage, dedication and selflessness.&rdquo;</p>
+      <p class="kw-ctx-cn">他在执行任务时献出了生命，以勇气、奉献和无私精神保护和服务他人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">legacy</span>
+        <button class="kw-speak-btn" data-word="legacy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈleɡəsi/ n.</span>
+      </div>
+      <p class="kw-def">遗产，遗赠</p>
+      <p class="kw-def-en">something that is left or handed down from a person, especially from the past</p>
+      <p class="kw-ctx">&ldquo;He may have left this world committed to the duty he believed in, but his greatest legacy will always be the love he gave to his family.&rdquo;</p>
+      <p class="kw-ctx-cn">他可能已离开这个世界，坚守着他所信仰的职责，但他最伟大的遗产将永远是他给予家人的爱。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fundraiser</span>
+        <button class="kw-speak-btn" data-word="fundraiser" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfʌndreɪzər/ n.</span>
+      </div>
+      <p class="kw-def">筹款活动</p>
+      <p class="kw-def-en">an event or activity to collect money for a particular purpose</p>
+      <p class="kw-ctx">&ldquo;On Sunday evening more than £180,000 had been pledged for the officers' families in an online fundraiser set up by Cleveland Police Federation.&rdquo;</p>
+      <p class="kw-ctx-cn">周日晚上，克利夫兰警察联合会设立的在线筹款活动中，已为警官家属认捐超过18万英镑。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "PC Matthew Blades (left) and PC Tom Clough were killed in a crash near Middlesbrough on Saturday", "start_ms": 0, "end_ms": 7752, "paragraph_index": 0}, {"index": 1, "text": "Two police officers who died when a car travelling the wrong way down a dual carriageway crashed into their vehicle have been hailed as heroes by their families.", "start_ms": 7752, "end_ms": 17832, "paragraph_index": 1}, {"index": 2, "text": "PC Tom Clough, 38, and PC Matthew Blades, 37, died when a Volkswagen Passat, which officers had been pursuing until seconds before , collided with their marked armed response car on the A66 near Middlesbrough on Saturday.", "start_ms": 17832, "end_ms": 35496, "paragraph_index": 2}, {"index": 3, "text": "The Passat's occupants Michael Robert Cahill, 23, Jacob Matusiak, 23, Theo Rae, 17, Makai Saddington, 18, and Cole Robert Worthy, 17, also died.", "start_ms": 35496, "end_ms": 50424, "paragraph_index": 3}, {"index": 4, "text": "In tributes released by Cleveland Police, PC Clough's family said he was \"willing to help anyone\", while PC Blades' wife described him as \"loved beyond words\".", "start_ms": 50424, "end_ms": 61632, "paragraph_index": 4}, {"index": 5, "text": "\"No words will ever feel like the right words to honour our Matt,\" she said, adding he was a \"beloved husband\" and the \"most devoted father\" to their two young sons who would grow up knowing what an \"incredible\" dad he was.", "start_ms": 61632, "end_ms": 75432, "paragraph_index": 5}, {"index": 6, "text": "\"He gave his life in the line of duty, protecting and serving others with courage, dedication and selflessness,\" she said.", "start_ms": 75432, "end_ms": 84120, "paragraph_index": 6}, {"index": 7, "text": "\"The pain of losing him is beyond words, and our lives will never be the same.", "start_ms": 84120, "end_ms": 89928, "paragraph_index": 7}, {"index": 8, "text": "\"Neither will the love he gave us ever fade.", "start_ms": 89928, "end_ms": 93552, "paragraph_index": 8}, {"index": 9, "text": "\"He may have left this world committed to the duty he believed in, but his greatest legacy will always be the love he gave to his family.\"", "start_ms": 93552, "end_ms": 102480, "paragraph_index": 9}, {"index": 10, "text": "She ended the tribute to her husband: \"Forever loved.", "start_ms": 102480, "end_ms": 106872, "paragraph_index": 10}, {"index": 11, "text": "Forever missed.", "start_ms": 106872, "end_ms": 109080, "paragraph_index": 10}, {"index": 12, "text": "Forever our superhero.", "start_ms": 109080, "end_ms": 111840, "paragraph_index": 10}, {"index": 13, "text": "Our Matt and Dad.\"", "start_ms": 111840, "end_ms": 114144, "paragraph_index": 10}, {"index": 14, "text": "This video can not be played", "start_ms": 114144, "end_ms": 117144, "paragraph_index": 11}, {"index": 15, "text": "Watch: Police officers leave floral tributes near the scene of the crash", "start_ms": 117144, "end_ms": 122760, "paragraph_index": 12}, {"index": 16, "text": "PC Clough's family said he had a \"fantastic sense of humour\" and \"jumped into action whenever needed\", adding he was \"our hero\" and always \"willing to help anyone for any reason\".", "start_ms": 122760, "end_ms": 134520, "paragraph_index": 13}, {"index": 17, "text": "They also said he \"proudly fought for his country to make the world a better place\" and was \"always on public duty throughout his short life\".", "start_ms": 134520, "end_ms": 143328, "paragraph_index": 14}, {"index": 18, "text": "In other tributes, a man who knew PC Clough posted on social media he was a \"true friend, fantastic soldier and I have no doubt even better police officer\".", "start_ms": 143328, "end_ms": 154704, "paragraph_index": 15}, {"index": 19, "text": "Seaton Carew FC, where PC Blades had recently become a coach and was preparing for his first season with its under-sevens team, said the officer and his family were \"much loved members\" of the club.", "start_ms": 154704, "end_ms": 168024, "paragraph_index": 16}, {"index": 20, "text": "FC Hartlepool, where PC Blades had coached the under-10s team, said he was a \"role model, mentor [and] friend\" who the children \"looked up to and admired\".", "start_ms": 168024, "end_ms": 179016, "paragraph_index": 17}, {"index": 21, "text": "\"His kindness, patience, and infectious personality made him loved by all who had the privilege of knowing him,\" the club added.", "start_ms": 179016, "end_ms": 188088, "paragraph_index": 18}, {"index": 22, "text": "Carmel College in Darlington, where PC Blades taught English before joining the police, said he was an \"intelligent, kind an approachable teacher\" who \"gave generously of himself to the young people in his care\".", "start_ms": 188088, "end_ms": 201480, "paragraph_index": 19}, {"index": 23, "text": "On Sunday evening more than \u00c2\u00a3180,000 had been pledged for the officers' families in an online fundraiser set up by Cleveland Police Federation, who said the two officers had \"paid the ultimate sacrifice in the line of duty\".", "start_ms": 201480, "end_ms": 218160, "paragraph_index": 20}, {"index": 24, "text": "\"They leave behind heartbroken loved ones who will struggle to come to terms with the loss of their loved one,\" the federation said, adding the organisation would support the families \"at this unfathomable moment\" with the money to be used \"as they so wish\".", "start_ms": 218160, "end_ms": 233664, "paragraph_index": 21}, {"index": 25, "text": "Earlier a group of police officers laid floral tributes at the police cordon on Eston Road.", "start_ms": 233664, "end_ms": 240264, "paragraph_index": 22}, {"index": 26, "text": "Some removed their hats and bowed their heads and took a brief moment of silence to remember their colleagues.", "start_ms": 240264, "end_ms": 247368, "paragraph_index": 23}, {"index": 27, "text": "They spoke briefly to other officers at the scene before leaving, with some hugging each other as they walked away.", "start_ms": 247368, "end_ms": 254856, "paragraph_index": 24}, {"index": 28, "text": "This video can not be played", "start_ms": 254856, "end_ms": 257856, "paragraph_index": 25}, {"index": 29, "text": "'Devastating': Residents speak of fatal A66 crash", "start_ms": 257856, "end_ms": 263184, "paragraph_index": 26}, {"index": 30, "text": "Local residents Elisia and Vincent Haarhoff also went to the scene to express their solidarity with the police.", "start_ms": 263184, "end_ms": 270888, "paragraph_index": 27}, {"index": 31, "text": "\"No family deserves that,\" Elisia said, adding: \"God bless all the families, honestly.", "start_ms": 270888, "end_ms": 278040, "paragraph_index": 28}, {"index": 32, "text": "\"We wanted to come...", "start_ms": 278040, "end_ms": 280320, "paragraph_index": 29}, {"index": 33, "text": "[the police here have] always been so lovely.\"", "start_ms": 280320, "end_ms": 284184, "paragraph_index": 29}, {"index": 34, "text": "The Independent Office for Police Conduct (IOPC), which is investigating the crash, said the officers who died were \"in the area to assist in a search\" for the Passat.", "start_ms": 284184, "end_ms": 296136, "paragraph_index": 30}, {"index": 35, "text": "Cleveland Police had received reports linking the car, which was believed to be using cloned registration plates that activated an ANPR camera, to \"numerous incidents\", the watchdog said.", "start_ms": 296136, "end_ms": 309264, "paragraph_index": 31}, {"index": 36, "text": "Officers were pursuing it for almost seven minutes before the Passat turned the wrong-way on to the A66, the IOPC spokesman said.", "start_ms": 309264, "end_ms": 319248, "paragraph_index": 32}, {"index": 37, "text": "About 10 seconds later, at 03:39 BST, the car hit the officers' vehicle which was on the correct side of the dual carriageway, the IOPC said.", "start_ms": 319248, "end_ms": 330936, "paragraph_index": 33}, {"index": 38, "text": "Security footage from a house on Lime Road in Middlesbrough appears to show a car being pursued by police vehicles three minutes before the crash.", "start_ms": 330936, "end_ms": 340392, "paragraph_index": 34}, {"index": 39, "text": "This video can not be played", "start_ms": 340392, "end_ms": 343392, "paragraph_index": 35}, {"index": 40, "text": "Watch: Video appears to show police pursuit minutes before fatal crash", "start_ms": 343392, "end_ms": 349224, "paragraph_index": 36}, {"index": 41, "text": "Redcar and Cleveland Borough Council said the section of A66 in South Bank between Eston Road and Normanby Road would remain closed until Monday while repairs were carried out on the carriageway.", "start_ms": 349224, "end_ms": 362376, "paragraph_index": 37}, {"index": 42, "text": "Follow BBC Tees on X, , external Facebook , external , Nextdoor and Instagram , external and listen to Radio Tees on BBC Sounds .", "start_ms": 362376, "end_ms": 373248, "paragraph_index": 38}, {"index": 43, "text": "Do you have a story suggestion for BBC Tees?", "start_ms": 373248, "end_ms": 377328, "paragraph_index": 39}, {"index": 44, "text": "Pursuit 'abandoned' seconds before crash killed seven", "start_ms": 377328, "end_ms": 381768, "paragraph_index": 40}, {"index": 45, "text": "Two police officers among seven killed in wrong-way car crash", "start_ms": 381768, "end_ms": 386880, "paragraph_index": 41}], "total_duration_ms": 386880};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "said": "说", "police": "警方", "in": "在", "he": "他", "of": "的", "on": "在", "pc": "个人电脑", "officers": "官员", "was": "是", "who": "谁", "their": "他们的", "his": "他的", "crash": "坠毁", "had": "有", "for": "为了", "before": "之前", "with": "与", "be": "是", "blades": "刀片", "car": "汽车", "loved": "爱过的", "were": "是", "have": "有", "by": "被", "family": "家庭", "will": "将", "our": "我们的", "an": "一个", "this": "这个", "they": "它们", "two": "两个", "died": "死亡", "been": "已经", "as": "作为", "families": "家庭", "which": "哪个", "tributes": "致敬", "cleveland": "克利夫兰", "him": "他", "words": "言辞", "adding": "补充说", "gave": "给予", "duty": "职责", "always": "总是", "video": "视频", "at": "在", "road": "道路", "clough": "克拉夫", "killed": "杀死", "near": "附近", "middlesbrough": "米德尔斯堡", "carriageway": "行车道", "passat": "帕萨特", "seconds": "秒", "also": "也", "no": "没有", "she": "她", "would": "将", "up": "向上", "forever": "永远", "can": "可以", "not": "不", "played": "比赛", "scene": "现场", "other": "其他", "where": "那里", "iopc": "警察行为独立办公室", "seven": "七", "minutes": "会议记录", "bbc": "英国广播公司", "tees": "蒂斯", "external": "外部的", "matthew": "马修", "left": "离开", "tom": "汤姆", "saturday": "星期六", "when": "当", "dual": "双重的", "into": "进入", "vehicle": "车辆", "pursuing": "追求", "until": "直到", "robert": "罗伯特", "willing": "愿意的", "help": "帮助", "anyone": "任何人", "while": "而", "beyond": "超出", "ever": "曾经", "matt": "马特", "husband": "丈夫", "young": "年轻的", "knowing": "明知", "dad": "爸爸", "life": "生活", "line": "界限", "is": "是", "love": "爱", "world": "世界", "believed": "据信", "watch": "观看", "leave": "离开", "floral": "花卉的", "fantastic": "极好的", "better": "更好的", "friend": "朋友", "officer": "警官", "fc": "足球俱乐部", "team": "团队", "club": "俱乐部", "all": "所有", "federation": "联合会", "come": "到来", "moment": "时刻", "so": "所以", "some": "一些", "residents": "居民", "fatal": "致命的", "that": "那个", "appears": "似乎", "show": "显示", "pursuit": "追求", "travelling": "旅行", "wrong": "错误的", "way": "方式", "down": "下来", "crashed": "撞毁", "hailed": "被誉为", "heroes": "英雄", "volkswagen": "大众", "collided": "相撞", "marked": "显著的", "armed": "武装的", "response": "回应", "occupants": "occupants", "michael": "迈克尔", "cole": "科尔", "released": "释放", "wife": "妻子", "described": "描述", "feel": "感觉", "like": "像", "right": "正确", "honour": "阁下", "beloved": "心爱的", "most": "最", "father": "父亲", "grow": "增长", "what": "什么", "incredible": "难以置信", "protecting": "保护", "serving": "担任", "others": "其他", "courage": "勇气", "dedication": "奉献", "pain": "痛苦", "losing": "失去", "lives": "生命", "never": "从未", "same": "相同", "neither": "双方都不", "us": "我们", "may": "可能", "committed": "承诺的", "but": "但是", "greatest": "最伟大的", "ended": "结束", "her": "她的", "missed": "未击中", "sense": "感觉", "humour": "幽默", "jumped": "跳了", "action": "行动", "whenever": "每当", "needed": "需要", "hero": "英雄", "any": "任何", "reason": "原因", "fought": "斗争", "country": "国家", "make": "使", "place": "地点", "public": "公众", "throughout": "贯穿", "short": "短暂的", "man": "男子", "knew": "知道", "posted": "发布", "social": "社交的", "media": "媒体", "true": "真实", "soldier": "士兵", "doubt": "怀疑", "even": "甚至", "recently": "最近", "become": "成为", "coach": "教练", "preparing": "准备", "first": "第一轮", "season": "季节", "its": "它的", "much": "许多", "members": "成员", "hartlepool": "哈特尔普尔", "under-": "不足", "role": "角色", "model": "模特", "children": "儿童", "looked": "看起来", "kindness": "善意", "patience": "耐心", "infectious": "传染性的", "personality": "个性", "made": "做出", "privilege": "特权", "added": "补充", "college": "学院", "english": "英格兰的", "joining": "加入", "kind": "种类", "teacher": "教师", "himself": "他自己", "people": "人们", "care": "照顾", "sunday": "星期日", "evening": "晚上", "more": "更多", "than": "比", "pledged": "承诺", "online": "在线", "set": "设定", "paid": "支付", "behind": "在...后面", "ones": "人们", "struggle": "搏斗", "terms": "条件", "loss": "损失", "one": "一个", "organisation": "组织", "support": "支持", "money": "金钱", "used": "使用", "wish": "希望", "earlier": "较早", "group": "团体", "laid": "布设", "cordon": "警戒线", "removed": "移除", "bowed": "屈服", "heads": "领导", "took": "担任", "brief": "简短的", "silence": "沉默", "remember": "记住", "colleagues": "同事", "spoke": "发言", "briefly": "短暂地", "leaving": "离开", "each": "每个", "walked": "走", "away": "离开", "devastating": "毁灭性的", "speak": "发言", "local": "当地", "went": "去", "express": "表达", "solidarity": "团结", "deserves": "应得", "god": "上帝", "we": "我们", "wanted": "想要", "here": "这里", "lovely": "可爱的", "independent": "独立的", "office": "办公室", "conduct": "行为", "investigating": "调查", "area": "区域", "assist": "协助", "search": "搜索", "received": "受到", "reports": "报道", "linking": "联系", "using": "使用", "camera": "摄像机", "numerous": "众多的", "incidents": "事件", "watchdog": "监管机构", "it": "它", "almost": "几乎", "turned": "转向", "spokesman": "发言人", "about": "关于", "later": "后来", "bst": "英国夏令时", "hit": "击中", "correct": "正确的", "side": "方面", "security": "安全", "footage": "视频片段", "from": "来自", "house": "议院", "lime": "莱姆", "being": "正在", "pursued": "追求", "vehicles": "车辆", "three": "三个", "redcar": "雷德卡", "council": "委员会", "section": "部分", "south": "韩国", "bank": "银行", "between": "之间", "normanby": "诺曼比", "remain": "仍然", "closed": "关闭", "monday": "星期一", "carried": "进行", "out": "出来", "follow": "关注", "facebook": "脸书", "nextdoor": "隔壁", "instagram": "Instagram", "listen": "倾听", "radio": "电台", "sounds": "听起来", "do": "做", "you": "你", "story": "故事", "suggestion": "建议", "abandoned": "被遗弃的", "among": "在...之中", "clough's": "克拉夫的", "eston": "伊斯顿", "elisia": "伊莉西亚", "wrong-way": "逆行", "passat's": "帕萨特的", "cahill": "卡希尔", "jacob": "雅各布", "matusiak": "马图西亚克", "theo": "西奥", "rae": "雷", "makai": "马凯", "saddington": "萨丁顿", "worthy": "值得的", "sons": "儿子们", "fade": "褪色", "superhero": "超级英雄", "proudly": "自豪地", "seaton": "西顿", "carew": "卡鲁", "under-sevens": "七岁以下", "coached": "执教", "mentor": "导师", "admired": "钦佩", "carmel": "卡梅尔", "darlington": "达灵顿", "taught": "教导", "intelligent": "聪明的", "approachable": "平易近人的", "generously": "慷慨地", "ultimate": "最终的", "sacrifice": "牺牲", "heartbroken": "心碎的", "unfathomable": "深不可测的", "hats": "帽子", "hugging": "拥抱", "vincent": "文森特", "haarhoff": "哈尔霍夫", "bless": "祝福", "honestly": "诚实地", "cloned": "克隆的", "registration": "注册", "plates": "车牌", "activated": "激活", "anpr": "自动车牌识别", "borough": "自治市镇", "repairs": "维修"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
