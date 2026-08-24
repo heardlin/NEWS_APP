@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-24</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-24</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/68ab/live/93348dd0-9f24-11f1-b109-879e35c24276.png" alt="Organised crime arrests as police investigate A66 crash that killed two officers" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Organised crime arrests as police investigate A66 crash that killed two officers</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c36d6975dzno?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-24.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">PC Matthew Blades and PC Tom Clough were killed in a crash near Middlesbrough on Saturday</span></p>
+        <p class="cn">PC Matthew Blades和PC Tom Clough在周六米德尔斯堡附近的一场车祸中丧生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Twelve people have been arrested as part of the investigation into the A66 crash that killed seven people, including two police officers.</span></p>
+        <p class="cn">已有12人因A66公路车祸调查被捕，该车祸导致包括两名警察在内的7人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Nine men and three women, aged between 19 and 61, have been arrested across Teesside on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of a range of offences including possession of a <span class="keyword" data-word="firearm" data-phonetic="/ˈfaɪərɑːrm/" data-pos="n." data-def="枪支，火器" data-def-en="a gun that can be carried and used by a person">firearm</span> and being part of an <span class="keyword" data-word="organised" data-phonetic="/ˈɔːrɡənaɪzd/" data-pos="adj." data-def="有组织的，有秩序的" data-def-en="involving a group of people working together in a planned way">organised</span> crime group.</span></p>
+        <p class="cn">在蒂斯河畔地区，9名男子和3名女子（年龄在19至61岁之间）因涉嫌一系列罪行被捕，包括持有枪支和参与有组织犯罪集团。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In the early hours of Saturday, a Volkswagen Passat that had been pursued by police travelled the wrong way down the A66 near Middlesbrough and crashed into an oncoming police car - two PCs and all five Passat occupants died.</span></p>
+        <p class="cn">周六凌晨，一辆被警方追捕的大众帕萨特在米德尔斯堡附近的A66公路上逆行，与迎面而来的警车相撞，导致两名警察和帕萨特车内五人全部死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Cleveland Police said it was investigating "serious criminal activity that resulted in this <span class="keyword" data-word="fatal" data-phonetic="/ˈfeɪtl/" data-pos="adj." data-def="致命的，毁灭性的" data-def-en="causing death">fatal</span> incident".</span></p>
+        <p class="cn">克利夫兰警方表示，他们正在调查“导致这起致命事件的严重犯罪活动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">PC Tom Clough, 38, and PC Matthew Blades, 37, died in the crash , as did Michael Robert Cahill, 23, Jacob Matusiak, 23, Makai Saddington, 18, Theo Rae, 17, and 17-year-old Cole Robert Worthy.</span></p>
+        <p class="cn">38岁的PC Tom Clough和37岁的PC Matthew Blades在车祸中丧生，同时遇难的还有23岁的Michael Robert Cahill、23岁的Jacob Matusiak、18岁的Makai Saddington、17岁的Theo Rae和17岁的Cole Robert Worthy。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Earlier, Cleveland Police released more details of its investigation into the lead-up to the crash and information about the 12 people it had arrested.</span></p>
+        <p class="cn">早些时候，克利夫兰警方公布了更多关于事故前调查的细节，以及被捕的12人的信息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">It received several reports of two vehicles "being driven dangerously" on Saturday morning</span></p>
+        <p class="cn">周六早上，警方接到多起报告称有两辆车“危险驾驶”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The first vehicle, believed to be a Volvo XC60, was seen "ramming properties" in the Middlesbrough area</span></p>
+        <p class="cn">第一辆车据信是一辆沃尔沃XC60，在米德尔斯堡地区被看到“撞击房产”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">The second vehicle, a Passat, is believed to have been associated with this activity</span></p>
+        <p class="cn">第二辆车是一辆帕萨特，据信与这一活动有关。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Both vehicles were operating with cloned number plates but were picked up by automated number plate recognition technology</span></p>
+        <p class="cn">两辆车都使用了克隆车牌，但被自动车牌识别技术捕捉到。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">The Volvo has been recovered in Middlesbrough</span></p>
+        <p class="cn">沃尔沃已在米德尔斯堡被找到。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Four of the five people in the Passat had previous convictions</span></p>
+        <p class="cn">帕萨特车内的五人中有四人曾有前科。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Assistant Chief Constable Wayne Fox said the investigation had been "fast moving and complex".</span></p>
+        <p class="cn">助理警长Wayne Fox表示，调查“进展迅速且复杂”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">He said: "The events of that tragic night will have a lasting and profound impact on the Cleveland area and the communities we seek to protect.</span></p>
+        <p class="cn">他说：“那个悲剧夜晚的事件将对克利夫兰地区及我们努力保护的社区产生持久而深远的影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">"We have a duty to respond to, and thoroughly investigate, the serious criminal activity that resulted in this <span class="keyword" data-word="fatal" data-phonetic="/ˈfeɪtl/" data-pos="adj." data-def="致命的，毁灭性的" data-def-en="causing death">fatal</span> incident and to bring all those responsible to justice."</span></p>
+        <p class="cn">“我们有责任应对并彻底调查导致这起致命事件的严重犯罪活动，并将所有责任人绳之以法。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The five who died in the Passat were Jacob Matusiak, Makai Saddington, Theo Ray, Michael Robert Cahill and Cole Robert Worthy</span></p>
+        <p class="cn">帕萨特车内遇难的五人是Jacob Matusiak、Makai Saddington、Theo Ray、Michael Robert Cahill和Cole Robert Worthy。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">The 12 people arrested as part of the investigation are:</span></p>
+        <p class="cn">作为调查的一部分被捕的12人是：</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Three men, aged 24, 19 and 35, all held on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of participating in an <span class="keyword" data-word="organised" data-phonetic="/ˈɔːrɡənaɪzd/" data-pos="adj." data-def="有组织的，有秩序的" data-def-en="involving a group of people working together in a planned way">organised</span> crime group and possession of an offensive weapon.</span> <span class="sentence" data-sentence-index="19">They are in police custody</span></p>
+        <p class="cn">三名男子，年龄分别为24岁、19岁和35岁，均因涉嫌参与有组织犯罪集团和持有攻击性武器而被拘留，目前被警方羁押。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">A man, 21, held on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of participating in an <span class="keyword" data-word="organised" data-phonetic="/ˈɔːrɡənaɪzd/" data-pos="adj." data-def="有组织的，有秩序的" data-def-en="involving a group of people working together in a planned way">organised</span> crime group, possession of an offensive weapon and criminal damage.</span> <span class="sentence" data-sentence-index="21">He has been remanded on recall to prison</span></p>
+        <p class="cn">一名21岁男子，因涉嫌参与有组织犯罪集团、持有攻击性武器和刑事毁坏而被捕，已被还押候审，召回监狱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">A 30-year-old woman arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of assisting an offender and who is in police custody</span></p>
+        <p class="cn">一名30岁女子，因涉嫌协助犯罪者被捕，目前被警方羁押。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">A 20-year-old man arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of threats to cause criminal damage and public order.</span> <span class="sentence" data-sentence-index="24">He remains in custody</span></p>
+        <p class="cn">一名20岁男子，因涉嫌威胁造成刑事毁坏和扰乱公共秩序被捕，仍被羁押。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">A 26-year-old man has been charged with possession with intent to supply class A and class B drugs, as well as the possession of criminal property</span></p>
+        <p class="cn">一名26岁男子已被控持有并意图供应A类和B类毒品，以及持有犯罪财产。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Another man, 39, and a 47-year-old woman have been released on conditional bail after both being arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of possessing a <span class="keyword" data-word="firearm" data-phonetic="/ˈfaɪərɑːrm/" data-pos="n." data-def="枪支，火器" data-def-en="a gun that can be carried and used by a person">firearm</span> without a certificate, possession with intent to supply class A and class B drugs, and possession of class C drugs</span></p>
+        <p class="cn">另一名39岁男子和一名47岁女子因涉嫌无证持有枪支、持有并意图供应A类和B类毒品，以及持有C类毒品而被捕，现已获有条件保释。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">An 18-year-old man has been released on unconditional bail after being arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of possessing a <span class="keyword" data-word="firearm" data-phonetic="/ˈfaɪərɑːrm/" data-pos="n." data-def="枪支，火器" data-def-en="a gun that can be carried and used by a person">firearm</span> without a certificate, possession with intent to supply class A and class B drugs, and possession of class C drugs</span></p>
+        <p class="cn">一名18岁男子因涉嫌无证持有枪支、持有并意图供应A类和B类毒品，以及持有C类毒品而被捕，现已获无条件保释。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">A 61-year-old woman has been released on conditional bail after being arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of possessing a <span class="keyword" data-word="firearm" data-phonetic="/ˈfaɪərɑːrm/" data-pos="n." data-def="枪支，火器" data-def-en="a gun that can be carried and used by a person">firearm</span> without a certificate</span></p>
+        <p class="cn">一名61岁女子因涉嫌无证持有枪支而被捕，现已获有条件保释。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">A 39-year-old man has been arrested on <span class="keyword" data-word="suspicion" data-phonetic="/səˈspɪʃən/" data-pos="n." data-def="怀疑，嫌疑" data-def-en="a feeling that someone has done something wrong">suspicion</span> of threats to kill and has been released on conditional bail</span></p>
+        <p class="cn">一名39岁男子因涉嫌威胁杀人而被捕，现已获有条件保释。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">This video can not be played</span></p>
+        <p class="cn">此视频无法播放。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">Watch: Security footage from a house on Lime Road in Middlesbrough appears to show a car being pursued by police vehicles three minutes before the crash</span></p>
+        <p class="cn">观看：米德尔斯堡Lime Road一处住宅的监控录像显示，在车祸发生前三分钟，一辆汽车被警车追赶。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">The Independent Office for Police Conduct (IOPC) has launched an investigation into the <span class="keyword" data-word="collision" data-phonetic="/kəˈlɪʒən/" data-pos="n." data-def="碰撞，冲突" data-def-en="an accident in which two vehicles or objects hit each other">collision</span> following a self-referral from Cleveland Police, which is mandatory when someone dies following contact with police.</span></p>
+        <p class="cn">警察行为独立办公室（IOPC）在克利夫兰警方自我转介后，已对此次碰撞展开调查，这是在与警方接触后有人死亡时的强制要求。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">The IOPC said officers had followed the Passat for almost seven minutes before abandoning the <span class="keyword" data-word="pursuit" data-phonetic="/pərˈsuːt/" data-pos="n." data-def="追赶，追捕" data-def-en="the act of chasing or following someone or something">pursuit</span> when the car went the wrong way down the A66 at South Bank.</span></p>
+        <p class="cn">IOPC表示，警察跟随帕萨特近七分钟，在汽车于South Bank逆行进入A66时放弃了追捕。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">Ten seconds later at 03:39 BST, the Passat collided with the vehicle of PCs Clough and Blades, who were travelling on the correct side of the road and were in the area to assist with the search for the car.</span></p>
+        <p class="cn">十秒后，即英国夏令时03:39，帕萨特与PC Clough和PC Blades的车辆相撞，他们当时正行驶在正确的车道上，并在该地区协助搜寻该车。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">Earlier, BBC Verify reported that a TikTok account believed to belong to Saddington previously shared videos showing young men driving dangerously .</span></p>
+        <p class="cn">早些时候，BBC Verify报道称，一个据信属于Saddington的TikTok账户此前曾分享过年轻男子危险驾驶的视频。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">The government called for social media platforms to remove posts celebrating such behaviour.</span></p>
+        <p class="cn">政府呼吁社交媒体平台删除庆祝此类行为的帖子。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Cleveland Police said: "At the current time, there is no evidence to indicate that filming of the activities that took place on Friday night and Saturday morning has taken place for the purposes of TikTok."</span></p>
+        <p class="cn">克利夫兰警方表示：“目前，没有证据表明周五晚上和周六早上的活动是为了TikTok而拍摄的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="38">Tributes have been left at the crash scene including a toy police car</span></p>
+        <p class="cn">事故现场留下了悼念物品，包括一辆玩具警车。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="39">An online fundraiser set up for the officers' families by the Cleveland Police Federation has raised more than Â£500,000.</span></p>
+        <p class="cn">克利夫兰警察联合会为遇难警察家属设立的在线筹款活动已筹集超过50万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="40">PC Blades' wife said he "gave his life in the line of duty, protecting and serving others with courage, dedication and selflessness".</span></p>
+        <p class="cn">PC Blades的妻子表示，他“在执行任务时献出了生命，以勇气、奉献和无私精神保护和服务他人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="41">Before joining Cleveland Police, PC Blades worked as an English teacher at Carmel College in Darlington.</span></p>
+        <p class="cn">在加入克利夫兰警方之前，PC Blades曾在达灵顿的卡梅尔学院担任英语教师。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="42">The college said: "Many within our community will remember Matty as an intelligent, kind and approachable teacher, a valued colleague and someone who gave generously of himself to the young people in his care."</span></p>
+        <p class="cn">该学院表示：“我们社区的许多人会记得Matty是一位聪明、善良、平易近人的老师，一位宝贵的同事，以及一位慷慨奉献于他所照顾的年轻人的人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="43">The family of PC Clough described the former soldier as "our hero".</span></p>
+        <p class="cn">PC Clough的家人将这位前士兵描述为“我们的英雄”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="44">They said he "jumped into action whenever needed" and was "willing to help anyone for any reason".</span></p>
+        <p class="cn">他们说，他“在需要时随时行动”，并且“愿意以任何理由帮助任何人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="45">The family statement added that he "proudly fought for his country to make the world a better place".</span></p>
+        <p class="cn">家人的声明补充说，他“自豪地为国家而战，让世界变得更美好”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="46">Flags at Cleveland Police headquarters are flying at half-mast and Redcar and Cleveland Council has opened a book of condolence at its offices on Ridley Street in Redcar.</span></p>
+        <p class="cn">克利夫兰警察总部降半旗致哀，雷德卡和克利夫兰议会已在雷德卡里德利街的办公室开设了吊唁簿。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="47">Floral tributes can also be left at the memorial garden at the force's headquarters in Hemlington or any Cleveland Police station, the council said.</span></p>
+        <p class="cn">议会表示，鲜花悼念品也可以放在位于赫姆林顿的部队总部纪念花园或任何克利夫兰警察局。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="48">Tributes for the five young men have also been shared on social media, with many of their friends saying they were "heartbroken" and "lost for words".</span> <span class="sentence" data-sentence-index="49">Balloon releases have been announced in their memory.</span></p>
+        <p class="cn">社交媒体上也分享了为这五名年轻男子的悼念，他们的许多朋友表示他们“心碎”和“无言以对”。已宣布为他们举行气球放飞活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="46">
+        <p class="en"><span class="sentence" data-sentence-index="50">Follow BBC Tees on X, , external Facebook , external , Nextdoor and Instagram , external and listen to Radio Tees on BBC Sounds .</span></p>
+        <p class="cn">在X、Facebook、Nextdoor和Instagram上关注BBC Tees，并在BBC Sounds上收听Radio Tees。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="47">
+        <p class="en"><span class="sentence" data-sentence-index="51">Do you have a story suggestion for BBC Tees?</span></p>
+        <p class="cn">您有BBC Tees的故事建议吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="48">
+        <p class="en"><span class="sentence" data-sentence-index="52"><span class="keyword" data-word="pursuit" data-phonetic="/pərˈsuːt/" data-pos="n." data-def="追赶，追捕" data-def-en="the act of chasing or following someone or something">Pursuit</span> 'abandoned' seconds before crash killed seven</span></p>
+        <p class="cn">车祸发生前几秒追捕被‘放弃’，造成七人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="49">
+        <p class="en"><span class="sentence" data-sentence-index="53">Two police officers among seven killed in wrong-way car crash</span></p>
+        <p class="cn">逆行车祸致七人死亡，其中包括两名警察。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pursuit</span>
+        <button class="kw-speak-btn" data-word="pursuit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pərˈsuːt/ n.</span>
+      </div>
+      <p class="kw-def">追赶，追捕</p>
+      <p class="kw-def-en">the act of chasing or following someone or something</p>
+      <p class="kw-ctx">&ldquo;The IOPC said officers had followed the Passat for almost seven minutes before abandoning the pursuit when the car went the wrong way down the A66 at South Bank.&rdquo;</p>
+      <p class="kw-ctx-cn">IOPC表示，警察跟随这辆帕萨特近七分钟后，在汽车在南岸逆行A66时放弃了追捕。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">collision</span>
+        <button class="kw-speak-btn" data-word="collision" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈlɪʒən/ n.</span>
+      </div>
+      <p class="kw-def">碰撞，冲突</p>
+      <p class="kw-def-en">an accident in which two vehicles or objects hit each other</p>
+      <p class="kw-ctx">&ldquo;The Independent Office for Police Conduct (IOPC) has launched an investigation into the collision following a self-referral from Cleveland Police.&rdquo;</p>
+      <p class="kw-ctx-cn">警察行为独立办公室（IOPC）在克利夫兰警方自我报告后，对这次碰撞展开了调查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">occupant</span>
+        <button class="kw-speak-btn" data-word="occupant" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɑːkjəpənt/ n.</span>
+      </div>
+      <p class="kw-def"> occupant 居住者，占有人</p>
+      <p class="kw-def-en">a person who is in a vehicle, room, or building</p>
+      <p class="kw-ctx">&ldquo;two PCs and all five Passat occupants died.&rdquo;</p>
+      <p class="kw-ctx-cn">两名警察和帕萨特上的五名乘客全部遇难。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicion</span>
+        <button class="kw-speak-btn" data-word="suspicion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">怀疑，嫌疑</p>
+      <p class="kw-def-en">a feeling that someone has done something wrong</p>
+      <p class="kw-ctx">&ldquo;Nine men and three women, aged between 19 and 61, have been arrested across Teesside on suspicion of a range of offences including possession of a firearm and being part of an organised crime group.&rdquo;</p>
+      <p class="kw-ctx-cn">九名男性和三名女性，年龄在19至61岁之间，在蒂斯河畔因涉嫌一系列罪行被捕，包括持有枪支和参与有组织犯罪集团。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">offence</span>
+        <button class="kw-speak-btn" data-word="offence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈfens/ n.</span>
+      </div>
+      <p class="kw-def">犯罪，过错</p>
+      <p class="kw-def-en">an illegal act or crime</p>
+      <p class="kw-ctx">&ldquo;Nine men and three women, aged between 19 and 61, have been arrested across Teesside on suspicion of a range of offences including possession of a firearm and being part of an organised crime group.&rdquo;</p>
+      <p class="kw-ctx-cn">九名男性和三名女性，年龄在19至61岁之间，在蒂斯河畔因涉嫌一系列罪行被捕，包括持有枪支和参与有组织犯罪集团。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">firearm</span>
+        <button class="kw-speak-btn" data-word="firearm" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfaɪərɑːrm/ n.</span>
+      </div>
+      <p class="kw-def">枪支，火器</p>
+      <p class="kw-def-en">a gun that can be carried and used by a person</p>
+      <p class="kw-ctx">&ldquo;Nine men and three women, aged between 19 and 61, have been arrested across Teesside on suspicion of a range of offences including possession of a firearm and being part of an organised crime group.&rdquo;</p>
+      <p class="kw-ctx-cn">九名男性和三名女性，年龄在19至61岁之间，在蒂斯河畔因涉嫌一系列罪行被捕，包括持有枪支和参与有组织犯罪集团。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">organised</span>
+        <button class="kw-speak-btn" data-word="organised" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɔːrɡənaɪzd/ adj.</span>
+      </div>
+      <p class="kw-def">有组织的，有秩序的</p>
+      <p class="kw-def-en">involving a group of people working together in a planned way</p>
+      <p class="kw-ctx">&ldquo;Nine men and three women, aged between 19 and 61, have been arrested across Teesside on suspicion of a range of offences including possession of a firearm and being part of an organised crime group.&rdquo;</p>
+      <p class="kw-ctx-cn">九名男性和三名女性，年龄在19至61岁之间，在蒂斯河畔因涉嫌一系列罪行被捕，包括持有枪支和参与有组织犯罪集团。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fatal</span>
+        <button class="kw-speak-btn" data-word="fatal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfeɪtl/ adj.</span>
+      </div>
+      <p class="kw-def">致命的，毁灭性的</p>
+      <p class="kw-def-en">causing death</p>
+      <p class="kw-ctx">&ldquo;Cleveland Police said it was investigating "serious criminal activity that resulted in this fatal incident".&rdquo;</p>
+      <p class="kw-ctx-cn">克利夫兰警方表示，正在调查“导致这起致命事件的严重犯罪活动”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "PC Matthew Blades and PC Tom Clough were killed in a crash near Middlesbrough on Saturday", "start_ms": 0, "end_ms": 6888, "paragraph_index": 0}, {"index": 1, "text": "Twelve people have been arrested as part of the investigation into the A66 crash that killed seven people, including two police officers.", "start_ms": 6888, "end_ms": 16944, "paragraph_index": 1}, {"index": 2, "text": "Nine men and three women, aged between 19 and 61, have been arrested across Teesside on suspicion of a range of offences including possession of a firearm and being part of an organised crime group.", "start_ms": 16944, "end_ms": 31056, "paragraph_index": 2}, {"index": 3, "text": "In the early hours of Saturday, a Volkswagen Passat that had been pursued by police travelled the wrong way down the A66 near Middlesbrough and crashed into an oncoming police car - two PCs and all five Passat occupants died.", "start_ms": 31056, "end_ms": 46800, "paragraph_index": 3}, {"index": 4, "text": "Cleveland Police said it was investigating \"serious criminal activity that resulted in this fatal incident\".", "start_ms": 46800, "end_ms": 54144, "paragraph_index": 4}, {"index": 5, "text": "PC Tom Clough, 38, and PC Matthew Blades, 37, died in the crash , as did Michael Robert Cahill, 23, Jacob Matusiak, 23, Makai Saddington, 18, Theo Rae, 17, and 17-year-old Cole Robert Worthy.", "start_ms": 54144, "end_ms": 73608, "paragraph_index": 5}, {"index": 6, "text": "Earlier, Cleveland Police released more details of its investigation into the lead-up to the crash and information about the 12 people it had arrested.", "start_ms": 73608, "end_ms": 83736, "paragraph_index": 6}, {"index": 7, "text": "It received several reports of two vehicles \"being driven dangerously\" on Saturday morning", "start_ms": 83736, "end_ms": 90264, "paragraph_index": 7}, {"index": 8, "text": "The first vehicle, believed to be a Volvo XC60, was seen \"ramming properties\" in the Middlesbrough area", "start_ms": 90264, "end_ms": 98064, "paragraph_index": 8}, {"index": 9, "text": "The second vehicle, a Passat, is believed to have been associated with this activity", "start_ms": 98064, "end_ms": 104352, "paragraph_index": 9}, {"index": 10, "text": "Both vehicles were operating with cloned number plates but were picked up by automated number plate recognition technology", "start_ms": 104352, "end_ms": 112536, "paragraph_index": 10}, {"index": 11, "text": "The Volvo has been recovered in Middlesbrough", "start_ms": 112536, "end_ms": 116016, "paragraph_index": 11}, {"index": 12, "text": "Four of the five people in the Passat had previous convictions", "start_ms": 116016, "end_ms": 120888, "paragraph_index": 12}, {"index": 13, "text": "Assistant Chief Constable Wayne Fox said the investigation had been \"fast moving and complex\".", "start_ms": 120888, "end_ms": 127752, "paragraph_index": 13}, {"index": 14, "text": "He said: \"The events of that tragic night will have a lasting and profound impact on the Cleveland area and the communities we seek to protect.", "start_ms": 127752, "end_ms": 137256, "paragraph_index": 14}, {"index": 15, "text": "\"We have a duty to respond to, and thoroughly investigate, the serious criminal activity that resulted in this fatal incident and to bring all those responsible to justice.\"", "start_ms": 137256, "end_ms": 148728, "paragraph_index": 15}, {"index": 16, "text": "The five who died in the Passat were Jacob Matusiak, Makai Saddington, Theo Ray, Michael Robert Cahill and Cole Robert Worthy", "start_ms": 148728, "end_ms": 158448, "paragraph_index": 16}, {"index": 17, "text": "The 12 people arrested as part of the investigation are:", "start_ms": 158448, "end_ms": 162864, "paragraph_index": 17}, {"index": 18, "text": "Three men, aged 24, 19 and 35, all held on suspicion of participating in an organised crime group and possession of an offensive weapon.", "start_ms": 162864, "end_ms": 173808, "paragraph_index": 18}, {"index": 19, "text": "They are in police custody", "start_ms": 173808, "end_ms": 176568, "paragraph_index": 18}, {"index": 20, "text": "A man, 21, held on suspicion of participating in an organised crime group, possession of an offensive weapon and criminal damage.", "start_ms": 176568, "end_ms": 186480, "paragraph_index": 19}, {"index": 21, "text": "He has been remanded on recall to prison", "start_ms": 186480, "end_ms": 190032, "paragraph_index": 19}, {"index": 22, "text": "A 30-year-old woman arrested on suspicion of assisting an offender and who is in police custody", "start_ms": 190032, "end_ms": 196944, "paragraph_index": 20}, {"index": 23, "text": "A 20-year-old man arrested on suspicion of threats to cause criminal damage and public order.", "start_ms": 196944, "end_ms": 203664, "paragraph_index": 21}, {"index": 24, "text": "He remains in custody", "start_ms": 203664, "end_ms": 206232, "paragraph_index": 21}, {"index": 25, "text": "A 26-year-old man has been charged with possession with intent to supply class A and class B drugs, as well as the possession of criminal property", "start_ms": 206232, "end_ms": 216600, "paragraph_index": 22}, {"index": 26, "text": "Another man, 39, and a 47-year-old woman have been released on conditional bail after both being arrested on suspicion of possessing a firearm without a certificate, possession with intent to supply class A and class B drugs, and possession of class C drugs", "start_ms": 216600, "end_ms": 235080, "paragraph_index": 23}, {"index": 27, "text": "An 18-year-old man has been released on unconditional bail after being arrested on suspicion of possessing a firearm without a certificate, possession with intent to supply class A and class B drugs, and possession of class C drugs", "start_ms": 235080, "end_ms": 250896, "paragraph_index": 24}, {"index": 28, "text": "A 61-year-old woman has been released on conditional bail after being arrested on suspicion of possessing a firearm without a certificate", "start_ms": 250896, "end_ms": 260496, "paragraph_index": 25}, {"index": 29, "text": "A 39-year-old man has been arrested on suspicion of threats to kill and has been released on conditional bail", "start_ms": 260496, "end_ms": 268272, "paragraph_index": 26}, {"index": 30, "text": "This video can not be played", "start_ms": 268272, "end_ms": 271272, "paragraph_index": 27}, {"index": 31, "text": "Watch: Security footage from a house on Lime Road in Middlesbrough appears to show a car being pursued by police vehicles three minutes before the crash", "start_ms": 271272, "end_ms": 281448, "paragraph_index": 28}, {"index": 32, "text": "The Independent Office for Police Conduct (IOPC) has launched an investigation into the collision following a self-referral from Cleveland Police, which is mandatory when someone dies following contact with police.", "start_ms": 281448, "end_ms": 296112, "paragraph_index": 29}, {"index": 33, "text": "The IOPC said officers had followed the Passat for almost seven minutes before abandoning the pursuit when the car went the wrong way down the A66 at South Bank.", "start_ms": 296112, "end_ms": 307488, "paragraph_index": 30}, {"index": 34, "text": "Ten seconds later at 03:39 BST, the Passat collided with the vehicle of PCs Clough and Blades, who were travelling on the correct side of the road and were in the area to assist with the search for the car.", "start_ms": 307488, "end_ms": 322056, "paragraph_index": 31}, {"index": 35, "text": "Earlier, BBC Verify reported that a TikTok account believed to belong to Saddington previously shared videos showing young men driving dangerously .", "start_ms": 322056, "end_ms": 332856, "paragraph_index": 32}, {"index": 36, "text": "The government called for social media platforms to remove posts celebrating such behaviour.", "start_ms": 332856, "end_ms": 339624, "paragraph_index": 33}, {"index": 37, "text": "Cleveland Police said: \"At the current time, there is no evidence to indicate that filming of the activities that took place on Friday night and Saturday morning has taken place for the purposes of TikTok.\"", "start_ms": 339624, "end_ms": 352416, "paragraph_index": 34}, {"index": 38, "text": "Tributes have been left at the crash scene including a toy police car", "start_ms": 352416, "end_ms": 357528, "paragraph_index": 35}, {"index": 39, "text": "An online fundraiser set up for the officers' families by the Cleveland Police Federation has raised more than \u00c2\u00a3500,000.", "start_ms": 357528, "end_ms": 367656, "paragraph_index": 36}, {"index": 40, "text": "PC Blades' wife said he \"gave his life in the line of duty, protecting and serving others with courage, dedication and selflessness\".", "start_ms": 367656, "end_ms": 377280, "paragraph_index": 37}, {"index": 41, "text": "Before joining Cleveland Police, PC Blades worked as an English teacher at Carmel College in Darlington.", "start_ms": 377280, "end_ms": 385056, "paragraph_index": 38}, {"index": 42, "text": "The college said: \"Many within our community will remember Matty as an intelligent, kind and approachable teacher, a valued colleague and someone who gave generously of himself to the young people in his care.\"", "start_ms": 385056, "end_ms": 398376, "paragraph_index": 39}, {"index": 43, "text": "The family of PC Clough described the former soldier as \"our hero\".", "start_ms": 398376, "end_ms": 403704, "paragraph_index": 40}, {"index": 44, "text": "They said he \"jumped into action whenever needed\" and was \"willing to help anyone for any reason\".", "start_ms": 403704, "end_ms": 410112, "paragraph_index": 41}, {"index": 45, "text": "The family statement added that he \"proudly fought for his country to make the world a better place\".", "start_ms": 410112, "end_ms": 416688, "paragraph_index": 42}, {"index": 46, "text": "Flags at Cleveland Police headquarters are flying at half-mast and Redcar and Cleveland Council has opened a book of condolence at its offices on Ridley Street in Redcar.", "start_ms": 416688, "end_ms": 428160, "paragraph_index": 43}, {"index": 47, "text": "Floral tributes can also be left at the memorial garden at the force's headquarters in Hemlington or any Cleveland Police station, the council said.", "start_ms": 428160, "end_ms": 438240, "paragraph_index": 44}, {"index": 48, "text": "Tributes for the five young men have also been shared on social media, with many of their friends saying they were \"heartbroken\" and \"lost for words\".", "start_ms": 438240, "end_ms": 447672, "paragraph_index": 45}, {"index": 49, "text": "Balloon releases have been announced in their memory.", "start_ms": 447672, "end_ms": 451392, "paragraph_index": 45}, {"index": 50, "text": "Follow BBC Tees on X, , external Facebook , external , Nextdoor and Instagram , external and listen to Radio Tees on BBC Sounds .", "start_ms": 451392, "end_ms": 462264, "paragraph_index": 46}, {"index": 51, "text": "Do you have a story suggestion for BBC Tees?", "start_ms": 462264, "end_ms": 466344, "paragraph_index": 47}, {"index": 52, "text": "Pursuit 'abandoned' seconds before crash killed seven", "start_ms": 466344, "end_ms": 470784, "paragraph_index": 48}, {"index": 53, "text": "Two police officers among seven killed in wrong-way car crash", "start_ms": 470784, "end_ms": 475896, "paragraph_index": 49}], "total_duration_ms": 475896};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "on": "在", "to": "到", "in": "在", "police": "警方", "been": "已经", "an": "一个", "with": "与", "has": "有", "for": "为了", "have": "有", "arrested": "被捕", "cleveland": "克利夫兰", "at": "在", "that": "那个", "possession": "控球", "said": "说", "crash": "坠毁", "as": "作为", "year-old": "岁的", "class": "阶级", "pc": "个人电脑", "were": "是", "passat": "帕萨特", "people": "人们", "being": "正在", "car": "汽车", "he": "他", "man": "男子", "blades": "刀片", "middlesbrough": "米德尔斯堡", "investigation": "调查", "into": "进入", "had": "有", "criminal": "犯罪的", "released": "释放", "drugs": "毒品", "clough": "克拉夫", "killed": "杀死", "saturday": "星期六", "seven": "七", "two": "两个", "officers": "官员", "men": "男人们", "by": "被", "five": "五", "this": "这个", "robert": "罗伯特", "is": "是", "who": "谁", "bail": "保释", "before": "之前", "bbc": "英国广播公司", "part": "部分", "including": "包括", "three": "三个", "crime": "犯罪", "group": "团体", "all": "所有", "died": "死亡", "it": "它", "was": "是", "activity": "活动", "saddington": "萨丁顿", "vehicles": "车辆", "vehicle": "车辆", "believed": "据信", "be": "是", "area": "区域", "are": "是", "they": "它们", "custody": "羁押", "woman": "女性", "intent": "意图", "supply": "供应", "conditional": "有条件的", "after": "之后", "without": "没有", "young": "年轻的", "place": "地点", "tributes": "致敬", "his": "他的", "tees": "蒂斯", "external": "外部的", "matthew": "马修", "tom": "汤姆", "near": "附近", "aged": "年龄为", "pursued": "追求", "wrong": "错误的", "way": "方式", "down": "下来", "serious": "严重的", "resulted": "导致", "incident": "事件", "michael": "迈克尔", "cahill": "卡希尔", "jacob": "雅各布", "matusiak": "马图西亚克", "makai": "马凯", "theo": "西奥", "cole": "科尔", "worthy": "值得的", "earlier": "较早", "more": "更多", "its": "它的", "dangerously": "危险地", "morning": "上午", "both": "两者", "number": "数量", "up": "向上", "night": "晚上", "will": "将", "we": "我们", "duty": "职责", "held": "举行", "participating": "参与", "offensive": "冒犯的", "weapon": "武器", "damage": "损坏", "threats": "威胁", "can": "可以", "from": "来自", "road": "道路", "minutes": "会议记录", "iopc": "警察行为独立办公室", "following": "随后", "when": "当", "someone": "某人", "seconds": "秒", "tiktok": "抖音", "shared": "分享", "social": "社交的", "media": "媒体", "left": "离开", "gave": "给予", "teacher": "教师", "college": "学院", "many": "许多", "our": "我们的", "family": "家庭", "any": "任何", "headquarters": "总部", "redcar": "雷德卡", "council": "委员会", "also": "也", "their": "他们的", "twelve": "十二", "nine": "九", "women": "女性", "between": "之间", "across": "跨越", "teesside": "蒂斯赛德", "range": "范围", "offences": "罪行", "early": "早期的", "hours": "小时", "volkswagen": "大众", "travelled": "旅行", "crashed": "撞毁", "oncoming": "迎面而来的", "occupants": "occupants", "investigating": "调查", "did": "做了", "rae": "雷", "details": "细节", "information": "信息", "about": "关于", "received": "受到", "several": "数个", "reports": "报道", "driven": "驱动", "first": "第一轮", "seen": "被视为", "ramming": "撞击", "properties": "财产", "second": "第二", "associated": "相关的", "operating": "操作", "cloned": "克隆的", "plates": "车牌", "but": "但是", "picked": "挑选", "plate": "盘子", "recognition": "承认", "technology": "技术", "recovered": "恢复", "four": "四", "previous": "先前", "convictions": "定罪", "assistant": "助理", "chief": "首席", "constable": "警察", "fox": "福克斯", "fast": "快速的", "moving": "移动", "complex": "复杂的", "events": "事件", "tragic": "悲惨的", "lasting": "持久的", "profound": "深刻的", "impact": "影响", "communities": "社区", "seek": "寻求", "protect": "保护", "respond": "回应", "thoroughly": "彻底地", "investigate": "调查", "bring": "带来", "those": "那些", "responsible": "负责的", "justice": "正义", "remanded": "还押", "recall": "召回", "prison": "监狱", "assisting": "协助", "offender": "罪犯", "cause": "事业", "public": "公众", "order": "命令", "remains": "仍然", "charged": "指控", "well": "好", "property": "财产", "another": "另一个", "unconditional": "无条件的", "kill": "杀死", "video": "视频", "not": "不", "played": "比赛", "watch": "观看", "security": "安全", "footage": "视频片段", "house": "议院", "lime": "莱姆", "appears": "似乎", "show": "显示", "independent": "独立的", "office": "办公室", "conduct": "行为", "launched": "发起", "which": "哪个", "dies": "死亡", "contact": "接触", "followed": "遵循", "almost": "几乎", "went": "去", "south": "韩国", "bank": "银行", "ten": "十", "later": "后来", "bst": "英国夏令时", "collided": "相撞", "travelling": "旅行", "correct": "正确的", "side": "方面", "assist": "协助", "search": "搜索", "verify": "核实", "reported": "据报道", "account": "责任", "previously": "此前", "videos": "视频", "showing": "表现", "driving": "推动", "government": "政府", "called": "称为", "platforms": "平台", "remove": "移除", "posts": "岗位", "celebrating": "庆祝", "such": "如此", "behaviour": "行为", "current": "当前的", "time": "时间", "there": "那里", "no": "没有", "evidence": "证据", "indicate": "表明", "filming": "拍摄", "activities": "活动", "took": "担任", "friday": "星期五", "taken": "采取", "purposes": "目的", "scene": "现场", "online": "在线", "set": "设定", "families": "家庭", "federation": "联合会", "raised": "提出的", "than": "比", "wife": "妻子", "life": "生活", "line": "界限", "protecting": "保护", "serving": "担任", "others": "其他", "courage": "勇气", "dedication": "奉献", "joining": "加入", "worked": "工作", "english": "英格兰的", "carmel": "卡梅尔", "darlington": "达灵顿", "within": "在内部", "community": "社区", "remember": "记住", "intelligent": "聪明的", "kind": "种类", "approachable": "平易近人的", "colleague": "同事", "generously": "慷慨地", "himself": "他自己", "care": "照顾", "described": "描述", "former": "前任", "soldier": "士兵", "hero": "英雄", "jumped": "跳了", "action": "行动", "whenever": "每当", "needed": "需要", "willing": "愿意的", "help": "帮助", "anyone": "任何人", "reason": "原因", "statement": "声明", "added": "补充", "proudly": "自豪地", "fought": "斗争", "country": "国家", "make": "使", "world": "世界", "better": "更好的", "flags": "标志", "flying": "飞行的", "opened": "开火", "book": "预订", "offices": "办公室", "street": "街", "floral": "花卉的", "memorial": "纪念", "garden": "花园", "force's": "警方的", "or": "或者", "station": "站点", "friends": "朋友", "saying": "说", "heartbroken": "心碎的", "lost": "失去", "words": "言辞", "releases": "释放", "announced": "宣布", "memory": "记忆", "follow": "关注", "facebook": "脸书", "nextdoor": "隔壁", "instagram": "Instagram", "listen": "倾听", "radio": "电台", "sounds": "听起来", "do": "做", "you": "你", "story": "故事", "suggestion": "建议", "abandoned": "被遗弃的", "among": "在...之中", "wrong-way": "逆行", "possessing": "拥有", "certificate": "证书", "pcs": "个人电脑", "volvo": "沃尔沃", "lead-up": "前期", "automated": "自动化的", "wayne": "韦恩", "ray": "雷", "self-referral": "自我转介", "mandatory": "强制性的", "abandoning": "放弃", "belong": "属于", "toy": "玩具", "fundraiser": "筹款活动", "selflessness": "无私", "matty": "马蒂", "valued": "受重视的", "half-mast": "降半旗", "condolence": "哀悼", "ridley": "里德利", "hemlington": "赫明顿", "balloon": "气球"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
