@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-08-25</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-08-25</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/d7a7/live/f08c6840-a0be-11f1-b109-879e35c24276.jpg" alt="Dolly Parton: The life of an iconic country singer" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Dolly Parton: The life of an iconic country singer</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/videos/c7831ld8e73o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-08-25.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1"><<span class="keyword" data-word="span" data-phonetic="/spæn/" data-pos="v." data-def="持续，横跨" data-def-en="to extend across or over a period of time or space">span</span> class="keyword" data-word="iconic" data-phonetic="/aɪˈkɒnɪk/" data-pos="adj." data-def="标志性的，偶像的" data-def-en="widely recognized and well-known, representing a particular idea or quality">Iconic</span> country musician Dolly Parton has died at the age of 80, her family announced on her social media.</span></p>
+        <p class="cn">标志性乡村音乐家多莉·帕顿（Dolly Parton）去世，享年80岁，她的家人通过她的社交媒体宣布了这一消息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">"Sadness lies with us, not with Dolly," Parton's nephew Brian Seaver said in a video announcement.</span></p>
+        <p class="cn">“悲伤属于我们，不属于多莉，”帕顿的侄子布莱恩·西弗（Brian Seaver）在视频声明中说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In a seven-decade <<span class="keyword" data-word="span" data-phonetic="/spæn/" data-pos="v." data-def="持续，横跨" data-def-en="to extend across or over a period of time or space">span</span> class="keyword" data-word="career" data-phonetic="/kəˈrɪər/" data-pos="n." data-def="职业，生涯" data-def-en="the job or series of jobs that a person has in a particular area of work">career</span>, Parton won 10 Grammy awards, sold more than 100 million records worldwide, and wrote in <span class="keyword" data-word="excess" data-phonetic="/ɪkˈses/" data-pos="n." data-def="超过，过量" data-def-en="an amount that is more than needed or allowed">excess</span> of 3,000 songs.</span></p>
+        <p class="cn">在长达七十年的职业生涯中，帕顿赢得了10项格莱美奖，全球唱片销量超过1亿张，创作了超过3000首歌曲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Parton took her writing seriously, and considered herself a songwriter over everything else.</span> <span class="sentence" data-sentence-index="5">"It's my way of expressing myself," she said.</span> <span class="sentence" data-sentence-index="6">"It's my <<span class="keyword" data-word="span" data-phonetic="/spæn/" data-pos="v." data-def="持续，横跨" data-def-en="to extend across or over a period of time or space">span</span> class="keyword" data-word="therapy" data-phonetic="/ˈθerəpi/" data-pos="n." data-def="治疗，疗法" data-def-en="treatment that helps someone feel better, grow stronger, etc., especially after an illness">therapy</span>."</span></p>
+        <p class="cn">帕顿对待创作非常认真，她认为自己首先是一位词曲作者。“这是我表达自己的方式，”她说，“这是我的疗愈。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">She was also a <<span class="keyword" data-word="span" data-phonetic="/spæn/" data-pos="v." data-def="持续，横跨" data-def-en="to extend across or over a period of time or space">span</span> class="keyword" data-word="savvy" data-phonetic="/ˈsævi/" data-pos="adj." data-def="精明的，有见识的" data-def-en="having practical knowledge and understanding of something; shrewd">savvy</span> businesswoman who wasn't afraid to make tough decisions.</span> <span class="sentence" data-sentence-index="8">Armed with a quick wit and southern charm, she took control of her show business <<span class="keyword" data-word="span" data-phonetic="/spæn/" data-pos="v." data-def="持续，横跨" data-def-en="to extend across or over a period of time or space">span</span> class="keyword" data-word="career" data-phonetic="/kəˈrɪər/" data-pos="n." data-def="职业，生涯" data-def-en="the job or series of jobs that a person has in a particular area of work">career</span> that spanned more than 60 years.</span></p>
+        <p class="cn">她还是一位精明的商人，不怕做出艰难的决定。凭借机智和南方魅力，她掌控了自己长达60多年的演艺事业。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="9">Follow for live updates and read more about Dolly's life.</span></p>
+        <p class="cn">请关注实时更新，了解更多关于多莉的生活。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">iconic</span>
+        <button class="kw-speak-btn" data-word="iconic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/aɪˈkɒnɪk/ adj.</span>
+      </div>
+      <p class="kw-def">标志性的，偶像的</p>
+      <p class="kw-def-en">widely recognized and well-known, representing a particular idea or quality</p>
+      <p class="kw-ctx">&ldquo;Iconic country musician Dolly Parton has died at the age of 80, her family announced on her social media.&rdquo;</p>
+      <p class="kw-ctx-cn">标志性的乡村音乐家多莉·帕顿去世，享年80岁，她的家人通过她的社交媒体宣布了这一消息。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">announce</span>
+        <button class="kw-speak-btn" data-word="announce" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈnaʊns/ v.</span>
+      </div>
+      <p class="kw-def">宣布，宣告</p>
+      <p class="kw-def-en">to make something known publicly, especially officially</p>
+      <p class="kw-ctx">&ldquo;Iconic country musician Dolly Parton has died at the age of 80, her family announced on her social media.&rdquo;</p>
+      <p class="kw-ctx-cn">标志性的乡村音乐家多莉·帕顿去世，享年80岁，她的家人通过她的社交媒体宣布了这一消息。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">career</span>
+        <button class="kw-speak-btn" data-word="career" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈrɪər/ n.</span>
+      </div>
+      <p class="kw-def">职业，生涯</p>
+      <p class="kw-def-en">the job or series of jobs that a person has in a particular area of work</p>
+      <p class="kw-ctx">&ldquo;In a seven-decade career, Parton won 10 Grammy awards, sold more than 100 million records worldwide, and wrote in excess of 3,000 songs.&rdquo;</p>
+      <p class="kw-ctx-cn">在长达七十年的职业生涯中，帕顿赢得了10项格莱美奖，全球销量超过1亿张唱片，并创作了超过3000首歌曲。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">excess</span>
+        <button class="kw-speak-btn" data-word="excess" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈses/ n.</span>
+      </div>
+      <p class="kw-def">超过，过量</p>
+      <p class="kw-def-en">an amount that is more than needed or allowed</p>
+      <p class="kw-ctx">&ldquo;In a seven-decade career, Parton won 10 Grammy awards, sold more than 100 million records worldwide, and wrote in excess of 3,000 songs.&rdquo;</p>
+      <p class="kw-ctx-cn">在长达七十年的职业生涯中，帕顿赢得了10项格莱美奖，全球销量超过1亿张唱片，并创作了超过3000首歌曲。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">express</span>
+        <button class="kw-speak-btn" data-word="express" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈspres/ v.</span>
+      </div>
+      <p class="kw-def">表达，表示</p>
+      <p class="kw-def-en">to show or make known a feeling, opinion, or fact</p>
+      <p class="kw-ctx">&ldquo;It's my way of expressing myself.&rdquo;</p>
+      <p class="kw-ctx-cn">这是我表达自己的方式。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">therapy</span>
+        <button class="kw-speak-btn" data-word="therapy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈθerəpi/ n.</span>
+      </div>
+      <p class="kw-def">治疗，疗法</p>
+      <p class="kw-def-en">treatment that helps someone feel better, grow stronger, etc., especially after an illness</p>
+      <p class="kw-ctx">&ldquo;It's my therapy.&rdquo;</p>
+      <p class="kw-ctx-cn">这是我的疗法。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">savvy</span>
+        <button class="kw-speak-btn" data-word="savvy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsævi/ adj.</span>
+      </div>
+      <p class="kw-def">精明的，有见识的</p>
+      <p class="kw-def-en">having practical knowledge and understanding of something; shrewd</p>
+      <p class="kw-ctx">&ldquo;She was also a savvy businesswoman who wasn't afraid to make tough decisions.&rdquo;</p>
+      <p class="kw-ctx-cn">她也是一位精明的女商人，不怕做出艰难的决定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">span</span>
+        <button class="kw-speak-btn" data-word="span" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/spæn/ v.</span>
+      </div>
+      <p class="kw-def">持续，横跨</p>
+      <p class="kw-def-en">to extend across or over a period of time or space</p>
+      <p class="kw-ctx">&ldquo;Armed with a quick wit and southern charm, she took control of her show business career that spanned more than 60 years.&rdquo;</p>
+      <p class="kw-ctx-cn">凭借机智和南方魅力，她掌控了自己长达60多年的演艺事业。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Iconic country musician Dolly Parton has died at the age of 80, her family announced on her social media.", "start_ms": 3000, "end_ms": 10872, "paragraph_index": 1}, {"index": 2, "text": "\"Sadness lies with us, not with Dolly,\" Parton's nephew Brian Seaver said in a video announcement.", "start_ms": 10872, "end_ms": 18264, "paragraph_index": 2}, {"index": 3, "text": "In a seven-decade career, Parton won 10 Grammy awards, sold more than 100 million records worldwide, and wrote in excess of 3,000 songs.", "start_ms": 18264, "end_ms": 29616, "paragraph_index": 3}, {"index": 4, "text": "Parton took her writing seriously, and considered herself a songwriter over everything else.", "start_ms": 29616, "end_ms": 36360, "paragraph_index": 4}, {"index": 5, "text": "\"It's my way of expressing myself,\" she said.", "start_ms": 36360, "end_ms": 40272, "paragraph_index": 4}, {"index": 6, "text": "\"It's my therapy.\"", "start_ms": 40272, "end_ms": 42576, "paragraph_index": 4}, {"index": 7, "text": "She was also a savvy businesswoman who wasn't afraid to make tough decisions.", "start_ms": 42576, "end_ms": 48216, "paragraph_index": 5}, {"index": 8, "text": "Armed with a quick wit and southern charm, she took control of her show business career that spanned more than 60 years.", "start_ms": 48216, "end_ms": 56280, "paragraph_index": 5}, {"index": 9, "text": "Follow for live updates and read more about Dolly's life.", "start_ms": 56280, "end_ms": 60912, "paragraph_index": 6}], "total_duration_ms": 60912};
+  const WORD_GLOSS = {"of": "的", "her": "她的", "and": "和", "with": "与", "in": "在", "more": "更多", "she": "她", "video": "视频", "not": "不", "said": "说", "than": "比", "took": "担任", "it's": "它是", "my": "我的", "this": "这个", "can": "可以", "be": "是", "played": "比赛", "country": "国家", "has": "有", "died": "死亡", "at": "在", "the": "这个", "age": "年龄", "family": "家庭", "announced": "宣布", "on": "在", "social": "社交的", "media": "媒体", "lies": "位于", "us": "我们", "brian": "布赖恩", "announcement": "公告", "won": "赢得", "awards": "奖项", "sold": "出售", "million": "百万", "records": "记录", "worldwide": "全球的", "wrote": "写道", "writing": "写作", "seriously": "认真地", "considered": "认为", "herself": "她自己", "over": "超过", "everything": "一切", "else": "其他", "way": "方式", "expressing": "表达", "myself": "我自己", "was": "是", "also": "也", "who": "谁", "wasn't": "不是", "afraid": "恐怕", "to": "到", "make": "使", "tough": "艰难的", "decisions": "决定", "armed": "武装的", "quick": "迅速", "southern": "南部的", "charm": "魅力", "control": "控制", "show": "显示", "business": "事务", "that": "那个", "spanned": "跨越", "years": "多年", "follow": "关注", "for": "为了", "live": "生活", "updates": "更新", "read": "阅读", "about": "关于", "life": "生活", "parton": "帕顿", "dolly": "多莉", "musician": "音乐家", "sadness": "悲伤", "parton's": "帕顿的", "nephew": "侄子", "seaver": "西弗", "seven-decade": "七十年", "grammy": "格莱美", "songs": "歌曲", "songwriter": "词曲作者", "businesswoman": "女商人", "wit": "机智", "dolly's": "多莉的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
