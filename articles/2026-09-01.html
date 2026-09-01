@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-01</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-01</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/739a/live/6a963ea0-a564-11f1-a29b-3ba1838baf75.jpg" alt="Mel Stride and Priti Patel replaced in major Tory reshuffle" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Mel Stride and Priti Patel replaced in major Tory reshuffle</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cp8026xlm35o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-01.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Sir Mel Stride and Dame Priti Patel have left the shadow cabinet as part of a significant <span class="keyword" data-word="reshuffle" data-phonetic="/ˌriːˈʃʌfl/" data-pos="n." data-def="改组；重新安排" data-def-en="An act of reorganizing or changing the positions of people in an organization.">reshuffle</span> of the Conservative top team by leader Kemi Badenoch.</span></p>
+        <p class="cn">梅尔·斯特赖德爵士和普里蒂·帕特尔女爵士已离开影子内阁，这是党魁凯米·巴德诺赫对保守党高层团队进行重大改组的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Andrew Griffith will replace Sir Mel as shadow chancellor, while Tom Tugendhat will take the place of Dame Priti as shadow foreign secretary.</span></p>
+        <p class="cn">安德鲁·格里菲斯将接替梅尔爵士出任影子财政大臣，而汤姆·图根哈特将接替普里蒂女爵士出任影子外交大臣。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Badenoch is forming a new shadow cabinet before the party's conference in October.</span></p>
+        <p class="cn">巴德诺赫正在10月党大会前组建新的影子内阁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">With most polls putting the Conservatives in third place, lagging behind Labour and Reform UK, the Tory leader will be hoping a refreshed shadow cabinet will help boost her party's popularity.</span></p>
+        <p class="cn">多数民调显示保守党支持率排名第三，落后于工党和改革党，保守党领袖希望新的影子内阁能帮助提升该党的支持率。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Claire Coutinho, previously the shadow energy secretary, after her maternity leave will replace Griffith as shadow business secretary and act as his deputy.</span></p>
+        <p class="cn">此前担任影子能源大臣的克莱尔·库蒂尼奥在休完产假后将接替格里菲斯出任影子商业大臣，并担任其副手。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Badenoch said that as shadow chancellor, Sir Mel had helped the party rebuild economic <span class="keyword" data-word="credibility" data-phonetic="/ˌkredəˈbɪləti/" data-pos="n." data-def="可信度；可靠性" data-def-en="The quality of being trusted and believed in.">credibility</span> and become an effective opposition.</span></p>
+        <p class="cn">巴德诺赫表示，作为影子财政大臣，梅尔爵士帮助该党重建了经济信誉，并成为有效的反对党。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">A senior Conservative source said: "Kemi is changing the way the Conservative Party approaches economic policy and creating a new economic leadership team for the next phase, focused on growth, higher living standards and fiscal <span class="keyword" data-word="credibility" data-phonetic="/ˌkredəˈbɪləti/" data-pos="n." data-def="可信度；可靠性" data-def-en="The quality of being trusted and believed in.">credibility</span>."</span></p>
+        <p class="cn">一位保守党高级消息人士称：“凯米正在改变保守党处理经济政策的方式，并为下一阶段创建新的经济领导团队，重点关注增长、提高生活水平和财政信誉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Sir Mel, who was appointed to the role following Badenoch's leadership election in 2024, described his time in post as a "great honour".</span></p>
+        <p class="cn">梅尔爵士在巴德诺赫2024年赢得党魁选举后被任命担任该职务，他形容自己的任职期间是“巨大的荣誉”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">New shadow chancellor Griffith said the Tories will deliver "an economic revolution" with lower taxes, Britain drilling again to bring energy costs down, <span class="keyword" data-word="slashing" data-phonetic="/ˈslæʃɪŋ/" data-pos="adj." data-def="大幅削减的；猛烈的" data-def-en="Reducing something drastically or severely.">slashing</span> red tape and Labour's Employment Rights Act.</span></p>
+        <p class="cn">新任影子财政大臣格里菲斯表示，保守党将实现“经济革命”，包括降低税收、英国重新钻探以降低能源成本、削减繁文缛节以及废除工党的《就业权利法案》。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"The Conservatives will always back the risk-takers and wealth creators who deliver growth, investment and jobs," he said.</span></p>
+        <p class="cn">他说：“保守党将永远支持那些带来增长、投资和就业的风险承担者和财富创造者。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">The Tory source described Griffith as a "no-nonsense, pro-growth shadow chancellor with real business experience".</span></p>
+        <p class="cn">保守党消息人士将格里菲斯描述为“一位务实、支持增长、拥有丰富商业经验的影子财政大臣”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Opposition parties highlight Andrew Griffith's role in the 2022 Liz Truss mini-Budget</span></p>
+        <p class="cn">反对党强调安德鲁·格里菲斯在2022年利兹·特拉斯迷你预算案中的角色</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Before he became MP for Arundel and South Downs in 2019, he served as a top executive at Sky and as chairman of Just Eat.</span></p>
+        <p class="cn">在2019年成为阿伦德尔和南唐斯选区议员之前，他曾担任天空电视台高管和Just Eat董事长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">As a Treasury minister, Griffiths defended Liz Truss' 2022 mini-Budget .</span></p>
+        <p class="cn">作为财政部部长，格里菲斯为利兹·特拉斯2022年的迷你预算案进行了辩护。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Labour Party chair Bridget Phillipson described Griffith as "a key <span class="keyword" data-word="architect" data-phonetic="/ˈɑːrkɪtekt/" data-pos="n." data-def="设计师；缔造者" data-def-en="A person who designs and guides a plan or project.">architect</span> of Liz Truss's disastrous mini-Budget" and said the shadow cabinet featured politicians "who hammered family finances and left our public services crumbling".</span></p>
+        <p class="cn">工党主席布里奇特·菲利普森将格里菲斯描述为“利兹·特拉斯灾难性迷你预算案的关键设计者”，并表示影子内阁中的政客“破坏了家庭财务，让我们的公共服务摇摇欲坠”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">That message was echoed by other parties.</span> <span class="sentence" data-sentence-index="16">Liberal Democrat Treasury spokesperson Daisy Cooper said: "His appointment to shadow chancellor shows they're happy to <span class="keyword" data-word="forfeit" data-phonetic="/ˈfɔːrfɪt/" data-pos="v." data-def="丧失；被没收" data-def-en="To lose or give up something as a penalty for a mistake or wrongdoing.">forfeit</span> any claim to economic <span class="keyword" data-word="credibility" data-phonetic="/ˌkredəˈbɪləti/" data-pos="n." data-def="可信度；可靠性" data-def-en="The quality of being trusted and believed in.">credibility</span> in their race to the bottom with Reform UK."</span></p>
+        <p class="cn">其他政党也发出了类似信息。自由民主党财政发言人黛西·库珀表示：“他被任命为影子财政大臣表明，他们乐于在与改革党的逐底竞争中放弃任何经济信誉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Reform UK shadow chancellor Robert Jenrick said: "They haven't changed and still aren't sorry for the damage they <span class="keyword" data-word="inflicted" data-phonetic="/ɪnˈflɪktɪd/" data-pos="v." data-def="造成（伤害等）" data-def-en="Caused something unpleasant to be suffered.">inflicted</span> on our country."</span></p>
+        <p class="cn">改革党影子财政大臣罗伯特·詹里克表示：“他们没有改变，也仍然没有为他们对国家造成的损害感到抱歉。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Dame Priti, who had been shadow foreign secretary since 2024,  will return to the <span class="keyword" data-word="backbenches" data-phonetic="/ˈbækbentʃɪz/" data-pos="n." data-def="后座议员席位" data-def-en="The seats in the UK Parliament where ordinary members sit, not holding a government or opposition leadership position.">backbenches</span> and will take on a new international role strengthening the Tories relationship with sister parties and centre-right movements abroad.</span></p>
+        <p class="cn">自2024年起担任影子外交大臣的普里蒂女爵士将重返后座议员席位，并承担新的国际角色，加强保守党与海外姊妹党和中右翼运动的关系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Badenoch has selected Damian Hinds as the new shadow health and social care secretary after Stuart Andrew confirmed he will be returning to the <span class="keyword" data-word="backbenches" data-phonetic="/ˈbækbentʃɪz/" data-pos="n." data-def="后座议员席位" data-def-en="The seats in the UK Parliament where ordinary members sit, not holding a government or opposition leadership position.">backbenches</span> .</span></p>
+        <p class="cn">巴德诺赫已选择达米安·海因兹担任新的影子卫生和社会关怀大臣，此前斯图尔特·安德鲁确认将重返后座议员席位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Katie Lam has been named as the new housing secretary, after Sir James Cleverly quit the front bench, announcing he wants to run for London mayor .</span></p>
+        <p class="cn">凯蒂·拉姆被任命为新的住房大臣，此前詹姆斯·克莱弗利爵士退出前座议员席位，宣布有意竞选伦敦市长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Claire Coutinho will become shadow business secretary after maternity leave</span></p>
+        <p class="cn">克莱尔·库蒂尼奥将在休完产假后出任影子商业大臣</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Badenoch's <span class="keyword" data-word="reshuffle" data-phonetic="/ˌriːˈʃʌfl/" data-pos="n." data-def="改组；重新安排" data-def-en="An act of reorganizing or changing the positions of people in an organization.">reshuffle</span> is intended to bring solutions to a number of problems.</span></p>
+        <p class="cn">巴德诺赫的改组旨在解决多个问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">First, she wants to retire those members of her top team that have had a relatively low profile, or who have not been delivering sufficient blows to both Labour and Reform UK.</span></p>
+        <p class="cn">首先，她希望让那些知名度相对较低或未能对工党和改革党造成足够打击的高层团队成员退休。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Badenoch paid a warm tribute to Sir Mel but some recent polls suggested that Reform UK were more trusted on the economy than the Conservatives.</span></p>
+        <p class="cn">巴德诺赫对梅尔爵士表示了热烈赞扬，但近期一些民调显示，在经济问题上，改革党比保守党更受信任。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">And that is something Kemi Badenoch felt needed to change.</span></p>
+        <p class="cn">这是凯米·巴德诺赫认为需要改变的地方。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Second, while familiar faces like Dame Priti were useful to have in the top team as they brought high-level government experience, they might also remind voters of the party they decisively rejected in 2024.</span></p>
+        <p class="cn">其次，虽然像普里蒂女爵士这样的熟悉面孔在高层团队中有用，因为他们带来了高级政府经验，但他们也可能让选民想起他们在2024年断然拒绝的那个政党。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">There has been a changing of the old guard, and Badenoch is now focusing on who can take the Conservatives into the next election - faced as she is by a new Labour leader and cabinet.</span></p>
+        <p class="cn">老卫兵已经换血，巴德诺赫现在专注于谁能带领保守党参加下一次大选——她面临的是新的工党领袖和内阁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">Third, she wants to focus on issues where Labour is perceived to be vulnerable.</span></p>
+        <p class="cn">第三，她希望聚焦于工党被认为薄弱的领域。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">One such area is defence spending and national security.</span></p>
+        <p class="cn">其中一个领域是国防开支和国家安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">So as shadow foreign secretary she appointed Tom Tugendhat  - a former security minister and current army reservist who served in Afghanistan and Iraq.</span> <span class="sentence" data-sentence-index="31">He will work as part of a team with the shadow defence secretary.</span></p>
+        <p class="cn">因此，她任命汤姆·图根哈特为影子外交大臣——他曾任安全部长，现任陆军预备役军官，曾在阿富汗和伊拉克服役。他将与影子国防大臣组成团队合作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">Some opinion polls rate the economy as the most important issue for voters, above asylum and immigration, and again the Tory leader believes the government is vulnerable here, with sluggish growth.</span></p>
+        <p class="cn">一些民调认为经济是选民最重要的问题，超过庇护和移民，保守党领袖再次认为政府在这方面很脆弱，因为经济增长缓慢。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">So she has announced a new Conservative economic unit headed by Griffith, with his extensive business experience.</span></p>
+        <p class="cn">因此，她宣布成立一个新的保守党经济部门，由拥有丰富商业经验的格里菲斯领导。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="34">Coutinho as his deputy is seen as a rising Conservative star who has performed well in her previous role shadowing the former energy secretary Ed Miliband  in the Commons, and as a potential future chancellor if the Conservatives were ever to recover electorally.</span></p>
+        <p class="cn">库蒂尼奥作为他的副手被视为保守党的新星，她在下议院此前负责影子能源大臣埃德·米利班德的职务时表现出色，如果保守党能在选举中复苏，她可能是未来的财政大臣。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="35">But the Tory leader has also included the former Conservative chairman and City Minister Richard Fuller in the unit, concentrating on fiscal responsibility and tax.</span></p>
+        <p class="cn">但保守党领袖还将前保守党主席和城市部长理查德·富勒纳入该部门，专注于财政责任和税收。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="36">He will be deployed as an attack dog if - as she believes he will â the chancellor  raises taxes in the Budget.</span></p>
+        <p class="cn">如果财政大臣在预算案中提高税收（她认为他会这样做），他将被部署为攻击犬。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="37">But the role will also underline that the Conservative leader is serious about making her sums add up, in contrast to her characterisation of Reform UK's plans as ill-thought out.</span></p>
+        <p class="cn">但这一角色也将强调保守党领袖认真对待让数字平衡，与她将改革党的计划描述为考虑不周形成对比。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="38">The question now though is whether Badenoch will change her own approach to political leadership.</span></p>
+        <p class="cn">现在的问题是巴德诺赫是否会改变自己的政治领导方式。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="39">While some of her top team may be seen as <span class="keyword" data-word="lacklustre" data-phonetic="/ˈlæklʌstər/" data-pos="adj." data-def="无生气的；平庸的" data-def-en="Lacking in vitality, force, or conviction; uninspired.">lacklustre</span>, how much opportunity did they get to shine?</span></p>
+        <p class="cn">虽然她的一些高层团队可能被视为平庸，但他们有多少机会发光呢？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="40">She tends to make the big announcements and is ubiquitous on the media.</span></p>
+        <p class="cn">她倾向于做出重大宣布，并在媒体上无处不在。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="41">If the Conservatives are to convince voters they are once again a government in waiting then the public will have to see that there is breadth and depth in the team that is shadowing current ministers.</span></p>
+        <p class="cn">如果保守党要让选民相信他们再次成为等待中的政府，那么公众必须看到影子部长团队有广度和深度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="42">Patel to be replaced by Tugendhat as shadow foreign secretary</span></p>
+        <p class="cn">帕特尔被图根哈特取代为影子外交大臣</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="43">Cleverly quits shadow cabinet to run for London mayor</span></p>
+        <p class="cn">克莱弗利退出影子内阁竞选伦敦市长</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reshuffle</span>
+        <button class="kw-speak-btn" data-word="reshuffle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːˈʃʌfl/ n.</span>
+      </div>
+      <p class="kw-def">改组；重新安排</p>
+      <p class="kw-def-en">An act of reorganizing or changing the positions of people in an organization.</p>
+      <p class="kw-ctx">&ldquo;Sir Mel Stride and Dame Priti Patel have left the shadow cabinet as part of a significant reshuffle of the Conservative top team by leader Kemi Badenoch.&rdquo;</p>
+      <p class="kw-ctx-cn">梅尔·斯特赖德爵士和普里蒂·帕特尔女爵士已离开影子内阁，这是凯米·巴德诺克对保守党高层团队进行重大改组的一部分。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">credibility</span>
+        <button class="kw-speak-btn" data-word="credibility" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkredəˈbɪləti/ n.</span>
+      </div>
+      <p class="kw-def">可信度；可靠性</p>
+      <p class="kw-def-en">The quality of being trusted and believed in.</p>
+      <p class="kw-ctx">&ldquo;Badenoch said that as shadow chancellor, Sir Mel had helped the party rebuild economic credibility and become an effective opposition.&rdquo;</p>
+      <p class="kw-ctx-cn">巴德诺克表示，作为影子财政大臣，梅尔爵士帮助该党重建了经济信誉，并成为有效的反对党。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">slashing</span>
+        <button class="kw-speak-btn" data-word="slashing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈslæʃɪŋ/ adj.</span>
+      </div>
+      <p class="kw-def">大幅削减的；猛烈的</p>
+      <p class="kw-def-en">Reducing something drastically or severely.</p>
+      <p class="kw-ctx">&ldquo;New shadow chancellor Griffith said the Tories will deliver "an economic revolution" with lower taxes, Britain drilling again to bring energy costs down, slashing red tape and Labour's Employment Rights Act.&rdquo;</p>
+      <p class="kw-ctx-cn">新任影子财政大臣格里菲斯表示，保守党将实现“经济革命”，包括降低税收、英国重新钻探以降低能源成本、大幅削减繁文缛节和工党的《就业权利法案》。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">architect</span>
+        <button class="kw-speak-btn" data-word="architect" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɑːrkɪtekt/ n.</span>
+      </div>
+      <p class="kw-def">设计师；缔造者</p>
+      <p class="kw-def-en">A person who designs and guides a plan or project.</p>
+      <p class="kw-ctx">&ldquo;Labour Party chair Bridget Phillipson described Griffith as "a key architect of Liz Truss's disastrous mini-Budget" and said the shadow cabinet featured politicians "who hammered family finances and left our public services crumbling".&rdquo;</p>
+      <p class="kw-ctx-cn">工党主席布里奇特·菲利普森称格里菲斯是“利兹·特拉斯灾难性迷你预算的关键设计师”，并表示影子内阁中的政客们“打击了家庭财政，使我们的公共服务崩溃”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">forfeit</span>
+        <button class="kw-speak-btn" data-word="forfeit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfɔːrfɪt/ v.</span>
+      </div>
+      <p class="kw-def">丧失；被没收</p>
+      <p class="kw-def-en">To lose or give up something as a penalty for a mistake or wrongdoing.</p>
+      <p class="kw-ctx">&ldquo;Liberal Democrat Treasury spokesperson Daisy Cooper said: "His appointment to shadow chancellor shows they're happy to forfeit any claim to economic credibility in their race to the bottom with Reform UK."&rdquo;</p>
+      <p class="kw-ctx-cn">自由民主党财政部发言人黛西·库珀表示：“他被任命为影子财政大臣表明，他们乐于在与改革英国的逐底竞争中丧失任何经济信誉的主张。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inflicted</span>
+        <button class="kw-speak-btn" data-word="inflicted" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈflɪktɪd/ v.</span>
+      </div>
+      <p class="kw-def">造成（伤害等）</p>
+      <p class="kw-def-en">Caused something unpleasant to be suffered.</p>
+      <p class="kw-ctx">&ldquo;Reform UK shadow chancellor Robert Jenrick said: "They haven't changed and still aren't sorry for the damage they inflicted on our country."&rdquo;</p>
+      <p class="kw-ctx-cn">改革英国影子财政大臣罗伯特·詹里克说：“他们没有改变，仍然对自己给国家造成的损害毫无歉意。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">backbenches</span>
+        <button class="kw-speak-btn" data-word="backbenches" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbækbentʃɪz/ n.</span>
+      </div>
+      <p class="kw-def">后座议员席位</p>
+      <p class="kw-def-en">The seats in the UK Parliament where ordinary members sit, not holding a government or opposition leadership position.</p>
+      <p class="kw-ctx">&ldquo;Dame Priti, who had been shadow foreign secretary since 2024, will return to the backbenches and will take on a new international role strengthening the Tories relationship with sister parties and centre-right movements abroad.&rdquo;</p>
+      <p class="kw-ctx-cn">自2024年起担任影子外交大臣的普里蒂女爵士将重返后座议员席位，并承担新的国际角色，加强保守党与国外姊妹党和中右翼运动的关系。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">lacklustre</span>
+        <button class="kw-speak-btn" data-word="lacklustre" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlæklʌstər/ adj.</span>
+      </div>
+      <p class="kw-def">无生气的；平庸的</p>
+      <p class="kw-def-en">Lacking in vitality, force, or conviction; uninspired.</p>
+      <p class="kw-ctx">&ldquo;While some of her top team may be seen as lacklustre, how much opportunity did they get to shine?&rdquo;</p>
+      <p class="kw-ctx-cn">虽然她的一些高层团队可能被视为平庸，但他们有多少机会大放异彩呢？</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Sir Mel Stride and Dame Priti Patel have left the shadow cabinet as part of a significant reshuffle of the Conservative top team by leader Kemi Badenoch.", "start_ms": 0, "end_ms": 10680, "paragraph_index": 0}, {"index": 1, "text": "Andrew Griffith will replace Sir Mel as shadow chancellor, while Tom Tugendhat will take the place of Dame Priti as shadow foreign secretary.", "start_ms": 10680, "end_ms": 20352, "paragraph_index": 1}, {"index": 2, "text": "Badenoch is forming a new shadow cabinet before the party's conference in October.", "start_ms": 20352, "end_ms": 26424, "paragraph_index": 2}, {"index": 3, "text": "With most polls putting the Conservatives in third place, lagging behind Labour and Reform UK, the Tory leader will be hoping a refreshed shadow cabinet will help boost her party's popularity.", "start_ms": 26424, "end_ms": 39624, "paragraph_index": 3}, {"index": 4, "text": "Claire Coutinho, previously the shadow energy secretary, after her maternity leave will replace Griffith as shadow business secretary and act as his deputy.", "start_ms": 39624, "end_ms": 50856, "paragraph_index": 4}, {"index": 5, "text": "Badenoch said that as shadow chancellor, Sir Mel had helped the party rebuild economic credibility and become an effective opposition.", "start_ms": 50856, "end_ms": 60264, "paragraph_index": 5}, {"index": 6, "text": "A senior Conservative source said: \"Kemi is changing the way the Conservative Party approaches economic policy and creating a new economic leadership team for the next phase, focused on growth, higher living standards and fiscal credibility.\"", "start_ms": 60264, "end_ms": 76632, "paragraph_index": 6}, {"index": 7, "text": "Sir Mel, who was appointed to the role following Badenoch's leadership election in 2024, described his time in post as a \"great honour\".", "start_ms": 76632, "end_ms": 86760, "paragraph_index": 7}, {"index": 8, "text": "New shadow chancellor Griffith said the Tories will deliver \"an economic revolution\" with lower taxes, Britain drilling again to bring energy costs down, slashing red tape and Labour's Employment Rights Act.", "start_ms": 86760, "end_ms": 100824, "paragraph_index": 8}, {"index": 9, "text": "\"The Conservatives will always back the risk-takers and wealth creators who deliver growth, investment and jobs,\" he said.", "start_ms": 100824, "end_ms": 109344, "paragraph_index": 9}, {"index": 10, "text": "The Tory source described Griffith as a \"no-nonsense, pro-growth shadow chancellor with real business experience\".", "start_ms": 109344, "end_ms": 117408, "paragraph_index": 10}, {"index": 11, "text": "Opposition parties highlight Andrew Griffith's role in the 2022 Liz Truss mini-Budget", "start_ms": 117408, "end_ms": 124272, "paragraph_index": 11}, {"index": 12, "text": "Before he became MP for Arundel and South Downs in 2019, he served as a top executive at Sky and as chairman of Just Eat.", "start_ms": 124272, "end_ms": 134304, "paragraph_index": 12}, {"index": 13, "text": "As a Treasury minister, Griffiths defended Liz Truss' 2022 mini-Budget .", "start_ms": 134304, "end_ms": 140832, "paragraph_index": 13}, {"index": 14, "text": "Labour Party chair Bridget Phillipson described Griffith as \"a key architect of Liz Truss's disastrous mini-Budget\" and said the shadow cabinet featured politicians \"who hammered family finances and left our public services crumbling\".", "start_ms": 140832, "end_ms": 156000, "paragraph_index": 14}, {"index": 15, "text": "That message was echoed by other parties.", "start_ms": 156000, "end_ms": 159648, "paragraph_index": 15}, {"index": 16, "text": "Liberal Democrat Treasury spokesperson Daisy Cooper said: \"His appointment to shadow chancellor shows they're happy to forfeit any claim to economic credibility in their race to the bottom with Reform UK.\"", "start_ms": 159648, "end_ms": 172968, "paragraph_index": 15}, {"index": 17, "text": "Reform UK shadow chancellor Robert Jenrick said: \"They haven't changed and still aren't sorry for the damage they inflicted on our country.\"", "start_ms": 172968, "end_ms": 182400, "paragraph_index": 16}, {"index": 18, "text": "Dame Priti, who had been shadow foreign secretary since 2024,  will return to the backbenches and will take on a new international role strengthening the Tories relationship with sister parties and centre-right movements abroad.", "start_ms": 182400, "end_ms": 197376, "paragraph_index": 17}, {"index": 19, "text": "Badenoch has selected Damian Hinds as the new shadow health and social care secretary after Stuart Andrew confirmed he will be returning to the backbenches .", "start_ms": 197376, "end_ms": 207888, "paragraph_index": 18}, {"index": 20, "text": "Katie Lam has been named as the new housing secretary, after Sir James Cleverly quit the front bench, announcing he wants to run for London mayor .", "start_ms": 207888, "end_ms": 218160, "paragraph_index": 19}, {"index": 21, "text": "Claire Coutinho will become shadow business secretary after maternity leave", "start_ms": 218160, "end_ms": 223824, "paragraph_index": 20}, {"index": 22, "text": "Badenoch's reshuffle is intended to bring solutions to a number of problems.", "start_ms": 223824, "end_ms": 229728, "paragraph_index": 21}, {"index": 23, "text": "First, she wants to retire those members of her top team that have had a relatively low profile, or who have not been delivering sufficient blows to both Labour and Reform UK.", "start_ms": 229728, "end_ms": 241728, "paragraph_index": 22}, {"index": 24, "text": "Badenoch paid a warm tribute to Sir Mel but some recent polls suggested that Reform UK were more trusted on the economy than the Conservatives.", "start_ms": 241728, "end_ms": 251736, "paragraph_index": 23}, {"index": 25, "text": "And that is something Kemi Badenoch felt needed to change.", "start_ms": 251736, "end_ms": 256248, "paragraph_index": 24}, {"index": 26, "text": "Second, while familiar faces like Dame Priti were useful to have in the top team as they brought high-level government experience, they might also remind voters of the party they decisively rejected in 2024.", "start_ms": 256248, "end_ms": 270528, "paragraph_index": 25}, {"index": 27, "text": "There has been a changing of the old guard, and Badenoch is now focusing on who can take the Conservatives into the next election - faced as she is by a new Labour leader and cabinet.", "start_ms": 270528, "end_ms": 282240, "paragraph_index": 26}, {"index": 28, "text": "Third, she wants to focus on issues where Labour is perceived to be vulnerable.", "start_ms": 282240, "end_ms": 288144, "paragraph_index": 27}, {"index": 29, "text": "One such area is defence spending and national security.", "start_ms": 288144, "end_ms": 293064, "paragraph_index": 28}, {"index": 30, "text": "So as shadow foreign secretary she appointed Tom Tugendhat  - a former security minister and current army reservist who served in Afghanistan and Iraq.", "start_ms": 293064, "end_ms": 304032, "paragraph_index": 29}, {"index": 31, "text": "He will work as part of a team with the shadow defence secretary.", "start_ms": 304032, "end_ms": 308736, "paragraph_index": 29}, {"index": 32, "text": "Some opinion polls rate the economy as the most important issue for voters, above asylum and immigration, and again the Tory leader believes the government is vulnerable here, with sluggish growth.", "start_ms": 308736, "end_ms": 322440, "paragraph_index": 30}, {"index": 33, "text": "So she has announced a new Conservative economic unit headed by Griffith, with his extensive business experience.", "start_ms": 322440, "end_ms": 330480, "paragraph_index": 31}, {"index": 34, "text": "Coutinho as his deputy is seen as a rising Conservative star who has performed well in her previous role shadowing the former energy secretary Ed Miliband  in the Commons, and as a potential future chancellor if the Conservatives were ever to recover electorally.", "start_ms": 330480, "end_ms": 347496, "paragraph_index": 32}, {"index": 35, "text": "But the Tory leader has also included the former Conservative chairman and City Minister Richard Fuller in the unit, concentrating on fiscal responsibility and tax.", "start_ms": 347496, "end_ms": 358872, "paragraph_index": 33}, {"index": 36, "text": "He will be deployed as an attack dog if - as she believes he will \u00e2\u0080\u0093 the chancellor  raises taxes in the Budget.", "start_ms": 358872, "end_ms": 365952, "paragraph_index": 34}, {"index": 37, "text": "But the role will also underline that the Conservative leader is serious about making her sums add up, in contrast to her characterisation of Reform UK's plans as ill-thought out.", "start_ms": 365952, "end_ms": 377976, "paragraph_index": 35}, {"index": 38, "text": "The question now though is whether Badenoch will change her own approach to political leadership.", "start_ms": 377976, "end_ms": 384480, "paragraph_index": 36}, {"index": 39, "text": "While some of her top team may be seen as lacklustre, how much opportunity did they get to shine?", "start_ms": 384480, "end_ms": 391224, "paragraph_index": 37}, {"index": 40, "text": "She tends to make the big announcements and is ubiquitous on the media.", "start_ms": 391224, "end_ms": 396192, "paragraph_index": 38}, {"index": 41, "text": "If the Conservatives are to convince voters they are once again a government in waiting then the public will have to see that there is breadth and depth in the team that is shadowing current ministers.", "start_ms": 396192, "end_ms": 407544, "paragraph_index": 39}, {"index": 42, "text": "Patel to be replaced by Tugendhat as shadow foreign secretary", "start_ms": 407544, "end_ms": 412752, "paragraph_index": 40}, {"index": 43, "text": "Cleverly quits shadow cabinet to run for London mayor", "start_ms": 412752, "end_ms": 417288, "paragraph_index": 41}], "total_duration_ms": 417288};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "as": "作为", "to": "到", "shadow": "阴影", "will": "将", "in": "在", "is": "是", "of": "的", "secretary": "秘书", "badenoch": "巴德诺赫", "chancellor": "总理", "new": "新的", "with": "与", "her": "她的", "that": "那个", "on": "在", "who": "谁", "he": "他", "conservative": "保守党", "team": "团队", "said": "说", "they": "它们", "she": "她", "sir": "爵士", "cabinet": "内阁", "leader": "领导人", "conservatives": "保守党", "reform": "改革", "be": "是", "economic": "经济的", "for": "为了", "has": "有", "mel": "梅尔", "have": "有", "top": "顶级的", "by": "被", "labour": "工党", "uk": "英国", "his": "他的", "role": "角色", "dame": "女爵士", "foreign": "外交", "tory": "保守党", "after": "之后", "business": "事务", "party": "政党", "been": "已经", "kemi": "凯米", "andrew": "安德鲁", "while": "而", "take": "采取", "polls": "民调", "energy": "能源", "had": "有", "an": "一个", "leadership": "领导力", "growth": "增长", "described": "描述", "again": "再次", "experience": "经历", "parties": "政党", "liz": "利兹", "minister": "部长", "wants": "想要", "but": "但是", "some": "一些", "were": "是", "government": "政府", "also": "也", "voters": "选民", "former": "前任", "if": "如果", "patel": "帕特尔", "left": "离开", "part": "部分", "replace": "取代", "tom": "汤姆", "place": "地点", "before": "之前", "party's": "党的", "most": "最", "third": "第三", "claire": "克莱尔", "maternity": "孕产", "leave": "离开", "act": "行为", "deputy": "副手", "become": "成为", "opposition": "反对党", "source": "来源", "changing": "改变", "next": "下一个", "was": "是", "appointed": "任命", "election": "选举", "tories": "保守党", "deliver": "发表", "taxes": "税收", "bring": "带来", "truss": "特拉斯", "served": "服役", "chairman": "主席", "treasury": "财政部", "our": "我们的", "public": "公众", "run": "奔跑", "london": "伦敦", "mayor": "市长", "economy": "经济", "change": "改变", "there": "那里", "now": "现在", "vulnerable": "易受攻击的", "defence": "国防", "security": "安全", "so": "所以", "current": "当前的", "believes": "认为", "unit": "单位", "seen": "被视为", "are": "是", "stride": "大步", "significant": "重大", "forming": "形成", "conference": "会议", "october": "十月", "putting": "放置", "behind": "在...后面", "hoping": "希望", "help": "帮助", "boost": "提升", "popularity": "受欢迎程度", "previously": "此前", "helped": "帮助", "rebuild": "重建", "effective": "有效的", "senior": "高级", "way": "方式", "approaches": "接近", "policy": "政策", "creating": "创造", "focused": "专注的", "higher": "更高的", "living": "生活", "standards": "标准", "following": "随后", "time": "时间", "post": "职位", "great": "伟大的", "honour": "阁下", "revolution": "革命", "lower": "较低的", "britain": "英国", "drilling": "钻探", "costs": "成本", "down": "下来", "red": "红色的", "labour's": "工党的", "employment": "就业", "rights": "权利", "always": "总是", "back": "后退", "wealth": "财富", "investment": "投资", "jobs": "工作", "real": "真正的", "highlight": "强调", "became": "成为", "mp": "议员", "south": "韩国", "downs": "丘陵地带", "executive": "行政的", "at": "在", "sky": "天空", "just": "只是", "eat": "吃", "defended": "辩护", "chair": "主席", "bridget": "布里奇特", "phillipson": "菲利普森", "key": "关键", "disastrous": "灾难性的", "featured": "以...为特色", "politicians": "政治家", "family": "家庭", "finances": "财务", "services": "服务", "message": "信息", "echoed": "附和", "other": "其他", "liberal": "自由", "democrat": "民主党", "spokesperson": "发言人", "cooper": "库珀", "appointment": "任命", "shows": "显示", "they're": "他们是", "happy": "高兴的", "any": "任何", "claim": "声称", "their": "他们的", "race": "种族", "bottom": "底部", "robert": "罗伯特", "jenrick": "詹里克", "haven't": "尚未", "changed": "改变", "still": "仍然", "aren't": "不是", "sorry": "抱歉", "damage": "损坏", "country": "国家", "since": "自从", "return": "返回", "international": "国际", "strengthening": "加强", "relationship": "关系", "sister": "姐妹", "abroad": "国外", "selected": "被选中的", "health": "健康", "social": "社交的", "care": "照顾", "confirmed": "确认", "returning": "返回", "katie": "凯蒂", "named": "名为", "housing": "住房", "james": "詹姆斯", "quit": "辞职", "front": "前线", "bench": "长凳", "announcing": "宣布", "intended": "打算的", "solutions": "解决方案", "number": "数量", "problems": "问题", "first": "第一轮", "those": "那些", "members": "成员", "relatively": "相对地", "low": "低的", "profile": "形象", "or": "或者", "not": "不", "delivering": "传递", "sufficient": "足够的", "both": "两者", "paid": "支付", "warm": "温暖的", "tribute": "致敬", "recent": "最近", "suggested": "建议", "more": "更多", "trusted": "信任的", "than": "比", "something": "某事", "felt": "感觉", "needed": "需要", "second": "第二", "familiar": "熟悉的", "faces": "面临", "like": "像", "brought": "带来", "high-level": "高层", "might": "可能", "decisively": "果断地", "rejected": "拒绝", "old": "旧的", "guard": "卫队", "focusing": "聚焦", "can": "可以", "into": "进入", "faced": "面对", "focus": "重点", "issues": "问题", "where": "那里", "perceived": "认为", "one": "一个", "such": "如此", "area": "区域", "spending": "支出", "national": "国家", "army": "军队", "afghanistan": "阿富汗", "work": "工作", "opinion": "意见", "rate": "比率", "important": "重要", "issue": "问题", "above": "超过", "asylum": "庇护", "immigration": "移民", "here": "这里", "announced": "宣布", "extensive": "广泛的", "rising": "上升的", "star": "明星", "performed": "表演了", "well": "好", "previous": "先前", "ed": "编辑", "miliband": "米利班德", "commons": "下议院", "potential": "潜在", "future": "未来", "ever": "曾经", "recover": "恢复", "included": "包括", "city": "城市", "richard": "理查德", "fuller": "更满", "responsibility": "责任", "tax": "税收", "deployed": "部署", "attack": "袭击", "dog": "狗", "raises": "提出", "budget": "预算", "serious": "严重的", "about": "关于", "making": "进行", "sums": "概括", "add": "增加", "up": "向上", "contrast": "对比", "uk's": "英国的", "plans": "计划", "out": "出来", "question": "问题", "though": "尽管", "whether": "是否", "own": "自己", "approach": "方法", "political": "政治的", "may": "可能", "how": "如何", "much": "许多", "opportunity": "机会", "did": "做了", "get": "得到", "shine": "闪耀", "make": "使", "big": "大的", "media": "媒体", "convince": "说服", "once": "一旦", "waiting": "等待", "then": "然后", "see": "看到", "depth": "深度", "ministers": "部长", "replaced": "取代", "griffith": "格里菲斯", "priti": "普丽蒂", "tugendhat": "图根哈特", "coutinho": "库蒂尼奥", "mini-budget": "迷你预算", "fiscal": "财政的", "badenoch's": "巴德诺赫的", "cleverly": "克莱弗利", "shadowing": "影子职位", "lagging": "落后", "refreshed": "焕然一新", "phase": "阶段", "tape": "录音带", "risk-takers": "冒险者", "creators": "创造者", "no-nonsense": "务实的", "pro-growth": "促增长的", "griffith's": "格里菲斯的", "arundel": "阿伦德尔", "griffiths": "格里菲斯", "truss's": "特拉斯", "hammered": "猛烈抨击", "crumbling": "崩塌", "daisy": "雏菊", "centre-right": "中右翼", "movements": "运动", "damian": "达米安", "hinds": "海因兹", "stuart": "斯图尔特", "lam": "林", "retire": "退休", "blows": "打击", "useful": "有用的", "remind": "提醒", "reservist": "预备役军人", "iraq": "伊拉克", "sluggish": "缓慢的", "headed": "前往", "electorally": "选举上", "concentrating": "集中", "underline": "强调", "characterisation": "描述", "ill-thought": "欠考虑的", "tends": "倾向于", "announcements": "公告", "ubiquitous": "无处不在", "breadth": "广度", "quits": "辞职"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
