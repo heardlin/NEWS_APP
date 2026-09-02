@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-02</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-02</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1202/live/6e6ca9d0-a70b-11f1-aed2-8d6da8d75094.jpg" alt="Burnham pressed on economy at first PMQs as borrowing costs surge" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Burnham pressed on economy at first PMQs as borrowing costs surge</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cn9wv7pene2o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-02.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Andy Burnham said his government would be "<span class="keyword" data-word="grounded" data-phonetic="/ˈɡraʊndɪd/" data-pos="adj." data-def="基于…的，以…为基础的" data-def-en="based on or rooted in something">grounded</span> in fiscal responsibility" as his first Prime Minister's Questions took place against a backdrop of rising UK borrowing costs.</span></p>
+        <p class="cn">安迪·伯纳姆表示，他的政府将“以财政责任为基础”，这是他首次首相质询的背景下，英国借贷成本不断上升。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Conservative leader Kemi Badenoch called on Burnham to say where spending would be cut and how he would deal with the UK's increasing debt, after the cost of borrowing for the UK reached a new 18-year high on Wednesday.</span></p>
+        <p class="cn">保守党领袖凯米·巴德诺克呼吁伯纳姆说明将在哪些方面削减开支，以及他将如何应对英国不断增加的债务，此前英国借贷成本周三触及18年新高。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">He blamed the previous Tory government, saying the "<span class="keyword" data-word="turbulence" data-phonetic="/ˈtɜːbjələns/" data-pos="n." data-def="动荡，骚乱" data-def-en="a state of confusion or disorder">turbulence</span> on global markets are because of that <span class="keyword" data-word="exposure" data-phonetic="/ɪkˈspəʊʒə(r)/" data-pos="n." data-def="风险敞口，暴露" data-def-en="the state of being exposed to risk or danger">exposure</span> that they left behind".</span></p>
+        <p class="cn">他指责上届保守党政府，称“全球市场的动荡是因为他们留下的风险敞口”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Burnham took over from Sir Keir Starmer in July before Parliament's summer recess, meaning Wednesday was the first time he had faced Badenoch at PMQs.</span></p>
+        <p class="cn">伯纳姆于7月议会夏季休会前接替基尔·斯塔默爵士，这意味着周三是他首次在首相质询中面对巴德诺克。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Burnham sought to stress his administration's fiscal responsibility and said ministers were taking steps to reduce debt.</span></p>
+        <p class="cn">伯纳姆试图强调其政府的财政责任，并表示部长们正在采取措施减少债务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">He told MPs: "This will be a government <span class="keyword" data-word="grounded" data-phonetic="/ˈɡraʊndɪd/" data-pos="adj." data-def="基于…的，以…为基础的" data-def-en="based on or rooted in something">grounded</span> in fiscal responsibility.</span> <span class="sentence" data-sentence-index="6">It will stick to the fiscal rules, but at the same time, we will help reduce cost-of-living pressure on our constituents, and that's the approach that we will take."</span></p>
+        <p class="cn">他告诉议员们：“这将是一个以财政责任为基础的政府。它将遵守财政规则，但同时，我们将帮助减轻选民的生活成本压力，这就是我们将采取的方法。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Interest rates on government bonds have been going up, with the yield on a 10-year bond at its highest level since 2008, while the yield on a 30-year bond is at its highest since 1998.</span></p>
+        <p class="cn">政府债券利率一直在上升，10年期债券收益率达到2008年以来的最高水平，而30年期债券收益率则达到1998年以来的最高水平。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">This means it costs the government more to borrow over the long term and could <span class="keyword" data-word="constrain" data-phonetic="/kənˈstreɪn/" data-pos="v." data-def="限制，约束" data-def-en="to limit or restrict something">constrain</span> its spending choices as the 28 October Budget approaches.</span></p>
+        <p class="cn">这意味着政府长期借贷成本更高，并可能限制其在10月28日预算案前的支出选择。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Burnham's PMQs <span class="keyword" data-word="debut" data-phonetic="/ˈdeɪbjuː/" data-pos="n." data-def="首次亮相，初次登场" data-def-en="the first public appearance of someone">debut</span> came after he used the summer recess to tour the UK,  announcing a series of eye-catching policies mainly aimed at tackling the cost of living.</span></p>
+        <p class="cn">伯纳姆的首相质询首秀之前，他利用夏季休会期巡访英国，宣布了一系列引人注目的政策，主要旨在解决生活成本问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">On Wednesday, Badenoch said the prime minister had set out plenty of spending plans but no detail of how he would be paying the bill.</span></p>
+        <p class="cn">周三，巴德诺克表示，首相提出了许多支出计划，但没有说明他将如何支付这笔账单。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">"The markets are clearly worried that we now have a <span class="keyword" data-word="spendthrift" data-phonetic="/ˈspendθrɪft/" data-pos="adj." data-def="挥霍的，浪费的" data-def-en="spending money in an extravagant way">spendthrift</span> prime minister who wants to say yes to everyone but cannot tell us where the money is coming from," she said.</span></p>
+        <p class="cn">她说：“市场显然担心我们现在有一位挥霍无度的首相，他想对所有人说‘是’，但无法告诉我们钱从哪里来。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">"He needs to pay for all his new promises and he has a choice - higher taxes, more borrowing, or spending cuts.</span></p>
+        <p class="cn">“他需要为所有新承诺买单，他有一个选择——提高税收、增加借贷或削减开支。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">"Yesterday he said change begins with honesty, so will he be honest and tell us: is he preparing to raise taxes again, yes or no?"</span></p>
+        <p class="cn">“昨天他说变革始于诚实，那么他是否愿意诚实地告诉我们：他是否准备再次增税，是或否？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Burnham had earlier said he had already cut taxes, including VAT on energy bills and a cut in business rates for hospitality.</span></p>
+        <p class="cn">伯纳姆早些时候表示，他已经减税，包括对能源账单征收的增值税减免，以及降低酒店业的商业税率。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"I've already indicated my first moves were to cut tax, but I'm not going to do what any prime minister has done and write the budget here," he said, adding he and Chancellor John Healey had agreed on an earlier date for the Budget to reduce <span class="keyword" data-word="speculation" data-phonetic="/ˌspekjuˈleɪʃn/" data-pos="n." data-def="猜测，投机" data-def-en="the act of guessing or forming opinions without definite knowledge">speculation</span>.</span></p>
+        <p class="cn">他说：“我已经表明我的第一步是减税，但我不会像任何首相那样在这里撰写预算案。”他补充说，他和财政大臣约翰·希利已同意提前预算日期以减少猜测。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">In the Commons, Badenoch also raised comments from economist and cross-bench peer Lord Jim O'Neill, who had been tipped to become Burnham's chief economic adviser, but who ruled out joining Burnham's government .</span></p>
+        <p class="cn">在下议院，巴德诺克还提到了经济学家、跨党派贵族吉姆·奥尼尔勋爵的评论，他曾被传将成为伯纳姆的首席经济顾问，但排除了加入伯纳姆政府的可能性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Speaking to the BBC, Lord O'Neill had praised the PM for "a great first five weeks" which he said had helped lift consumer and business confidence; adding the current spike in market interest rates for government debt would force Labour to start "dealing with the triple lock" on the state pension, and "excessive" welfare spending.</span></p>
+        <p class="cn">奥尼尔勋爵在接受BBC采访时赞扬首相“头五周表现很好”，称这有助于提振消费者和企业信心；并补充说，当前市场对政府债务利率的飙升将迫使工党开始“处理”国家养老金的“三重锁定”和“过度”的福利支出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Badenoch pointed to a warning from Lord O'Neill that the prime minister's tone during his Tuesday Commons <span class="keyword" data-word="debut" data-phonetic="/ˈdeɪbjuː/" data-pos="n." data-def="首次亮相，初次登场" data-def-en="the first public appearance of someone">debut</span> would have unsettled investors, although the peer had also said that spike was mostly mirroring US market upheaval concerning the Iran conflict.</span></p>
+        <p class="cn">巴德诺克指出奥尼尔勋爵警告称，首相周二在下议院首秀时的语气会让投资者不安，尽管这位贵族也表示，这次飙升主要是反映了美国市场因伊朗冲突而动荡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Kemi Badenoch speaking in the House of Commons at PMQs</span></p>
+        <p class="cn">凯米·巴德诺克在首相质询中于下议院发言</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">"Lord O'Neill, a close friend of the prime minister, said yesterday's statement in the Commons was the last thing investors wanted to hear," Badenoch said.</span></p>
+        <p class="cn">巴德诺克说：“奥尼尔勋爵是首相的密友，他说昨天在下议院的声明是投资者最不想听到的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">"Lord O'Neill is a serious economist.</span> <span class="sentence" data-sentence-index="22">He knows what he's talking about and, sure enough, yesterday the cost of government borrowing rose to its highest in 18 years.</span></p>
+        <p class="cn">“奥尼尔勋爵是一位严肃的经济学家。他知道自己在说什么，果然，昨天政府借贷成本升至18年高点。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">"How does he plan to tackle the government's rising debt costs?"</span></p>
+        <p class="cn">“他计划如何应对政府不断上升的债务成本？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">Burnham replied that he and Lord O'Neill did "not always agree", before attacking Badenoch's shadow cabinet reshuffle for bringing MPs who were in the leadership team of former Conservative prime minister Liz Truss back to her front benches.</span></p>
+        <p class="cn">伯纳姆回答说，他和奥尼尔勋爵“并非总是意见一致”，然后抨击巴德诺克影子内阁改组，将前保守党首相利兹·特拉斯领导团队的议员带回其前排席位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">To shouts of "point-scoring!" from the Conservative side, he said: "Can I also say to her and the whole of her new shadow cabinet, the majority of whom were part of a government that lasted for 49 days, a short-lived government that crashed confidence in the economy and hammered people's mortgages.</span></p>
+        <p class="cn">在保守党方面“得分！”的喊声中，他说：“我能否也对她说，以及她的整个新影子内阁，其中大多数人曾是一个只持续了49天的政府的一部分，那个短命政府破坏了经济信心，打击了人们的抵押贷款。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">"She took a decision at the weekend, she removed a shadow chancellor who said that the Truss mini budget was a mistake, and she replaced that shadow chancellor with one that helped to write the Truss mini budget."</span></p>
+        <p class="cn">“她在周末做了一个决定，她解雇了一位说特拉斯迷你预算是个错误的影子财政大臣，并用一位帮助撰写特拉斯迷你预算的人取代了他。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">In the Tory reshuffle , Andrew Griffith replaced Sir Mel Stride as shadow chancellor.</span></p>
+        <p class="cn">在保守党改组中，安德鲁·格里菲斯取代梅尔·斯特莱德爵士成为影子财政大臣。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">Badenoch said Burnham had not ruled out tax rises, claiming: "The reason why that budget failed was because spending was announced before the money to pay for it, which is exactly what he is doing right now."</span></p>
+        <p class="cn">巴德诺克表示，伯纳姆没有排除增税的可能性，声称：“预算失败的原因是支出在支付资金之前就宣布了，这正是他现在正在做的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">Burnham's PMQs <span class="keyword" data-word="debut" data-phonetic="/ˈdeɪbjuː/" data-pos="n." data-def="首次亮相，初次登场" data-def-en="the first public appearance of someone">debut</span> shows the challenge of delivering new style of politics</span></p>
+        <p class="cn">伯纳姆的首相质询首秀展示了推行新政治风格的挑战</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">Why are UK borrowing costs rising and what does it mean for me?</span></p>
+        <p class="cn">为什么英国借贷成本上升，这对我意味着什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="31">Burnham promises more devolution and public control of essential services</span></p>
+        <p class="cn">伯纳姆承诺进一步下放权力，并加强对基本服务的公共控制</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="32">The opposition leader went on to raise the alleged Russian attack on Leipzig airport in Germany , urging the prime minister to commit to 3% spending.</span></p>
+        <p class="cn">反对党领袖接着提到了据称俄罗斯对德国莱比锡机场的袭击，敦促首相承诺将国防开支提高到GDP的3%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">So far the new government has only committed to meeting the 3.5% spending target for defence by 2035, pushing back the interim 3% spending commitment to spring next year.</span></p>
+        <p class="cn">到目前为止，新政府只承诺到2035年实现3.5%的国防开支目标，将3%的临时承诺推迟到明年春天。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="34">The new chancellor quit as defence secretary in June over the last government's failure to commit to a 3% increase, which proved to be the final nail in the coffin for Sir Keir's premiership.</span></p>
+        <p class="cn">新财政大臣6月因上届政府未能承诺增加3%的国防开支而辞去国防大臣职务，这成为基尔爵士首相任期的最后一根稻草。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="35">Burnham told MPs: "The very reason I appointed this Chancellor to his position is because of his strong commitment to the defence of our country and to defence spending.</span></p>
+        <p class="cn">伯纳姆告诉议员们：“我任命这位财政大臣的原因正是因为他坚定地致力于我们国家的国防和国防开支。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="36">"We will fully fund the defence investment plan and at the spending review we will set out a plan to meet the Nato commitments by 2035, there is no problem with our commitment to defence."</span></p>
+        <p class="cn">“我们将全额资助国防投资计划，并在支出审查中制定计划，到2035年履行北约承诺，我们对国防的承诺没有问题。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="37">Sign up for our Politics Essential newsletter to read top political analysis, gain insight from across the UK and stay up to speed with the big moments.</span> <span class="sentence" data-sentence-index="38">It'll be delivered straight to your inbox every weekday.</span></p>
+        <p class="cn">订阅我们的《政治要点》时事通讯，阅读顶级政治分析，获取英国各地的见解，并跟上重大时刻。它将在每个工作日直接发送到您的收件箱。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">grounded</span>
+        <button class="kw-speak-btn" data-word="grounded" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡraʊndɪd/ adj.</span>
+      </div>
+      <p class="kw-def">基于…的，以…为基础的</p>
+      <p class="kw-def-en">based on or rooted in something</p>
+      <p class="kw-ctx">&ldquo;This will be a government grounded in fiscal responsibility.&rdquo;</p>
+      <p class="kw-ctx-cn">这将是一个以财政责任为基础的政府。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">turbulence</span>
+        <button class="kw-speak-btn" data-word="turbulence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɜːbjələns/ n.</span>
+      </div>
+      <p class="kw-def">动荡，骚乱</p>
+      <p class="kw-def-en">a state of confusion or disorder</p>
+      <p class="kw-ctx">&ldquo;He blamed the previous Tory government, saying the 'turbulence on global markets are because of that exposure that they left behind'.&rdquo;</p>
+      <p class="kw-ctx-cn">他指责了之前的保守党政府，称“全球市场的动荡是因为他们留下的风险敞口”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exposure</span>
+        <button class="kw-speak-btn" data-word="exposure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈspəʊʒə(r)/ n.</span>
+      </div>
+      <p class="kw-def">风险敞口，暴露</p>
+      <p class="kw-def-en">the state of being exposed to risk or danger</p>
+      <p class="kw-ctx">&ldquo;He blamed the previous Tory government, saying the 'turbulence on global markets are because of that exposure that they left behind'.&rdquo;</p>
+      <p class="kw-ctx-cn">他指责了之前的保守党政府，称“全球市场的动荡是因为他们留下的风险敞口”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">constrain</span>
+        <button class="kw-speak-btn" data-word="constrain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈstreɪn/ v.</span>
+      </div>
+      <p class="kw-def">限制，约束</p>
+      <p class="kw-def-en">to limit or restrict something</p>
+      <p class="kw-ctx">&ldquo;This means it costs the government more to borrow over the long term and could constrain its spending choices as the 28 October Budget approaches.&rdquo;</p>
+      <p class="kw-ctx-cn">这意味着政府长期借贷成本更高，随着10月28日预算案的临近，这可能会限制其支出选择。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">debut</span>
+        <button class="kw-speak-btn" data-word="debut" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdeɪbjuː/ n.</span>
+      </div>
+      <p class="kw-def">首次亮相，初次登场</p>
+      <p class="kw-def-en">the first public appearance of someone</p>
+      <p class="kw-ctx">&ldquo;Burnham's PMQs debut came after he used the summer recess to tour the UK, announcing a series of eye-catching policies mainly aimed at tackling the cost of living.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆在首相质询中的首次亮相是在他利用夏季休会期间巡访英国，宣布一系列旨在解决生活成本问题的引人注目的政策之后。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">spendthrift</span>
+        <button class="kw-speak-btn" data-word="spendthrift" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈspendθrɪft/ adj.</span>
+      </div>
+      <p class="kw-def">挥霍的，浪费的</p>
+      <p class="kw-def-en">spending money in an extravagant way</p>
+      <p class="kw-ctx">&ldquo;The markets are clearly worried that we now have a spendthrift prime minister who wants to say yes to everyone but cannot tell us where the money is coming from.&rdquo;</p>
+      <p class="kw-ctx-cn">市场显然担心我们现在有一位挥霍无度的首相，他想对所有人说“是”，却无法告诉我们钱从哪里来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">speculation</span>
+        <button class="kw-speak-btn" data-word="speculation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌspekjuˈleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">猜测，投机</p>
+      <p class="kw-def-en">the act of guessing or forming opinions without definite knowledge</p>
+      <p class="kw-ctx">&ldquo;Burnham had earlier said he had already cut taxes, including VAT on energy bills and a cut in business rates for hospitality.&rdquo;</p>
+      <p class="kw-ctx-cn">伯纳姆早些时候表示他已经减税，包括能源账单的增值税和酒店业的商业税率削减。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unsettle</span>
+        <button class="kw-speak-btn" data-word="unsettle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈsetl/ v.</span>
+      </div>
+      <p class="kw-def">使不安，扰乱</p>
+      <p class="kw-def-en">to cause someone to feel anxious or disturbed</p>
+      <p class="kw-ctx">&ldquo;Badenoch pointed to a warning from Lord O'Neill that the prime minister's tone during his Tuesday Commons debut would have unsettled investors, although the peer had also said that spike was mostly mirroring US market upheaval concerning the Iran conflict.&rdquo;</p>
+      <p class="kw-ctx-cn">巴德诺克引用了奥尼尔勋爵的警告，称首相周二在下议院的首次亮相时的语气会让投资者不安，尽管这位贵族也表示，这一飙升主要是反映了美国市场因伊朗冲突而出现的动荡。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Andy Burnham said his government would be \"grounded in fiscal responsibility\" as his first Prime Minister's Questions took place against a backdrop of rising UK borrowing costs.", "start_ms": 0, "end_ms": 11880, "paragraph_index": 0}, {"index": 1, "text": "Conservative leader Kemi Badenoch called on Burnham to say where spending would be cut and how he would deal with the UK's increasing debt, after the cost of borrowing for the UK reached a new 18-year high on Wednesday.", "start_ms": 11880, "end_ms": 26088, "paragraph_index": 1}, {"index": 2, "text": "He blamed the previous Tory government, saying the \"turbulence on global markets are because of that exposure that they left behind\".", "start_ms": 26088, "end_ms": 34872, "paragraph_index": 2}, {"index": 3, "text": "Burnham took over from Sir Keir Starmer in July before Parliament's summer recess, meaning Wednesday was the first time he had faced Badenoch at PMQs.", "start_ms": 34872, "end_ms": 45864, "paragraph_index": 3}, {"index": 4, "text": "Burnham sought to stress his administration's fiscal responsibility and said ministers were taking steps to reduce debt.", "start_ms": 45864, "end_ms": 54168, "paragraph_index": 4}, {"index": 5, "text": "He told MPs: \"This will be a government grounded in fiscal responsibility.", "start_ms": 54168, "end_ms": 60048, "paragraph_index": 5}, {"index": 6, "text": "It will stick to the fiscal rules, but at the same time, we will help reduce cost-of-living pressure on our constituents, and that's the approach that we will take.\"", "start_ms": 60048, "end_ms": 70584, "paragraph_index": 5}, {"index": 7, "text": "Interest rates on government bonds have been going up, with the yield on a 10-year bond at its highest level since 2008, while the yield on a 30-year bond is at its highest since 1998.", "start_ms": 70584, "end_ms": 84024, "paragraph_index": 6}, {"index": 8, "text": "This means it costs the government more to borrow over the long term and could constrain its spending choices as the 28 October Budget approaches.", "start_ms": 84024, "end_ms": 93840, "paragraph_index": 7}, {"index": 9, "text": "Burnham's PMQs debut came after he used the summer recess to tour the UK,  announcing a series of eye-catching policies mainly aimed at tackling the cost of living.", "start_ms": 93840, "end_ms": 105576, "paragraph_index": 8}, {"index": 10, "text": "On Wednesday, Badenoch said the prime minister had set out plenty of spending plans but no detail of how he would be paying the bill.", "start_ms": 105576, "end_ms": 114648, "paragraph_index": 9}, {"index": 11, "text": "\"The markets are clearly worried that we now have a spendthrift prime minister who wants to say yes to everyone but cannot tell us where the money is coming from,\" she said.", "start_ms": 114648, "end_ms": 125304, "paragraph_index": 10}, {"index": 12, "text": "\"He needs to pay for all his new promises and he has a choice - higher taxes, more borrowing, or spending cuts.", "start_ms": 125304, "end_ms": 133512, "paragraph_index": 11}, {"index": 13, "text": "\"Yesterday he said change begins with honesty, so will he be honest and tell us: is he preparing to raise taxes again, yes or no?\"", "start_ms": 133512, "end_ms": 143208, "paragraph_index": 12}, {"index": 14, "text": "Burnham had earlier said he had already cut taxes, including VAT on energy bills and a cut in business rates for hospitality.", "start_ms": 143208, "end_ms": 152904, "paragraph_index": 13}, {"index": 15, "text": "\"I've already indicated my first moves were to cut tax, but I'm not going to do what any prime minister has done and write the budget here,\" he said, adding he and Chancellor John Healey had agreed on an earlier date for the Budget to reduce speculation.", "start_ms": 152904, "end_ms": 168960, "paragraph_index": 14}, {"index": 16, "text": "In the Commons, Badenoch also raised comments from economist and cross-bench peer Lord Jim O'Neill, who had been tipped to become Burnham's chief economic adviser, but who ruled out joining Burnham's government .", "start_ms": 168960, "end_ms": 183096, "paragraph_index": 15}, {"index": 17, "text": "Speaking to the BBC, Lord O'Neill had praised the PM for \"a great first five weeks\" which he said had helped lift consumer and business confidence; adding the current spike in market interest rates for government debt would force Labour to start \"dealing with the triple lock\" on the state pension, and \"excessive\" welfare spending.", "start_ms": 183096, "end_ms": 203544, "paragraph_index": 16}, {"index": 18, "text": "Badenoch pointed to a warning from Lord O'Neill that the prime minister's tone during his Tuesday Commons debut would have unsettled investors, although the peer had also said that spike was mostly mirroring US market upheaval concerning the Iran conflict.", "start_ms": 203544, "end_ms": 220128, "paragraph_index": 17}, {"index": 19, "text": "Kemi Badenoch speaking in the House of Commons at PMQs", "start_ms": 220128, "end_ms": 225000, "paragraph_index": 18}, {"index": 20, "text": "\"Lord O'Neill, a close friend of the prime minister, said yesterday's statement in the Commons was the last thing investors wanted to hear,\" Badenoch said.", "start_ms": 225000, "end_ms": 235344, "paragraph_index": 19}, {"index": 21, "text": "\"Lord O'Neill is a serious economist.", "start_ms": 235344, "end_ms": 238968, "paragraph_index": 20}, {"index": 22, "text": "He knows what he's talking about and, sure enough, yesterday the cost of government borrowing rose to its highest in 18 years.", "start_ms": 238968, "end_ms": 247968, "paragraph_index": 20}, {"index": 23, "text": "\"How does he plan to tackle the government's rising debt costs?\"", "start_ms": 247968, "end_ms": 252672, "paragraph_index": 21}, {"index": 24, "text": "Burnham replied that he and Lord O'Neill did \"not always agree\", before attacking Badenoch's shadow cabinet reshuffle for bringing MPs who were in the leadership team of former Conservative prime minister Liz Truss back to her front benches.", "start_ms": 252672, "end_ms": 268128, "paragraph_index": 22}, {"index": 25, "text": "To shouts of \"point-scoring!\" from the Conservative side, he said: \"Can I also say to her and the whole of her new shadow cabinet, the majority of whom were part of a government that lasted for 49 days, a short-lived government that crashed confidence in the economy and hammered people's mortgages.", "start_ms": 268128, "end_ms": 287520, "paragraph_index": 23}, {"index": 26, "text": "\"She took a decision at the weekend, she removed a shadow chancellor who said that the Truss mini budget was a mistake, and she replaced that shadow chancellor with one that helped to write the Truss mini budget.\"", "start_ms": 287520, "end_ms": 300432, "paragraph_index": 24}, {"index": 27, "text": "In the Tory reshuffle , Andrew Griffith replaced Sir Mel Stride as shadow chancellor.", "start_ms": 300432, "end_ms": 306912, "paragraph_index": 25}, {"index": 28, "text": "Badenoch said Burnham had not ruled out tax rises, claiming: \"The reason why that budget failed was because spending was announced before the money to pay for it, which is exactly what he is doing right now.\"", "start_ms": 306912, "end_ms": 320232, "paragraph_index": 26}, {"index": 29, "text": "Burnham's PMQs debut shows the challenge of delivering new style of politics", "start_ms": 320232, "end_ms": 326496, "paragraph_index": 27}, {"index": 30, "text": "Why are UK borrowing costs rising and what does it mean for me?", "start_ms": 326496, "end_ms": 331536, "paragraph_index": 28}, {"index": 31, "text": "Burnham promises more devolution and public control of essential services", "start_ms": 331536, "end_ms": 337272, "paragraph_index": 29}, {"index": 32, "text": "The opposition leader went on to raise the alleged Russian attack on Leipzig airport in Germany , urging the prime minister to commit to 3% spending.", "start_ms": 337272, "end_ms": 347904, "paragraph_index": 30}, {"index": 33, "text": "So far the new government has only committed to meeting the 3.5% spending target for defence by 2035, pushing back the interim 3% spending commitment to spring next year.", "start_ms": 347904, "end_ms": 361512, "paragraph_index": 31}, {"index": 34, "text": "The new chancellor quit as defence secretary in June over the last government's failure to commit to a 3% increase, which proved to be the final nail in the coffin for Sir Keir's premiership.", "start_ms": 361512, "end_ms": 374376, "paragraph_index": 32}, {"index": 35, "text": "Burnham told MPs: \"The very reason I appointed this Chancellor to his position is because of his strong commitment to the defence of our country and to defence spending.", "start_ms": 374376, "end_ms": 385320, "paragraph_index": 33}, {"index": 36, "text": "\"We will fully fund the defence investment plan and at the spending review we will set out a plan to meet the Nato commitments by 2035, there is no problem with our commitment to defence.\"", "start_ms": 385320, "end_ms": 397608, "paragraph_index": 34}, {"index": 37, "text": "Sign up for our Politics Essential newsletter to read top political analysis, gain insight from across the UK and stay up to speed with the big moments.", "start_ms": 397608, "end_ms": 408600, "paragraph_index": 35}, {"index": 38, "text": "It'll be delivered straight to your inbox every weekday.", "start_ms": 408600, "end_ms": 412896, "paragraph_index": 35}], "total_duration_ms": 412896};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "he": "他", "in": "在", "said": "说", "on": "在", "for": "为了", "that": "那个", "government": "政府", "spending": "支出", "had": "有", "burnham": "伯纳姆", "prime": "首相", "badenoch": "巴德诺赫", "at": "在", "is": "是", "his": "他的", "be": "是", "with": "与", "will": "将", "would": "将", "new": "新的", "from": "来自", "was": "是", "budget": "预算", "minister": "部长", "chancellor": "总理", "lord": "勋爵", "defence": "国防", "uk": "英国", "borrowing": "借贷", "but": "但是", "we": "我们", "who": "谁", "shadow": "阴影", "fiscal": "财政的", "as": "作为", "first": "第一轮", "costs": "成本", "cut": "削减", "debt": "债务", "year": "年", "were": "是", "it": "它", "our": "我们的", "its": "它的", "burnham's": "伯纳姆的", "out": "出来", "she": "她", "what": "什么", "commons": "下议院", "responsibility": "责任", "took": "担任", "rising": "上升的", "conservative": "保守党", "say": "说", "how": "如何", "cost": "成本", "wednesday": "星期三", "are": "是", "because": "因为", "over": "超过", "sir": "爵士", "before": "之前", "reduce": "减少", "mps": "议员", "this": "这个", "rates": "费率", "have": "有", "up": "向上", "highest": "最高", "more": "更多", "no": "没有", "us": "我们", "has": "有", "taxes": "税收", "not": "不", "also": "也", "which": "哪个", "plan": "计划", "truss": "特拉斯", "her": "她的", "commitment": "承诺", "minister's": "部长的", "leader": "领导人", "kemi": "凯米", "where": "那里", "after": "之后", "tory": "保守党", "markets": "市场", "summer": "夏天", "recess": "休会期", "time": "时间", "told": "告诉", "interest": "兴趣", "been": "已经", "going": "将要", "since": "自从", "set": "设定", "now": "现在", "yes": "是的", "tell": "告诉", "money": "金钱", "pay": "支付", "promises": "承诺", "or": "或者", "yesterday": "昨天", "so": "所以", "raise": "提高", "earlier": "较早", "already": "已经", "business": "事务", "tax": "税收", "write": "写", "adding": "补充说", "economist": "经济学家", "peer": "同行", "ruled": "裁定", "speaking": "发言", "helped": "帮助", "confidence": "信任", "market": "市场", "investors": "投资者", "last": "最后", "does": "做", "government's": "政府的", "cabinet": "内阁", "reshuffle": "改组", "back": "后退", "replaced": "取代", "reason": "原因", "why": "为何", "politics": "政治", "essential": "必要的", "commit": "犯下", "by": "被", "andy": "安迪", "questions": "问题", "place": "地点", "against": "反对", "backdrop": "背景", "called": "称为", "deal": "协议", "uk's": "英国的", "increasing": "增加", "reached": "达成", "high": "高的", "blamed": "指责", "previous": "先前", "saying": "说", "global": "全球", "they": "它们", "left": "离开", "behind": "在...后面", "keir": "基尔", "starmer": "斯塔默", "july": "七月", "parliament's": "议会的", "meaning": "意义", "faced": "面对", "sought": "寻求", "stress": "强调", "administration's": "政府的", "ministers": "部长", "taking": "采取", "steps": "步骤", "stick": "坚持", "rules": "规则", "same": "相同", "help": "帮助", "pressure": "压力", "that's": "那是", "approach": "方法", "take": "采取", "level": "水平", "while": "而", "means": "意味着", "long": "长久", "term": "术语", "could": "可能", "choices": "选择", "october": "十月", "approaches": "接近", "came": "到来", "used": "使用", "tour": "巡回赛", "announcing": "宣布", "series": "系列", "eye-catching": "引人注目的", "policies": "政策", "mainly": "主要", "aimed": "旨在", "tackling": "应对", "living": "生活", "plenty": "大量", "plans": "计划", "detail": "细节", "paying": "支付", "bill": "法案", "clearly": "显然", "worried": "担心的", "wants": "想要", "everyone": "每个人", "cannot": "不能", "coming": "即将到来的", "needs": "需要", "all": "所有", "choice": "选择", "higher": "更高的", "cuts": "削减", "change": "改变", "begins": "开始", "honest": "诚实的", "preparing": "准备", "again": "再次", "including": "包括", "vat": "增值税", "energy": "能源", "bills": "法案", "hospitality": "酒店餐饮业", "i've": "我已经", "indicated": "表明", "my": "我的", "moves": "行动", "i'm": "我是", "do": "做", "any": "任何", "done": "完成", "here": "这里", "john": "约翰", "healey": "希利", "agreed": "同意", "an": "一个", "date": "日期", "raised": "提出的", "comments": "评论", "jim": "吉姆", "tipped": "倾斜的", "become": "成为", "chief": "首席", "economic": "经济的", "adviser": "顾问", "joining": "加入", "bbc": "英国广播公司", "praised": "赞扬", "pm": "首相", "great": "伟大的", "five": "五", "weeks": "周", "current": "当前的", "force": "力量", "labour": "工党", "start": "开始", "dealing": "处理", "state": "国家", "pension": "养老金", "excessive": "过度的", "welfare": "福利", "pointed": "指出", "warning": "警告", "tone": "语气", "during": "在期间", "tuesday": "星期二", "although": "虽然", "mostly": "主要", "upheaval": "剧变", "concerning": "关于", "iran": "伊朗", "conflict": "冲突", "house": "议院", "close": "密切的", "friend": "朋友", "statement": "声明", "thing": "事情", "wanted": "想要", "hear": "听到", "serious": "严重的", "knows": "知道", "he's": "他是", "talking": "谈论", "about": "关于", "sure": "确定", "enough": "足够", "rose": "上升", "years": "多年", "tackle": "应对", "replied": "回复", "did": "做了", "always": "总是", "agree": "同意", "attacking": "攻击", "badenoch's": "巴德诺赫的", "bringing": "带来", "leadership": "领导力", "team": "团队", "former": "前任", "liz": "利兹", "front": "前线", "benches": "长凳", "point-scoring": "得分", "side": "方面", "can": "可以", "whole": "整个", "majority": "多数", "whom": "谁", "part": "部分", "lasted": "持续", "days": "天", "crashed": "撞毁", "economy": "经济", "hammered": "猛烈抨击", "people's": "人民的", "decision": "决定", "weekend": "周末", "removed": "移除", "mistake": "错误", "one": "一个", "andrew": "安德鲁", "griffith": "格里菲斯", "mel": "梅尔", "stride": "大步", "rises": "上升", "claiming": "声称", "failed": "失败", "announced": "宣布", "exactly": "确切地", "doing": "做", "right": "正确", "shows": "显示", "challenge": "挑战", "delivering": "传递", "mean": "意味着", "me": "我", "devolution": "权力下放", "public": "公众", "control": "控制", "services": "服务", "opposition": "反对党", "went": "去", "alleged": "据称的", "russian": "俄罗斯的", "attack": "袭击", "airport": "机场", "germany": "德国", "urging": "敦促", "far": "远", "only": "只有", "committed": "承诺的", "meeting": "会议", "target": "目标", "pushing": "推动", "interim": "临时的", "spring": "春天", "next": "下一个", "quit": "辞职", "secretary": "秘书", "june": "六月", "failure": "失败", "increase": "增加", "proved": "证明是", "final": "最终", "keir's": "基尔的", "premiership": "首相任期", "very": "非常", "appointed": "任命", "position": "立场", "strong": "强烈", "country": "国家", "fully": "完全地", "fund": "资金", "investment": "投资", "review": "审查", "meet": "会见", "nato": "北约", "commitments": "承诺", "there": "那里", "problem": "问题", "sign": "签署", "newsletter": "新闻简报", "read": "阅读", "top": "顶级的", "political": "政治的", "analysis": "分析", "gain": "获得", "insight": "洞察", "across": "跨越", "stay": "保持", "speed": "速度", "big": "大的", "moments": "时刻", "it'll": "它将", "delivered": "递送", "straight": "直接", "your": "你的", "inbox": "收件箱", "every": "每个", "weekday": "工作日", "o'neill": "奥尼尔", "pmqs": "首相质询", "yield": "收益率", "bond": "债券", "spike": "飙升", "mini": "小型", "cost-of-living": "生活成本", "constituents": "选民", "bonds": "债券", "borrow": "借贷", "honesty": "诚实", "cross-bench": "中立议员", "lift": "提振", "consumer": "消费者", "triple": "三重", "lock": "锁定", "unsettled": "不安的", "mirroring": "反映", "yesterday's": "昨天的", "shouts": "呼喊", "short-lived": "短暂的", "mortgages": "抵押贷款", "style": "风格", "leipzig": "莱比锡", "nail": "钉子", "coffin": "棺材"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
