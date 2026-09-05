@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-05</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-05</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/4d7d/live/1a5083e0-a953-11f1-adf0-6d46cbf5ba37.png" alt="US envoys meet Putin in Moscow for Ukraine talks" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US envoys meet Putin in Moscow for Ukraine talks</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cx2zqp46g8eo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-05.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: President Putin welcomes US envoys Steve Witkoff and Jared Kushner to talks in Moscow</span></p>
+        <p class="cn">观看：普京总统欢迎美国特使史蒂夫·维特科夫和贾里德·库什纳到莫斯科进行会谈</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">US President Donald Trump's top negotiators have met Russian President Vladimir Putin in Moscow, as efforts to end the war in Ukraine gather pace.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普的高级谈判代表在莫斯科会见了俄罗斯总统弗拉基米尔·普京，旨在结束乌克兰战争的努力正在加速。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Footage released by the Kremlin showed Steve Witkoff and Jared Kushner being greeted by Putin, who said the current situation "is not so easy".</span> <span class="sentence" data-sentence-index="4">He added Russia would explain "how we see the situation".</span></p>
+        <p class="cn">克里姆林宫发布的视频显示，普京会见了史蒂夫·维特科夫和贾里德·库什纳，普京表示当前局势“并不容易”。他补充说，俄罗斯将解释“我们如何看待局势”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Witkoff thanked Putin for agreeing with Ukraine to <span class="keyword" data-word="halt" data-phonetic="/hɔːlt/" data-pos="v./n." data-def="停止，中止" data-def-en="to stop; to bring something to a stop">halt</span> strikes on each other's capitals for three days.</span> <span class="sentence" data-sentence-index="6">On Sunday the envoys will travel to Kyiv for more talks.</span></p>
+        <p class="cn">维特科夫感谢普京同意与乌克兰相互停止对对方首都的打击三天。周日，特使们将前往基辅进行更多会谈。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">On Friday, Trump said Witkoff and Kushner were "bringing with them a proposal to end the war".</span> <span class="sentence" data-sentence-index="8">So far, efforts by the US and its allies to <span class="keyword" data-word="broker" data-phonetic="/ˈbrəʊkə(r)/" data-pos="v." data-def="促成，斡旋" data-def-en="to arrange something such as a deal or agreement between two or more parties">broker</span> a peace deal have failed.</span></p>
+        <p class="cn">周五，特朗普表示，维特科夫和库什纳“带去了一项结束战争的提议”。到目前为止，美国及其盟友促成和平协议的努力尚未成功。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="9">At Saturday's talks in the Kremlin, Putin also said that "in any case, whatever happens, such contacts are undoubtedly always useful".</span> <span class="sentence" data-sentence-index="10">He also thanked Trump for his peacemaking efforts.</span></p>
+        <p class="cn">在周六的克里姆林宫会谈中，普京还表示，“无论如何，无论发生什么，这样的接触无疑总是有用的。”他还感谢特朗普为和平所做的努力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="11">He told the envoys that he was "comfortable" working with them, adding: "Of course on our side there is quite a high level of trust during this work."</span></p>
+        <p class="cn">他告诉特使们，他与他们合作感到“舒适”，并补充说：“当然，在我们这边，这项工作中有相当高的信任度。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="12">The talks â which continued behind closed doors in Putin's official residence in the heart of the Russian capital â lasted for three hours, according to Russian state media.</span></p>
+        <p class="cn">据俄罗斯官方媒体报道，会谈在普京位于俄罗斯首都中心的官邸闭门进行，持续了三个小时。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="13">Zelensky said earlier on Saturday that he had spoken to the envoys, who have "already begun working with the Russian side today".</span></p>
+        <p class="cn">泽连斯基周六早些时候表示，他已与特使们交谈过，他们“今天已经开始与俄方合作”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="14">"The plan for tomorrow's diplomatic engagements in Kyiv, involving the US team, has been approved.</span> <span class="sentence" data-sentence-index="15">We are waiting for Steve Witkoff and Jared Kushner and are ready for a <span class="keyword" data-word="substantive" data-phonetic="/səbˈstæntɪv/" data-pos="adj." data-def="实质性的，重要的" data-def-en="important and meaningful; having real substance">substantive</span> conversation," he added.</span></p>
+        <p class="cn">他补充说：“明天在基辅涉及美国团队的外交接触计划已获批准。我们期待史蒂夫·维特科夫和贾里德·库什纳的到来，并准备进行实质性的对话。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="16">"From now through the end of Saturday, as well as on Sunday and Monday, Ukraine is ready to <span class="keyword" data-word="refrain" data-phonetic="/rɪˈfreɪn/" data-pos="v." data-def="克制，避免" data-def-en="to stop yourself from doing something you want to do">refrain</span> from strikes on Moscow, and we expect the Russians to do the same regarding Kyiv."</span></p>
+        <p class="cn">“从现在到周六结束，以及周日和周一，乌克兰准备不对莫斯科发动打击，我们期望俄罗斯对基辅也这样做。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="17">Russian state media reported that Putin had ordered a <span class="keyword" data-word="halt" data-phonetic="/hɔːlt/" data-pos="v./n." data-def="停止，中止" data-def-en="to stop; to bring something to a stop">halt</span> to strikes on Kyiv for three days due to the US visit.</span></p>
+        <p class="cn">俄罗斯官方媒体报道称，由于美国访问，普京已下令三天内停止对基辅的打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="18">In televised remarks, Putin said Russia had not agreed to a <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪə(r)/" data-pos="n." data-def="停火，停战" data-def-en="an agreement to stop fighting for a period of time">ceasefire</span> for the rest of Ukraine outside of the capital.</span></p>
+        <p class="cn">在电视讲话中，普京表示，俄罗斯尚未同意在首都以外的乌克兰其他地区停火。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="19">The Russian president said he would "ensure the security of the negotiating process" and of the mediators.</span></p>
+        <p class="cn">俄罗斯总统表示，他将“确保谈判进程”和调解人的安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="20">Kushner and Witkoff have visited Russia several times but the talks on Sunday would be the first in Ukraine.</span> <span class="sentence" data-sentence-index="21">It is not clear how the US envoys will be travelling from Moscow to Kyiv.</span></p>
+        <p class="cn">库什纳和维特科夫曾多次访问俄罗斯，但周日的会谈将是他们在乌克兰的首次。目前尚不清楚美国特使将如何从莫斯科前往基辅。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="22">Ukraine's airspace has been closed since Russia launched its full-scale invasion in February 2022.</span></p>
+        <p class="cn">自2022年2月俄罗斯发动全面入侵以来，乌克兰领空一直关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="23">Jared Kushner (left) and Steve Witkoff (right) pictured with Russia's Kirill Dmitriev (centre) on arrival in Moscow</span></p>
+        <p class="cn">贾里德·库什纳（左）和史蒂夫·维特科夫（右）抵达莫斯科时与俄罗斯的基里尔·德米特里耶夫（中）合影</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="24">Delegations from Ukraine have attended talks in the US over the past 18 months.</span></p>
+        <p class="cn">过去18个月中，乌克兰代表团曾参加在美国举行的会谈。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">Earlier on Saturday, Zelensky said Russia had fired "demonstrative" strikes on airports in Kyiv and Boryspil overnight ahead of his planned meeting with the US.</span></p>
+        <p class="cn">周六早些时候，泽连斯基表示，在他计划与美国会晤之前，俄罗斯连夜对基辅和鲍里斯波尔的机场发动了“示威性”打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="26">Ukraine's president added: "Clearly, these Russian strikes on the airports are a reaction to the discussions and preparations for the possibility of the US side using an aircraft to travel to Ukraine and land at Kyiv Airport or Boryspil Airport."</span></p>
+        <p class="cn">乌克兰总统补充说：“显然，俄罗斯对机场的打击是对美国可能使用飞机前往乌克兰并在基辅机场或鲍里斯波尔机场降落的讨论和准备的反应。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="27">Zelensky said on Friday he would guarantee the safety of Russian airspace during the envoys' visit and called for Russia to do the same for Ukraine.</span></p>
+        <p class="cn">泽连斯基周五表示，他将保证特使访问期间俄罗斯领空的安全，并呼吁俄罗斯对乌克兰也这样做。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="28">He also said an overnight Russian strike on a civilian building in the Dnipro region killed four people and injured five others.</span></p>
+        <p class="cn">他还表示，俄罗斯连夜对第聂伯罗地区一座民用建筑的打击造成四人死亡，五人受伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="29">Witkoff and Kushner's visit to Moscow comes just over a week after a rare visit to the Russian capital by the head of the CIA, John Ratcliffe.</span></p>
+        <p class="cn">维特科夫和库什纳访问莫斯科，是在中央情报局局长约翰·拉特克利夫罕见访问俄罗斯首都一周多之后。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="30">There was no official comment from Washington or the Kremlin on what was discussed.</span> <span class="sentence" data-sentence-index="31">Speaking last week, Trump described the meeting as "semi-routine".</span></p>
+        <p class="cn">华盛顿和克里姆林宫均未对讨论内容发表官方评论。上周，特朗普称这次会议“半常规”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="32">Last year, the US, Ukraine and Russia separately suggested that a deal to end the war was edging closer following a flurry of talks brokered by the Americans.</span></p>
+        <p class="cn">去年，美国、乌克兰和俄罗斯分别表示，在美国斡旋的一系列会谈后，结束战争的协议正在接近达成。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="33">European allies also held talks in Paris but discussions ultimately ended without a breakthrough.</span> <span class="sentence" data-sentence-index="34">Key disagreements remain between the warring sides on issues such as territory and security guarantees for Ukraine.</span></p>
+        <p class="cn">欧洲盟友也在巴黎举行了会谈，但讨论最终没有突破。交战双方在领土和乌克兰安全保障等问题上仍存在关键分歧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="35">In recent months, both Russia and Ukraine have intensified their aerial attacks as fighting continues.</span></p>
+        <p class="cn">近几个月来，随着战斗持续，俄罗斯和乌克兰都加强了空袭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="36">Ukraine said it has struggled to repel ballistic missile attacks due to a lack of interceptor missiles, while Kyiv has focused its strikes on Russian economic infrastructure targets.</span></p>
+        <p class="cn">乌克兰表示，由于缺乏拦截导弹，难以抵御弹道导弹袭击，而基辅则将打击重点放在俄罗斯经济基础设施目标上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="37">Trump's peace envoys to visit Moscow and Kyiv over weekend</span></p>
+        <p class="cn">特朗普的和平特使周末将访问莫斯科和基辅</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="38">Russia hits Ukrainian security headquarters in drone attack, Zelensky says</span></p>
+        <p class="cn">泽连斯基称，俄罗斯在无人机袭击中击中乌克兰安全总部</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">envoy</span>
+        <button class="kw-speak-btn" data-word="envoy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈenvɔɪ/ n.</span>
+      </div>
+      <p class="kw-def">使者，特使</p>
+      <p class="kw-def-en">a person sent to represent their government in another country</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump's top negotiators have met Russian President Vladimir Putin in Moscow, as efforts to end the war in Ukraine gather pace.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统特朗普的高级谈判代表在莫斯科会见了俄罗斯总统普京，随着结束乌克兰战争的努力加速推进。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">negotiate</span>
+        <button class="kw-speak-btn" data-word="negotiate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/nɪˈɡəʊʃieɪt/ v.</span>
+      </div>
+      <p class="kw-def">谈判，协商</p>
+      <p class="kw-def-en">to try to reach an agreement by discussion</p>
+      <p class="kw-ctx">&ldquo;US President Donald Trump's top negotiators have met Russian President Vladimir Putin in Moscow, as efforts to end the war in Ukraine gather pace.&rdquo;</p>
+      <p class="kw-ctx-cn">美国总统特朗普的高级谈判代表在莫斯科会见了俄罗斯总统普京，随着结束乌克兰战争的努力加速推进。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">broker</span>
+        <button class="kw-speak-btn" data-word="broker" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbrəʊkə(r)/ v.</span>
+      </div>
+      <p class="kw-def">促成，斡旋</p>
+      <p class="kw-def-en">to arrange something such as a deal or agreement between two or more parties</p>
+      <p class="kw-ctx">&ldquo;So far, efforts by the US and its allies to broker a peace deal have failed.&rdquo;</p>
+      <p class="kw-ctx-cn">到目前为止，美国及其盟友促成和平协议的努力失败了。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">halt</span>
+        <button class="kw-speak-btn" data-word="halt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/hɔːlt/ v./n.</span>
+      </div>
+      <p class="kw-def">停止，中止</p>
+      <p class="kw-def-en">to stop; to bring something to a stop</p>
+      <p class="kw-ctx">&ldquo;Witkoff thanked Putin for agreeing with Ukraine to halt strikes on each other's capitals for three days.&rdquo;</p>
+      <p class="kw-ctx-cn">维特科夫感谢普京同意与乌克兰互相停止对首都的打击三天。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">substantive</span>
+        <button class="kw-speak-btn" data-word="substantive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səbˈstæntɪv/ adj.</span>
+      </div>
+      <p class="kw-def">实质性的，重要的</p>
+      <p class="kw-def-en">important and meaningful; having real substance</p>
+      <p class="kw-ctx">&ldquo;We are waiting for Steve Witkoff and Jared Kushner and are ready for a substantive conversation.&rdquo;</p>
+      <p class="kw-ctx-cn">我们正在等待史蒂夫·维特科夫和贾里德·库什纳，并准备进行实质性的对话。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">refrain</span>
+        <button class="kw-speak-btn" data-word="refrain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈfreɪn/ v.</span>
+      </div>
+      <p class="kw-def">克制，避免</p>
+      <p class="kw-def-en">to stop yourself from doing something you want to do</p>
+      <p class="kw-ctx">&ldquo;From now through the end of Saturday, as well as on Sunday and Monday, Ukraine is ready to refrain from strikes on Moscow, and we expect the Russians to do the same regarding Kyiv.&rdquo;</p>
+      <p class="kw-ctx-cn">从现在到周六结束，以及周日和周一，乌克兰准备避免对莫斯科的打击，我们期望俄罗斯对基辅也这样做。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ceasefire</span>
+        <button class="kw-speak-btn" data-word="ceasefire" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsiːsfaɪə(r)/ n.</span>
+      </div>
+      <p class="kw-def">停火，停战</p>
+      <p class="kw-def-en">an agreement to stop fighting for a period of time</p>
+      <p class="kw-ctx">&ldquo;The Russian president said he would "ensure the security of the negotiating process" and of the mediators.&rdquo;</p>
+      <p class="kw-ctx-cn">俄罗斯总统表示，他将“确保谈判进程和调解人的安全”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">mediator</span>
+        <button class="kw-speak-btn" data-word="mediator" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmiːdieɪtə(r)/ n.</span>
+      </div>
+      <p class="kw-def">调解人，中间人</p>
+      <p class="kw-def-en">a person who tries to bring about an agreement between people who are in conflict</p>
+      <p class="kw-ctx">&ldquo;The Russian president said he would "ensure the security of the negotiating process" and of the mediators.&rdquo;</p>
+      <p class="kw-ctx-cn">俄罗斯总统表示，他将“确保谈判进程和调解人的安全”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: President Putin welcomes US envoys Steve Witkoff and Jared Kushner to talks in Moscow", "start_ms": 3000, "end_ms": 10752, "paragraph_index": 1}, {"index": 2, "text": "US President Donald Trump's top negotiators have met Russian President Vladimir Putin in Moscow, as efforts to end the war in Ukraine gather pace.", "start_ms": 10752, "end_ms": 21816, "paragraph_index": 2}, {"index": 3, "text": "Footage released by the Kremlin showed Steve Witkoff and Jared Kushner being greeted by Putin, who said the current situation \"is not so easy\".", "start_ms": 21816, "end_ms": 31728, "paragraph_index": 3}, {"index": 4, "text": "He added Russia would explain \"how we see the situation\".", "start_ms": 31728, "end_ms": 36168, "paragraph_index": 3}, {"index": 5, "text": "Witkoff thanked Putin for agreeing with Ukraine to halt strikes on each other's capitals for three days.", "start_ms": 36168, "end_ms": 43296, "paragraph_index": 4}, {"index": 6, "text": "On Sunday the envoys will travel to Kyiv for more talks.", "start_ms": 43296, "end_ms": 48096, "paragraph_index": 4}, {"index": 7, "text": "On Friday, Trump said Witkoff and Kushner were \"bringing with them a proposal to end the war\".", "start_ms": 48096, "end_ms": 54744, "paragraph_index": 5}, {"index": 8, "text": "So far, efforts by the US and its allies to broker a peace deal have failed.", "start_ms": 54744, "end_ms": 60888, "paragraph_index": 5}, {"index": 9, "text": "At Saturday's talks in the Kremlin, Putin also said that \"in any case, whatever happens, such contacts are undoubtedly always useful\".", "start_ms": 60888, "end_ms": 71016, "paragraph_index": 6}, {"index": 10, "text": "He also thanked Trump for his peacemaking efforts.", "start_ms": 71016, "end_ms": 75168, "paragraph_index": 6}, {"index": 11, "text": "He told the envoys that he was \"comfortable\" working with them, adding: \"Of course on our side there is quite a high level of trust during this work.\"", "start_ms": 75168, "end_ms": 84456, "paragraph_index": 7}, {"index": 12, "text": "The talks \u00e2\u0080\u0093 which continued behind closed doors in Putin's official residence in the heart of the Russian capital \u00e2\u0080\u0093 lasted for three hours, according to Russian state media.", "start_ms": 84456, "end_ms": 96024, "paragraph_index": 8}, {"index": 13, "text": "Zelensky said earlier on Saturday that he had spoken to the envoys, who have \"already begun working with the Russian side today\".", "start_ms": 96024, "end_ms": 104784, "paragraph_index": 9}, {"index": 14, "text": "\"The plan for tomorrow's diplomatic engagements in Kyiv, involving the US team, has been approved.", "start_ms": 104784, "end_ms": 112368, "paragraph_index": 10}, {"index": 15, "text": "We are waiting for Steve Witkoff and Jared Kushner and are ready for a substantive conversation,\" he added.", "start_ms": 112368, "end_ms": 119880, "paragraph_index": 10}, {"index": 16, "text": "\"From now through the end of Saturday, as well as on Sunday and Monday, Ukraine is ready to refrain from strikes on Moscow, and we expect the Russians to do the same regarding Kyiv.\"", "start_ms": 119880, "end_ms": 132384, "paragraph_index": 11}, {"index": 17, "text": "Russian state media reported that Putin had ordered a halt to strikes on Kyiv for three days due to the US visit.", "start_ms": 132384, "end_ms": 140328, "paragraph_index": 12}, {"index": 18, "text": "In televised remarks, Putin said Russia had not agreed to a ceasefire for the rest of Ukraine outside of the capital.", "start_ms": 140328, "end_ms": 148800, "paragraph_index": 13}, {"index": 19, "text": "The Russian president said he would \"ensure the security of the negotiating process\" and of the mediators.", "start_ms": 148800, "end_ms": 156024, "paragraph_index": 14}, {"index": 20, "text": "Kushner and Witkoff have visited Russia several times but the talks on Sunday would be the first in Ukraine.", "start_ms": 156024, "end_ms": 163296, "paragraph_index": 15}, {"index": 21, "text": "It is not clear how the US envoys will be travelling from Moscow to Kyiv.", "start_ms": 163296, "end_ms": 169008, "paragraph_index": 15}, {"index": 22, "text": "Ukraine's airspace has been closed since Russia launched its full-scale invasion in February 2022.", "start_ms": 169008, "end_ms": 176712, "paragraph_index": 16}, {"index": 23, "text": "Jared Kushner (left) and Steve Witkoff (right) pictured with Russia's Kirill Dmitriev (centre) on arrival in Moscow", "start_ms": 176712, "end_ms": 186192, "paragraph_index": 17}, {"index": 24, "text": "Delegations from Ukraine have attended talks in the US over the past 18 months.", "start_ms": 186192, "end_ms": 192504, "paragraph_index": 18}, {"index": 25, "text": "Earlier on Saturday, Zelensky said Russia had fired \"demonstrative\" strikes on airports in Kyiv and Boryspil overnight ahead of his planned meeting with the US.", "start_ms": 192504, "end_ms": 203880, "paragraph_index": 19}, {"index": 26, "text": "Ukraine's president added: \"Clearly, these Russian strikes on the airports are a reaction to the discussions and preparations for the possibility of the US side using an aircraft to travel to Ukraine and land at Kyiv Airport or Boryspil Airport.\"", "start_ms": 203880, "end_ms": 220608, "paragraph_index": 20}, {"index": 27, "text": "Zelensky said on Friday he would guarantee the safety of Russian airspace during the envoys' visit and called for Russia to do the same for Ukraine.", "start_ms": 220608, "end_ms": 230448, "paragraph_index": 21}, {"index": 28, "text": "He also said an overnight Russian strike on a civilian building in the Dnipro region killed four people and injured five others.", "start_ms": 230448, "end_ms": 239184, "paragraph_index": 22}, {"index": 29, "text": "Witkoff and Kushner's visit to Moscow comes just over a week after a rare visit to the Russian capital by the head of the CIA, John Ratcliffe.", "start_ms": 239184, "end_ms": 249504, "paragraph_index": 23}, {"index": 30, "text": "There was no official comment from Washington or the Kremlin on what was discussed.", "start_ms": 249504, "end_ms": 255144, "paragraph_index": 24}, {"index": 31, "text": "Speaking last week, Trump described the meeting as \"semi-routine\".", "start_ms": 255144, "end_ms": 260304, "paragraph_index": 24}, {"index": 32, "text": "Last year, the US, Ukraine and Russia separately suggested that a deal to end the war was edging closer following a flurry of talks brokered by the Americans.", "start_ms": 260304, "end_ms": 271584, "paragraph_index": 25}, {"index": 33, "text": "European allies also held talks in Paris but discussions ultimately ended without a breakthrough.", "start_ms": 271584, "end_ms": 278832, "paragraph_index": 26}, {"index": 34, "text": "Key disagreements remain between the warring sides on issues such as territory and security guarantees for Ukraine.", "start_ms": 278832, "end_ms": 286992, "paragraph_index": 26}, {"index": 35, "text": "In recent months, both Russia and Ukraine have intensified their aerial attacks as fighting continues.", "start_ms": 286992, "end_ms": 294792, "paragraph_index": 27}, {"index": 36, "text": "Ukraine said it has struggled to repel ballistic missile attacks due to a lack of interceptor missiles, while Kyiv has focused its strikes on Russian economic infrastructure targets.", "start_ms": 294792, "end_ms": 306840, "paragraph_index": 28}, {"index": 37, "text": "Trump's peace envoys to visit Moscow and Kyiv over weekend", "start_ms": 306840, "end_ms": 311760, "paragraph_index": 29}, {"index": 38, "text": "Russia hits Ukrainian security headquarters in drone attack, Zelensky says", "start_ms": 311760, "end_ms": 317952, "paragraph_index": 30}], "total_duration_ms": 317952};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "in": "在", "on": "在", "for": "为了", "of": "的", "ukraine": "乌克兰", "russian": "俄罗斯的", "us": "我们", "said": "说", "he": "他", "russia": "俄罗斯", "kyiv": "基辅", "witkoff": "威特科夫", "talks": "会谈", "putin": "普京", "envoys": "特使", "moscow": "莫斯科", "kushner": "库什纳", "have": "有", "as": "作为", "with": "与", "strikes": "袭击", "president": "总统", "by": "被", "that": "那个", "from": "来自", "visit": "访问", "not": "不", "steve": "史蒂夫", "jared": "贾里德", "end": "结束", "is": "是", "would": "将", "also": "也", "are": "是", "was": "是", "zelensky": "泽连斯基", "had": "有", "has": "有", "be": "是", "efforts": "努力", "war": "战争", "kremlin": "克里姆林宫", "added": "补充", "we": "我们", "three": "三个", "sunday": "星期日", "trump": "特朗普", "its": "它的", "side": "方面", "capital": "资本", "saturday": "星期六", "security": "安全", "over": "超过", "this": "这个", "trump's": "特朗普的", "who": "谁", "situation": "局势", "so": "所以", "how": "如何", "thanked": "感谢", "days": "天", "will": "将", "travel": "旅行", "friday": "星期五", "them": "他们", "allies": "盟友", "peace": "和平", "deal": "协议", "at": "在", "such": "如此", "his": "他的", "working": "工作", "there": "那里", "during": "在期间", "closed": "关闭", "official": "官方", "state": "国家", "media": "媒体", "earlier": "较早", "been": "已经", "ready": "准备就绪", "do": "做", "same": "相同", "due": "应得", "but": "但是", "it": "它", "ukraine's": "乌克兰的", "airspace": "领空", "months": "月", "boryspil": "鲍里斯波尔", "overnight": "夜间", "meeting": "会议", "discussions": "讨论", "an": "一个", "airport": "机场", "or": "或者", "week": "周", "last": "最后", "attacks": "袭击", "video": "视频", "can": "可以", "played": "比赛", "watch": "观看", "welcomes": "欢迎", "donald": "唐纳德", "top": "顶级的", "negotiators": "谈判代表", "met": "伦敦警察厅", "vladimir": "弗拉基米尔", "gather": "聚集", "pace": "节奏", "footage": "视频片段", "released": "释放", "showed": "显示", "being": "正在", "greeted": "受到…对待", "current": "当前的", "easy": "容易的", "explain": "解释", "see": "看到", "each": "每个", "other's": "彼此的", "more": "更多", "were": "是", "bringing": "带来", "proposal": "提议", "far": "远", "failed": "失败", "saturday's": "周六的", "any": "任何", "case": "案例", "whatever": "无论什么", "happens": "发生", "contacts": "接触者", "always": "总是", "useful": "有用的", "told": "告诉", "adding": "补充说", "course": "课程", "our": "我们的", "quite": "相当", "high": "高的", "level": "水平", "trust": "信任", "work": "工作", "which": "哪个", "continued": "持续的", "behind": "在...后面", "doors": "门", "putin's": "普京的", "residence": "官邸", "heart": "核心", "lasted": "持续", "hours": "小时", "according": "根据", "spoken": "发言", "already": "已经", "begun": "开始", "today": "今天", "plan": "计划", "diplomatic": "外交", "engagements": "活动", "involving": "涉及", "team": "团队", "approved": "批准", "waiting": "等待", "conversation": "对话", "now": "现在", "through": "通过", "well": "好", "monday": "星期一", "expect": "期望", "russians": "俄罗斯人", "regarding": "关于", "reported": "据报道", "ordered": "命令", "remarks": "言论", "agreed": "同意", "rest": "其余", "outside": "外部", "ensure": "确保", "negotiating": "谈判", "process": "过程", "mediators": "调解人", "visited": "访问", "several": "数个", "times": "次", "first": "第一轮", "clear": "明确", "travelling": "旅行", "since": "自从", "launched": "发起", "full-scale": "全面的", "invasion": "入侵", "february": "二月", "left": "离开", "right": "正确", "pictured": "被描绘", "russia's": "俄罗斯的", "kirill": "基里尔", "centre": "中心", "arrival": "到达", "delegations": "代表团", "attended": "参加", "past": "过去", "fired": "发射", "ahead": "提前", "planned": "计划中的", "clearly": "显然", "these": "这些", "reaction": "反应", "preparations": "准备工作", "possibility": "可能性", "using": "使用", "aircraft": "飞机", "land": "土地", "safety": "安全", "called": "称为", "strike": "罢工", "civilian": "平民", "building": "建筑物", "region": "地区", "killed": "杀死", "four": "四", "people": "人们", "injured": "受伤", "five": "五", "others": "其他", "kushner's": "库什纳的", "comes": "到来", "just": "只是", "after": "之后", "rare": "罕见的", "head": "前往", "cia": "中情局", "john": "约翰", "no": "没有", "comment": "评论", "washington": "华盛顿", "what": "什么", "discussed": "讨论", "speaking": "发言", "described": "描述", "year": "年", "separately": "分别", "suggested": "建议", "closer": "更近的", "following": "随后", "flurry": "一阵", "americans": "美国人", "european": "欧洲的", "held": "举行", "paris": "巴黎", "ultimately": "最终", "ended": "结束", "without": "没有", "key": "关键", "disagreements": "分歧", "remain": "仍然", "between": "之间", "warring": "交战的", "sides": "各方", "issues": "问题", "territory": "领土", "recent": "最近", "both": "两者", "their": "他们的", "aerial": "空中的", "fighting": "战斗", "continues": "继续", "struggled": "艰难应对", "ballistic": "弹道", "missile": "导弹", "lack": "缺乏", "missiles": "导弹", "while": "而", "focused": "专注的", "economic": "经济的", "infrastructure": "基础设施", "targets": "目标", "weekend": "周末", "ukrainian": "乌克兰的", "headquarters": "总部", "drone": "无人机", "attack": "袭击", "says": "表示", "airports": "机场", "agreeing": "同意", "capitals": "首都", "undoubtedly": "无疑", "peacemaking": "调停", "comfortable": "舒适的", "tomorrow's": "明天的", "televised": "电视转播的", "dmitriev": "德米特里耶夫", "demonstrative": "示范性的", "guarantee": "保证", "dnipro": "第聂伯罗", "ratcliffe": "拉特克利夫", "semi-routine": "半常规的", "edging": "逐渐逼近", "brokered": "斡旋的", "breakthrough": "突破", "guarantees": "保证", "intensified": "加剧的", "repel": "击退", "interceptor": "拦截器", "hits": "命中"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
