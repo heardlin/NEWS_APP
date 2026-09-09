@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-09</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-09</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/bbaa/live/1acb1230-ac60-11f1-be57-03729df1d736.jpg" alt="Police launch criminal investigation into Reform UK donations" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Police launch criminal investigation into Reform UK donations</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cp3k72k1y3vo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-09.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: <span class="keyword" data-word="undercover" data-phonetic="/ˌʌndəˈkʌvər/" data-pos="adj." data-def="秘密的，卧底的" data-def-en="working secretly to obtain information">Undercover</span> reporters posing as party donors meet with Nigel Farage</span></p>
+        <p class="cn">观看：卧底记者假扮政党捐赠者与奈杰尔·法拉奇会面</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The Metropolitan Police is carrying out a criminal <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span> into Reform UK over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.</span></p>
+        <p class="cn">伦敦警察厅正在对改革党（Reform UK）进行刑事调查，指控其违反外国资金法律，此前第四频道新闻（Channel 4 News）上周播出了一段报道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">An <span class="keyword" data-word="undercover" data-phonetic="/ˌʌndəˈkʌvər/" data-pos="adj." data-def="秘密的，卧底的" data-def-en="working secretly to obtain information">undercover</span> reporter recorded two senior Reform aides apparently suggesting a way around <span class="keyword" data-word="electoral" data-phonetic="/ɪˈlektərəl/" data-pos="adj." data-def="选举的" data-def-en="relating to elections">electoral</span> law to secure foreign party donations, one of which would have totalled Â£500,000.</span></p>
+        <p class="cn">一名卧底记者录下了改革党两名高级助手似乎在暗示一种规避选举法以确保外国政党捐款的方法，其中一笔捐款总额将达50万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The police <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span> by the Met's Special Enquiry Team is being folded into an inquiry that has been under way into other donations to the party.</span></p>
+        <p class="cn">伦敦警察厅特别调查小组的警方调查将并入一项已在进行中的、针对该党其他捐款的调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">A Reform UK spokesman said the party "denies any wrongdoing and will fully cooperate with the <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span>".</span></p>
+        <p class="cn">改革党发言人表示，该党“否认任何不当行为，并将全力配合调查”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"We won't be commenting further while a live <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span> is under way."</span></p>
+        <p class="cn">“在调查进行期间，我们不会进一步置评。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">A Met spokesperson said it had received "a number of reports relating to donations and polling involving a political party", after the film by Channel 4 News and Verbatim Investigations was shown on Thursday evening.</span></p>
+        <p class="cn">伦敦警察厅发言人表示，在第四频道新闻和Verbatim Investigations的影片于周四晚间播出后，警方已收到“多起涉及某政党的捐款和民调的报告”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">In its statement, the Met Police said: "All allegations under <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span> relate to potential offences under the Political Parties, Elections and Referendums Act 2000."</span></p>
+        <p class="cn">伦敦警察厅在声明中表示：“所有调查中的指控均涉及《2000年政党、选举与公投法》下的潜在罪行。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"Detectives continue to liaise closely with the <span class="keyword" data-word="electoral" data-phonetic="/ɪˈlektərəl/" data-pos="adj." data-def="选举的" data-def-en="relating to elections">Electoral</span> Commission and Crown Prosecution Service as enquiries progress."</span></p>
+        <p class="cn">“随着调查的进展，侦探们继续与选举委员会和皇家检察署密切联络。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">The police spokesperson said detectives were seeking to obtain footage relating to the broadcast.</span></p>
+        <p class="cn">警方发言人表示，侦探们正在寻求获取与该报道相关的录像。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">An <span class="keyword" data-word="electoral" data-phonetic="/ɪˈlektərəl/" data-pos="adj." data-def="选举的" data-def-en="relating to elections">Electoral</span> Commission spokesperson said the Channel 4 News report included "serious allegations of wrongdoing", adding: "It is right that these are properly and thoroughly investigated by the police.</span></p>
+        <p class="cn">选举委员会发言人表示，第四频道新闻的报道包含“严重的不当行为指控”，并补充说：“警方对这些指控进行适当而彻底的调查是正确的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">"In parallel, we are also considering all relevant information and regulatory steps."</span></p>
+        <p class="cn">“与此同时，我们也在考虑所有相关信息和监管措施。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">The film overshadowed the party's conference in Birmingham and led to the party losing two key figures - Dan Jukes, chief of staff to the leader Nigel Farage, and James Orr, head of policy.</span></p>
+        <p class="cn">这部影片给该党在伯明翰举行的会议蒙上了阴影，并导致该党失去了两位关键人物——党魁奈杰尔·法拉奇的幕僚长丹·朱克斯和政策主管詹姆斯·奥尔。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Watch: Farage senior aide filmed suggesting way to avoid donations law</span></p>
+        <p class="cn">观看：法拉奇高级助手被拍暗示规避捐款法的方法</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">In the news report, an <span class="keyword" data-word="undercover" data-phonetic="/ˌʌndəˈkʌvər/" data-pos="adj." data-def="秘密的，卧底的" data-def-en="working secretly to obtain information">undercover</span> investigator posing as the son of an American donor is recorded raising a concern that his father wouldn't be able to directly donate to the party within the law.</span></p>
+        <p class="cn">在新闻报道中，一名卧底调查员假扮成一位美国捐赠者的儿子，被录下提出担忧，称其父亲无法在法律范围内直接向该党捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17"><span class="keyword" data-word="electoral" data-phonetic="/ɪˈlektərəl/" data-pos="adj." data-def="选举的" data-def-en="relating to elections">Electoral</span> law states that to be a <span class="keyword" data-word="permissible" data-phonetic="/pərˈmɪsəbl/" data-pos="adj." data-def="可允许的" data-def-en="allowed by rules or law">permissible</span> donor to a UK political party you must be a UK registered voter, or a company registered in the UK.</span></p>
+        <p class="cn">选举法规定，要成为英国政党的合法捐赠者，必须是英国注册选民或在英国注册的公司。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Jukes appears to suggest that the <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃn/" data-pos="n." data-def="捐赠，捐款" data-def-en="something given to a person or organization, especially money">donation</span> could be in the UK-based son's name, although the money would have come from his American father.</span></p>
+        <p class="cn">朱克斯似乎暗示，捐款可以以这位在英国的儿子名义进行，尽管资金将来自他的美国父亲。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">Elsewhere, James Orr, the party's head of policy suggests that the father could pay for opinion polling to support one of Reform's campaigns.</span></p>
+        <p class="cn">在其他场合，该党政策主管詹姆斯·奥尔建议，这位父亲可以支付民意调查费用，以支持改革党的一项竞选活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">Farage and Jukes were also filmed at a lunch in Clacton where it is suggested the US donor, who was being played by an actor, gives Â£500,000 to Reform through his son.</span></p>
+        <p class="cn">法拉奇和朱克斯还被拍到在克拉克顿的一次午餐会上，有人建议这位由演员扮演的美国捐赠者通过其儿子向改革党捐款50万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">Farage told the BBC he "frankly wasn't listening" to the discussion about the potential <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃn/" data-pos="n." data-def="捐赠，捐款" data-def-en="something given to a person or organization, especially money">donation</span>.</span> <span class="sentence" data-sentence-index="22">Channel 4 News has said the payment was never made.</span></p>
+        <p class="cn">法拉奇告诉BBC，他“坦率地说没有在听”关于潜在捐款的讨论。第四频道新闻表示，这笔款项从未支付。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">He dismissed the comments made by his aide in the film as "loose pub talk including a couple of boasts that simply were not true".</span></p>
+        <p class="cn">他将其助手在影片中的言论斥为“松散的酒吧谈话，包括一些根本不真实的吹嘘”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Jukes has denied "any wrongdoing" and said he had "stepped back from politics in order to clear my name".</span></p>
+        <p class="cn">朱克斯否认了“任何不当行为”，并表示他已“退出政坛以洗清自己的名声”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Last week, Orr told Sky News he would cooperate with the party's internal <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span> "fully".</span></p>
+        <p class="cn">上周，奥尔告诉天空新闻，他将“全面”配合该党的内部调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">The Met had already been investigating whether payments to Reform in the weeks before the last election complied with <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃn/" data-pos="n." data-def="捐赠，捐款" data-def-en="something given to a person or organization, especially money">donation</span> laws.</span></p>
+        <p class="cn">伦敦警察厅此前已在调查上次选举前几周向改革党支付的款项是否符合捐款法。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">The probe is examining donations given directly to the party by Fiona Cottrell, mother of longstanding Nigel Farage ally, George Cottrell.</span></p>
+        <p class="cn">该调查正在审查奈杰尔·法拉奇长期盟友乔治·科特雷尔的母亲菲奥娜·科特雷尔直接向该党提供的捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">It is also examining payments from a company controlled by Reform's deputy leader Richard Tice, which received Â£1m from Fiona Cottrell in June 2024.</span></p>
+        <p class="cn">调查还审查了由改革党副领袖理查德·泰斯控制的一家公司支付的款项，该公司于2024年6月从菲奥娜·科特雷尔处收到了100万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">A Verbatim Investigations spokesperson said: "Verbatim will cooperate with the police's <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查，研究" data-def-en="the process of examining a crime, problem, etc. carefully">investigation</span>."</span></p>
+        <p class="cn">Verbatim Investigations发言人表示：“Verbatim将配合警方的调查。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">Labour Party Chair Bridget Phillipson said: "Farage needs to wake up and realise the buck stops with him.</span></p>
+        <p class="cn">工党主席布里奇特·菲利普森表示：“法拉奇需要清醒过来，认识到责任在他身上。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">"Reform's failure to take responsibility for their actions shows just how unfit they are for office."</span></p>
+        <p class="cn">“改革党未能为其行为承担责任，这表明他们多么不适合担任公职。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">The Liberal Democrat's Cabinet Office spokeswoman Lisa Smart said: "Every Reform MP urgently needs to state whether they or their campaigns have benefited from any foreign money."</span></p>
+        <p class="cn">自由民主党内阁办公室发言人丽莎·斯马特表示：“每一位改革党议员都迫切需要说明他们或他们的竞选活动是否受益于任何外国资金。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">Zack Polanski, leader of the Green Party in England and Wales, said: "Nigel Farage and Lee Anderson hoped they could pin all this on two of their most senior advisors, but they have more questions to answer about how much they knew."</span></p>
+        <p class="cn">英格兰和威尔士绿党领袖扎克·波兰斯基表示：“奈杰尔·法拉奇和李·安德森希望他们能把这一切归咎于他们最资深的两位顾问，但关于他们知道多少，他们还有更多问题需要回答。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="34">Nigel Farage tells BBC he 'wasn't listening' during foreign donor talks filmed <span class="keyword" data-word="undercover" data-phonetic="/ˌʌndəˈkʌvər/" data-pos="adj." data-def="秘密的，卧底的" data-def-en="working secretly to obtain information">undercover</span></span></p>
+        <p class="cn">奈杰尔·法拉奇告诉BBC，在卧底拍摄的外国捐赠者谈话中，他“没有在听”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="35">Why Reform UK <span class="keyword" data-word="undercover" data-phonetic="/ˌʌndəˈkʌvər/" data-pos="adj." data-def="秘密的，卧底的" data-def-en="working secretly to obtain information">undercover</span> donations claims are legally complicated</span></p>
+        <p class="cn">为什么改革党（Reform UK）的卧底捐款指控在法律上很复杂</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="36">Reform UK winded by donations row as insiders call for shift in approach</span></p>
+        <p class="cn">改革党（Reform UK）因捐款争议受挫，内部人士呼吁转变策略</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="37">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的《政治要点》时事通讯，了解威斯敏斯特内外的内幕。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">undercover</span>
+        <button class="kw-speak-btn" data-word="undercover" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌndəˈkʌvər/ adj.</span>
+      </div>
+      <p class="kw-def">秘密的，卧底的</p>
+      <p class="kw-def-en">working secretly to obtain information</p>
+      <p class="kw-ctx">&ldquo;Undercover reporters posing as party donors meet with Nigel Farage.&rdquo;</p>
+      <p class="kw-ctx-cn">卧底记者伪装成政党捐赠者与奈杰尔·法拉奇会面。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌæləˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">指控，断言</p>
+      <p class="kw-def-en">a statement that someone has done something wrong, without proof</p>
+      <p class="kw-ctx">&ldquo;The Metropolitan Police is carrying out a criminal investigation into Reform UK over allegations it broke foreign funding laws.&rdquo;</p>
+      <p class="kw-ctx-cn">伦敦警察厅正在对英国改革党进行刑事调查，因其被指控违反外国资金法律。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">donation</span>
+        <button class="kw-speak-btn" data-word="donation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/doʊˈneɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">捐赠，捐款</p>
+      <p class="kw-def-en">something given to a person or organization, especially money</p>
+      <p class="kw-ctx">&ldquo;An undercover reporter recorded two senior Reform aides apparently suggesting a way around electoral law to secure foreign party donations.&rdquo;</p>
+      <p class="kw-ctx-cn">一名卧底记者记录到两名改革党高级助手似乎在建议一种绕过选举法以获取外国政党捐款的方法。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">electoral</span>
+        <button class="kw-speak-btn" data-word="electoral" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈlektərəl/ adj.</span>
+      </div>
+      <p class="kw-def">选举的</p>
+      <p class="kw-def-en">relating to elections</p>
+      <p class="kw-ctx">&ldquo;An undercover reporter recorded two senior Reform aides apparently suggesting a way around electoral law to secure foreign party donations.&rdquo;</p>
+      <p class="kw-ctx-cn">一名卧底记者记录到两名改革党高级助手似乎在建议一种绕过选举法以获取外国政党捐款的方法。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">investigation</span>
+        <button class="kw-speak-btn" data-word="investigation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˌvestɪˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">调查，研究</p>
+      <p class="kw-def-en">the process of examining a crime, problem, etc. carefully</p>
+      <p class="kw-ctx">&ldquo;The police investigation by the Met's Special Enquiry Team is being folded into an inquiry that has been under way into other donations to the party.&rdquo;</p>
+      <p class="kw-ctx-cn">伦敦警察厅特别调查组的警方调查正在并入一项对政党其他捐款的持续调查中。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">comply</span>
+        <button class="kw-speak-btn" data-word="comply" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəmˈplaɪ/ v.</span>
+      </div>
+      <p class="kw-def">遵守，服从</p>
+      <p class="kw-def-en">to obey a rule or law</p>
+      <p class="kw-ctx">&ldquo;The probe is examining whether payments to Reform in the weeks before the last election complied with donation laws.&rdquo;</p>
+      <p class="kw-ctx-cn">调查正在审查上次选举前几周向改革党支付的款项是否符合捐款法律。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overshadow</span>
+        <button class="kw-speak-btn" data-word="overshadow" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌoʊvərˈʃædoʊ/ v.</span>
+      </div>
+      <p class="kw-def">使黯然失色</p>
+      <p class="kw-def-en">to make something seem less important or noticeable</p>
+      <p class="kw-ctx">&ldquo;The film overshadowed the party's conference in Birmingham and led to the party losing two key figures.&rdquo;</p>
+      <p class="kw-ctx-cn">该影片使该党在伯明翰的会议黯然失色，并导致该党失去两位关键人物。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">permissible</span>
+        <button class="kw-speak-btn" data-word="permissible" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pərˈmɪsəbl/ adj.</span>
+      </div>
+      <p class="kw-def">可允许的</p>
+      <p class="kw-def-en">allowed by rules or law</p>
+      <p class="kw-ctx">&ldquo;Electoral law states that to be a permissible donor to a UK political party you must be a UK registered voter.&rdquo;</p>
+      <p class="kw-ctx-cn">选举法规定，要成为英国政党的合法捐赠者，你必须是英国注册选民。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Undercover reporters posing as party donors meet with Nigel Farage", "start_ms": 3000, "end_ms": 9288, "paragraph_index": 1}, {"index": 2, "text": "The Metropolitan Police is carrying out a criminal investigation into Reform UK over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.", "start_ms": 9288, "end_ms": 22272, "paragraph_index": 2}, {"index": 3, "text": "An undercover reporter recorded two senior Reform aides apparently suggesting a way around electoral law to secure foreign party donations, one of which would have totalled \u00c2\u00a3500,000.", "start_ms": 22272, "end_ms": 36456, "paragraph_index": 3}, {"index": 4, "text": "The police investigation by the Met's Special Enquiry Team is being folded into an inquiry that has been under way into other donations to the party.", "start_ms": 36456, "end_ms": 46248, "paragraph_index": 4}, {"index": 5, "text": "A Reform UK spokesman said the party \"denies any wrongdoing and will fully cooperate with the investigation\".", "start_ms": 46248, "end_ms": 54240, "paragraph_index": 5}, {"index": 6, "text": "\"We won't be commenting further while a live investigation is under way.\"", "start_ms": 54240, "end_ms": 59424, "paragraph_index": 6}, {"index": 7, "text": "A Met spokesperson said it had received \"a number of reports relating to donations and polling involving a political party\", after the film by Channel 4 News and Verbatim Investigations was shown on Thursday evening.", "start_ms": 59424, "end_ms": 73848, "paragraph_index": 7}, {"index": 8, "text": "In its statement, the Met Police said: \"All allegations under investigation relate to potential offences under the Political Parties, Elections and Referendums Act 2000.\"", "start_ms": 73848, "end_ms": 86232, "paragraph_index": 8}, {"index": 9, "text": "\"Detectives continue to liaise closely with the Electoral Commission and Crown Prosecution Service as enquiries progress.\"", "start_ms": 86232, "end_ms": 94656, "paragraph_index": 9}, {"index": 10, "text": "The police spokesperson said detectives were seeking to obtain footage relating to the broadcast.", "start_ms": 94656, "end_ms": 101424, "paragraph_index": 10}, {"index": 11, "text": "An Electoral Commission spokesperson said the Channel 4 News report included \"serious allegations of wrongdoing\", adding: \"It is right that these are properly and thoroughly investigated by the police.", "start_ms": 101424, "end_ms": 114576, "paragraph_index": 11}, {"index": 12, "text": "\"In parallel, we are also considering all relevant information and regulatory steps.\"", "start_ms": 114576, "end_ms": 121512, "paragraph_index": 12}, {"index": 13, "text": "The film overshadowed the party's conference in Birmingham and led to the party losing two key figures - Dan Jukes, chief of staff to the leader Nigel Farage, and James Orr, head of policy.", "start_ms": 121512, "end_ms": 134760, "paragraph_index": 13}, {"index": 14, "text": "This video can not be played", "start_ms": 134760, "end_ms": 137760, "paragraph_index": 14}, {"index": 15, "text": "Watch: Farage senior aide filmed suggesting way to avoid donations law", "start_ms": 137760, "end_ms": 143880, "paragraph_index": 15}, {"index": 16, "text": "In the news report, an undercover investigator posing as the son of an American donor is recorded raising a concern that his father wouldn't be able to directly donate to the party within the law.", "start_ms": 143880, "end_ms": 156456, "paragraph_index": 16}, {"index": 17, "text": "Electoral law states that to be a permissible donor to a UK political party you must be a UK registered voter, or a company registered in the UK.", "start_ms": 156456, "end_ms": 167280, "paragraph_index": 17}, {"index": 18, "text": "Jukes appears to suggest that the donation could be in the UK-based son's name, although the money would have come from his American father.", "start_ms": 167280, "end_ms": 176400, "paragraph_index": 18}, {"index": 19, "text": "Elsewhere, James Orr, the party's head of policy suggests that the father could pay for opinion polling to support one of Reform's campaigns.", "start_ms": 176400, "end_ms": 186408, "paragraph_index": 19}, {"index": 20, "text": "Farage and Jukes were also filmed at a lunch in Clacton where it is suggested the US donor, who was being played by an actor, gives \u00c2\u00a3500,000 to Reform through his son.", "start_ms": 186408, "end_ms": 199560, "paragraph_index": 20}, {"index": 21, "text": "Farage told the BBC he \"frankly wasn't listening\" to the discussion about the potential donation.", "start_ms": 199560, "end_ms": 206424, "paragraph_index": 21}, {"index": 22, "text": "Channel 4 News has said the payment was never made.", "start_ms": 206424, "end_ms": 210576, "paragraph_index": 21}, {"index": 23, "text": "He dismissed the comments made by his aide in the film as \"loose pub talk including a couple of boasts that simply were not true\".", "start_ms": 210576, "end_ms": 218976, "paragraph_index": 22}, {"index": 24, "text": "Jukes has denied \"any wrongdoing\" and said he had \"stepped back from politics in order to clear my name\".", "start_ms": 218976, "end_ms": 226128, "paragraph_index": 23}, {"index": 25, "text": "Last week, Orr told Sky News he would cooperate with the party's internal investigation \"fully\".", "start_ms": 226128, "end_ms": 233160, "paragraph_index": 24}, {"index": 26, "text": "The Met had already been investigating whether payments to Reform in the weeks before the last election complied with donation laws.", "start_ms": 233160, "end_ms": 241800, "paragraph_index": 25}, {"index": 27, "text": "The probe is examining donations given directly to the party by Fiona Cottrell, mother of longstanding Nigel Farage ally, George Cottrell.", "start_ms": 241800, "end_ms": 252096, "paragraph_index": 26}, {"index": 28, "text": "It is also examining payments from a company controlled by Reform's deputy leader Richard Tice, which received \u00c2\u00a31m from Fiona Cottrell in June 2024.", "start_ms": 252096, "end_ms": 263856, "paragraph_index": 27}, {"index": 29, "text": "A Verbatim Investigations spokesperson said: \"Verbatim will cooperate with the police's investigation.\"", "start_ms": 263856, "end_ms": 271416, "paragraph_index": 28}, {"index": 30, "text": "Labour Party Chair Bridget Phillipson said: \"Farage needs to wake up and realise the buck stops with him.", "start_ms": 271416, "end_ms": 278952, "paragraph_index": 29}, {"index": 31, "text": "\"Reform's failure to take responsibility for their actions shows just how unfit they are for office.\"", "start_ms": 278952, "end_ms": 286248, "paragraph_index": 30}, {"index": 32, "text": "The Liberal Democrat's Cabinet Office spokeswoman Lisa Smart said: \"Every Reform MP urgently needs to state whether they or their campaigns have benefited from any foreign money.\"", "start_ms": 286248, "end_ms": 298176, "paragraph_index": 31}, {"index": 33, "text": "Zack Polanski, leader of the Green Party in England and Wales, said: \"Nigel Farage and Lee Anderson hoped they could pin all this on two of their most senior advisors, but they have more questions to answer about how much they knew.\"", "start_ms": 298176, "end_ms": 313536, "paragraph_index": 32}, {"index": 34, "text": "Nigel Farage tells BBC he 'wasn't listening' during foreign donor talks filmed undercover", "start_ms": 313536, "end_ms": 320616, "paragraph_index": 33}, {"index": 35, "text": "Why Reform UK undercover donations claims are legally complicated", "start_ms": 320616, "end_ms": 326304, "paragraph_index": 34}, {"index": 36, "text": "Reform UK winded by donations row as insiders call for shift in approach", "start_ms": 326304, "end_ms": 332688, "paragraph_index": 35}, {"index": 37, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 332688, "end_ms": 340128, "paragraph_index": 36}], "total_duration_ms": 340128};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "in": "在", "party": "政党", "said": "说", "farage": "法拉奇", "by": "被", "with": "与", "is": "是", "reform": "改革", "be": "是", "uk": "英国", "donations": "捐款", "that": "那个", "news": "新闻", "an": "一个", "as": "作为", "nigel": "奈杰尔", "police": "警方", "it": "它", "from": "来自", "for": "为了", "he": "他", "they": "它们", "foreign": "外交", "channel": "航道", "way": "方式", "law": "法律", "have": "有", "under": "在...之下", "spokesperson": "发言人", "are": "是", "jukes": "假动作", "his": "他的", "this": "这个", "not": "不", "played": "比赛", "into": "进入", "allegations": "指控", "last": "最后", "two": "两个", "senior": "高级", "would": "将", "has": "有", "any": "任何", "wrongdoing": "不法行为", "met": "伦敦警察厅", "had": "有", "political": "政治的", "film": "拍摄", "verbatim": "逐字地", "was": "是", "all": "所有", "were": "是", "also": "也", "party's": "党的", "leader": "领导人", "orr": "奥尔", "filmed": "拍摄了", "father": "父亲", "could": "可能", "reform's": "改革的", "cottrell": "科特雷尔", "up": "向上", "their": "他们的", "video": "视频", "can": "可以", "watch": "观看", "posing": "摆姿势", "laws": "法律", "broadcast": "广播", "week": "周", "recorded": "记录", "suggesting": "暗示", "one": "一个", "which": "哪个", "being": "正在", "been": "已经", "will": "将", "fully": "完全地", "we": "我们", "received": "受到", "relating": "关于", "polling": "民调", "investigations": "调查", "on": "在", "potential": "潜在", "detectives": "侦探", "commission": "委员会", "report": "报告", "james": "詹姆斯", "head": "前往", "policy": "政策", "aide": "助手", "son": "儿子", "american": "美国的", "directly": "直接地", "registered": "注册的", "or": "或者", "company": "公司", "name": "名字", "money": "金钱", "campaigns": "运动", "told": "告诉", "bbc": "英国广播公司", "wasn't": "不是", "listening": "倾听", "about": "关于", "made": "做出", "politics": "政治", "whether": "是否", "payments": "付款", "examining": "审查", "fiona": "菲奥娜", "needs": "需要", "how": "如何", "office": "办公室", "reporters": "记者们", "donors": "捐赠者", "meet": "会见", "metropolitan": "伦敦警察厅", "carrying": "携带", "out": "出来", "criminal": "犯罪的", "over": "超过", "broke": "打破", "funding": "资金", "following": "随后", "reporter": "记者", "apparently": "显然", "around": "在...周围", "secure": "安全的", "met's": "伦敦警察厅的", "special": "特别的", "enquiry": "调查", "team": "团队", "inquiry": "调查", "other": "其他", "spokesman": "发言人", "denies": "否认", "won't": "不会", "further": "进一步的", "while": "而", "live": "生活", "number": "数量", "reports": "报道", "involving": "涉及", "after": "之后", "shown": "表现出", "thursday": "星期四", "evening": "晚上", "its": "它的", "statement": "声明", "relate": "关联", "offences": "罪行", "parties": "政党", "elections": "选举", "referendums": "公投", "act": "行为", "continue": "继续", "closely": "密切", "crown": "王冠", "prosecution": "起诉", "service": "服务", "enquiries": "询问", "progress": "进展", "seeking": "寻求", "obtain": "获得", "footage": "视频片段", "included": "包括", "serious": "严重的", "adding": "补充说", "right": "正确", "these": "这些", "properly": "妥善", "thoroughly": "彻底地", "investigated": "被调查", "considering": "考虑", "relevant": "相关", "information": "信息", "regulatory": "监管的", "steps": "步骤", "conference": "会议", "birmingham": "伯明翰", "led": "带领", "losing": "失去", "key": "关键", "figures": "人物", "dan": "丹", "chief": "首席", "staff": "员工", "avoid": "避免", "raising": "提出", "concern": "关切", "wouldn't": "不会", "able": "能够", "donate": "捐赠", "within": "在内部", "states": "国家", "you": "你", "must": "必须", "voter": "选民", "appears": "似乎", "suggest": "表明", "uk-based": "总部在英国", "son's": "儿子的", "although": "虽然", "come": "到来", "elsewhere": "其他地方", "suggests": "表明", "pay": "支付", "opinion": "意见", "support": "支持", "at": "在", "lunch": "午餐", "clacton": "克拉克顿", "where": "那里", "suggested": "建议", "us": "我们", "who": "谁", "actor": "演员", "gives": "给予", "through": "通过", "frankly": "坦率地", "discussion": "讨论", "payment": "付款", "never": "从未", "dismissed": "驳回", "comments": "评论", "pub": "酒吧", "talk": "会谈", "including": "包括", "couple": "几个", "simply": "仅仅", "true": "真实", "denied": "拒绝", "stepped": "迈步", "back": "后退", "order": "命令", "clear": "明确", "my": "我的", "sky": "天空", "internal": "内部的", "already": "已经", "investigating": "调查", "weeks": "周", "before": "之前", "election": "选举", "complied": "遵守", "probe": "调查", "given": "给定", "mother": "母亲", "longstanding": "长期存在的", "ally": "盟友", "george": "乔治", "controlled": "受控的", "deputy": "副手", "richard": "理查德", "tice": "泰斯", "june": "六月", "police's": "警察的", "labour": "工党", "chair": "主席", "bridget": "布里奇特", "phillipson": "菲利普森", "wake": "醒来", "realise": "意识到", "him": "他", "failure": "失败", "take": "采取", "responsibility": "责任", "actions": "行动", "shows": "显示", "just": "只是", "liberal": "自由", "cabinet": "内阁", "spokeswoman": "女发言人", "lisa": "丽莎", "smart": "斯马特", "every": "每个", "mp": "议员", "urgently": "紧急地", "state": "国家", "benefited": "受益", "zack": "扎克", "polanski": "波兰斯基", "green": "绿色", "england": "英格兰", "wales": "威尔士", "hoped": "希望", "most": "最", "but": "但是", "more": "更多", "questions": "问题", "answer": "回答", "much": "许多", "knew": "知道", "tells": "告诉", "during": "在期间", "talks": "会谈", "why": "为何", "claims": "声称", "legally": "法律上", "row": "争吵", "insiders": "内部人士", "call": "呼吁", "shift": "转移", "approach": "方法", "sign": "签署", "our": "我们的", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "westminster": "威斯敏斯特", "beyond": "超出", "donor": "捐赠者", "cooperate": "合作", "aides": "助手", "totalled": "总计", "folded": "折叠", "commenting": "评论", "liaise": "联络", "parallel": "平行", "overshadowed": "使黯然失色", "investigator": "调查员", "loose": "松散的", "boasts": "自夸", "buck": "美元", "stops": "停止", "unfit": "不适合的", "democrat's": "民主党人的", "lee": "李", "anderson": "安德森", "pin": "别针", "advisors": "顾问", "complicated": "复杂的", "winded": "喘气的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
