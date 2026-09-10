@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-10</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-10</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6a39/live/2540a8b0-ad41-11f1-a540-61c3f7fc4e6c.jpg" alt="Labour mayors in England vow to cap tourist tax at 5%" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Labour mayors in England vow to cap tourist tax at 5%</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c3wjnv3z8nxo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-10.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">York, pictured, is one of the cities where the regional mayor plans to limit the new <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span> to 5% of an overnight stay</span></p>
+        <p class="cn">约克（York），如图所示，是地区市长计划将新征税限制为过夜住宿费用5%的城市之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Labour's regional mayors in England have pledged to <span class="keyword" data-word="cap" data-phonetic="/kæp/" data-pos="v." data-def="限制；设定上限" data-def-en="To set an upper limit on something.">cap</span> a new fee on visitors' overnight stays at 5%, after <span class="keyword" data-word="hospitality" data-phonetic="/ˌhɒspɪˈtæləti/" data-pos="n." data-def="酒店业；招待业" data-def-en="The industry of providing accommodation, food, and services for guests.">hospitality</span> bosses warned it could put jobs at risk.</span></p>
+        <p class="cn">英格兰工党地区市长已承诺将游客过夜住宿的新费用上限设定为5%，此前酒店业老板警告称这可能危及就业。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Local leaders are set to gain new powers to charge an uncapped <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>, dubbed a "tourist tax", as a percentage of the cost of hotels, bed and breakfasts and other types of accommodation.</span></p>
+        <p class="cn">地方领导人将获得新权力，可以按酒店、民宿和其他类型住宿费用的百分比收取无上限的征税，被称为“旅游税”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">But the Labour mayors in 10 city regions said they would voluntarily limit the charge if they do apply it, adding that they had listened to concerns over costs.</span></p>
+        <p class="cn">但10个城市地区的工党市长表示，如果他们确实实施该收费，他们将自愿限制收费，并补充说他们已经听取了关于成本的担忧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Reform UK's two regional mayors and the two Conservative ones are likely to oppose any <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span> given criticism from their national parties of the policy.</span></p>
+        <p class="cn">英国改革党（Reform UK）的两位地区市长和两位保守党市长可能会反对任何征税，因为他们的全国政党批评该政策。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">In a letter to Chancellor John Healey and Local Government Secretary Angela Rayner, the Labour metro mayors said 5% represented a "reasonable ceiling" on the tax.</span></p>
+        <p class="cn">在致财政大臣约翰·希利（John Healey）和地方治理大臣安吉拉·雷纳（Angela Rayner）的一封信中，工党大都市市长表示，5%代表税收的“合理上限”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"It provides a balance of ensuring that local levies are not <span class="keyword" data-word="excessive" data-phonetic="/ɪkˈsesɪv/" data-pos="adj." data-def="过度的；过多的" data-def-en="More than is necessary, normal, or desirable.">excessive</span>, or vary significantly between regions, while also leaving room for local variation as appropriate," they added.</span></p>
+        <p class="cn">他们补充说：“这确保了地方征税不会过高，或地区之间差异过大，同时为适当的地方差异留出空间。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">They added this would still allow for "meaningful investment" in local areas, whilst stressing any future levies in their areas would be "subject to local consultation".</span></p>
+        <p class="cn">他们补充说，这仍将允许对地方地区进行“有意义的投资”，同时强调他们地区未来的任何征税都将“经过地方咨询”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">The letter was signed by Labour mayors in London, Greater Manchester, Liverpool City Region, West Midlands, North East, West of England, West Yorkshire, South Yorkshire, East Midlands and York and North Yorkshire.</span></p>
+        <p class="cn">这封信由伦敦、大曼彻斯特、利物浦城市地区、西米德兰兹、东北部、英格兰西部、西约克郡、南约克郡、东米德兰兹以及约克和北约克郡的工党市长签署。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">The government had earlier pledged to protect budget holidays "by making sure low-cost accommodation always pays lowest <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>" and said the extra cash could be invested in high streets and local transport.</span></p>
+        <p class="cn">政府早些时候承诺保护预算假期，“通过确保低成本住宿始终支付最低征税”，并表示额外资金可以投资于商业街和当地交通。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">While Labour mayors have backed the new <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>, others have expressed caution or signalled they will not bring it in.</span></p>
+        <p class="cn">虽然工党市长支持新征税，但其他人表示谨慎或暗示他们不会引入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Local leaders, including heads of Foundation Strategic Authorities where there is no mayor, will need to clarify by early 2028 how the revenue raised should be reinvested.</span></p>
+        <p class="cn">地方领导人，包括没有市长的基金会战略当局负责人，需要在2028年初澄清如何再投资所筹集的收入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">They will also be allowed to offer exemptions, such as for campsites.</span></p>
+        <p class="cn">他们还将被允许提供豁免，例如露营地。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">However, mayors will not be allowed to exempt whole localities within their regions from the tax, to avoid creating confusion for visitors and businesses.</span></p>
+        <p class="cn">然而，市长们不允许豁免其地区内的整个地方，以避免给游客和企业造成混淆。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">The government said it would introduce a bill to Parliament "in due course" to bring in the <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>, which would apply to both Britons and people visiting from abroad.</span></p>
+        <p class="cn">政府表示将“适时”向议会提出法案以引入该征税，该征税将适用于英国人和来自国外的游客。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Leading trade body UKHospitality has hit back, saying the <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span> means "jobs are now at risk".</span></p>
+        <p class="cn">主要贸易机构UKHospitality（英国酒店业协会）进行了反击，称该征税意味着“就业现在面临风险”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Its chief executive Allen Simpson claimed it would add about Â£100 to Â£120 on average to the cost of a family holiday in England, amid fears mayors would make use of the fact there is, in theory, no upper limit for the <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>.</span></p>
+        <p class="cn">其首席执行官艾伦·辛普森（Allen Simpson）声称，这将在英格兰家庭假期的平均成本上增加约100至120英镑，因为担心市长们会利用理论上征税没有上限的事实。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">"We know, don't we, that local government is struggling for funds - it was hit very hard by <span class="keyword" data-word="austerity" data-phonetic="/ɔːˈsterəti/" data-pos="n." data-def="紧缩政策；财政紧缩" data-def-en="Government policies to reduce spending, often causing hardship.">austerity</span>," he told BBC Radio 4's Today programme.</span></p>
+        <p class="cn">“我们知道，不是吗，地方政府正在为资金而挣扎——它受到紧缩政策的严重打击，”他告诉BBC广播4台的《今日》节目。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">"If you only <span class="keyword" data-word="devolve" data-phonetic="/dɪˈvɒlv/" data-pos="v." data-def="下放（权力）" data-def-en="To transfer power or responsibility to a lower level of government.">devolve</span> one tax raising power, of course local mayors are going to pull that lever until it snaps."</span></p>
+        <p class="cn">“如果你只下放一种增税权力，当然地方市长会一直拉动那个杠杆直到它断裂。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">He added: "It will be the case that you'll have holiday parks which can't open in the shoulder seasons [between peak and low season] and of course people who go on holiday will just have that little bit less money in their pocket."</span></p>
+        <p class="cn">他补充说：“情况将是，你的假日公园在肩季（旺季和淡季之间）无法开放，当然去度假的人口袋里会少那么一点钱。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">Conservative shadow housing secretary David Simmonds said: "VAT is already charged at 20% on hotels - much higher than in other countries - and now they'll pay VAT on this tourism tax too: a Labour double whammy."</span></p>
+        <p class="cn">保守党影子住房大臣大卫·西蒙兹（David Simmonds）说：“酒店已经征收20%的增值税——远高于其他国家——现在他们还要为这个旅游税支付增值税：工党的双重打击。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">Reform UK leader Nigel Farage said his party's two mayors in Greater Lincolnshire and Hull and East Yorkshire "won't touch" the <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span>, which he described as a "holiday tax".</span></p>
+        <p class="cn">英国改革党领袖奈杰尔·法拉奇（Nigel Farage）表示，他的政党在大林肯郡和赫尔与东约克郡的两位市长“不会触碰”该征税，他将其描述为“假日税”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">A 5% tourist tax for overnight stays was introduced in Edinburgh in July</span></p>
+        <p class="cn">爱丁堡于7月引入了5%的过夜住宿旅游税。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">The idea was first raised under former Prime Minister Sir Keir Starmer in November and is similar to schemes running in Scotland and European destinations.</span></p>
+        <p class="cn">这个想法最初由前首相基尔·斯塔默爵士（Sir Keir Starmer）在11月提出，类似于苏格兰和欧洲目的地正在运行的计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">Two cities in England already run their own voluntary schemes - a Â£1 per room, per night City Visitor Charge in Manchester, introduced when Burnham was mayor of the region, and a Â£2 nightly charge in Liverpool.</span> <span class="sentence" data-sentence-index="25">These are business-led schemes where hotels choose to pool the money raised to support local tourism.</span></p>
+        <p class="cn">英格兰的两个城市已经运行了自己的自愿计划——曼彻斯特的每间房每晚1英镑的城市游客费，在伯纳姆（Burnham）担任该地区市长时引入，以及利物浦的每晚2英镑收费。这些是由企业主导的计划，酒店选择将筹集的资金汇集起来支持当地旅游业。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Until now, regional mayors have not had the power to bring such fees in themselves - but they argue it is needed to boost economic growth.</span></p>
+        <p class="cn">到目前为止，地区市长没有权力自己引入此类费用——但他们认为这是促进经济增长所必需的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">Conservative Mayor of Tees Valley Ben Houchen ruled out , external introducing any tourist tax last year.</span></p>
+        <p class="cn">保守党蒂斯谷（Tees Valley）市长本·霍本（Ben Houchen）去年排除了引入任何旅游税的可能性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">John Chappell, who runs five caravan parks in Skegness, Lincolnshire, told BBC Your Voice that many English tourist resorts have visitors on tight budgets already struggling with the cost of car travel.</span></p>
+        <p class="cn">约翰·查佩尔（John Chappell）在林肯郡斯凯格内斯经营五个房车公园，他告诉BBC Your Voice，许多英格兰旅游胜地的游客预算紧张，已经在为汽车旅行成本而挣扎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">He said an extra cost would "kill the industry off".</span></p>
+        <p class="cn">他说额外成本将“扼杀这个行业”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">"Tourists are the saviours of our resorts, not the demons and ill thought-out ideas like these show how out of touch with reality politicians are," he added.</span></p>
+        <p class="cn">“游客是我们度假胜地的救星，不是恶魔，像这些考虑不周的想法表明政客们与现实脱节，”他补充说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">The taxes are common in Europe and the rest of the world, with New York, Amsterdam and Rome applying overnight charges to accommodation stays to fund local services.</span> <span class="sentence" data-sentence-index="32">However, they are capped in several European cities.</span></p>
+        <p class="cn">这些税收在欧洲和世界其他地区很常见，纽约、阿姆斯特丹和罗马对住宿征收过夜费以资助当地服务。然而，在几个欧洲城市，它们是有上限的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="33">In Scotland local authorities can charge a visitor <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span> on overnight accommodation.</span> <span class="sentence" data-sentence-index="34">In Edinburgh, the rate is 5% for those staying overnight in hotels, bed and breakfasts and self-catering facilities - capped at five nights.</span></p>
+        <p class="cn">在苏格兰，地方当局可以对过夜住宿收取游客税。在爱丁堡，酒店、民宿和自助式住宿的过夜税率为5%——上限为五晚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">It has had a mixed reaction , with some praising extra investment but Scottish Ballet responded by cutting performances while criticising the "unsustainable economics of touring in Edinburgh".</span></p>
+        <p class="cn">反应不一，一些人赞扬额外投资，但苏格兰芭蕾舞团（Scottish Ballet）通过削减表演来回应，同时批评“爱丁堡巡演的不可持续经济”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">In Wales, a capped <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收的费用" data-def-en="A tax or fee imposed by a government or authority.">levy</span> of Â£1.30 per person per night is set to be introduced in April next year, but it will be up to local authorities to decide whether to roll it out.</span></p>
+        <p class="cn">在威尔士，从明年4月起将引入每人每晚1.30英镑的上限征税，但由地方当局决定是否推出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Do you have any comments or questions about this story?</span></p>
+        <p class="cn">你对这个故事有任何评论或问题吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="38">Burnham promises more devolution and public control of essential services</span></p>
+        <p class="cn">伯纳姆承诺更多权力下放和基本服务的公共控制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="39">Tourist tax introduced in Edinburgh: How much is it and who pays?</span></p>
+        <p class="cn">爱丁堡引入旅游税：多少钱，谁支付？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="40">Tourist tax could raise Â£350m a year for London</span></p>
+        <p class="cn">旅游税每年可为伦敦筹集3.5亿英镑。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">levy</span>
+        <button class="kw-speak-btn" data-word="levy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlevi/ n.</span>
+      </div>
+      <p class="kw-def">征税；征收的费用</p>
+      <p class="kw-def-en">A tax or fee imposed by a government or authority.</p>
+      <p class="kw-ctx">&ldquo;Labour's regional mayors in England have pledged to cap a new fee on visitors' overnight stays at 5%, after hospitality bosses warned it could put jobs at risk.&rdquo;</p>
+      <p class="kw-ctx-cn">英格兰工党地区市长承诺将游客过夜住宿的新费用上限设为5%，此前酒店业老板警告称这可能危及就业。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cap</span>
+        <button class="kw-speak-btn" data-word="cap" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kæp/ v.</span>
+      </div>
+      <p class="kw-def">限制；设定上限</p>
+      <p class="kw-def-en">To set an upper limit on something.</p>
+      <p class="kw-ctx">&ldquo;Labour's regional mayors in England have pledged to cap a new fee on visitors' overnight stays at 5%, after hospitality bosses warned it could put jobs at risk.&rdquo;</p>
+      <p class="kw-ctx-cn">英格兰工党地区市长承诺将游客过夜住宿的新费用上限设为5%，此前酒店业老板警告称这可能危及就业。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hospitality</span>
+        <button class="kw-speak-btn" data-word="hospitality" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌhɒspɪˈtæləti/ n.</span>
+      </div>
+      <p class="kw-def">酒店业；招待业</p>
+      <p class="kw-def-en">The industry of providing accommodation, food, and services for guests.</p>
+      <p class="kw-ctx">&ldquo;Labour's regional mayors in England have pledged to cap a new fee on visitors' overnight stays at 5%, after hospitality bosses warned it could put jobs at risk.&rdquo;</p>
+      <p class="kw-ctx-cn">英格兰工党地区市长承诺将游客过夜住宿的新费用上限设为5%，此前酒店业老板警告称这可能危及就业。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">exemption</span>
+        <button class="kw-speak-btn" data-word="exemption" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪɡˈzempʃn/ n.</span>
+      </div>
+      <p class="kw-def">豁免；免除</p>
+      <p class="kw-def-en">A special permission not to do or pay something.</p>
+      <p class="kw-ctx">&ldquo;They will also be allowed to offer exemptions, such as for campsites.&rdquo;</p>
+      <p class="kw-ctx-cn">他们还将被允许提供豁免，例如对露营地。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devolve</span>
+        <button class="kw-speak-btn" data-word="devolve" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈvɒlv/ v.</span>
+      </div>
+      <p class="kw-def">下放（权力）</p>
+      <p class="kw-def-en">To transfer power or responsibility to a lower level of government.</p>
+      <p class="kw-ctx">&ldquo;If you only devolve one tax raising power, of course local mayors are going to pull that lever until it snaps.&rdquo;</p>
+      <p class="kw-ctx-cn">如果你只下放一项征税权力，地方市长当然会一直拉这个杠杆直到它断裂。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">austerity</span>
+        <button class="kw-speak-btn" data-word="austerity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɔːˈsterəti/ n.</span>
+      </div>
+      <p class="kw-def">紧缩政策；财政紧缩</p>
+      <p class="kw-def-en">Government policies to reduce spending, often causing hardship.</p>
+      <p class="kw-ctx">&ldquo;We know, don't we, that local government is struggling for funds - it was hit very hard by austerity.&rdquo;</p>
+      <p class="kw-ctx-cn">我们知道，不是吗，地方政府正在为资金挣扎——它受到紧缩政策的严重打击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reinvest</span>
+        <button class="kw-speak-btn" data-word="reinvest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌriːɪnˈvest/ v.</span>
+      </div>
+      <p class="kw-def">再投资</p>
+      <p class="kw-def-en">To put money back into something to improve it or make more profit.</p>
+      <p class="kw-ctx">&ldquo;Local leaders, including heads of Foundation Strategic Authorities where there is no mayor, will need to clarify by early 2028 how the revenue raised should be reinvested.&rdquo;</p>
+      <p class="kw-ctx-cn">地方领导人，包括没有市长的基金会战略当局负责人，需要在2028年初之前澄清所筹集的收入应如何再投资。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">excessive</span>
+        <button class="kw-speak-btn" data-word="excessive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈsesɪv/ adj.</span>
+      </div>
+      <p class="kw-def">过度的；过多的</p>
+      <p class="kw-def-en">More than is necessary, normal, or desirable.</p>
+      <p class="kw-ctx">&ldquo;It provides a balance of ensuring that local levies are not excessive, or vary significantly between regions, while also leaving room for local variation as appropriate,&rdquo;</p>
+      <p class="kw-ctx-cn">它提供了一种平衡，确保地方征税不过度，或地区之间差异不大，同时为适当的地方差异留出空间。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "York, pictured, is one of the cities where the regional mayor plans to limit the new levy to 5% of an overnight stay", "start_ms": 0, "end_ms": 8664, "paragraph_index": 0}, {"index": 1, "text": "Labour's regional mayors in England have pledged to cap a new fee on visitors' overnight stays at 5%, after hospitality bosses warned it could put jobs at risk.", "start_ms": 8664, "end_ms": 20424, "paragraph_index": 1}, {"index": 2, "text": "Local leaders are set to gain new powers to charge an uncapped levy, dubbed a \"tourist tax\", as a percentage of the cost of hotels, bed and breakfasts and other types of accommodation.", "start_ms": 20424, "end_ms": 33576, "paragraph_index": 2}, {"index": 3, "text": "But the Labour mayors in 10 city regions said they would voluntarily limit the charge if they do apply it, adding that they had listened to concerns over costs.", "start_ms": 33576, "end_ms": 43800, "paragraph_index": 3}, {"index": 4, "text": "Reform UK's two regional mayors and the two Conservative ones are likely to oppose any levy given criticism from their national parties of the policy.", "start_ms": 43800, "end_ms": 54072, "paragraph_index": 4}, {"index": 5, "text": "In a letter to Chancellor John Healey and Local Government Secretary Angela Rayner, the Labour metro mayors said 5% represented a \"reasonable ceiling\" on the tax.", "start_ms": 54072, "end_ms": 65592, "paragraph_index": 5}, {"index": 6, "text": "\"It provides a balance of ensuring that local levies are not excessive, or vary significantly between regions, while also leaving room for local variation as appropriate,\" they added.", "start_ms": 65592, "end_ms": 78240, "paragraph_index": 6}, {"index": 7, "text": "They added this would still allow for \"meaningful investment\" in local areas, whilst stressing any future levies in their areas would be \"subject to local consultation\".", "start_ms": 78240, "end_ms": 89616, "paragraph_index": 7}, {"index": 8, "text": "The letter was signed by Labour mayors in London, Greater Manchester, Liverpool City Region, West Midlands, North East, West of England, West Yorkshire, South Yorkshire, East Midlands and York and North Yorkshire.", "start_ms": 89616, "end_ms": 104424, "paragraph_index": 8}, {"index": 9, "text": "The government had earlier pledged to protect budget holidays \"by making sure low-cost accommodation always pays lowest levy\" and said the extra cash could be invested in high streets and local transport.", "start_ms": 104424, "end_ms": 118200, "paragraph_index": 9}, {"index": 10, "text": "While Labour mayors have backed the new levy, others have expressed caution or signalled they will not bring it in.", "start_ms": 118200, "end_ms": 125592, "paragraph_index": 10}, {"index": 11, "text": "Local leaders, including heads of Foundation Strategic Authorities where there is no mayor, will need to clarify by early 2028 how the revenue raised should be reinvested.", "start_ms": 125592, "end_ms": 137808, "paragraph_index": 11}, {"index": 12, "text": "They will also be allowed to offer exemptions, such as for campsites.", "start_ms": 137808, "end_ms": 143208, "paragraph_index": 12}, {"index": 13, "text": "However, mayors will not be allowed to exempt whole localities within their regions from the tax, to avoid creating confusion for visitors and businesses.", "start_ms": 143208, "end_ms": 154080, "paragraph_index": 13}, {"index": 14, "text": "The government said it would introduce a bill to Parliament \"in due course\" to bring in the levy, which would apply to both Britons and people visiting from abroad.", "start_ms": 154080, "end_ms": 164040, "paragraph_index": 14}, {"index": 15, "text": "Leading trade body UKHospitality has hit back, saying the levy means \"jobs are now at risk\".", "start_ms": 164040, "end_ms": 171384, "paragraph_index": 15}, {"index": 16, "text": "Its chief executive Allen Simpson claimed it would add about \u00c2\u00a3100 to \u00c2\u00a3120 on average to the cost of a family holiday in England, amid fears mayors would make use of the fact there is, in theory, no upper limit for the levy.", "start_ms": 171384, "end_ms": 187896, "paragraph_index": 16}, {"index": 17, "text": "\"We know, don't we, that local government is struggling for funds - it was hit very hard by austerity,\" he told BBC Radio 4's Today programme.", "start_ms": 187896, "end_ms": 198456, "paragraph_index": 17}, {"index": 18, "text": "\"If you only devolve one tax raising power, of course local mayors are going to pull that lever until it snaps.\"", "start_ms": 198456, "end_ms": 206520, "paragraph_index": 18}, {"index": 19, "text": "He added: \"It will be the case that you'll have holiday parks which can't open in the shoulder seasons [between peak and low season] and of course people who go on holiday will just have that little bit less money in their pocket.\"", "start_ms": 206520, "end_ms": 220368, "paragraph_index": 19}, {"index": 20, "text": "Conservative shadow housing secretary David Simmonds said: \"VAT is already charged at 20% on hotels - much higher than in other countries - and now they'll pay VAT on this tourism tax too: a Labour double whammy.\"", "start_ms": 220368, "end_ms": 235944, "paragraph_index": 20}, {"index": 21, "text": "Reform UK leader Nigel Farage said his party's two mayors in Greater Lincolnshire and Hull and East Yorkshire \"won't touch\" the levy, which he described as a \"holiday tax\".", "start_ms": 235944, "end_ms": 247584, "paragraph_index": 21}, {"index": 22, "text": "A 5% tourist tax for overnight stays was introduced in Edinburgh in July", "start_ms": 247584, "end_ms": 254040, "paragraph_index": 22}, {"index": 23, "text": "The idea was first raised under former Prime Minister Sir Keir Starmer in November and is similar to schemes running in Scotland and European destinations.", "start_ms": 254040, "end_ms": 264648, "paragraph_index": 23}, {"index": 24, "text": "Two cities in England already run their own voluntary schemes - a \u00c2\u00a31 per room, per night City Visitor Charge in Manchester, introduced when Burnham was mayor of the region, and a \u00c2\u00a32 nightly charge in Liverpool.", "start_ms": 264648, "end_ms": 280080, "paragraph_index": 24}, {"index": 25, "text": "These are business-led schemes where hotels choose to pool the money raised to support local tourism.", "start_ms": 280080, "end_ms": 287040, "paragraph_index": 24}, {"index": 26, "text": "Until now, regional mayors have not had the power to bring such fees in themselves - but they argue it is needed to boost economic growth.", "start_ms": 287040, "end_ms": 296640, "paragraph_index": 25}, {"index": 27, "text": "Conservative Mayor of Tees Valley Ben Houchen ruled out , external introducing any tourist tax last year.", "start_ms": 296640, "end_ms": 304632, "paragraph_index": 26}, {"index": 28, "text": "John Chappell, who runs five caravan parks in Skegness, Lincolnshire, told BBC Your Voice that many English tourist resorts have visitors on tight budgets already struggling with the cost of car travel.", "start_ms": 304632, "end_ms": 318648, "paragraph_index": 27}, {"index": 29, "text": "He said an extra cost would \"kill the industry off\".", "start_ms": 318648, "end_ms": 322824, "paragraph_index": 28}, {"index": 30, "text": "\"Tourists are the saviours of our resorts, not the demons and ill thought-out ideas like these show how out of touch with reality politicians are,\" he added.", "start_ms": 322824, "end_ms": 333312, "paragraph_index": 29}, {"index": 31, "text": "The taxes are common in Europe and the rest of the world, with New York, Amsterdam and Rome applying overnight charges to accommodation stays to fund local services.", "start_ms": 333312, "end_ms": 344880, "paragraph_index": 30}, {"index": 32, "text": "However, they are capped in several European cities.", "start_ms": 344880, "end_ms": 349488, "paragraph_index": 30}, {"index": 33, "text": "In Scotland local authorities can charge a visitor levy on overnight accommodation.", "start_ms": 349488, "end_ms": 355560, "paragraph_index": 31}, {"index": 34, "text": "In Edinburgh, the rate is 5% for those staying overnight in hotels, bed and breakfasts and self-catering facilities - capped at five nights.", "start_ms": 355560, "end_ms": 366312, "paragraph_index": 31}, {"index": 35, "text": "It has had a mixed reaction , with some praising extra investment but Scottish Ballet responded by cutting performances while criticising the \"unsustainable economics of touring in Edinburgh\".", "start_ms": 366312, "end_ms": 379200, "paragraph_index": 32}, {"index": 36, "text": "In Wales, a capped levy of \u00c2\u00a31.30 per person per night is set to be introduced in April next year, but it will be up to local authorities to decide whether to roll it out.", "start_ms": 379200, "end_ms": 391656, "paragraph_index": 33}, {"index": 37, "text": "Do you have any comments or questions about this story?", "start_ms": 391656, "end_ms": 395760, "paragraph_index": 34}, {"index": 38, "text": "Burnham promises more devolution and public control of essential services", "start_ms": 395760, "end_ms": 401496, "paragraph_index": 35}, {"index": 39, "text": "Tourist tax introduced in Edinburgh: How much is it and who pays?", "start_ms": 401496, "end_ms": 406728, "paragraph_index": 36}, {"index": 40, "text": "Tourist tax could raise \u00c2\u00a3350m a year for London", "start_ms": 406728, "end_ms": 411912, "paragraph_index": 37}], "total_duration_ms": 411912};
+  const WORD_GLOSS = {"the": "这个", "in": "在", "to": "到", "and": "和", "of": "的", "it": "它", "local": "当地", "mayors": "市长们", "is": "是", "are": "是", "tax": "税收", "they": "它们", "for": "为了", "have": "有", "on": "在", "would": "将", "be": "是", "said": "说", "that": "那个", "will": "将", "overnight": "夜间", "tourist": "游客", "new": "新的", "at": "在", "charge": "负责", "labour": "工党", "their": "他们的", "not": "不", "was": "是", "by": "被", "he": "他", "regional": "地区的", "mayor": "市长", "england": "英格兰", "as": "作为", "cost": "成本", "accommodation": "住宿", "but": "但是", "had": "有", "two": "两个", "any": "任何", "government": "政府", "added": "补充", "yorkshire": "约克郡", "holiday": "假期", "introduced": "介绍", "edinburgh": "爱丁堡", "per": "每", "with": "与", "york": "约克", "cities": "城市", "where": "那里", "limit": "限制", "an": "一个", "visitors": "游客", "stays": "停留", "could": "可能", "city": "城市", "regions": "地区", "conservative": "保守党", "from": "来自", "or": "或者", "while": "而", "this": "这个", "west": "西部", "east": "东部", "extra": "额外的", "bring": "带来", "authorities": "当局", "how": "如何", "raised": "提出的", "course": "课程", "which": "哪个", "now": "现在", "who": "谁", "already": "已经", "schemes": "计划", "out": "出来", "year": "年", "one": "一个", "pledged": "承诺", "jobs": "工作", "risk": "风险", "leaders": "领导人", "set": "设定", "bed": "床", "other": "其他", "if": "如果", "do": "做", "apply": "适用", "reform": "改革", "letter": "信件", "john": "约翰", "secretary": "秘书", "between": "之间", "also": "也", "room": "房间", "investment": "投资", "areas": "区域", "london": "伦敦", "greater": "更大的", "manchester": "曼彻斯特", "liverpool": "利物浦", "region": "地区", "midlands": "中部地区", "north": "北部", "pays": "支付", "there": "那里", "no": "没有", "allowed": "允许", "such": "如此", "however": "然而", "people": "人们", "has": "有", "hit": "击中", "about": "关于", "we": "我们", "struggling": "挣扎", "told": "告诉", "bbc": "英国广播公司", "you": "你", "power": "权力", "until": "直到", "parks": "公园", "money": "金钱", "vat": "增值税", "much": "许多", "lincolnshire": "林肯郡", "touch": "接触", "scotland": "苏格兰", "european": "欧洲的", "night": "晚上", "visitor": "访客", "burnham": "伯纳姆", "these": "这些", "five": "五", "resorts": "度假胜地", "services": "服务", "pictured": "被描绘", "plans": "计划", "stay": "保持", "labour's": "工党的", "fee": "费用", "after": "之后", "warned": "警告", "put": "提出", "gain": "获得", "powers": "权力", "dubbed": "被称为", "percentage": "百分比", "voluntarily": "自愿地", "adding": "补充说", "listened": "倾听", "concerns": "担忧", "over": "超过", "costs": "成本", "uk's": "英国的", "ones": "人们", "likely": "可能", "oppose": "反对", "given": "给定", "criticism": "批评", "national": "国家", "parties": "政党", "policy": "政策", "chancellor": "总理", "healey": "希利", "angela": "安吉拉", "rayner": "雷纳", "represented": "代表", "reasonable": "合理", "provides": "提供", "balance": "平衡", "ensuring": "确保", "vary": "变化", "significantly": "显著地", "leaving": "离开", "appropriate": "合适", "still": "仍然", "allow": "允许", "meaningful": "有意义的", "whilst": "当", "stressing": "强调", "future": "未来", "subject": "主题", "consultation": "咨询", "signed": "签署", "south": "韩国", "earlier": "较早", "protect": "保护", "budget": "预算", "making": "进行", "sure": "确定", "always": "总是", "lowest": "最低的", "cash": "现金", "invested": "投入", "high": "高的", "streets": "街道", "transport": "运输", "backed": "支持", "others": "其他", "expressed": "表达", "signalled": "发出信号", "including": "包括", "heads": "领导", "foundation": "基金会", "strategic": "战略的", "need": "需要", "clarify": "澄清", "early": "早期的", "revenue": "税收", "should": "应该", "offer": "提供", "whole": "整个", "within": "在内部", "avoid": "避免", "creating": "创造", "confusion": "混乱", "businesses": "企业", "introduce": "引入", "bill": "法案", "parliament": "议会", "due": "应得", "both": "两者", "britons": "英国人", "visiting": "访问", "abroad": "国外", "leading": "领导", "trade": "贸易", "body": "机构", "back": "后退", "saying": "说", "means": "意味着", "its": "它的", "chief": "首席", "executive": "行政的", "allen": "艾伦", "claimed": "声称", "add": "增加", "average": "平均", "family": "家庭", "amid": "在…中", "fears": "担忧", "make": "使", "use": "使用", "fact": "事实", "theory": "理论", "upper": "上层的", "know": "知道", "don't": "不要", "funds": "资金", "very": "非常", "hard": "艰难的", "radio": "电台", "today": "今天", "programme": "节目", "only": "只有", "raising": "提出", "going": "将要", "pull": "拉", "case": "案例", "you'll": "你将", "can't": "不能", "open": "开放", "shoulder": "承担", "seasons": "季", "peak": "高峰", "low": "低的", "season": "季节", "go": "去", "just": "只是", "little": "很少", "bit": "一点", "less": "更少", "pocket": "口袋", "shadow": "阴影", "housing": "住房", "david": "大卫", "charged": "指控", "higher": "更高的", "than": "比", "countries": "国家", "pay": "支付", "too": "太", "double": "双重", "uk": "英国", "leader": "领导人", "nigel": "奈杰尔", "farage": "法拉奇", "his": "他的", "party's": "党的", "hull": "赫尔", "won't": "不会", "described": "描述", "july": "七月", "idea": "想法", "first": "第一轮", "under": "在...之下", "former": "前任", "prime": "首相", "minister": "部长", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "november": "十一月", "similar": "类似的", "running": "奔跑", "destinations": "目的地", "run": "奔跑", "own": "自己", "voluntary": "自愿的", "when": "当", "choose": "选择", "support": "支持", "fees": "费用", "themselves": "他们自己", "argue": "争论", "needed": "需要", "boost": "提升", "economic": "经济的", "growth": "增长", "tees": "蒂斯", "valley": "河谷", "ben": "本", "houchen": "霍琴", "ruled": "裁定", "external": "外部的", "introducing": "引入", "last": "最后", "runs": "奔跑（第三人称）", "caravan": "房车", "your": "你的", "voice": "声音", "many": "许多", "english": "英格兰的", "budgets": "预算", "car": "汽车", "travel": "旅行", "kill": "杀死", "industry": "行业", "off": "离开", "tourists": "游客", "our": "我们的", "ill": "生病", "ideas": "想法", "like": "像", "show": "显示", "reality": "现实", "politicians": "政治家", "taxes": "税收", "common": "共同的", "europe": "欧洲", "rest": "其余", "world": "世界", "rome": "罗马", "applying": "申请", "charges": "指控", "fund": "资金", "several": "数个", "can": "可以", "rate": "比率", "those": "那些", "staying": "保持", "facilities": "设施", "nights": "夜晚", "mixed": "混杂的", "reaction": "反应", "some": "一些", "praising": "赞扬", "scottish": "苏格兰的", "responded": "回应", "cutting": "削减", "criticising": "批评", "unsustainable": "不可持续的", "economics": "经济学", "wales": "威尔士", "person": "个人", "april": "四月", "next": "下一个", "up": "向上", "decide": "决定", "whether": "是否", "comments": "评论", "questions": "问题", "story": "故事", "promises": "承诺", "more": "更多", "devolution": "权力下放", "public": "公众", "control": "控制", "essential": "必要的", "raise": "提高", "hotels": "酒店", "capped": "设上限", "breakfasts": "早餐", "levies": "征税", "tourism": "旅游业", "bosses": "老板", "uncapped": "无上限", "types": "类型", "metro": "地铁", "ceiling": "上限", "variation": "差异", "holidays": "假期", "low-cost": "低成本", "caution": "谨慎", "reinvested": "再投资", "exemptions": "豁免", "campsites": "露营地", "exempt": "豁免", "localities": "地区", "ukhospitality": "英国酒店业", "simpson": "辛普森", "lever": "杠杆", "snaps": "快照", "simmonds": "西蒙兹", "they'll": "他们将", "whammy": "打击", "nightly": "每晚", "business-led": "商业主导", "pool": "共享", "chappell": "查普尔", "skegness": "斯凯格内斯", "tight": "紧张", "saviours": "救星", "demons": "恶魔", "thought-out": "深思熟虑", "amsterdam": "阿姆斯特丹", "self-catering": "自助式", "ballet": "芭蕾舞", "performances": "演出", "touring": "巡演", "roll": "推出"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
