@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-11</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-11</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/751d/live/9bfaf8b0-ae32-11f1-b1d1-571ed4d7ff2c.jpg" alt="Reform receives record £36m donation from crypto billionaire" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Reform receives record £36m donation from crypto billionaire</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c3v4zvyde15o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-11.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Ben Delo pictured in 2022</span></p>
+        <p class="cn">本·德洛（Ben Delo）2022年照片</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Reform UK has received a Â£36m <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span> from a British <span class="keyword" data-word="cryptocurrency" data-phonetic="/ˈkrɪptoʊˌkɜrənsi/" data-pos="n." data-def="加密货币" data-def-en="A digital or virtual currency that uses cryptography for security.">cryptocurrency</span> <span class="keyword" data-word="billionaire" data-phonetic="/ˌbɪljəˈner/" data-pos="n." data-def="亿万富翁" data-def-en="A person who has assets worth a billion or more dollars, pounds, etc.">billionaire</span> - a record for a UK political party.</span></p>
+        <p class="cn">英国改革党（Reform UK）收到了一位英国加密货币亿万富翁3600万英镑的捐款，创下了英国政党的纪录。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Writing in the Daily Telegraph , external , Ben Delo said he was making the move because he wanted a "fair fight and a level playing field".</span></p>
+        <p class="cn">本·德洛（Ben Delo）在《每日电讯报》（Daily Telegraph）上撰文称，他之所以这么做，是因为他想要一场“公平的竞争和公平的竞争环境”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The sum is the biggest single <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span> ever given to a political party in the UK.</span></p>
+        <p class="cn">这是英国政党有史以来收到的最大一笔单笔捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Party leader Nigel Farage said he was "honoured and humbled" by the gift.</span></p>
+        <p class="cn">改革党领袖奈杰尔·法拉奇（Nigel Farage）表示，他对这份礼物感到“荣幸和谦卑”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Delo said he was donating Â£1m a month between now and the latest date Labour could call a general election in 2029 - but that he would give all the money up front in case the government tried to limit mega-donations in future.</span></p>
+        <p class="cn">德洛表示，从现在到工党可能召集大选的最晚日期2029年，他每月捐赠100万英镑，但他会一次性提前捐出所有资金，以防政府未来试图限制巨额捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">There are currently no restrictions on the amount of money UK-based donors can give to political parties.</span></p>
+        <p class="cn">目前，英国国内捐赠者向政党捐款的金额没有限制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">But Labour previously introduced a Â£100,000 <span class="keyword" data-word="cap" data-phonetic="/kæp/" data-pos="n." data-def="上限，限额" data-def-en="An upper limit on an amount of money that can be spent or given.">cap</span> on donations from British citizens living overseas.</span></p>
+        <p class="cn">但工党此前对居住在海外英国公民的捐款设定了10万英镑的上限。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Sheffield-born Delo, who has already donated Â£4m to Reform, has previously said he will move back to the UK from Hong Kong in order to continue his backing for the party.</span></p>
+        <p class="cn">出生于谢菲尔德的德洛已向改革党捐赠了400万英镑，他此前表示将从香港搬回英国，以继续支持该党。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Last year, Delo was given an unconditional <span class="keyword" data-word="pardon" data-phonetic="/ˈpɑrdən/" data-pos="n." data-def="赦免，宽恕" data-def-en="An act of forgiving someone for a crime or offense.">pardon</span> by US President Donald Trump over a Bank Secrecy Act violation.</span></p>
+        <p class="cn">去年，德洛因违反《银行保密法》（Bank Secrecy Act）被美国总统唐纳德·特朗普（Donald Trump）无条件赦免。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">In the Telegraph, Delo wrote: "Unlike the people who express mock concern for the health of 'our democracy' while doing everything they can to keep it as a cartel, I want a fair fight and a level playing field.</span></p>
+        <p class="cn">德洛在《每日电讯报》上写道：“有些人一边对‘我们的民主’健康表示虚假担忧，一边竭尽全力将其维持为一个卡特尔，我与他们不同，我想要一场公平的竞争和公平的竞争环境。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">"My conclusion from Reform's recent troubles is that they should spend less time trying to raise funds to compete on equal terms and more time preparing for government."</span></p>
+        <p class="cn">“我从改革党最近的麻烦中得出的结论是，他们应该少花时间试图筹集资金以平等竞争，而应多花时间准备执政。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Nigel Farage tells BBC he 'wasn't listening' during foreign donor talks filmed undercover</span></p>
+        <p class="cn">奈杰尔·法拉奇告诉BBC，在秘密拍摄的外国捐赠者会谈中他“没有在听”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Why Reform UK undercover donations claims are legally complicated</span></p>
+        <p class="cn">为什么改革党秘密捐款指控在法律上很复杂</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Crypto billionaires help Reform cement fundraising lead</span></p>
+        <p class="cn">加密货币亿万富翁帮助改革党巩固筹款领先地位</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Reform's fundraising has been under <span class="keyword" data-word="scrutiny" data-phonetic="/ˈskruːtəni/" data-pos="n." data-def="详细审查，监督" data-def-en="Critical observation or examination.">scrutiny</span> with police announcing an investigation over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.</span></p>
+        <p class="cn">改革党的筹款活动一直受到审查，警方宣布对上周第四频道新闻（Channel 4 News）播出后指控其违反外国资金法的行为展开调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The party denied any wrongdoing and said it would co-operate with the investigation.</span></p>
+        <p class="cn">该党否认有任何不当行为，并表示将配合调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Farage is also under investigation by the parliamentary standards commissioner over whether he should have declared a Â£5m cash gift he received from Thailand-based <span class="keyword" data-word="cryptocurrency" data-phonetic="/ˈkrɪptoʊˌkɜrənsi/" data-pos="n." data-def="加密货币" data-def-en="A digital or virtual currency that uses cryptography for security.">cryptocurrency</span> investor Christopher Harborne ahead of the 2024 election upon his election as an MP.</span></p>
+        <p class="cn">法拉奇还因是否应在2024年大选前收到来自泰国加密货币投资者克里斯托弗·哈伯恩（Christopher Harborne）的500万英镑现金礼物后，在当选议员时申报该礼物，而受到议会标准专员的调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Farage argues he was under no obligation to register the "purely private" gift, as it was unrelated to his parliamentary or political activities.</span></p>
+        <p class="cn">法拉奇辩称，他没有义务登记这份“纯私人”礼物，因为它与他的议会或政治活动无关。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">The Metropolitan Police is also investigating whether payments to Reform in the weeks before the last election complied with <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span> laws.</span></p>
+        <p class="cn">大都会警察局（Metropolitan Police）还在调查上次选举前几周向改革党的付款是否符合捐款法律。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">The police inquiry is looking at donations given directly to the party by Fiona Cottrell, mother of longstanding Farage ally George Cottrell.</span></p>
+        <p class="cn">警方调查正在审查由法拉奇长期盟友乔治·科特雷尔（George Cottrell）的母亲菲奥娜·科特雷尔（Fiona Cottrell）直接向该党提供的捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">It is also examining payments from a company controlled by Reform's deputy leader, Richard Tice, which received Â£1m from Fiona Cottrell in June 2024.</span></p>
+        <p class="cn">调查还在审查由改革党副领袖理查德·泰斯（Richard Tice）控制的一家公司支付的款项，该公司于2024年6月从菲奥娜·科特雷尔处收到了100万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="22">The restrictions on donations from Britons living abroad prompted a furious row with Reform and its key donors, who have accused Labour of trying to stymie their party's progress.</span></p>
+        <p class="cn">对居住在海外英国人捐款的限制引发了改革党及其主要捐赠者的愤怒争吵，他们指责工党试图阻碍其政党的进展。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="23">The government has also sought to prevent overseas voters moving to the UK from giving more than Â£100,000 for a year after their arrival as part of the Representation of the People Bill, which has its second reading in the Lords on Monday.</span></p>
+        <p class="cn">政府还试图阻止海外选民移居英国后一年内捐赠超过10万英镑，作为《人民代表法案》（Representation of the People Bill）的一部分，该法案将于周一在上议院进行二读。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="24">Last year Harborne gave a single <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span> of Â£9m to Reform - which was the biggest single donation to a UK political party by a living person at the time.</span></p>
+        <p class="cn">去年，哈伯恩向改革党单笔捐赠了900万英镑，这是当时在世个人向英国政党提供的最大单笔捐款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="25">The Conservatives had received Â£10m as a legacy but that too has been eclipsed by Delo's latest <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span>.</span></p>
+        <p class="cn">保守党曾收到1000万英镑的遗产捐赠，但这也被德洛的最新捐款所超越。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="26">Responding to the <span class="keyword" data-word="donation" data-phonetic="/doʊˈneɪʃən/" data-pos="n." data-def="捐赠，捐款" data-def-en="A gift of money or goods to a person or organization.">donation</span>, a Labour Party spokesperson said Farage was "still up to his neck in scandal" and "the questions he faces aren't going away - in fact they're piling up".</span></p>
+        <p class="cn">针对这笔捐款，工党发言人表示，法拉奇“仍然深陷丑闻”，他面临的“问题不会消失——事实上，它们正在堆积”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="27">"Reform UK can't buy their way out of questions about <span class="keyword" data-word="sleaze" data-phonetic="/sliːz/" data-pos="n." data-def="腐败，不道德行为" data-def-en="Dishonest or immoral behavior, especially by people in positions of power.">sleaze</span>, criminal mates and dodgy finances," they said.</span> <span class="sentence" data-sentence-index="28">"It's time Farage and Reform finally came clean with the public, co-operated fully with the police, and proved they're not just in it for themselves."</span></p>
+        <p class="cn">他们说：“英国改革党无法用钱摆脱关于腐败、犯罪同伙和可疑财务的问题。现在是法拉奇和改革党最终向公众坦白、全面配合警方，并证明他们不仅仅是为了自己。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">Liberal Democrat Cabinet Office spokesperson Lisa Smart said Farage wanted to "bring Trump's America to our shores by buying his way into power".</span></p>
+        <p class="cn">自由民主党（Liberal Democrat）内阁办公室发言人丽莎·斯马特（Lisa Smart）表示，法拉奇想“通过买通权力，把特朗普的美国带到我们海岸”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">"He's trying to get into Number 10 as if it's a stop on a monopoly board," the Liberal Democrat added.</span> <span class="sentence" data-sentence-index="31">"It can't go on like this.</span> <span class="sentence" data-sentence-index="32">Andy Burnham needs to introduce a <span class="keyword" data-word="cap" data-phonetic="/kæp/" data-pos="n." data-def="上限，限额" data-def-en="An upper limit on an amount of money that can be spent or given.">cap</span> on political donations.</span> <span class="sentence" data-sentence-index="33">Our democracy depends on it."</span></p>
+        <p class="cn">这位自由民主党人补充说：“他试图进入唐宁街10号，就像这是大富翁棋盘上的一站。不能再这样下去了。安迪·伯纳姆（Andy Burnham）需要对政治捐款设置上限。我们的民主取决于此。”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">donation</span>
+        <button class="kw-speak-btn" data-word="donation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/doʊˈneɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">捐赠，捐款</p>
+      <p class="kw-def-en">A gift of money or goods to a person or organization.</p>
+      <p class="kw-ctx">&ldquo;Reform UK has received a £36m donation from a British cryptocurrency billionaire - a record for a UK political party.&rdquo;</p>
+      <p class="kw-ctx-cn">改革英国党从一位英国加密货币亿万富翁那里收到了3600万英镑的捐款——创下了英国政党的记录。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">billionaire</span>
+        <button class="kw-speak-btn" data-word="billionaire" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌbɪljəˈner/ n.</span>
+      </div>
+      <p class="kw-def">亿万富翁</p>
+      <p class="kw-def-en">A person who has assets worth a billion or more dollars, pounds, etc.</p>
+      <p class="kw-ctx">&ldquo;Reform UK has received a £36m donation from a British cryptocurrency billionaire - a record for a UK political party.&rdquo;</p>
+      <p class="kw-ctx-cn">改革英国党从一位英国加密货币亿万富翁那里收到了3600万英镑的捐款——创下了英国政党的记录。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cryptocurrency</span>
+        <button class="kw-speak-btn" data-word="cryptocurrency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkrɪptoʊˌkɜrənsi/ n.</span>
+      </div>
+      <p class="kw-def">加密货币</p>
+      <p class="kw-def-en">A digital or virtual currency that uses cryptography for security.</p>
+      <p class="kw-ctx">&ldquo;Reform UK has received a £36m donation from a British cryptocurrency billionaire - a record for a UK political party.&rdquo;</p>
+      <p class="kw-ctx-cn">改革英国党从一位英国加密货币亿万富翁那里收到了3600万英镑的捐款——创下了英国政党的记录。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cap</span>
+        <button class="kw-speak-btn" data-word="cap" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kæp/ n.</span>
+      </div>
+      <p class="kw-def">上限，限额</p>
+      <p class="kw-def-en">An upper limit on an amount of money that can be spent or given.</p>
+      <p class="kw-ctx">&ldquo;But Labour previously introduced a £100,000 cap on donations from British citizens living overseas.&rdquo;</p>
+      <p class="kw-ctx-cn">但工党此前对居住在海外英国公民的捐款设定了10万英镑的上限。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pardon</span>
+        <button class="kw-speak-btn" data-word="pardon" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɑrdən/ n.</span>
+      </div>
+      <p class="kw-def">赦免，宽恕</p>
+      <p class="kw-def-en">An act of forgiving someone for a crime or offense.</p>
+      <p class="kw-ctx">&ldquo;Last year, Delo was given an unconditional pardon by US President Donald Trump over a Bank Secrecy Act violation.&rdquo;</p>
+      <p class="kw-ctx-cn">去年，德洛因违反《银行保密法》被美国总统唐纳德·特朗普无条件赦免。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrutiny</span>
+        <button class="kw-speak-btn" data-word="scrutiny" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskruːtəni/ n.</span>
+      </div>
+      <p class="kw-def">详细审查，监督</p>
+      <p class="kw-def-en">Critical observation or examination.</p>
+      <p class="kw-ctx">&ldquo;Reform's fundraising has been under scrutiny with police announcing an investigation over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.&rdquo;</p>
+      <p class="kw-ctx-cn">改革党的筹款活动一直受到审查，警方宣布对其涉嫌违反外国资金法的指控展开调查，此前第四频道新闻上周播出了相关报道。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌæləˈɡeɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">指控，声称</p>
+      <p class="kw-def-en">A claim or assertion that someone has done something illegal or wrong, typically made without proof.</p>
+      <p class="kw-ctx">&ldquo;Reform's fundraising has been under scrutiny with police announcing an investigation over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.&rdquo;</p>
+      <p class="kw-ctx-cn">改革党的筹款活动一直受到审查，警方宣布对其涉嫌违反外国资金法的指控展开调查，此前第四频道新闻上周播出了相关报道。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sleaze</span>
+        <button class="kw-speak-btn" data-word="sleaze" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/sliːz/ n.</span>
+      </div>
+      <p class="kw-def">腐败，不道德行为</p>
+      <p class="kw-def-en">Dishonest or immoral behavior, especially by people in positions of power.</p>
+      <p class="kw-ctx">&ldquo;Reform UK can't buy their way out of questions about sleaze, criminal mates and dodgy finances,&rdquo;</p>
+      <p class="kw-ctx-cn">改革英国党无法通过花钱来摆脱关于腐败、罪犯同伙和可疑财务的问题，</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Ben Delo pictured in 2022", "start_ms": 0, "end_ms": 3576, "paragraph_index": 0}, {"index": 1, "text": "Reform UK has received a \u00c2\u00a336m donation from a British cryptocurrency billionaire - a record for a UK political party.", "start_ms": 3576, "end_ms": 13632, "paragraph_index": 1}, {"index": 2, "text": "Writing in the Daily Telegraph , external , Ben Delo said he was making the move because he wanted a \"fair fight and a level playing field\".", "start_ms": 13632, "end_ms": 22992, "paragraph_index": 2}, {"index": 3, "text": "The sum is the biggest single donation ever given to a political party in the UK.", "start_ms": 22992, "end_ms": 29136, "paragraph_index": 3}, {"index": 4, "text": "Party leader Nigel Farage said he was \"honoured and humbled\" by the gift.", "start_ms": 29136, "end_ms": 34512, "paragraph_index": 4}, {"index": 5, "text": "Delo said he was donating \u00c2\u00a31m a month between now and the latest date Labour could call a general election in 2029 - but that he would give all the money up front in case the government tried to limit mega-donations in future.", "start_ms": 34512, "end_ms": 49512, "paragraph_index": 5}, {"index": 6, "text": "There are currently no restrictions on the amount of money UK-based donors can give to political parties.", "start_ms": 49512, "end_ms": 56880, "paragraph_index": 6}, {"index": 7, "text": "But Labour previously introduced a \u00c2\u00a3100,000 cap on donations from British citizens living overseas.", "start_ms": 56880, "end_ms": 66432, "paragraph_index": 7}, {"index": 8, "text": "Sheffield-born Delo, who has already donated \u00c2\u00a34m to Reform, has previously said he will move back to the UK from Hong Kong in order to continue his backing for the party.", "start_ms": 66432, "end_ms": 78912, "paragraph_index": 8}, {"index": 9, "text": "Last year, Delo was given an unconditional pardon by US President Donald Trump over a Bank Secrecy Act violation.", "start_ms": 78912, "end_ms": 87936, "paragraph_index": 9}, {"index": 10, "text": "In the Telegraph, Delo wrote: \"Unlike the people who express mock concern for the health of 'our democracy' while doing everything they can to keep it as a cartel, I want a fair fight and a level playing field.", "start_ms": 87936, "end_ms": 101592, "paragraph_index": 10}, {"index": 11, "text": "\"My conclusion from Reform's recent troubles is that they should spend less time trying to raise funds to compete on equal terms and more time preparing for government.\"", "start_ms": 101592, "end_ms": 112200, "paragraph_index": 11}, {"index": 12, "text": "Nigel Farage tells BBC he 'wasn't listening' during foreign donor talks filmed undercover", "start_ms": 112200, "end_ms": 119280, "paragraph_index": 12}, {"index": 13, "text": "Why Reform UK undercover donations claims are legally complicated", "start_ms": 119280, "end_ms": 124968, "paragraph_index": 13}, {"index": 14, "text": "Crypto billionaires help Reform cement fundraising lead", "start_ms": 124968, "end_ms": 129624, "paragraph_index": 14}, {"index": 15, "text": "Reform's fundraising has been under scrutiny with police announcing an investigation over allegations it broke foreign funding laws, following a broadcast by Channel 4 News last week.", "start_ms": 129624, "end_ms": 142224, "paragraph_index": 15}, {"index": 16, "text": "The party denied any wrongdoing and said it would co-operate with the investigation.", "start_ms": 142224, "end_ms": 148056, "paragraph_index": 16}, {"index": 17, "text": "Farage is also under investigation by the parliamentary standards commissioner over whether he should have declared a \u00c2\u00a35m cash gift he received from Thailand-based cryptocurrency investor Christopher Harborne ahead of the 2024 election upon his election as an MP.", "start_ms": 148056, "end_ms": 166680, "paragraph_index": 17}, {"index": 18, "text": "Farage argues he was under no obligation to register the \"purely private\" gift, as it was unrelated to his parliamentary or political activities.", "start_ms": 166680, "end_ms": 177288, "paragraph_index": 18}, {"index": 19, "text": "The Metropolitan Police is also investigating whether payments to Reform in the weeks before the last election complied with donation laws.", "start_ms": 177288, "end_ms": 186744, "paragraph_index": 19}, {"index": 20, "text": "The police inquiry is looking at donations given directly to the party by Fiona Cottrell, mother of longstanding Farage ally George Cottrell.", "start_ms": 186744, "end_ms": 196728, "paragraph_index": 20}, {"index": 21, "text": "It is also examining payments from a company controlled by Reform's deputy leader, Richard Tice, which received \u00c2\u00a31m from Fiona Cottrell in June 2024.", "start_ms": 196728, "end_ms": 208752, "paragraph_index": 21}, {"index": 22, "text": "The restrictions on donations from Britons living abroad prompted a furious row with Reform and its key donors, who have accused Labour of trying to stymie their party's progress.", "start_ms": 208752, "end_ms": 220800, "paragraph_index": 22}, {"index": 23, "text": "The government has also sought to prevent overseas voters moving to the UK from giving more than \u00c2\u00a3100,000 for a year after their arrival as part of the Representation of the People Bill, which has its second reading in the Lords on Monday.", "start_ms": 220800, "end_ms": 237264, "paragraph_index": 23}, {"index": 24, "text": "Last year Harborne gave a single donation of \u00c2\u00a39m to Reform - which was the biggest single donation to a UK political party by a living person at the time.", "start_ms": 237264, "end_ms": 248712, "paragraph_index": 24}, {"index": 25, "text": "The Conservatives had received \u00c2\u00a310m as a legacy but that too has been eclipsed by Delo's latest donation.", "start_ms": 248712, "end_ms": 257016, "paragraph_index": 25}, {"index": 26, "text": "Responding to the donation, a Labour Party spokesperson said Farage was \"still up to his neck in scandal\" and \"the questions he faces aren't going away - in fact they're piling up\".", "start_ms": 257016, "end_ms": 268872, "paragraph_index": 26}, {"index": 27, "text": "\"Reform UK can't buy their way out of questions about sleaze, criminal mates and dodgy finances,\" they said.", "start_ms": 268872, "end_ms": 277248, "paragraph_index": 27}, {"index": 28, "text": "\"It's time Farage and Reform finally came clean with the public, co-operated fully with the police, and proved they're not just in it for themselves.\"", "start_ms": 277248, "end_ms": 287352, "paragraph_index": 27}, {"index": 29, "text": "Liberal Democrat Cabinet Office spokesperson Lisa Smart said Farage wanted to \"bring Trump's America to our shores by buying his way into power\".", "start_ms": 287352, "end_ms": 297384, "paragraph_index": 28}, {"index": 30, "text": "\"He's trying to get into Number 10 as if it's a stop on a monopoly board,\" the Liberal Democrat added.", "start_ms": 297384, "end_ms": 304464, "paragraph_index": 29}, {"index": 31, "text": "\"It can't go on like this.", "start_ms": 304464, "end_ms": 307152, "paragraph_index": 29}, {"index": 32, "text": "Andy Burnham needs to introduce a cap on political donations.", "start_ms": 307152, "end_ms": 312264, "paragraph_index": 29}, {"index": 33, "text": "Our democracy depends on it.\"", "start_ms": 312264, "end_ms": 315288, "paragraph_index": 29}], "total_duration_ms": 315288};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "he": "他", "and": "和", "reform": "改革", "from": "来自", "by": "被", "on": "在", "of": "的", "uk": "英国", "party": "政党", "said": "说", "was": "是", "farage": "法拉奇", "it": "它", "has": "有", "for": "为了", "political": "政治的", "is": "是", "as": "作为", "with": "与", "donations": "捐款", "his": "他的", "received": "受到", "labour": "工党", "election": "选举", "last": "最后", "time": "时间", "police": "警方", "also": "也", "single": "单一的", "given": "给定", "gift": "礼物", "but": "但是", "that": "那个", "up": "向上", "government": "政府", "living": "生活", "who": "谁", "year": "年", "an": "一个", "over": "超过", "our": "我们的", "they": "它们", "reform's": "改革的", "trying": "尝试", "under": "在...之下", "investigation": "调查", "cottrell": "科特雷尔", "which": "哪个", "their": "他们的", "ben": "本", "british": "英国的", "telegraph": "电讯报", "move": "行动", "wanted": "想要", "fair": "公平的", "fight": "斗争", "level": "水平", "playing": "玩耍", "field": "领域", "biggest": "最大的", "leader": "领导人", "nigel": "奈杰尔", "latest": "最新的", "would": "将", "give": "提供", "money": "金钱", "are": "是", "no": "没有", "restrictions": "限制", "donors": "捐赠者", "can": "可以", "previously": "此前", "overseas": "海外的", "people": "人们", "democracy": "民主", "should": "应该", "more": "更多", "foreign": "外交", "fundraising": "筹款", "been": "已经", "laws": "法律", "parliamentary": "议会", "whether": "是否", "have": "有", "harborne": "哈伯恩", "payments": "付款", "at": "在", "fiona": "菲奥娜", "its": "它的", "spokesperson": "发言人", "questions": "问题", "they're": "他们是", "can't": "不能", "way": "方式", "it's": "它是", "liberal": "自由", "democrat": "民主党", "into": "进入", "pictured": "被描绘", "record": "记录", "writing": "写作", "daily": "每日", "external": "外部的", "making": "进行", "because": "因为", "sum": "金额", "ever": "曾经", "honoured": "感到荣幸的", "month": "月份", "between": "之间", "now": "现在", "date": "日期", "could": "可能", "call": "呼吁", "general": "总", "all": "所有", "front": "前线", "case": "案例", "tried": "试图", "limit": "限制", "future": "未来", "there": "那里", "currently": "目前", "amount": "数量", "uk-based": "总部在英国", "parties": "政党", "introduced": "介绍", "citizens": "公民", "already": "已经", "donated": "捐赠", "will": "将", "back": "后退", "order": "命令", "continue": "继续", "backing": "支持", "unconditional": "无条件的", "us": "我们", "president": "总统", "donald": "唐纳德", "trump": "特朗普", "bank": "银行", "secrecy": "保密", "act": "行为", "violation": "侵犯", "wrote": "写道", "unlike": "不像", "express": "表达", "mock": "模拟的", "concern": "关切", "health": "健康", "while": "而", "doing": "做", "everything": "一切", "keep": "保持", "want": "想要", "my": "我的", "conclusion": "结论", "recent": "最近", "spend": "花费", "less": "更少", "raise": "提高", "funds": "资金", "equal": "平等的", "terms": "条件", "preparing": "准备", "tells": "告诉", "bbc": "英国广播公司", "wasn't": "不是", "listening": "倾听", "during": "在期间", "donor": "捐赠者", "talks": "会谈", "filmed": "拍摄了", "why": "为何", "claims": "声称", "legally": "法律上", "complicated": "复杂的", "help": "帮助", "lead": "导致", "announcing": "宣布", "allegations": "指控", "broke": "打破", "funding": "资金", "following": "随后", "broadcast": "广播", "channel": "航道", "news": "新闻", "week": "周", "denied": "拒绝", "any": "任何", "wrongdoing": "不法行为", "co-operate": "合作", "standards": "标准", "commissioner": "专员", "declared": "宣布", "cash": "现金", "thailand-based": "位于泰国的", "investor": "投资者", "christopher": "克里斯托弗", "ahead": "提前", "upon": "在…上", "mp": "议员", "argues": "主张", "obligation": "义务", "purely": "纯粹地", "private": "私人的", "unrelated": "无关的", "or": "或者", "activities": "活动", "metropolitan": "伦敦警察厅", "investigating": "调查", "weeks": "周", "before": "之前", "complied": "遵守", "inquiry": "调查", "looking": "寻找", "directly": "直接地", "mother": "母亲", "longstanding": "长期存在的", "ally": "盟友", "george": "乔治", "examining": "审查", "company": "公司", "controlled": "受控的", "deputy": "副手", "richard": "理查德", "tice": "泰斯", "june": "六月", "britons": "英国人", "abroad": "国外", "prompted": "促使", "furious": "愤怒", "row": "争吵", "key": "关键", "accused": "被指控", "party's": "党的", "progress": "进展", "sought": "寻求", "prevent": "防止", "voters": "选民", "moving": "移动", "giving": "给予", "than": "比", "after": "之后", "arrival": "到达", "part": "部分", "representation": "代表制", "bill": "法案", "second": "第二", "lords": "贵族", "monday": "星期一", "gave": "给予", "person": "个人", "conservatives": "保守党", "had": "有", "legacy": "遗留", "too": "太", "responding": "回应", "still": "仍然", "neck": "脖子", "scandal": "丑闻", "faces": "面临", "aren't": "不是", "going": "将要", "away": "离开", "fact": "事实", "piling": "堆积", "buy": "买入", "out": "出来", "about": "关于", "criminal": "犯罪的", "finances": "财务", "finally": "最终", "came": "到来", "public": "公众", "fully": "完全地", "proved": "证明是", "not": "不", "just": "只是", "themselves": "他们自己", "cabinet": "内阁", "office": "办公室", "lisa": "丽莎", "smart": "斯马特", "bring": "带来", "trump's": "特朗普的", "america": "美国", "buying": "购买", "power": "权力", "he's": "他是", "get": "得到", "number": "数量", "if": "如果", "stop": "停止", "board": "董事会", "added": "补充", "go": "去", "like": "像", "this": "这个", "andy": "安迪", "burnham": "伯纳姆", "needs": "需要", "introduce": "引入", "depends": "取决于", "delo": "德洛（公司名）", "undercover": "卧底", "humbled": "使谦逊", "donating": "捐赠", "mega-donations": "巨额捐款", "sheffield-born": "谢菲尔德出生", "hong": "香港（Hong）", "kong": "香港（Kong）", "cartel": "卡特尔", "troubles": "麻烦", "compete": "竞争", "crypto": "加密货币", "billionaires": "亿万富翁", "cement": "巩固", "register": "注册", "stymie": "阻碍", "reading": "解读", "eclipsed": "超越", "delo's": "德洛的", "mates": "伙伴", "dodgy": "可疑的", "clean": "干净的", "co-operated": "合作", "shores": "海岸", "monopoly": "垄断"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
