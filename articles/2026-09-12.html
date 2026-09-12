@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-12</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-12</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/9256/live/a1802a30-aeb9-11f1-b1d1-571ed4d7ff2c.jpg" alt="Anthropic boss Dario Amodei calls for AI development to slow down" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Anthropic boss Dario Amodei calls for AI development to slow down</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c14dpgm0rg4o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-12.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">There was no alternative to developing AI, Anthropic boss Dario Amodei said</span></p>
+        <p class="cn">Anthropic（Anthropic）老板达里奥·阿莫代伊（Dario Amodei）表示，开发人工智能别无选择。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The head of AI company Anthropic has called for the pace of development of artificial intelligence models to slow down and to be closely monitored.</span></p>
+        <p class="cn">AI公司Anthropic（Anthropic）的负责人呼吁放缓人工智能模型的开发步伐，并对其进行密切监控。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">In an essay, Dario Amodei said developing AI was not in question, but the risks associated with it were "serious" and companies and governments must be given time to address them.</span></p>
+        <p class="cn">在一篇文章中，达里奥·阿莫代伊（Dario Amodei）表示，开发AI毋庸置疑，但与之相关的风险是“严重的”，必须给公司和政府时间来解决这些问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The bosses of two rival AI firms, Sam Altman of OpenAI and Elon Musk, have both said they agree with Amodei.</span></p>
+        <p class="cn">两家竞争对手AI公司的老板，OpenAI（OpenAI）的萨姆·奥尔特曼（Sam Altman）和埃隆·马斯克（Elon Musk），都表示同意阿莫代伊的观点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">There have been growing concerns recently about the technology's potential risks.</span> <span class="sentence" data-sentence-index="5">An AI researcher who left Anthropic this week told the BBC that "if we don't slow down at the current rate of progress, there is a strong chance that we could all die in the immediate future".</span></p>
+        <p class="cn">最近，人们对这项技术的潜在风险越来越担忧。本周离开Anthropic（Anthropic）的一位AI研究员告诉BBC，“如果我们不按照目前的进展速度放缓，我们很有可能在不久的将来全部死亡”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Jacob Coxon told Laura Kuenssberg that people working at AI companies were "genuinely frightened...</span> <span class="sentence" data-sentence-index="7">genuinely concerned about the fate of humanity in the next two years".</span></p>
+        <p class="cn">雅各布·考克森（Jacob Coxon）告诉劳拉·昆斯伯格（Laura Kuenssberg），在AI公司工作的人“真的害怕……真的担心未来两年人类的命运”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">"It's not at all an exaggeration to say that the people who are involved with both founding these companies and building the tech believe there is a possibility of human <span class="keyword" data-word="extinction" data-phonetic="/ɪkˈstɪŋkʃn/" data-pos="n." data-def="灭绝，消亡" data-def-en="The complete disappearance of a species or group.">extinction</span>," Coxon said.</span></p>
+        <p class="cn">考克森说：“说参与创办这些公司和构建这项技术的人相信人类有可能灭绝，这一点也不夸张。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">"Many of the people who are sort of deep in the weeds on actually coding the thing believe that there is like a greater than ten percent chance, or even greater.</span> <span class="sentence" data-sentence-index="10">Some smaller, but they all have different numbers for a probability that humans might die.</span> <span class="sentence" data-sentence-index="11">And they all keep this in their head on a daily basis while working on the technology."</span></p>
+        <p class="cn">“许多深入参与实际编码的人认为，人类死亡的概率超过10%，甚至更高。有些人认为概率较小，但他们对人类可能死亡的概率都有不同的数字。他们在研究这项技术时，每天都把这个记在脑子里。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="12">Dramatic insider warnings over AI fall flat with some in Silicon Valley</span></p>
+        <p class="cn">AI内部人士的戏剧性警告在硅谷一些人看来并不以为然。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="13">In Amodei's essay, called We Must Pace the Frontier and made public on Saturday, he proposed a three-point plan that includes independent monitoring of AI models as they are developed, industry-wide regulation and global regulation.</span></p>
+        <p class="cn">在阿莫代伊周六公开的题为《我们必须放慢前沿步伐》的文章中，他提出了一个三点计划，包括对AI模型开发过程进行独立监控、行业范围内的监管和全球监管。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="14">As his proposal made the rounds, even competitors voiced support for the idea of third-party monitors who could <span class="keyword" data-word="evaluate" data-phonetic="/ɪˈvæljueɪt/" data-pos="v." data-def="评估，评价" data-def-en="To assess or judge the value or quality of something.">evaluate</span> the safety of models as they are developed.</span></p>
+        <p class="cn">随着他的提议广为流传，甚至竞争对手也表示支持第三方监控者的想法，这些监控者可以在模型开发过程中评估其安全性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="15">"I agree with Dario that we need to pace the frontier," wrote OpenAI CEO Sam Altman on X.</span> <span class="sentence" data-sentence-index="16">He called independent evaluators "a great idea."</span></p>
+        <p class="cn">OpenAI（OpenAI）首席执行官萨姆·奥尔特曼（Sam Altman）在X上写道：“我同意达里奥的观点，我们需要放慢前沿步伐。”他称独立评估者是“一个绝妙的主意”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="17">In a new interview with Fortune Magazine, Altman had sounded similar safety concerns, saying standards were "not at a place" to push AI capabilities much further.</span></p>
+        <p class="cn">在接受《财富》杂志（Fortune Magazine）的新采访中，奥尔特曼也表达了类似的安全担忧，称标准“还没有达到”可以进一步推动AI能力的程度。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="18">He added that he believed AI beyond human control is "absolutely" possible.</span></p>
+        <p class="cn">他补充说，他认为AI超越人类控制是“绝对”可能的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="19">Elon Musk meanwhile said the Anthropic boss was "right".</span></p>
+        <p class="cn">与此同时，埃隆·马斯克（Elon Musk）表示，Anthropic（Anthropic）老板是“对的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="20">The warnings have prompted calls to action, but US President Donald Trump has so far rejected such fears, saying on Thursday he was concerned "if we don't win AI, we're going to be put in a very bad position".</span></p>
+        <p class="cn">这些警告引发了行动呼吁，但美国总统唐纳德·特朗普（Donald Trump）迄今拒绝接受这种担忧，他在周四表示，他担心“如果我们不赢得AI，我们将处于非常糟糕的境地”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="21">Cyber-security concerns have grown as new models have exhibited more and more powerful hacking capabilities.</span></p>
+        <p class="cn">随着新模型展现出越来越强大的黑客能力，网络安全担忧日益加剧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">Anthropic withheld its Mythos model from public use when it was announced in April that it could independently escape the testing environment, known as the sandbox.</span></p>
+        <p class="cn">Anthropic（Anthropic）在4月宣布其Mythos模型可以独立逃离测试环境（称为沙箱）时，拒绝将其公开使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="23">In the run-up to the release of its most recent Astra model, OpenAI cited <span class="keyword" data-word="cybersecurity" data-phonetic="/ˌsaɪbəsɪˈkjʊərəti/" data-pos="n." data-def="网络安全" data-def-en="The state of being protected against the criminal or unauthorized use of electronic data.">cybersecurity</span> concerns as it explained it had paused certain aspects of the model's development.</span></p>
+        <p class="cn">在最近发布Astra模型之前，OpenAI（OpenAI）以网络安全担忧为由，解释称已暂停该模型某些方面的开发。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="24">Safety has also taken centrestage in the rivalry between Anthropic and OpenAI.</span></p>
+        <p class="cn">安全也已成为Anthropic（Anthropic）和OpenAI（OpenAI）之间竞争的焦点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="25">Amodei, who had previously worked as a vice president at OpenAI, has said he co-founded Anthropic in 2021 so he could build safer and more trusted AI models.</span></p>
+        <p class="cn">阿莫代伊曾在OpenAI（OpenAI）担任副总裁，他表示自己在2021年共同创立了Anthropic（Anthropic），以便构建更安全、更值得信赖的AI模型。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="26">In his essay, Amodei pointed out that AI had advanced "drastically faster" including its "ability to build the next generation of AI" - and mentioned an incident involving rival OpenAI which has revealed that agents conducted <span class="keyword" data-word="cybersecurity" data-phonetic="/ˌsaɪbəsɪˈkjʊərəti/" data-pos="n." data-def="网络安全" data-def-en="The state of being protected against the criminal or unauthorized use of electronic data.">cybersecurity</span> attacks , external on targets they were not asked to attack in July.</span></p>
+        <p class="cn">在他的文章中，阿莫代伊指出，AI已经“极其迅速地”进步，包括其“构建下一代AI的能力”——并提到了一起涉及竞争对手OpenAI（OpenAI）的事件，该事件揭示，7月份，代理对未被要求攻击的目标进行了网络安全攻击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="27">The OpenAI agents had "essentially acted as a fanatically devoted collective", Amodei said.</span> <span class="sentence" data-sentence-index="28">OpenAI has said it is slowing down training of certain advanced AI models and tools as a result.</span></p>
+        <p class="cn">阿莫代伊说，OpenAI（OpenAI）的代理“基本上像一个狂热忠诚的集体一样行事”。OpenAI（OpenAI）表示，因此正在放缓某些先进AI模型和工具的训练。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="29">Amodei called for "building AI at a balanced rate that aims to ensure its safety while still achieving its benefits".</span></p>
+        <p class="cn">阿莫代伊呼吁“以平衡的速度构建AI，旨在确保其安全的同时仍实现其益处”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="30">This would not mean "halting model training or technical progress, but ensuring companies take adequate time to <span class="keyword" data-word="align" data-phonetic="/əˈlaɪn/" data-pos="v." data-def="使一致，对齐" data-def-en="To bring into agreement or alignment with a particular standard or goal.">align</span> and safeguard their models, and for third party evaluators to confirm this".</span></p>
+        <p class="cn">这并不意味着“停止模型训练或技术进步，而是确保公司有足够的时间来对齐和保护他们的模型，并让第三方评估者确认这一点”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="31">He was committing Anthropic to this "unilaterally" - as well as calling on governments "to require other frontier companies to match".</span></p>
+        <p class="cn">他承诺Anthropic（Anthropic）“单方面”这样做——同时呼吁各国政府“要求其他前沿公司也这样做”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="32">Amodei said he recognised that regulation might not be able to keep up with the pace of AI, and therefore called on AI companies to "voluntarily work together to set standard" in parallel with regulation.</span></p>
+        <p class="cn">阿莫代伊表示，他认识到监管可能无法跟上AI的步伐，因此呼吁AI公司在监管的同时“自愿合作制定标准”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="33">The Anthropic CEO went on to address the impact that a slowdown would have on the industry and competition with leading developers worldwide, particularly China.</span></p>
+        <p class="cn">这位Anthropic（Anthropic）首席执行官接着谈到了放缓对行业和与全球领先开发者，特别是中国竞争的影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="34">"I believe that if slowing down bought us even an extra year or two before models reach critical levels of <span class="keyword" data-word="capability" data-phonetic="/ˌkeɪpəˈbɪləti/" data-pos="n." data-def="能力，性能" data-def-en="The power or ability to do something.">capability</span>, and we used that time to advance alignment, we could greatly reduce the risk that something goes seriously wrong," Amodei said.</span></p>
+        <p class="cn">阿莫代伊说：“我相信，如果放缓能让我们在模型达到关键能力水平之前多出一两年时间，并且我们利用这段时间推进对齐，我们就能大大降低出现严重问题的风险。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="35">This would have to be done in a co-ordinated manner "without sacrificing commercial advantage or the United States' lead in AI".</span> <span class="sentence" data-sentence-index="36">Any slowdown would have to be limited, he said, to avoid allowing China to pull ahead.</span></p>
+        <p class="cn">这必须以协调一致的方式进行，“不牺牲商业优势或美国在AI领域的领先地位”。他说，任何放缓都必须有限度，以避免让中国领先。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="37">He urged the US government to take measures so that US companies' AI chips could not be sold to China - or the technology shared with authoritarian countries.</span></p>
+        <p class="cn">他敦促美国政府采取措施，确保美国公司的AI芯片不能卖给中国——也不能与威权国家分享技术。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="38">His former employee, Jacob Coxon, told the BBC, however, that the initiative to slow down must go beyond the US - "there'll need to be some sort of co-ordinated slowdown with China if we're going to avoid a race at an international scale".</span></p>
+        <p class="cn">然而，他的前员工雅各布·考克森（Jacob Coxon）告诉BBC，放缓的倡议必须超越美国——“如果我们要避免国际规模的竞赛，就需要与中国进行某种协调一致的放缓”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="39">Amodei's post has prompted a wide range of responses.</span></p>
+        <p class="cn">阿莫代伊的文章引发了广泛的回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="40">Clement Delangue, the CEO of the AI platform Hugging Face, said he was launching a new project called the Open Alignment Initiative, adding he wanted to be among "embedded evaluators" that Amodei proposed could be part of a solution.</span></p>
+        <p class="cn">AI平台Hugging Face（Hugging Face）的首席执行官克莱门特·德朗格（Clement Delangue）表示，他正在启动一个名为开放对齐倡议的新项目，并补充说，他希望成为阿莫代伊提出的可能成为解决方案一部分的“嵌入式评估者”之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="41">Hugging Face was hacked by OpenAI agents earlier this year prompting an outcry over AI safety.</span></p>
+        <p class="cn">今年早些时候，Hugging Face（Hugging Face）被OpenAI（OpenAI）代理黑客攻击，引发了对AI安全的强烈抗议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="42">"Let's make AI safer by making it more <span class="keyword" data-word="transparent" data-phonetic="/trænsˈpærənt/" data-pos="adj." data-def="透明的，公开的" data-def-en="Open and honest, without secrets.">transparent</span>," Delangue wrote on X.</span></p>
+        <p class="cn">德朗格在X上写道：“让我们通过提高透明度来使AI更安全。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="43">Elon Musk also voiced his support, writing that "Dario is right".</span></p>
+        <p class="cn">埃隆·马斯克（Elon Musk）也表示支持，写道“达里奥是对的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="44">Musk, whose SpaceXAI makes the controversial chatbot Grok, once called Anthropic "evil" but has changed his tone since signing a $15bn deal to sell compute capacity to Anthropic in May.</span></p>
+        <p class="cn">马斯克的SpaceXAI（SpaceXAI）制造了有争议的聊天机器人Grok，他曾称Anthropic（Anthropic）“邪恶”，但自从5月签署了一项150亿美元的协议向Anthropic（Anthropic）出售计算能力以来，他的语气有所改变。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="45">However some observers suggested that Amodei's post was less about safety than about consolidating control over AI technology.</span></p>
+        <p class="cn">然而，一些观察人士认为，阿莫代伊的文章与其说是关于安全，不如说是关于巩固对AI技术的控制。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="46">"Dario makes the case to stop open source and concentrate enormous technological and economic power with Anthropic," wrote Chamath Palihapitiya, investor and co-host of the tech podcast "All-In".</span></p>
+        <p class="cn">投资者兼科技播客“All-In”的联合主持人查马斯·帕里哈皮蒂亚（Chamath Palihapitiya）写道：“达里奥提出了停止开源并将巨大的技术和经济权力集中在Anthropic（Anthropic）的理由。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="47">Notions of slowing down or even pausing AI development have long been met with such cynicism in certain corners of Silicon Valley, with critics accusing leading AI developers of hyping their technology as a marketing ploy.</span></p>
+        <p class="cn">在硅谷的某些角落，放缓甚至暂停AI开发的想法长期以来一直遭到这种冷嘲热讽，批评者指责领先的AI开发者将他们的技术炒作作为营销手段。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="48">Anthropic and OpenAI are both reportedly preparing for potentially record-setting initial public offerings.</span></p>
+        <p class="cn">据报道，Anthropic（Anthropic）和OpenAI（OpenAI）都在为可能创纪录的首次公开募股做准备。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="49">Why some experts increasingly fear AI will take over</span></p>
+        <p class="cn">为什么一些专家越来越担心AI会接管</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="50">Anthropic researcher believes more than 10% chance AI 'could kill all humans'</span></p>
+        <p class="cn">Anthropic（Anthropic）研究员认为AI‘可能杀死所有人类’的概率超过10%</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="51">The contradiction at the heart of the trillion-dollar AI race</span></p>
+        <p class="cn">万亿美元AI竞赛核心的矛盾</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="52">Sign up for our Tech Decoded newsletter to follow the world's top tech stories and trends.</span> <span class="sentence" data-sentence-index="53">Outside the UK?</span> <span class="sentence" data-sentence-index="54">Sign up here .</span></p>
+        <p class="cn">注册我们的Tech Decoded新闻通讯，关注世界顶级科技故事和趋势。不在英国？在此注册。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">monitor</span>
+        <button class="kw-speak-btn" data-word="monitor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmɒnɪtə/ v.</span>
+      </div>
+      <p class="kw-def">监控，监测</p>
+      <p class="kw-def-en">To observe and check the progress or quality of something over time.</p>
+      <p class="kw-ctx">&ldquo;The head of AI company Anthropic has called for the pace of development of artificial intelligence models to slow down and to be closely monitored.&rdquo;</p>
+      <p class="kw-ctx-cn">AI公司Anthropic的负责人呼吁放缓人工智能模型的发展速度，并对其进行密切监控。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">extinction</span>
+        <button class="kw-speak-btn" data-word="extinction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪkˈstɪŋkʃn/ n.</span>
+      </div>
+      <p class="kw-def">灭绝，消亡</p>
+      <p class="kw-def-en">The complete disappearance of a species or group.</p>
+      <p class="kw-ctx">&ldquo;"It's not at all an exaggeration to say that the people who are involved with both founding these companies and building the tech believe there is a possibility of human extinction," Coxon said.&rdquo;</p>
+      <p class="kw-ctx-cn">“毫不夸张地说，参与创办这些公司和构建这项技术的人都认为人类有可能灭绝，”考克森说。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evaluate</span>
+        <button class="kw-speak-btn" data-word="evaluate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvæljueɪt/ v.</span>
+      </div>
+      <p class="kw-def">评估，评价</p>
+      <p class="kw-def-en">To assess or judge the value or quality of something.</p>
+      <p class="kw-ctx">&ldquo;As his proposal made the rounds, even competitors voiced support for the idea of third-party monitors who could evaluate the safety of models as they are developed.&rdquo;</p>
+      <p class="kw-ctx-cn">随着他的提议传开，甚至竞争对手也表示支持第三方监督者的想法，他们可以在模型开发过程中评估其安全性。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">capability</span>
+        <button class="kw-speak-btn" data-word="capability" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkeɪpəˈbɪləti/ n.</span>
+      </div>
+      <p class="kw-def">能力，性能</p>
+      <p class="kw-def-en">The power or ability to do something.</p>
+      <p class="kw-ctx">&ldquo;In a new interview with Fortune Magazine, Altman had sounded similar safety concerns, saying standards were "not at a place" to push AI capabilities much further.&rdquo;</p>
+      <p class="kw-ctx-cn">在接受《财富》杂志的新采访时，奥特曼也表达了类似的安全担忧，称标准“还没有达到”将AI能力进一步推进的水平。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">cybersecurity</span>
+        <button class="kw-speak-btn" data-word="cybersecurity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌsaɪbəsɪˈkjʊərəti/ n.</span>
+      </div>
+      <p class="kw-def">网络安全</p>
+      <p class="kw-def-en">The state of being protected against the criminal or unauthorized use of electronic data.</p>
+      <p class="kw-ctx">&ldquo;In the run-up to the release of its most recent Astra model, OpenAI cited cybersecurity concerns as it explained it had paused certain aspects of the model's development.&rdquo;</p>
+      <p class="kw-ctx-cn">在最近发布Astra模型之前，OpenAI以网络安全担忧为由，解释称已暂停该模型开发的某些方面。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">align</span>
+        <button class="kw-speak-btn" data-word="align" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈlaɪn/ v.</span>
+      </div>
+      <p class="kw-def">使一致，对齐</p>
+      <p class="kw-def-en">To bring into agreement or alignment with a particular standard or goal.</p>
+      <p class="kw-ctx">&ldquo;This would not mean "halting model training or technical progress, but ensuring companies take adequate time to align and safeguard their models, and for third party evaluators to confirm this".&rdquo;</p>
+      <p class="kw-ctx-cn">这并不意味着“停止模型训练或技术进步，而是确保公司有足够的时间来调整和保障其模型，并由第三方评估者确认这一点”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">transparent</span>
+        <button class="kw-speak-btn" data-word="transparent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trænsˈpærənt/ adj.</span>
+      </div>
+      <p class="kw-def">透明的，公开的</p>
+      <p class="kw-def-en">Open and honest, without secrets.</p>
+      <p class="kw-ctx">&ldquo;"Let's make AI safer by making it more transparent," Delangue wrote on X.&rdquo;</p>
+      <p class="kw-ctx-cn">“让我们通过提高透明度来使AI更安全，”德朗格在X上写道。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">consolidate</span>
+        <button class="kw-speak-btn" data-word="consolidate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈsɒlɪdeɪt/ v.</span>
+      </div>
+      <p class="kw-def">巩固，加强</p>
+      <p class="kw-def-en">To make something stronger or more secure.</p>
+      <p class="kw-ctx">&ldquo;However some observers suggested that Amodei's post was less about safety than about consolidating control over AI technology.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，一些观察人士认为，阿莫代伊的帖子与其说是关于安全，不如说是关于巩固对AI技术的控制。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "There was no alternative to developing AI, Anthropic boss Dario Amodei said", "start_ms": 0, "end_ms": 6384, "paragraph_index": 0}, {"index": 1, "text": "The head of AI company Anthropic has called for the pace of development of artificial intelligence models to slow down and to be closely monitored.", "start_ms": 6384, "end_ms": 16152, "paragraph_index": 1}, {"index": 2, "text": "In an essay, Dario Amodei said developing AI was not in question, but the risks associated with it were \"serious\" and companies and governments must be given time to address them.", "start_ms": 16152, "end_ms": 28512, "paragraph_index": 2}, {"index": 3, "text": "The bosses of two rival AI firms, Sam Altman of OpenAI and Elon Musk, have both said they agree with Amodei.", "start_ms": 28512, "end_ms": 37272, "paragraph_index": 3}, {"index": 4, "text": "There have been growing concerns recently about the technology's potential risks.", "start_ms": 37272, "end_ms": 43032, "paragraph_index": 4}, {"index": 5, "text": "An AI researcher who left Anthropic this week told the BBC that \"if we don't slow down at the current rate of progress, there is a strong chance that we could all die in the immediate future\".", "start_ms": 43032, "end_ms": 55368, "paragraph_index": 4}, {"index": 6, "text": "Jacob Coxon told Laura Kuenssberg that people working at AI companies were \"genuinely frightened...", "start_ms": 55368, "end_ms": 62352, "paragraph_index": 5}, {"index": 7, "text": "genuinely concerned about the fate of humanity in the next two years\".", "start_ms": 62352, "end_ms": 67560, "paragraph_index": 5}, {"index": 8, "text": "\"It's not at all an exaggeration to say that the people who are involved with both founding these companies and building the tech believe there is a possibility of human extinction,\" Coxon said.", "start_ms": 67560, "end_ms": 79488, "paragraph_index": 6}, {"index": 9, "text": "\"Many of the people who are sort of deep in the weeds on actually coding the thing believe that there is like a greater than ten percent chance, or even greater.", "start_ms": 79488, "end_ms": 89232, "paragraph_index": 7}, {"index": 10, "text": "Some smaller, but they all have different numbers for a probability that humans might die.", "start_ms": 89232, "end_ms": 95688, "paragraph_index": 7}, {"index": 11, "text": "And they all keep this in their head on a daily basis while working on the technology.\"", "start_ms": 95688, "end_ms": 101448, "paragraph_index": 7}, {"index": 12, "text": "Dramatic insider warnings over AI fall flat with some in Silicon Valley", "start_ms": 101448, "end_ms": 107400, "paragraph_index": 8}, {"index": 13, "text": "In Amodei's essay, called We Must Pace the Frontier and made public on Saturday, he proposed a three-point plan that includes independent monitoring of AI models as they are developed, industry-wide regulation and global regulation.", "start_ms": 107400, "end_ms": 123576, "paragraph_index": 9}, {"index": 14, "text": "As his proposal made the rounds, even competitors voiced support for the idea of third-party monitors who could evaluate the safety of models as they are developed.", "start_ms": 123576, "end_ms": 134400, "paragraph_index": 10}, {"index": 15, "text": "\"I agree with Dario that we need to pace the frontier,\" wrote OpenAI CEO Sam Altman on X.", "start_ms": 134400, "end_ms": 141840, "paragraph_index": 11}, {"index": 16, "text": "He called independent evaluators \"a great idea.\"", "start_ms": 141840, "end_ms": 146184, "paragraph_index": 11}, {"index": 17, "text": "In a new interview with Fortune Magazine, Altman had sounded similar safety concerns, saying standards were \"not at a place\" to push AI capabilities much further.", "start_ms": 146184, "end_ms": 157512, "paragraph_index": 12}, {"index": 18, "text": "He added that he believed AI beyond human control is \"absolutely\" possible.", "start_ms": 157512, "end_ms": 163344, "paragraph_index": 13}, {"index": 19, "text": "Elon Musk meanwhile said the Anthropic boss was \"right\".", "start_ms": 163344, "end_ms": 167784, "paragraph_index": 14}, {"index": 20, "text": "The warnings have prompted calls to action, but US President Donald Trump has so far rejected such fears, saying on Thursday he was concerned \"if we don't win AI, we're going to be put in a very bad position\".", "start_ms": 167784, "end_ms": 182112, "paragraph_index": 15}, {"index": 21, "text": "Cyber-security concerns have grown as new models have exhibited more and more powerful hacking capabilities.", "start_ms": 182112, "end_ms": 189672, "paragraph_index": 16}, {"index": 22, "text": "Anthropic withheld its Mythos model from public use when it was announced in April that it could independently escape the testing environment, known as the sandbox.", "start_ms": 189672, "end_ms": 200328, "paragraph_index": 17}, {"index": 23, "text": "In the run-up to the release of its most recent Astra model, OpenAI cited cybersecurity concerns as it explained it had paused certain aspects of the model's development.", "start_ms": 200328, "end_ms": 212136, "paragraph_index": 18}, {"index": 24, "text": "Safety has also taken centrestage in the rivalry between Anthropic and OpenAI.", "start_ms": 212136, "end_ms": 218616, "paragraph_index": 19}, {"index": 25, "text": "Amodei, who had previously worked as a vice president at OpenAI, has said he co-founded Anthropic in 2021 so he could build safer and more trusted AI models.", "start_ms": 218616, "end_ms": 231264, "paragraph_index": 20}, {"index": 26, "text": "In his essay, Amodei pointed out that AI had advanced \"drastically faster\" including its \"ability to build the next generation of AI\" - and mentioned an incident involving rival OpenAI which has revealed that agents conducted cybersecurity attacks , external on targets they were not asked to attack in July.", "start_ms": 231264, "end_ms": 252432, "paragraph_index": 21}, {"index": 27, "text": "The OpenAI agents had \"essentially acted as a fanatically devoted collective\", Amodei said.", "start_ms": 252432, "end_ms": 259584, "paragraph_index": 22}, {"index": 28, "text": "OpenAI has said it is slowing down training of certain advanced AI models and tools as a result.", "start_ms": 259584, "end_ms": 266736, "paragraph_index": 22}, {"index": 29, "text": "Amodei called for \"building AI at a balanced rate that aims to ensure its safety while still achieving its benefits\".", "start_ms": 266736, "end_ms": 274872, "paragraph_index": 23}, {"index": 30, "text": "This would not mean \"halting model training or technical progress, but ensuring companies take adequate time to align and safeguard their models, and for third party evaluators to confirm this\".", "start_ms": 274872, "end_ms": 288096, "paragraph_index": 24}, {"index": 31, "text": "He was committing Anthropic to this \"unilaterally\" - as well as calling on governments \"to require other frontier companies to match\".", "start_ms": 288096, "end_ms": 296904, "paragraph_index": 25}, {"index": 32, "text": "Amodei said he recognised that regulation might not be able to keep up with the pace of AI, and therefore called on AI companies to \"voluntarily work together to set standard\" in parallel with regulation.", "start_ms": 296904, "end_ms": 310920, "paragraph_index": 26}, {"index": 33, "text": "The Anthropic CEO went on to address the impact that a slowdown would have on the industry and competition with leading developers worldwide, particularly China.", "start_ms": 310920, "end_ms": 322224, "paragraph_index": 27}, {"index": 34, "text": "\"I believe that if slowing down bought us even an extra year or two before models reach critical levels of capability, and we used that time to advance alignment, we could greatly reduce the risk that something goes seriously wrong,\" Amodei said.", "start_ms": 322224, "end_ms": 338088, "paragraph_index": 28}, {"index": 35, "text": "This would have to be done in a co-ordinated manner \"without sacrificing commercial advantage or the United States' lead in AI\".", "start_ms": 338088, "end_ms": 346728, "paragraph_index": 29}, {"index": 36, "text": "Any slowdown would have to be limited, he said, to avoid allowing China to pull ahead.", "start_ms": 346728, "end_ms": 353400, "paragraph_index": 29}, {"index": 37, "text": "He urged the US government to take measures so that US companies' AI chips could not be sold to China - or the technology shared with authoritarian countries.", "start_ms": 353400, "end_ms": 364320, "paragraph_index": 30}, {"index": 38, "text": "His former employee, Jacob Coxon, told the BBC, however, that the initiative to slow down must go beyond the US - \"there'll need to be some sort of co-ordinated slowdown with China if we're going to avoid a race at an international scale\".", "start_ms": 364320, "end_ms": 380328, "paragraph_index": 31}, {"index": 39, "text": "Amodei's post has prompted a wide range of responses.", "start_ms": 380328, "end_ms": 384912, "paragraph_index": 32}, {"index": 40, "text": "Clement Delangue, the CEO of the AI platform Hugging Face, said he was launching a new project called the Open Alignment Initiative, adding he wanted to be among \"embedded evaluators\" that Amodei proposed could be part of a solution.", "start_ms": 384912, "end_ms": 400728, "paragraph_index": 33}, {"index": 41, "text": "Hugging Face was hacked by OpenAI agents earlier this year prompting an outcry over AI safety.", "start_ms": 400728, "end_ms": 408192, "paragraph_index": 34}, {"index": 42, "text": "\"Let's make AI safer by making it more transparent,\" Delangue wrote on X.", "start_ms": 408192, "end_ms": 414144, "paragraph_index": 35}, {"index": 43, "text": "Elon Musk also voiced his support, writing that \"Dario is right\".", "start_ms": 414144, "end_ms": 419640, "paragraph_index": 36}, {"index": 44, "text": "Musk, whose SpaceXAI makes the controversial chatbot Grok, once called Anthropic \"evil\" but has changed his tone since signing a $15bn deal to sell compute capacity to Anthropic in May.", "start_ms": 419640, "end_ms": 433872, "paragraph_index": 37}, {"index": 45, "text": "However some observers suggested that Amodei's post was less about safety than about consolidating control over AI technology.", "start_ms": 433872, "end_ms": 443160, "paragraph_index": 38}, {"index": 46, "text": "\"Dario makes the case to stop open source and concentrate enormous technological and economic power with Anthropic,\" wrote Chamath Palihapitiya, investor and co-host of the tech podcast \"All-In\".", "start_ms": 443160, "end_ms": 457104, "paragraph_index": 39}, {"index": 47, "text": "Notions of slowing down or even pausing AI development have long been met with such cynicism in certain corners of Silicon Valley, with critics accusing leading AI developers of hyping their technology as a marketing ploy.", "start_ms": 457104, "end_ms": 471960, "paragraph_index": 40}, {"index": 48, "text": "Anthropic and OpenAI are both reportedly preparing for potentially record-setting initial public offerings.", "start_ms": 471960, "end_ms": 479832, "paragraph_index": 41}, {"index": 49, "text": "Why some experts increasingly fear AI will take over", "start_ms": 479832, "end_ms": 484632, "paragraph_index": 42}, {"index": 50, "text": "Anthropic researcher believes more than 10% chance AI 'could kill all humans'", "start_ms": 484632, "end_ms": 490968, "paragraph_index": 43}, {"index": 51, "text": "The contradiction at the heart of the trillion-dollar AI race", "start_ms": 490968, "end_ms": 495744, "paragraph_index": 44}, {"index": 52, "text": "Sign up for our Tech Decoded newsletter to follow the world's top tech stories and trends.", "start_ms": 495744, "end_ms": 502296, "paragraph_index": 45}, {"index": 53, "text": "Outside the UK?", "start_ms": 502296, "end_ms": 504672, "paragraph_index": 45}, {"index": 54, "text": "Sign up here .", "start_ms": 504672, "end_ms": 506784, "paragraph_index": 45}], "total_duration_ms": 506784};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "ai": "人工智能", "of": "的", "and": "和", "that": "那个", "in": "在", "with": "与", "he": "他", "said": "说", "on": "在", "as": "作为", "be": "是", "have": "有", "was": "是", "has": "有", "models": "模特们", "at": "在", "could": "可能", "called": "称为", "for": "为了", "an": "一个", "not": "不", "it": "它", "companies": "公司", "this": "这个", "we": "我们", "down": "下来", "they": "它们", "is": "是", "or": "或者", "safety": "安全", "there": "那里", "but": "但是", "who": "谁", "all": "所有", "are": "是", "some": "一些", "his": "他的", "had": "有", "us": "我们", "more": "更多", "its": "它的", "pace": "节奏", "were": "是", "musk": "马斯克", "concerns": "担忧", "about": "关于", "if": "如果", "even": "甚至", "technology": "技术", "over": "超过", "regulation": "监管", "would": "将", "china": "中国", "development": "发展", "slow": "缓慢的", "must": "必须", "time": "时间", "two": "两个", "elon": "埃隆", "both": "两者", "told": "告诉", "chance": "机会", "people": "人们", "believe": "认为", "than": "比", "their": "他们的", "public": "公众", "wrote": "写道", "ceo": "首席执行官", "new": "新的", "so": "所以", "model": "模特", "certain": "某些", "agents": "特工", "slowing": "放缓", "take": "采取", "up": "向上", "developing": "发展中的", "boss": "老板", "head": "前往", "risks": "风险", "governments": "政府", "address": "地址", "rival": "对手", "sam": "萨姆", "agree": "同意", "been": "已经", "bbc": "英国广播公司", "don't": "不要", "rate": "比率", "progress": "进展", "die": "死亡", "jacob": "雅各布", "working": "工作", "genuinely": "真正地", "concerned": "担忧的", "next": "下一个", "building": "建筑物", "human": "人类", "sort": "种类", "greater": "更大的", "might": "可能", "keep": "保持", "while": "而", "warnings": "警告", "valley": "河谷", "made": "做出", "proposed": "提议的", "independent": "独立的", "developed": "发展", "support": "支持", "idea": "想法", "need": "需要", "saying": "说", "capabilities": "能力", "beyond": "超出", "control": "控制", "right": "正确", "prompted": "促使", "president": "总统", "such": "如此", "we're": "我们是", "going": "将要", "also": "也", "build": "建立", "safer": "更安全", "advanced": "先进的", "training": "培训", "leading": "领导", "year": "年", "alignment": "结盟", "co-ordinated": "协调的", "avoid": "避免", "however": "然而", "race": "种族", "post": "职位", "hugging": "拥抱", "face": "面临", "open": "开放", "by": "被", "makes": "使得", "sign": "签署", "no": "没有", "alternative": "替代的", "company": "公司", "artificial": "人工的", "intelligence": "情报", "closely": "密切", "monitored": "监测", "question": "问题", "associated": "相关的", "serious": "严重的", "given": "给定", "them": "他们", "bosses": "老板", "firms": "公司", "growing": "日益增长的", "recently": "最近", "potential": "潜在", "left": "离开", "week": "周", "current": "当前的", "strong": "强烈", "immediate": "立即的", "future": "未来", "laura": "劳拉", "kuenssberg": "昆斯伯格", "frightened": "害怕的", "humanity": "人类", "years": "多年", "it's": "它是", "say": "说", "involved": "涉及的", "these": "这些", "possibility": "可能性", "many": "许多", "deep": "深切", "actually": "实际上", "thing": "事情", "like": "像", "ten": "十", "smaller": "较小的", "different": "不同的", "numbers": "数字", "daily": "每日", "basis": "基础", "dramatic": "戏剧性的", "fall": "属于", "flat": "公寓", "saturday": "星期六", "plan": "计划", "includes": "包括", "monitoring": "监控", "global": "全球", "proposal": "提议", "third-party": "第三方", "monitors": "监控", "great": "伟大的", "interview": "采访", "fortune": "财富", "magazine": "杂志", "sounded": "发出声响", "similar": "类似的", "standards": "标准", "place": "地点", "push": "推动", "much": "许多", "further": "进一步的", "added": "补充", "believed": "据信", "absolutely": "绝对", "possible": "可能的", "meanwhile": "与此同时", "calls": "呼吁", "action": "行动", "donald": "唐纳德", "trump": "特朗普", "far": "远", "rejected": "拒绝", "fears": "担忧", "thursday": "星期四", "win": "赢得", "put": "提出", "very": "非常", "bad": "糟糕", "position": "立场", "grown": "长大的", "powerful": "强大的", "from": "来自", "use": "使用", "when": "当", "announced": "宣布", "april": "四月", "independently": "独立地", "escape": "逃离", "testing": "检测", "environment": "环境", "known": "已知", "run-up": "前期", "release": "发布", "most": "最", "recent": "最近", "cited": "引用", "explained": "解释", "paused": "暂停", "aspects": "方面", "taken": "采取", "between": "之间", "previously": "此前", "worked": "工作", "vice": "反之", "trusted": "信任的", "pointed": "指出", "out": "出来", "faster": "更快地", "including": "包括", "ability": "能力", "generation": "一代", "mentioned": "提到的", "incident": "事件", "involving": "涉及", "which": "哪个", "revealed": "揭露", "conducted": "进行", "attacks": "袭击", "external": "外部的", "targets": "目标", "asked": "询问", "attack": "袭击", "july": "七月", "essentially": "本质上", "acted": "行动", "devoted": "忠诚的", "collective": "集体的", "tools": "工具", "result": "结果", "balanced": "平衡的", "aims": "目标", "ensure": "确保", "still": "仍然", "benefits": "好处", "mean": "意味着", "technical": "技术的", "ensuring": "确保", "adequate": "足够的", "safeguard": "保护", "third": "第三", "party": "政党", "confirm": "确认", "committing": "承诺", "well": "好", "calling": "呼吁", "require": "要求", "other": "其他", "match": "匹配", "recognised": "认出", "able": "能够", "therefore": "因此", "voluntarily": "自愿地", "work": "工作", "together": "一起", "set": "设定", "standard": "标准", "parallel": "平行", "went": "去", "impact": "影响", "industry": "行业", "competition": "比赛", "worldwide": "全球的", "particularly": "尤其", "bought": "购买", "extra": "额外的", "before": "之前", "reach": "达到", "critical": "关键", "levels": "水平", "used": "使用", "advance": "提前", "reduce": "减少", "risk": "风险", "something": "某事", "goes": "进行", "seriously": "认真地", "wrong": "错误的", "done": "完成", "manner": "方式", "without": "没有", "commercial": "商业", "advantage": "优势", "united": "联合", "states": "国家", "lead": "导致", "any": "任何", "limited": "有限的", "allowing": "允许", "pull": "拉", "ahead": "提前", "urged": "敦促", "government": "政府", "measures": "措施", "sold": "出售", "shared": "分享", "countries": "国家", "former": "前任", "go": "去", "there'll": "将有", "international": "国际", "scale": "规模", "wide": "广泛的", "range": "范围", "responses": "回应", "clement": "温和的", "platform": "平台", "launching": "发起", "project": "项目", "adding": "补充说", "wanted": "想要", "among": "在...之中", "part": "部分", "solution": "解决方案", "earlier": "较早", "prompting": "促使", "let's": "让我们", "make": "使", "making": "进行", "writing": "写作", "whose": "谁的", "controversial": "有争议的", "chatbot": "聊天机器人", "once": "一旦", "evil": "邪恶", "changed": "改变", "tone": "语气", "since": "自从", "signing": "签署", "deal": "协议", "sell": "卖出", "capacity": "容量", "may": "可能", "suggested": "建议", "less": "更少", "case": "案例", "stop": "停止", "source": "来源", "enormous": "巨大的", "economic": "经济的", "power": "权力", "investor": "投资者", "podcast": "播客", "pausing": "暂停", "long": "长久", "met": "伦敦警察厅", "critics": "批评者", "accusing": "指责", "reportedly": "据报道", "preparing": "准备", "potentially": "可能地", "initial": "最初", "why": "为何", "experts": "专家", "increasingly": "日益", "fear": "恐惧", "will": "将", "believes": "认为", "kill": "杀死", "heart": "核心", "our": "我们的", "newsletter": "新闻简报", "follow": "关注", "world's": "世界的", "top": "顶级的", "stories": "报道", "outside": "外部", "uk": "英国", "here": "这里", "anthropic": "人工智能公司Anthropic", "amodei": "阿莫代伊", "openai": "OpenAI公司", "dario": "达里奥", "tech": "科技", "essay": "文章", "altman": "奥尔特曼", "coxon": "考克森", "amodei's": "阿莫代伊的", "frontier": "前沿", "evaluators": "评估者", "slowdown": "放缓", "researcher": "研究员", "humans": "人类", "silicon": "硅谷", "voiced": "表达", "developers": "开发者", "initiative": "倡议", "delangue": "德朗格", "technology's": "技术的", "fate": "命运", "exaggeration": "夸大", "founding": "创立", "weeds": "杂草", "coding": "编程", "percent": "百分比", "probability": "概率", "insider": "内部人士", "three-point": "三点", "industry-wide": "全行业", "rounds": "轮次", "competitors": "竞争对手", "cyber-security": "网络安全", "exhibited": "表现出", "hacking": "黑客攻击", "withheld": "扣留", "mythos": "神话", "sandbox": "沙盒", "astra": "阿斯特拉", "model's": "模型的", "centrestage": "中心舞台", "rivalry": "竞争", "co-founded": "共同创立", "drastically": "大幅", "fanatically": "狂热地", "achieving": "实现", "halting": "停止", "unilaterally": "单方面", "greatly": "大大", "sacrificing": "牺牲", "chips": "芯片", "authoritarian": "威权", "employee": "员工", "embedded": "嵌入", "hacked": "被黑", "outcry": "强烈抗议", "spacexai": "SpaceXAI", "grok": "Grok", "compute": "算力", "observers": "观察人士", "consolidating": "整合", "concentrate": "集中", "technological": "技术的", "chamath": "查马斯", "palihapitiya": "帕里哈皮蒂亚", "co-host": "联合主持人", "all-in": "All-In", "notions": "观念", "cynicism": "愤世嫉俗", "corners": "角落", "hyping": "炒作", "marketing": "营销", "ploy": "策略", "record-setting": "创纪录的", "offerings": "发行", "contradiction": "矛盾", "trillion-dollar": "万亿美元", "decoded": "解读", "trends": "趋势"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
