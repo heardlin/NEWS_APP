@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-13</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-13</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/f4d2/live/edf64150-af96-11f1-b1d1-571ed4d7ff2c.jpg" alt="Russia hits Ukrainian train shortly after Boris Johnson and top European officials leave station" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Russia hits Ukrainian train shortly after Boris Johnson and top European officials leave station</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cy5zg41dkqwo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-13.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: Moment Russian strike hits near Ukraine-Poland border</span></p>
+        <p class="cn">观看：俄罗斯袭击击中乌克兰-波兰边境附近的瞬间</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">A Russian <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> has hit a train near the Ukraine-Poland border shortly after former UK Prime Minister Boris Johnson and top European security officials had passed through.</span></p>
+        <p class="cn">一枚俄罗斯无人机在乌克兰-波兰边境附近击中了一列火车，此前不久，英国前首相鲍里斯·约翰逊（Boris Johnson）和欧洲高级安全官员刚刚经过。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">No casualties were reported after the strike at Yahodyn, which hit the train's engine.</span> <span class="sentence" data-sentence-index="4">All the passengers had been evacuated, Ukrainian authorities said.</span></p>
+        <p class="cn">乌克兰当局表示，袭击发生在亚霍丁（Yahodyn），击中了火车引擎，没有人员伤亡报告。所有乘客均已疏散。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Johnson and other European national security advisers, including the UK's Jonathan Powell, had passed along the same line on a different train on their way back from a conference in Kyiv.</span></p>
+        <p class="cn">约翰逊和其他欧洲国家安全顾问，包括英国的乔纳森·鲍威尔（Jonathan Powell），在从基辅（Kyiv）会议返回时，乘坐另一列火车经过了同一线路。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Russia said it had struck "railway <span class="keyword" data-word="infrastructure" data-phonetic="/ˈɪnfrəstrʌktʃər/" data-pos="n." data-def="基础设施" data-def-en="The basic physical and organizational structures and facilities needed for the operation of a society or enterprise.">infrastructure</span>" in western Ukraine, but Ukraine's state railway company Ukrzaliznytsia said that "quite possibly, the target of this <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> could have been the <span class="keyword" data-word="diplomatic" data-phonetic="/ˌdɪpləˈmætɪk/" data-pos="adj." data-def="外交的" data-def-en="Relating to the profession, activity, or skill of managing international relations.">diplomatic</span> train".</span></p>
+        <p class="cn">俄罗斯表示，它袭击了乌克兰西部的“铁路基础设施”，但乌克兰国家铁路公司（Ukrzaliznytsia）表示，“很可能，这架无人机的目标可能是外交列车”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">In a statement, it said the train "had left the station earlier than expected because of the timetable change...</span> <span class="sentence" data-sentence-index="8">due to constant threats of Russian strikes".</span></p>
+        <p class="cn">在一份声明中，它表示，火车“因时刻表变化而提前离站……这是由于俄罗斯袭击的持续威胁”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">It also said an evacuation order for passengers on the hit train had been given "just 15 minutes"  before the strike by a Russian <span class="keyword" data-word="jet-propelled" data-phonetic="/ˈdʒet prəˈpeld/" data-pos="adj." data-def="喷气推进的" data-def-en="Driven forward by the thrust of a jet engine.">jet-propelled</span> <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span>.</span></p>
+        <p class="cn">它还表示，被击中的火车上的乘客疏散命令是在俄罗斯喷气式无人机袭击前“仅15分钟”下达的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">The railway authority also said former CIA chief David Petraeus had been on board another train at Yahodyn station at the time of the <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> strike.</span></p>
+        <p class="cn">铁路当局还表示，前中央情报局（CIA）局长大卫·彼得雷乌斯（David Petraeus）在无人机袭击时身处亚霍丁站的另一列火车上。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Both Ukrainian and Polish authorities said the Russian <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> had struck 2km from the Polish border.</span></p>
+        <p class="cn">乌克兰和波兰当局均表示，俄罗斯无人机袭击地点距离波兰边境2公里。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">Former Swedish Prime Minister Carl Bildt, who had also attended the conference in Kyiv, told the BBC passengers on board his train had been told to prepare for evacuation before subsequently being allowed to continue their journey.</span></p>
+        <p class="cn">前瑞典首相卡尔·比尔特（Carl Bildt），他也参加了基辅的会议，告诉BBC，他乘坐的火车上的乘客被告知准备疏散，随后被允许继续行程。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">"On the train I was on we received order to prepare evacuation after it had stopped.</span> <span class="sentence" data-sentence-index="14">But after a number of minutes we were informed that it was clear and we could proceed," he said.</span></p>
+        <p class="cn">“在我乘坐的火车上，我们收到疏散准备命令后停了下来。但几分钟后，我们被告知情况已清楚，可以继续前行，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">That train then safely arrived at Poland's border station in Dorohusk.</span></p>
+        <p class="cn">那列火车随后安全抵达波兰边境的多罗胡斯克（Dorohusk）站。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">Some reports have suggested Bildt was on the same train as Johnson, but the former UK prime minister has not confirmed any details.</span></p>
+        <p class="cn">一些报道称比尔特与约翰逊同乘一列火车，但这位英国前首相未确认任何细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">Johnson wrote on X: "I don't know what warped logic drove Putin to blow up a stationary Ukrainian locomotive on the Polish border this morning.</span></p>
+        <p class="cn">约翰逊在X上写道：“我不知道是什么扭曲的逻辑驱使普京今早炸毁波兰边境上一辆静止的乌克兰机车。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">He said this was "the kind of random and senseless attack Ukrainians are enduring every day - even on civilian railways" and urged Kyiv's allies to urgently provide Ukrainians "the air defences they need".</span></p>
+        <p class="cn">他说，这是“乌克兰人每天都忍受的那种随机和无意义的袭击——甚至针对民用铁路”，并敦促基辅的盟友紧急向乌克兰人提供“他们所需的防空系统”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Ukraine has made repeated pleas to its allies - particularly the US - to provide more interceptors to defend against daily Russian attacks that increasingly use fast-moving ballistic missiles and <span class="keyword" data-word="jet-propelled" data-phonetic="/ˈdʒet prəˈpeld/" data-pos="adj." data-def="喷气推进的" data-def-en="Driven forward by the thrust of a jet engine.">jet-propelled</span> drones.</span></p>
+        <p class="cn">乌克兰一再恳求其盟友——特别是美国——提供更多拦截器，以防御俄罗斯每天使用快速弹道导弹和喷气式无人机进行的袭击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Johnson, seen here at a book fair in Lviv last week, was on the train alongside top European security officials</span></p>
+        <p class="cn">约翰逊，上周在利沃夫（Lviv）书展上被看到，与欧洲高级安全官员一同在火车上</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Ukrainian Foreign Minister Andrii Sybiha said the "barbaric strikes" at the Ukraine-Poland border in Yahodyn amounted to "[Russian President Vladimir] Putin's terror 'knocking' directly on the doors of the EU and Nato" and renewed calls for more sanctions on Moscow.</span></p>
+        <p class="cn">乌克兰外交部长安德里·西比哈（Andrii Sybiha）表示，在乌克兰-波兰边境亚霍丁的“野蛮袭击”相当于“[俄罗斯总统弗拉基米尔]普京的恐怖‘敲响’了欧盟和北约的大门”，并再次呼吁对莫斯科实施更多制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">"Putin needs to understand that his barbarism will be met with decisive action that increases the cost of war for him to an unacceptable level.</span> <span class="sentence" data-sentence-index="23">This is the only way to stop him," he said.</span></p>
+        <p class="cn">“普京需要明白，他的野蛮行为将遭到果断行动，将战争成本提高到不可接受的水平。这是阻止他的唯一方式，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="24">In Poland, Prime Minister Donald Tusk held an emergency meeting to discuss the latest developments.</span></p>
+        <p class="cn">在波兰，总理唐纳德·图斯克（Donald Tusk）召开紧急会议讨论最新进展。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">"The <span class="keyword" data-word="escalation" data-phonetic="/ˌeskəˈleɪʃn/" data-pos="n." data-def="升级，加剧" data-def-en="A rapid increase in the intensity or seriousness of something.">escalation</span> of the actions from the Russian side is becoming a reality, and they are getting closer and closer to our border."</span></p>
+        <p class="cn">“俄罗斯方面的行动升级正在成为现实，他们越来越接近我们的边境。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">Johnson and other top European security advisers were on their way back from the Yalta European Strategy (YES) conference in Kyiv - an annual event that brings together leaders and experts from politics, business, security and mass media.</span></p>
+        <p class="cn">约翰逊和其他欧洲高级安全顾问正在从基辅的雅尔塔欧洲战略（YES）会议返回途中——这是一个年度活动，汇集了政治、商业、安全和大众媒体的领导人和专家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">PM's top security adviser says Europe faces hard winter to keep pressure on Putin</span></p>
+        <p class="cn">首相高级安全顾问称欧洲面临艰难冬季以保持对普京的压力</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">Russia appears to be escalating its war against Ukraine by targeting trains, railway depots, petrol stations and border crossings.</span></p>
+        <p class="cn">俄罗斯似乎正在通过针对火车、铁路仓库、加油站和边境口岸来升级对乌克兰的战争。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Earlier this week, two people were killed when Russian drones hit a border crossing between Ukraine and Moldova, Ukrainian President Volodymyr Zelensky said.</span></p>
+        <p class="cn">本周早些时候，乌克兰总统沃洛迪米尔·泽连斯基（Volodymyr Zelensky）表示，俄罗斯无人机击中乌克兰和摩尔多瓦之间的边境口岸，造成两人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">Also this week, a female conductor died in a Russian <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> attack on a passenger train in southern Ukraine.</span> <span class="sentence" data-sentence-index="31">Six Ukrzaliznytsia employees were killed after a depot was struck n Kyiv at the start of the month.</span></p>
+        <p class="cn">同样在本周，一名女列车员在俄罗斯无人机袭击乌克兰南部一列客运火车时死亡。本月早些时候，基辅一个仓库被击中，造成六名乌克兰国家铁路公司员工死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">In January, Zelensky condemned as "terrorism" a Russian strike on a crowded passenger train in the north-eastern Kharkiv region that left five people dead.</span></p>
+        <p class="cn">1月份，泽连斯基谴责俄罗斯对东北部哈尔科夫（Kharkiv）地区一列拥挤客运火车的袭击为“恐怖主义”，造成五人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">The Russian attacks have significantly damaged Ukraine's vast train network - the main mode of transportation for millions of Ukrainians as all air travel has been suspended since the start of Russia's full-scale invasion in 2022.</span></p>
+        <p class="cn">俄罗斯的袭击严重破坏了乌克兰庞大的火车网络——这是数百万乌克兰人的主要交通方式，因为自2022年俄罗斯全面入侵开始以来，所有航空旅行均已暂停。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">European countries are also blaming Russia for suspicious incidents on their territory.</span></p>
+        <p class="cn">欧洲国家也指责俄罗斯在其领土上发生可疑事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">Last week, Germany said Russia was responsible for August's <span class="keyword" data-word="drone" data-phonetic="/droʊn/" data-pos="n." data-def="无人机" data-def-en="An unmanned aircraft or ship guided by remote control or onboard computers.">drone</span> attack at Leipzig's airport - a claim denied by Moscow as "absurd".</span></p>
+        <p class="cn">上周，德国表示俄罗斯对8月份莱比锡（Leipzig）机场的无人机袭击负责——莫斯科否认这一说法，称其“荒谬”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">There have also been a number of suspicious fires at defence facilities from Italy to Estonia, with some of the affected countries blaming Russia.</span></p>
+        <p class="cn">从意大利到爱沙尼亚，国防设施也发生了一系列可疑火灾，一些受影响国家指责俄罗斯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">Europe targeted by spiralling campaign of <span class="keyword" data-word="sabotage" data-phonetic="/ˈsæbətɑːʒ/" data-pos="n." data-def="破坏活动" data-def-en="The deliberate destruction or damage of property or equipment for political or military advantage.">sabotage</span> - and Russia is the chief suspect</span></p>
+        <p class="cn">欧洲成为不断升级的破坏活动目标——俄罗斯是主要嫌疑人</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">Russia's new jet-powered drones outpacing Ukraine's air defences with daily launches</span></p>
+        <p class="cn">俄罗斯的新型喷气动力无人机每天发射，速度超过乌克兰的防空系统</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">Only Roland Garros towel left, says Ukraine tennis player after Russian strike hits flat</span></p>
+        <p class="cn">乌克兰网球运动员称俄罗斯袭击击中公寓后，只剩罗兰·加洛斯（Roland Garros）毛巾</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">drone</span>
+        <button class="kw-speak-btn" data-word="drone" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/droʊn/ n.</span>
+      </div>
+      <p class="kw-def">无人机</p>
+      <p class="kw-def-en">An unmanned aircraft or ship guided by remote control or onboard computers.</p>
+      <p class="kw-ctx">&ldquo;A Russian drone has hit a train near the Ukraine-Poland border shortly after former UK Prime Minister Boris Johnson and top European security officials had passed through.&rdquo;</p>
+      <p class="kw-ctx-cn">一架俄罗斯无人机在乌克兰-波兰边境附近击中了一列火车，此前不久，英国前首相鲍里斯·约翰逊和欧洲高级安全官员刚刚通过。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散，撤离</p>
+      <p class="kw-def-en">To remove people from a place of danger to a safer place.</p>
+      <p class="kw-ctx">&ldquo;All the passengers had been evacuated, Ukrainian authorities said.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰当局表示，所有乘客已被疏散。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">infrastructure</span>
+        <button class="kw-speak-btn" data-word="infrastructure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnfrəstrʌktʃər/ n.</span>
+      </div>
+      <p class="kw-def">基础设施</p>
+      <p class="kw-def-en">The basic physical and organizational structures and facilities needed for the operation of a society or enterprise.</p>
+      <p class="kw-ctx">&ldquo;Russia said it had struck "railway infrastructure" in western Ukraine, but Ukraine's state railway company Ukrzaliznytsia said that "quite possibly, the target of this drone could have been the diplomatic train".&rdquo;</p>
+      <p class="kw-ctx-cn">俄罗斯表示它击中了乌克兰西部的“铁路基础设施”，但乌克兰国家铁路公司Ukrzaliznytsia表示，“这架无人机的目标很可能就是外交列车”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">diplomatic</span>
+        <button class="kw-speak-btn" data-word="diplomatic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdɪpləˈmætɪk/ adj.</span>
+      </div>
+      <p class="kw-def">外交的</p>
+      <p class="kw-def-en">Relating to the profession, activity, or skill of managing international relations.</p>
+      <p class="kw-ctx">&ldquo;Russia said it had struck "railway infrastructure" in western Ukraine, but Ukraine's state railway company Ukrzaliznytsia said that "quite possibly, the target of this drone could have been the diplomatic train".&rdquo;</p>
+      <p class="kw-ctx-cn">俄罗斯表示它击中了乌克兰西部的“铁路基础设施”，但乌克兰国家铁路公司Ukrzaliznytsia表示，“这架无人机的目标很可能就是外交列车”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">jet-propelled</span>
+        <button class="kw-speak-btn" data-word="jet-propelled" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdʒet prəˈpeld/ adj.</span>
+      </div>
+      <p class="kw-def">喷气推进的</p>
+      <p class="kw-def-en">Driven forward by the thrust of a jet engine.</p>
+      <p class="kw-ctx">&ldquo;It also said an evacuation order for passengers on the hit train had been given "just 15 minutes" before the strike by a Russian jet-propelled drone.&rdquo;</p>
+      <p class="kw-ctx-cn">它还表示，在俄罗斯喷气推进无人机袭击前“仅15分钟”才向被击中列车上的乘客发出疏散命令。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">interceptor</span>
+        <button class="kw-speak-btn" data-word="interceptor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntərˈseptər/ n.</span>
+      </div>
+      <p class="kw-def">拦截器，拦截导弹</p>
+      <p class="kw-def-en">A missile or aircraft designed to intercept and destroy enemy aircraft or missiles.</p>
+      <p class="kw-ctx">&ldquo;Ukraine has made repeated pleas to its allies - particularly the US - to provide more interceptors to defend against daily Russian attacks that increasingly use fast-moving ballistic missiles and jet-propelled drones.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰一再恳求其盟友——尤其是美国——提供更多拦截器，以防御俄罗斯日益使用快速弹道导弹和喷气推进无人机的日常袭击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">escalation</span>
+        <button class="kw-speak-btn" data-word="escalation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌeskəˈleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">升级，加剧</p>
+      <p class="kw-def-en">A rapid increase in the intensity or seriousness of something.</p>
+      <p class="kw-ctx">&ldquo;"The escalation of the actions from the Russian side is becoming a reality, and they are getting closer and closer to our border."&rdquo;</p>
+      <p class="kw-ctx-cn">“俄罗斯方面的行动升级正在成为现实，他们越来越接近我们的边境。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sabotage</span>
+        <button class="kw-speak-btn" data-word="sabotage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæbətɑːʒ/ n.</span>
+      </div>
+      <p class="kw-def">破坏活动</p>
+      <p class="kw-def-en">The deliberate destruction or damage of property or equipment for political or military advantage.</p>
+      <p class="kw-ctx">&ldquo;Europe targeted by spiralling campaign of sabotage - and Russia is the chief suspect&rdquo;</p>
+      <p class="kw-ctx-cn">欧洲成为不断升级的破坏活动的目标——而俄罗斯是主要嫌疑人</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Moment Russian strike hits near Ukraine-Poland border", "start_ms": 3000, "end_ms": 8064, "paragraph_index": 1}, {"index": 2, "text": "A Russian drone has hit a train near the Ukraine-Poland border shortly after former UK Prime Minister Boris Johnson and top European security officials had passed through.", "start_ms": 8064, "end_ms": 19728, "paragraph_index": 2}, {"index": 3, "text": "No casualties were reported after the strike at Yahodyn, which hit the train's engine.", "start_ms": 19728, "end_ms": 26064, "paragraph_index": 3}, {"index": 4, "text": "All the passengers had been evacuated, Ukrainian authorities said.", "start_ms": 26064, "end_ms": 31368, "paragraph_index": 3}, {"index": 5, "text": "Johnson and other European national security advisers, including the UK's Jonathan Powell, had passed along the same line on a different train on their way back from a conference in Kyiv.", "start_ms": 31368, "end_ms": 44424, "paragraph_index": 4}, {"index": 6, "text": "Russia said it had struck \"railway infrastructure\" in western Ukraine, but Ukraine's state railway company Ukrzaliznytsia said that \"quite possibly, the target of this drone could have been the diplomatic train\".", "start_ms": 44424, "end_ms": 58200, "paragraph_index": 5}, {"index": 7, "text": "In a statement, it said the train \"had left the station earlier than expected because of the timetable change...", "start_ms": 58200, "end_ms": 65736, "paragraph_index": 6}, {"index": 8, "text": "due to constant threats of Russian strikes\".", "start_ms": 65736, "end_ms": 69336, "paragraph_index": 6}, {"index": 9, "text": "It also said an evacuation order for passengers on the hit train had been given \"just 15 minutes\"  before the strike by a Russian jet-propelled drone.", "start_ms": 69336, "end_ms": 79536, "paragraph_index": 7}, {"index": 10, "text": "The railway authority also said former CIA chief David Petraeus had been on board another train at Yahodyn station at the time of the drone strike.", "start_ms": 79536, "end_ms": 89760, "paragraph_index": 8}, {"index": 11, "text": "Both Ukrainian and Polish authorities said the Russian drone had struck 2km from the Polish border.", "start_ms": 89760, "end_ms": 97104, "paragraph_index": 9}, {"index": 12, "text": "Former Swedish Prime Minister Carl Bildt, who had also attended the conference in Kyiv, told the BBC passengers on board his train had been told to prepare for evacuation before subsequently being allowed to continue their journey.", "start_ms": 97104, "end_ms": 112392, "paragraph_index": 10}, {"index": 13, "text": "\"On the train I was on we received order to prepare evacuation after it had stopped.", "start_ms": 112392, "end_ms": 118656, "paragraph_index": 11}, {"index": 14, "text": "But after a number of minutes we were informed that it was clear and we could proceed,\" he said.", "start_ms": 118656, "end_ms": 124920, "paragraph_index": 11}, {"index": 15, "text": "That train then safely arrived at Poland's border station in Dorohusk.", "start_ms": 124920, "end_ms": 130584, "paragraph_index": 12}, {"index": 16, "text": "Some reports have suggested Bildt was on the same train as Johnson, but the former UK prime minister has not confirmed any details.", "start_ms": 130584, "end_ms": 139944, "paragraph_index": 13}, {"index": 17, "text": "Johnson wrote on X: \"I don't know what warped logic drove Putin to blow up a stationary Ukrainian locomotive on the Polish border this morning.", "start_ms": 139944, "end_ms": 149712, "paragraph_index": 14}, {"index": 18, "text": "He said this was \"the kind of random and senseless attack Ukrainians are enduring every day - even on civilian railways\" and urged Kyiv's allies to urgently provide Ukrainians \"the air defences they need\".", "start_ms": 149712, "end_ms": 163032, "paragraph_index": 15}, {"index": 19, "text": "Ukraine has made repeated pleas to its allies - particularly the US - to provide more interceptors to defend against daily Russian attacks that increasingly use fast-moving ballistic missiles and jet-propelled drones.", "start_ms": 163032, "end_ms": 177648, "paragraph_index": 16}, {"index": 20, "text": "Johnson, seen here at a book fair in Lviv last week, was on the train alongside top European security officials", "start_ms": 177648, "end_ms": 186264, "paragraph_index": 17}, {"index": 21, "text": "Ukrainian Foreign Minister Andrii Sybiha said the \"barbaric strikes\" at the Ukraine-Poland border in Yahodyn amounted to \"[Russian President Vladimir] Putin's terror 'knocking' directly on the doors of the EU and Nato\" and renewed calls for more sanctions on Moscow.", "start_ms": 186264, "end_ms": 203712, "paragraph_index": 18}, {"index": 22, "text": "\"Putin needs to understand that his barbarism will be met with decisive action that increases the cost of war for him to an unacceptable level.", "start_ms": 203712, "end_ms": 213144, "paragraph_index": 19}, {"index": 23, "text": "This is the only way to stop him,\" he said.", "start_ms": 213144, "end_ms": 216960, "paragraph_index": 19}, {"index": 24, "text": "In Poland, Prime Minister Donald Tusk held an emergency meeting to discuss the latest developments.", "start_ms": 216960, "end_ms": 224304, "paragraph_index": 20}, {"index": 25, "text": "\"The escalation of the actions from the Russian side is becoming a reality, and they are getting closer and closer to our border.\"", "start_ms": 224304, "end_ms": 232920, "paragraph_index": 21}, {"index": 26, "text": "Johnson and other top European security advisers were on their way back from the Yalta European Strategy (YES) conference in Kyiv - an annual event that brings together leaders and experts from politics, business, security and mass media.", "start_ms": 232920, "end_ms": 250056, "paragraph_index": 22}, {"index": 27, "text": "PM's top security adviser says Europe faces hard winter to keep pressure on Putin", "start_ms": 250056, "end_ms": 256560, "paragraph_index": 23}, {"index": 28, "text": "Russia appears to be escalating its war against Ukraine by targeting trains, railway depots, petrol stations and border crossings.", "start_ms": 256560, "end_ms": 266760, "paragraph_index": 24}, {"index": 29, "text": "Earlier this week, two people were killed when Russian drones hit a border crossing between Ukraine and Moldova, Ukrainian President Volodymyr Zelensky said.", "start_ms": 266760, "end_ms": 277776, "paragraph_index": 25}, {"index": 30, "text": "Also this week, a female conductor died in a Russian drone attack on a passenger train in southern Ukraine.", "start_ms": 277776, "end_ms": 285432, "paragraph_index": 26}, {"index": 31, "text": "Six Ukrzaliznytsia employees were killed after a depot was struck n Kyiv at the start of the month.", "start_ms": 285432, "end_ms": 292440, "paragraph_index": 26}, {"index": 32, "text": "In January, Zelensky condemned as \"terrorism\" a Russian strike on a crowded passenger train in the north-eastern Kharkiv region that left five people dead.", "start_ms": 292440, "end_ms": 303144, "paragraph_index": 27}, {"index": 33, "text": "The Russian attacks have significantly damaged Ukraine's vast train network - the main mode of transportation for millions of Ukrainians as all air travel has been suspended since the start of Russia's full-scale invasion in 2022.", "start_ms": 303144, "end_ms": 318576, "paragraph_index": 28}, {"index": 34, "text": "European countries are also blaming Russia for suspicious incidents on their territory.", "start_ms": 318576, "end_ms": 325008, "paragraph_index": 29}, {"index": 35, "text": "Last week, Germany said Russia was responsible for August's drone attack at Leipzig's airport - a claim denied by Moscow as \"absurd\".", "start_ms": 325008, "end_ms": 334920, "paragraph_index": 30}, {"index": 36, "text": "There have also been a number of suspicious fires at defence facilities from Italy to Estonia, with some of the affected countries blaming Russia.", "start_ms": 334920, "end_ms": 344616, "paragraph_index": 31}, {"index": 37, "text": "Europe targeted by spiralling campaign of sabotage - and Russia is the chief suspect", "start_ms": 344616, "end_ms": 351408, "paragraph_index": 32}, {"index": 38, "text": "Russia's new jet-powered drones outpacing Ukraine's air defences with daily launches", "start_ms": 351408, "end_ms": 358056, "paragraph_index": 33}, {"index": 39, "text": "Only Roland Garros towel left, says Ukraine tennis player after Russian strike hits flat", "start_ms": 358056, "end_ms": 365088, "paragraph_index": 34}], "total_duration_ms": 365088};
+  const WORD_GLOSS = {"the": "这个", "on": "在", "to": "到", "and": "和", "of": "的", "train": "火车", "in": "在", "russian": "俄罗斯的", "said": "说", "had": "有", "border": "边界", "at": "在", "that": "那个", "this": "这个", "been": "已经", "for": "为了", "was": "是", "strike": "罢工", "after": "之后", "johnson": "约翰逊", "european": "欧洲的", "security": "安全", "from": "来自", "russia": "俄罗斯", "ukraine": "乌克兰", "also": "也", "minister": "部长", "were": "是", "ukrainian": "乌克兰的", "it": "它", "has": "有", "hit": "击中", "former": "前任", "prime": "首相", "top": "顶级的", "their": "他们的", "kyiv": "基辅", "railway": "铁路", "have": "有", "an": "一个", "by": "被", "as": "作为", "week": "周", "be": "是", "passengers": "乘客", "way": "方式", "conference": "会议", "struck": "击中", "but": "但是", "ukraine's": "乌克兰的", "left": "离开", "station": "站点", "evacuation": "疏散", "polish": "波兰的", "we": "我们", "he": "他", "putin": "普京", "attack": "袭击", "ukrainians": "乌克兰人", "are": "是", "air": "气氛", "drones": "无人机", "with": "与", "is": "是", "not": "不", "hits": "命中", "near": "附近", "uk": "英国", "officials": "官员", "passed": "通过", "all": "所有", "authorities": "当局", "other": "其他", "advisers": "顾问", "same": "相同", "back": "后退", "could": "可能", "earlier": "较早", "strikes": "袭击", "order": "命令", "minutes": "会议记录", "before": "之前", "chief": "首席", "board": "董事会", "told": "告诉", "his": "他的", "prepare": "准备", "number": "数量", "some": "一些", "allies": "盟友", "provide": "提供", "defences": "防御", "they": "它们", "its": "它的", "more": "更多", "against": "反对", "daily": "每日", "attacks": "袭击", "last": "最后", "president": "总统", "moscow": "莫斯科", "war": "战争", "him": "他", "only": "只有", "closer": "更近的", "says": "表示", "europe": "欧洲", "people": "人们", "killed": "杀死", "zelensky": "泽连斯基", "passenger": "乘客", "start": "开始", "russia's": "俄罗斯的", "countries": "国家", "blaming": "责备", "suspicious": "可疑的", "video": "视频", "can": "可以", "played": "比赛", "watch": "观看", "moment": "时刻", "shortly": "不久", "boris": "鲍里斯", "through": "通过", "no": "没有", "casualties": "伤亡", "reported": "据报道", "which": "哪个", "engine": "引擎", "evacuated": "撤离", "national": "国家", "including": "包括", "uk's": "英国的", "jonathan": "乔纳森", "powell": "鲍威尔", "along": "一起", "line": "界限", "different": "不同的", "western": "西方的", "state": "国家", "company": "公司", "quite": "相当", "possibly": "可能", "target": "目标", "statement": "声明", "than": "比", "expected": "预期", "because": "因为", "timetable": "时间表", "change": "改变", "due": "应得", "constant": "持续", "threats": "威胁", "given": "给定", "just": "只是", "authority": "权威", "cia": "中情局", "david": "大卫", "another": "另一个", "time": "时间", "both": "两者", "who": "谁", "attended": "参加", "bbc": "英国广播公司", "subsequently": "随后", "being": "正在", "allowed": "允许", "continue": "继续", "journey": "旅程", "received": "受到", "stopped": "停止", "informed": "告知", "clear": "明确", "proceed": "进行", "then": "然后", "safely": "安全地", "arrived": "抵达", "reports": "报道", "suggested": "建议", "confirmed": "确认", "any": "任何", "details": "细节", "wrote": "写道", "don't": "不要", "know": "知道", "what": "什么", "blow": "打击", "up": "向上", "morning": "上午", "kind": "种类", "random": "随机的", "enduring": "持久的", "every": "每个", "day": "天", "even": "甚至", "civilian": "平民", "railways": "铁路", "urged": "敦促", "urgently": "紧急地", "need": "需要", "made": "做出", "repeated": "重复", "pleas": "请求", "particularly": "尤其", "us": "我们", "defend": "辩护", "increasingly": "日益", "use": "使用", "ballistic": "弹道", "missiles": "导弹", "seen": "被视为", "here": "这里", "book": "预订", "fair": "公平的", "alongside": "与...一起", "foreign": "外交", "andrii": "安德烈", "sybiha": "西比哈", "amounted": "相当于", "vladimir": "弗拉基米尔", "putin's": "普京的", "terror": "恐怖", "directly": "直接地", "doors": "门", "eu": "欧盟", "nato": "北约", "renewed": "重新开始的", "calls": "呼吁", "sanctions": "制裁", "needs": "需要", "understand": "理解", "will": "将", "met": "伦敦警察厅", "action": "行动", "increases": "增加", "cost": "成本", "unacceptable": "不可接受", "level": "水平", "stop": "停止", "poland": "波兰", "donald": "唐纳德", "tusk": "图斯克", "held": "举行", "emergency": "紧急", "meeting": "会议", "discuss": "讨论", "latest": "最新的", "developments": "事态发展", "actions": "行动", "side": "方面", "becoming": "变得", "reality": "现实", "getting": "获得", "our": "我们的", "strategy": "策略", "yes": "是的", "annual": "年度", "event": "事件", "brings": "带来", "together": "一起", "leaders": "领导人", "experts": "专家", "politics": "政治", "business": "事务", "mass": "大规模的", "media": "媒体", "pm's": "首相的", "adviser": "顾问", "faces": "面临", "hard": "艰难的", "winter": "冬季", "keep": "保持", "pressure": "压力", "appears": "似乎", "escalating": "升级", "targeting": "针对", "trains": "火车", "depots": "仓库", "petrol": "汽油", "stations": "车站", "crossings": "过境", "two": "两个", "when": "当", "crossing": "越境", "between": "之间", "volodymyr": "弗拉基米尔", "female": "女性", "died": "死亡", "southern": "南部的", "six": "六", "employees": "员工", "depot": "仓库", "month": "月份", "january": "一月", "condemned": "谴责", "terrorism": "恐怖主义", "north-eastern": "东北部", "region": "地区", "five": "五", "dead": "死亡", "significantly": "显著地", "damaged": "受损", "vast": "庞大的", "network": "网络", "main": "主要的", "mode": "模式", "transportation": "运输", "millions": "数百万", "travel": "旅行", "suspended": "暂停", "since": "自从", "full-scale": "全面的", "invasion": "入侵", "incidents": "事件", "territory": "领土", "germany": "德国", "responsible": "负责的", "airport": "机场", "claim": "声称", "denied": "拒绝", "there": "那里", "fires": "火灾", "defence": "国防", "facilities": "设施", "italy": "意大利", "affected": "受影响", "targeted": "针对", "spiralling": "螺旋式上升", "campaign": "竞选活动", "suspect": "嫌疑人", "new": "新的", "launches": "发射", "player": "球员", "flat": "公寓", "ukraine-poland": "乌克兰-波兰", "yahodyn": "亚霍丁", "ukrzaliznytsia": "乌克兰铁路", "bildt": "比尔特", "train's": "列车的", "petraeus": "彼得雷乌斯", "swedish": "瑞典的", "carl": "卡尔", "poland's": "波兰的", "dorohusk": "多罗胡斯克", "warped": "扭曲的", "logic": "逻辑", "drove": "驱使", "stationary": "静止的", "locomotive": "机车", "senseless": "无意义的", "kyiv's": "基辅的", "interceptors": "拦截器", "fast-moving": "快速移动的", "lviv": "利沃夫", "barbaric": "野蛮的", "knocking": "敲击", "barbarism": "野蛮行为", "decisive": "决定性的", "yalta": "雅尔塔", "moldova": "摩尔多瓦", "conductor": "列车员", "crowded": "拥挤的", "kharkiv": "哈尔科夫", "august's": "八月的", "leipzig's": "莱比锡的", "absurd": "荒谬的", "estonia": "爱沙尼亚", "jet-powered": "喷气动力的", "outpacing": "超过", "roland": "罗兰", "garros": "加洛斯", "towel": "毛巾", "tennis": "网球"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
