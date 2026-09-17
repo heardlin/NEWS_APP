@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-17</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/e4d0/live/8a926280-b1f1-11f1-a430-4d16ee157c41.jpg" alt="Body found in search for missing three-year-old Noah Woods" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Body found in search for missing three-year-old Noah Woods</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cm93v1573vqro?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-17.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Noah Woods was described as looking "happy and healthy" by one of the last people to see him</span></p>
+        <p class="cn">诺亚·伍兹（Noah Woods）被最后见到他的人之一描述为看起来“快乐而健康”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">A body has been found in the search for missing three-year-old boy Noah Woods, police have confirmed.</span></p>
+        <p class="cn">警方证实，在寻找失踪的三岁男孩诺亚·伍兹的过程中发现了一具尸体。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Noah disappeared at about 15:00 BST on Tuesday from a playground in Brantham, Suffolk, after becoming separated from a relative.</span></p>
+        <p class="cn">诺亚于周二英国夏令时15:00左右在萨福克郡布兰瑟姆的一个游乐场与亲戚走散后失踪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Supt Tom Pearse of Suffolk Police said dive teams recovered the body of a child from a nearby pond.</span></p>
+        <p class="cn">萨福克郡警察局的汤姆·皮尔斯警司（Supt Tom Pearse）表示，潜水队从附近的池塘中找到了一具儿童尸体。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">He said the death was being treated as <span class="keyword" data-word="unexplained" data-phonetic="/ˌʌnɪkˈspleɪnd/" data-pos="adj." data-def="未解释的；原因不明的" data-def-en="Not explained or made clear; mysterious.">unexplained</span> but not <span class="keyword" data-word="suspicious" data-phonetic="/səˈspɪʃəs/" data-pos="adj." data-def="可疑的；令人怀疑的" data-def-en="Causing a feeling that something is wrong or that someone is guilty.">suspicious</span>.</span></p>
+        <p class="cn">他说，死亡被视为原因不明，但无可疑之处。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">CCTV footage shows the last sighting of Noah at the playground</span></p>
+        <p class="cn">闭路电视录像显示了诺亚在游乐场的最后身影</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Supt Pearse said formal identification had yet to take place, but Noah's family had been informed.</span></p>
+        <p class="cn">皮尔斯警司表示，正式身份确认尚未进行，但诺亚的家人已被告知。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">"Our thoughts are with Noah's family and all those who knew him," he said.</span></p>
+        <p class="cn">他说：“我们的心与诺亚的家人以及所有认识他的人同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">"We have been overwhelmed by the <span class="keyword" data-word="outpouring" data-phonetic="/ˈaʊtpɔːrɪŋ/" data-pos="n." data-def="流露；涌现" data-def-en="A strong and rapid expression of emotion or support.">outpouring</span> of public support and people putting on their boots to help."</span></p>
+        <p class="cn">“公众的支持和人们踊跃参与帮助，让我们深受感动。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Police said at least 1,300 members of the public had helped in the search for the missing boy, who was non-verbal and partially deaf.</span></p>
+        <p class="cn">警方表示，至少有1300名公众参与了寻找这名失踪男孩的行动，该男孩不会说话且部分失聪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">People from as far afield as Birmingham and Hampshire had turned up to help.</span></p>
+        <p class="cn">来自远至伯明翰和汉普郡的人们也赶来帮忙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Helicopters, dog units and members of the public had been scouring the area, close to the estuary of the River Stour on the Essex border.</span></p>
+        <p class="cn">直升机、警犬队和公众一直在该地区进行搜索，该地区靠近埃塞克斯郡边界的斯陶尔河河口。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Volunteer efforts had been co-ordinated from Brantham Leisure Centre and the village hall, which ran out of hi-vis vests due to the number of volunteers.</span></p>
+        <p class="cn">志愿者工作由布兰瑟姆休闲中心和村政厅协调，由于志愿者人数众多，高可见度背心已用完。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Those looking for Noah had been told he would not respond to shouting.</span></p>
+        <p class="cn">寻找诺亚的人们被告知，他不会对呼喊做出回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">Supt Tom Pearse of Suffolk Police said: "Our thoughts are with Noah's family and all those who knew him"</span></p>
+        <p class="cn">萨福克郡警察局的汤姆·皮尔斯警司说：“我们的心与诺亚的家人以及所有认识他的人同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Michael Crowley, who was working opposite the playground on Tuesday and was one of the last people to see Noah before he went missing, said: "He looked happy and healthy as anything."</span></p>
+        <p class="cn">迈克尔·克劳利（Michael Crowley）周二在游乐场对面工作，是诺亚失踪前最后见到他的人之一，他说：“他看起来非常快乐和健康。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Jessica Gammons, a mother-of-two from Kelvedon, in Essex, was among the many volunteers who went out to look for the toddler.</span></p>
+        <p class="cn">来自埃塞克斯郡凯尔维登的两个孩子的母亲杰西卡·加蒙斯（Jessica Gammons）是众多出去寻找这名幼儿的志愿者之一。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">She said she felt compelled join the search, despite being heavily pregnant, because her son, like Noah, is three years old.</span></p>
+        <p class="cn">她说，尽管身怀六甲，她仍觉得必须加入搜索，因为她的儿子和诺亚一样，也是三岁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">"I kept thinking to myself 'If this was my son, I'd want everyone possible to help,'" she said.</span></p>
+        <p class="cn">她说：“我一直在想，‘如果这是我的儿子，我会希望所有人都来帮忙。’”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">"It's such a sad situation.</span> <span class="sentence" data-sentence-index="21">I can't stop thinking about him."</span></p>
+        <p class="cn">“这太令人悲伤了。我无法停止想他。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">Jessica Gammons, a mother of two, was among the volunteers who helped in the search</span></p>
+        <p class="cn">杰西卡·加蒙斯，两个孩子的母亲，是参与搜索的志愿者之一</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Searches had widened to include East Bergholt and Manningtree, over the Essex border, on Wednesday.</span></p>
+        <p class="cn">周三，搜索范围已扩大到包括埃塞克斯郡边界外的东贝霍尔特和曼宁特里。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Divers from the Metropolitan Police were called in to search Decoy Pond, a nearby fishing lake.</span></p>
+        <p class="cn">伦敦警察厅的潜水员被召来搜索附近的钓鱼湖迪科伊池塘。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">The pond is about 350 yds (320m) away from the playground where Noah was last seen.</span></p>
+        <p class="cn">该池塘距离诺亚最后被看到的游乐场约350码（320米）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">Police said at least 1,300 members of the public had joined emergency services in the search for the missing boy</span></p>
+        <p class="cn">警方表示，至少有1300名公众加入了紧急服务部门寻找失踪男孩的行动</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">Supt Pearse continued: "Since Noah was reported as missing, a vast number of our officers and staff have been deployed in numerous functions in the search for Noah and support for his family.</span></p>
+        <p class="cn">皮尔斯警司继续说：“自从诺亚被报告失踪以来，我们的大量警员和工作人员已被部署到众多岗位，寻找诺亚并支持他的家人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">"We've been supported by Suffolk HART (Hazardous Area Response Team), SULSAR (Suffolk Lowland Search and Rescue), Environment Agency, HM Coastguard, Fire and Rescue Service and the ambulance service.</span></p>
+        <p class="cn">“我们得到了萨福克郡HART（危险区域响应小组）、SULSAR（萨福克低地搜索与救援）、环境署、英国海岸警卫队、消防与救援服务以及救护服务的支持。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">"As a parent myself, I completely understand why people would want to help and such a response is one that typifies the strong sense of community and the heart-warming nature of Suffolk people that make the county such a special place.</span></p>
+        <p class="cn">“作为一名家长，我完全理解人们为何想要帮忙，这样的响应体现了强烈的社区意识和萨福克人民温暖人心的天性，使这个郡成为一个如此特别的地方。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">"I am sure you appreciate the family now need time, space and privacy and I thank you for your understanding in this."</span></p>
+        <p class="cn">“我相信您能理解，这家人现在需要时间、空间和隐私，我感谢您在这方面的理解。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">Search continues for boy, 3, missing from playground</span></p>
+        <p class="cn">继续搜索从游乐场失踪的3岁男孩</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recover</span>
+        <button class="kw-speak-btn" data-word="recover" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈkʌvər/ v.</span>
+      </div>
+      <p class="kw-def">找回；恢复</p>
+      <p class="kw-def-en">To find or get back something that was lost.</p>
+      <p class="kw-ctx">&ldquo;Supt Tom Pearse of Suffolk Police said dive teams recovered the body of a child from a nearby pond.&rdquo;</p>
+      <p class="kw-ctx-cn">萨福克郡警察局的汤姆·皮尔斯警司说，潜水队从附近的一个池塘中打捞出一具儿童的尸体。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unexplained</span>
+        <button class="kw-speak-btn" data-word="unexplained" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌnɪkˈspleɪnd/ adj.</span>
+      </div>
+      <p class="kw-def">未解释的；原因不明的</p>
+      <p class="kw-def-en">Not explained or made clear; mysterious.</p>
+      <p class="kw-ctx">&ldquo;He said the death was being treated as unexplained but not suspicious.&rdquo;</p>
+      <p class="kw-ctx-cn">他说，这起死亡事件被视为原因不明，但没有可疑之处。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicious</span>
+        <button class="kw-speak-btn" data-word="suspicious" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃəs/ adj.</span>
+      </div>
+      <p class="kw-def">可疑的；令人怀疑的</p>
+      <p class="kw-def-en">Causing a feeling that something is wrong or that someone is guilty.</p>
+      <p class="kw-ctx">&ldquo;He said the death was being treated as unexplained but not suspicious.&rdquo;</p>
+      <p class="kw-ctx-cn">他说，这起死亡事件被视为原因不明，但没有可疑之处。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">outpouring</span>
+        <button class="kw-speak-btn" data-word="outpouring" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈaʊtpɔːrɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">流露；涌现</p>
+      <p class="kw-def-en">A strong and rapid expression of emotion or support.</p>
+      <p class="kw-ctx">&ldquo;We have been overwhelmed by the outpouring of public support and people putting on their boots to help.&rdquo;</p>
+      <p class="kw-ctx-cn">公众的支持和人们纷纷伸出援手，让我们深受感动。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scour</span>
+        <button class="kw-speak-btn" data-word="scour" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskaʊər/ v.</span>
+      </div>
+      <p class="kw-def">搜寻；仔细搜索</p>
+      <p class="kw-def-en">To search a place or area very carefully.</p>
+      <p class="kw-ctx">&ldquo;Helicopters, dog units and members of the public had been scouring the area, close to the estuary of the River Stour on the Essex border.&rdquo;</p>
+      <p class="kw-ctx-cn">直升机、警犬队和公众一直在该地区仔细搜索，该地区靠近埃塞克斯郡边界的斯陶尔河河口。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">co-ordinate</span>
+        <button class="kw-speak-btn" data-word="co-ordinate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/koʊˈɔːrdɪneɪt/ v.</span>
+      </div>
+      <p class="kw-def">协调；统筹</p>
+      <p class="kw-def-en">To organize people or activities so that they work together effectively.</p>
+      <p class="kw-ctx">&ldquo;Volunteer efforts had been co-ordinated from Brantham Leisure Centre and the village hall, which ran out of hi-vis vests due to the number of volunteers.&rdquo;</p>
+      <p class="kw-ctx-cn">志愿者工作一直在布兰瑟姆休闲中心和村政厅进行协调，由于志愿者人数众多，那里的高能见度背心已经用完。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compel</span>
+        <button class="kw-speak-btn" data-word="compel" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəmˈpel/ v.</span>
+      </div>
+      <p class="kw-def">迫使；使不得不</p>
+      <p class="kw-def-en">To force or make someone feel that they must do something.</p>
+      <p class="kw-ctx">&ldquo;She said she felt compelled join the search, despite being heavily pregnant, because her son, like Noah, is three years old.&rdquo;</p>
+      <p class="kw-ctx-cn">她说，尽管她已怀孕晚期，但她感到有必要加入搜寻，因为她的儿子和诺亚一样，都是三岁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">typify</span>
+        <button class="kw-speak-btn" data-word="typify" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɪpɪfaɪ/ v.</span>
+      </div>
+      <p class="kw-def">是…的典型；代表</p>
+      <p class="kw-def-en">To be a typical example or representation of something.</p>
+      <p class="kw-ctx">&ldquo;As a parent myself, I completely understand why people would want to help and such a response is one that typifies the strong sense of community and the heart-warming nature of Suffolk people that make the county such a special place.&rdquo;</p>
+      <p class="kw-ctx-cn">作为一名家长，我完全理解人们为什么想要帮忙，这种反应正是萨福克郡人民强烈的社区意识和温暖人心的特质的典型体现，使该郡成为一个如此特别的地方。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Noah Woods was described as looking \"happy and healthy\" by one of the last people to see him", "start_ms": 0, "end_ms": 6336, "paragraph_index": 0}, {"index": 1, "text": "A body has been found in the search for missing three-year-old boy Noah Woods, police have confirmed.", "start_ms": 6336, "end_ms": 13128, "paragraph_index": 1}, {"index": 2, "text": "Noah disappeared at about 15:00 BST on Tuesday from a playground in Brantham, Suffolk, after becoming separated from a relative.", "start_ms": 13128, "end_ms": 24240, "paragraph_index": 2}, {"index": 3, "text": "Supt Tom Pearse of Suffolk Police said dive teams recovered the body of a child from a nearby pond.", "start_ms": 24240, "end_ms": 31392, "paragraph_index": 3}, {"index": 4, "text": "He said the death was being treated as unexplained but not suspicious.", "start_ms": 31392, "end_ms": 36672, "paragraph_index": 4}, {"index": 5, "text": "This video can not be played", "start_ms": 36672, "end_ms": 39672, "paragraph_index": 5}, {"index": 6, "text": "CCTV footage shows the last sighting of Noah at the playground", "start_ms": 39672, "end_ms": 45000, "paragraph_index": 6}, {"index": 7, "text": "Supt Pearse said formal identification had yet to take place, but Noah's family had been informed.", "start_ms": 45000, "end_ms": 52368, "paragraph_index": 7}, {"index": 8, "text": "\"Our thoughts are with Noah's family and all those who knew him,\" he said.", "start_ms": 52368, "end_ms": 57264, "paragraph_index": 8}, {"index": 9, "text": "\"We have been overwhelmed by the outpouring of public support and people putting on their boots to help.\"", "start_ms": 57264, "end_ms": 63816, "paragraph_index": 9}, {"index": 10, "text": "Police said at least 1,300 members of the public had helped in the search for the missing boy, who was non-verbal and partially deaf.", "start_ms": 63816, "end_ms": 73200, "paragraph_index": 10}, {"index": 11, "text": "People from as far afield as Birmingham and Hampshire had turned up to help.", "start_ms": 73200, "end_ms": 78648, "paragraph_index": 11}, {"index": 12, "text": "Helicopters, dog units and members of the public had been scouring the area, close to the estuary of the River Stour on the Essex border.", "start_ms": 78648, "end_ms": 88416, "paragraph_index": 12}, {"index": 13, "text": "Volunteer efforts had been co-ordinated from Brantham Leisure Centre and the village hall, which ran out of hi-vis vests due to the number of volunteers.", "start_ms": 88416, "end_ms": 98496, "paragraph_index": 13}, {"index": 14, "text": "Those looking for Noah had been told he would not respond to shouting.", "start_ms": 98496, "end_ms": 103272, "paragraph_index": 14}, {"index": 15, "text": "Supt Tom Pearse of Suffolk Police said: \"Our thoughts are with Noah's family and all those who knew him\"", "start_ms": 103272, "end_ms": 110088, "paragraph_index": 15}, {"index": 16, "text": "Michael Crowley, who was working opposite the playground on Tuesday and was one of the last people to see Noah before he went missing, said: \"He looked happy and healthy as anything.\"", "start_ms": 110088, "end_ms": 121896, "paragraph_index": 16}, {"index": 17, "text": "Jessica Gammons, a mother-of-two from Kelvedon, in Essex, was among the many volunteers who went out to look for the toddler.", "start_ms": 121896, "end_ms": 130776, "paragraph_index": 17}, {"index": 18, "text": "She said she felt compelled join the search, despite being heavily pregnant, because her son, like Noah, is three years old.", "start_ms": 130776, "end_ms": 139656, "paragraph_index": 18}, {"index": 19, "text": "\"I kept thinking to myself 'If this was my son, I'd want everyone possible to help,'\" she said.", "start_ms": 139656, "end_ms": 146568, "paragraph_index": 19}, {"index": 20, "text": "\"It's such a sad situation.", "start_ms": 146568, "end_ms": 149520, "paragraph_index": 20}, {"index": 21, "text": "I can't stop thinking about him.\"", "start_ms": 149520, "end_ms": 152544, "paragraph_index": 20}, {"index": 22, "text": "Jessica Gammons, a mother of two, was among the volunteers who helped in the search", "start_ms": 152544, "end_ms": 158856, "paragraph_index": 21}, {"index": 23, "text": "Searches had widened to include East Bergholt and Manningtree, over the Essex border, on Wednesday.", "start_ms": 158856, "end_ms": 166200, "paragraph_index": 22}, {"index": 24, "text": "Divers from the Metropolitan Police were called in to search Decoy Pond, a nearby fishing lake.", "start_ms": 166200, "end_ms": 173304, "paragraph_index": 23}, {"index": 25, "text": "The pond is about 350 yds (320m) away from the playground where Noah was last seen.", "start_ms": 173304, "end_ms": 181536, "paragraph_index": 24}, {"index": 26, "text": "Police said at least 1,300 members of the public had joined emergency services in the search for the missing boy", "start_ms": 181536, "end_ms": 189912, "paragraph_index": 25}, {"index": 27, "text": "Supt Pearse continued: \"Since Noah was reported as missing, a vast number of our officers and staff have been deployed in numerous functions in the search for Noah and support for his family.", "start_ms": 189912, "end_ms": 202272, "paragraph_index": 26}, {"index": 28, "text": "\"We've been supported by Suffolk HART (Hazardous Area Response Team), SULSAR (Suffolk Lowland Search and Rescue), Environment Agency, HM Coastguard, Fire and Rescue Service and the ambulance service.", "start_ms": 202272, "end_ms": 217032, "paragraph_index": 27}, {"index": 29, "text": "\"As a parent myself, I completely understand why people would want to help and such a response is one that typifies the strong sense of community and the heart-warming nature of Suffolk people that make the county such a special place.", "start_ms": 217032, "end_ms": 231312, "paragraph_index": 28}, {"index": 30, "text": "\"I am sure you appreciate the family now need time, space and privacy and I thank you for your understanding in this.\"", "start_ms": 231312, "end_ms": 239784, "paragraph_index": 29}, {"index": 31, "text": "Search continues for boy, 3, missing from playground", "start_ms": 239784, "end_ms": 244728, "paragraph_index": 30}], "total_duration_ms": 244728};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "to": "到", "was": "是", "in": "在", "said": "说", "search": "搜索", "for": "为了", "from": "来自", "had": "有", "been": "已经", "as": "作为", "people": "人们", "missing": "失踪", "police": "警方", "suffolk": "萨福克郡", "who": "谁", "on": "在", "playground": "操场", "he": "他", "family": "家庭", "last": "最后", "him": "他", "boy": "男孩", "at": "在", "supt": "警司", "public": "公众", "help": "帮助", "by": "被", "one": "一个", "have": "有", "about": "关于", "not": "不", "this": "这个", "our": "我们的", "those": "那些", "members": "成员", "essex": "埃塞克斯", "volunteers": "志愿者", "she": "她", "is": "是", "such": "如此", "woods": "树林", "looking": "寻找", "happy": "高兴的", "healthy": "健康的", "see": "看到", "body": "机构", "tuesday": "星期二", "tom": "汤姆", "nearby": "附近", "being": "正在", "but": "但是", "place": "地点", "thoughts": "想法", "are": "是", "with": "与", "all": "所有", "knew": "知道", "support": "支持", "least": "至少", "helped": "帮助", "area": "区域", "border": "边界", "out": "出来", "number": "数量", "would": "将", "went": "去", "among": "在...之中", "son": "儿子", "thinking": "思考", "myself": "我自己", "want": "想要", "response": "回应", "rescue": "救援", "service": "服务", "that": "那个", "you": "你", "described": "描述", "has": "有", "found": "发现", "three-year-old": "三岁的", "confirmed": "确认", "disappeared": "消失了", "bst": "英国夏令时", "after": "之后", "becoming": "变得", "separated": "分开的", "teams": "团队", "recovered": "恢复", "child": "孩子", "death": "死亡", "treated": "接受治疗", "video": "视频", "can": "可以", "be": "是", "played": "比赛", "cctv": "闭路电视", "footage": "视频片段", "shows": "显示", "formal": "正式的", "identification": "识别", "yet": "尚未", "take": "采取", "informed": "告知", "we": "我们", "putting": "放置", "their": "他们的", "non-verbal": "非语言的", "partially": "部分地", "far": "远", "birmingham": "伯明翰", "hampshire": "汉普郡", "turned": "转向", "up": "向上", "helicopters": "直升机", "dog": "狗", "units": "单位", "close": "密切的", "river": "河", "volunteer": "志愿者", "efforts": "努力", "co-ordinated": "协调的", "centre": "中心", "village": "村庄", "hall": "霍尔", "which": "哪个", "ran": "运行", "due": "应得", "told": "告诉", "respond": "回应", "shouting": "大喊", "michael": "迈克尔", "working": "工作", "opposite": "相反的", "before": "之前", "looked": "看起来", "anything": "任何事", "many": "许多", "look": "看起来", "felt": "感觉", "join": "加入", "despite": "尽管", "heavily": "大量地", "pregnant": "怀孕的", "because": "因为", "her": "她的", "like": "像", "three": "三个", "years": "多年", "old": "旧的", "kept": "保留", "if": "如果", "my": "我的", "i'd": "我会", "everyone": "每个人", "possible": "可能的", "it's": "它是", "sad": "悲伤的", "situation": "局势", "can't": "不能", "stop": "停止", "mother": "母亲", "two": "两个", "include": "包括", "east": "东部", "over": "超过", "wednesday": "星期三", "metropolitan": "伦敦警察厅", "were": "是", "called": "称为", "lake": "湖", "away": "离开", "where": "那里", "seen": "被视为", "joined": "加入", "emergency": "紧急", "services": "服务", "continued": "持续的", "since": "自从", "reported": "据报道", "vast": "庞大的", "officers": "官员", "staff": "员工", "deployed": "部署", "numerous": "众多的", "his": "他的", "we've": "我们已经", "supported": "支持", "team": "团队", "environment": "环境", "agency": "机构", "hm": "陛下", "coastguard": "海岸警卫队", "fire": "射击", "ambulance": "救护车", "parent": "家长", "completely": "完全", "understand": "理解", "why": "为何", "strong": "强烈", "sense": "感觉", "community": "社区", "nature": "性质", "make": "使", "county": "郡", "special": "特别的", "am": "是", "sure": "确定", "now": "现在", "need": "需要", "time": "时间", "space": "空间", "privacy": "隐私", "thank": "感谢", "your": "你的", "understanding": "谅解", "continues": "继续", "noah": "诺亚", "pearse": "皮尔斯", "pond": "池塘", "noah's": "诺亚的", "brantham": "布兰瑟姆", "jessica": "杰西卡", "gammons": "甘蒙斯", "relative": "亲属", "dive": "潜水", "sighting": "目击", "overwhelmed": "深受感动", "boots": "靴子", "deaf": "耳聋的", "afield": "在野外", "scouring": "搜寻", "estuary": "河口", "stour": "斯陶尔河", "leisure": "休闲", "hi-vis": "高可见度", "vests": "背心", "crowley": "克劳利", "mother-of-two": "两个孩子的母亲", "kelvedon": "凯尔弗登", "toddler": "幼儿", "compelled": "被迫", "searches": "搜索", "widened": "扩大", "bergholt": "伯格霍尔特", "manningtree": "曼宁特里", "divers": "潜水员", "decoy": "诱饵", "fishing": "钓鱼", "yds": "码", "functions": "功能", "hart": "哈特", "hazardous": "危险的", "sulsar": "苏尔萨", "lowland": "低地", "typifies": "典型体现", "heart-warming": "暖心的", "appreciate": "感激"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
