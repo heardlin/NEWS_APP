@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-18</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-18</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/a1d9/live/919d1120-b3ad-11f1-baa2-f576e6b1431d.jpg" alt="US and Denmark reach deal over Greenland after Trump annexation threats" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US and Denmark reach deal over Greenland after Trump annexation threats</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c63d7lexyym1o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-18.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The US and Denmark have announced a deal on Greenland's security, resolving a <span class="keyword" data-word="diplomatic" data-phonetic="/ˌdɪpləˈmætɪk/" data-pos="adj." data-def="外交的" data-def-en="Relating to the management of international relations.">diplomatic</span> dispute sparked by President Donald Trump's threats to seize the territory by force.</span></p>
+        <p class="cn">美国和丹麦宣布就格陵兰岛安全达成协议，解决了由美国总统唐纳德·特朗普（Donald Trump）威胁以武力夺取该领土而引发的外交争端。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Trump said the agreement would grant the US "permanent control over security, and all other needs".</span></p>
+        <p class="cn">特朗普表示，该协议将赋予美国“对安全及所有其他需求的永久控制权”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Denmark's Prime Minister said the deal "strengthens security in the Arctic and the North Atlantic area" but did not address specifics in the agreement that Trump mentioned in a social media post.</span></p>
+        <p class="cn">丹麦首相表示，该协议“加强了北极和北大西洋地区的安全”，但未提及特朗普在社交媒体帖子中提到的协议具体内容。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The deal comes after months of threats by Trump to "take" Greenland over national security concerns, citing its strategic location for defence purposes and its mineral wealth.</span></p>
+        <p class="cn">该协议达成之前，特朗普数月来以国家安全为由威胁“夺取”格陵兰岛， citing其战略位置对国防的重要性及其矿产资源。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Trump, in a post on Truth Social, said the deal comes with "no cost to the United States" and will grant the US the ability to "to do what is necessary" to "secure and defend the security of Greenland".</span></p>
+        <p class="cn">特朗普在Truth Social上发帖称，该协议“对美国没有成本”，并将赋予美国“采取必要措施”来“保障和捍卫格陵兰岛安全”的能力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">He said it includes a rule that no US adversary can maintain a military presence in Greenland or "make sensitive investments in Greenland, without our express written approval".</span></p>
+        <p class="cn">他说，协议包括一项规定，即任何美国对手都不得在格陵兰岛维持军事存在，或“未经我们明确书面批准，在格陵兰岛进行敏感投资”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Denmark's Prime Minister Mette Frederiksen confirmed that the agreement will be signed at the United Nations General Assembly next week.</span></p>
+        <p class="cn">丹麦首相梅特·弗雷德里克森（Mette Frederiksen）确认，该协议将于下周在联合国大会上签署。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">She said the agreement "strengthens our common security in the Arctic and the North Atlantic area" while also "at the same time recognizes the <span class="keyword" data-word="sovereignty" data-phonetic="/ˈsɒvrənti/" data-pos="n." data-def="主权" data-def-en="The full right and power of a governing body over itself, without any interference from outside sources.">sovereignty</span> and <span class="keyword" data-word="territorial" data-phonetic="/ˌterəˈtɔːriəl/" data-pos="adj." data-def="领土的" data-def-en="Relating to the territory of a country or region.">territorial</span> integrity of the Kingdom and the right of the Greenlandic people to self-determination".</span></p>
+        <p class="cn">她说，该协议“加强了我们在北极和北大西洋地区的共同安全”，同时“承认了王国的 sovereignty and territorial integrity 以及格陵兰人民自决的权利”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">She added that the deal still needs approval from legislators, and "will have to go through the necessary <span class="keyword" data-word="parliamentary" data-phonetic="/ˌpɑːləˈmentri/" data-pos="adj." data-def="议会的" data-def-en="Relating to a parliament or its procedures.">parliamentary</span> procedures to enter into force".</span></p>
+        <p class="cn">她补充说，该协议仍需立法者批准，并“必须经过必要的议会程序才能生效”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Chairman of the Greenland Government Jens-Frederik Nielsen said in a statement announcing the deal that it "is gratifying that we are about to enter into an agreement that ensures and strengthens the security" of Greenland, Denmark and the US.</span></p>
+        <p class="cn">格陵兰政府主席延斯-弗雷德里克·尼尔森（Jens-Frederik Nielsen）在宣布协议的声明中表示，“令人欣慰的是，我们即将达成一项确保并加强格陵兰、丹麦和美国安全的协议”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"The agreement recognises Greenland's interests and our place in international co-operation.</span> <span class="sentence" data-sentence-index="11">It is for the benefit of us all," he said.</span></p>
+        <p class="cn">“该协议承认了格陵兰的利益和我们在国际合作中的地位。这符合我们所有人的利益，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Trump had tried for months to purchase or annex the mineral-rich Danish territory, arguing that it is vulnerable to adversaries, including Russia and China.</span> <span class="sentence" data-sentence-index="13">He even threatened military action in Greenland, prompting an outcry from Danes and other Nato countries.</span></p>
+        <p class="cn">特朗普数月来试图购买或吞并这个矿产资源丰富的丹麦领土，认为它容易受到包括俄罗斯和中国在内的对手的影响。他甚至威胁在格陵兰岛采取军事行动，引发丹麦人和其他北约国家的强烈抗议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="14">US Secretary of State Marco Rubio called it a "historic deal" and a "huge win for the United States and the American people".</span></p>
+        <p class="cn">美国国务卿马可·卢比奥（Marco Rubio）称其为“历史性协议”和“美国和 American people 的巨大胜利”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="15">"This deal permanently and completely addresses our national security concerns in Greenland," he said in a statement.</span></p>
+        <p class="cn">“该协议永久且彻底地解决了我们在格陵兰岛的国家安全关切，”他在一份声明中说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="16">No text of the agreement has been released.</span> <span class="sentence" data-sentence-index="17">The BBC has reached out to the Danish Embassy and the White House.</span></p>
+        <p class="cn">协议文本尚未公布。BBC已联系丹麦大使馆和白宫。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">However, an unnamed US State Department official outlined the deal without providing specifics.</span></p>
+        <p class="cn">然而，一位未具名的美国国务院官员概述了该协议，但未提供具体细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Among the agreed provisions is one stating the deal would not expire even if Greenland became an independent country in the future.</span></p>
+        <p class="cn">已商定的条款中包括一项规定，即即使格陵兰岛未来成为独立国家，该协议也不会到期。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">The official added that under the deal, the US has <span class="keyword" data-word="unilateral" data-phonetic="/ˌjuːnɪˈlætərəl/" data-pos="adj." data-def="单方面的" data-def-en="Performed by or affecting only one person, group, or country involved in a situation, without the agreement of another or the others.">unilateral</span> power to build additional military structures with no approval needed from Greenland or Denmark.</span> <span class="sentence" data-sentence-index="21">It includes "permanent access, basing and overflights rights," the official said.</span></p>
+        <p class="cn">该官员补充说，根据协议，美国拥有单方面权力建造额外军事设施，无需格陵兰岛或丹麦批准。该官员说，协议包括“永久准入、驻军和飞越权”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="22">It also bans non-Nato countries from building bases in Greenland, and "bans adversaries from making investments in Greenland that could threaten the United States".</span></p>
+        <p class="cn">协议还禁止非北约国家在格陵兰岛建造基地，并“禁止对手在格陵兰岛进行可能威胁美国的投资”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="23">The official added that under the current status quo, adversaries have been allowed to invest in Greenland's "sensitive sectors without investment screening".</span></p>
+        <p class="cn">该官员补充说，在当前现状下，对手被允许在格陵兰岛“敏感领域投资而无需投资审查”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="24">The official specifically referenced Russia and China, saying it blocks them from deploying troops or making investments in "sensitive sectors".</span></p>
+        <p class="cn">该官员特别提到俄罗斯和中国，称该协议阻止他们在“敏感领域”部署军队或进行投资。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">Without the official text being released, it is unclear how exactly the deal differs from a 1951 agreement with Denmark, under which the US can send as many troops as it wants to Greenland.</span></p>
+        <p class="cn">由于官方文本尚未公布，目前不清楚该协议与1951年与丹麦达成的协议有何具体不同，根据该协议，美国可以向格陵兰岛派遣任意数量的军队。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">The US already has more than 100 military personnel permanently stationed at its Pituffik base in the north-western tip of the territory.</span></p>
+        <p class="cn">美国已在该领土西北端的皮图菲克（Pituffik）基地永久驻扎了100多名军事人员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">Trump says Greenland is essential for his plan to build a Golden Dome defence system, designed to protect the US against missile attacks from Russia and China, and that European allies could co-operate in this endeavor.</span></p>
+        <p class="cn">特朗普表示，格陵兰岛对于他建造金色穹顶（Golden Dome）防御系统的计划至关重要，该系统旨在保护美国免受来自俄罗斯和中国的导弹袭击，欧洲盟友可以在这项努力中合作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">The island has vast - and largely <span class="keyword" data-word="untapped" data-phonetic="/ˌʌnˈtæpt/" data-pos="adj." data-def="未开发的" data-def-en="Not yet used or exploited.">untapped</span> - reserves of rare earth minerals, many of which are crucial for technologies including mobile phones and electric vehicles.</span></p>
+        <p class="cn">该岛拥有 vast - and largely untapped - reserves of rare earth minerals，其中许多对包括移动电话和电动汽车在内的技术至关重要。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">US in closely guarded talks to open new bases in Greenland</span></p>
+        <p class="cn">美国在严密保密的谈判中寻求在格陵兰岛开设新基地</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">What we know about Trump's  'framework of future deal' over Greenland</span></p>
+        <p class="cn">关于特朗普格陵兰岛“未来协议框架”我们所知道的一切</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Why does Trump want Greenland and what could it mean for Nato and the EU?</span></p>
+        <p class="cn">特朗普为什么想要格陵兰岛，这对北约和欧盟可能意味着什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">US allies won't forget Trump Greenland crisis</span></p>
+        <p class="cn">美国盟友不会忘记特朗普格陵兰岛危机</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">diplomatic</span>
+        <button class="kw-speak-btn" data-word="diplomatic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdɪpləˈmætɪk/ adj.</span>
+      </div>
+      <p class="kw-def">外交的</p>
+      <p class="kw-def-en">Relating to the management of international relations.</p>
+      <p class="kw-ctx">&ldquo;The US and Denmark have announced a deal on Greenland's security, resolving a diplomatic dispute sparked by President Donald Trump's threats to seize the territory by force.&rdquo;</p>
+      <p class="kw-ctx-cn">美国和丹麦宣布就格陵兰岛安全达成协议，解决了由特朗普总统威胁武力夺取该领土引发的外交争端。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sovereignty</span>
+        <button class="kw-speak-btn" data-word="sovereignty" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsɒvrənti/ n.</span>
+      </div>
+      <p class="kw-def">主权</p>
+      <p class="kw-def-en">The full right and power of a governing body over itself, without any interference from outside sources.</p>
+      <p class="kw-ctx">&ldquo;She said the agreement "strengthens our common security in the Arctic and the North Atlantic area" while also "at the same time recognizes the sovereignty and territorial integrity of the Kingdom and the right of the Greenlandic people to self-determination".&rdquo;</p>
+      <p class="kw-ctx-cn">她说，该协议“加强了我们在北极和北大西洋地区的共同安全”，同时“承认了王国的主权和领土完整以及格陵兰人民的自决权”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">territorial</span>
+        <button class="kw-speak-btn" data-word="territorial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌterəˈtɔːriəl/ adj.</span>
+      </div>
+      <p class="kw-def">领土的</p>
+      <p class="kw-def-en">Relating to the territory of a country or region.</p>
+      <p class="kw-ctx">&ldquo;She said the agreement "strengthens our common security in the Arctic and the North Atlantic area" while also "at the same time recognizes the sovereignty and territorial integrity of the Kingdom and the right of the Greenlandic people to self-determination".&rdquo;</p>
+      <p class="kw-ctx-cn">她说，该协议“加强了我们在北极和北大西洋地区的共同安全”，同时“承认了王国的主权和领土完整以及格陵兰人民的自决权”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">parliamentary</span>
+        <button class="kw-speak-btn" data-word="parliamentary" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌpɑːləˈmentri/ adj.</span>
+      </div>
+      <p class="kw-def">议会的</p>
+      <p class="kw-def-en">Relating to a parliament or its procedures.</p>
+      <p class="kw-ctx">&ldquo;She added that the deal still needs approval from legislators, and "will have to go through the necessary parliamentary procedures to enter into force".&rdquo;</p>
+      <p class="kw-ctx-cn">她补充说，该协议仍需立法者批准，并且“必须经过必要的议会程序才能生效”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unilateral</span>
+        <button class="kw-speak-btn" data-word="unilateral" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌjuːnɪˈlætərəl/ adj.</span>
+      </div>
+      <p class="kw-def">单方面的</p>
+      <p class="kw-def-en">Performed by or affecting only one person, group, or country involved in a situation, without the agreement of another or the others.</p>
+      <p class="kw-ctx">&ldquo;The official added that under the deal, the US has unilateral power to build additional military structures with no approval needed from Greenland or Denmark.&rdquo;</p>
+      <p class="kw-ctx-cn">这位官员补充说，根据协议，美国拥有单方面权力建造额外的军事设施，无需格陵兰或丹麦的批准。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">provision</span>
+        <button class="kw-speak-btn" data-word="provision" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈvɪʒn/ n.</span>
+      </div>
+      <p class="kw-def">条款</p>
+      <p class="kw-def-en">A condition or stipulation in a legal document or agreement.</p>
+      <p class="kw-ctx">&ldquo;Among the agreed provisions is one stating the deal would not expire even if Greenland became an independent country in the future.&rdquo;</p>
+      <p class="kw-ctx-cn">在商定的条款中，有一条规定即使格陵兰将来成为独立国家，该协议也不会到期。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deploy</span>
+        <button class="kw-speak-btn" data-word="deploy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈplɔɪ/ v.</span>
+      </div>
+      <p class="kw-def">部署</p>
+      <p class="kw-def-en">To move troops or equipment into position for military action.</p>
+      <p class="kw-ctx">&ldquo;The official specifically referenced Russia and China, saying it blocks them from deploying troops or making investments in "sensitive sectors".&rdquo;</p>
+      <p class="kw-ctx-cn">这位官员特别提到俄罗斯和中国，称该协议阻止他们在“敏感领域”部署军队或进行投资。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">untapped</span>
+        <button class="kw-speak-btn" data-word="untapped" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌʌnˈtæpt/ adj.</span>
+      </div>
+      <p class="kw-def">未开发的</p>
+      <p class="kw-def-en">Not yet used or exploited.</p>
+      <p class="kw-ctx">&ldquo;The island has vast - and largely untapped - reserves of rare earth minerals, many of which are crucial for technologies including mobile phones and electric vehicles.&rdquo;</p>
+      <p class="kw-ctx-cn">该岛拥有 vast - 且基本上未开发 - 的稀土矿物储量，其中许多对包括手机和电动汽车在内的技术至关重要。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The US and Denmark have announced a deal on Greenland's security, resolving a diplomatic dispute sparked by President Donald Trump's threats to seize the territory by force.", "start_ms": 0, "end_ms": 12024, "paragraph_index": 0}, {"index": 1, "text": "Trump said the agreement would grant the US \"permanent control over security, and all other needs\".", "start_ms": 12024, "end_ms": 19200, "paragraph_index": 1}, {"index": 2, "text": "Denmark's Prime Minister said the deal \"strengthens security in the Arctic and the North Atlantic area\" but did not address specifics in the agreement that Trump mentioned in a social media post.", "start_ms": 19200, "end_ms": 31488, "paragraph_index": 2}, {"index": 3, "text": "The deal comes after months of threats by Trump to \"take\" Greenland over national security concerns, citing its strategic location for defence purposes and its mineral wealth.", "start_ms": 31488, "end_ms": 43296, "paragraph_index": 3}, {"index": 4, "text": "Trump, in a post on Truth Social, said the deal comes with \"no cost to the United States\" and will grant the US the ability to \"to do what is necessary\" to \"secure and defend the security of Greenland\".", "start_ms": 43296, "end_ms": 56760, "paragraph_index": 4}, {"index": 5, "text": "He said it includes a rule that no US adversary can maintain a military presence in Greenland or \"make sensitive investments in Greenland, without our express written approval\".", "start_ms": 56760, "end_ms": 68592, "paragraph_index": 5}, {"index": 6, "text": "Denmark's Prime Minister Mette Frederiksen confirmed that the agreement will be signed at the United Nations General Assembly next week.", "start_ms": 68592, "end_ms": 77280, "paragraph_index": 6}, {"index": 7, "text": "She said the agreement \"strengthens our common security in the Arctic and the North Atlantic area\" while also \"at the same time recognizes the sovereignty and territorial integrity of the Kingdom and the right of the Greenlandic people to self-determination\".", "start_ms": 77280, "end_ms": 93144, "paragraph_index": 7}, {"index": 8, "text": "She added that the deal still needs approval from legislators, and \"will have to go through the necessary parliamentary procedures to enter into force\".", "start_ms": 93144, "end_ms": 103056, "paragraph_index": 8}, {"index": 9, "text": "Chairman of the Greenland Government Jens-Frederik Nielsen said in a statement announcing the deal that it \"is gratifying that we are about to enter into an agreement that ensures and strengthens the security\" of Greenland, Denmark and the US.", "start_ms": 103056, "end_ms": 118152, "paragraph_index": 9}, {"index": 10, "text": "\"The agreement recognises Greenland's interests and our place in international co-operation.", "start_ms": 118152, "end_ms": 124872, "paragraph_index": 10}, {"index": 11, "text": "It is for the benefit of us all,\" he said.", "start_ms": 124872, "end_ms": 128496, "paragraph_index": 10}, {"index": 12, "text": "Trump had tried for months to purchase or annex the mineral-rich Danish territory, arguing that it is vulnerable to adversaries, including Russia and China.", "start_ms": 128496, "end_ms": 139944, "paragraph_index": 11}, {"index": 13, "text": "He even threatened military action in Greenland, prompting an outcry from Danes and other Nato countries.", "start_ms": 139944, "end_ms": 147720, "paragraph_index": 11}, {"index": 14, "text": "US Secretary of State Marco Rubio called it a \"historic deal\" and a \"huge win for the United States and the American people\".", "start_ms": 147720, "end_ms": 156768, "paragraph_index": 12}, {"index": 15, "text": "\"This deal permanently and completely addresses our national security concerns in Greenland,\" he said in a statement.", "start_ms": 156768, "end_ms": 164880, "paragraph_index": 13}, {"index": 16, "text": "No text of the agreement has been released.", "start_ms": 164880, "end_ms": 168480, "paragraph_index": 14}, {"index": 17, "text": "The BBC has reached out to the Danish Embassy and the White House.", "start_ms": 168480, "end_ms": 173496, "paragraph_index": 14}, {"index": 18, "text": "However, an unnamed US State Department official outlined the deal without providing specifics.", "start_ms": 173496, "end_ms": 180768, "paragraph_index": 15}, {"index": 19, "text": "Among the agreed provisions is one stating the deal would not expire even if Greenland became an independent country in the future.", "start_ms": 180768, "end_ms": 189384, "paragraph_index": 16}, {"index": 20, "text": "The official added that under the deal, the US has unilateral power to build additional military structures with no approval needed from Greenland or Denmark.", "start_ms": 189384, "end_ms": 200184, "paragraph_index": 17}, {"index": 21, "text": "It includes \"permanent access, basing and overflights rights,\" the official said.", "start_ms": 200184, "end_ms": 206640, "paragraph_index": 17}, {"index": 22, "text": "It also bans non-Nato countries from building bases in Greenland, and \"bans adversaries from making investments in Greenland that could threaten the United States\".", "start_ms": 206640, "end_ms": 217560, "paragraph_index": 18}, {"index": 23, "text": "The official added that under the current status quo, adversaries have been allowed to invest in Greenland's \"sensitive sectors without investment screening\".", "start_ms": 217560, "end_ms": 227808, "paragraph_index": 19}, {"index": 24, "text": "The official specifically referenced Russia and China, saying it blocks them from deploying troops or making investments in \"sensitive sectors\".", "start_ms": 227808, "end_ms": 237528, "paragraph_index": 20}, {"index": 25, "text": "Without the official text being released, it is unclear how exactly the deal differs from a 1951 agreement with Denmark, under which the US can send as many troops as it wants to Greenland.", "start_ms": 237528, "end_ms": 250968, "paragraph_index": 21}, {"index": 26, "text": "The US already has more than 100 military personnel permanently stationed at its Pituffik base in the north-western tip of the territory.", "start_ms": 250968, "end_ms": 260856, "paragraph_index": 22}, {"index": 27, "text": "Trump says Greenland is essential for his plan to build a Golden Dome defence system, designed to protect the US against missile attacks from Russia and China, and that European allies could co-operate in this endeavor.", "start_ms": 260856, "end_ms": 275304, "paragraph_index": 23}, {"index": 28, "text": "The island has vast - and largely untapped - reserves of rare earth minerals, many of which are crucial for technologies including mobile phones and electric vehicles.", "start_ms": 275304, "end_ms": 286968, "paragraph_index": 24}, {"index": 29, "text": "US in closely guarded talks to open new bases in Greenland", "start_ms": 286968, "end_ms": 292128, "paragraph_index": 25}, {"index": 30, "text": "What we know about Trump's  'framework of future deal' over Greenland", "start_ms": 292128, "end_ms": 297048, "paragraph_index": 26}, {"index": 31, "text": "Why does Trump want Greenland and what could it mean for Nato and the EU?", "start_ms": 297048, "end_ms": 302208, "paragraph_index": 27}, {"index": 32, "text": "US allies won't forget Trump Greenland crisis", "start_ms": 302208, "end_ms": 306528, "paragraph_index": 28}], "total_duration_ms": 306528};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "in": "在", "to": "到", "greenland": "格陵兰", "us": "我们", "deal": "协议", "of": "的", "that": "那个", "it": "它", "said": "说", "security": "安全", "trump": "特朗普", "agreement": "协议", "from": "来自", "for": "为了", "is": "是", "official": "官方", "has": "有", "denmark": "丹麦", "no": "没有", "united": "联合", "he": "他", "military": "军事", "or": "或者", "without": "没有", "our": "我们的", "an": "一个", "have": "有", "by": "被", "territory": "领土", "over": "超过", "its": "它的", "with": "与", "states": "国家", "will": "将", "what": "什么", "sensitive": "敏感", "investments": "投资", "approval": "批准", "at": "在", "added": "补充", "adversaries": "对手", "russia": "俄罗斯", "china": "中国", "under": "在...之下", "could": "可能", "on": "在", "trump's": "特朗普的", "threats": "威胁", "force": "力量", "would": "将", "grant": "授予", "permanent": "永久的", "all": "所有", "other": "其他", "needs": "需要", "prime": "首相", "minister": "部长", "arctic": "北极", "north": "北部", "atlantic": "大西洋", "area": "区域", "not": "不", "social": "社交的", "post": "职位", "comes": "到来", "months": "月", "national": "国家", "concerns": "担忧", "defence": "国防", "necessary": "必要的", "includes": "包括", "can": "可以", "she": "她", "also": "也", "people": "人们", "enter": "提出", "into": "进入", "statement": "声明", "we": "我们", "are": "是", "about": "关于", "danish": "丹麦的", "including": "包括", "even": "甚至", "nato": "北约", "countries": "国家", "state": "国家", "this": "这个", "permanently": "永久地", "been": "已经", "released": "释放", "future": "未来", "build": "建立", "bans": "禁令", "bases": "基地", "making": "进行", "sectors": "部门", "troops": "部队", "which": "哪个", "as": "作为", "many": "许多", "allies": "盟友", "announced": "宣布", "dispute": "争端", "sparked": "引发", "president": "总统", "donald": "唐纳德", "seize": "扣押", "control": "控制", "but": "但是", "did": "做了", "address": "地址", "mentioned": "提到的", "media": "媒体", "after": "之后", "take": "采取", "citing": "引用", "strategic": "战略的", "location": "地点", "purposes": "目的", "wealth": "财富", "truth": "真相", "cost": "成本", "ability": "能力", "do": "做", "secure": "安全的", "defend": "辩护", "rule": "统治", "maintain": "维持", "presence": "存在", "make": "使", "express": "表达", "written": "书面", "mette": "梅特", "frederiksen": "弗雷泽里克森", "confirmed": "确认", "be": "是", "signed": "签署", "nations": "国家（复数）", "general": "总", "assembly": "议会", "next": "下一个", "week": "周", "common": "共同的", "while": "而", "same": "相同", "time": "时间", "integrity": "诚信", "kingdom": "王国", "right": "正确", "still": "仍然", "go": "去", "through": "通过", "procedures": "程序", "chairman": "主席", "government": "政府", "announcing": "宣布", "recognises": "承认", "interests": "利益", "place": "地点", "international": "国际", "co-operation": "合作", "benefit": "利益", "had": "有", "tried": "试图", "purchase": "购买", "arguing": "争论", "vulnerable": "易受攻击的", "threatened": "威胁", "action": "行动", "prompting": "促使", "outcry": "强烈抗议", "secretary": "秘书", "marco": "马可", "rubio": "鲁比奥", "called": "称为", "historic": "历史性的", "huge": "巨大的", "win": "赢得", "american": "美国的", "completely": "完全", "addresses": "处理", "bbc": "英国广播公司", "reached": "达成", "out": "出来", "embassy": "大使馆", "white": "白色的", "house": "议院", "however": "然而", "unnamed": "未具名的", "department": "部门", "outlined": "概述", "providing": "提供", "among": "在...之中", "agreed": "同意", "one": "一个", "expire": "到期", "if": "如果", "became": "成为", "independent": "独立的", "country": "国家", "power": "权力", "additional": "额外的", "structures": "建筑物", "needed": "需要", "access": "进入", "rights": "权利", "building": "建筑物", "threaten": "威胁", "current": "当前的", "status": "状态", "quo": "现状", "allowed": "允许", "invest": "投资", "investment": "投资", "specifically": "具体来说", "referenced": "提及", "saying": "说", "them": "他们", "deploying": "部署", "being": "正在", "unclear": "不清楚的", "how": "如何", "exactly": "确切地", "send": "发送", "wants": "想要", "already": "已经", "more": "更多", "than": "比", "personnel": "人员", "stationed": "驻扎", "base": "基地", "tip": "提示", "says": "表示", "essential": "必要的", "his": "他的", "plan": "计划", "golden": "金靴", "dome": "穹顶", "system": "制度", "designed": "设计的", "protect": "保护", "against": "反对", "missile": "导弹", "attacks": "袭击", "european": "欧洲的", "co-operate": "合作", "island": "岛", "vast": "庞大的", "largely": "很大程度上", "reserves": "储备", "rare": "罕见的", "earth": "地球", "crucial": "关键的", "technologies": "技术", "phones": "电话", "electric": "电动的", "vehicles": "车辆", "closely": "密切", "talks": "会谈", "open": "开放", "new": "新的", "know": "知道", "framework": "框架", "why": "为何", "does": "做", "want": "想要", "mean": "意味着", "eu": "欧盟", "won't": "不会", "forget": "忘记", "crisis": "危机", "greenland's": "格陵兰的", "strengthens": "加强", "denmark's": "丹麦的", "specifics": "具体细节", "text": "文本", "resolving": "解决", "mineral": "矿产", "adversary": "对手", "recognizes": "承认", "greenlandic": "格陵兰的", "self-determination": "自决", "legislators": "议员", "jens-frederik": "延斯-弗雷德里克", "nielsen": "尼尔森", "gratifying": "令人欣慰", "ensures": "确保", "annex": "附件", "mineral-rich": "矿产丰富", "danes": "丹麦人", "provisions": "条款", "stating": "声明", "basing": "驻扎", "overflights": "飞越", "non-nato": "非北约", "screening": "筛查", "blocks": "阻碍", "differs": "不同", "pituffik": "皮图菲克", "north-western": "西北部", "endeavor": "努力", "minerals": "矿产", "mobile": "移动", "guarded": "谨慎"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
