@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-19</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-19</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/39c5/live/a0844fe0-b45d-11f1-b213-1db858c3e27c.jpg" alt="Houthis say they targeted Saudi capital with ballistic missiles" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Houthis say they targeted Saudi capital with ballistic missiles</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cwly5d9v7r43o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-19.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: Thick black plumes of smoke rise from near Riyadh's international airport</span></p>
+        <p class="cn">观看：利雅得国际机场附近升起浓密黑烟</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Iran-backed Houthi militants in Yemen say they carried out drone and <span class="keyword" data-word="ballistic" data-phonetic="/bəˈlɪstɪk/" data-pos="adj." data-def="弹道的" data-def-en="Relating to the motion of projectiles, especially missiles.">ballistic</span> missile attacks on the Saudi capital Riyadh, as well as energy sites on the country's Red Sea coast.</span></p>
+        <p class="cn">也门伊朗支持的胡塞武装分子声称对沙特首都利雅得及该国红海沿岸的能源设施发动了无人机和弹道导弹袭击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Saudi authorities said they intercepted and destroyed a <span class="keyword" data-word="ballistic" data-phonetic="/bəˈlɪstɪk/" data-pos="adj." data-def="弹道的" data-def-en="Relating to the motion of projectiles, especially missiles.">ballistic</span> missile fired at Riyadh earlier that day, without confirming any further strikes or causalities.</span></p>
+        <p class="cn">沙特当局表示，他们当天早些时候拦截并摧毁了一枚向利雅得发射的弹道导弹，但未确认进一步袭击或伤亡情况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Earlier, a column of black smoke was seen rising from fuel tanks near the Saudi capital's international airport, where flights were disrupted temporarily on Saturday.</span></p>
+        <p class="cn">早些时候，沙特首都国际机场附近油罐升起一股黑烟，周六航班暂时中断。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Air raid alerts had sounded in the capital for the first time since the Iran-backed Houthis increased their attacks on Saudi Arabia in July.</span></p>
+        <p class="cn">自7月伊朗支持的胡塞武装加大对沙特阿拉伯的袭击以来，首都首次响起空袭警报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Air defences also stopped "hostile attempts to target civilians" in the cities of Bish, Taif, Farasan and Yanbu, an official spokesperson for the Saudi-led <span class="keyword" data-word="coalition" data-phonetic="/ˌkoʊəˈlɪʃn/" data-pos="n." data-def="联盟" data-def-en="An alliance of groups or countries for a common purpose.">coalition</span> said in a statement.</span></p>
+        <p class="cn">沙特领导联军的官方发言人声明称，防空系统还在比什、塔伊夫、法拉桑和延布等城市阻止了“针对平民的敌对企图”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">In a statement posted online, Houthi military spokesman Yahya al-Sarea said a "large number of <span class="keyword" data-word="ballistic" data-phonetic="/bəˈlɪstɪk/" data-pos="adj." data-def="弹道的" data-def-en="Relating to the motion of projectiles, especially missiles.">ballistic</span> and cruise missiles and drones" had been used to attack "sensitive sites" in Riyadh and Aramco state oil and gas company facilities in Yanbu on the coast.</span></p>
+        <p class="cn">胡塞军事发言人叶海亚·萨雷亚在网上声明中表示，使用“大量弹道导弹、巡航导弹和无人机”袭击了利雅得的“敏感地点”以及沿海延布的阿美国家石油和天然气公司设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">He added that the attacks were "in response to the Saudi enemy's criminal attempts" to target the Yemeni capital Sanaa, which is currently controlled by the Houthis.</span></p>
+        <p class="cn">他补充说，这些袭击是“对沙特敌人犯罪企图的回应”，目标是目前由胡塞控制的也门首都萨那。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Earlier, Sarea had accused Saudi Arabia of carrying out 300 strikes across Yemen during the past week.</span></p>
+        <p class="cn">早些时候，萨雷亚指责沙特阿拉伯在过去一周对也门进行了300次空袭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">The Houthis are locked in a civil war with Yemen's internationally recognised government, which is backed by Saudi Arabia.</span></p>
+        <p class="cn">胡塞武装与也门国际公认政府陷入内战，该政府得到沙特阿拉伯支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">They have attacked targets inside Saudi Arabia on several occasions in recent months, and said this week that they were responsible for downing a Saudi fighter jet over Yemen.</span></p>
+        <p class="cn">近几个月，他们多次袭击沙特境内目标，并于本周表示对在也门上空击落一架沙特战斗机负责。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">According to an unconfirmed report from AFP news agency, quoting military sources on both sides of Yemen's civil war, fighting between the Houthis and Saudi-backed government forces claimed 48 lives on Saturday.</span></p>
+        <p class="cn">据法新社未证实报道，援引也门内战双方军事消息来源，胡塞与沙特支持的政府军之间的战斗周六造成48人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">The Houthis said 31 of their fighters had been killed while government sources said their side had lost 17 soldiers, according to the news agency.</span></p>
+        <p class="cn">据该通讯社报道，胡塞表示其31名战士被杀，而政府消息来源称其一方损失17名士兵。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">On Friday, the International Organization for Migration, a UN body, reported that the number of people displaced as a result of recent fighting had passed 104,796 , external .</span></p>
+        <p class="cn">周五，联合国机构国际移民组织报告称，近期战斗导致的流离失所人数已超过104,796人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">How escalating Saudi oil crisis could drive up prices everywhere</span></p>
+        <p class="cn">沙特石油危机升级如何推高各地油价</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Saudi Arabia issues first air raid alerts for Riyadh since Houthis escalated attacks</span></p>
+        <p class="cn">沙特阿拉伯自胡塞升级袭击以来首次对利雅得发布空袭警报</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">A number of apparent explosions were heard in Riyadh and major problems were reported at King Khalid International Airport earlier on Saturday, with the tracking website FlightRadar24 reporting delays and cancellations.</span> <span class="sentence" data-sentence-index="18">, external</span></p>
+        <p class="cn">周六早些时候，利雅得听到多起明显爆炸声，哈立德国王国际机场报告重大问题，追踪网站FlightRadar24报道延误和取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">An AFP journalist reported that firefighters could be seen trying to extinguish the flames of a burnt-out fuel tank belonging to Aramco.</span></p>
+        <p class="cn">法新社记者报道，可以看到消防员试图扑灭属于阿美公司的烧毁油罐火焰。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">The Saudi Civil Defence had sent out phone alerts overnight warning of potential danger in Riyadh and other regions, before issuing an all-clear on Saturday morning.</span></p>
+        <p class="cn">沙特民防部门连夜发送电话警报，警告利雅得和其他地区潜在危险，周六早上发布解除警报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Residents told AFP on condition of anonymity that they had heard what sounded like a round of explosions echoing through the city after the alerts.</span></p>
+        <p class="cn">居民匿名告诉法新社，他们在警报后听到类似爆炸声在城市回荡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">"I heard the alarm, then my windows shook," said a resident of northern Riyadh, 27.</span> <span class="sentence" data-sentence-index="23">"It was definitely scary.</span> <span class="sentence" data-sentence-index="24">I was not expecting this."</span></p>
+        <p class="cn">利雅得北部一名27岁居民说：“我听到警报，然后窗户摇晃。绝对可怕。我没想到会这样。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">The Houthis recently seized control of the strategic port city of Mokha and Perim Island, a gateway to a key shipping route used by the Gulf state to export to Asia and Europe.</span></p>
+        <p class="cn">胡塞最近夺取战略港口城市莫卡和佩里姆岛，这是海湾国家用于向亚洲和欧洲出口的关键航运路线的门户。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The group said the naval <span class="keyword" data-word="blockade" data-phonetic="/blɑːˈkeɪd/" data-pos="n." data-def="封锁" data-def-en="An act of sealing off a place to prevent goods or people from entering or leaving.">blockade</span> was in retaliation for a Saudi blockade of ports and airports in Houthi-controlled north-western Yemen.</span></p>
+        <p class="cn">该组织表示，海上封锁是对沙特封锁胡塞控制的也门西北部港口和机场的报复。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">Saudi vessels have relied on that stretch of the Red Sea for oil exports since the US and Israel's war with Iran effectively closed the Strait of Hormuz.</span></p>
+        <p class="cn">自美国和以色列与伊朗的战争有效关闭霍尔木兹海峡以来，沙特船只依赖红海那段进行石油出口。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">On Friday, investment banking giant JP Morgan said it was struggling to predict how oil prices would be impacted by the war, telling investors in a rare note that "we simply don't know how to model the endgame".</span></p>
+        <p class="cn">周五，投资银行巨头摩根大通表示，难以预测战争将如何影响油价，在罕见笔记中告诉投资者“我们根本不知道如何模拟终局”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Verified video shows wreckage of Saudi fighter jet shot down over Yemen</span></p>
+        <p class="cn">验证视频显示在也门上空被击落的沙特战斗机残骸</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">'We simply don't know' - JP Morgan struggling to <span class="keyword" data-word="forecast" data-phonetic="/ˈfɔːrkæst/" data-pos="v." data-def="预测" data-def-en="To predict or estimate a future event or trend.">forecast</span> oil prices due to Trump's war with Iran</span></p>
+        <p class="cn">“我们根本不知道”——摩根大通因特朗普与伊朗战争难以预测油价</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">Saudi Arabia says it shot down Houthi drone south of Mecca</span></p>
+        <p class="cn">沙特阿拉伯称在麦加南部击落胡塞无人机</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">Lightning Houthi advance in Yemen may bring dangerous new dimension to Iran war</span></p>
+        <p class="cn">胡塞在也门的闪电推进可能为伊朗战争带来危险新维度</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">Satellite image reveals major damage that shut crucial Saudi oil pipeline</span></p>
+        <p class="cn">卫星图像揭示关闭关键沙特石油管道的重大损害</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ballistic</span>
+        <button class="kw-speak-btn" data-word="ballistic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bəˈlɪstɪk/ adj.</span>
+      </div>
+      <p class="kw-def">弹道的</p>
+      <p class="kw-def-en">Relating to the motion of projectiles, especially missiles.</p>
+      <p class="kw-ctx">&ldquo;Iran-backed Houthi militants in Yemen say they carried out drone and ballistic missile attacks on the Saudi capital Riyadh, as well as energy sites on the country's Red Sea coast.&rdquo;</p>
+      <p class="kw-ctx-cn">伊朗支持的也门胡塞武装分子称，他们对沙特首都利雅得以及该国红海沿岸的能源设施进行了无人机和弹道导弹袭击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intercept</span>
+        <button class="kw-speak-btn" data-word="intercept" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈsept/ v.</span>
+      </div>
+      <p class="kw-def">拦截</p>
+      <p class="kw-def-en">To stop or catch something before it reaches its destination.</p>
+      <p class="kw-ctx">&ldquo;Saudi authorities said they intercepted and destroyed a ballistic missile fired at Riyadh earlier that day, without confirming any further strikes or causalities.&rdquo;</p>
+      <p class="kw-ctx-cn">沙特当局表示，他们当天早些时候拦截并摧毁了一枚射向利雅得的弹道导弹，但没有证实任何进一步的袭击或伤亡。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disrupt</span>
+        <button class="kw-speak-btn" data-word="disrupt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈrʌpt/ v.</span>
+      </div>
+      <p class="kw-def">扰乱</p>
+      <p class="kw-def-en">To interrupt or disturb an event, activity, or process.</p>
+      <p class="kw-ctx">&ldquo;Earlier, a column of black smoke was seen rising from fuel tanks near the Saudi capital's international airport, where flights were disrupted temporarily on Saturday.&rdquo;</p>
+      <p class="kw-ctx-cn">早些时候，有人看到沙特首都国际机场附近的油箱升起一股黑烟，周六航班暂时中断。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">coalition</span>
+        <button class="kw-speak-btn" data-word="coalition" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkoʊəˈlɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">联盟</p>
+      <p class="kw-def-en">An alliance of groups or countries for a common purpose.</p>
+      <p class="kw-ctx">&ldquo;Air defences also stopped "hostile attempts to target civilians" in the cities of Bish, Taif, Farasan and Yanbu, an official spokesperson for the Saudi-led coalition said in a statement.&rdquo;</p>
+      <p class="kw-ctx-cn">沙特领导的联盟官方发言人表示，防空系统还在比什、塔伊夫、法拉桑和延布等城市阻止了“针对平民的敌对企图”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">escalate</span>
+        <button class="kw-speak-btn" data-word="escalate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈeskəleɪt/ v.</span>
+      </div>
+      <p class="kw-def">升级</p>
+      <p class="kw-def-en">To increase in intensity or magnitude.</p>
+      <p class="kw-ctx">&ldquo;How escalating Saudi oil crisis could drive up prices everywhere&rdquo;</p>
+      <p class="kw-ctx-cn">不断升级的沙特石油危机如何推高各地油价</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">displace</span>
+        <button class="kw-speak-btn" data-word="displace" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈpleɪs/ v.</span>
+      </div>
+      <p class="kw-def">使流离失所</p>
+      <p class="kw-def-en">To force people to leave their home or country.</p>
+      <p class="kw-ctx">&ldquo;On Friday, the International Organization for Migration, a UN body, reported that the number of people displaced as a result of recent fighting had passed 104,796 , external .&rdquo;</p>
+      <p class="kw-ctx-cn">周五，联合国机构国际移民组织报告称，最近战斗导致的流离失所人数已超过104,796人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">blockade</span>
+        <button class="kw-speak-btn" data-word="blockade" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/blɑːˈkeɪd/ n.</span>
+      </div>
+      <p class="kw-def">封锁</p>
+      <p class="kw-def-en">An act of sealing off a place to prevent goods or people from entering or leaving.</p>
+      <p class="kw-ctx">&ldquo;The group said the naval blockade was in retaliation for a Saudi blockade of ports and airports in Houthi-controlled north-western Yemen.&rdquo;</p>
+      <p class="kw-ctx-cn">该组织表示，海上封锁是对沙特封锁胡塞武装控制的也门西北部港口和机场的报复。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">forecast</span>
+        <button class="kw-speak-btn" data-word="forecast" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfɔːrkæst/ v.</span>
+      </div>
+      <p class="kw-def">预测</p>
+      <p class="kw-def-en">To predict or estimate a future event or trend.</p>
+      <p class="kw-ctx">&ldquo;'We simply don't know' - JP Morgan struggling to forecast oil prices due to Trump's war with Iran&rdquo;</p>
+      <p class="kw-ctx-cn">“我们根本不知道”——由于特朗普与伊朗的战争，摩根大通难以预测油价</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Thick black plumes of smoke rise from near Riyadh's international airport", "start_ms": 3000, "end_ms": 9336, "paragraph_index": 1}, {"index": 2, "text": "Iran-backed Houthi militants in Yemen say they carried out drone and ballistic missile attacks on the Saudi capital Riyadh, as well as energy sites on the country's Red Sea coast.", "start_ms": 9336, "end_ms": 21552, "paragraph_index": 2}, {"index": 3, "text": "Saudi authorities said they intercepted and destroyed a ballistic missile fired at Riyadh earlier that day, without confirming any further strikes or causalities.", "start_ms": 21552, "end_ms": 32520, "paragraph_index": 3}, {"index": 4, "text": "Earlier, a column of black smoke was seen rising from fuel tanks near the Saudi capital's international airport, where flights were disrupted temporarily on Saturday.", "start_ms": 32520, "end_ms": 43992, "paragraph_index": 4}, {"index": 5, "text": "Air raid alerts had sounded in the capital for the first time since the Iran-backed Houthis increased their attacks on Saudi Arabia in July.", "start_ms": 43992, "end_ms": 53592, "paragraph_index": 5}, {"index": 6, "text": "Air defences also stopped \"hostile attempts to target civilians\" in the cities of Bish, Taif, Farasan and Yanbu, an official spokesperson for the Saudi-led coalition said in a statement.", "start_ms": 53592, "end_ms": 66648, "paragraph_index": 6}, {"index": 7, "text": "In a statement posted online, Houthi military spokesman Yahya al-Sarea said a \"large number of ballistic and cruise missiles and drones\" had been used to attack \"sensitive sites\" in Riyadh and Aramco state oil and gas company facilities in Yanbu on the coast.", "start_ms": 66648, "end_ms": 83904, "paragraph_index": 7}, {"index": 8, "text": "He added that the attacks were \"in response to the Saudi enemy's criminal attempts\" to target the Yemeni capital Sanaa, which is currently controlled by the Houthis.", "start_ms": 83904, "end_ms": 94488, "paragraph_index": 8}, {"index": 9, "text": "Earlier, Sarea had accused Saudi Arabia of carrying out 300 strikes across Yemen during the past week.", "start_ms": 94488, "end_ms": 102936, "paragraph_index": 9}, {"index": 10, "text": "The Houthis are locked in a civil war with Yemen's internationally recognised government, which is backed by Saudi Arabia.", "start_ms": 102936, "end_ms": 111384, "paragraph_index": 10}, {"index": 11, "text": "They have attacked targets inside Saudi Arabia on several occasions in recent months, and said this week that they were responsible for downing a Saudi fighter jet over Yemen.", "start_ms": 111384, "end_ms": 122976, "paragraph_index": 11}, {"index": 12, "text": "According to an unconfirmed report from AFP news agency, quoting military sources on both sides of Yemen's civil war, fighting between the Houthis and Saudi-backed government forces claimed 48 lives on Saturday.", "start_ms": 122976, "end_ms": 138168, "paragraph_index": 12}, {"index": 13, "text": "The Houthis said 31 of their fighters had been killed while government sources said their side had lost 17 soldiers, according to the news agency.", "start_ms": 138168, "end_ms": 148296, "paragraph_index": 13}, {"index": 14, "text": "On Friday, the International Organization for Migration, a UN body, reported that the number of people displaced as a result of recent fighting had passed 104,796 , external .", "start_ms": 148296, "end_ms": 163224, "paragraph_index": 14}, {"index": 15, "text": "How escalating Saudi oil crisis could drive up prices everywhere", "start_ms": 163224, "end_ms": 168552, "paragraph_index": 15}, {"index": 16, "text": "Saudi Arabia issues first air raid alerts for Riyadh since Houthis escalated attacks", "start_ms": 168552, "end_ms": 175512, "paragraph_index": 16}, {"index": 17, "text": "A number of apparent explosions were heard in Riyadh and major problems were reported at King Khalid International Airport earlier on Saturday, with the tracking website FlightRadar24 reporting delays and cancellations.", "start_ms": 175512, "end_ms": 190800, "paragraph_index": 17}, {"index": 18, "text": ", external", "start_ms": 190800, "end_ms": 192744, "paragraph_index": 17}, {"index": 19, "text": "An AFP journalist reported that firefighters could be seen trying to extinguish the flames of a burnt-out fuel tank belonging to Aramco.", "start_ms": 192744, "end_ms": 202344, "paragraph_index": 18}, {"index": 20, "text": "The Saudi Civil Defence had sent out phone alerts overnight warning of potential danger in Riyadh and other regions, before issuing an all-clear on Saturday morning.", "start_ms": 202344, "end_ms": 213792, "paragraph_index": 19}, {"index": 21, "text": "Residents told AFP on condition of anonymity that they had heard what sounded like a round of explosions echoing through the city after the alerts.", "start_ms": 213792, "end_ms": 223656, "paragraph_index": 20}, {"index": 22, "text": "\"I heard the alarm, then my windows shook,\" said a resident of northern Riyadh, 27.", "start_ms": 223656, "end_ms": 230424, "paragraph_index": 21}, {"index": 23, "text": "\"It was definitely scary.", "start_ms": 230424, "end_ms": 233184, "paragraph_index": 21}, {"index": 24, "text": "I was not expecting this.\"", "start_ms": 233184, "end_ms": 235944, "paragraph_index": 21}, {"index": 25, "text": "The Houthis recently seized control of the strategic port city of Mokha and Perim Island, a gateway to a key shipping route used by the Gulf state to export to Asia and Europe.", "start_ms": 235944, "end_ms": 247800, "paragraph_index": 22}, {"index": 26, "text": "The group said the naval blockade was in retaliation for a Saudi blockade of ports and airports in Houthi-controlled north-western Yemen.", "start_ms": 247800, "end_ms": 256896, "paragraph_index": 23}, {"index": 27, "text": "Saudi vessels have relied on that stretch of the Red Sea for oil exports since the US and Israel's war with Iran effectively closed the Strait of Hormuz.", "start_ms": 256896, "end_ms": 267432, "paragraph_index": 24}, {"index": 28, "text": "On Friday, investment banking giant JP Morgan said it was struggling to predict how oil prices would be impacted by the war, telling investors in a rare note that \"we simply don't know how to model the endgame\".", "start_ms": 267432, "end_ms": 281424, "paragraph_index": 25}, {"index": 29, "text": "Verified video shows wreckage of Saudi fighter jet shot down over Yemen", "start_ms": 281424, "end_ms": 287328, "paragraph_index": 26}, {"index": 30, "text": "'We simply don't know' - JP Morgan struggling to forecast oil prices due to Trump's war with Iran", "start_ms": 287328, "end_ms": 294504, "paragraph_index": 27}, {"index": 31, "text": "Saudi Arabia says it shot down Houthi drone south of Mecca", "start_ms": 294504, "end_ms": 299472, "paragraph_index": 28}, {"index": 32, "text": "Lightning Houthi advance in Yemen may bring dangerous new dimension to Iran war", "start_ms": 299472, "end_ms": 305568, "paragraph_index": 29}, {"index": 33, "text": "Satellite image reveals major damage that shut crucial Saudi oil pipeline", "start_ms": 305568, "end_ms": 311664, "paragraph_index": 30}], "total_duration_ms": 311664};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "in": "在", "saudi": "沙特", "and": "和", "to": "到", "on": "在", "said": "说", "that": "那个", "had": "有", "for": "为了", "arabia": "阿拉伯", "oil": "石油", "war": "战争", "they": "它们", "was": "是", "were": "是", "international": "国际", "attacks": "袭击", "earlier": "较早", "saturday": "星期六", "alerts": "警报", "an": "一个", "by": "被", "with": "与", "this": "这个", "be": "是", "from": "来自", "airport": "机场", "out": "出来", "capital": "资本", "as": "作为", "air": "气氛", "since": "自从", "their": "他们的", "number": "数量", "civil": "民事的", "government": "政府", "afp": "法新社", "reported": "据报道", "how": "如何", "prices": "价格", "heard": "听到", "it": "它", "iran": "伊朗", "video": "视频", "not": "不", "black": "黑色", "smoke": "烟雾", "near": "附近", "iran-backed": "伊朗支持的", "drone": "无人机", "missile": "导弹", "sites": "网站", "red": "红色的", "sea": "海域", "coast": "海岸", "at": "在", "strikes": "袭击", "seen": "被视为", "fuel": "动力", "sounded": "发出声响", "first": "第一轮", "attempts": "尝试", "target": "目标", "statement": "声明", "military": "军事", "been": "已经", "used": "使用", "state": "国家", "which": "哪个", "is": "是", "week": "周", "have": "有", "recent": "最近", "fighter": "战斗机", "jet": "喷气式飞机", "over": "超过", "according": "根据", "news": "新闻", "agency": "机构", "sources": "消息来源", "fighting": "战斗", "friday": "星期五", "external": "外部的", "could": "可能", "explosions": "爆炸", "major": "重大的", "city": "城市", "morgan": "摩根", "struggling": "挣扎", "we": "我们", "simply": "仅仅", "don't": "不要", "know": "知道", "shot": "开枪", "down": "下来", "can": "可以", "played": "比赛", "watch": "观看", "thick": "浓密的", "rise": "上升", "say": "说", "carried": "进行", "well": "好", "energy": "能源", "country's": "国家的", "authorities": "当局", "intercepted": "拦截", "destroyed": "被毁的", "fired": "发射", "day": "天", "without": "没有", "confirming": "确认", "any": "任何", "further": "进一步的", "or": "或者", "rising": "上升的", "capital's": "首都的", "where": "那里", "flights": "航班", "disrupted": "中断的", "temporarily": "暂时", "time": "时间", "increased": "增加的", "july": "七月", "defences": "防御", "also": "也", "stopped": "停止", "hostile": "敌对的", "civilians": "平民", "cities": "城市", "official": "官方", "spokesperson": "发言人", "posted": "发布", "online": "在线", "spokesman": "发言人", "large": "大的", "cruise": "巡航", "missiles": "导弹", "drones": "无人机", "attack": "袭击", "sensitive": "敏感", "gas": "气体", "company": "公司", "facilities": "设施", "he": "他", "added": "补充", "response": "回应", "criminal": "犯罪的", "currently": "目前", "controlled": "受控的", "accused": "被指控", "carrying": "携带", "across": "跨越", "during": "在期间", "past": "过去", "are": "是", "locked": "锁定", "recognised": "认出", "backed": "支持", "attacked": "袭击", "targets": "目标", "inside": "内部", "several": "数个", "occasions": "场合", "months": "月", "responsible": "负责的", "downing": "唐宁", "report": "报告", "quoting": "引用", "both": "两者", "sides": "各方", "between": "之间", "forces": "力量", "claimed": "声称", "lives": "生命", "killed": "杀死", "while": "而", "side": "方面", "lost": "失去", "soldiers": "士兵", "organization": "组织", "migration": "迁移", "un": "联合国", "body": "机构", "people": "人们", "result": "结果", "passed": "通过", "escalating": "升级", "crisis": "危机", "drive": "推动力", "up": "向上", "everywhere": "到处", "issues": "问题", "escalated": "上报", "apparent": "明显的", "problems": "问题", "king": "国王", "tracking": "追踪", "website": "网站", "reporting": "报道", "delays": "延误", "cancellations": "取消", "journalist": "记者", "firefighters": "消防员", "trying": "尝试", "extinguish": "扑灭", "flames": "火焰", "tank": "坦克", "belonging": "属于", "defence": "国防", "sent": "派遣", "phone": "电话", "overnight": "夜间", "warning": "警告", "potential": "潜在", "danger": "危险", "other": "其他", "regions": "地区", "before": "之前", "issuing": "发布", "morning": "上午", "residents": "居民", "told": "告诉", "condition": "状况", "anonymity": "匿名", "what": "什么", "like": "像", "round": "轮", "through": "通过", "after": "之后", "alarm": "警报", "then": "然后", "my": "我的", "windows": "窗户", "resident": "居民", "northern": "北部的", "definitely": "肯定", "scary": "可怕的", "expecting": "期待", "recently": "最近", "seized": "抓住", "control": "控制", "strategic": "战略的", "port": "港口", "island": "岛", "key": "关键", "shipping": "航运", "route": "航线", "gulf": "海湾", "asia": "亚洲", "europe": "欧洲", "group": "团体", "naval": "海军的", "ports": "港口", "airports": "机场", "north-western": "西北部", "vessels": "船只", "relied": "依赖", "exports": "出口", "us": "我们", "israel's": "以色列的", "effectively": "实际上", "closed": "关闭", "strait": "海峡", "hormuz": "霍尔木兹", "investment": "投资", "giant": "巨型", "would": "将", "impacted": "影响", "telling": "告诉", "investors": "投资者", "rare": "罕见的", "note": "便条", "model": "模特", "verified": "已核实的", "shows": "显示", "due": "应得", "trump's": "特朗普的", "says": "表示", "south": "韩国", "lightning": "闪电", "advance": "提前", "may": "可能", "bring": "带来", "dangerous": "危险", "new": "新的", "satellite": "卫星", "image": "画面", "reveals": "揭示", "damage": "损坏", "shut": "关闭", "crucial": "关键的", "pipeline": "管道", "riyadh": "利雅得", "houthis": "胡塞武装", "yemen": "也门", "houthi": "胡塞武装的", "raid": "袭击", "yanbu": "延布", "aramco": "阿美石油公司", "yemen's": "也门的", "jp": "日本", "plumes": "烟柱", "riyadh's": "利雅得的", "militants": "武装分子", "causalities": "伤亡", "column": "纵队", "tanks": "坦克", "bish": "比什", "taif": "塔伊夫", "farasan": "法拉桑", "saudi-led": "沙特领导的", "yahya": "叶海亚", "al-sarea": "萨里阿", "enemy's": "敌方的", "yemeni": "也门的", "sanaa": "萨那", "sarea": "萨里阿", "internationally": "国际公认", "unconfirmed": "未经证实", "saudi-backed": "沙特支持的", "fighters": "武装分子", "displaced": "流离失所", "khalid": "哈立德", "burnt-out": "烧毁的", "all-clear": "解除警报", "echoing": "呼应", "shook": "震动", "mokha": "摩卡", "perim": "丕林岛", "gateway": "门户", "export": "出口", "retaliation": "报复", "houthi-controlled": "胡塞控制的", "stretch": "区域", "banking": "银行业", "predict": "预测", "endgame": "终局", "wreckage": "残骸", "mecca": "麦加", "dimension": "层面"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
