@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-20</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-20</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ec5d/live/0cb35a40-b539-11f1-9bd0-bb4fc2f94a87.jpg" alt="German Chancellor Merz calls state election a 'disaster' for his party but vows to stay on" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>German Chancellor Merz calls state election a 'disaster' for his party but vows to stay on</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cvwyz29n0nn2o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-20.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Why Merz is staying on as German chancellor after election 'disaster'</span></p>
+        <p class="cn">为何梅尔茨在选举“灾难”后仍留任德国总理</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Embattled German Chancellor Friedrich Merz has vowed to stay on despite exit polls in two local elections suggesting damaging defeats for his centre-right Christian Democratic Union (CDU) party.</span></p>
+        <p class="cn">陷入困境的德国总理弗里德里希·梅尔茨（Friedrich Merz）誓言将继续留任，尽管两场地方选举的出口民调显示，他的中右翼基督教民主联盟（CDU）党遭受了破坏性失败。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In the north-eastern state of Mecklenburg-Vorpommern, the party was initially projected to scrape through with its worst ever election result.</span> <span class="sentence" data-sentence-index="4">But a few hours later, it dipped below the 5% threshold needed to stay in parliament.</span> <span class="sentence" data-sentence-index="5">Merz called it "a disaster" for his party.</span></p>
+        <p class="cn">在东北部的梅克伦堡-前波美拉尼亚州（Mecklenburg-Vorpommern），该党最初预计将以有史以来最差的选举结果勉强通过。但几小时后，其得票率跌破了进入议会所需的5%门槛。梅尔茨称这对他的政党来说是“一场灾难”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="6">Meanwhile the far-right AfD was on track to win the most votes in Mecklenburg-Vorpommern, but it is unlikely to govern as other parties refuse to work with it.</span></p>
+        <p class="cn">与此同时，极右翼的德国选择党（AfD）有望在梅克伦堡-前波美拉尼亚州赢得最多选票，但由于其他政党拒绝与其合作，它不太可能执政。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="7">In Berlin, the ruling CDU was expected to be beaten by Die Linke (The Left).</span></p>
+        <p class="cn">在柏林，执政的基民盟预计将被左翼党（Die Linke）击败。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Merz is under mounting pressure, with poor approval ratings and rumours he could even be replaced mid-term in a so-called chancellor swap.</span></p>
+        <p class="cn">梅尔茨面临越来越大的压力，支持率低迷，且有传言称他可能在任期中途被替换，即所谓的“总理互换”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">Votes took place on Sunday, a fortnight after the CDU saw its vote halved as the Alternative for Germany (AfD) won a major victory in the state of Saxony-Anhalt.</span></p>
+        <p class="cn">投票于周日进行，两周前，基民盟在萨克森-安哈尔特州（Saxony-Anhalt）的得票率减半，而德国选择党（AfD）在该州取得了重大胜利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Echoing comments he made after that defeat, Merz told reporters at the party's Berlin headquarters on Sunday that he would forge ahead with his <span class="keyword" data-word="coalition" data-phonetic="/ˌkoʊəˈlɪʃən/" data-pos="n." data-def="联合政府；联盟" data-def-en="A government formed by two or more political parties working together.">coalition</span> government's plans to push through a package of economic, tax and welfare reforms.</span></p>
+        <p class="cn">梅尔茨周日在基民盟柏林总部对记者表示，他将推进其联合政府的经济、税收和福利改革方案，这与他在那次失败后的评论相呼应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">"The reforms have to come," he insisted.</span> <span class="sentence" data-sentence-index="12">"I am taking on this responsibility, because I want to move our country forward".</span></p>
+        <p class="cn">“改革必须进行，”他坚持道。“我承担这一责任，因为我想推动我们的国家前进”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">"What needs to be done now requires <span class="keyword" data-word="backbone" data-phonetic="/ˈbækboʊn/" data-pos="n." data-def="骨气；毅力" data-def-en="Strength of character; courage and determination.">backbone</span>, <span class="keyword" data-word="steadfastness" data-phonetic="/ˈstedfæstnəs/" data-pos="n." data-def="坚定；不动摇" data-def-en="The quality of being firm and not changing in your support or belief.">steadfastness</span> and patience," Merz said.</span> <span class="sentence" data-sentence-index="14">"I will demonstrate this as CDU party chairman and, above all, as chancellor of our country."</span></p>
+        <p class="cn">“现在需要做的事情需要骨气、坚定和耐心，”梅尔茨说。“作为基民盟党主席，尤其是作为我们国家的总理，我将证明这一点。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="15">"I would even go so far as to say that these reforms are the <span class="keyword" data-word="antidote" data-phonetic="/ˈæntidoʊt/" data-pos="n." data-def="解毒剂；对策" data-def-en="Something that counteracts or relieves a harmful or unwanted condition.">antidote</span> to the <span class="keyword" data-word="authoritarian" data-phonetic="/əˌθɔːrɪˈteriən/" data-pos="adj." data-def="威权主义的" data-def-en="Favoring or enforcing strict obedience to authority, especially that of the government, at the expense of personal freedom.">authoritarian</span> poison that, with the fascination of authoritarianism, is penetrating ever deeper into our society," Merz added.</span></p>
+        <p class="cn">“我甚至要说，这些改革是对威权主义毒药的解药，这种毒药带着对威权主义的迷恋，正越来越深入地渗透到我们的社会中，”梅尔茨补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="16">The AfD's national co-leader Alice Weidel said: "We are the strongest force and have reached the mainstream of the population."</span></p>
+        <p class="cn">德国选择党的全国联合领导人爱丽丝·魏德尔（Alice Weidel）表示：“我们是最强大的力量，已经达到了民众的主流。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">Some branches of the <span class="keyword" data-word="populist" data-phonetic="/ˈpɑːpjəlɪst/" data-pos="adj." data-def="民粹主义的" data-def-en="Relating to or characteristic of a political approach that strives to appeal to ordinary people who feel that their concerns are disregarded by established elite groups.">populist</span> AfD are classed as right-wing extremist by domestic intelligence, a designation it strongly rejects.</span></p>
+        <p class="cn">德国选择党的一些分支被国内情报机构列为右翼极端主义，该党强烈否认这一定性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">But its anti-immigration, German-first, and Russian-friendly agenda has found fertile ground in the country's former communist east.</span></p>
+        <p class="cn">但其反移民、德国优先和亲俄罗斯的议程在该国前共产主义东部找到了肥沃的土壤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">There was a muted response to exit polls at the CDU's election night gathering in Berlin</span></p>
+        <p class="cn">在基民盟柏林选举之夜聚会上，对出口民调的反应平淡</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">As the projected results came up on the screen at the CDU's election night gathering in Berlin, there were no cheers or celebration.</span></p>
+        <p class="cn">当预测结果出现在基民盟柏林选举之夜聚会的屏幕上时，没有欢呼或庆祝。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="21">This is a party that knows it's in trouble, and its leader quickly went on the offensive, declaring that he is going nowhere.</span></p>
+        <p class="cn">这是一个知道自己陷入困境的政党，其领导人迅速采取攻势，宣称他不会去任何地方。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="22">Merz has long coveted the top job in German politics, and likely won't give it up easily.</span></p>
+        <p class="cn">梅尔茨长期以来一直觊觎德国政治的最高职位，可能不会轻易放弃。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="23">Polls for both states closed at 18:00 local time (17:00 BST), with a final result expected later on Sunday night, or even Monday morning.</span></p>
+        <p class="cn">两州的投票在当地时间18:00（英国夏令时17:00）结束，最终结果预计在周日晚些时候或甚至周一早上公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="24">Public broadcasters ZDF and ARD put the AfD slightly ahead in Mecklenburg-Vorpommern.</span></p>
+        <p class="cn">公共广播公司ZDF和ARD在梅克伦堡-前波美拉尼亚州显示德国选择党略微领先。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="25">The party was projected to take 38% of the vote share in the state, followed in second place by the centre-left SPD, on 36%.</span></p>
+        <p class="cn">该党预计在该州获得38%的选票份额，其次是中左翼的社民党（SPD），得票率为36%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="26">For Berlin, the broadcasters put the CDU on 20% of the vote share when polls closed, behind Die Linke - which has never topped polls in the capital before - on nearly 26%.</span></p>
+        <p class="cn">对于柏林，广播公司在投票结束时将基民盟的选票份额定为20%，落后于左翼党——该党此前从未在首都的民调中领先——后者接近26%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="27">The AfD also looks set to increase its vote in Berlin, with a projected 16% of the vote.</span></p>
+        <p class="cn">德国选择党在柏林的得票率似乎也将增加，预计为16%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">Prior to Sunday's elections, there had been intense speculation in Germany that Merz could be replaced unless his party's political fortunes improved.</span></p>
+        <p class="cn">在周日选举之前，德国国内有激烈猜测，除非梅尔茨的政党政治命运改善，否则他可能被替换。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Earlier this week, the leaders of eight German states backed Merz, who has only been chancellor for 16 months.</span></p>
+        <p class="cn">本周早些时候，德国八个州的领导人支持梅尔茨，他仅担任总理16个月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">On Sunday, Burkard Dregger from the CDU in Berlin, told the BBC it was right that Merz should stay on.</span> <span class="sentence" data-sentence-index="31">"He has a lot of work to do and we don't have time to waste to form new government in the federal level".</span></p>
+        <p class="cn">周日，基民盟柏林的伯卡德·德雷格（Burkard Dregger）告诉BBC，梅尔茨应该留任是正确的。“他有很多工作要做，我们没有时间浪费在联邦层面组建新政府”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="32">Die Linke's lead candidate in Berlin, Elif Eralp, celebrated as exit polls came in</span></p>
+        <p class="cn">左翼党在柏林的首席候选人埃利夫·埃拉尔普（Elif Eralp）在出口民调出炉时庆祝</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">He described the <span class="keyword" data-word="electorate" data-phonetic="/ɪˈlektərət/" data-pos="n." data-def="全体选民" data-def-en="All the people in a country or area who are entitled to vote in an election.">electorate</span> as "impatient", adding that it was "not realistic to expect that every issue has been solved within one year.</span></p>
+        <p class="cn">他形容选民“不耐烦”，并补充说“期望每个问题在一年内解决是不现实的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">"He has got four years and we have to give him the four years," Dregger said.</span></p>
+        <p class="cn">“他有四年时间，我们必须给他这四年，”德雷格说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">While his backers have argued that many of the problems the nation faces are inherited, Merz himself is deeply unpopular.</span></p>
+        <p class="cn">虽然他的支持者认为国家面临的许多问题是继承来的，但梅尔茨本人非常不受欢迎。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">The former corporate lawyer's tack to the right on issues like immigration has failed to erode AfD support, while also alienating people further to the left.</span></p>
+        <p class="cn">这位前公司律师在移民等问题上向右转，未能削弱德国选择党的支持，同时也疏远了更左翼的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">German elections under way which could decide fate of Chancellor Merz</span></p>
+        <p class="cn">德国选举正在进行，可能决定总理梅尔茨的命运</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">Eight German state premiers back Merz amid speculation over future</span></p>
+        <p class="cn">德国八个州长在猜测中支持梅尔茨</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">How significant are AfD's historic gains for Germany and the rest of Europe?</span></p>
+        <p class="cn">德国选择党的历史性收获对德国和欧洲其他地区有多重要？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">coalition</span>
+        <button class="kw-speak-btn" data-word="coalition" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkoʊəˈlɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">联合政府；联盟</p>
+      <p class="kw-def-en">A government formed by two or more political parties working together.</p>
+      <p class="kw-ctx">&ldquo;Echoing comments he made after that defeat, Merz told reporters at the party's Berlin headquarters on Sunday that he would forge ahead with his coalition government's plans to push through a package of economic, tax and welfare reforms.&rdquo;</p>
+      <p class="kw-ctx-cn">默茨在周日于该党柏林总部对记者发表讲话时，重复了他在那次失败后所发表的评论，表示他将推进其联合政府的计划，推动一揽子经济、税收和福利改革。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reform</span>
+        <button class="kw-speak-btn" data-word="reform" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈfɔːrm/ n.</span>
+      </div>
+      <p class="kw-def">改革；改良</p>
+      <p class="kw-def-en">A change made to a system, law, or institution in order to improve it.</p>
+      <p class="kw-ctx">&ldquo;The reforms have to come, he insisted.&rdquo;</p>
+      <p class="kw-ctx-cn">他坚称，改革必须进行。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">backbone</span>
+        <button class="kw-speak-btn" data-word="backbone" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbækboʊn/ n.</span>
+      </div>
+      <p class="kw-def">骨气；毅力</p>
+      <p class="kw-def-en">Strength of character; courage and determination.</p>
+      <p class="kw-ctx">&ldquo;What needs to be done now requires backbone, steadfastness and patience, Merz said.&rdquo;</p>
+      <p class="kw-ctx-cn">默茨说：“现在需要做的事情需要骨气、坚定和耐心。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">steadfastness</span>
+        <button class="kw-speak-btn" data-word="steadfastness" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstedfæstnəs/ n.</span>
+      </div>
+      <p class="kw-def">坚定；不动摇</p>
+      <p class="kw-def-en">The quality of being firm and not changing in your support or belief.</p>
+      <p class="kw-ctx">&ldquo;What needs to be done now requires backbone, steadfastness and patience, Merz said.&rdquo;</p>
+      <p class="kw-ctx-cn">默茨说：“现在需要做的事情需要骨气、坚定和耐心。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">antidote</span>
+        <button class="kw-speak-btn" data-word="antidote" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈæntidoʊt/ n.</span>
+      </div>
+      <p class="kw-def">解毒剂；对策</p>
+      <p class="kw-def-en">Something that counteracts or relieves a harmful or unwanted condition.</p>
+      <p class="kw-ctx">&ldquo;I would even go so far as to say that these reforms are the antidote to the authoritarian poison that, with the fascination of authoritarianism, is penetrating ever deeper into our society, Merz added.&rdquo;</p>
+      <p class="kw-ctx-cn">默茨补充说：“我甚至可以说，这些改革是解药，用来对抗威权主义的毒害，这种毒害伴随着对威权主义的迷恋，正日益深入地渗透到我们的社会中。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">authoritarian</span>
+        <button class="kw-speak-btn" data-word="authoritarian" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˌθɔːrɪˈteriən/ adj.</span>
+      </div>
+      <p class="kw-def">威权主义的</p>
+      <p class="kw-def-en">Favoring or enforcing strict obedience to authority, especially that of the government, at the expense of personal freedom.</p>
+      <p class="kw-ctx">&ldquo;I would even go so far as to say that these reforms are the antidote to the authoritarian poison that, with the fascination of authoritarianism, is penetrating ever deeper into our society, Merz added.&rdquo;</p>
+      <p class="kw-ctx-cn">默茨补充说：“我甚至可以说，这些改革是解药，用来对抗威权主义的毒害，这种毒害伴随着对威权主义的迷恋，正日益深入地渗透到我们的社会中。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">populist</span>
+        <button class="kw-speak-btn" data-word="populist" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɑːpjəlɪst/ adj.</span>
+      </div>
+      <p class="kw-def">民粹主义的</p>
+      <p class="kw-def-en">Relating to or characteristic of a political approach that strives to appeal to ordinary people who feel that their concerns are disregarded by established elite groups.</p>
+      <p class="kw-ctx">&ldquo;Some branches of the populist AfD are classed as right-wing extremist by domestic intelligence, a designation it strongly rejects.&rdquo;</p>
+      <p class="kw-ctx-cn">民粹主义政党AfD的一些分支被国内情报机构列为右翼极端主义，该党强烈拒绝这一认定。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">electorate</span>
+        <button class="kw-speak-btn" data-word="electorate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈlektərət/ n.</span>
+      </div>
+      <p class="kw-def">全体选民</p>
+      <p class="kw-def-en">All the people in a country or area who are entitled to vote in an election.</p>
+      <p class="kw-ctx">&ldquo;He described the electorate as impatient, adding that it was not realistic to expect that every issue has been solved within one year.&rdquo;</p>
+      <p class="kw-ctx-cn">他形容选民缺乏耐心，并补充说，期望所有问题在一年内解决是不现实的。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Why Merz is staying on as German chancellor after election 'disaster'", "start_ms": 3000, "end_ms": 8328, "paragraph_index": 1}, {"index": 2, "text": "Embattled German Chancellor Friedrich Merz has vowed to stay on despite exit polls in two local elections suggesting damaging defeats for his centre-right Christian Democratic Union (CDU) party.", "start_ms": 8328, "end_ms": 22128, "paragraph_index": 2}, {"index": 3, "text": "In the north-eastern state of Mecklenburg-Vorpommern, the party was initially projected to scrape through with its worst ever election result.", "start_ms": 22128, "end_ms": 31104, "paragraph_index": 3}, {"index": 4, "text": "But a few hours later, it dipped below the 5% threshold needed to stay in parliament.", "start_ms": 31104, "end_ms": 37704, "paragraph_index": 3}, {"index": 5, "text": "Merz called it \"a disaster\" for his party.", "start_ms": 37704, "end_ms": 41400, "paragraph_index": 3}, {"index": 6, "text": "Meanwhile the far-right AfD was on track to win the most votes in Mecklenburg-Vorpommern, but it is unlikely to govern as other parties refuse to work with it.", "start_ms": 41400, "end_ms": 52224, "paragraph_index": 4}, {"index": 7, "text": "In Berlin, the ruling CDU was expected to be beaten by Die Linke (The Left).", "start_ms": 52224, "end_ms": 58464, "paragraph_index": 5}, {"index": 8, "text": "Merz is under mounting pressure, with poor approval ratings and rumours he could even be replaced mid-term in a so-called chancellor swap.", "start_ms": 58464, "end_ms": 67848, "paragraph_index": 6}, {"index": 9, "text": "Votes took place on Sunday, a fortnight after the CDU saw its vote halved as the Alternative for Germany (AfD) won a major victory in the state of Saxony-Anhalt.", "start_ms": 67848, "end_ms": 79920, "paragraph_index": 7}, {"index": 10, "text": "Echoing comments he made after that defeat, Merz told reporters at the party's Berlin headquarters on Sunday that he would forge ahead with his coalition government's plans to push through a package of economic, tax and welfare reforms.", "start_ms": 79920, "end_ms": 95160, "paragraph_index": 8}, {"index": 11, "text": "\"The reforms have to come,\" he insisted.", "start_ms": 95160, "end_ms": 98856, "paragraph_index": 9}, {"index": 12, "text": "\"I am taking on this responsibility, because I want to move our country forward\".", "start_ms": 98856, "end_ms": 104616, "paragraph_index": 9}, {"index": 13, "text": "\"What needs to be done now requires backbone, steadfastness and patience,\" Merz said.", "start_ms": 104616, "end_ms": 111384, "paragraph_index": 10}, {"index": 14, "text": "\"I will demonstrate this as CDU party chairman and, above all, as chancellor of our country.\"", "start_ms": 111384, "end_ms": 118536, "paragraph_index": 10}, {"index": 15, "text": "\"I would even go so far as to say that these reforms are the antidote to the authoritarian poison that, with the fascination of authoritarianism, is penetrating ever deeper into our society,\" Merz added.", "start_ms": 118536, "end_ms": 132456, "paragraph_index": 11}, {"index": 16, "text": "The AfD's national co-leader Alice Weidel said: \"We are the strongest force and have reached the mainstream of the population.\"", "start_ms": 132456, "end_ms": 141312, "paragraph_index": 12}, {"index": 17, "text": "Some branches of the populist AfD are classed as right-wing extremist by domestic intelligence, a designation it strongly rejects.", "start_ms": 141312, "end_ms": 151296, "paragraph_index": 13}, {"index": 18, "text": "But its anti-immigration, German-first, and Russian-friendly agenda has found fertile ground in the country's former communist east.", "start_ms": 151296, "end_ms": 160584, "paragraph_index": 14}, {"index": 19, "text": "There was a muted response to exit polls at the CDU's election night gathering in Berlin", "start_ms": 160584, "end_ms": 167040, "paragraph_index": 15}, {"index": 20, "text": "As the projected results came up on the screen at the CDU's election night gathering in Berlin, there were no cheers or celebration.", "start_ms": 167040, "end_ms": 176064, "paragraph_index": 16}, {"index": 21, "text": "This is a party that knows it's in trouble, and its leader quickly went on the offensive, declaring that he is going nowhere.", "start_ms": 176064, "end_ms": 184224, "paragraph_index": 17}, {"index": 22, "text": "Merz has long coveted the top job in German politics, and likely won't give it up easily.", "start_ms": 184224, "end_ms": 191136, "paragraph_index": 18}, {"index": 23, "text": "Polls for both states closed at 18:00 local time (17:00 BST), with a final result expected later on Sunday night, or even Monday morning.", "start_ms": 191136, "end_ms": 204408, "paragraph_index": 19}, {"index": 24, "text": "Public broadcasters ZDF and ARD put the AfD slightly ahead in Mecklenburg-Vorpommern.", "start_ms": 204408, "end_ms": 211632, "paragraph_index": 20}, {"index": 25, "text": "The party was projected to take 38% of the vote share in the state, followed in second place by the centre-left SPD, on 36%.", "start_ms": 211632, "end_ms": 222120, "paragraph_index": 21}, {"index": 26, "text": "For Berlin, the broadcasters put the CDU on 20% of the vote share when polls closed, behind Die Linke - which has never topped polls in the capital before - on nearly 26%.", "start_ms": 222120, "end_ms": 235272, "paragraph_index": 22}, {"index": 27, "text": "The AfD also looks set to increase its vote in Berlin, with a projected 16% of the vote.", "start_ms": 235272, "end_ms": 242832, "paragraph_index": 23}, {"index": 28, "text": "Prior to Sunday's elections, there had been intense speculation in Germany that Merz could be replaced unless his party's political fortunes improved.", "start_ms": 242832, "end_ms": 252768, "paragraph_index": 24}, {"index": 29, "text": "Earlier this week, the leaders of eight German states backed Merz, who has only been chancellor for 16 months.", "start_ms": 252768, "end_ms": 260688, "paragraph_index": 25}, {"index": 30, "text": "On Sunday, Burkard Dregger from the CDU in Berlin, told the BBC it was right that Merz should stay on.", "start_ms": 260688, "end_ms": 268560, "paragraph_index": 26}, {"index": 31, "text": "\"He has a lot of work to do and we don't have time to waste to form new government in the federal level\".", "start_ms": 268560, "end_ms": 275256, "paragraph_index": 26}, {"index": 32, "text": "Die Linke's lead candidate in Berlin, Elif Eralp, celebrated as exit polls came in", "start_ms": 275256, "end_ms": 282096, "paragraph_index": 27}, {"index": 33, "text": "He described the electorate as \"impatient\", adding that it was \"not realistic to expect that every issue has been solved within one year.", "start_ms": 282096, "end_ms": 290976, "paragraph_index": 28}, {"index": 34, "text": "\"He has got four years and we have to give him the four years,\" Dregger said.", "start_ms": 290976, "end_ms": 296544, "paragraph_index": 29}, {"index": 35, "text": "While his backers have argued that many of the problems the nation faces are inherited, Merz himself is deeply unpopular.", "start_ms": 296544, "end_ms": 305136, "paragraph_index": 30}, {"index": 36, "text": "The former corporate lawyer's tack to the right on issues like immigration has failed to erode AfD support, while also alienating people further to the left.", "start_ms": 305136, "end_ms": 316032, "paragraph_index": 31}, {"index": 37, "text": "German elections under way which could decide fate of Chancellor Merz", "start_ms": 316032, "end_ms": 321240, "paragraph_index": 32}, {"index": 38, "text": "Eight German state premiers back Merz amid speculation over future", "start_ms": 321240, "end_ms": 326760, "paragraph_index": 33}, {"index": 39, "text": "How significant are AfD's historic gains for Germany and the rest of Europe?", "start_ms": 326760, "end_ms": 332712, "paragraph_index": 34}], "total_duration_ms": 332712};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "in": "在", "on": "在", "of": "的", "merz": "默茨", "and": "和", "that": "那个", "as": "作为", "has": "有", "it": "它", "berlin": "柏林", "he": "他", "is": "是", "for": "为了", "was": "是", "with": "与", "german": "德国的", "chancellor": "总理", "polls": "民调", "cdu": "基民盟", "party": "政党", "afd": "德国选择党", "this": "这个", "be": "是", "his": "他的", "its": "它的", "vote": "投票", "have": "有", "are": "是", "election": "选举", "state": "国家", "projected": "预计的", "sunday": "星期日", "at": "在", "after": "之后", "stay": "保持", "exit": "退出", "elections": "选举", "but": "但是", "by": "被", "die": "死亡", "could": "可能", "even": "甚至", "germany": "德国", "reforms": "改革", "our": "我们的", "said": "说", "we": "我们", "there": "那里", "night": "晚上", "been": "已经", "not": "不", "disaster": "灾难", "local": "当地", "through": "通过", "ever": "曾经", "result": "结果", "later": "后来", "votes": "选票", "work": "工作", "expected": "预期", "left": "离开", "under": "在...之下", "replaced": "取代", "place": "地点", "told": "告诉", "party's": "党的", "would": "将", "ahead": "提前", "country": "国家", "afd's": "德国选择党的", "former": "前任", "gathering": "集会", "came": "到来", "up": "向上", "or": "或者", "give": "提供", "states": "国家", "closed": "关闭", "time": "时间", "broadcasters": "广播公司", "put": "提出", "share": "分享", "which": "哪个", "also": "也", "speculation": "猜测", "eight": "八", "right": "正确", "four": "四", "years": "多年", "while": "而", "video": "视频", "can": "可以", "played": "比赛", "why": "为何", "staying": "保持", "friedrich": "弗里德里希", "vowed": "发誓", "despite": "尽管", "two": "两个", "suggesting": "暗示", "damaging": "损坏", "defeats": "击败", "centre-right": "中右翼", "christian": "基督教的", "democratic": "民主的", "union": "工会", "north-eastern": "东北部", "initially": "最初", "worst": "最坏的", "few": "少数", "hours": "小时", "below": "下方", "threshold": "门槛", "needed": "需要", "parliament": "议会", "called": "称为", "meanwhile": "与此同时", "far-right": "极右翼", "track": "轨道", "win": "赢得", "most": "最", "unlikely": "不太可能", "govern": "治理", "other": "其他", "parties": "政党", "refuse": "拒绝", "ruling": "裁决", "beaten": "殴打", "mounting": "增加的", "pressure": "压力", "poor": "糟糕的", "approval": "批准", "ratings": "评级", "rumours": "谣言", "so-called": "所谓的", "took": "担任", "fortnight": "两周", "saw": "看到", "halved": "减半", "alternative": "替代的", "won": "赢得", "major": "重大的", "victory": "胜利", "saxony-anhalt": "萨克森-安哈尔特", "echoing": "呼应", "comments": "评论", "made": "做出", "defeat": "失败", "reporters": "记者们", "headquarters": "总部", "forge": "锻造", "government's": "政府的", "plans": "计划", "push": "推动", "package": "一揽子计划", "economic": "经济的", "tax": "税收", "welfare": "福利", "come": "到来", "insisted": "坚持", "am": "是", "taking": "采取", "responsibility": "责任", "because": "因为", "want": "想要", "move": "行动", "forward": "向前", "what": "什么", "needs": "需要", "done": "完成", "now": "现在", "requires": "需要", "patience": "耐心", "will": "将", "chairman": "主席", "above": "超过", "all": "所有", "go": "去", "so": "所以", "far": "远", "say": "说", "these": "这些", "poison": "毒药", "into": "进入", "society": "社会", "added": "补充", "national": "国家", "alice": "爱丽丝", "weidel": "魏德尔", "strongest": "最强烈的", "force": "力量", "reached": "达成", "mainstream": "主流", "population": "人口", "some": "一些", "classed": "归类", "right-wing": "右翼", "extremist": "极端分子", "domestic": "国内的", "intelligence": "情报", "strongly": "强烈地", "rejects": "拒绝", "agenda": "议程", "found": "发现", "ground": "地面", "country's": "国家的", "east": "东部", "response": "回应", "results": "结果", "screen": "屏幕", "were": "是", "no": "没有", "cheers": "欢呼", "celebration": "庆祝", "knows": "知道", "it's": "它是", "trouble": "麻烦", "leader": "领导人", "quickly": "迅速", "went": "去", "offensive": "冒犯的", "declaring": "宣布", "going": "将要", "nowhere": "无处", "long": "长久", "coveted": "梦寐以求的", "top": "顶级的", "job": "工作", "politics": "政治", "likely": "可能", "won't": "不会", "easily": "容易地", "both": "两者", "bst": "英国夏令时", "final": "最终", "monday": "星期一", "morning": "上午", "public": "公众", "slightly": "稍微", "take": "采取", "followed": "遵循", "second": "第二", "centre-left": "中左翼", "spd": "社民党", "when": "当", "behind": "在...后面", "never": "从未", "capital": "资本", "before": "之前", "nearly": "几乎", "looks": "看起来", "set": "设定", "increase": "增加", "prior": "先前的", "sunday's": "周日的", "had": "有", "intense": "激烈的", "unless": "除非", "political": "政治的", "fortunes": "命运", "improved": "改善的", "earlier": "较早", "week": "周", "leaders": "领导人", "backed": "支持", "who": "谁", "only": "只有", "months": "月", "from": "来自", "bbc": "英国广播公司", "should": "应该", "lot": "很多", "do": "做", "don't": "不要", "waste": "浪费", "form": "形成", "new": "新的", "government": "政府", "federal": "联邦", "level": "水平", "lead": "导致", "candidate": "候选人", "celebrated": "庆祝的", "described": "描述", "impatient": "不耐烦的", "adding": "补充说", "realistic": "现实的", "expect": "期望", "every": "每个", "issue": "问题", "within": "在内部", "one": "一个", "year": "年", "got": "获得", "him": "他", "backers": "支持者", "argued": "争论", "many": "许多", "problems": "问题", "nation": "国家", "faces": "面临", "inherited": "继承的", "himself": "他自己", "deeply": "深深地", "unpopular": "不受欢迎的", "issues": "问题", "like": "像", "immigration": "移民", "failed": "失败", "support": "支持", "people": "人们", "further": "进一步的", "way": "方式", "decide": "决定", "fate": "命运", "back": "后退", "amid": "在…中", "over": "超过", "future": "未来", "how": "如何", "significant": "重大", "historic": "历史性的", "gains": "获得", "rest": "其余", "europe": "欧洲", "mecklenburg-vorpommern": "梅克伦堡-前波莫瑞州", "linke": "左翼党", "cdu's": "基民盟的", "dregger": "德雷格尔", "embattled": "陷入困境的", "scrape": "勉强获得", "dipped": "下降", "mid-term": "中期", "swap": "交换", "demonstrate": "表明", "fascination": "迷恋", "authoritarianism": "威权主义", "penetrating": "渗透的", "deeper": "更深入的", "co-leader": "联合领导人", "branches": "分支机构", "designation": "指定", "anti-immigration": "反移民", "german-first": "德国优先", "russian-friendly": "对俄友好", "fertile": "肥沃的", "communist": "共产主义", "muted": "温和的", "zdf": "德国电视二台", "ard": "德国电视一台", "topped": "位居榜首", "burkard": "布卡德", "linke's": "左翼党的", "elif": "埃利夫", "eralp": "埃拉尔普", "solved": "解决", "corporate": "企业的", "lawyer's": "律师的", "tack": "方针", "erode": "侵蚀", "alienating": "疏远", "premiers": "州长"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
