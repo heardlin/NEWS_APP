@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-22</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-22</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/5fc4/live/2a039960-b5d0-11f1-b1d1-571ed4d7ff2c.jpg" alt="Airlines criticise air traffic control as second glitch causes more disruption" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Airlines criticise air traffic control as second glitch causes more disruption</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cqp80p78mxx5o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-22.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: 'I couldn't believe it' - Scottish airports see flights cancelled again</span></p>
+        <p class="cn">观看：'我简直不敢相信'——苏格兰机场再次遭遇航班取消</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Airlines have criticised the UK's air traffic control system after a second technical problem in two weeks caused major disruption to UK flights.</span></p>
+        <p class="cn">航空公司批评英国空中交通管制系统，因为两周内第二次技术问题导致英国航班严重中断。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">EasyJet said Monday's incident "once again calls into question the <span class="keyword" data-word="resilience" data-phonetic="/rɪˈzɪliəns/" data-pos="n." data-def="恢复力；韧性" data-def-en="The ability to recover quickly from difficulties.">resilience</span>" of the service, while Wizz Air said there was a "national confidence crisis" in National Air Traffic Services (Nats), which runs the UK's air traffic.</span></p>
+        <p class="cn">易捷航空（EasyJet）表示，周一的事件“再次让人质疑”该服务的韧性，而威兹航空（Wizz Air）则表示，运营英国空中交通的国家空中交通服务公司（Nats）存在“国家信心危机”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Nats said a "<span class="keyword" data-word="connectivity" data-phonetic="/ˌkɒnekˈtɪvəti/" data-pos="n." data-def="连接性；连通性" data-def-en="The state of being connected or able to connect.">connectivity</span> issue" at Prestwick was behind the disruption across Scotland, Northern Ireland and northern England - and had "nothing to do" with a separate software <span class="keyword" data-word="defect" data-phonetic="/ˈdiːfekt/" data-pos="n." data-def="缺陷；故障" data-def-en="A fault or imperfection in a system or process.">defect</span> at Swanwick earlier this month.</span></p>
+        <p class="cn">Nats表示，普雷斯蒂克（Prestwick）的“连接问题”是苏格兰、北爱尔兰和英格兰北部航班中断的原因，与本月初斯旺威克（Swanwick）的单独软件缺陷“无关”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Prime Minister Andy Burnham said further issues today "cause even greater concern" about the UK's air traffic control.</span></p>
+        <p class="cn">首相安迪·伯纳姆（Andy Burnham）表示，今天进一步的问题“引发了对英国空中交通管制的更大担忧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">When asked by reporters whether he would look to fire the head of Nats, Burnham said "these are clearly serious issues and they need to be fully investigated".</span></p>
+        <p class="cn">当记者问及是否会考虑解雇Nats负责人时，伯纳姆表示“这些显然是严重问题，需要彻底调查”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">He added that the transport secretary was taking the issues "extremely seriously" and initially it's a matter for her "to get to the bottom of...</span> <span class="sentence" data-sentence-index="8">and why there has been a <span class="keyword" data-word="recurrence" data-phonetic="/rɪˈkʌrəns/" data-pos="n." data-def="再次发生；复发" data-def-en="The fact of something happening again.">recurrence</span>."</span></p>
+        <p class="cn">他补充说，交通大臣正在“极其严肃”地对待这些问题，最初这是她“查明真相……以及为何再次发生”的职责。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">The underlying issue causing Monday's disruption has since been resolved, with Nats saying it was running at "full capacity" although officials warned of knock-on effects.</span></p>
+        <p class="cn">导致周一中断的根本问题已经解决，Nats表示其运行已恢复“满负荷”，尽管官员警告可能会有连锁反应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">A spokesperson said they were now "focused on working with our customers to recover their <span class="keyword" data-word="residual" data-phonetic="/rɪˈzɪdjuəl/" data-pos="adj." data-def="剩余的；残留的" data-def-en="Remaining after the main part has gone or been dealt with.">residual</span> delays and help get their operations back to normal".</span></p>
+        <p class="cn">一位发言人表示，他们现在“专注于与客户合作，恢复剩余延误，并帮助他们的运营恢复正常”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">More than 150 flights were cancelled at UK airports on Monday - including 140 departures and 137 arrivals, according to aviation analytics company Cirium.</span></p>
+        <p class="cn">根据航空分析公司Cirium的数据，周一英国机场有超过150个航班被取消，包括140个出发和137个到达航班。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Easyjet was the worst affected airline, with 48 of its 670 scheduled departures cancelled, while British Airways has seen 13 cancellations from its 513 scheduled departures.</span></p>
+        <p class="cn">易捷航空是受影响最严重的航空公司，其670个计划出发航班中有48个被取消，而英国航空（British Airways）的513个计划出发航班中有13个被取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">The UK Civil Aviation Authority (CAA) said passengers who had flights disrupted were "unlikely" to be entitled to <span class="keyword" data-word="compensation" data-phonetic="/ˌkɒmpenˈseɪʃn/" data-pos="n." data-def="赔偿；补偿" data-def-en="Money paid to someone because of loss or injury.">compensation</span>.</span></p>
+        <p class="cn">英国民航局（CAA）表示，航班受影响的乘客“不太可能”有权获得赔偿。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">It said the technical issue is "likely to be considered the result of 'extraordinary circumstances' under passenger rights rules", meaning that "although passengers should be looked after by airlines, they are unlikely to be entitled to <span class="keyword" data-word="compensation" data-phonetic="/ˌkɒmpenˈseɪʃn/" data-pos="n." data-def="赔偿；补偿" data-def-en="Money paid to someone because of loss or injury.">compensation</span> for delays or cancellations that were directly caused by the incident".</span></p>
+        <p class="cn">它表示，技术问题“很可能被视为乘客权利规则下的‘特殊情况’”，这意味着“尽管乘客应由航空公司照顾，但他们不太可能有权获得由事件直接导致的延误或取消的赔偿”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">An independent review by the CAA into the <span class="keyword" data-word="resilience" data-phonetic="/rɪˈzɪliəns/" data-pos="n." data-def="恢复力；韧性" data-def-en="The ability to recover quickly from difficulties.">resilience</span> of the UK's air traffic control system is under way and the results will be published "within six months", it said.</span></p>
+        <p class="cn">CAA对英国空中交通管制系统韧性的独立审查正在进行中，结果将在“六个月内”公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Repeated air traffic control failures leave us in worrying territory</span></p>
+        <p class="cn">反复的空中交通管制故障让我们处于令人担忧的境地</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Flight chaos caused by 'millisecond' software <span class="keyword" data-word="defect" data-phonetic="/ˈdiːfekt/" data-pos="n." data-def="缺陷；故障" data-def-en="A fault or imperfection in a system or process.">defect</span>, report says</span></p>
+        <p class="cn">报告称，‘毫秒’软件缺陷导致航班混乱</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">UK flight delays continue after issue with air traffic control in Scotland is fixed</span></p>
+        <p class="cn">苏格兰空中交通管制问题解决后，英国航班延误仍在继续</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Industry representative body Airlines UK said both passengers and airlines "deserve better" service after "yet another Nats failure".</span></p>
+        <p class="cn">行业代表机构英国航空公司（Airlines UK）表示，在“又一次Nats故障”后，乘客和航空公司“应得更好的”服务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Managing director of Wizz Air UK, Yvonne Moynihan, called for "urgent reform" of Nats, adding that she did not have confidence in its current leadership.</span></p>
+        <p class="cn">威兹航空英国公司董事总经理伊冯娜·莫伊尼汉（Yvonne Moynihan）呼吁对Nats进行“紧急改革”，并补充说她对当前领导层没有信心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Asked on BBC Radio 4's World at One programme if Nats chief Martin Rolfe should resign, Moynihan said: "We need to look at the leadership at the top.</span> <span class="sentence" data-sentence-index="22">But more than that, what are the board of directors doing?"</span></p>
+        <p class="cn">在BBC广播4台的《世界一体化》节目中，当被问及Nats负责人马丁·罗尔夫（Martin Rolfe）是否应该辞职时，莫伊尼汉表示：“我们需要审视高层领导。但更重要的是，董事会在做什么？”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">Jet2 boss Steve Heapy called for "urgent and accountable" action to bolster the UK's air traffic control infrastructure.</span></p>
+        <p class="cn">Jet2老板史蒂夫·希皮（Steve Heapy）呼吁采取“紧急且负责任”的行动来加强英国空中交通管制基础设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">Ryanair reiterated its calls for Rolfe to resign, saying he had failed to deliver" either a reliable system or an effective back-up".</span> <span class="sentence" data-sentence-index="25">The latest <span class="keyword" data-word="outage" data-phonetic="/ˈaʊtɪdʒ/" data-pos="n." data-def="中断；停机" data-def-en="A period when a service is not available.">outage</span> affected 140 of the airline's flights and 25,000 passengers.</span></p>
+        <p class="cn">瑞安航空（Ryanair）重申要求罗尔夫辞职，称他未能提供“可靠的系统或有效的备份”。最新故障影响了该航空公司的140个航班和25,000名乘客。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">British Airways said "yet another technical fault with Nats" was "disappointing".</span></p>
+        <p class="cn">英国航空表示，“Nats又一次技术故障”令人“失望”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">A Nats spokesperson apologised, saying: "In the real world, we accept technology can and sometimes does fail.</span> <span class="sentence" data-sentence-index="28">Our job is minimising disruption where possible.</span></p>
+        <p class="cn">Nats发言人道歉，表示：“在现实世界中，我们接受技术可能且有时确实会失败。我们的工作是尽可能减少中断。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">"What isn't acceptable is any incident where safety is compromised - this is always our first priority."</span></p>
+        <p class="cn">“不可接受的是任何危及安全的事件——这始终是我们的首要任务。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">They added that it was working to return air traffic to normal as quickly as possible and urged passengers to check their flight status with their airline.</span></p>
+        <p class="cn">他们补充说，正在努力尽快恢复空中交通正常，并敦促乘客向航空公司查询航班状态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Transport Secretary Heidi Alexander acknowledged the situation was "deeply frustrating" for passengers.</span></p>
+        <p class="cn">交通大臣海蒂·亚历山大（Heidi Alexander）承认，情况对乘客来说“非常令人沮丧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">Steve Davies, 74, told the BBC he was "cheesed off with air traffic control" as technical issues with its systems seemed to be "happening a lot".</span></p>
+        <p class="cn">74岁的史蒂夫·戴维斯（Steve Davies）告诉BBC，他“对空中交通管制感到厌烦”，因为其系统的技术问题似乎“经常发生”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">He and his wife Sadie became stuck at Birmingham airport after being told to disembark their EasyJet flight to Edinburgh on Monday morning.</span></p>
+        <p class="cn">他和妻子萨迪（Sadie）在周一早上被告知下机后，被困在伯明翰机场，他们的易捷航空飞往爱丁堡的航班被取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">Nicole McCloskey, from Kilmarnock, had been due to go to Disneyland Paris with her family before their flight was cancelled.</span></p>
+        <p class="cn">来自基尔马诺克的妮可·麦克洛斯基（Nicole McCloskey）原本计划与家人去巴黎迪士尼乐园，但航班被取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">She told the BBC her family got a message to say the flight was delayed while they were travelling to Glasgow airport, but only found out it had been grounded altogether once they arrived.</span></p>
+        <p class="cn">她告诉BBC，她的家人在前往格拉斯哥机场时收到消息说航班延误，但到达后才发现航班完全停飞。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">Nicole said they have been rebooked on another flight on later on Monday and were hopeful "it's sorted in time".</span></p>
+        <p class="cn">妮可说，他们已被重新预订周一晚些时候的另一航班，并希望“及时解决”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">Nicole McCloskey and her daughters have had their flight to Disneyland cancelled</span></p>
+        <p class="cn">妮可·麦克洛斯基和她的女儿们飞往迪士尼乐园的航班被取消</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Rebecca Freeman became stranded at Bristol Airport after her flight to Edinburgh for a business meeting was cancelled.</span> <span class="sentence" data-sentence-index="39">She described the atmosphere as "chaos".</span></p>
+        <p class="cn">丽贝卡·弗里曼（Rebecca Freeman）在布里斯托尔机场滞留，因为她飞往爱丁堡参加商务会议的航班被取消。她形容气氛“混乱”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">"I was caught up in the Nats issue earlier this month and spent nine hours at Bristol airport," she told the BBC.</span></p>
+        <p class="cn">“我本月初卷入了Nats问题，在布里斯托尔机场待了九个小时，”她告诉BBC。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">"I can't believe it's happened again.</span> <span class="sentence" data-sentence-index="42">It is very frustrating and I will have to attempt the business meeting again for a third time," adding that she still has not received money back from the associated costs for the last time her flights were cancelled.</span></p>
+        <p class="cn">“我简直不敢相信又发生了。这非常令人沮丧，我将不得不第三次尝试商务会议，”并补充说，她上次航班取消的相关费用仍未收到退款。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="43">Not much is known about what caused the latest Nats problems, except that there was a technical failure at its control centre in Prestwick, which handles traffic across northern England, Scotland and Northern Ireland - catering for about 42% of the UK's air traffic.</span></p>
+        <p class="cn">关于最新Nats问题的原因知之甚少，只知道其普雷斯蒂克控制中心发生技术故障，该中心处理英格兰北部、苏格兰和北爱尔兰的交通——约占英国空中交通的42%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="44">The other Nats centre at Swanwick in Hampshire looks after airspace in the southern part of the UK, including the approaches to Heathrow and Gatwick.</span></p>
+        <p class="cn">Nats在汉普郡斯旺威克的另一个中心负责英国南部空域，包括希思罗和盖特威克机场的进近。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="45">Last month's Swanwick incident affected hundreds of thousands of passengers, with some sleeping on airport floors or getting stuck overseas earlier this month.</span></p>
+        <p class="cn">上个月的斯旺威克事件影响了数十万乘客，一些人睡在机场地板上或本月初滞留在海外。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="46">It was more severe as it affected intercontinental and long-haul travel via UK airspace.</span></p>
+        <p class="cn">那次更严重，因为它影响了通过英国空域的洲际和长途旅行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="47">Nats said in a report last week that the software <span class="keyword" data-word="glitch" data-phonetic="/ɡlɪtʃ/" data-pos="n." data-def="小故障；小毛病" data-def-en="A small problem or fault that stops something working.">glitch</span> happened "in the space of a millisecond" leading to the system producing corrupted data.</span></p>
+        <p class="cn">Nats在上周的一份报告中表示，软件故障发生在“一毫秒内”，导致系统产生损坏数据。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="48">Sources say that behind the scenes, airlines are "furious" that disruption keeps on happening, and that they must bear the costs of refunding passengers and looking after those affected by delays.</span></p>
+        <p class="cn">消息人士称，在幕后，航空公司对中断持续发生感到“愤怒”，并且它们必须承担退款乘客和照顾受延误影响者的成本。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="43">
+        <p class="en"><span class="sentence" data-sentence-index="49">There are deep concerns that not enough resources are being put into ensuring the air traffic control system has the <span class="keyword" data-word="resilience" data-phonetic="/rɪˈzɪliəns/" data-pos="n." data-def="恢复力；韧性" data-def-en="The ability to recover quickly from difficulties.">resilience</span> it needs.</span></p>
+        <p class="cn">人们深切担忧，没有投入足够资源来确保空中交通管制系统具备所需的韧性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="44">
+        <p class="en"><span class="sentence" data-sentence-index="50">Rolfe told the BBC at the time of the Swanwick incident that he would not resign, saying the software <span class="keyword" data-word="defect" data-phonetic="/ˈdiːfekt/" data-pos="n." data-def="缺陷；故障" data-def-en="A fault or imperfection in a system or process.">defect</span> was "very, very obscure".</span></p>
+        <p class="cn">罗尔夫在斯旺威克事件时告诉BBC，他不会辞职，称软件缺陷“非常非常 obscure”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="45">
+        <p class="en"><span class="sentence" data-sentence-index="51">Have you been affected by the disruption to flights?</span></p>
+        <p class="cn">您是否受到航班中断的影响？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resilience</span>
+        <button class="kw-speak-btn" data-word="resilience" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzɪliəns/ n.</span>
+      </div>
+      <p class="kw-def">恢复力；韧性</p>
+      <p class="kw-def-en">The ability to recover quickly from difficulties.</p>
+      <p class="kw-ctx">&ldquo;EasyJet said Monday's incident "once again calls into question the resilience" of the service, while Wizz Air said there was a "national confidence crisis" in National Air Traffic Services (Nats), which runs the UK's air traffic.&rdquo;</p>
+      <p class="kw-ctx-cn">易捷航空表示，周一的事件“再次令人质疑该服务的韧性”，而维兹航空则称，负责英国空中交通的国家空中交通服务公司（Nats）存在“全国性的信心危机”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">connectivity</span>
+        <button class="kw-speak-btn" data-word="connectivity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkɒnekˈtɪvəti/ n.</span>
+      </div>
+      <p class="kw-def">连接性；连通性</p>
+      <p class="kw-def-en">The state of being connected or able to connect.</p>
+      <p class="kw-ctx">&ldquo;Nats said a "connectivity issue" at Prestwick was behind the disruption across Scotland, Northern Ireland and northern England - and had "nothing to do" with a separate software defect at Swanwick earlier this month.&rdquo;</p>
+      <p class="kw-ctx-cn">Nats表示，普雷斯特威克的一个“连接性问题”是苏格兰、北爱尔兰和英格兰北部航班中断的原因，与本月初斯旺威克另一起软件缺陷“无关”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">defect</span>
+        <button class="kw-speak-btn" data-word="defect" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdiːfekt/ n.</span>
+      </div>
+      <p class="kw-def">缺陷；故障</p>
+      <p class="kw-def-en">A fault or imperfection in a system or process.</p>
+      <p class="kw-ctx">&ldquo;Nats said a "connectivity issue" at Prestwick was behind the disruption across Scotland, Northern Ireland and northern England - and had "nothing to do" with a separate software defect at Swanwick earlier this month.&rdquo;</p>
+      <p class="kw-ctx-cn">Nats表示，普雷斯特威克的一个“连接性问题”是苏格兰、北爱尔兰和英格兰北部航班中断的原因，与本月初斯旺威克另一起软件缺陷“无关”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">recurrence</span>
+        <button class="kw-speak-btn" data-word="recurrence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈkʌrəns/ n.</span>
+      </div>
+      <p class="kw-def">再次发生；复发</p>
+      <p class="kw-def-en">The fact of something happening again.</p>
+      <p class="kw-ctx">&ldquo;He added that the transport secretary was taking the issues "extremely seriously" and initially it's a matter for her "to get to the bottom of... and why there has been a recurrence."&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，交通大臣正在“极其严肃”地对待这些问题，最初这是她“彻查……以及为何再次发生”的事情。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">residual</span>
+        <button class="kw-speak-btn" data-word="residual" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzɪdjuəl/ adj.</span>
+      </div>
+      <p class="kw-def">剩余的；残留的</p>
+      <p class="kw-def-en">Remaining after the main part has gone or been dealt with.</p>
+      <p class="kw-ctx">&ldquo;A spokesperson said they were now "focused on working with our customers to recover their residual delays and help get their operations back to normal".&rdquo;</p>
+      <p class="kw-ctx-cn">一位发言人表示，他们现在“专注于与客户合作，恢复剩余的延误，并帮助他们的运营恢复正常”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compensation</span>
+        <button class="kw-speak-btn" data-word="compensation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkɒmpenˈseɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">赔偿；补偿</p>
+      <p class="kw-def-en">Money paid to someone because of loss or injury.</p>
+      <p class="kw-ctx">&ldquo;The UK Civil Aviation Authority (CAA) said passengers who had flights disrupted were "unlikely" to be entitled to compensation.&rdquo;</p>
+      <p class="kw-ctx-cn">英国民航局（CAA）表示，航班受影响的乘客“不太可能”有权获得赔偿。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">outage</span>
+        <button class="kw-speak-btn" data-word="outage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈaʊtɪdʒ/ n.</span>
+      </div>
+      <p class="kw-def">中断；停机</p>
+      <p class="kw-def-en">A period when a service is not available.</p>
+      <p class="kw-ctx">&ldquo;The latest outage affected 140 of the airline's flights and 25,000 passengers.&rdquo;</p>
+      <p class="kw-ctx-cn">最近的一次中断影响了该航空公司的140个航班和2.5万名乘客。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">glitch</span>
+        <button class="kw-speak-btn" data-word="glitch" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɡlɪtʃ/ n.</span>
+      </div>
+      <p class="kw-def">小故障；小毛病</p>
+      <p class="kw-def-en">A small problem or fault that stops something working.</p>
+      <p class="kw-ctx">&ldquo;Nats said in a report last week that the software glitch happened "in the space of a millisecond" leading to the system producing corrupted data.&rdquo;</p>
+      <p class="kw-ctx-cn">Nats上周在一份报告中表示，软件故障发生在“一毫秒内”，导致系统产生损坏的数据。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: 'I couldn't believe it' - Scottish airports see flights cancelled again", "start_ms": 3000, "end_ms": 8568, "paragraph_index": 1}, {"index": 2, "text": "Airlines have criticised the UK's air traffic control system after a second technical problem in two weeks caused major disruption to UK flights.", "start_ms": 8568, "end_ms": 18960, "paragraph_index": 2}, {"index": 3, "text": "EasyJet said Monday's incident \"once again calls into question the resilience\" of the service, while Wizz Air said there was a \"national confidence crisis\" in National Air Traffic Services (Nats), which runs the UK's air traffic.", "start_ms": 18960, "end_ms": 34536, "paragraph_index": 3}, {"index": 4, "text": "Nats said a \"connectivity issue\" at Prestwick was behind the disruption across Scotland, Northern Ireland and northern England - and had \"nothing to do\" with a separate software defect at Swanwick earlier this month.", "start_ms": 34536, "end_ms": 48168, "paragraph_index": 4}, {"index": 5, "text": "Prime Minister Andy Burnham said further issues today \"cause even greater concern\" about the UK's air traffic control.", "start_ms": 48168, "end_ms": 56424, "paragraph_index": 5}, {"index": 6, "text": "When asked by reporters whether he would look to fire the head of Nats, Burnham said \"these are clearly serious issues and they need to be fully investigated\".", "start_ms": 56424, "end_ms": 66552, "paragraph_index": 6}, {"index": 7, "text": "He added that the transport secretary was taking the issues \"extremely seriously\" and initially it's a matter for her \"to get to the bottom of...", "start_ms": 66552, "end_ms": 75960, "paragraph_index": 7}, {"index": 8, "text": "and why there has been a recurrence.\"", "start_ms": 75960, "end_ms": 78984, "paragraph_index": 7}, {"index": 9, "text": "The underlying issue causing Monday's disruption has since been resolved, with Nats saying it was running at \"full capacity\" although officials warned of knock-on effects.", "start_ms": 78984, "end_ms": 89904, "paragraph_index": 8}, {"index": 10, "text": "A spokesperson said they were now \"focused on working with our customers to recover their residual delays and help get their operations back to normal\".", "start_ms": 89904, "end_ms": 99624, "paragraph_index": 9}, {"index": 11, "text": "More than 150 flights were cancelled at UK airports on Monday - including 140 departures and 137 arrivals, according to aviation analytics company Cirium.", "start_ms": 99624, "end_ms": 113568, "paragraph_index": 10}, {"index": 12, "text": "Easyjet was the worst affected airline, with 48 of its 670 scheduled departures cancelled, while British Airways has seen 13 cancellations from its 513 scheduled departures.", "start_ms": 113568, "end_ms": 127968, "paragraph_index": 11}, {"index": 13, "text": "The UK Civil Aviation Authority (CAA) said passengers who had flights disrupted were \"unlikely\" to be entitled to compensation.", "start_ms": 127968, "end_ms": 137832, "paragraph_index": 12}, {"index": 14, "text": "It said the technical issue is \"likely to be considered the result of 'extraordinary circumstances' under passenger rights rules\", meaning that \"although passengers should be looked after by airlines, they are unlikely to be entitled to compensation for delays or cancellations that were directly caused by the incident\".", "start_ms": 137832, "end_ms": 157872, "paragraph_index": 13}, {"index": 15, "text": "An independent review by the CAA into the resilience of the UK's air traffic control system is under way and the results will be published \"within six months\", it said.", "start_ms": 157872, "end_ms": 169416, "paragraph_index": 14}, {"index": 16, "text": "Repeated air traffic control failures leave us in worrying territory", "start_ms": 169416, "end_ms": 174696, "paragraph_index": 15}, {"index": 17, "text": "Flight chaos caused by 'millisecond' software defect, report says", "start_ms": 174696, "end_ms": 180216, "paragraph_index": 16}, {"index": 18, "text": "UK flight delays continue after issue with air traffic control in Scotland is fixed", "start_ms": 180216, "end_ms": 186984, "paragraph_index": 17}, {"index": 19, "text": "Industry representative body Airlines UK said both passengers and airlines \"deserve better\" service after \"yet another Nats failure\".", "start_ms": 186984, "end_ms": 196440, "paragraph_index": 18}, {"index": 20, "text": "Managing director of Wizz Air UK, Yvonne Moynihan, called for \"urgent reform\" of Nats, adding that she did not have confidence in its current leadership.", "start_ms": 196440, "end_ms": 207840, "paragraph_index": 19}, {"index": 21, "text": "Asked on BBC Radio 4's World at One programme if Nats chief Martin Rolfe should resign, Moynihan said: \"We need to look at the leadership at the top.", "start_ms": 207840, "end_ms": 218520, "paragraph_index": 20}, {"index": 22, "text": "But more than that, what are the board of directors doing?\"", "start_ms": 218520, "end_ms": 222624, "paragraph_index": 20}, {"index": 23, "text": "Jet2 boss Steve Heapy called for \"urgent and accountable\" action to bolster the UK's air traffic control infrastructure.", "start_ms": 222624, "end_ms": 231312, "paragraph_index": 21}, {"index": 24, "text": "Ryanair reiterated its calls for Rolfe to resign, saying he had failed to deliver\" either a reliable system or an effective back-up\".", "start_ms": 231312, "end_ms": 240720, "paragraph_index": 22}, {"index": 25, "text": "The latest outage affected 140 of the airline's flights and 25,000 passengers.", "start_ms": 240720, "end_ms": 248160, "paragraph_index": 22}, {"index": 26, "text": "British Airways said \"yet another technical fault with Nats\" was \"disappointing\".", "start_ms": 248160, "end_ms": 253728, "paragraph_index": 23}, {"index": 27, "text": "A Nats spokesperson apologised, saying: \"In the real world, we accept technology can and sometimes does fail.", "start_ms": 253728, "end_ms": 262488, "paragraph_index": 24}, {"index": 28, "text": "Our job is minimising disruption where possible.", "start_ms": 262488, "end_ms": 266520, "paragraph_index": 24}, {"index": 29, "text": "\"What isn't acceptable is any incident where safety is compromised - this is always our first priority.\"", "start_ms": 266520, "end_ms": 273792, "paragraph_index": 25}, {"index": 30, "text": "They added that it was working to return air traffic to normal as quickly as possible and urged passengers to check their flight status with their airline.", "start_ms": 273792, "end_ms": 283776, "paragraph_index": 26}, {"index": 31, "text": "Transport Secretary Heidi Alexander acknowledged the situation was \"deeply frustrating\" for passengers.", "start_ms": 283776, "end_ms": 291480, "paragraph_index": 27}, {"index": 32, "text": "Steve Davies, 74, told the BBC he was \"cheesed off with air traffic control\" as technical issues with its systems seemed to be \"happening a lot\".", "start_ms": 291480, "end_ms": 302280, "paragraph_index": 28}, {"index": 33, "text": "He and his wife Sadie became stuck at Birmingham airport after being told to disembark their EasyJet flight to Edinburgh on Monday morning.", "start_ms": 302280, "end_ms": 311640, "paragraph_index": 29}, {"index": 34, "text": "Nicole McCloskey, from Kilmarnock, had been due to go to Disneyland Paris with her family before their flight was cancelled.", "start_ms": 311640, "end_ms": 320088, "paragraph_index": 30}, {"index": 35, "text": "She told the BBC her family got a message to say the flight was delayed while they were travelling to Glasgow airport, but only found out it had been grounded altogether once they arrived.", "start_ms": 320088, "end_ms": 331944, "paragraph_index": 31}, {"index": 36, "text": "Nicole said they have been rebooked on another flight on later on Monday and were hopeful \"it's sorted in time\".", "start_ms": 331944, "end_ms": 339024, "paragraph_index": 32}, {"index": 37, "text": "Nicole McCloskey and her daughters have had their flight to Disneyland cancelled", "start_ms": 339024, "end_ms": 344592, "paragraph_index": 33}, {"index": 38, "text": "Rebecca Freeman became stranded at Bristol Airport after her flight to Edinburgh for a business meeting was cancelled.", "start_ms": 344592, "end_ms": 352344, "paragraph_index": 34}, {"index": 39, "text": "She described the atmosphere as \"chaos\".", "start_ms": 352344, "end_ms": 355896, "paragraph_index": 34}, {"index": 40, "text": "\"I was caught up in the Nats issue earlier this month and spent nine hours at Bristol airport,\" she told the BBC.", "start_ms": 355896, "end_ms": 363960, "paragraph_index": 35}, {"index": 41, "text": "\"I can't believe it's happened again.", "start_ms": 363960, "end_ms": 366984, "paragraph_index": 36}, {"index": 42, "text": "It is very frustrating and I will have to attempt the business meeting again for a third time,\" adding that she still has not received money back from the associated costs for the last time her flights were cancelled.", "start_ms": 366984, "end_ms": 380136, "paragraph_index": 36}, {"index": 43, "text": "Not much is known about what caused the latest Nats problems, except that there was a technical failure at its control centre in Prestwick, which handles traffic across northern England, Scotland and Northern Ireland - catering for about 42% of the UK's air traffic.", "start_ms": 380136, "end_ms": 398160, "paragraph_index": 37}, {"index": 44, "text": "The other Nats centre at Swanwick in Hampshire looks after airspace in the southern part of the UK, including the approaches to Heathrow and Gatwick.", "start_ms": 398160, "end_ms": 408192, "paragraph_index": 38}, {"index": 45, "text": "Last month's Swanwick incident affected hundreds of thousands of passengers, with some sleeping on airport floors or getting stuck overseas earlier this month.", "start_ms": 408192, "end_ms": 418968, "paragraph_index": 39}, {"index": 46, "text": "It was more severe as it affected intercontinental and long-haul travel via UK airspace.", "start_ms": 418968, "end_ms": 425976, "paragraph_index": 40}, {"index": 47, "text": "Nats said in a report last week that the software glitch happened \"in the space of a millisecond\" leading to the system producing corrupted data.", "start_ms": 425976, "end_ms": 435264, "paragraph_index": 41}, {"index": 48, "text": "Sources say that behind the scenes, airlines are \"furious\" that disruption keeps on happening, and that they must bear the costs of refunding passengers and looking after those affected by delays.", "start_ms": 435264, "end_ms": 448056, "paragraph_index": 42}, {"index": 49, "text": "There are deep concerns that not enough resources are being put into ensuring the air traffic control system has the resilience it needs.", "start_ms": 448056, "end_ms": 457032, "paragraph_index": 43}, {"index": 50, "text": "Rolfe told the BBC at the time of the Swanwick incident that he would not resign, saying the software defect was \"very, very obscure\".", "start_ms": 457032, "end_ms": 466512, "paragraph_index": 44}, {"index": 51, "text": "Have you been affected by the disruption to flights?", "start_ms": 466512, "end_ms": 470232, "paragraph_index": 45}], "total_duration_ms": 470232};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "was": "是", "air": "气氛", "said": "说", "that": "那个", "traffic": "交通", "in": "在", "at": "在", "with": "与", "it": "它", "for": "为了", "control": "控制", "on": "在", "is": "是", "flight": "航班", "be": "是", "after": "之后", "uk": "英国", "they": "它们", "passengers": "乘客", "flights": "航班", "cancelled": "取消", "by": "被", "were": "是", "their": "他们的", "not": "不", "have": "有", "uk's": "英国的", "disruption": "中断", "had": "有", "he": "他", "are": "是", "her": "她的", "been": "已经", "affected": "受影响", "its": "它的", "this": "这个", "system": "制度", "technical": "技术的", "incident": "事件", "issue": "问题", "has": "有", "she": "她", "bbc": "英国广播公司", "as": "作为", "told": "告诉", "airport": "机场", "again": "再次", "caused": "导致", "there": "那里", "northern": "北部的", "issues": "问题", "saying": "说", "delays": "延误", "time": "时间", "easyjet": "易捷航空", "into": "进入", "while": "而", "scotland": "苏格兰", "earlier": "较早", "month": "月份", "about": "关于", "it's": "它是", "our": "我们的", "more": "更多", "monday": "星期一", "departures": "出发", "from": "来自", "or": "或者", "another": "另一个", "resign": "辞职", "what": "什么", "nicole": "妮可", "very": "非常", "last": "最后", "can": "可以", "believe": "认为", "airports": "机场", "monday's": "周一的", "once": "一旦", "calls": "呼吁", "service": "服务", "national": "国家", "confidence": "信任", "which": "哪个", "behind": "在...后面", "across": "跨越", "ireland": "爱尔兰", "england": "英格兰", "burnham": "伯纳姆", "asked": "询问", "would": "将", "look": "看起来", "need": "需要", "added": "补充", "transport": "运输", "secretary": "秘书", "get": "得到", "although": "虽然", "spokesperson": "发言人", "working": "工作", "back": "后退", "normal": "正常", "than": "比", "including": "包括", "scheduled": "预定", "british": "英国的", "cancellations": "取消", "unlikely": "不太可能", "entitled": "有权", "under": "在...之下", "should": "应该", "an": "一个", "will": "将", "chaos": "混乱", "report": "报告", "yet": "尚未", "failure": "失败", "called": "称为", "urgent": "紧急的", "adding": "补充说", "leadership": "领导力", "world": "世界", "we": "我们", "but": "但是", "steve": "史蒂夫", "latest": "最新的", "where": "那里", "possible": "可能的", "frustrating": "令人沮丧的", "happening": "发生", "became": "成为", "stuck": "被困的", "being": "正在", "edinburgh": "爱丁堡", "family": "家庭", "say": "说", "bristol": "布里斯托尔", "business": "事务", "meeting": "会议", "happened": "发生", "costs": "成本", "centre": "中心", "airspace": "领空", "video": "视频", "played": "比赛", "watch": "观看", "couldn't": "不能", "scottish": "苏格兰的", "see": "看到", "criticised": "批评", "second": "第二", "problem": "问题", "two": "两个", "weeks": "周", "major": "重大的", "question": "问题", "crisis": "危机", "services": "服务", "runs": "奔跑（第三人称）", "nothing": "没有东西", "do": "做", "separate": "单独的", "prime": "首相", "minister": "部长", "andy": "安迪", "further": "进一步的", "today": "今天", "cause": "事业", "even": "甚至", "greater": "更大的", "concern": "关切", "when": "当", "reporters": "记者们", "whether": "是否", "fire": "射击", "head": "前往", "these": "这些", "clearly": "显然", "serious": "严重的", "fully": "完全地", "investigated": "被调查", "taking": "采取", "extremely": "极其", "seriously": "认真地", "initially": "最初", "matter": "事情", "bottom": "底部", "why": "为何", "underlying": "潜在的", "causing": "导致", "since": "自从", "resolved": "解决了的", "running": "奔跑", "full": "完整", "capacity": "容量", "officials": "官员", "warned": "警告", "effects": "影响", "now": "现在", "focused": "专注的", "customers": "客户", "recover": "恢复", "help": "帮助", "operations": "行动", "arrivals": "到达", "according": "根据", "company": "公司", "worst": "最坏的", "seen": "被视为", "civil": "民事的", "authority": "权威", "who": "谁", "disrupted": "中断的", "likely": "可能", "considered": "认为", "result": "结果", "extraordinary": "非凡的", "circumstances": "情况", "passenger": "乘客", "rights": "权利", "rules": "规则", "meaning": "意义", "looked": "看起来", "directly": "直接地", "independent": "独立的", "review": "审查", "way": "方式", "results": "结果", "published": "发布", "within": "在内部", "six": "六", "months": "月", "repeated": "重复", "failures": "失败", "leave": "离开", "us": "我们", "worrying": "令人担忧的", "territory": "领土", "says": "表示", "continue": "继续", "fixed": "固定的", "industry": "行业", "representative": "代表", "body": "机构", "both": "两者", "deserve": "应得", "better": "更好的", "managing": "管理", "director": "局长", "reform": "改革", "did": "做了", "current": "当前的", "radio": "电台", "one": "一个", "programme": "节目", "if": "如果", "chief": "首席", "martin": "马丁", "top": "顶级的", "board": "董事会", "directors": "董事", "doing": "做", "boss": "老板", "accountable": "负责的", "action": "行动", "bolster": "加强", "infrastructure": "基础设施", "reiterated": "重申", "failed": "失败", "deliver": "发表", "either": "要么", "reliable": "可靠的", "effective": "有效的", "fault": "过错", "apologised": "道歉", "real": "真正的", "accept": "接受", "technology": "技术", "sometimes": "有时", "does": "做", "fail": "失败", "job": "工作", "isn't": "不是", "acceptable": "可接受的", "any": "任何", "safety": "安全", "compromised": "受损的", "always": "总是", "first": "第一轮", "priority": "优先事项", "return": "返回", "quickly": "迅速", "urged": "敦促", "check": "支票", "status": "状态", "heidi": "海迪", "alexander": "亚历山大", "acknowledged": "承认", "situation": "局势", "deeply": "深深地", "davies": "戴维斯", "off": "离开", "systems": "系统", "seemed": "似乎", "lot": "很多", "his": "他的", "wife": "妻子", "birmingham": "伯明翰", "morning": "上午", "due": "应得", "go": "去", "paris": "巴黎", "before": "之前", "got": "获得", "message": "信息", "delayed": "延迟的", "travelling": "旅行", "glasgow": "格拉斯哥", "only": "只有", "found": "发现", "out": "出来", "grounded": "停飞的", "altogether": "完全", "arrived": "抵达", "later": "后来", "hopeful": "有希望的", "sorted": "解决", "daughters": "女儿们", "rebecca": "丽贝卡", "stranded": "滞留的", "described": "描述", "atmosphere": "气氛", "caught": "被卷入", "up": "向上", "spent": "花费", "nine": "九", "hours": "小时", "can't": "不能", "attempt": "企图", "third": "第三", "still": "仍然", "received": "受到", "money": "金钱", "associated": "相关的", "much": "许多", "known": "已知", "problems": "问题", "except": "除了", "other": "其他", "hampshire": "汉普郡", "looks": "看起来", "southern": "南部的", "part": "部分", "approaches": "接近", "gatwick": "盖特威克（机场）", "month's": "这个月的", "hundreds": "数百", "thousands": "数千", "some": "一些", "sleeping": "睡觉", "getting": "获得", "overseas": "海外的", "severe": "严重的", "travel": "旅行", "via": "通过", "week": "周", "space": "空间", "leading": "领导", "producing": "产生", "data": "数据", "sources": "消息来源", "scenes": "场景", "furious": "愤怒", "keeps": "持续", "must": "必须", "bear": "承受", "looking": "寻找", "those": "那些", "deep": "深切", "concerns": "担忧", "enough": "足够", "resources": "资源", "put": "提出", "ensuring": "确保", "needs": "需要", "you": "你", "nats": "英国国家航空交通服务公司", "airlines": "航空公司", "software": "软件", "swanwick": "斯旺威克", "rolfe": "罗尔夫", "wizz": "维兹航空", "prestwick": "普雷斯蒂克", "aviation": "航空", "airline": "航空公司", "airways": "航空公司", "caa": "英国民航局", "millisecond": "毫秒", "moynihan": "莫伊尼汉", "mccloskey": "麦克洛斯基", "disneyland": "迪士尼乐园", "knock-on": "连锁", "analytics": "分析", "cirium": "西睿", "yvonne": "伊冯", "heapy": "希皮", "ryanair": "瑞安航空", "back-up": "备用", "airline's": "航空公司的", "disappointing": "令人失望", "minimising": "最小化", "cheesed": "恼火", "sadie": "赛迪", "disembark": "下机", "kilmarnock": "基尔马诺克", "rebooked": "改签", "freeman": "弗里曼", "handles": "处理", "catering": "餐饮", "heathrow": "希思罗", "floors": "楼层", "intercontinental": "洲际", "long-haul": "长途", "corrupted": "损坏", "refunding": "退款", "obscure": "晦涩"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
