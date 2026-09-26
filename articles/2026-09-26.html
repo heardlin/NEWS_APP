@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-26</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-26</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/f162/live/8ef99460-b91c-11f1-b1d1-571ed4d7ff2c.jpg" alt="Man City found guilty of majority of 115 financial rule breaches" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Man City found guilty of majority of 115 financial rule breaches</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/sport/football/articles/cw7v44ezry5go?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-26.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">本视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Kieran Maguire on potential sanctions for Man City</span></p>
+        <p class="cn">基兰·马奎尔（Kieran Maguire）谈曼城可能面临的制裁</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Manchester City have been found guilty of breaking the majority of the 115 financial rules they were accused of breaching.</span></p>
+        <p class="cn">曼城（Manchester City）被认定违反了其被指控的115项财务规则中的大部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The Athletic , external is reporting that the sanctions have not been decided but that the independent panel has reached its decision, finding the club guilty of all but one count.</span></p>
+        <p class="cn">据The Athletic（外部链接）报道，制裁措施尚未确定，但独立小组已做出决定，认定该俱乐部除一项指控外其余全部有罪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The Premier League declined to comment.</span></p>
+        <p class="cn">英超联赛（Premier League）拒绝置评。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Asked if the report was correct, City did not comment either way.</span></p>
+        <p class="cn">当被问及该报道是否准确时，曼城未作任何评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Instead they released a statement saying the "Premier League process remains ongoing with significant elements to be completed, and subject to strict <span class="keyword" data-word="confidentiality" data-phonetic="/ˌkɒnfɪˌdenʃiˈæləti/" data-pos="n." data-def="保密性；机密性" data-def-en="The state of keeping information secret or private.">confidentiality</span>".</span></p>
+        <p class="cn">相反，他们发表声明称“英超联赛的程序仍在进行中，尚有重要环节有待完成，且须严格保密”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"The club has diligently respected due process for eight years on the basis that the Premier League board and executive would behave as an independent, <span class="keyword" data-word="impartial" data-phonetic="/ɪmˈpɑːʃl/" data-pos="adj." data-def="公正的；不偏不倚的" data-def-en="Treating all people or sides equally; not biased.">impartial</span> and fair-minded regulator, free from partisan influence," it added.</span></p>
+        <p class="cn">声明还表示：“俱乐部八年来一直勤勉地尊重正当程序，基于英超联赛董事会和高管将作为独立、公正、公平的监管者行事，不受党派影响。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">BBC Sport has also been told that, in the event of being found guilty, City will appeal against the findings.</span></p>
+        <p class="cn">BBC体育（BBC Sport）还获悉，如果被判有罪，曼城将对裁决提出上诉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Other Premier League clubs are believed to have been informed about the independent panel's decision and have sought legal advice as to whether they would have a <span class="keyword" data-word="compensation" data-phonetic="/ˌkɒmpenˈseɪʃn/" data-pos="n." data-def="赔偿；补偿" data-def-en="Money paid to someone because of loss, injury, or damage.">compensation</span> claim.</span></p>
+        <p class="cn">据信，其他英超俱乐部已获悉独立小组的决定，并已就他们是否可能提出赔偿要求寻求法律建议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Clubs seek legal advice over Man City charges <span class="keyword" data-word="compensation" data-phonetic="/ˌkɒmpenˈseɪʃn/" data-pos="n." data-def="赔偿；补偿" data-def-en="Money paid to someone because of loss, injury, or damage.">compensation</span></span></p>
+        <p class="cn">俱乐部就曼城指控赔偿寻求法律建议</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Relegation?</span> <span class="sentence" data-sentence-index="12">Titles stripped?</span> <span class="sentence" data-sentence-index="13">Appeals?</span> <span class="sentence" data-sentence-index="14">What next for Man City</span></p>
+        <p class="cn">降级？剥夺冠军？上诉？曼城接下来会怎样</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">This video can not be played</span></p>
+        <p class="cn">本视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">What do Man City charges mean and what happens next?</span></p>
+        <p class="cn">曼城的指控意味着什么，接下来会发生什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">In February 2023, City were charged with more than 100 breaches of the Premier League's financial rules following a four-year investigation.</span></p>
+        <p class="cn">2023年2月，经过四年的调查，曼城被指控违反英超联赛财务规则超过100项。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">The club was referred to an independent commission over allegations it breached financial rules between 2009 and 2018.</span></p>
+        <p class="cn">该俱乐部因涉嫌在2009年至2018年间违反财务规则而被提交给独立委员会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">The hearing began in September 2024 behind closed doors and concluded that December after around 12 weeks.</span></p>
+        <p class="cn">听证会于2024年9月闭门开始，并在大约12周后于当年12月结束。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">The Premier League claimed City breached rules requiring the club to provide "accurate financial information that gives a true and fair view of the club's financial position".</span></p>
+        <p class="cn">英超联赛声称曼城违反了要求俱乐部提供“准确财务信息，真实公平地反映俱乐部财务状况”的规则。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">City strongly denied all charges and have said their case is supported by a "comprehensive body of <span class="keyword" data-word="irrefutable" data-phonetic="/ɪˈrefjətəbl/" data-pos="adj." data-def="无可辩驳的" data-def-en="Impossible to deny or disprove.">irrefutable</span> evidence".</span></p>
+        <p class="cn">曼城强烈否认所有指控，并表示其案件有“全面且无可辩驳的证据”支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">The club won eight trophies in the period covered by the case, including three Premier League titles, three League Cups, one Community Shield and one FA Cup.</span></p>
+        <p class="cn">在该案涉及的时期内，俱乐部赢得了八座奖杯，包括三个英超冠军、三个联赛杯、一个社区盾和一个足总杯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">The charges cover the mangerial tenures of Roberto Mancini and Manuel Pellegrini, and the first two years under Pep Guardiola, who left the club after 10 seasons at the end of the 2025-26 campaign.</span></p>
+        <p class="cn">这些指控涵盖了罗伯托·曼奇尼（Roberto Mancini）和曼努埃尔·佩莱格里尼（Manuel Pellegrini）的执教时期，以及佩普·瓜迪奥拉（Pep Guardiola）执教的前两年，瓜迪奥拉在2025-26赛季结束后离开俱乐部，执教了10个赛季。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">A separate case between City and the Premier League was also heard last year.</span></p>
+        <p class="cn">曼城与英超联赛之间的另一起案件也在去年进行了听证。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">In 2024, an independent <span class="keyword" data-word="arbitration" data-phonetic="/ˌɑːbɪˈtreɪʃn/" data-pos="n." data-def="仲裁" data-def-en="The process of settling a dispute by an independent person or body.">arbitration</span> panel found against aspects of the league's Associated Party Transaction regulations (APTs) after City launched an arbitration challenge.</span></p>
+        <p class="cn">2024年，在曼城发起仲裁挑战后，一个独立仲裁小组裁定英超联赛的关联方交易法规（APTs）的某些方面不成立。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">A tribunal held in February 2025 found the Premier League's rules governing sponsorship deals from the period between 2021 and 2024 are "void and unenforceable".</span></p>
+        <p class="cn">2025年2月举行的一个法庭裁定，英超联赛在2021年至2024年期间管理赞助协议的规则“无效且不可执行”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">City and the Premier League reached a settlement in September 2025, with the club accepting the APT rules are valid and binding and both parties agreeing to terminate legal proceedings.</span></p>
+        <p class="cn">曼城和英超联赛于2025年9月达成和解，俱乐部接受APT规则有效且具有约束力，双方同意终止法律程序。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">The rules were formed by the Premier League to prevent clubs from profiting from commercial deals with companies linked to their owners that are deemed above "fair market value".</span></p>
+        <p class="cn">这些规则由英超联赛制定，旨在防止俱乐部通过与所有者有关联的公司达成被认为高于“公平市场价值”的商业交易来获利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">This video can not be played</span></p>
+        <p class="cn">本视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">â¢ 54x Failure to provide accurate financial information 2009-10 to 2017-18.</span></p>
+        <p class="cn">• 54次未能提供2009-10至2017-18赛季的准确财务信息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">â¢ 14x Failure to provide accurate details for player and manager payments from 2009-10 to 2017-18.</span></p>
+        <p class="cn">• 14次未能提供2009-10至2017-18赛季球员和经理付款的准确细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">â¢ 5x Failure to comply with Uefa's rules including Financial Fair Play (FFP) 2013-14 to 2017-18.</span></p>
+        <p class="cn">• 5次未能遵守欧足联（Uefa）的规则，包括2013-14至2017-18赛季的财务公平竞赛（FFP）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">â¢ 7x Breaching Premier League's Profitability and Sustainability Rules (PSR) 2015-16 to 2017-18.</span></p>
+        <p class="cn">• 7次违反2015-16至2017-18赛季英超联赛的盈利和可持续性规则（PSR）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">â¢ 35x Failure to co-operate with Premier League investigations December 2018 - Feb 2023.</span></p>
+        <p class="cn">• 35次未能配合英超联赛2018年12月至2023年2月的调查。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">There have been suggestions by the Times and football finance expert Kieran Maguire the number of charges is as high as 130.</span> <span class="sentence" data-sentence-index="36">BBC Sport has been unable to verify this.</span></p>
+        <p class="cn">《泰晤士报》和足球财务专家基兰·马奎尔曾暗示指控数量高达130项。BBC体育无法核实这一点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">This video can not be played</span></p>
+        <p class="cn">本视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">'I don't really know how to feel' - City fan on charges</span></p>
+        <p class="cn">“我真的不知道该怎么想”——曼城球迷谈指控</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Football on Trial: The Manchester City Charges</span></p>
+        <p class="cn">足球审判：曼城指控</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">Could history be rewritten?</span> <span class="sentence" data-sentence-index="41">Guardiola, Man City and the 115 charges</span></p>
+        <p class="cn">历史会被改写吗？瓜迪奥拉、曼城和115项指控</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="42">Latest Manchester City news, analysis and fan views</span></p>
+        <p class="cn">最新曼城新闻、分析和球迷观点</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="43">Ask about Man City - what do you want to know?</span></p>
+        <p class="cn">询问关于曼城的问题——你想知道什么？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃən/ n.</span>
+      </div>
+      <p class="kw-def">制裁；处罚</p>
+      <p class="kw-def-en">A penalty or punishment imposed for breaking a rule or law.</p>
+      <p class="kw-ctx">&ldquo;The Athletic, external is reporting that the sanctions have not been decided but that the independent panel has reached its decision, finding the club guilty of all but one count.&rdquo;</p>
+      <p class="kw-ctx-cn">《The Athletic》外部报道称，制裁尚未决定，但独立小组已达成决定，认定俱乐部除一项指控外全部有罪。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">breach</span>
+        <button class="kw-speak-btn" data-word="breach" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/briːtʃ/ v.</span>
+      </div>
+      <p class="kw-def">违反；破坏</p>
+      <p class="kw-def-en">To break a rule, law, or agreement.</p>
+      <p class="kw-ctx">&ldquo;Manchester City have been found guilty of breaking the majority of the 115 financial rules they were accused of breaching.&rdquo;</p>
+      <p class="kw-ctx-cn">曼城被认定违反了被指控的115项财务规则中的大多数。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">confidentiality</span>
+        <button class="kw-speak-btn" data-word="confidentiality" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkɒnfɪˌdenʃiˈæləti/ n.</span>
+      </div>
+      <p class="kw-def">保密性；机密性</p>
+      <p class="kw-def-en">The state of keeping information secret or private.</p>
+      <p class="kw-ctx">&ldquo;Instead they released a statement saying the "Premier League process remains ongoing with significant elements to be completed, and subject to strict confidentiality".&rdquo;</p>
+      <p class="kw-ctx-cn">相反，他们发表声明称“英超联赛程序仍在进行中，重要部分有待完成，并须严格保密”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">impartial</span>
+        <button class="kw-speak-btn" data-word="impartial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪmˈpɑːʃl/ adj.</span>
+      </div>
+      <p class="kw-def">公正的；不偏不倚的</p>
+      <p class="kw-def-en">Treating all people or sides equally; not biased.</p>
+      <p class="kw-ctx">&ldquo;The club has diligently respected due process for eight years on the basis that the Premier League board and executive would behave as an independent, impartial and fair-minded regulator, free from partisan influence,&rdquo;</p>
+      <p class="kw-ctx-cn">俱乐部八年来一直勤勉地遵守正当程序，基于英超董事会和高管将作为独立、公正、公平的监管者行事，不受党派影响。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compensation</span>
+        <button class="kw-speak-btn" data-word="compensation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌkɒmpenˈseɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">赔偿；补偿</p>
+      <p class="kw-def-en">Money paid to someone because of loss, injury, or damage.</p>
+      <p class="kw-ctx">&ldquo;Other Premier League clubs are believed to have been informed about the independent panel's decision and have sought legal advice as to whether they would have a compensation claim.&rdquo;</p>
+      <p class="kw-ctx-cn">据信其他英超俱乐部已获悉独立小组的决定，并已寻求法律建议，以确定他们是否有赔偿要求。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allegation</span>
+        <button class="kw-speak-btn" data-word="allegation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌæləˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">指控；断言</p>
+      <p class="kw-def-en">A claim that someone has done something wrong or illegal, without proof.</p>
+      <p class="kw-ctx">&ldquo;The club was referred to an independent commission over allegations it breached financial rules between 2009 and 2018.&rdquo;</p>
+      <p class="kw-ctx-cn">该俱乐部因涉嫌在2009年至2018年间违反财务规则而被提交给独立委员会。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">irrefutable</span>
+        <button class="kw-speak-btn" data-word="irrefutable" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈrefjətəbl/ adj.</span>
+      </div>
+      <p class="kw-def">无可辩驳的</p>
+      <p class="kw-def-en">Impossible to deny or disprove.</p>
+      <p class="kw-ctx">&ldquo;City strongly denied all charges and have said their case is supported by a "comprehensive body of irrefutable evidence".&rdquo;</p>
+      <p class="kw-ctx-cn">曼城强烈否认所有指控，并表示他们的案件得到“全面无可辩驳的证据”支持。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">arbitration</span>
+        <button class="kw-speak-btn" data-word="arbitration" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɑːbɪˈtreɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">仲裁</p>
+      <p class="kw-def-en">The process of settling a dispute by an independent person or body.</p>
+      <p class="kw-ctx">&ldquo;In 2024, an independent arbitration panel found against aspects of the league's Associated Party Transaction regulations (APTs) after City launched an arbitration challenge.&rdquo;</p>
+      <p class="kw-ctx-cn">2024年，在曼城发起仲裁挑战后，一个独立仲裁小组裁定联赛的关联方交易法规（APTs）的某些方面不成立。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Kieran Maguire on potential sanctions for Man City", "start_ms": 3000, "end_ms": 7416, "paragraph_index": 1}, {"index": 2, "text": "Manchester City have been found guilty of breaking the majority of the 115 financial rules they were accused of breaching.", "start_ms": 7416, "end_ms": 16224, "paragraph_index": 2}, {"index": 3, "text": "The Athletic , external is reporting that the sanctions have not been decided but that the independent panel has reached its decision, finding the club guilty of all but one count.", "start_ms": 16224, "end_ms": 27960, "paragraph_index": 3}, {"index": 4, "text": "The Premier League declined to comment.", "start_ms": 27960, "end_ms": 31296, "paragraph_index": 4}, {"index": 5, "text": "Asked if the report was correct, City did not comment either way.", "start_ms": 31296, "end_ms": 36384, "paragraph_index": 5}, {"index": 6, "text": "Instead they released a statement saying the \"Premier League process remains ongoing with significant elements to be completed, and subject to strict confidentiality\".", "start_ms": 36384, "end_ms": 47664, "paragraph_index": 6}, {"index": 7, "text": "\"The club has diligently respected due process for eight years on the basis that the Premier League board and executive would behave as an independent, impartial and fair-minded regulator, free from partisan influence,\" it added.", "start_ms": 47664, "end_ms": 62808, "paragraph_index": 7}, {"index": 8, "text": "BBC Sport has also been told that, in the event of being found guilty, City will appeal against the findings.", "start_ms": 62808, "end_ms": 71040, "paragraph_index": 8}, {"index": 9, "text": "Other Premier League clubs are believed to have been informed about the independent panel's decision and have sought legal advice as to whether they would have a compensation claim.", "start_ms": 71040, "end_ms": 81456, "paragraph_index": 9}, {"index": 10, "text": "Clubs seek legal advice over Man City charges compensation", "start_ms": 81456, "end_ms": 86616, "paragraph_index": 10}, {"index": 11, "text": "Relegation?", "start_ms": 86616, "end_ms": 88704, "paragraph_index": 11}, {"index": 12, "text": "Titles stripped?", "start_ms": 88704, "end_ms": 90816, "paragraph_index": 11}, {"index": 13, "text": "Appeals?", "start_ms": 90816, "end_ms": 92904, "paragraph_index": 11}, {"index": 14, "text": "What next for Man City", "start_ms": 92904, "end_ms": 95664, "paragraph_index": 11}, {"index": 15, "text": "This video can not be played", "start_ms": 95664, "end_ms": 98664, "paragraph_index": 12}, {"index": 16, "text": "What do Man City charges mean and what happens next?", "start_ms": 98664, "end_ms": 103008, "paragraph_index": 13}, {"index": 17, "text": "In February 2023, City were charged with more than 100 breaches of the Premier League's financial rules following a four-year investigation.", "start_ms": 103008, "end_ms": 113376, "paragraph_index": 14}, {"index": 18, "text": "The club was referred to an independent commission over allegations it breached financial rules between 2009 and 2018.", "start_ms": 113376, "end_ms": 122832, "paragraph_index": 15}, {"index": 19, "text": "The hearing began in September 2024 behind closed doors and concluded that December after around 12 weeks.", "start_ms": 122832, "end_ms": 131520, "paragraph_index": 16}, {"index": 20, "text": "The Premier League claimed City breached rules requiring the club to provide \"accurate financial information that gives a true and fair view of the club's financial position\".", "start_ms": 131520, "end_ms": 142680, "paragraph_index": 17}, {"index": 21, "text": "City strongly denied all charges and have said their case is supported by a \"comprehensive body of irrefutable evidence\".", "start_ms": 142680, "end_ms": 151080, "paragraph_index": 18}, {"index": 22, "text": "The club won eight trophies in the period covered by the case, including three Premier League titles, three League Cups, one Community Shield and one FA Cup.", "start_ms": 151080, "end_ms": 162408, "paragraph_index": 19}, {"index": 23, "text": "The charges cover the mangerial tenures of Roberto Mancini and Manuel Pellegrini, and the first two years under Pep Guardiola, who left the club after 10 seasons at the end of the 2025-26 campaign.", "start_ms": 162408, "end_ms": 177504, "paragraph_index": 20}, {"index": 24, "text": "A separate case between City and the Premier League was also heard last year.", "start_ms": 177504, "end_ms": 183096, "paragraph_index": 21}, {"index": 25, "text": "In 2024, an independent arbitration panel found against aspects of the league's Associated Party Transaction regulations (APTs) after City launched an arbitration challenge.", "start_ms": 183096, "end_ms": 196848, "paragraph_index": 22}, {"index": 26, "text": "A tribunal held in February 2025 found the Premier League's rules governing sponsorship deals from the period between 2021 and 2024 are \"void and unenforceable\".", "start_ms": 196848, "end_ms": 209688, "paragraph_index": 23}, {"index": 27, "text": "City and the Premier League reached a settlement in September 2025, with the club accepting the APT rules are valid and binding and both parties agreeing to terminate legal proceedings.", "start_ms": 209688, "end_ms": 222624, "paragraph_index": 24}, {"index": 28, "text": "The rules were formed by the Premier League to prevent clubs from profiting from commercial deals with companies linked to their owners that are deemed above \"fair market value\".", "start_ms": 222624, "end_ms": 233160, "paragraph_index": 25}, {"index": 29, "text": "This video can not be played", "start_ms": 233160, "end_ms": 236160, "paragraph_index": 26}, {"index": 30, "text": "\u00e2\u0080\u00a2 54x Failure to provide accurate financial information 2009-10 to 2017-18.", "start_ms": 236160, "end_ms": 245496, "paragraph_index": 27}, {"index": 31, "text": "\u00e2\u0080\u00a2 14x Failure to provide accurate details for player and manager payments from 2009-10 to 2017-18.", "start_ms": 245496, "end_ms": 255792, "paragraph_index": 28}, {"index": 32, "text": "\u00e2\u0080\u00a2 5x Failure to comply with Uefa's rules including Financial Fair Play (FFP) 2013-14 to 2017-18.", "start_ms": 255792, "end_ms": 267504, "paragraph_index": 29}, {"index": 33, "text": "\u00e2\u0080\u00a2 7x Breaching Premier League's Profitability and Sustainability Rules (PSR) 2015-16 to 2017-18.", "start_ms": 267504, "end_ms": 278856, "paragraph_index": 30}, {"index": 34, "text": "\u00e2\u0080\u00a2 35x Failure to co-operate with Premier League investigations December 2018 - Feb 2023.", "start_ms": 278856, "end_ms": 288096, "paragraph_index": 31}, {"index": 35, "text": "There have been suggestions by the Times and football finance expert Kieran Maguire the number of charges is as high as 130.", "start_ms": 288096, "end_ms": 297072, "paragraph_index": 32}, {"index": 36, "text": "BBC Sport has been unable to verify this.", "start_ms": 297072, "end_ms": 301296, "paragraph_index": 32}, {"index": 37, "text": "This video can not be played", "start_ms": 301296, "end_ms": 304296, "paragraph_index": 33}, {"index": 38, "text": "'I don't really know how to feel' - City fan on charges", "start_ms": 304296, "end_ms": 308640, "paragraph_index": 34}, {"index": 39, "text": "Football on Trial: The Manchester City Charges", "start_ms": 308640, "end_ms": 312912, "paragraph_index": 35}, {"index": 40, "text": "Could history be rewritten?", "start_ms": 312912, "end_ms": 315480, "paragraph_index": 36}, {"index": 41, "text": "Guardiola, Man City and the 115 charges", "start_ms": 315480, "end_ms": 320544, "paragraph_index": 36}, {"index": 42, "text": "Latest Manchester City news, analysis and fan views", "start_ms": 320544, "end_ms": 325776, "paragraph_index": 37}, {"index": 43, "text": "Ask about Man City - what do you want to know?", "start_ms": 325776, "end_ms": 329520, "paragraph_index": 38}], "total_duration_ms": 329520};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "city": "城市", "premier": "英超", "of": "的", "league": "联赛", "rules": "规则", "charges": "指控", "have": "有", "financial": "金融的", "that": "那个", "club": "俱乐部", "in": "在", "not": "不", "be": "是", "man": "男子", "been": "已经", "with": "与", "this": "这个", "independent": "独立的", "from": "来自", "video": "视频", "can": "可以", "played": "比赛", "on": "在", "for": "为了", "found": "发现", "has": "有", "as": "作为", "an": "一个", "are": "是", "what": "什么", "by": "被", "failure": "失败", "manchester": "曼彻斯特", "guilty": "有罪", "they": "它们", "were": "是", "is": "是", "one": "一个", "was": "是", "legal": "法律的", "between": "之间", "after": "之后", "provide": "提供", "fair": "公平的", "case": "案例", "kieran": "基兰", "maguire": "马奎尔", "sanctions": "制裁", "breaching": "突破", "but": "但是", "reached": "达成", "decision": "决定", "all": "所有", "comment": "评论", "process": "过程", "eight": "八", "years": "多年", "would": "将", "it": "它", "bbc": "英国广播公司", "sport": "体育", "also": "也", "against": "反对", "about": "关于", "advice": "建议", "over": "超过", "next": "下一个", "do": "做", "february": "二月", "breached": "违反", "september": "九月", "december": "十二月", "information": "信息", "their": "他们的", "period": "时期", "including": "包括", "three": "三个", "deals": "协议", "football": "足球", "know": "知道", "fan": "粉丝", "potential": "潜在", "breaking": "打破", "majority": "多数", "accused": "被指控", "external": "外部的", "reporting": "报道", "decided": "决定", "its": "它的", "finding": "发现", "count": "计票", "declined": "拒绝", "asked": "询问", "if": "如果", "report": "报告", "correct": "正确的", "did": "做了", "either": "要么", "way": "方式", "instead": "反而", "released": "释放", "statement": "声明", "saying": "说", "remains": "仍然", "ongoing": "正在进行的", "significant": "重大", "elements": "要素", "completed": "完成", "subject": "主题", "strict": "严格的", "due": "应得", "basis": "基础", "board": "董事会", "executive": "行政的", "regulator": "监管机构", "free": "自由的", "partisan": "党派的", "influence": "影响", "added": "补充", "told": "告诉", "event": "事件", "being": "正在", "will": "将", "appeal": "呼吁", "findings": "调查结果", "other": "其他", "believed": "据信", "informed": "告知", "sought": "寻求", "whether": "是否", "claim": "声称", "seek": "寻求", "appeals": "上诉", "mean": "意味着", "happens": "发生", "charged": "指控", "more": "更多", "than": "比", "following": "随后", "investigation": "调查", "referred": "提及", "commission": "委员会", "allegations": "指控", "hearing": "听证会", "began": "开始", "behind": "在...后面", "closed": "关闭", "doors": "门", "concluded": "得出结论", "around": "在...周围", "weeks": "周", "claimed": "声称", "gives": "给予", "true": "真实", "view": "看法", "club's": "俱乐部的", "position": "立场", "strongly": "强烈地", "denied": "拒绝", "said": "说", "supported": "支持", "comprehensive": "全面的", "body": "机构", "evidence": "证据", "won": "赢得", "covered": "覆盖的", "cups": "奖杯", "community": "社区", "fa": "英足总", "cup": "杯赛", "cover": "覆盖", "first": "第一轮", "two": "两个", "under": "在...之下", "who": "谁", "left": "离开", "seasons": "季", "at": "在", "end": "结束", "campaign": "竞选活动", "separate": "单独的", "heard": "听到", "last": "最后", "year": "年", "aspects": "方面", "associated": "相关的", "party": "政党", "transaction": "交易", "regulations": "规定", "launched": "发起", "challenge": "挑战", "held": "举行", "governing": "治理", "void": "空白", "settlement": "解决", "accepting": "接受", "binding": "有约束力的", "both": "两者", "parties": "政党", "agreeing": "同意", "proceedings": "诉讼程序", "formed": "形成", "prevent": "防止", "commercial": "商业", "companies": "公司", "linked": "关联的", "deemed": "被视为", "above": "超过", "market": "市场", "value": "价值", "details": "细节", "player": "球员", "manager": "经理", "payments": "付款", "comply": "遵守", "uefa's": "欧足联的", "play": "扮演", "co-operate": "合作", "investigations": "调查", "there": "那里", "times": "次", "finance": "财务", "expert": "专家", "number": "数量", "high": "高的", "unable": "无法", "verify": "核实", "don't": "不要", "really": "真正地", "how": "如何", "feel": "感觉", "trial": "审判", "could": "可能", "history": "历史", "latest": "最新的", "news": "新闻", "analysis": "分析", "views": "观点", "ask": "询问", "you": "你", "want": "想要", "league's": "联赛的", "clubs": "俱乐部", "accurate": "准确的", "panel": "小组", "titles": "冠军", "guardiola": "瓜迪奥拉", "athletic": "竞技", "diligently": "勤勉地", "respected": "受尊敬", "behave": "表现", "fair-minded": "公正的", "panel's": "小组的", "relegation": "降级", "stripped": "剥夺", "breaches": "违规", "four-year": "四年", "requiring": "要求", "trophies": "奖杯", "shield": "盾牌", "mangerial": "管理的", "tenures": "任期", "roberto": "罗伯托", "mancini": "曼奇尼", "manuel": "曼努埃尔", "pellegrini": "佩莱格里尼", "pep": "佩普", "apts": "关联方交易", "tribunal": "法庭", "sponsorship": "赞助", "unenforceable": "不可执行", "apt": "关联方交易", "valid": "有效", "terminate": "终止", "profiting": "获利", "owners": "所有者", "ffp": "财政公平", "profitability": "盈利", "sustainability": "可持续性", "psr": "盈利与可持续性规则", "feb": "二月", "suggestions": "建议", "rewritten": "改写"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
