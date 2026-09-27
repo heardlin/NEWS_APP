@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-27</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-27</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6c5b/live/b607d7b0-b9c1-11f1-a430-4d16ee157c41.jpg" alt="Burnham announces scheme to help first-time buyers on to housing ladder" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Burnham announces scheme to help first-time buyers on to housing ladder</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cv8e33gdw17no?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-27.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The prime minister announced the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> on the eve of the Labour Party conference in Liverpool</span></p>
+        <p class="cn">首相在利物浦工党大会前夕宣布了该计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Prime Minister Andy Burnham is to introduce a new <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> to try to help young people get on the property ladder.</span></p>
+        <p class="cn">首相安迪·伯纳姆（Andy Burnham）将推出一项新计划，试图帮助年轻人登上房产阶梯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The "Your First Home" <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> would be open to first-time buyers in England with a <span class="keyword" data-word="deposit" data-phonetic="/dɪˈpɒzɪt/" data-pos="n." data-def="定金；首付" data-def-en="A sum of money paid as a first installment or as a guarantee.">deposit</span> of 2.5%.</span> <span class="sentence" data-sentence-index="3">It would provide them with a loan worth 20% of their new build property's value to help pay for the purchase.</span></p>
+        <p class="cn">“你的第一套房”（Your First Home）计划将面向英格兰的首套房买家，首付只需2.5%。该计划将为他们提供相当于新建房产价值20%的贷款，以帮助支付购房费用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Burnham said people who do not have support from the "bank of mum and dad" are among those the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> would aim to help.</span></p>
+        <p class="cn">伯纳姆表示，该计划旨在帮助那些没有得到“父母银行”支持的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">There would be an initial interest-free period for the <span class="keyword" data-word="equity" data-phonetic="/ˈekwəti/" data-pos="n." data-def="权益；股本" data-def-en="The value of a property or company after deducting debts; ownership interest.">equity</span> loan, with more details expected in next month's Budget.</span></p>
+        <p class="cn">股权贷款最初将有一段时间免息，更多细节预计将在下个月的预算中公布。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">The Conservatives warned the policy would leave first-time buyers taking on more debt and risks "pushing up the price of new homes".</span></p>
+        <p class="cn">保守党警告称，该政策将使首次购房者背负更多债务，并可能“推高新房价格”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Burnham said: "Too many young people are struggling with the cost of housing, with many giving up hope of ever having a home to call their own.</span></p>
+        <p class="cn">伯纳姆说：“太多年轻人在住房成本中挣扎，许多人放弃了拥有自己住房的希望。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">"So we will step in to help more first-time buyers on to the housing ladder."</span></p>
+        <p class="cn">“因此，我们将介入，帮助更多首次购房者登上房产阶梯。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">The PM added he believes the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> will give builders the "confidence to deliver the high-quality new homes the country needs".</span></p>
+        <p class="cn">首相补充说，他相信该计划将给建筑商“信心，以交付国家所需的高质量新房”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Funding for the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> is expected to come from reprioritising existing budgets, but housing developers will pay towards the running costs.</span></p>
+        <p class="cn">该计划的资金预计将来自重新调整现有预算的优先次序，但住房开发商将支付运营成本。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Ministers have not yet confirmed whether there is an age restriction on the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>, or a cap on the price on the value of the property.</span></p>
+        <p class="cn">部长们尚未确认该计划是否有年龄限制，或房产价值是否有价格上限。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">The policy is similar to initiatives from previous governments, including the coalition's Help To Buy <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>, introduced in 2013 by then-Chancellor George Osborne.</span></p>
+        <p class="cn">该政策与历届政府的举措类似，包括2013年由时任财政大臣乔治·奥斯本（George Osborne）推出的联合政府“购房援助”（Help to Buy）计划。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">It expanded a previous <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>, known as FirstBuy, which was aimed solely at first-time buyers.</span></p>
+        <p class="cn">该计划扩展了之前一项名为“首次购房”（FirstBuy）的计划，该计划仅针对首次购房者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Help to Buy initially enabled all purchasers to put down a 5% <span class="keyword" data-word="deposit" data-phonetic="/dɪˈpɒzɪt/" data-pos="n." data-def="定金；首付" data-def-en="A sum of money paid as a first installment or as a guarantee.">deposit</span> on a newly built home, with a value of up to a Â£600,000.</span></p>
+        <p class="cn">“购房援助”最初允许所有购房者以5%的首付购买新建房屋，价值最高可达60万英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">Up to 20% of the cost of the home was funded by a shared <span class="keyword" data-word="equity" data-phonetic="/ˈekwəti/" data-pos="n." data-def="权益；股本" data-def-en="The value of a property or company after deducting debts; ownership interest.">equity</span> loan, which was interest-free for the first five years.</span></p>
+        <p class="cn">房屋成本的最高20%由共享股权贷款提供资金，该贷款在前五年免息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">The first version of the programme was active until 2021.</span> <span class="sentence" data-sentence-index="17">A second iteration of the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>, which ran until 2023, restricted access to first-time buyers and applied regional-level price caps to the properties that could be bought.</span></p>
+        <p class="cn">该计划的第一版一直实施到2021年。该计划的第二版一直持续到2023年，限制首次购房者参与，并对可购买的房产实行区域价格上限。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">An evaluation of the <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> , external found more than 387,000 properties were purchased through it, of which 328,000 were by first-time buyers.</span></p>
+        <p class="cn">对该计划的外部评估发现，通过该计划购买了超过38.7万套房产，其中32.8万套由首次购房者购买。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">In its conclusion, the report noted Help to Buy was "effective in supporting people into home ownership in some areas, but did not remove <span class="keyword" data-word="affordability" data-phonetic="/əˌfɔːdəˈbɪləti/" data-pos="n." data-def="可负担性" data-def-en="The ability to afford something, especially housing.">affordability</span> barriers for first-time buyers in areas that were already relatively expensive".</span></p>
+        <p class="cn">报告在结论中指出，“购房援助”在“一些地区有效支持人们拥有住房，但并未消除那些已经相对昂贵地区首次购房者的负担能力障碍”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">Housing Secretary Angela Rayner said "Your First Home" would "build on the lessons learned from previous schemes, while retaining the benefits".</span></p>
+        <p class="cn">住房大臣安吉拉·雷纳（Angela Rayner）表示，“你的第一套房”将“借鉴以往计划的经验教训，同时保留其优点”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">The Home Builders Federation welcomed the proposals, saying it had "long called for action to improve access to home ownership".</span></p>
+        <p class="cn">房屋建筑商联合会（Home Builders Federation）对这些提议表示欢迎，称其“长期以来一直呼吁采取行动改善购房机会”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">"Our analysis shows a well-designed <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span> can make a meaningful difference for households struggling to get on to the property ladder," it added.</span></p>
+        <p class="cn">该联合会补充说：“我们的分析表明，一个设计良好的计划可以为那些难以登上房产阶梯的家庭带来有意义的改变。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">Conservative shadow housing secretary Katie Lam accused Labour of wanting first-time buyers to "take on even more debt to afford the few homes that have been built".</span></p>
+        <p class="cn">保守党影子住房大臣凯蒂·拉姆（Katie Lam）指责工党希望首次购房者“承担更多债务，以负担已经建成的少数房屋”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">She added taxpayers would take a "stake in their homes" and be "picking up the bill for months".</span></p>
+        <p class="cn">她补充说，纳税人将“在他们的房屋中持有股份”，并“为数月买单”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">Lam said: "Slapping another <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税；征收" data-def-en="An amount of money, such as a tax, that you have to pay to a government or organization.">levy</span> on developers risks pushing up the price of new homes too.</span></p>
+        <p class="cn">拉姆说：“对开发商再征收一项税费也可能推高新房价格。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">"This is a colossal admission of failure.</span> <span class="sentence" data-sentence-index="27">This Labour government is making homes harder to build, then asking buyers to borrow more to pay for them."</span></p>
+        <p class="cn">“这是对失败的巨大承认。这个工党政府让房屋更难建造，然后要求买家借更多钱来支付。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Lam said the Conservatives want to <span class="keyword" data-word="scrap" data-phonetic="/skræp/" data-pos="v." data-def="废除；取消" data-def-en="To abandon or get rid of something that is no longer useful or wanted.">scrap</span> stamp duty, "back British house builders" and ensure that houses are "built in the places that people actually want to live".</span></p>
+        <p class="cn">拉姆表示，保守党希望取消印花税，“支持英国房屋建筑商”，并确保房屋“建在人们真正想居住的地方”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Rayner told the BBC earlier this month that there was only a "slim chance" the government would meet its target of building 1.5m homes in England by the next election, but said she was "not giving it up".</span></p>
+        <p class="cn">雷纳本月早些时候告诉BBC，政府在下届选举前实现英格兰建造150万套住房的目标只有“微弱的机会”，但表示她“不会放弃”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Data up to June this year suggested the government was behind on the rate of construction needed to meet the goal , which housebuilders have previously warned was too optimistic.</span></p>
+        <p class="cn">截至今年6月的数据表明，政府所需的建设速度落后于实现该目标的速度，房屋建筑商此前曾警告该目标过于乐观。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">BBC Verify analysis showed a decline in the number of new houses being built during Labour's first year in power - continuing a fall that began under the Conservatives.</span></p>
+        <p class="cn">BBC Verify的分析显示，在工党执政的第一年，新建房屋数量下降——延续了保守党执政时期开始的下降趋势。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">The housing policy announcement came as Burnham arrived in Liverpool ahead of his first Labour Party conference since becoming prime minister.</span></p>
+        <p class="cn">这一住房政策宣布之际，伯纳姆抵达利物浦，准备参加他成为首相以来的首次工党大会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">The PM said he wanted to make it a "really important week where we set out a new direction for the country".</span></p>
+        <p class="cn">首相表示，他希望将其打造成“真正重要的一周，我们为国家制定新方向”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">He added: "We've had a decade since Brexit and it's been a decade of too much drift, too much division, and we need to draw a line on that."</span></p>
+        <p class="cn">他补充说：“脱欧以来我们已经过了十年，这十年有太多的漂移，太多的分裂，我们需要对此划清界限。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">Another pre-conference announcement included a <span class="keyword" data-word="pledge" data-phonetic="/pledʒ/" data-pos="n." data-def="承诺；保证" data-def-en="A serious or formal promise to do something.">pledge</span> to offer quicker access of a guaranteed job to young people receiving health or disability support.</span></p>
+        <p class="cn">会前的另一项宣布包括承诺为领取健康或残疾支持的年轻人提供更快获得保障性工作的机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">The offer would be made three months after they start claiming benefits.</span> <span class="sentence" data-sentence-index="37">This approach would be introduced from next April.</span></p>
+        <p class="cn">该提议将在他们开始领取福利三个月后提出。这种方法将从明年4月开始实施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Labour said the government would cover 100% of wage costs for up to 25 hours a week for six months.</span></p>
+        <p class="cn">工党表示，政府将承担每周最多25小时、为期六个月的100%工资成本。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Currently, jobless young people aged 18 to 24 must have been on universal credit for 18 months before receiving an offer under the government's job guarantee <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>.</span></p>
+        <p class="cn">目前，18至24岁的失业年轻人必须领取通用信贷18个月，才能根据政府的就业保障计划获得工作机会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">Conservative shadow work and pensions secretary Helen Whately said Labour should have cut "burdens" on businesses to help ensure disabled people are employed.</span></p>
+        <p class="cn">保守党影子工作和养老金大臣海伦·惠特利（Helen Whately）表示，工党应该削减企业的“负担”，以帮助确保残疾人就业。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="41">She said: "Instead, they are bringing back a Conservative post-pandemic <span class="keyword" data-word="scheme" data-phonetic="/skiːm/" data-pos="n." data-def="计划；方案" data-def-en="A plan or program designed to achieve a particular goal.">scheme</span>.</span> <span class="sentence" data-sentence-index="42">Andy Burnham clearly has no new ideas."</span></p>
+        <p class="cn">她说：“相反，他们带回了一项保守党疫情后的计划。安迪·伯纳姆显然没有新想法。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="43">Whately also questioned how the change would be funded.</span></p>
+        <p class="cn">惠特利还质疑这一变化将如何获得资金。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="44">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">注册我们的《政治要闻》时事通讯，了解威斯敏斯特及其他地区的内部运作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="45">Burnham not doing enough to boost growth, says former business secretary</span></p>
+        <p class="cn">前商务大臣表示，伯纳姆在促进增长方面做得不够。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="46">I'm not tempted to call an early election, Burnham says</span></p>
+        <p class="cn">伯纳姆表示，我不打算提前举行选举。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="42">
+        <p class="en"><span class="sentence" data-sentence-index="47">New policies, election speculation: What to expect from Burnham's first Labour conference as PM</span></p>
+        <p class="cn">新政策、选举猜测：伯纳姆作为首相的首次工党大会有何期待。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scheme</span>
+        <button class="kw-speak-btn" data-word="scheme" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/skiːm/ n.</span>
+      </div>
+      <p class="kw-def">计划；方案</p>
+      <p class="kw-def-en">A plan or program designed to achieve a particular goal.</p>
+      <p class="kw-ctx">&ldquo;The prime minister announced the scheme on the eve of the Labour Party conference in Liverpool&rdquo;</p>
+      <p class="kw-ctx-cn">首相在利物浦工党会议前夕宣布了该计划。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deposit</span>
+        <button class="kw-speak-btn" data-word="deposit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈpɒzɪt/ n.</span>
+      </div>
+      <p class="kw-def">定金；首付</p>
+      <p class="kw-def-en">A sum of money paid as a first installment or as a guarantee.</p>
+      <p class="kw-ctx">&ldquo;The "Your First Home" scheme would be open to first-time buyers in England with a deposit of 2.5%.&rdquo;</p>
+      <p class="kw-ctx-cn">“你的第一套房”计划将面向英格兰的首套房买家，首付为2.5%。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">equity</span>
+        <button class="kw-speak-btn" data-word="equity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈekwəti/ n.</span>
+      </div>
+      <p class="kw-def">权益；股本</p>
+      <p class="kw-def-en">The value of a property or company after deducting debts; ownership interest.</p>
+      <p class="kw-ctx">&ldquo;There would be an initial interest-free period for the equity loan, with more details expected in next month's Budget.&rdquo;</p>
+      <p class="kw-ctx-cn">该权益贷款将有一个初始免息期，更多细节预计在下个月的预算中公布。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">initiative</span>
+        <button class="kw-speak-btn" data-word="initiative" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈnɪʃətɪv/ n.</span>
+      </div>
+      <p class="kw-def">倡议；新方案</p>
+      <p class="kw-def-en">A new plan or action to solve a problem or improve a situation.</p>
+      <p class="kw-ctx">&ldquo;The policy is similar to initiatives from previous governments, including the coalition's Help To Buy scheme, introduced in 2013 by then-Chancellor George Osborne.&rdquo;</p>
+      <p class="kw-ctx-cn">该政策与历届政府的举措类似，包括2013年由时任财政大臣乔治·奥斯本推出的联合政府“购房援助”计划。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">affordability</span>
+        <button class="kw-speak-btn" data-word="affordability" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˌfɔːdəˈbɪləti/ n.</span>
+      </div>
+      <p class="kw-def">可负担性</p>
+      <p class="kw-def-en">The ability to afford something, especially housing.</p>
+      <p class="kw-ctx">&ldquo;In its conclusion, the report noted Help to Buy was "effective in supporting people into home ownership in some areas, but did not remove affordability barriers for first-time buyers in areas that were already relatively expensive".&rdquo;</p>
+      <p class="kw-ctx-cn">报告在结论中指出，“购房援助”计划“在某些地区有效支持了人们拥有住房，但并未消除那些已经相对昂贵地区首套房买家的可负担性障碍”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">levy</span>
+        <button class="kw-speak-btn" data-word="levy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlevi/ n.</span>
+      </div>
+      <p class="kw-def">征税；征收</p>
+      <p class="kw-def-en">An amount of money, such as a tax, that you have to pay to a government or organization.</p>
+      <p class="kw-ctx">&ldquo;Lam said: "Slapping another levy on developers risks pushing up the price of new homes too.&rdquo;</p>
+      <p class="kw-ctx-cn">拉姆说：“对开发商再加征一项税费也可能推高新房价格。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">scrap</span>
+        <button class="kw-speak-btn" data-word="scrap" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/skræp/ v.</span>
+      </div>
+      <p class="kw-def">废除；取消</p>
+      <p class="kw-def-en">To abandon or get rid of something that is no longer useful or wanted.</p>
+      <p class="kw-ctx">&ldquo;Lam said the Conservatives want to scrap stamp duty, "back British house builders" and ensure that houses are "built in the places that people actually want to live".&rdquo;</p>
+      <p class="kw-ctx-cn">拉姆表示，保守党希望废除印花税，“支持英国房屋建筑商”，并确保房屋“建在人们真正想居住的地方”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pledge</span>
+        <button class="kw-speak-btn" data-word="pledge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pledʒ/ n.</span>
+      </div>
+      <p class="kw-def">承诺；保证</p>
+      <p class="kw-def-en">A serious or formal promise to do something.</p>
+      <p class="kw-ctx">&ldquo;Another pre-conference announcement included a pledge to offer quicker access of a guaranteed job to young people receiving health or disability support.&rdquo;</p>
+      <p class="kw-ctx-cn">会前的另一项宣布包括承诺为领取健康或残疾补助的年轻人更快提供有保障的工作。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The prime minister announced the scheme on the eve of the Labour Party conference in Liverpool", "start_ms": 0, "end_ms": 6216, "paragraph_index": 0}, {"index": 1, "text": "Prime Minister Andy Burnham is to introduce a new scheme to try to help young people get on the property ladder.", "start_ms": 6216, "end_ms": 13512, "paragraph_index": 1}, {"index": 2, "text": "The \"Your First Home\" scheme would be open to first-time buyers in England with a deposit of 2.5%.", "start_ms": 13512, "end_ms": 20856, "paragraph_index": 2}, {"index": 3, "text": "It would provide them with a loan worth 20% of their new build property's value to help pay for the purchase.", "start_ms": 20856, "end_ms": 28368, "paragraph_index": 2}, {"index": 4, "text": "Burnham said people who do not have support from the \"bank of mum and dad\" are among those the scheme would aim to help.", "start_ms": 28368, "end_ms": 36000, "paragraph_index": 3}, {"index": 5, "text": "There would be an initial interest-free period for the equity loan, with more details expected in next month's Budget.", "start_ms": 36000, "end_ms": 44016, "paragraph_index": 4}, {"index": 6, "text": "The Conservatives warned the policy would leave first-time buyers taking on more debt and risks \"pushing up the price of new homes\".", "start_ms": 44016, "end_ms": 52752, "paragraph_index": 5}, {"index": 7, "text": "Burnham said: \"Too many young people are struggling with the cost of housing, with many giving up hope of ever having a home to call their own.", "start_ms": 52752, "end_ms": 61896, "paragraph_index": 6}, {"index": 8, "text": "\"So we will step in to help more first-time buyers on to the housing ladder.\"", "start_ms": 61896, "end_ms": 67152, "paragraph_index": 7}, {"index": 9, "text": "The PM added he believes the scheme will give builders the \"confidence to deliver the high-quality new homes the country needs\".", "start_ms": 67152, "end_ms": 75264, "paragraph_index": 8}, {"index": 10, "text": "Funding for the scheme is expected to come from reprioritising existing budgets, but housing developers will pay towards the running costs.", "start_ms": 75264, "end_ms": 84792, "paragraph_index": 9}, {"index": 11, "text": "Ministers have not yet confirmed whether there is an age restriction on the scheme, or a cap on the price on the value of the property.", "start_ms": 84792, "end_ms": 93408, "paragraph_index": 10}, {"index": 12, "text": "The policy is similar to initiatives from previous governments, including the coalition's Help To Buy scheme, introduced in 2013 by then-Chancellor George Osborne.", "start_ms": 93408, "end_ms": 105600, "paragraph_index": 11}, {"index": 13, "text": "It expanded a previous scheme, known as FirstBuy, which was aimed solely at first-time buyers.", "start_ms": 105600, "end_ms": 112896, "paragraph_index": 12}, {"index": 14, "text": "Help to Buy initially enabled all purchasers to put down a 5% deposit on a newly built home, with a value of up to a \u00c2\u00a3600,000.", "start_ms": 112896, "end_ms": 124416, "paragraph_index": 13}, {"index": 15, "text": "Up to 20% of the cost of the home was funded by a shared equity loan, which was interest-free for the first five years.", "start_ms": 124416, "end_ms": 133056, "paragraph_index": 14}, {"index": 16, "text": "The first version of the programme was active until 2021.", "start_ms": 133056, "end_ms": 138000, "paragraph_index": 15}, {"index": 17, "text": "A second iteration of the scheme, which ran until 2023, restricted access to first-time buyers and applied regional-level price caps to the properties that could be bought.", "start_ms": 138000, "end_ms": 150072, "paragraph_index": 15}, {"index": 18, "text": "An evaluation of the scheme , external found more than 387,000 properties were purchased through it, of which 328,000 were by first-time buyers.", "start_ms": 150072, "end_ms": 162288, "paragraph_index": 16}, {"index": 19, "text": "In its conclusion, the report noted Help to Buy was \"effective in supporting people into home ownership in some areas, but did not remove affordability barriers for first-time buyers in areas that were already relatively expensive\".", "start_ms": 162288, "end_ms": 177576, "paragraph_index": 17}, {"index": 20, "text": "Housing Secretary Angela Rayner said \"Your First Home\" would \"build on the lessons learned from previous schemes, while retaining the benefits\".", "start_ms": 177576, "end_ms": 186840, "paragraph_index": 18}, {"index": 21, "text": "The Home Builders Federation welcomed the proposals, saying it had \"long called for action to improve access to home ownership\".", "start_ms": 186840, "end_ms": 195840, "paragraph_index": 19}, {"index": 22, "text": "\"Our analysis shows a well-designed scheme can make a meaningful difference for households struggling to get on to the property ladder,\" it added.", "start_ms": 195840, "end_ms": 204936, "paragraph_index": 20}, {"index": 23, "text": "Conservative shadow housing secretary Katie Lam accused Labour of wanting first-time buyers to \"take on even more debt to afford the few homes that have been built\".", "start_ms": 204936, "end_ms": 215880, "paragraph_index": 21}, {"index": 24, "text": "She added taxpayers would take a \"stake in their homes\" and be \"picking up the bill for months\".", "start_ms": 215880, "end_ms": 222264, "paragraph_index": 22}, {"index": 25, "text": "Lam said: \"Slapping another levy on developers risks pushing up the price of new homes too.", "start_ms": 222264, "end_ms": 229344, "paragraph_index": 23}, {"index": 26, "text": "\"This is a colossal admission of failure.", "start_ms": 229344, "end_ms": 232800, "paragraph_index": 24}, {"index": 27, "text": "This Labour government is making homes harder to build, then asking buyers to borrow more to pay for them.\"", "start_ms": 232800, "end_ms": 240216, "paragraph_index": 24}, {"index": 28, "text": "Lam said the Conservatives want to scrap stamp duty, \"back British house builders\" and ensure that houses are \"built in the places that people actually want to live\".", "start_ms": 240216, "end_ms": 250920, "paragraph_index": 25}, {"index": 29, "text": "Rayner told the BBC earlier this month that there was only a \"slim chance\" the government would meet its target of building 1.5m homes in England by the next election, but said she was \"not giving it up\".", "start_ms": 250920, "end_ms": 264240, "paragraph_index": 26}, {"index": 30, "text": "Data up to June this year suggested the government was behind on the rate of construction needed to meet the goal , which housebuilders have previously warned was too optimistic.", "start_ms": 264240, "end_ms": 275520, "paragraph_index": 27}, {"index": 31, "text": "BBC Verify analysis showed a decline in the number of new houses being built during Labour's first year in power - continuing a fall that began under the Conservatives.", "start_ms": 275520, "end_ms": 286680, "paragraph_index": 28}, {"index": 32, "text": "The housing policy announcement came as Burnham arrived in Liverpool ahead of his first Labour Party conference since becoming prime minister.", "start_ms": 286680, "end_ms": 295704, "paragraph_index": 29}, {"index": 33, "text": "The PM said he wanted to make it a \"really important week where we set out a new direction for the country\".", "start_ms": 295704, "end_ms": 302472, "paragraph_index": 30}, {"index": 34, "text": "He added: \"We've had a decade since Brexit and it's been a decade of too much drift, too much division, and we need to draw a line on that.\"", "start_ms": 302472, "end_ms": 311832, "paragraph_index": 31}, {"index": 35, "text": "Another pre-conference announcement included a pledge to offer quicker access of a guaranteed job to young people receiving health or disability support.", "start_ms": 311832, "end_ms": 322152, "paragraph_index": 32}, {"index": 36, "text": "The offer would be made three months after they start claiming benefits.", "start_ms": 322152, "end_ms": 327192, "paragraph_index": 33}, {"index": 37, "text": "This approach would be introduced from next April.", "start_ms": 327192, "end_ms": 331128, "paragraph_index": 33}, {"index": 38, "text": "Labour said the government would cover 100% of wage costs for up to 25 hours a week for six months.", "start_ms": 331128, "end_ms": 339288, "paragraph_index": 34}, {"index": 39, "text": "Currently, jobless young people aged 18 to 24 must have been on universal credit for 18 months before receiving an offer under the government's job guarantee scheme.", "start_ms": 339288, "end_ms": 351312, "paragraph_index": 35}, {"index": 40, "text": "Conservative shadow work and pensions secretary Helen Whately said Labour should have cut \"burdens\" on businesses to help ensure disabled people are employed.", "start_ms": 351312, "end_ms": 361320, "paragraph_index": 36}, {"index": 41, "text": "She said: \"Instead, they are bringing back a Conservative post-pandemic scheme.", "start_ms": 361320, "end_ms": 367344, "paragraph_index": 37}, {"index": 42, "text": "Andy Burnham clearly has no new ideas.\"", "start_ms": 367344, "end_ms": 371208, "paragraph_index": 37}, {"index": 43, "text": "Whately also questioned how the change would be funded.", "start_ms": 371208, "end_ms": 375432, "paragraph_index": 38}, {"index": 44, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 375432, "end_ms": 382872, "paragraph_index": 39}, {"index": 45, "text": "Burnham not doing enough to boost growth, says former business secretary", "start_ms": 382872, "end_ms": 388416, "paragraph_index": 40}, {"index": 46, "text": "I'm not tempted to call an early election, Burnham says", "start_ms": 388416, "end_ms": 393192, "paragraph_index": 41}, {"index": 47, "text": "New policies, election speculation: What to expect from Burnham's first Labour conference as PM", "start_ms": 393192, "end_ms": 400872, "paragraph_index": 42}], "total_duration_ms": 400872};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "of": "的", "on": "在", "in": "在", "for": "为了", "would": "将", "up": "向上", "said": "说", "new": "新的", "and": "和", "was": "是", "help": "帮助", "people": "人们", "home": "家", "that": "那个", "labour": "工党", "burnham": "伯纳姆", "first": "第一轮", "be": "是", "with": "与", "it": "它", "homes": "家", "is": "是", "not": "不", "have": "有", "from": "来自", "more": "更多", "housing": "住房", "are": "是", "an": "一个", "too": "太", "which": "哪个", "this": "这个", "young": "年轻的", "price": "价格", "added": "补充", "by": "被", "built": "建造", "secretary": "秘书", "months": "月", "government": "政府", "prime": "首相", "minister": "部长", "conference": "会议", "property": "财产", "ladder": "阶梯", "their": "他们的", "build": "建立", "value": "价值", "pay": "支付", "there": "那里", "next": "下一个", "conservatives": "保守党", "policy": "政策", "we": "我们", "will": "将", "pm": "首相", "he": "他", "but": "但是", "previous": "先前", "buy": "买入", "as": "作为", "access": "进入", "were": "是", "conservative": "保守党", "lam": "林", "been": "已经", "she": "她", "election": "选举", "offer": "提供", "party": "政党", "liverpool": "利物浦", "andy": "安迪", "get": "得到", "your": "你的", "england": "英格兰", "them": "他们", "support": "支持", "expected": "预期", "warned": "警告", "debt": "债务", "risks": "风险", "pushing": "推动", "many": "许多", "struggling": "挣扎", "cost": "成本", "giving": "给予", "call": "呼吁", "country": "国家", "developers": "开发者", "costs": "成本", "or": "或者", "introduced": "介绍", "funded": "资助的", "until": "直到", "properties": "财产", "its": "它的", "ownership": "所有权", "areas": "区域", "rayner": "雷纳", "benefits": "好处", "had": "有", "our": "我们的", "analysis": "分析", "make": "使", "shadow": "阴影", "take": "采取", "another": "另一个", "want": "想要", "back": "后退", "ensure": "确保", "houses": "房屋", "bbc": "英国广播公司", "meet": "会见", "year": "年", "under": "在...之下", "announcement": "公告", "since": "自从", "week": "周", "decade": "十年", "much": "许多", "job": "工作", "receiving": "接收", "they": "它们", "whately": "沃特利", "says": "表示", "announced": "宣布", "eve": "前夕", "introduce": "引入", "try": "审判", "open": "开放", "provide": "提供", "worth": "价值", "property's": "房产的", "purchase": "购买", "who": "谁", "do": "做", "bank": "银行", "mum": "妈妈", "dad": "爸爸", "among": "在...之中", "those": "那些", "aim": "目标", "initial": "最初", "period": "时期", "details": "细节", "month's": "这个月的", "budget": "预算", "leave": "离开", "taking": "采取", "hope": "希望", "ever": "曾经", "having": "拥有", "own": "自己", "so": "所以", "step": "步骤", "believes": "认为", "give": "提供", "confidence": "信任", "deliver": "发表", "needs": "需要", "funding": "资金", "come": "到来", "existing": "现有的", "budgets": "预算", "towards": "对待", "running": "奔跑", "ministers": "部长", "yet": "尚未", "confirmed": "确认", "whether": "是否", "age": "年龄", "restriction": "限制", "cap": "上限", "similar": "类似的", "initiatives": "倡议", "governments": "政府", "including": "包括", "george": "乔治", "expanded": "扩大", "known": "已知", "aimed": "旨在", "solely": "仅仅", "at": "在", "initially": "最初", "all": "所有", "put": "提出", "down": "下来", "newly": "新近", "shared": "分享", "five": "五", "years": "多年", "version": "版本", "programme": "节目", "active": "现役的", "second": "第二", "ran": "运行", "restricted": "受限的", "applied": "申请", "could": "可能", "bought": "购买", "external": "外部的", "found": "发现", "than": "比", "purchased": "购买", "through": "通过", "conclusion": "结论", "report": "报告", "noted": "指出", "effective": "有效的", "supporting": "支持", "into": "进入", "some": "一些", "did": "做了", "remove": "移除", "barriers": "障碍物", "already": "已经", "relatively": "相对地", "expensive": "昂贵的", "angela": "安吉拉", "lessons": "教训", "learned": "得知", "schemes": "计划", "while": "而", "federation": "联合会", "welcomed": "受到欢迎", "proposals": "提议", "saying": "说", "long": "长久", "called": "称为", "action": "行动", "improve": "改善", "shows": "显示", "can": "可以", "meaningful": "有意义的", "difference": "差异", "households": "家庭", "katie": "凯蒂", "accused": "被指控", "wanting": "想要", "even": "甚至", "afford": "负担得起", "few": "少数", "taxpayers": "纳税人", "stake": "利害关系", "picking": "挑选", "bill": "法案", "admission": "承认", "failure": "失败", "making": "进行", "harder": "更努力地", "then": "然后", "asking": "询问", "borrow": "借贷", "stamp": "印记", "duty": "职责", "british": "英国的", "house": "议院", "places": "地方", "actually": "实际上", "live": "生活", "told": "告诉", "earlier": "较早", "month": "月份", "only": "只有", "chance": "机会", "target": "目标", "building": "建筑物", "data": "数据", "june": "六月", "suggested": "建议", "behind": "在...后面", "rate": "比率", "construction": "建设", "needed": "需要", "goal": "目标", "previously": "此前", "optimistic": "乐观的", "verify": "核实", "showed": "显示", "decline": "下降", "number": "数量", "being": "正在", "during": "在期间", "labour's": "工党的", "power": "权力", "continuing": "持续", "fall": "属于", "began": "开始", "came": "到来", "arrived": "抵达", "ahead": "提前", "his": "他的", "becoming": "变得", "wanted": "想要", "really": "真正地", "important": "重要", "where": "那里", "set": "设定", "out": "出来", "direction": "方向", "we've": "我们已经", "brexit": "英国脱欧", "it's": "它是", "division": "分裂", "need": "需要", "draw": "平局", "line": "界限", "included": "包括", "quicker": "更快", "guaranteed": "保证的", "health": "健康", "made": "做出", "three": "三个", "after": "之后", "start": "开始", "claiming": "声称", "approach": "方法", "april": "四月", "cover": "覆盖", "wage": "工资", "hours": "小时", "six": "六", "currently": "目前", "jobless": "失业的", "aged": "年龄为", "must": "必须", "credit": "功劳", "before": "之前", "government's": "政府的", "guarantee": "保证", "work": "工作", "pensions": "养老金", "helen": "海伦", "should": "应该", "cut": "削减", "businesses": "企业", "disabled": "残疾的", "employed": "雇佣的", "instead": "反而", "bringing": "带来", "clearly": "显然", "has": "有", "no": "没有", "ideas": "想法", "also": "也", "questioned": "质疑", "how": "如何", "change": "改变", "sign": "签署", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "westminster": "威斯敏斯特", "beyond": "超出", "doing": "做", "enough": "足够", "boost": "提升", "growth": "增长", "former": "前任", "business": "事务", "i'm": "我是", "tempted": "吸引", "early": "早期的", "policies": "政策", "speculation": "猜测", "what": "什么", "expect": "期望", "burnham's": "伯纳姆的", "buyers": "购房者", "first-time": "首次", "loan": "贷款", "builders": "建筑商", "interest-free": "无息", "high-quality": "高质量", "reprioritising": "重新调整优先顺序", "coalition's": "联合政府的", "then-chancellor": "时任财政大臣", "osborne": "奥斯本", "firstbuy": "首次购房计划", "enabled": "使能够", "purchasers": "购买者", "iteration": "版本", "regional-level": "地区层面", "caps": "上限", "evaluation": "评估", "retaining": "保留", "well-designed": "精心设计的", "slapping": "强加", "colossal": "巨大的", "slim": "微小的", "housebuilders": "房屋建筑商", "drift": "趋势", "pre-conference": "会前", "disability": "残疾", "universal": "普遍的", "burdens": "负担", "post-pandemic": "疫情后"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
