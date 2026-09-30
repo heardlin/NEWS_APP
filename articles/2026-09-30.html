@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-09-30</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-09-30</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/4353/live/d68d09e0-bc57-11f1-bc1f-3f186ca4140c.jpg" alt="One of the five men arrested near RAF Fairford called 999 himself" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>One of the five men arrested near RAF Fairford called 999 himself</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cqn8m342rgk9o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-09-30.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">One of five men arrested near RAF Fairford in the early hours of Sunday morning had dialled 999 himself, the BBC understands.</span></p>
+        <p class="cn">据BBC了解，周日凌晨在英国皇家空军费尔福德基地附近被捕的五名男子中，有一人自己拨打了999报警电话。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The <span class="keyword" data-word="suspect" data-phonetic="/ˈsʌspekt/" data-pos="n." data-def="嫌疑人" data-def-en="A person believed to have committed a crime.">suspect</span> called the police at 00:45 BST, almost an hour before a female farmer also dialled 999 after seeing men in balaclavas.</span></p>
+        <p class="cn">这名嫌疑人在英国夏令时00:45打电话报警，大约一小时后，一名女农场主也拨打了999，因为她看到了戴巴拉克拉瓦头套的男子。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The five were arrested on suspicion of explosives offences and later terrorism offences after three vans were spotted, sparking a major security incident around the Gloucestershire base which the US military operates.</span></p>
+        <p class="cn">这五人因涉嫌爆炸物犯罪被捕，随后又因恐怖主义犯罪被捕，此前发现了三辆面包车，引发了围绕这座由美军运营的格洛斯特郡基地的重大安全事件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">They were released on <span class="keyword" data-word="bail" data-phonetic="/beɪl/" data-pos="n." data-def="保释" data-def-en="The temporary release of an accused person awaiting trial, often with conditions.">bail</span> on Monday in what police described as an "investigative decision" "grounded in experience and strategy".</span></p>
+        <p class="cn">他们于周一获保释，警方称这是“基于经验和策略”的“调查决定”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Police say a quantity of petrol but no explosive devices were found during searches of the vans.</span></p>
+        <p class="cn">警方表示，在搜查这些面包车时发现了一定数量的汽油，但没有发现爆炸装置。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Police were alerted to "three <span class="keyword" data-word="suspicious" data-phonetic="/səˈspɪʃəs/" data-pos="adj." data-def="可疑的" data-def-en="Causing a feeling that something is wrong or someone is guilty.">suspicious</span> vehicles" in Whelford, a village which lies directly east of the base, by the farmer.</span></p>
+        <p class="cn">农场主报警后，警方注意到基地正东的惠尔福德村有“三辆可疑车辆”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">She told the BBC it was "pure luck" she had spotted them, having arrived home to find the road blocked and a "large group of hooded and masked men".</span></p>
+        <p class="cn">她告诉BBC，她发现他们纯属“运气好”，因为她回到家时发现道路被堵，还有“一大群戴兜帽和面罩的男子”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"I believe that my 999 call foiled whatever plans they had," she said.</span></p>
+        <p class="cn">她说：“我相信我的999报警电话挫败了他们的任何计划。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">A bomb disposal team arrived on scene shortly afterwards and a 400m (1,312ft) cordon was put in place.</span></p>
+        <p class="cn">不久后，一个炸弹处理小组赶到现场，并设置了400米（1312英尺）的警戒线。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">But Assistant Commissioner Laurence Taylor, head of Counter Terrorism Policing, told reporters on Tuesday that the police response that morning had been due to "a range of information".</span></p>
+        <p class="cn">但反恐警务负责人、助理警务处长劳伦斯·泰勒周二告诉记者，当天早上的警方响应是由于“一系列信息”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Police cordons near the base are expected to be completely lifted on Wednesday, while residents from the 85 homes evacuated on Sunday have been allowed to return to their properties.</span></p>
+        <p class="cn">基地附近的警方警戒线预计将于周三完全解除，而周日被疏散的85户居民已被允许返回家中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">The five men are all UK nationals aged between 23 and 25.</span> <span class="sentence" data-sentence-index="12">Four of them live in Westminster and one in Camden, and searches of their homes are now complete.</span></p>
+        <p class="cn">这五名男子均为英国国民，年龄在23至25岁之间。其中四人住在威斯敏斯特，一人住在卡姆登，对他们住处的搜查现已完成。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Taylor previously said their <span class="keyword" data-word="bail" data-phonetic="/beɪl/" data-pos="n." data-def="保释" data-def-en="The temporary release of an accused person awaiting trial, often with conditions.">bail</span> was "subject to <span class="keyword" data-word="stringent" data-phonetic="/ˈstrɪndʒənt/" data-pos="adj." data-def="严格的" data-def-en="Strict and severe; demanding high standards.">stringent</span> conditions on their movement and contact with others" as they remained under investigation.</span></p>
+        <p class="cn">泰勒此前表示，由于他们仍在接受调查，他们的保释“在行动和与他人接触方面受到严格条件限制”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">"The safety of the public is at the forefront of our investigative decision-making, and this was certainly the case yesterday," he said on Tuesday.</span></p>
+        <p class="cn">他在周二说：“公众安全是我们调查决策的首要考虑，昨天的情况当然也是如此。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"I understand why this development was surprising to some, but I would like to <span class="keyword" data-word="reiterate" data-phonetic="/riˈɪtəreɪt/" data-pos="v." data-def="重申" data-def-en="To say something again for emphasis or clarity.">reiterate</span> that this is an investigative decision and one which is grounded in experience and strategy."</span></p>
+        <p class="cn">“我理解为什么这一进展让一些人感到意外，但我想重申，这是一个调查决定，而且是基于经验和策略的决定。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">The RAF base has been used as a forward operating location by the US Air Force for decades.</span></p>
+        <p class="cn">这座皇家空军基地数十年来一直被美国空军用作前沿作战地点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">In recent months, US bombers have taken off from the base for the Middle East, after the UK approved a US request to use it for defensive strikes on Iran.</span></p>
+        <p class="cn">近几个月来，在英国批准美国关于使用该基地对伊朗进行防御性打击的请求后，美国轰炸机已从该基地起飞前往中东。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">US President Donald Trump on Tuesday told journalists he was "disappointed" the five men had been released on <span class="keyword" data-word="bail" data-phonetic="/beɪl/" data-pos="n." data-def="保释" data-def-en="The temporary release of an accused person awaiting trial, often with conditions.">bail</span>.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普周二告诉记者，他对这五名男子获保释感到“失望”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Taylor has said officers are exploring "multiple lines of inquiry", including whether proxies or individuals knowingly or unknowingly working on behalf of a foreign state were involved.</span></p>
+        <p class="cn">泰勒表示，警员正在探索“多条调查线索”，包括是否有代理人或个人在知情或不知情的情况下代表外国行事。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">In an update on Tuesday, he added that the incident had been worrying for many people, with this "heightened by the international commentary that we are seeing" in an apparent reference to comments from the US administration.</span></p>
+        <p class="cn">在周二的更新中，他补充说，这起事件让许多人感到担忧，而“我们看到的国际评论”加剧了这种担忧，这显然是指美国政府的评论。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Prime Minister Andy Burnham chaired a Cobra meeting on Monday afternoon and urged people "not to <span class="keyword" data-word="speculate" data-phonetic="/ˈspekjuleɪt/" data-pos="v." data-def="猜测" data-def-en="To form a theory or conjecture without firm evidence.">speculate</span> while the authorities establish the full facts".</span></p>
+        <p class="cn">首相安迪·伯纳姆周一主持了“眼镜蛇”紧急会议，并敦促人们“在当局查明全部事实之前不要猜测”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">In July, Iran said "any base used for aggression against Iranian territory constitutes a legitimate target for our forces".</span></p>
+        <p class="cn">7月，伊朗表示“任何被用于侵略伊朗领土的基地都构成我方部队的合法目标”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">However, the Iranian embassy in London has said it "categorically rejects and strongly condemns" "unfounded and malicious speculations" linking Iran to the latest incident.</span></p>
+        <p class="cn">然而，伊朗驻伦敦大使馆表示，它“断然拒绝并强烈谴责”将伊朗与最新事件联系起来的“毫无根据和恶意的猜测”。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspect</span>
+        <button class="kw-speak-btn" data-word="suspect" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsʌspekt/ n.</span>
+      </div>
+      <p class="kw-def">嫌疑人</p>
+      <p class="kw-def-en">A person believed to have committed a crime.</p>
+      <p class="kw-ctx">&ldquo;The suspect called the police at 00:45 BST, almost an hour before a female farmer also dialled 999 after seeing men in balaclavas.&rdquo;</p>
+      <p class="kw-ctx-cn">嫌疑人在英国夏令时00:45打电话报警，几乎一小时前，一位女农民在看到戴巴拉克拉瓦头套的男子后也拨打了999。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">arrest</span>
+        <button class="kw-speak-btn" data-word="arrest" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈrest/ v.</span>
+      </div>
+      <p class="kw-def">逮捕</p>
+      <p class="kw-def-en">To take someone into custody by legal authority.</p>
+      <p class="kw-ctx">&ldquo;The five were arrested on suspicion of explosives offences and later terrorism offences after three vans were spotted, sparking a major security incident around the Gloucestershire base which the US military operates.&rdquo;</p>
+      <p class="kw-ctx-cn">这五人在发现三辆面包车后因涉嫌爆炸罪和后来的恐怖主义罪被捕，引发了围绕美国军方运营的格洛斯特郡基地的重大安全事件。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bail</span>
+        <button class="kw-speak-btn" data-word="bail" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/beɪl/ n.</span>
+      </div>
+      <p class="kw-def">保释</p>
+      <p class="kw-def-en">The temporary release of an accused person awaiting trial, often with conditions.</p>
+      <p class="kw-ctx">&ldquo;They were released on bail on Monday in what police described as an "investigative decision" "grounded in experience and strategy".&rdquo;</p>
+      <p class="kw-ctx-cn">他们于周一被保释，警方称这是“基于经验和策略的调查决定”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">suspicious</span>
+        <button class="kw-speak-btn" data-word="suspicious" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səˈspɪʃəs/ adj.</span>
+      </div>
+      <p class="kw-def">可疑的</p>
+      <p class="kw-def-en">Causing a feeling that something is wrong or someone is guilty.</p>
+      <p class="kw-ctx">&ldquo;Police were alerted to "three suspicious vehicles" in Whelford, a village which lies directly east of the base, by the farmer.&rdquo;</p>
+      <p class="kw-ctx-cn">警方被农民提醒注意位于基地正东的Whelford村中的“三辆可疑车辆”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散</p>
+      <p class="kw-def-en">To move people from a dangerous place to a safer one.</p>
+      <p class="kw-ctx">&ldquo;Police cordons near the base are expected to be completely lifted on Wednesday, while residents from the 85 homes evacuated on Sunday have been allowed to return to their properties.&rdquo;</p>
+      <p class="kw-ctx-cn">基地附近的警方警戒线预计将于周三完全解除，而周日被疏散的85户居民已被允许返回家园。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stringent</span>
+        <button class="kw-speak-btn" data-word="stringent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstrɪndʒənt/ adj.</span>
+      </div>
+      <p class="kw-def">严格的</p>
+      <p class="kw-def-en">Strict and severe; demanding high standards.</p>
+      <p class="kw-ctx">&ldquo;Taylor previously said their bail was "subject to stringent conditions on their movement and contact with others" as they remained under investigation.&rdquo;</p>
+      <p class="kw-ctx-cn">泰勒此前表示，他们的保释“受到严格的行动和与他人接触条件的限制”，因为他们仍在接受调查。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reiterate</span>
+        <button class="kw-speak-btn" data-word="reiterate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/riˈɪtəreɪt/ v.</span>
+      </div>
+      <p class="kw-def">重申</p>
+      <p class="kw-def-en">To say something again for emphasis or clarity.</p>
+      <p class="kw-ctx">&ldquo;I understand why this development was surprising to some, but I would like to reiterate that this is an investigative decision and one which is grounded in experience and strategy.&rdquo;</p>
+      <p class="kw-ctx-cn">我理解为什么这一进展让一些人感到惊讶，但我想重申，这是一个调查决定，并且基于经验和策略。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">speculate</span>
+        <button class="kw-speak-btn" data-word="speculate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈspekjuleɪt/ v.</span>
+      </div>
+      <p class="kw-def">猜测</p>
+      <p class="kw-def-en">To form a theory or conjecture without firm evidence.</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Andy Burnham chaired a Cobra meeting on Monday afternoon and urged people "not to speculate while the authorities establish the full facts".&rdquo;</p>
+      <p class="kw-ctx-cn">首相安迪·伯纳姆于周一下午主持了眼镜蛇会议，并敦促人们“在当局查明全部事实之前不要猜测”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "One of five men arrested near RAF Fairford in the early hours of Sunday morning had dialled 999 himself, the BBC understands.", "start_ms": 0, "end_ms": 10656, "paragraph_index": 0}, {"index": 1, "text": "The suspect called the police at 00:45 BST, almost an hour before a female farmer also dialled 999 after seeing men in balaclavas.", "start_ms": 10656, "end_ms": 23064, "paragraph_index": 1}, {"index": 2, "text": "The five were arrested on suspicion of explosives offences and later terrorism offences after three vans were spotted, sparking a major security incident around the Gloucestershire base which the US military operates.", "start_ms": 23064, "end_ms": 37872, "paragraph_index": 2}, {"index": 3, "text": "They were released on bail on Monday in what police described as an \"investigative decision\" \"grounded in experience and strategy\".", "start_ms": 37872, "end_ms": 46608, "paragraph_index": 3}, {"index": 4, "text": "Police say a quantity of petrol but no explosive devices were found during searches of the vans.", "start_ms": 46608, "end_ms": 53568, "paragraph_index": 4}, {"index": 5, "text": "Police were alerted to \"three suspicious vehicles\" in Whelford, a village which lies directly east of the base, by the farmer.", "start_ms": 53568, "end_ms": 62256, "paragraph_index": 5}, {"index": 6, "text": "She told the BBC it was \"pure luck\" she had spotted them, having arrived home to find the road blocked and a \"large group of hooded and masked men\".", "start_ms": 62256, "end_ms": 71880, "paragraph_index": 6}, {"index": 7, "text": "\"I believe that my 999 call foiled whatever plans they had,\" she said.", "start_ms": 71880, "end_ms": 77856, "paragraph_index": 7}, {"index": 8, "text": "A bomb disposal team arrived on scene shortly afterwards and a 400m (1,312ft) cordon was put in place.", "start_ms": 77856, "end_ms": 87864, "paragraph_index": 8}, {"index": 9, "text": "But Assistant Commissioner Laurence Taylor, head of Counter Terrorism Policing, told reporters on Tuesday that the police response that morning had been due to \"a range of information\".", "start_ms": 87864, "end_ms": 99936, "paragraph_index": 9}, {"index": 10, "text": "Police cordons near the base are expected to be completely lifted on Wednesday, while residents from the 85 homes evacuated on Sunday have been allowed to return to their properties.", "start_ms": 99936, "end_ms": 112032, "paragraph_index": 10}, {"index": 11, "text": "The five men are all UK nationals aged between 23 and 25.", "start_ms": 112032, "end_ms": 118272, "paragraph_index": 11}, {"index": 12, "text": "Four of them live in Westminster and one in Camden, and searches of their homes are now complete.", "start_ms": 118272, "end_ms": 124992, "paragraph_index": 11}, {"index": 13, "text": "Taylor previously said their bail was \"subject to stringent conditions on their movement and contact with others\" as they remained under investigation.", "start_ms": 124992, "end_ms": 134376, "paragraph_index": 12}, {"index": 14, "text": "\"The safety of the public is at the forefront of our investigative decision-making, and this was certainly the case yesterday,\" he said on Tuesday.", "start_ms": 134376, "end_ms": 143880, "paragraph_index": 13}, {"index": 15, "text": "\"I understand why this development was surprising to some, but I would like to reiterate that this is an investigative decision and one which is grounded in experience and strategy.\"", "start_ms": 143880, "end_ms": 155256, "paragraph_index": 14}, {"index": 16, "text": "The RAF base has been used as a forward operating location by the US Air Force for decades.", "start_ms": 155256, "end_ms": 162648, "paragraph_index": 15}, {"index": 17, "text": "In recent months, US bombers have taken off from the base for the Middle East, after the UK approved a US request to use it for defensive strikes on Iran.", "start_ms": 162648, "end_ms": 173856, "paragraph_index": 16}, {"index": 18, "text": "US President Donald Trump on Tuesday told journalists he was \"disappointed\" the five men had been released on bail.", "start_ms": 173856, "end_ms": 181824, "paragraph_index": 17}, {"index": 19, "text": "Taylor has said officers are exploring \"multiple lines of inquiry\", including whether proxies or individuals knowingly or unknowingly working on behalf of a foreign state were involved.", "start_ms": 181824, "end_ms": 194256, "paragraph_index": 18}, {"index": 20, "text": "In an update on Tuesday, he added that the incident had been worrying for many people, with this \"heightened by the international commentary that we are seeing\" in an apparent reference to comments from the US administration.", "start_ms": 194256, "end_ms": 207936, "paragraph_index": 19}, {"index": 21, "text": "Prime Minister Andy Burnham chaired a Cobra meeting on Monday afternoon and urged people \"not to speculate while the authorities establish the full facts\".", "start_ms": 207936, "end_ms": 217992, "paragraph_index": 20}, {"index": 22, "text": "In July, Iran said \"any base used for aggression against Iranian territory constitutes a legitimate target for our forces\".", "start_ms": 217992, "end_ms": 227400, "paragraph_index": 21}, {"index": 23, "text": "However, the Iranian embassy in London has said it \"categorically rejects and strongly condemns\" \"unfounded and malicious speculations\" linking Iran to the latest incident.", "start_ms": 227400, "end_ms": 239400, "paragraph_index": 22}], "total_duration_ms": 239400};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "on": "在", "and": "和", "in": "在", "to": "到", "had": "有", "police": "警方", "were": "是", "base": "基地", "us": "我们", "was": "是", "that": "那个", "said": "说", "for": "为了", "men": "男人们", "an": "一个", "been": "已经", "are": "是", "five": "五", "tuesday": "星期二", "their": "他们的", "this": "这个", "one": "一个", "after": "之后", "incident": "事件", "which": "哪个", "they": "它们", "as": "作为", "investigative": "调查的", "but": "但是", "by": "被", "she": "她", "told": "告诉", "it": "它", "taylor": "泰勒", "from": "来自", "is": "是", "he": "他", "has": "有", "iran": "伊朗", "arrested": "被捕", "near": "附近", "raf": "英国皇家空军", "sunday": "星期日", "morning": "上午", "bbc": "英国广播公司", "at": "在", "farmer": "农民", "seeing": "看到", "offences": "罪行", "terrorism": "恐怖主义", "three": "三个", "vans": "货车", "spotted": "发现", "released": "释放", "monday": "星期一", "decision": "决定", "grounded": "停飞的", "experience": "经历", "strategy": "策略", "searches": "搜索", "east": "东部", "them": "他们", "arrived": "抵达", "while": "而", "homes": "家", "have": "有", "uk": "英国", "with": "与", "our": "我们的", "used": "使用", "or": "或者", "people": "人们", "iranian": "伊朗的", "fairford": "费尔福德", "early": "早期的", "hours": "小时", "himself": "他自己", "understands": "理解", "called": "称为", "bst": "英国夏令时", "almost": "几乎", "hour": "时刻", "before": "之前", "female": "女性", "also": "也", "balaclavas": "巴拉克拉瓦帽", "suspicion": "嫌疑", "explosives": "炸药", "later": "后来", "sparking": "引发", "major": "重大的", "security": "安全", "around": "在...周围", "gloucestershire": "格洛斯特郡", "military": "军事", "what": "什么", "described": "描述", "say": "说", "petrol": "汽油", "no": "没有", "explosive": "爆炸性", "found": "发现", "during": "在期间", "alerted": "警报", "vehicles": "车辆", "whelford": "惠尔福德", "village": "村庄", "lies": "位于", "directly": "直接地", "pure": "纯粹的", "luck": "运气", "having": "拥有", "home": "家", "find": "找到", "road": "道路", "blocked": "封锁", "large": "大的", "group": "团体", "hooded": "戴头罩的", "masked": "蒙面的", "believe": "认为", "my": "我的", "call": "呼吁", "foiled": "挫败", "whatever": "无论什么", "plans": "计划", "bomb": "炸弹", "disposal": "处理", "team": "团队", "scene": "现场", "shortly": "不久", "afterwards": "之后", "cordon": "警戒线", "put": "提出", "place": "地点", "assistant": "助理", "commissioner": "专员", "laurence": "劳伦斯", "head": "前往", "counter": "反制", "policing": "警务", "reporters": "记者们", "response": "回应", "due": "应得", "range": "范围", "information": "信息", "expected": "预期", "be": "是", "completely": "完全", "lifted": "抬起", "wednesday": "星期三", "residents": "居民", "evacuated": "撤离", "allowed": "允许", "return": "返回", "properties": "财产", "all": "所有", "nationals": "国民", "aged": "年龄为", "between": "之间", "four": "四", "live": "生活", "westminster": "威斯敏斯特", "camden": "卡姆登", "now": "现在", "complete": "完全的", "previously": "此前", "subject": "主题", "conditions": "条件", "movement": "运动", "contact": "接触", "others": "其他", "remained": "仍然是", "under": "在...之下", "investigation": "调查", "safety": "安全", "public": "公众", "decision-making": "决策", "certainly": "当然", "case": "案例", "yesterday": "昨天", "understand": "理解", "why": "为何", "development": "发展", "surprising": "令人惊讶的", "some": "一些", "would": "将", "like": "像", "forward": "向前", "operating": "操作", "location": "地点", "air": "气氛", "force": "力量", "decades": "数十年", "recent": "最近", "months": "月", "bombers": "轰炸机", "taken": "采取", "off": "离开", "middle": "中间", "approved": "批准", "request": "请求", "use": "使用", "defensive": "防御性的", "strikes": "袭击", "president": "总统", "donald": "唐纳德", "trump": "特朗普", "journalists": "记者", "disappointed": "失望的", "officers": "官员", "exploring": "探索", "multiple": "多条", "lines": "线", "inquiry": "调查", "including": "包括", "whether": "是否", "proxies": "代理人", "individuals": "个人", "knowingly": "明知地", "unknowingly": "无意中", "working": "工作", "behalf": "代表", "foreign": "外交", "state": "国家", "involved": "涉及的", "update": "更新", "added": "补充", "worrying": "令人担忧的", "many": "许多", "heightened": "加强的", "international": "国际", "commentary": "评论", "we": "我们", "apparent": "明显的", "reference": "提及", "comments": "评论", "administration": "政府", "prime": "首相", "minister": "部长", "andy": "安迪", "burnham": "伯纳姆", "chaired": "主持", "cobra": "眼镜蛇", "meeting": "会议", "afternoon": "下午", "urged": "敦促", "not": "不", "authorities": "当局", "establish": "确定", "full": "完整", "facts": "事实", "july": "七月", "any": "任何", "aggression": "侵略", "against": "反对", "territory": "领土", "constitutes": "构成", "legitimate": "合法的", "target": "目标", "forces": "力量", "however": "然而", "embassy": "大使馆", "london": "伦敦", "categorically": "绝对地", "rejects": "拒绝", "strongly": "强烈地", "condemns": "谴责", "unfounded": "毫无根据", "malicious": "恶意", "speculations": "猜测", "linking": "联系", "latest": "最新的", "dialled": "拨打电话", "operates": "运营", "quantity": "数量", "devices": "设备", "cordons": "警戒线", "forefront": "前沿"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
