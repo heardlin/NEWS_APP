@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-01</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-01</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/d1b3/live/d0c1bc40-bd10-11f1-88b1-671c34af7444.jpg" alt="Veteran broadcaster Dame Esther Rantzen dies aged 86" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Veteran broadcaster Dame Esther Rantzen dies aged 86</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c4g4z255y30o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-01.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: Dame Esther Rantzen, broadcaster, <span class="keyword" data-word="campaigner" data-phonetic="/kæmˈpeɪnər/" data-pos="n." data-def="活动家；运动参与者" data-def-en="A person who works in an organized way to achieve a social or political goal.">campaigner</span> and charity founder, dies aged 86</span></p>
+        <p class="cn">观看：广播员、活动家兼慈善创始人埃丝特·兰岑女爵士去世，享年86岁</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Dame Esther Rantzen, who presented BBC show That's Life!</span> <span class="sentence" data-sentence-index="3">for 21 years and launched the charity Childline, has died at the age of 86.</span></p>
+        <p class="cn">埃丝特·兰岑女爵士去世，享年86岁。她曾主持BBC节目《这就是生活！》长达21年，并创立了慈善机构Childline。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Prime Minister Andy Burnham said the <span class="keyword" data-word="veteran" data-phonetic="/ˈvetərən/" data-pos="adj." data-def="资深的；经验丰富的" data-def-en="Having a lot of experience in a particular activity or job.">veteran</span> broadcaster and <span class="keyword" data-word="campaigner" data-phonetic="/kæmˈpeɪnər/" data-pos="n." data-def="活动家；运动参与者" data-def-en="A person who works in an organized way to achieve a social or political goal.">campaigner</span> had "changed countless lives".</span></p>
+        <p class="cn">首相安迪·伯纳姆表示，这位资深广播员和活动家“改变了无数人的生活”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">Dame Esther hosted and produced That's Life!</span> <span class="sentence" data-sentence-index="6">during its run from 1973 to 1994.</span> <span class="sentence" data-sentence-index="7">It regularly attracted 20 million viewers for its mixture of serious consumer investigations and light-hearted items.</span></p>
+        <p class="cn">埃丝特女爵士在1973年至1994年期间主持并制作了《这就是生活！》。该节目融合了严肃的消费者调查和轻松的内容，通常吸引2000万观众。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="8">She launched Childline, a British <span class="keyword" data-word="counselling" data-phonetic="/ˈkaʊnsəlɪŋ/" data-pos="n." data-def="心理咨询；辅导" data-def-en="Professional advice and help given to people with personal or emotional problems.">counselling</span> service for children and young people, in 1986, and in 2013 she launched Silver Line to help elderly people suffering from <span class="keyword" data-word="isolation" data-phonetic="/ˌaɪsəˈleɪʃn/" data-pos="n." data-def="孤立；隔离" data-def-en="The state of being separated from other people or feeling alone.">isolation</span> and loneliness.</span> <span class="sentence" data-sentence-index="9">Later in life, she became a prominent <span class="keyword" data-word="campaigner" data-phonetic="/kæmˈpeɪnər/" data-pos="n." data-def="活动家；运动参与者" data-def-en="A person who works in an organized way to achieve a social or political goal.">campaigner</span> for the <span class="keyword" data-word="legalisation" data-phonetic="/ˌliːɡəlaɪˈzeɪʃn/" data-pos="n." data-def="合法化" data-def-en="The process of making something legal.">legalisation</span> of assisted dying.</span></p>
+        <p class="cn">她于1986年创立了Childline，这是一个为儿童和年轻人提供咨询服务的英国机构。2013年，她又创立了Silver Line，旨在帮助遭受孤立和孤独的老年人。晚年，她成为推动辅助死亡合法化的著名活动家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="10">She had been terminally ill with lung cancer.</span> <span class="sentence" data-sentence-index="11">In December 2023, she revealed she had joined Dignitas, the Swiss assisted dying clinic.</span></p>
+        <p class="cn">她患有晚期肺癌。2023年12月，她透露自己已加入瑞士辅助死亡诊所Dignitas。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="12">But in a statement given to the Press Association earlier this month, she said that despite having "spent the money and made the plans" to go to Dignitas, she had since reached the point where she was "too physically <span class="keyword" data-word="fragile" data-phonetic="/ˈfrædʒaɪl/" data-pos="adj." data-def="虚弱的；易碎的" data-def-en="Easily broken or damaged; physically weak.">fragile</span> to make the journey".</span></p>
+        <p class="cn">但在本月早些时候向英国新闻联合社提供的一份声明中，她说尽管已经“花了钱并做好了计划”前往Dignitas，但她现在已经到了“身体太虚弱，无法成行”的地步。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="13">She added that the law must "change and change quickly", as she renewed her plea ahead of the latest debate and vote on the Terminally Ill Adults (End of Life) Bill, which failed to pass through the Commons.</span></p>
+        <p class="cn">她补充说，法律必须“改变，而且要迅速改变”。在关于《绝症成年人（生命终结）法案》的最新辩论和投票之前，她再次发出呼吁，但该法案未能通过下议院。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="14">Dame Esther Rantzen: That's Life!</span> <span class="sentence" data-sentence-index="15">presenter, Childline founder and <span class="keyword" data-word="campaigner" data-phonetic="/kæmˈpeɪnər/" data-pos="n." data-def="活动家；运动参与者" data-def-en="A person who works in an organized way to achieve a social or political goal.">campaigner</span> for assisted dying</span></p>
+        <p class="cn">埃丝特·兰岑女爵士：《这就是生活！》主持人、Childline创始人和辅助死亡活动家</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="16">The broadcaster revealed her cancer diagnosis in January 2023, saying the news had prompted her to express "profound thanks to everyone who has made my life so joyful".</span></p>
+        <p class="cn">这位广播员于2023年1月透露了自己的癌症诊断，称这一消息促使她表达“对每一位让我的人生如此快乐的人致以深深的感谢”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="17">In a statement announcing her death on Wednesday, Dame Esther's family paid tribute to the "most wonderful mother" and "cherished grandmother" whose <span class="keyword" data-word="compassion" data-phonetic="/kəmˈpæʃn/" data-pos="n." data-def="同情；怜悯" data-def-en="A strong feeling of sympathy and sadness for the suffering of others and a wish to help them.">compassion</span> would live on through her charities.</span></p>
+        <p class="cn">在周三宣布她去世的声明中，埃丝特女爵士的家人向这位“最了不起的母亲”和“备受珍视的祖母”致敬，称她的同情心将通过她创立的慈善机构延续下去。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="18">"We hope the humour, <span class="keyword" data-word="ingenuity" data-phonetic="/ˌɪndʒəˈnjuːəti/" data-pos="n." data-def="独创性；巧妙" data-def-en="The quality of being clever, original, and inventive.">ingenuity</span> and audacity she brought to her work may continue to inspire you as it will do us."</span></p>
+        <p class="cn">“我们希望她在工作中展现的幽默、独创性和大胆精神能继续激励你们，就像它将激励我们一样。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="19">Dame Esther with fellow That's Life!</span> <span class="sentence" data-sentence-index="20">presenters Howard Leader, Kevin Devine, and Gavin Campbell in 1993</span></p>
+        <p class="cn">1993年，埃丝特女爵士与《这就是生活！》的其他主持人霍华德·利德、凯文·迪瓦恩和加文·坎贝尔在一起</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="21">Rantzen joined BBC radio as a sound effects assistant before becoming a TV researcher, and in 1968 she trained as a producer and director.</span></p>
+        <p class="cn">兰岑最初加入BBC电台担任音效助理，后来成为电视研究员。1968年，她接受了制片人和导演的培训。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="22">The young broadcaster became a researcher and reporter for Bernard Braden's consumer affairs programme, Braden's Week.</span></p>
+        <p class="cn">这位年轻的广播员成为伯纳德·布拉登的消费者事务节目《布拉登一周》的研究员和记者。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="23">When That's Life!</span> <span class="sentence" data-sentence-index="24">launched in 1973, she was its figurehead and became a popular fixture on screens as the show's formidable and fun-loving presenter and producer.</span></p>
+        <p class="cn">1973年《这就是生活！》开播时，她是该节目的标志性人物，作为节目令人敬畏又热爱乐趣的主持人和制片人，成为电视屏幕上的常客。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="25">The consumer show's notable items, according to her website , external , included "talking dogs, Jobsworth Awards and campaigns on behalf of abused children, organ transplants, safe playgrounds, and to provide justice for consumers".</span></p>
+        <p class="cn">据她的网站（外部链接）介绍，这档消费者节目的著名内容包括“会说话的狗、乔布斯沃斯奖，以及代表受虐儿童、器官移植、安全游乐场和为消费者伸张正义而开展的宣传活动”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="26">Its most-viewed episode featured Sir Nicholas Winton being introduced for the first time to survivors he had saved from the Holocaust, during a 1988 instalment of the show.</span></p>
+        <p class="cn">该节目收视率最高的一集是1988年播出的一期，其中尼古拉斯·温顿爵士首次与他从大屠杀中救出的幸存者见面。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="27">Later in her career, she also appeared on Strictly Come Dancing, First Dates and I'm a Celebrity...</span> <span class="sentence" data-sentence-index="28">Get Me Out of Here!</span></p>
+        <p class="cn">在职业生涯后期，她还参加了《舞动奇迹》、《初次约会》和《我是名人……让我离开这里！》。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="29">Dame Esther was married to documentary film-maker Desmond Wilcox from 1977 until he died in 2000.</span> <span class="sentence" data-sentence-index="30">They had three children.</span></p>
+        <p class="cn">埃丝特女爵士于1977年与纪录片制片人德斯蒙德·威尔科克斯结婚，直到他于2000年去世。他们育有三个孩子。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="31">She was made a dame in 2015 for her services to children and older people.</span></p>
+        <p class="cn">她因对儿童和老年人的贡献于2015年被授予女爵士爵位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="32">Dame Esther met some Childline volunteers when she visited its Belfast office in 2009</span></p>
+        <p class="cn">2009年，埃丝特女爵士访问Childline贝尔法斯特办公室时会见了部分志愿者</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="33">Dame Esther went on to become a vocal <span class="keyword" data-word="campaigner" data-phonetic="/kæmˈpeɪnər/" data-pos="n." data-def="活动家；运动参与者" data-def-en="A person who works in an organized way to achieve a social or political goal.">campaigner</span> for the <span class="keyword" data-word="legalisation" data-phonetic="/ˌliːɡəlaɪˈzeɪʃn/" data-pos="n." data-def="合法化" data-def-en="The process of making something legal.">legalisation</span> of assisted dying.</span></p>
+        <p class="cn">埃丝特女爵士后来成为推动辅助死亡合法化的积极活动家。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="34">In December 2024, she spoke of her "great relief" after MPs backed proposals to legalise assisted dying in England and Wales, before they ultimately stalled in the House of Lords.</span></p>
+        <p class="cn">2024年12月，在议员们支持英格兰和威尔士辅助死亡合法化提案后，她表示“如释重负”，但该提案最终在上议院停滞不前。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="35">In an interview with the Sunday Times , external in November 2025, before the bill ran out of time, she said that "as long as others in the future will be able to ask for help to die as they choose, I will die happy".</span></p>
+        <p class="cn">2025年11月，在该法案期限届满前接受《星期日泰晤士报》（外部链接）采访时，她说：“只要未来其他人能够按照自己的选择请求帮助死亡，我就会快乐地死去。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="36">She expressed her disappointment after MPs voted against a fresh attempt to introduce the legislation in September .</span> <span class="sentence" data-sentence-index="37">Some disability campaigners described the result as a "victory", while Dame Esther said it was "deeply sad that it won't come soon enough for many of the people who need it".</span></p>
+        <p class="cn">9月，议员们投票反对再次尝试引入该立法后，她表达了失望。一些残疾人活动家将这一结果描述为“胜利”，而埃丝特女爵士则表示，“对许多需要它的人来说，它不会很快到来，这令人深感悲伤”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="38">"I am sure a change in the law will come," she added.</span></p>
+        <p class="cn">“我相信法律终将改变，”她补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="39">Figures from politics, broadcasting and the charity sector have paid tribute to Dame Esther for her impact on public life.</span></p>
+        <p class="cn">政界、广播界和慈善界人士纷纷向埃丝特女爵士致敬，赞扬她对公共生活的影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="40">The prime minister said he would "always admire the characteristic courage and openness with which she spoke about her illness, making us all think about the difficult questions we face at the end of life".</span></p>
+        <p class="cn">首相表示，他将“永远钦佩她谈论自己病情时表现出的勇气和坦诚，这让我们所有人思考生命终结时面临的难题”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="41">BBC director-general Matt Brittin paid tribute to Dame Esther as a "legend of British broadcasting" whose contribution to public life was "immeasurable".</span></p>
+        <p class="cn">BBC总裁马特·布里顿向埃丝特女爵士致敬，称她是“英国广播界的传奇”，对公共生活的贡献“不可估量”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="42">"Her warmth, spirit and fight for justice and action that we saw on our screens continued long after the programme ended, with a lifetime of campaigning where she changed the lives of millions," he said.</span></p>
+        <p class="cn">他说：“我们在屏幕上看到的她的温暖、精神以及为正义和行动而奋斗的精神，在节目结束后仍持续了很久，她一生的宣传活动改变了数百万人的生活。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="43">Kim Leadbeater, the Labour MP who sponsored the assisted dying bill, told the BBC that Dame Esther was a "wonderful mix of strength and feistiness, but also really deep <span class="keyword" data-word="compassion" data-phonetic="/kəmˈpæʃn/" data-pos="n." data-def="同情；怜悯" data-def-en="A strong feeling of sympathy and sadness for the suffering of others and a wish to help them.">compassion</span> and kindness" - and that she would continue to inspire campaigners.</span></p>
+        <p class="cn">赞助辅助死亡法案的工党议员金·利德比特告诉BBC，埃丝特女爵士是“力量与活力的美妙结合，同时也充满深切的同情和善良”，她将继续激励活动家们。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="44">Chris Sherwood, the chief executive of the NSPCC, which runs the Childline helpline, said Dame Esther had gone to "exceptional lengths to ensure children and young people across the UK had somewhere to turn when they were in need of help".</span></p>
+        <p class="cn">运营Childline求助热线的NSPCC首席执行官克里斯·舍伍德表示，埃丝特女爵士“竭尽全力确保英国各地的儿童和年轻人在需要帮助时有个去处”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="45">Dame Esther's That's Life!</span> <span class="sentence" data-sentence-index="46">co-presenter Bill Buckley told the BBC's Radio 4 Front Row programme that "nothing would stop her" when it came to campaigning.</span></p>
+        <p class="cn">埃丝特女爵士在《这就是生活！》的搭档主持人比尔·巴克利告诉BBC广播4台《前排》节目，在宣传活动方面，“没有什么能阻止她”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="47">"She saw the light at the end of the tunnel and followed it doggedly," he said.</span></p>
+        <p class="cn">他说：“她看到了隧道尽头的曙光，并执着地追随它。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="48">Watch Katie Razzall's half-hour special programme Esther!</span> <span class="sentence" data-sentence-index="49">on iPlayer .</span> <span class="sentence" data-sentence-index="50">It will also be shown this Friday, 2 October, on BBC One at 19:30 BST.</span></p>
+        <p class="cn">在iPlayer上观看凯蒂·拉扎尔的半小时特别节目《埃丝特！》。该节目还将于10月2日星期五英国夏令时19:30在BBC One播出。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">campaigner</span>
+        <button class="kw-speak-btn" data-word="campaigner" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kæmˈpeɪnər/ n.</span>
+      </div>
+      <p class="kw-def">活动家；运动参与者</p>
+      <p class="kw-def-en">A person who works in an organized way to achieve a social or political goal.</p>
+      <p class="kw-ctx">&ldquo;Dame Esther Rantzen, who presented BBC show That's Life! for 21 years and launched the charity Childline, has died at the age of 86.&rdquo;</p>
+      <p class="kw-ctx-cn">埃丝特·兰岑女爵士，曾主持BBC节目《这就是生活！》21年并创办了慈善机构Childline，于86岁去世。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">veteran</span>
+        <button class="kw-speak-btn" data-word="veteran" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvetərən/ adj.</span>
+      </div>
+      <p class="kw-def">资深的；经验丰富的</p>
+      <p class="kw-def-en">Having a lot of experience in a particular activity or job.</p>
+      <p class="kw-ctx">&ldquo;Prime Minister Andy Burnham said the veteran broadcaster and campaigner had "changed countless lives".&rdquo;</p>
+      <p class="kw-ctx-cn">首相安迪·伯纳姆表示，这位资深播音员和活动家“改变了无数人的生活”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">counselling</span>
+        <button class="kw-speak-btn" data-word="counselling" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkaʊnsəlɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">心理咨询；辅导</p>
+      <p class="kw-def-en">Professional advice and help given to people with personal or emotional problems.</p>
+      <p class="kw-ctx">&ldquo;She launched Childline, a British counselling service for children and young people, in 1986, and in 2013 she launched Silver Line to help elderly people suffering from isolation and loneliness.&rdquo;</p>
+      <p class="kw-ctx-cn">她于1986年创办了Childline，一家为儿童和年轻人提供咨询服务的英国机构，并于2013年创办了Silver Line，帮助遭受孤立和孤独的老年人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">isolation</span>
+        <button class="kw-speak-btn" data-word="isolation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌaɪsəˈleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">孤立；隔离</p>
+      <p class="kw-def-en">The state of being separated from other people or feeling alone.</p>
+      <p class="kw-ctx">&ldquo;She launched Childline, a British counselling service for children and young people, in 1986, and in 2013 she launched Silver Line to help elderly people suffering from isolation and loneliness.&rdquo;</p>
+      <p class="kw-ctx-cn">她于1986年创办了Childline，一家为儿童和年轻人提供咨询服务的英国机构，并于2013年创办了Silver Line，帮助遭受孤立和孤独的老年人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">legalisation</span>
+        <button class="kw-speak-btn" data-word="legalisation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌliːɡəlaɪˈzeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">合法化</p>
+      <p class="kw-def-en">The process of making something legal.</p>
+      <p class="kw-ctx">&ldquo;Later in life, she became a prominent campaigner for the legalisation of assisted dying.&rdquo;</p>
+      <p class="kw-ctx-cn">晚年，她成为协助死亡合法化的著名活动家。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">fragile</span>
+        <button class="kw-speak-btn" data-word="fragile" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfrædʒaɪl/ adj.</span>
+      </div>
+      <p class="kw-def">虚弱的；易碎的</p>
+      <p class="kw-def-en">Easily broken or damaged; physically weak.</p>
+      <p class="kw-ctx">&ldquo;But in a statement given to the Press Association earlier this month, she said that despite having "spent the money and made the plans" to go to Dignitas, she had since reached the point where she was "too physically fragile to make the journey".&rdquo;</p>
+      <p class="kw-ctx-cn">但在本月早些时候向英国新闻联合社发表的一份声明中，她说尽管已经“花了钱并制定了计划”去Dignitas，但她已经达到了“身体太虚弱而无法成行”的地步。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compassion</span>
+        <button class="kw-speak-btn" data-word="compassion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəmˈpæʃn/ n.</span>
+      </div>
+      <p class="kw-def">同情；怜悯</p>
+      <p class="kw-def-en">A strong feeling of sympathy and sadness for the suffering of others and a wish to help them.</p>
+      <p class="kw-ctx">&ldquo;In a statement announcing her death on Wednesday, Dame Esther's family paid tribute to the "most wonderful mother" and "cherished grandmother" whose compassion would live on through her charities.&rdquo;</p>
+      <p class="kw-ctx-cn">在周三宣布她去世的声明中，埃丝特女爵士的家人向这位“最棒的母亲”和“珍爱的祖母”致敬，她的同情心将通过她的慈善机构延续下去。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ingenuity</span>
+        <button class="kw-speak-btn" data-word="ingenuity" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪndʒəˈnjuːəti/ n.</span>
+      </div>
+      <p class="kw-def">独创性；巧妙</p>
+      <p class="kw-def-en">The quality of being clever, original, and inventive.</p>
+      <p class="kw-ctx">&ldquo;"We hope the humour, ingenuity and audacity she brought to her work may continue to inspire you as it will do us."&rdquo;</p>
+      <p class="kw-ctx-cn">“我们希望她带给工作的幽默、独创性和大胆能继续激励你们，就像激励我们一样。”</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: Dame Esther Rantzen, broadcaster, campaigner and charity founder, dies aged 86", "start_ms": 3000, "end_ms": 11160, "paragraph_index": 1}, {"index": 2, "text": "Dame Esther Rantzen, who presented BBC show That's Life!", "start_ms": 11160, "end_ms": 16392, "paragraph_index": 2}, {"index": 3, "text": "for 21 years and launched the charity Childline, has died at the age of 86.", "start_ms": 16392, "end_ms": 23256, "paragraph_index": 2}, {"index": 4, "text": "Prime Minister Andy Burnham said the veteran broadcaster and campaigner had \"changed countless lives\".", "start_ms": 23256, "end_ms": 30432, "paragraph_index": 3}, {"index": 5, "text": "Dame Esther hosted and produced That's Life!", "start_ms": 30432, "end_ms": 34248, "paragraph_index": 4}, {"index": 6, "text": "during its run from 1973 to 1994.", "start_ms": 34248, "end_ms": 39360, "paragraph_index": 4}, {"index": 7, "text": "It regularly attracted 20 million viewers for its mixture of serious consumer investigations and light-hearted items.", "start_ms": 39360, "end_ms": 48096, "paragraph_index": 4}, {"index": 8, "text": "She launched Childline, a British counselling service for children and young people, in 1986, and in 2013 she launched Silver Line to help elderly people suffering from isolation and loneliness.", "start_ms": 48096, "end_ms": 62544, "paragraph_index": 5}, {"index": 9, "text": "Later in life, she became a prominent campaigner for the legalisation of assisted dying.", "start_ms": 62544, "end_ms": 69192, "paragraph_index": 5}, {"index": 10, "text": "She had been terminally ill with lung cancer.", "start_ms": 69192, "end_ms": 72864, "paragraph_index": 6}, {"index": 11, "text": "In December 2023, she revealed she had joined Dignitas, the Swiss assisted dying clinic.", "start_ms": 72864, "end_ms": 80400, "paragraph_index": 6}, {"index": 12, "text": "But in a statement given to the Press Association earlier this month, she said that despite having \"spent the money and made the plans\" to go to Dignitas, she had since reached the point where she was \"too physically fragile to make the journey\".", "start_ms": 80400, "end_ms": 95040, "paragraph_index": 7}, {"index": 13, "text": "She added that the law must \"change and change quickly\", as she renewed her plea ahead of the latest debate and vote on the Terminally Ill Adults (End of Life) Bill, which failed to pass through the Commons.", "start_ms": 95040, "end_ms": 107928, "paragraph_index": 8}, {"index": 14, "text": "Dame Esther Rantzen: That's Life!", "start_ms": 107928, "end_ms": 111528, "paragraph_index": 9}, {"index": 15, "text": "presenter, Childline founder and campaigner for assisted dying", "start_ms": 111528, "end_ms": 116880, "paragraph_index": 9}, {"index": 16, "text": "The broadcaster revealed her cancer diagnosis in January 2023, saying the news had prompted her to express \"profound thanks to everyone who has made my life so joyful\".", "start_ms": 116880, "end_ms": 129240, "paragraph_index": 10}, {"index": 17, "text": "In a statement announcing her death on Wednesday, Dame Esther's family paid tribute to the \"most wonderful mother\" and \"cherished grandmother\" whose compassion would live on through her charities.", "start_ms": 129240, "end_ms": 141024, "paragraph_index": 11}, {"index": 18, "text": "\"We hope the humour, ingenuity and audacity she brought to her work may continue to inspire you as it will do us.\"", "start_ms": 141024, "end_ms": 149208, "paragraph_index": 12}, {"index": 19, "text": "Dame Esther with fellow That's Life!", "start_ms": 149208, "end_ms": 152472, "paragraph_index": 13}, {"index": 20, "text": "presenters Howard Leader, Kevin Devine, and Gavin Campbell in 1993", "start_ms": 152472, "end_ms": 158928, "paragraph_index": 13}, {"index": 21, "text": "Rantzen joined BBC radio as a sound effects assistant before becoming a TV researcher, and in 1968 she trained as a producer and director.", "start_ms": 158928, "end_ms": 170352, "paragraph_index": 14}, {"index": 22, "text": "The young broadcaster became a researcher and reporter for Bernard Braden's consumer affairs programme, Braden's Week.", "start_ms": 170352, "end_ms": 178656, "paragraph_index": 15}, {"index": 23, "text": "When That's Life!", "start_ms": 178656, "end_ms": 180840, "paragraph_index": 16}, {"index": 24, "text": "launched in 1973, she was its figurehead and became a popular fixture on screens as the show's formidable and fun-loving presenter and producer.", "start_ms": 180840, "end_ms": 191760, "paragraph_index": 16}, {"index": 25, "text": "The consumer show's notable items, according to her website , external , included \"talking dogs, Jobsworth Awards and campaigns on behalf of abused children, organ transplants, safe playgrounds, and to provide justice for consumers\".", "start_ms": 191760, "end_ms": 208392, "paragraph_index": 17}, {"index": 26, "text": "Its most-viewed episode featured Sir Nicholas Winton being introduced for the first time to survivors he had saved from the Holocaust, during a 1988 instalment of the show.", "start_ms": 208392, "end_ms": 220320, "paragraph_index": 18}, {"index": 27, "text": "Later in her career, she also appeared on Strictly Come Dancing, First Dates and I'm a Celebrity...", "start_ms": 220320, "end_ms": 227640, "paragraph_index": 19}, {"index": 28, "text": "Get Me Out of Here!", "start_ms": 227640, "end_ms": 229944, "paragraph_index": 19}, {"index": 29, "text": "Dame Esther was married to documentary film-maker Desmond Wilcox from 1977 until he died in 2000.", "start_ms": 229944, "end_ms": 238512, "paragraph_index": 20}, {"index": 30, "text": "They had three children.", "start_ms": 238512, "end_ms": 241008, "paragraph_index": 20}, {"index": 31, "text": "She was made a dame in 2015 for her services to children and older people.", "start_ms": 241008, "end_ms": 247176, "paragraph_index": 21}, {"index": 32, "text": "Dame Esther met some Childline volunteers when she visited its Belfast office in 2009", "start_ms": 247176, "end_ms": 254256, "paragraph_index": 22}, {"index": 33, "text": "Dame Esther went on to become a vocal campaigner for the legalisation of assisted dying.", "start_ms": 254256, "end_ms": 260640, "paragraph_index": 23}, {"index": 34, "text": "In December 2024, she spoke of her \"great relief\" after MPs backed proposals to legalise assisted dying in England and Wales, before they ultimately stalled in the House of Lords.", "start_ms": 260640, "end_ms": 273624, "paragraph_index": 24}, {"index": 35, "text": "In an interview with the Sunday Times , external in November 2025, before the bill ran out of time, she said that \"as long as others in the future will be able to ask for help to die as they choose, I will die happy\".", "start_ms": 273624, "end_ms": 288792, "paragraph_index": 25}, {"index": 36, "text": "She expressed her disappointment after MPs voted against a fresh attempt to introduce the legislation in September .", "start_ms": 288792, "end_ms": 296928, "paragraph_index": 26}, {"index": 37, "text": "Some disability campaigners described the result as a \"victory\", while Dame Esther said it was \"deeply sad that it won't come soon enough for many of the people who need it\".", "start_ms": 296928, "end_ms": 307680, "paragraph_index": 26}, {"index": 38, "text": "\"I am sure a change in the law will come,\" she added.", "start_ms": 307680, "end_ms": 311856, "paragraph_index": 27}, {"index": 39, "text": "Figures from politics, broadcasting and the charity sector have paid tribute to Dame Esther for her impact on public life.", "start_ms": 311856, "end_ms": 320616, "paragraph_index": 28}, {"index": 40, "text": "The prime minister said he would \"always admire the characteristic courage and openness with which she spoke about her illness, making us all think about the difficult questions we face at the end of life\".", "start_ms": 320616, "end_ms": 333168, "paragraph_index": 29}, {"index": 41, "text": "BBC director-general Matt Brittin paid tribute to Dame Esther as a \"legend of British broadcasting\" whose contribution to public life was \"immeasurable\".", "start_ms": 333168, "end_ms": 343224, "paragraph_index": 30}, {"index": 42, "text": "\"Her warmth, spirit and fight for justice and action that we saw on our screens continued long after the programme ended, with a lifetime of campaigning where she changed the lives of millions,\" he said.", "start_ms": 343224, "end_ms": 356424, "paragraph_index": 31}, {"index": 43, "text": "Kim Leadbeater, the Labour MP who sponsored the assisted dying bill, told the BBC that Dame Esther was a \"wonderful mix of strength and feistiness, but also really deep compassion and kindness\" - and that she would continue to inspire campaigners.", "start_ms": 356424, "end_ms": 372600, "paragraph_index": 32}, {"index": 44, "text": "Chris Sherwood, the chief executive of the NSPCC, which runs the Childline helpline, said Dame Esther had gone to \"exceptional lengths to ensure children and young people across the UK had somewhere to turn when they were in need of help\".", "start_ms": 372600, "end_ms": 388464, "paragraph_index": 33}, {"index": 45, "text": "Dame Esther's That's Life!", "start_ms": 388464, "end_ms": 391200, "paragraph_index": 34}, {"index": 46, "text": "co-presenter Bill Buckley told the BBC's Radio 4 Front Row programme that \"nothing would stop her\" when it came to campaigning.", "start_ms": 391200, "end_ms": 399696, "paragraph_index": 34}, {"index": 47, "text": "\"She saw the light at the end of the tunnel and followed it doggedly,\" he said.", "start_ms": 399696, "end_ms": 404928, "paragraph_index": 35}, {"index": 48, "text": "Watch Katie Razzall's half-hour special programme Esther!", "start_ms": 404928, "end_ms": 409416, "paragraph_index": 36}, {"index": 49, "text": "on iPlayer .", "start_ms": 409416, "end_ms": 411552, "paragraph_index": 36}, {"index": 50, "text": "It will also be shown this Friday, 2 October, on BBC One at 19:30 BST.", "start_ms": 411552, "end_ms": 419352, "paragraph_index": 36}], "total_duration_ms": 419352};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "she": "她", "in": "在", "of": "的", "dame": "女爵士", "her": "她的", "for": "为了", "life": "生活", "on": "在", "as": "作为", "had": "有", "said": "说", "it": "它", "that": "那个", "was": "是", "that's": "那是", "dying": "垂死的", "bbc": "英国广播公司", "its": "它的", "from": "来自", "children": "儿童", "people": "人们", "with": "与", "will": "将", "he": "他", "broadcaster": "广播公司", "who": "谁", "launched": "发起", "at": "在", "bill": "法案", "would": "将", "programme": "节目", "when": "当", "they": "它们", "this": "这个", "be": "是", "charity": "慈善机构", "consumer": "消费者", "young": "年轻的", "help": "帮助", "became": "成为", "made": "做出", "change": "改变", "end": "结束", "which": "哪个", "paid": "支付", "tribute": "致敬", "we": "我们", "before": "之前", "also": "也", "come": "到来", "after": "之后", "watch": "观看", "founder": "创始人", "show": "显示", "has": "有", "died": "死亡", "prime": "首相", "minister": "部长", "changed": "改变", "lives": "生命", "during": "在期间", "items": "物品", "british": "英国的", "later": "后来", "ill": "生病", "cancer": "癌症", "december": "十二月", "revealed": "揭露", "joined": "加入", "but": "但是", "statement": "声明", "where": "那里", "added": "补充", "law": "法律", "through": "通过", "presenter": "主持人", "whose": "谁的", "continue": "继续", "us": "我们", "radio": "电台", "researcher": "研究员", "producer": "制片人", "screens": "屏幕", "show's": "节目的", "external": "外部的", "justice": "正义", "first": "第一轮", "time": "时间", "out": "出来", "some": "一些", "spoke": "发言", "mps": "议员", "long": "长久", "die": "死亡", "campaigners": "活动人士", "need": "需要", "broadcasting": "广播", "public": "公众", "about": "关于", "saw": "看到", "campaigning": "竞选活动", "told": "告诉", "video": "视频", "can": "可以", "not": "不", "played": "比赛", "dies": "死亡", "aged": "年龄为", "presented": "提交", "years": "多年", "age": "年龄", "andy": "安迪", "burnham": "伯纳姆", "countless": "无数的", "hosted": "主办", "produced": "产生", "run": "奔跑", "regularly": "定期地", "million": "百万", "viewers": "观众", "serious": "严重的", "investigations": "调查", "service": "服务", "silver": "银色的", "line": "界限", "elderly": "老年人", "suffering": "苦难", "prominent": "著名的", "been": "已经", "swiss": "瑞士的", "given": "给定", "press": "新闻", "association": "协会", "earlier": "较早", "month": "月份", "despite": "尽管", "having": "拥有", "spent": "花费", "money": "金钱", "plans": "计划", "go": "去", "since": "自从", "reached": "达成", "point": "点", "too": "太", "make": "使", "journey": "旅程", "must": "必须", "quickly": "迅速", "renewed": "重新开始的", "plea": "抗辩", "ahead": "提前", "latest": "最新的", "debate": "辩论", "vote": "投票", "adults": "成年人", "failed": "失败", "pass": "通过", "commons": "下议院", "diagnosis": "诊断", "january": "一月", "saying": "说", "news": "新闻", "prompted": "促使", "express": "表达", "profound": "深刻的", "thanks": "由于", "everyone": "每个人", "my": "我的", "so": "所以", "announcing": "宣布", "death": "死亡", "wednesday": "星期三", "family": "家庭", "most": "最", "mother": "母亲", "live": "生活", "charities": "慈善机构", "hope": "希望", "humour": "幽默", "brought": "带来", "work": "工作", "may": "可能", "you": "你", "do": "做", "fellow": "同事", "leader": "领导人", "kevin": "凯文", "campbell": "坎贝尔", "sound": "声音", "effects": "影响", "assistant": "助理", "becoming": "变得", "tv": "电视", "trained": "训练有素的", "director": "局长", "reporter": "记者", "affairs": "事务", "week": "周", "popular": "流行的", "fixture": "赛程", "formidable": "令人敬畏的", "according": "根据", "website": "网站", "included": "包括", "talking": "谈论", "dogs": "狗", "awards": "奖项", "campaigns": "运动", "behalf": "代表", "abused": "受虐待的", "safe": "安全", "provide": "提供", "episode": "集", "featured": "以...为特色", "sir": "爵士", "nicholas": "尼古拉斯", "being": "正在", "introduced": "介绍", "survivors": "幸存者", "saved": "拯救", "holocaust": "大屠杀", "career": "职业", "appeared": "出现", "strictly": "严格地", "dancing": "跳舞", "i'm": "我是", "celebrity": "名人", "get": "得到", "me": "我", "here": "这里", "married": "已婚的", "documentary": "纪录片", "until": "直到", "three": "三个", "services": "服务", "older": "年长的", "met": "伦敦警察厅", "volunteers": "志愿者", "visited": "访问", "belfast": "贝尔法斯特", "office": "办公室", "went": "去", "become": "成为", "vocal": "直言不讳的", "great": "伟大的", "relief": "缓解", "backed": "支持", "proposals": "提议", "england": "英格兰", "wales": "威尔士", "ultimately": "最终", "stalled": "停滞的", "house": "议院", "lords": "贵族", "an": "一个", "interview": "采访", "sunday": "星期日", "times": "次", "november": "十一月", "ran": "运行", "others": "其他", "future": "未来", "able": "能够", "ask": "询问", "choose": "选择", "happy": "高兴的", "expressed": "表达", "voted": "投票", "against": "反对", "fresh": "新的", "attempt": "企图", "introduce": "引入", "legislation": "立法", "september": "九月", "disability": "残疾", "described": "描述", "result": "结果", "victory": "胜利", "while": "而", "deeply": "深深地", "sad": "悲伤的", "won't": "不会", "soon": "很快", "enough": "足够", "many": "许多", "am": "是", "sure": "确定", "figures": "人物", "politics": "政治", "sector": "部门", "have": "有", "impact": "影响", "always": "总是", "courage": "勇气", "illness": "疾病", "making": "进行", "all": "所有", "think": "认为", "difficult": "困难的", "questions": "问题", "face": "面临", "matt": "马特", "legend": "传奇", "contribution": "贡献", "warmth": "温暖", "spirit": "精神", "fight": "斗争", "action": "行动", "our": "我们的", "continued": "持续的", "ended": "结束", "lifetime": "终身", "millions": "数百万", "kim": "金", "labour": "工党", "mp": "议员", "mix": "混合", "strength": "力量", "really": "真正地", "deep": "深切", "kindness": "善意", "chris": "克里斯", "chief": "首席", "executive": "行政的", "nspcc": "全国防止虐待儿童协会", "runs": "奔跑（第三人称）", "helpline": "求助热线", "gone": "已去", "exceptional": "例外的", "lengths": "长度", "ensure": "确保", "across": "跨越", "uk": "英国", "somewhere": "某处", "turn": "转变", "were": "是", "bbc's": "英国广播公司的", "front": "前线", "row": "争吵", "nothing": "没有东西", "stop": "停止", "came": "到来", "light": "轻的", "tunnel": "隧道", "followed": "遵循", "katie": "凯蒂", "special": "特别的", "iplayer": "iPlayer", "shown": "表现出", "friday": "星期五", "october": "十月", "one": "一个", "bst": "英国夏令时", "esther": "埃斯特", "assisted": "协助的", "childline": "儿童热线", "rantzen": "兰岑", "terminally": "晚期", "dignitas": "尊严", "esther's": "埃斯特的", "wonderful": "精彩的", "inspire": "激励", "braden's": "布拉登的", "attracted": "吸引", "mixture": "混合", "light-hearted": "轻松愉快", "loneliness": "孤独", "lung": "肺", "clinic": "诊所", "physically": "身体上", "joyful": "欢乐", "cherished": "珍视", "grandmother": "祖母", "audacity": "大胆", "presenters": "主持人", "howard": "霍华德", "devine": "德瓦恩", "gavin": "加文", "bernard": "伯纳德", "figurehead": "名义领袖", "fun-loving": "爱玩", "notable": "著名", "jobsworth": "死板官僚", "organ": "器官", "transplants": "移植", "playgrounds": "操场", "consumers": "消费者", "most-viewed": "观看最多", "winton": "温顿", "instalment": "一期", "dates": "日期", "film-maker": "电影制作人", "desmond": "德斯蒙德", "wilcox": "威尔科克斯", "legalise": "合法化", "disappointment": "失望", "admire": "钦佩", "characteristic": "特点", "openness": "开放", "director-general": "总干事", "brittin": "布里廷", "immeasurable": "不可估量", "leadbeater": "利德比特", "sponsored": "赞助", "feistiness": "好斗", "sherwood": "舍伍德", "co-presenter": "联合主持人", "buckley": "巴克利", "doggedly": "顽强地", "razzall's": "拉扎尔的", "half-hour": "半小时"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
