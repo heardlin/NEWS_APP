@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-03</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-03</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/3808/live/888bd6f0-be90-11f1-9f15-2f9dbc671f7d.png" alt="Widdecombe suspect charged with planning terror act against Farage" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Widdecombe suspect charged with planning terror act against Farage</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cv1j3lgrl6gko?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-03.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Joshua Kerry has been charged with preparing acts of <span class="keyword" data-word="terror" data-phonetic="/ˈterər/" data-pos="n." data-def="恐怖；恐怖活动" data-def-en="The use of violence and intimidation for political aims.">terror</span> including against Reform UK leader Nigel Farage.</span></p>
+        <p class="cn">约书亚·克里（Joshua Kerry）被指控策划恐怖活动，包括针对改革英国党（Reform UK）领袖奈杰尔·法拉奇（Nigel Farage）的行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The man accused of murdering Ann Widdecombe has also been charged with preparing acts of <span class="keyword" data-word="terror" data-phonetic="/ˈterər/" data-pos="n." data-def="恐怖；恐怖活动" data-def-en="The use of violence and intimidation for political aims.">terror</span> including against Reform UK leader Nigel Farage.</span></p>
+        <p class="cn">被控谋杀安·威德科姆（Ann Widdecombe）的男子还被指控策划恐怖活动，包括针对改革英国党领袖奈杰尔·法拉奇的行动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Counter <span class="keyword" data-word="terror" data-phonetic="/ˈterər/" data-pos="n." data-def="恐怖；恐怖活动" data-def-en="The use of violence and intimidation for political aims.">terror</span> police said Joshua Kerry, 28, was charged on Friday with one count of preparation of terrorist acts.</span></p>
+        <p class="cn">反恐警察表示，28岁的约书亚·克里于周五被控一项策划恐怖活动的罪名。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span> relates to activity which is alleged to have taken place between May 2024 and July 2026.</span></p>
+        <p class="cn">该指控涉及据称发生在2024年5月至2026年7月期间的活动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Kerry was charged in July with the murder of 78-year-old Widdecombe, a former Conservative minister and Reform UK spokeswoman.</span></p>
+        <p class="cn">克里于7月被控谋杀78岁的威德科姆，她曾是保守党大臣及改革英国党发言人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Home Secretary Shabana Mahmood said she knew the fresh <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span> would be "extremely concerning" and her "profound sympathies" were with Farage and his family.</span></p>
+        <p class="cn">内政大臣沙巴纳·马哈茂德（Shabana Mahmood）表示，她知道这项新指控会“极其令人担忧”，并向法拉奇及其家人致以“深切的同情”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">"Let no one make any mistake: an attack on anyone in politics is an attack on us all.</span></p>
+        <p class="cn">“不要让任何人产生任何误解：对政界任何人的攻击都是对我们所有人的攻击。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">"This case raises serious questions about the security of those in public life.</span> <span class="sentence" data-sentence-index="8">We must use this as an opportunity to reset.</span> <span class="sentence" data-sentence-index="9">Once parliament returns, I will update on our work to strengthen protections for those who choose to serve."</span></p>
+        <p class="cn">“此案引发了关于公众人物安全的严重问题。我们必须以此为契机进行重置。一旦议会复会，我将通报我们加强保护那些选择为民服务者的工作进展。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">The BBC contacted Reform UK for comment and a party source said: "This is exactly why Nigel needed Â£5m to protect his security for life."</span></p>
+        <p class="cn">BBC联系了改革英国党寻求置评，一位党内消息人士表示：“这正是奈杰尔需要500万英镑来终身保障其安全的原因。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Farage is currently facing a parliamentary standards watchdog <span class="keyword" data-word="probe" data-phonetic="/proʊb/" data-pos="n." data-def="调查；探查" data-def-en="An investigation into a crime or a problematic situation.">probe</span> into a Â£5m gift from a billionaire donor before he returned as an MP in 2024.</span> <span class="sentence" data-sentence-index="12">The Reform leader has previously said the money was for his personal security.</span></p>
+        <p class="cn">法拉奇目前正面临议会标准监督机构的调查，涉及他在2024年重返议员职位前从一位亿万富翁捐赠者处获得的500万英镑赠礼。这位改革党领袖此前曾表示，这笔钱是用于他的个人安全。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">Counter Terrorism Policing Deputy Assistant Commissioner Vicki Evans said the <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span> on Friday was the result of a "hugely intensive and complex <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查；侦查" data-def-en="The process of examining a crime or problem to find the truth.">investigation</span>".</span></p>
+        <p class="cn">反恐警务副助理专员维基·埃文斯（Vicki Evans）表示，周五的指控是“极其密集且复杂的调查”的结果。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">"This <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查；侦查" data-def-en="The process of examining a crime or problem to find the truth.">investigation</span> has been led by a dedicated team of detectives, analysts, and <span class="keyword" data-word="forensic" data-phonetic="/fəˈrenzɪk/" data-pos="adj." data-def="法医的；鉴证的" data-def-en="Relating to scientific methods used in the investigation of crime.">forensic</span> experts, working on multiple lines of <span class="keyword" data-word="enquiry" data-phonetic="/ɪnˈkwaɪəri/" data-pos="n." data-def="询问；调查" data-def-en="An official investigation or a request for information.">enquiry</span>, which has resulted in this very serious <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span>," she added.</span></p>
+        <p class="cn">她补充说：“这项调查由一支专门的侦探、分析师和法医专家团队主导，他们从多条线索展开调查，最终促成了这项非常严重的指控。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Kerry, from Rotherham, is due to appear in court over the <span class="keyword" data-word="terror" data-phonetic="/ˈterər/" data-pos="n." data-def="恐怖；恐怖活动" data-def-en="The use of violence and intimidation for political aims.">terror</span> <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span> on Wednesday, police said.</span></p>
+        <p class="cn">警方表示，来自罗瑟勒姆的克里因恐怖指控定于周三出庭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">Frank Ferguson of the Crown Prosecution Service's Special Crime and Counter Terrorism Division said prosecutors "worked closely" with police to bring the <span class="keyword" data-word="charge" data-phonetic="/tʃɑːrdʒ/" data-pos="v." data-def="指控；控告" data-def-en="To formally accuse someone of a crime.">charge</span> and would continue to work alongside them as the <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查；侦查" data-def-en="The process of examining a crime or problem to find the truth.">investigation</span> continued.</span></p>
+        <p class="cn">皇家检察署特别犯罪与反恐部门的弗兰克·弗格森（Frank Ferguson）表示，检察官与警方“密切合作”提出指控，并将在调查继续期间与他们并肩工作。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">Widdecombe was found dead on Thursday 9 July at her home in Haytor, Devon, having sustained serious injuries.</span></p>
+        <p class="cn">威德科姆于7月9日周四被发现死于她位于德文郡海托的家中，身上有严重伤势。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">She served as Conservative MP for Maidstone in Kent for 23 years and was appointed to <span class="keyword" data-word="ministerial" data-phonetic="/ˌmɪnɪˈstɪəriəl/" data-pos="adj." data-def="部长的；内阁的" data-def-en="Relating to a government minister or ministry.">ministerial</span> roles in Sir John Major's government in the 1990s.</span></p>
+        <p class="cn">她曾担任肯特郡梅德斯通的保守党议员长达23年，并于1990年代被任命为约翰·梅杰爵士政府的部长级职务。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Following her departure from the Commons, Widdecombe appeared on the BBC's Strictly Come Dancing and would later become a Reform UK spokeswoman.</span></p>
+        <p class="cn">离开下议院后，威德科姆曾参加BBC的《舞动奇迹》，后来成为改革英国党发言人。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">charge</span>
+        <button class="kw-speak-btn" data-word="charge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/tʃɑːrdʒ/ v.</span>
+      </div>
+      <p class="kw-def">指控；控告</p>
+      <p class="kw-def-en">To formally accuse someone of a crime.</p>
+      <p class="kw-ctx">&ldquo;Joshua Kerry has been charged with preparing acts of terror including against Reform UK leader Nigel Farage.&rdquo;</p>
+      <p class="kw-ctx-cn">约书亚·克里被指控准备恐怖行动，包括针对改革英国党领袖奈杰尔·法拉奇。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">terror</span>
+        <button class="kw-speak-btn" data-word="terror" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈterər/ n.</span>
+      </div>
+      <p class="kw-def">恐怖；恐怖活动</p>
+      <p class="kw-def-en">The use of violence and intimidation for political aims.</p>
+      <p class="kw-ctx">&ldquo;Counter terror police said Joshua Kerry, 28, was charged on Friday with one count of preparation of terrorist acts.&rdquo;</p>
+      <p class="kw-ctx-cn">反恐警察称，28岁的约书亚·克里于周五被指控一项准备恐怖行动的罪名。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">investigation</span>
+        <button class="kw-speak-btn" data-word="investigation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˌvestɪˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">调查；侦查</p>
+      <p class="kw-def-en">The process of examining a crime or problem to find the truth.</p>
+      <p class="kw-ctx">&ldquo;Counter Terrorism Policing Deputy Assistant Commissioner Vicki Evans said the charge on Friday was the result of a "hugely intensive and complex investigation".&rdquo;</p>
+      <p class="kw-ctx-cn">反恐警务副助理专员维基·埃文斯表示，周五的指控是“一项极其密集和复杂的调查”的结果。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">probe</span>
+        <button class="kw-speak-btn" data-word="probe" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/proʊb/ n.</span>
+      </div>
+      <p class="kw-def">调查；探查</p>
+      <p class="kw-def-en">An investigation into a crime or a problematic situation.</p>
+      <p class="kw-ctx">&ldquo;Farage is currently facing a parliamentary standards watchdog probe into a Â£5m gift from a billionaire donor before he returned as an MP in 2024.&rdquo;</p>
+      <p class="kw-ctx-cn">法拉奇目前正面临议会标准监督机构的一项调查，涉及他在2024年重返议员席位前从一位亿万富翁捐赠者那里收到的500万英镑礼物。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">forensic</span>
+        <button class="kw-speak-btn" data-word="forensic" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/fəˈrenzɪk/ adj.</span>
+      </div>
+      <p class="kw-def">法医的；鉴证的</p>
+      <p class="kw-def-en">Relating to scientific methods used in the investigation of crime.</p>
+      <p class="kw-ctx">&ldquo;This investigation has been led by a dedicated team of detectives, analysts, and forensic experts, working on multiple lines of enquiry, which has resulted in this very serious charge,&rdquo;</p>
+      <p class="kw-ctx-cn">这项调查由一支专门的侦探、分析师和法医专家团队领导，他们从多条线索展开工作，最终导致了这项非常严重的指控。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enquiry</span>
+        <button class="kw-speak-btn" data-word="enquiry" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkwaɪəri/ n.</span>
+      </div>
+      <p class="kw-def">询问；调查</p>
+      <p class="kw-def-en">An official investigation or a request for information.</p>
+      <p class="kw-ctx">&ldquo;This investigation has been led by a dedicated team of detectives, analysts, and forensic experts, working on multiple lines of enquiry, which has resulted in this very serious charge,&rdquo;</p>
+      <p class="kw-ctx-cn">这项调查由一支专门的侦探、分析师和法医专家团队领导，他们从多条线索展开工作，最终导致了这项非常严重的指控。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">prosecutor</span>
+        <button class="kw-speak-btn" data-word="prosecutor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈprɑːsɪkjuːtər/ n.</span>
+      </div>
+      <p class="kw-def">检察官；公诉人</p>
+      <p class="kw-def-en">A legal official who conducts a case against a person accused of a crime.</p>
+      <p class="kw-ctx">&ldquo;Frank Ferguson of the Crown Prosecution Service's Special Crime and Counter Terrorism Division said prosecutors "worked closely" with police to bring the charge and would continue to work alongside them as the investigation continued.&rdquo;</p>
+      <p class="kw-ctx-cn">皇家检察署特别犯罪和反恐部门的弗兰克·弗格森表示，检察官与警方“密切合作”提出指控，并将在调查继续期间继续与他们合作。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ministerial</span>
+        <button class="kw-speak-btn" data-word="ministerial" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌmɪnɪˈstɪəriəl/ adj.</span>
+      </div>
+      <p class="kw-def">部长的；内阁的</p>
+      <p class="kw-def-en">Relating to a government minister or ministry.</p>
+      <p class="kw-ctx">&ldquo;She served as Conservative MP for Maidstone in Kent for 23 years and was appointed to ministerial roles in Sir John Major's government in the 1990s.&rdquo;</p>
+      <p class="kw-ctx-cn">她曾担任肯特郡梅德斯通的保守党议员23年，并在20世纪90年代被任命为约翰·梅杰爵士政府的部长职务。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Joshua Kerry has been charged with preparing acts of terror including against Reform UK leader Nigel Farage.", "start_ms": 0, "end_ms": 8280, "paragraph_index": 0}, {"index": 1, "text": "The man accused of murdering Ann Widdecombe has also been charged with preparing acts of terror including against Reform UK leader Nigel Farage.", "start_ms": 8280, "end_ms": 18336, "paragraph_index": 1}, {"index": 2, "text": "Counter terror police said Joshua Kerry, 28, was charged on Friday with one count of preparation of terrorist acts.", "start_ms": 18336, "end_ms": 27600, "paragraph_index": 2}, {"index": 3, "text": "The charge relates to activity which is alleged to have taken place between May 2024 and July 2026.", "start_ms": 27600, "end_ms": 36144, "paragraph_index": 3}, {"index": 4, "text": "Kerry was charged in July with the murder of 78-year-old Widdecombe, a former Conservative minister and Reform UK spokeswoman.", "start_ms": 36144, "end_ms": 45768, "paragraph_index": 4}, {"index": 5, "text": "Home Secretary Shabana Mahmood said she knew the fresh charge would be \"extremely concerning\" and her \"profound sympathies\" were with Farage and his family.", "start_ms": 45768, "end_ms": 55728, "paragraph_index": 5}, {"index": 6, "text": "\"Let no one make any mistake: an attack on anyone in politics is an attack on us all.", "start_ms": 55728, "end_ms": 62256, "paragraph_index": 6}, {"index": 7, "text": "\"This case raises serious questions about the security of those in public life.", "start_ms": 62256, "end_ms": 68208, "paragraph_index": 7}, {"index": 8, "text": "We must use this as an opportunity to reset.", "start_ms": 68208, "end_ms": 72312, "paragraph_index": 7}, {"index": 9, "text": "Once parliament returns, I will update on our work to strengthen protections for those who choose to serve.\"", "start_ms": 72312, "end_ms": 79608, "paragraph_index": 7}, {"index": 10, "text": "The BBC contacted Reform UK for comment and a party source said: \"This is exactly why Nigel needed \u00c2\u00a35m to protect his security for life.\"", "start_ms": 79608, "end_ms": 90720, "paragraph_index": 8}, {"index": 11, "text": "Farage is currently facing a parliamentary standards watchdog probe into a \u00c2\u00a35m gift from a billionaire donor before he returned as an MP in 2024.", "start_ms": 90720, "end_ms": 102744, "paragraph_index": 9}, {"index": 12, "text": "The Reform leader has previously said the money was for his personal security.", "start_ms": 102744, "end_ms": 108432, "paragraph_index": 9}, {"index": 13, "text": "Counter Terrorism Policing Deputy Assistant Commissioner Vicki Evans said the charge on Friday was the result of a \"hugely intensive and complex investigation\".", "start_ms": 108432, "end_ms": 119136, "paragraph_index": 10}, {"index": 14, "text": "\"This investigation has been led by a dedicated team of detectives, analysts, and forensic experts, working on multiple lines of enquiry, which has resulted in this very serious charge,\" she added.", "start_ms": 119136, "end_ms": 133320, "paragraph_index": 11}, {"index": 15, "text": "Kerry, from Rotherham, is due to appear in court over the terror charge on Wednesday, police said.", "start_ms": 133320, "end_ms": 140496, "paragraph_index": 12}, {"index": 16, "text": "Frank Ferguson of the Crown Prosecution Service's Special Crime and Counter Terrorism Division said prosecutors \"worked closely\" with police to bring the charge and would continue to work alongside them as the investigation continued.", "start_ms": 140496, "end_ms": 155016, "paragraph_index": 13}, {"index": 17, "text": "Widdecombe was found dead on Thursday 9 July at her home in Haytor, Devon, having sustained serious injuries.", "start_ms": 155016, "end_ms": 163248, "paragraph_index": 14}, {"index": 18, "text": "She served as Conservative MP for Maidstone in Kent for 23 years and was appointed to ministerial roles in Sir John Major's government in the 1990s.", "start_ms": 163248, "end_ms": 174480, "paragraph_index": 15}, {"index": 19, "text": "Following her departure from the Commons, Widdecombe appeared on the BBC's Strictly Come Dancing and would later become a Reform UK spokeswoman.", "start_ms": 174480, "end_ms": 184392, "paragraph_index": 16}], "total_duration_ms": 184392};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "and": "和", "to": "到", "in": "在", "on": "在", "said": "说", "with": "与", "reform": "改革", "was": "是", "for": "为了", "has": "有", "uk": "英国", "is": "是", "this": "这个", "kerry": "凯里", "charged": "指控", "farage": "法拉奇", "widdecombe": "威德科姆", "an": "一个", "as": "作为", "been": "已经", "acts": "行为", "leader": "领导人", "nigel": "奈杰尔", "counter": "反制", "police": "警方", "july": "七月", "she": "她", "would": "将", "her": "她的", "his": "他的", "serious": "严重的", "security": "安全", "from": "来自", "joshua": "约书亚", "preparing": "准备", "including": "包括", "against": "反对", "friday": "星期五", "one": "一个", "which": "哪个", "conservative": "保守党", "spokeswoman": "女发言人", "home": "家", "attack": "袭击", "those": "那些", "life": "生活", "work": "工作", "mp": "议员", "terrorism": "恐怖主义", "man": "男子", "accused": "被指控", "murdering": "谋杀", "ann": "安", "also": "也", "count": "计票", "preparation": "准备", "terrorist": "恐怖分子", "relates": "涉及", "activity": "活动", "alleged": "据称的", "have": "有", "taken": "采取", "place": "地点", "between": "之间", "may": "可能", "murder": "谋杀", "year-old": "岁的", "former": "前任", "minister": "部长", "secretary": "秘书", "shabana": "沙巴娜", "mahmood": "马哈茂德", "knew": "知道", "fresh": "新的", "be": "是", "extremely": "极其", "concerning": "关于", "profound": "深刻的", "sympathies": "同情", "were": "是", "family": "家庭", "let": "让", "no": "没有", "make": "使", "any": "任何", "mistake": "错误", "anyone": "任何人", "politics": "政治", "us": "我们", "all": "所有", "case": "案例", "raises": "提出", "questions": "问题", "about": "关于", "public": "公众", "we": "我们", "must": "必须", "use": "使用", "opportunity": "机会", "reset": "重置", "once": "一旦", "parliament": "议会", "returns": "返回", "will": "将", "update": "更新", "our": "我们的", "strengthen": "加强", "protections": "保护措施", "who": "谁", "choose": "选择", "serve": "服务", "bbc": "英国广播公司", "contacted": "联系", "comment": "评论", "party": "政党", "source": "来源", "exactly": "确切地", "why": "为何", "needed": "需要", "protect": "保护", "currently": "目前", "facing": "面临", "parliamentary": "议会", "standards": "标准", "watchdog": "监管机构", "into": "进入", "gift": "礼物", "billionaire": "亿万富翁", "donor": "捐赠者", "before": "之前", "he": "他", "returned": "返回", "previously": "此前", "money": "金钱", "personal": "个人", "policing": "警务", "deputy": "副手", "assistant": "助理", "commissioner": "专员", "vicki": "维基", "evans": "埃文斯", "result": "结果", "hugely": "极其", "intensive": "密集的", "complex": "复杂的", "led": "带领", "by": "被", "dedicated": "专注的", "team": "团队", "detectives": "侦探", "experts": "专家", "working": "工作", "multiple": "多条", "lines": "线", "resulted": "导致", "very": "非常", "added": "补充", "rotherham": "罗瑟勒姆", "due": "应得", "appear": "出现", "court": "法庭", "over": "超过", "wednesday": "星期三", "frank": "坦率的", "crown": "王冠", "prosecution": "起诉", "service's": "服务的", "special": "特别的", "crime": "犯罪", "division": "分裂", "prosecutors": "检察官", "worked": "工作", "closely": "密切", "bring": "带来", "continue": "继续", "alongside": "与...一起", "them": "他们", "continued": "持续的", "found": "发现", "dead": "死亡", "thursday": "星期四", "at": "在", "haytor": "海托尔", "devon": "德文郡", "having": "拥有", "sustained": "持续的", "injuries": "受伤", "served": "服役", "maidstone": "梅德斯通", "kent": "肯特", "years": "多年", "appointed": "任命", "roles": "角色", "sir": "爵士", "john": "约翰", "major's": "少校的", "government": "政府", "following": "随后", "departure": "离职", "commons": "下议院", "appeared": "出现", "bbc's": "英国广播公司的", "strictly": "严格地", "come": "到来", "dancing": "跳舞", "later": "后来", "become": "成为", "analysts": "分析师", "ferguson": "弗格森"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
