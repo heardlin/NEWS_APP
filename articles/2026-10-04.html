@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-04</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-04</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/2448/live/1043b780-befe-11f1-bc2e-018d645d8d21.jpg" alt="Flydubai co-pilot attacked captain with axe, UAE official says" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Flydubai co-pilot attacked captain with axe, UAE official says</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c61wv7lgex13o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-04.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The Indian government has praised captain Smit Machchhar for his "immense courage" during the attack</span></p>
+        <p class="cn">印度政府赞扬了机长斯米特·马赫查尔（Smit Machchhar）在袭击中表现出的“巨大勇气”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The co-pilot who attempted to take control of a Flydubai plane travelling to Israel attacked the pilot with a crash axe, the United Arab Emirates prosecutor general has said.</span></p>
+        <p class="cn">阿联酋总检察长表示，试图控制一架飞往以色列的迪拜航空（Flydubai）飞机的副驾驶用破拆斧袭击了飞行员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The flight from Dubai to Tel Aviv carrying more than 170 people plunged 17,000ft (5,200m) two and a half hours into its journey, before passengers managed to <span class="keyword" data-word="overpower" data-phonetic="/ˌoʊvərˈpaʊər/" data-pos="v." data-def="制服；压倒" data-def-en="to defeat or overcome someone by using greater strength">overpower</span> the attacker and successfully take control of the plane.</span></p>
+        <p class="cn">这架从迪拜飞往特拉维夫的航班载有170多人，在飞行两个半小时后骤降17000英尺（5200米），随后乘客设法制服了袭击者并成功控制了飞机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Capt Smit Machchhar said he was lying on the floor injured when he realised the plane was sinking and he had to act, explaining: "I told myself to go for one last push to open the door from inside", which allowed the passengers in.</span></p>
+        <p class="cn">机长斯米特·马赫查尔表示，他受伤躺在地板上时意识到飞机正在下坠，他必须采取行动，并解释说：“我告诉自己再最后努力一次，从里面打开门”，这让乘客得以进入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Two reserve pilots then landed the plane safely in Saudi Arabia.</span></p>
+        <p class="cn">随后两名备用飞行员将飞机安全降落在沙特阿拉伯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">A crash axe is usually kept âin the cockpit in case of emergencies.</span></p>
+        <p class="cn">破拆斧通常存放在驾驶舱内以备紧急情况使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The weapon used has been a key question for investigators, given the <span class="keyword" data-word="stringent" data-phonetic="/ˈstrɪndʒənt/" data-pos="adj." data-def="严格的；严厉的" data-def-en="strict and severe; requiring strict attention to rules">stringent</span> security on such a sensitive route.</span> <span class="sentence" data-sentence-index="7">Early reports from passengers on board had suggested it might have been a knife.</span></p>
+        <p class="cn">鉴于如此敏感航线上的严格安保，所使用的武器一直是调查人员的关键问题。机上乘客的早期报告曾暗示可能是一把刀。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">The UAE attorney general told state media that investigations were ongoing to determine the full circumstances and motives of the incident.</span></p>
+        <p class="cn">阿联酋总检察长告诉国家媒体，调查正在进行中，以确定事件的全部情况和动机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">The co-pilot who launched the attack was an Omani national, according to Israeli Prime Minister Benjamin Netanyahu.</span></p>
+        <p class="cn">据以色列总理本雅明·内塔尼亚胡（Benjamin Netanyahu）称，发动袭击的副驾驶是阿曼国民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Multiple media outlets including Reuters, CNN and The New York Times have named him as Hamam al-Hammami.</span> <span class="sentence" data-sentence-index="11">There has been no official confirmation of this.</span></p>
+        <p class="cn">包括路透社、CNN和《纽约时报》在内的多家媒体称他为哈马姆·阿尔-哈马米（Hamam al-Hammami）。目前尚无官方确认。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">While working at another airline, Oman Air, US media reported that Al-Hammami was removed from flight training because of concerns over his radical views, and was given another role at Oman's national airline.</span></p>
+        <p class="cn">据美国媒体报道，在另一家航空公司阿曼航空（Oman Air）工作时，阿尔-哈马米因激进观点引发担忧而被取消飞行训练，并在阿曼国家航空公司获得了另一个职位。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="13">He completed a three-year distance-learning course at Buckinghamshire New University in the UK and graduated with a degree in aviation management in 2023, the university said.</span> <span class="sentence" data-sentence-index="14">It added he did not take any pilot training at the school.</span></p>
+        <p class="cn">白金汉郡新大学（Buckinghamshire New University）表示，他在该校完成了为期三年的远程教育课程，并于2023年毕业，获得航空管理学位。该校补充说，他没有在学校接受任何飞行员培训。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Speaking to Fox News, Netanyahu said that after the attacker was subdued on the flight, he called out to the crew "Kill me, kill me!"</span></p>
+        <p class="cn">内塔尼亚胡在接受福克斯新闻采访时表示，袭击者在飞机上被制服后，向机组人员喊道“杀了我，杀了我！”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">The Israeli prime minister added: "So, it's clear that he was suicidalâ¦ It looks very likely that he was going to down the plane."</span></p>
+        <p class="cn">以色列总理补充说：“所以，很明显他有自杀倾向……看起来他很可能打算让飞机坠毁。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">He also said the attacker "underwent Islamist radical <span class="keyword" data-word="indoctrination" data-phonetic="/ɪnˌdɑːktrɪˈneɪʃn/" data-pos="n." data-def="灌输；教导" data-def-en="the process of teaching a person or group to accept a set of beliefs uncritically">indoctrination</span>".</span></p>
+        <p class="cn">他还表示，袭击者“接受了伊斯兰激进主义灌输”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">The UAE's attorney general, Hamad Saif Al Shamsi, said investigations into the incident revealed that the co-pilot attempted to carry out a "terrorist act", according to the country's state news agency.</span></p>
+        <p class="cn">据阿联酋国家通讯社报道，阿联酋总检察长哈马德·赛义夫·阿尔·沙姆西（Hamad Saif Al Shamsi）表示，对事件的调查显示，副驾驶试图实施“恐怖行为”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">He also said investigations were under way to establish the circumstances, motives and any links related to the incident.</span></p>
+        <p class="cn">他还表示，正在进行调查以确定事件的情况、动机及任何相关联系。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">Machchhar, who was stabbed in the attack, was taken to a nearby hospital before being airlifted to Abu Dhabi, where he is reported to be in a stable condition.</span></p>
+        <p class="cn">马赫查尔在袭击中被刺伤，被送往附近医院，随后被空运至阿布扎比，据报道他情况稳定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">The pilot, who is from India, was in "good health and recovering well", the Indian embassy in the UAE said on Thursday.</span></p>
+        <p class="cn">印度驻阿联酋大使馆周四表示，这位来自印度的飞行员“健康状况良好，恢复顺利”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">"I am confident that the recovery will be there and I will become fit and healthy again," Machchhar said.</span></p>
+        <p class="cn">马赫查尔说：“我相信会康复，我会再次变得健康强壮。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">About two and half hours after the plane took off from Dubai International Airport it begun to <span class="keyword" data-word="plunge" data-phonetic="/plʌndʒ/" data-pos="v." data-def="突然下降；暴跌" data-def-en="to fall suddenly and quickly">plunge</span> sharply.</span></p>
+        <p class="cn">飞机从迪拜国际机场起飞约两个半小时后开始急剧下坠。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">The plane signalled a "general emergency" code, squawk 7700, before switching to squawk 7500, a code reporting "unlawful interference", or hijacking.</span></p>
+        <p class="cn">飞机发出“一般紧急”代码7700，然后切换到7500代码，报告“非法干扰”或劫机。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">In an interview with the BBC, one passenger described the moment he realised that something was wrong.</span></p>
+        <p class="cn">在接受BBC采访时，一名乘客描述了他意识到出错的时刻。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Almog Itali said: "Suddenly the aeroplane started to, like a rollercoaster, to drop down [with] a massive G-force.</span> <span class="sentence" data-sentence-index="27">It was falling down for 20 or 30 seconds, rapidly, and then balanced, and then started once again to fall down."</span></p>
+        <p class="cn">阿尔莫格·伊塔利（Almog Itali）说：“突然，飞机像过山车一样，以巨大的重力加速度下坠。它快速下坠了20或30秒，然后平稳，然后又再次开始下坠。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="28">People then began to rush to the cockpit, he said.</span></p>
+        <p class="cn">他说，人们随后开始冲向驾驶舱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="29">Israeli President Isaac Herzog said on Thursday that the alarm was raised onboard by an Israeli woman, Tali Manes, who heard a <span class="keyword" data-word="commotion" data-phonetic="/kəˈmoʊʃn/" data-pos="n." data-def="骚动；喧闹" data-def-en="a noisy disturbance or confusion">commotion</span> coming from the cockpit.</span></p>
+        <p class="cn">以色列总统艾萨克·赫尔佐格（Isaac Herzog）周四表示，机上警报是由一名以色列女性塔利·马内斯（Tali Manes）发出的，她听到驾驶舱传来骚动。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="30">Her husband, Zvika, along with three other men - Yaniv Hayun, Dr Shota Musayev and Asaf Rajuan - entered the cockpit after Capt Machchhar managed to open the door despite his injuries.</span></p>
+        <p class="cn">她的丈夫兹维卡（Zvika）以及另外三名男子——亚尼夫·哈云（Yaniv Hayun）、肖塔·穆萨耶夫博士（Dr Shota Musayev）和阿萨夫·拉朱安（Asaf Rajuan）——在机长马赫查尔尽管受伤仍设法打开门后进入了驾驶舱。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Hayun said, in a video released by the prime minister's office, that the attacker was "trying to destroy the instruments in order to disable the plane".</span></p>
+        <p class="cn">哈云在总理办公室发布的视频中说，袭击者“试图破坏仪器以使飞机失灵”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="32">Hayun then described putting the attacker in a <span class="keyword" data-word="chokehold" data-phonetic="/ˈtʃoʊkhoʊld/" data-pos="n." data-def="锁喉；掐脖子" data-def-en="a tight grip around a person's neck to prevent them from breathing">chokehold</span> and pulling him outside the cockpit before other passengers helped to pin him down.</span></p>
+        <p class="cn">哈云随后描述说，他扼住袭击者的脖子，将他拉出驾驶舱，然后其他乘客帮助将他按住。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="33">He added that he "pulled the controls" of the plane.</span> <span class="sentence" data-sentence-index="34">"The plane started to level out, a bit more, and then [another] pilot told me he was taking control from there," he said.</span></p>
+        <p class="cn">他补充说，他“拉动了飞机的控制装置”。“飞机开始稍微平稳了一些，然后[另一名]飞行员告诉我他从那里接管控制，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">In an interview with CNN on Wednesday evening, Netanyahu said the stabbed pilot, passengers and second crew had "managed to prevent a 9/11 disaster".</span></p>
+        <p class="cn">在周三晚上接受CNN采访时，内塔尼亚胡表示，被刺伤的飞行员、乘客和第二机组人员“成功阻止了一场9/11式的灾难”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">Watch: Flydubai pilot speaks with Indian PM</span></p>
+        <p class="cn">观看：迪拜航空飞行员与印度总理交谈</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">plunge</span>
+        <button class="kw-speak-btn" data-word="plunge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/plʌndʒ/ v.</span>
+      </div>
+      <p class="kw-def">突然下降；暴跌</p>
+      <p class="kw-def-en">to fall suddenly and quickly</p>
+      <p class="kw-ctx">&ldquo;The flight from Dubai to Tel Aviv carrying more than 170 people plunged 17,000ft (5,200m) two and a half hours into its journey, before passengers managed to overpower the attacker and successfully take control of the plane.&rdquo;</p>
+      <p class="kw-ctx-cn">这架从迪拜飞往特拉维夫的航班载有170多人，在飞行两个半小时后骤降17000英尺（5200米），随后乘客设法制服了袭击者并成功控制了飞机。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overpower</span>
+        <button class="kw-speak-btn" data-word="overpower" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌoʊvərˈpaʊər/ v.</span>
+      </div>
+      <p class="kw-def">制服；压倒</p>
+      <p class="kw-def-en">to defeat or overcome someone by using greater strength</p>
+      <p class="kw-ctx">&ldquo;The flight from Dubai to Tel Aviv carrying more than 170 people plunged 17,000ft (5,200m) two and a half hours into its journey, before passengers managed to overpower the attacker and successfully take control of the plane.&rdquo;</p>
+      <p class="kw-ctx-cn">这架从迪拜飞往特拉维夫的航班载有170多人，在飞行两个半小时后骤降17000英尺（5200米），随后乘客设法制服了袭击者并成功控制了飞机。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stringent</span>
+        <button class="kw-speak-btn" data-word="stringent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstrɪndʒənt/ adj.</span>
+      </div>
+      <p class="kw-def">严格的；严厉的</p>
+      <p class="kw-def-en">strict and severe; requiring strict attention to rules</p>
+      <p class="kw-ctx">&ldquo;The weapon used has been a key question for investigators, given the stringent security on such a sensitive route.&rdquo;</p>
+      <p class="kw-ctx-cn">鉴于如此敏感航线上的严格安保，使用的武器一直是调查人员的关键问题。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">subdue</span>
+        <button class="kw-speak-btn" data-word="subdue" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/səbˈduː/ v.</span>
+      </div>
+      <p class="kw-def">制服；征服</p>
+      <p class="kw-def-en">to bring under control by force; to overcome</p>
+      <p class="kw-ctx">&ldquo;Speaking to Fox News, Netanyahu said that after the attacker was subdued on the flight, he called out to the crew "Kill me, kill me!"&rdquo;</p>
+      <p class="kw-ctx-cn">内塔尼亚胡在接受福克斯新闻采访时说，袭击者在飞机上被制服后，他向机组人员喊道“杀了我，杀了我！”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">indoctrination</span>
+        <button class="kw-speak-btn" data-word="indoctrination" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˌdɑːktrɪˈneɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">灌输；教导</p>
+      <p class="kw-def-en">the process of teaching a person or group to accept a set of beliefs uncritically</p>
+      <p class="kw-ctx">&ldquo;He also said the attacker "underwent Islamist radical indoctrination".&rdquo;</p>
+      <p class="kw-ctx-cn">他还说，袭击者“接受了伊斯兰激进主义的灌输”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">commotion</span>
+        <button class="kw-speak-btn" data-word="commotion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈmoʊʃn/ n.</span>
+      </div>
+      <p class="kw-def">骚动；喧闹</p>
+      <p class="kw-def-en">a noisy disturbance or confusion</p>
+      <p class="kw-ctx">&ldquo;Israeli President Isaac Herzog said on Thursday that the alarm was raised onboard by an Israeli woman, Tali Manes, who heard a commotion coming from the cockpit.&rdquo;</p>
+      <p class="kw-ctx-cn">以色列总统艾萨克·赫尔佐格周四表示，机上警报是由一名以色列女子塔利·马内斯发出的，她听到驾驶舱传来骚动声。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">chokehold</span>
+        <button class="kw-speak-btn" data-word="chokehold" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtʃoʊkhoʊld/ n.</span>
+      </div>
+      <p class="kw-def">锁喉；掐脖子</p>
+      <p class="kw-def-en">a tight grip around a person's neck to prevent them from breathing</p>
+      <p class="kw-ctx">&ldquo;Hayun then described putting the attacker in a chokehold and pulling him outside the cockpit before other passengers helped to pin him down.&rdquo;</p>
+      <p class="kw-ctx-cn">哈云随后描述说，他锁住袭击者的喉咙，将他拖出驾驶舱，随后其他乘客帮忙将他按住。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hijack</span>
+        <button class="kw-speak-btn" data-word="hijack" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈhaɪdʒæk/ v.</span>
+      </div>
+      <p class="kw-def">劫持；劫机</p>
+      <p class="kw-def-en">to illegally seize control of a vehicle, especially an aircraft, by force</p>
+      <p class="kw-ctx">&ldquo;The plane signalled a "general emergency" code, squawk 7700, before switching to squawk 7500, a code reporting "unlawful interference", or hijacking.&rdquo;</p>
+      <p class="kw-ctx-cn">飞机发出了“一般紧急情况”代码7700，随后切换到7500代码，该代码报告“非法干扰”或劫机。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The Indian government has praised captain Smit Machchhar for his \"immense courage\" during the attack", "start_ms": 0, "end_ms": 6960, "paragraph_index": 0}, {"index": 1, "text": "The co-pilot who attempted to take control of a Flydubai plane travelling to Israel attacked the pilot with a crash axe, the United Arab Emirates prosecutor general has said.", "start_ms": 6960, "end_ms": 18864, "paragraph_index": 1}, {"index": 2, "text": "The flight from Dubai to Tel Aviv carrying more than 170 people plunged 17,000ft (5,200m) two and a half hours into its journey, before passengers managed to overpower the attacker and successfully take control of the plane.", "start_ms": 18864, "end_ms": 37104, "paragraph_index": 2}, {"index": 3, "text": "Capt Smit Machchhar said he was lying on the floor injured when he realised the plane was sinking and he had to act, explaining: \"I told myself to go for one last push to open the door from inside\", which allowed the passengers in.", "start_ms": 37104, "end_ms": 52344, "paragraph_index": 3}, {"index": 4, "text": "Two reserve pilots then landed the plane safely in Saudi Arabia.", "start_ms": 52344, "end_ms": 57672, "paragraph_index": 4}, {"index": 5, "text": "A crash axe is usually kept \u00e2\u0080\u008bin the cockpit in case of emergencies.", "start_ms": 57672, "end_ms": 63168, "paragraph_index": 5}, {"index": 6, "text": "The weapon used has been a key question for investigators, given the stringent security on such a sensitive route.", "start_ms": 63168, "end_ms": 71184, "paragraph_index": 6}, {"index": 7, "text": "Early reports from passengers on board had suggested it might have been a knife.", "start_ms": 71184, "end_ms": 76848, "paragraph_index": 6}, {"index": 8, "text": "The UAE attorney general told state media that investigations were ongoing to determine the full circumstances and motives of the incident.", "start_ms": 76848, "end_ms": 86448, "paragraph_index": 7}, {"index": 9, "text": "The co-pilot who launched the attack was an Omani national, according to Israeli Prime Minister Benjamin Netanyahu.", "start_ms": 86448, "end_ms": 94632, "paragraph_index": 8}, {"index": 10, "text": "Multiple media outlets including Reuters, CNN and The New York Times have named him as Hamam al-Hammami.", "start_ms": 94632, "end_ms": 102360, "paragraph_index": 9}, {"index": 11, "text": "There has been no official confirmation of this.", "start_ms": 102360, "end_ms": 106080, "paragraph_index": 9}, {"index": 12, "text": "While working at another airline, Oman Air, US media reported that Al-Hammami was removed from flight training because of concerns over his radical views, and was given another role at Oman's national airline.", "start_ms": 106080, "end_ms": 120552, "paragraph_index": 10}, {"index": 13, "text": "He completed a three-year distance-learning course at Buckinghamshire New University in the UK and graduated with a degree in aviation management in 2023, the university said.", "start_ms": 120552, "end_ms": 132984, "paragraph_index": 11}, {"index": 14, "text": "It added he did not take any pilot training at the school.", "start_ms": 132984, "end_ms": 137496, "paragraph_index": 11}, {"index": 15, "text": "Speaking to Fox News, Netanyahu said that after the attacker was subdued on the flight, he called out to the crew \"Kill me, kill me!\"", "start_ms": 137496, "end_ms": 146832, "paragraph_index": 12}, {"index": 16, "text": "The Israeli prime minister added: \"So, it's clear that he was suicidal\u00e2\u0080\u00a6 It looks very likely that he was going to down the plane.\"", "start_ms": 146832, "end_ms": 155784, "paragraph_index": 13}, {"index": 17, "text": "He also said the attacker \"underwent Islamist radical indoctrination\".", "start_ms": 155784, "end_ms": 161328, "paragraph_index": 14}, {"index": 18, "text": "The UAE's attorney general, Hamad Saif Al Shamsi, said investigations into the incident revealed that the co-pilot attempted to carry out a \"terrorist act\", according to the country's state news agency.", "start_ms": 161328, "end_ms": 175320, "paragraph_index": 15}, {"index": 19, "text": "He also said investigations were under way to establish the circumstances, motives and any links related to the incident.", "start_ms": 175320, "end_ms": 184224, "paragraph_index": 16}, {"index": 20, "text": "Machchhar, who was stabbed in the attack, was taken to a nearby hospital before being airlifted to Abu Dhabi, where he is reported to be in a stable condition.", "start_ms": 184224, "end_ms": 195144, "paragraph_index": 17}, {"index": 21, "text": "The pilot, who is from India, was in \"good health and recovering well\", the Indian embassy in the UAE said on Thursday.", "start_ms": 195144, "end_ms": 203976, "paragraph_index": 18}, {"index": 22, "text": "\"I am confident that the recovery will be there and I will become fit and healthy again,\" Machchhar said.", "start_ms": 203976, "end_ms": 211104, "paragraph_index": 19}, {"index": 23, "text": "About two and half hours after the plane took off from Dubai International Airport it begun to plunge sharply.", "start_ms": 211104, "end_ms": 218880, "paragraph_index": 20}, {"index": 24, "text": "The plane signalled a \"general emergency\" code, squawk 7700, before switching to squawk 7500, a code reporting \"unlawful interference\", or hijacking.", "start_ms": 218880, "end_ms": 231408, "paragraph_index": 21}, {"index": 25, "text": "In an interview with the BBC, one passenger described the moment he realised that something was wrong.", "start_ms": 231408, "end_ms": 238752, "paragraph_index": 22}, {"index": 26, "text": "Almog Itali said: \"Suddenly the aeroplane started to, like a rollercoaster, to drop down [with] a massive G-force.", "start_ms": 238752, "end_ms": 247824, "paragraph_index": 23}, {"index": 27, "text": "It was falling down for 20 or 30 seconds, rapidly, and then balanced, and then started once again to fall down.\"", "start_ms": 247824, "end_ms": 256416, "paragraph_index": 23}, {"index": 28, "text": "People then began to rush to the cockpit, he said.", "start_ms": 256416, "end_ms": 260592, "paragraph_index": 24}, {"index": 29, "text": "Israeli President Isaac Herzog said on Thursday that the alarm was raised onboard by an Israeli woman, Tali Manes, who heard a commotion coming from the cockpit.", "start_ms": 260592, "end_ms": 272064, "paragraph_index": 25}, {"index": 30, "text": "Her husband, Zvika, along with three other men - Yaniv Hayun, Dr Shota Musayev and Asaf Rajuan - entered the cockpit after Capt Machchhar managed to open the door despite his injuries.", "start_ms": 272064, "end_ms": 285504, "paragraph_index": 26}, {"index": 31, "text": "Hayun said, in a video released by the prime minister's office, that the attacker was \"trying to destroy the instruments in order to disable the plane\".", "start_ms": 285504, "end_ms": 295560, "paragraph_index": 27}, {"index": 32, "text": "Hayun then described putting the attacker in a chokehold and pulling him outside the cockpit before other passengers helped to pin him down.", "start_ms": 295560, "end_ms": 304632, "paragraph_index": 28}, {"index": 33, "text": "He added that he \"pulled the controls\" of the plane.", "start_ms": 304632, "end_ms": 308496, "paragraph_index": 29}, {"index": 34, "text": "\"The plane started to level out, a bit more, and then [another] pilot told me he was taking control from there,\" he said.", "start_ms": 308496, "end_ms": 317184, "paragraph_index": 29}, {"index": 35, "text": "In an interview with CNN on Wednesday evening, Netanyahu said the stabbed pilot, passengers and second crew had \"managed to prevent a 9/11 disaster\".", "start_ms": 317184, "end_ms": 328536, "paragraph_index": 30}, {"index": 36, "text": "This video can not be played", "start_ms": 328536, "end_ms": 331536, "paragraph_index": 31}, {"index": 37, "text": "Watch: Flydubai pilot speaks with Indian PM", "start_ms": 331536, "end_ms": 336168, "paragraph_index": 32}], "total_duration_ms": 336168};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "he": "他", "was": "是", "in": "在", "said": "说", "that": "那个", "plane": "飞机", "from": "来自", "of": "的", "with": "与", "on": "在", "pilot": "飞行员", "then": "然后", "who": "谁", "passengers": "乘客", "attacker": "袭击者", "it": "它", "down": "下来", "has": "有", "for": "为了", "general": "总", "before": "之前", "an": "一个", "israeli": "以色列的", "at": "在", "indian": "印度的", "his": "他的", "attack": "袭击", "take": "采取", "control": "控制", "flight": "航班", "two": "两个", "managed": "管理", "had": "有", "told": "告诉", "is": "是", "been": "已经", "media": "媒体", "investigations": "调查", "incident": "事件", "prime": "首相", "netanyahu": "内塔尼亚胡", "him": "他", "there": "那里", "another": "另一个", "added": "补充", "after": "之后", "out": "出来", "me": "我", "be": "是", "started": "开始", "attempted": "试图", "crash": "坠毁", "dubai": "迪拜", "more": "更多", "people": "人们", "half": "一半", "hours": "小时", "into": "进入", "realised": "意识到", "act": "行为", "one": "一个", "open": "开放", "door": "门", "given": "给定", "have": "有", "uae": "阿联酋", "attorney": "检察官", "state": "国家", "were": "是", "circumstances": "情况", "motives": "动机", "national": "国家", "according": "根据", "minister": "部长", "new": "新的", "this": "这个", "airline": "航空公司", "reported": "据报道", "training": "培训", "radical": "激进的", "university": "大学", "not": "不", "any": "任何", "news": "新闻", "crew": "船员", "kill": "杀死", "also": "也", "stabbed": "被刺伤", "thursday": "星期四", "will": "将", "again": "再次", "code": "准则", "or": "或者", "interview": "采访", "described": "描述", "by": "被", "other": "其他", "video": "视频", "government": "政府", "praised": "赞扬", "captain": "船长", "immense": "巨大的", "courage": "勇气", "during": "在期间", "travelling": "旅行", "israel": "以色列", "attacked": "袭击", "united": "联合", "arab": "阿拉伯", "emirates": "酋长国", "prosecutor": "检察官", "carrying": "携带", "than": "比", "its": "它的", "journey": "旅程", "successfully": "成功地", "lying": "撒谎", "floor": "楼层", "injured": "受伤", "when": "当", "explaining": "解释", "myself": "我自己", "go": "去", "last": "最后", "push": "推动", "inside": "内部", "which": "哪个", "allowed": "允许", "reserve": "保护区", "pilots": "飞行员们", "landed": "降落", "safely": "安全地", "saudi": "沙特", "arabia": "阿拉伯", "usually": "通常", "kept": "保留", "case": "案例", "weapon": "武器", "used": "使用", "key": "关键", "question": "问题", "investigators": "调查人员", "security": "安全", "such": "如此", "sensitive": "敏感", "route": "航线", "early": "早期的", "reports": "报道", "board": "董事会", "suggested": "建议", "might": "可能", "knife": "刀", "ongoing": "正在进行的", "determine": "确定", "full": "完整", "launched": "发起", "omani": "阿曼的", "benjamin": "本雅明", "multiple": "多条", "outlets": "出口", "including": "包括", "reuters": "路透社", "york": "约克", "times": "次", "named": "名为", "as": "作为", "no": "没有", "official": "官方", "while": "而", "working": "工作", "oman": "阿曼", "air": "气氛", "us": "我们", "removed": "移除", "because": "因为", "concerns": "担忧", "over": "超过", "views": "观点", "role": "角色", "oman's": "阿曼的", "completed": "完成", "three-year": "三年的", "course": "课程", "buckinghamshire": "白金汉郡", "uk": "英国", "degree": "学位", "aviation": "航空", "management": "管理", "did": "做了", "school": "学校", "speaking": "发言", "fox": "福克斯", "called": "称为", "so": "所以", "it's": "它是", "clear": "明确", "looks": "看起来", "very": "非常", "likely": "可能", "going": "将要", "underwent": "接受", "islamist": "伊斯兰主义者", "uae's": "阿联酋的", "al": "阿尔", "revealed": "揭露", "carry": "携带", "terrorist": "恐怖分子", "country's": "国家的", "agency": "机构", "under": "在...之下", "way": "方式", "establish": "确定", "links": "联系", "related": "相关的", "taken": "采取", "nearby": "附近", "hospital": "医院", "being": "正在", "abu": "阿布", "dhabi": "扎比", "where": "那里", "stable": "稳定的", "condition": "状况", "india": "印度", "good": "良好", "health": "健康", "recovering": "康复中的", "well": "好", "embassy": "大使馆", "am": "是", "confident": "自信", "recovery": "恢复", "become": "成为", "fit": "适合", "healthy": "健康的", "about": "关于", "took": "担任", "off": "离开", "international": "国际", "airport": "机场", "begun": "开始", "signalled": "发出信号", "emergency": "紧急", "switching": "切换", "reporting": "报道", "unlawful": "非法的", "interference": "干涉", "bbc": "英国广播公司", "passenger": "乘客", "moment": "时刻", "something": "某事", "wrong": "错误的", "suddenly": "突然", "like": "像", "drop": "放下", "massive": "大规模的", "falling": "下降", "seconds": "秒", "rapidly": "迅速地", "balanced": "平衡的", "once": "一旦", "fall": "属于", "began": "开始", "president": "总统", "isaac": "艾萨克", "herzog": "赫尔佐格", "alarm": "警报", "raised": "提出的", "onboard": "在船上", "woman": "女性", "heard": "听到", "coming": "即将到来的", "her": "她的", "husband": "丈夫", "along": "一起", "three": "三个", "men": "男人们", "dr": "博士", "entered": "进入", "despite": "尽管", "injuries": "受伤", "released": "释放", "minister's": "部长的", "office": "办公室", "trying": "尝试", "destroy": "摧毁", "order": "命令", "putting": "放置", "pulling": "撤离", "outside": "外部", "helped": "帮助", "pin": "别针", "pulled": "撤回", "controls": "控制措施", "level": "水平", "bit": "一点", "taking": "采取", "wednesday": "星期三", "evening": "晚上", "second": "第二", "prevent": "防止", "disaster": "灾难", "can": "可以", "played": "比赛", "watch": "观看", "speaks": "发言", "pm": "首相", "machchhar": "蚊子", "cockpit": "驾驶舱", "co-pilot": "副驾驶", "hayun": "哈云", "smit": "史密斯", "flydubai": "迪拜航空", "axe": "斧头", "capt": "机长", "cnn": "CNN", "al-hammami": "哈马米", "squawk": "应答机代码", "tel": "特拉维夫", "aviv": "阿维夫", "plunged": "骤降", "sinking": "下沉", "emergencies": "紧急情况", "hamam": "哈马姆", "confirmation": "确认", "distance-learning": "远程学习", "graduated": "毕业", "subdued": "制服", "hamad": "哈马德", "saif": "赛义夫", "shamsi": "沙姆西", "airlifted": "空运", "sharply": "急剧", "hijacking": "劫机", "almog": "阿尔莫格", "itali": "意大利", "aeroplane": "飞机", "rollercoaster": "过山车", "g-force": "重力加速度", "rush": "冲", "tali": "塔利", "manes": "马内斯", "zvika": "兹维卡", "yaniv": "亚尼夫", "shota": "肖塔", "musayev": "穆萨耶夫", "asaf": "阿萨夫", "rajuan": "拉朱安", "instruments": "仪表", "disable": "使失效"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
