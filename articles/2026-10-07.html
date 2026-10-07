@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-07</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-07</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/226c/live/7221efd0-c1c9-11f1-b8a9-47f21beea0a3.jpg" alt="US death row inmate Christa Pike awake and speaking after failed execution, lawyers say" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US death row inmate Christa Pike awake and speaking after failed execution, lawyers say</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c8kgezxn54qko?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-07.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: What we know about Christa Pikeâs "<span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="前所未有的" data-def-en="Never done or known before.">unprecedented</span>" recovery after failed execution</span></p>
+        <p class="cn">观看：了解克里斯塔·派克（Christa Pike）在死刑执行失败后“史无前例”的恢复情况</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">US death row <span class="keyword" data-word="inmate" data-phonetic="/ˈɪnmeɪt/" data-pos="n." data-def="囚犯" data-def-en="A person confined to an institution such as a prison.">inmate</span> Christa Pike is "conscious and speaking" after surviving a failed execution attempt last week, her lawyers say.</span></p>
+        <p class="cn">美国死囚克里斯塔·派克（Christa Pike）的律师表示，她在上周死刑执行失败后幸存下来，目前“意识清醒并能说话”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Pike, 50, continues to receive critical medical care while handcuffed in hospital, her attorneys said in a statement on Tuesday.</span></p>
+        <p class="cn">律师在周二的一份声明中表示，50岁的派克（Pike）仍在医院接受重症监护，同时戴着手铐。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Pike, who was sentenced to death after murdering Colleen Slemmer in 1995, survived two failed <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injections last Wednesday in Tennessee.</span> <span class="sentence" data-sentence-index="5">She was taken to hospital, where she remained unconscious for days as medical staff cleared her body of the injected chemical.</span></p>
+        <p class="cn">派克（Pike）因1995年谋杀科琳·斯莱默（Colleen Slemmer）被判处死刑，上周三在田纳西州（Tennessee）两次注射死刑失败后幸存。她被送往医院，在那里昏迷了数天，医疗人员清除她体内的注射化学物质。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Experts and her legal team say her apparent recovery is <span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="前所未有的" data-def-en="Never done or known before.">unprecedented</span>.</span> <span class="sentence" data-sentence-index="7">She is believed to be the only person to survive a <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection.</span></p>
+        <p class="cn">专家和她的法律团队表示，她的明显恢复是史无前例的。她被认为是唯一一个在注射死刑后幸存的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Her lawyers called her progress "medically <span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="前所未有的" data-def-en="Never done or known before.">unprecedented</span>", and while her <span class="keyword" data-word="prognosis" data-phonetic="/prɒɡˈnəʊsɪs/" data-pos="n." data-def="预后" data-def-en="A forecast of the likely course of a disease or ailment.">prognosis</span> remains unclear, "at a minimum, we expect a long recovery".</span></p>
+        <p class="cn">她的律师称她的进展“在医学上史无前例”，虽然她的预后仍不清楚，但“至少，我们预计需要长期恢复”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">Deborah Denno, a criminologist and professor at Fordham Law School, said she was "absolutely <span class="keyword" data-word="astonished" data-phonetic="/əˈstɒnɪʃt/" data-pos="adj." data-def="震惊的" data-def-en="Greatly surprised or impressed; amazed.">astonished</span>" that Pike is conscious and speaking.</span></p>
+        <p class="cn">福德汉姆法学院（Fordham Law School）的犯罪学家兼教授黛博拉·丹诺（Deborah Denno）表示，她对派克（Pike）意识清醒并能说话感到“绝对震惊”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">There were seven other cases where prisoners survived slated executions, but in those cases, executioners were not able to inject anything into the inmates' veins, Denno told the BBC.</span></p>
+        <p class="cn">丹诺（Denno）告诉BBC，还有七起囚犯在预定执行死刑后幸存的案例，但在那些案例中，执行者无法将任何东西注入囚犯的静脉。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="11">Pike "is the only person for whom some kind of <span class="keyword" data-word="toxin" data-phonetic="/ˈtɒksɪn/" data-pos="n." data-def="毒素" data-def-en="A poison produced by a living organism.">toxin</span> has been injected," she said.</span></p>
+        <p class="cn">她说，派克（Pike）“是唯一一个被注射了某种毒素的人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="12">"They did everything they were supposed to do as part of the execution process, and it simply didn't work," Denno said.</span> <span class="sentence" data-sentence-index="13">"This has never happened before."</span></p>
+        <p class="cn">丹诺（Denno）说：“他们做了执行死刑过程中应该做的一切，但就是没有奏效。这从未发生过。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">What happened in the failed execution of Christa Pike - and what next?</span></p>
+        <p class="cn">克里斯塔·派克（Christa Pike）死刑执行失败发生了什么——接下来会怎样？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">Authorities have not yet said whether they will try again to execute Pike.</span> <span class="sentence" data-sentence-index="16">They have also not offered an explanation for what went wrong after injecting her with the chemical pentobarbital.</span></p>
+        <p class="cn">当局尚未表示是否会再次尝试执行派克（Pike）的死刑。他们也没有解释在给她注射化学物质戊巴比妥（pentobarbital）后出了什么问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">Tennessee Governor Bill Lee suspended all executions for the rest of the year - and the head of prisons in the state said over the weekend that he plans to resign.</span></p>
+        <p class="cn">田纳西州州长比尔·李（Bill Lee）暂停了今年剩余时间的所有死刑执行——该州监狱负责人周末表示他计划辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">Pike was 18 when she and her then-boyfriend, Tadaryl Shipp, beat, tortured and killed 19-year-old Slemmer, whom they had met at a job training camp for troubled teens.</span></p>
+        <p class="cn">派克（Pike）18岁时，她和当时的男友塔达里尔·希普（Tadaryl Shipp）殴打、折磨并杀害了19岁的斯莱默（Slemmer），他们是在一个为问题青少年举办的工作培训营认识的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">Pike's attorneys are scheduled to appear in court in Nashville on Wednesday.</span> <span class="sentence" data-sentence-index="20">They also plan to hold a news conference outside the court.</span></p>
+        <p class="cn">派克（Pike）的律师定于周三在纳什维尔（Nashville）出庭。他们还计划在法院外举行新闻发布会。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="21">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="22">How widely used is the death penalty in the US?</span></p>
+        <p class="cn">美国死刑使用有多广泛？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="23">Dr Joel Zivot, an anaesthesiologist advising Pike's defence team, said on Tuesday that the likelihood of recovering from <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection is low.</span></p>
+        <p class="cn">为派克（Pike）辩护团队提供咨询的麻醉师乔尔·齐沃特博士（Dr Joel Zivot）周二表示，从注射死刑中恢复的可能性很低。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="24">"Most people who get <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection die from it," he told the BBC.</span> <span class="sentence" data-sentence-index="25">"In fact, pretty well everyone, except Christa.</span> <span class="sentence" data-sentence-index="26">So, the fact that she survived it ...</span> <span class="sentence" data-sentence-index="27">was unusual."</span></p>
+        <p class="cn">他告诉BBC：“大多数接受注射死刑的人都会死于其中。事实上，几乎所有人都是这样，除了克里斯塔（Christa）。所以，她幸存下来……是不寻常的。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="28">But there remains a lot of uncertainty and many unknowns, he said, including how much of the pentobarbital got into her system, what her blood levels were after the injection and what her recovery will look like.</span></p>
+        <p class="cn">但他表示，仍有很多不确定性和未知因素，包括有多少戊巴比妥（pentobarbital）进入她的系统、注射后她的血液水平如何，以及她的恢复情况会怎样。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="29">"I would not, in any way, say at this point that all the big risks are behind her," he noted.</span></p>
+        <p class="cn">他指出：“在这一点上，我不会说所有重大风险都已过去。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="30">Zivot had previously said the two doses of pentobarbital she received last week would have been enough that, had it entered her bloodstream in normal circulation, "she would have surely died".</span></p>
+        <p class="cn">齐沃特（Zivot）此前曾表示，她上周接受的两剂戊巴比妥（pentobarbital）如果进入她的血液循环，就足以“让她必死无疑”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="31">Instead, Zivot said a possible explanation is that instead of entering Pike's bloodstream, the pentobarbital was more likely to have spread across the tissue under her skin.</span></p>
+        <p class="cn">相反，齐沃特（Zivot）说，一个可能的解释是，戊巴比妥（pentobarbital）没有进入派克（Pike）的血液，而是更可能扩散到她皮肤下的组织。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="32">Zivot said last week he thought her ending up with a brain injury was "very possible", due to the delays in <span class="keyword" data-word="resuscitating" data-phonetic="/rɪˈsʌsɪteɪtɪŋ/" data-pos="v." data-def="使复苏" data-def-en="Reviving someone from unconsciousness or apparent death.">resuscitating</span> her.</span> <span class="sentence" data-sentence-index="33">He also believed it would take about a week to truly understand her condition and do a neurological exam.</span> <span class="sentence" data-sentence-index="34">It's now been six days since the failed attempt to execute her.</span></p>
+        <p class="cn">齐沃特（Zivot）上周表示，由于复苏延迟，她最终出现脑损伤是“非常可能的”。他还认为需要大约一周时间才能真正了解她的状况并进行神经检查。现在距离执行失败已经六天了。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="35">Pike's lawyers previously warned that her medical history and anatomy - including thrombocytosis (a blood-clotting condition) and small veins - meant there was a risk she would experience "unnecessary" pain and suffering during a <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection.</span></p>
+        <p class="cn">派克（Pike）的律师此前警告说，她的病史和解剖结构——包括血小板增多症（一种凝血状况）和细小静脉——意味着她在注射死刑过程中可能经历“不必要的”痛苦和折磨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="36">They said on Tuesday that she has endured "severe damage" to her arms.</span></p>
+        <p class="cn">他们周二表示，她的手臂遭受了“严重损伤”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="37">In 2022, more than a third of executions across the US were <span class="keyword" data-word="botched" data-phonetic="/bɒtʃt/" data-pos="adj." data-def="搞砸的" data-def-en="Carried out badly or carelessly.">botched</span> or highly problematic, according to the Death Penalty Information Center, which tracks information about such cases.</span></p>
+        <p class="cn">根据跟踪此类案件信息的死刑信息中心（Death Penalty Information Center），2022年，美国超过三分之一的死刑执行是拙劣的或高度有问题的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="38">For <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injections, such incidents have typically occurred due to difficulty obtaining reliable IV access to the veins, though the underlying reason differs from person to person.</span></p>
+        <p class="cn">对于注射死刑，此类事件通常是由于难以获得可靠的静脉通路，尽管根本原因因人而异。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="39">In cases the centre has documented, all failures happened before the <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span>  drugs could be administered.</span> <span class="sentence" data-sentence-index="40">The last failed <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection that was tracked happened earlier this year - also in Tennessee.</span></p>
+        <p class="cn">在该中心记录的案例中，所有失败都发生在致命药物能够施用之前。最后一次跟踪到的失败注射死刑发生在今年早些时候——也在田纳西州（Tennessee）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="41">The execution of Tony Carruthers, who was convicted of kidnapping and murdering three people in 1994, was postponed in May after staff were unable to find a vein for a <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="Sufficient to cause death.">lethal</span> injection.</span> <span class="sentence" data-sentence-index="42">He was granted a year's reprieve by the governor.</span></p>
+        <p class="cn">托尼·卡鲁瑟斯（Tony Carruthers）因1994年绑架和谋杀三人被定罪，他的死刑执行在5月被推迟，因为工作人员无法找到静脉进行注射。州长给予他一年的缓刑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="43">What happened in the failed execution of Christa Pike - and what next?</span></p>
+        <p class="cn">克里斯塔·派克（Christa Pike）死刑执行失败发生了什么——接下来会怎样？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="44">I interviewed Christa Pike 20 years ago - I can't stop thinking about her</span></p>
+        <p class="cn">20年前我采访过克里斯塔·派克（Christa Pike）——我无法停止想她</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="45">Tennessee prison chief to resign after Christa Pike's failed execution</span></p>
+        <p class="cn">田纳西州监狱负责人在克里斯塔·派克（Christa Pike）执行失败后辞职</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inmate</span>
+        <button class="kw-speak-btn" data-word="inmate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnmeɪt/ n.</span>
+      </div>
+      <p class="kw-def">囚犯</p>
+      <p class="kw-def-en">A person confined to an institution such as a prison.</p>
+      <p class="kw-ctx">&ldquo;US death row inmate Christa Pike is "conscious and speaking" after surviving a failed execution attempt last week, her lawyers say.&rdquo;</p>
+      <p class="kw-ctx-cn">美国死囚克里斯塔·派克上周在死刑执行失败后幸存，目前“有意识并能说话”，她的律师表示。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">lethal</span>
+        <button class="kw-speak-btn" data-word="lethal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈliːθl/ adj.</span>
+      </div>
+      <p class="kw-def">致命的</p>
+      <p class="kw-def-en">Sufficient to cause death.</p>
+      <p class="kw-ctx">&ldquo;Pike, who was sentenced to death after murdering Colleen Slemmer in 1995, survived two failed lethal injections last Wednesday in Tennessee.&rdquo;</p>
+      <p class="kw-ctx-cn">派克因1995年谋杀科琳·斯莱默而被判处死刑，上周三在田纳西州，她经历了两次失败的致命注射后幸存。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unprecedented</span>
+        <button class="kw-speak-btn" data-word="unprecedented" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈpresɪdentɪd/ adj.</span>
+      </div>
+      <p class="kw-def">前所未有的</p>
+      <p class="kw-def-en">Never done or known before.</p>
+      <p class="kw-ctx">&ldquo;Experts and her legal team say her apparent recovery is unprecedented.&rdquo;</p>
+      <p class="kw-ctx-cn">专家和她的法律团队表示，她明显的康复是前所未有的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">prognosis</span>
+        <button class="kw-speak-btn" data-word="prognosis" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prɒɡˈnəʊsɪs/ n.</span>
+      </div>
+      <p class="kw-def">预后</p>
+      <p class="kw-def-en">A forecast of the likely course of a disease or ailment.</p>
+      <p class="kw-ctx">&ldquo;Her lawyers called her progress "medically unprecedented", and while her prognosis remains unclear, "at a minimum, we expect a long recovery".&rdquo;</p>
+      <p class="kw-ctx-cn">她的律师称她的进展“在医学上前所未有”，虽然她的预后仍不清楚，“但至少，我们预计需要很长时间的康复”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">astonished</span>
+        <button class="kw-speak-btn" data-word="astonished" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈstɒnɪʃt/ adj.</span>
+      </div>
+      <p class="kw-def">震惊的</p>
+      <p class="kw-def-en">Greatly surprised or impressed; amazed.</p>
+      <p class="kw-ctx">&ldquo;Deborah Denno, a criminologist and professor at Fordham Law School, said she was "absolutely astonished" that Pike is conscious and speaking.&rdquo;</p>
+      <p class="kw-ctx-cn">福德汉姆法学院犯罪学教授黛博拉·丹诺表示，她对派克有意识并能说话感到“绝对震惊”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">toxin</span>
+        <button class="kw-speak-btn" data-word="toxin" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɒksɪn/ n.</span>
+      </div>
+      <p class="kw-def">毒素</p>
+      <p class="kw-def-en">A poison produced by a living organism.</p>
+      <p class="kw-ctx">&ldquo;Pike "is the only person for whom some kind of toxin has been injected," she said.&rdquo;</p>
+      <p class="kw-ctx-cn">她说，派克“是唯一被注射了某种毒素的人”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resuscitating</span>
+        <button class="kw-speak-btn" data-word="resuscitating" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈsʌsɪteɪtɪŋ/ v.</span>
+      </div>
+      <p class="kw-def">使复苏</p>
+      <p class="kw-def-en">Reviving someone from unconsciousness or apparent death.</p>
+      <p class="kw-ctx">&ldquo;Zivot said last week he thought her ending up with a brain injury was "very possible", due to the delays in resuscitating her.&rdquo;</p>
+      <p class="kw-ctx-cn">齐沃特上周表示，由于对她进行复苏的延迟，他认为她最终脑损伤是“非常可能的”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">botched</span>
+        <button class="kw-speak-btn" data-word="botched" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bɒtʃt/ adj.</span>
+      </div>
+      <p class="kw-def">搞砸的</p>
+      <p class="kw-def-en">Carried out badly or carelessly.</p>
+      <p class="kw-ctx">&ldquo;In 2022, more than a third of executions across the US were botched or highly problematic, according to the Death Penalty Information Center, which tracks information about such cases.&rdquo;</p>
+      <p class="kw-ctx-cn">根据追踪此类案件信息的死刑信息中心，2022年，美国超过三分之一的死刑执行被搞砸或存在严重问题。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: What we know about Christa Pike\u00e2\u0080\u0099s \"unprecedented\" recovery after failed execution", "start_ms": 3000, "end_ms": 10152, "paragraph_index": 1}, {"index": 2, "text": "US death row inmate Christa Pike is \"conscious and speaking\" after surviving a failed execution attempt last week, her lawyers say.", "start_ms": 10152, "end_ms": 19632, "paragraph_index": 2}, {"index": 3, "text": "Pike, 50, continues to receive critical medical care while handcuffed in hospital, her attorneys said in a statement on Tuesday.", "start_ms": 19632, "end_ms": 28848, "paragraph_index": 3}, {"index": 4, "text": "Pike, who was sentenced to death after murdering Colleen Slemmer in 1995, survived two failed lethal injections last Wednesday in Tennessee.", "start_ms": 28848, "end_ms": 39528, "paragraph_index": 4}, {"index": 5, "text": "She was taken to hospital, where she remained unconscious for days as medical staff cleared her body of the injected chemical.", "start_ms": 39528, "end_ms": 48024, "paragraph_index": 4}, {"index": 6, "text": "Experts and her legal team say her apparent recovery is unprecedented.", "start_ms": 48024, "end_ms": 53616, "paragraph_index": 5}, {"index": 7, "text": "She is believed to be the only person to survive a lethal injection.", "start_ms": 53616, "end_ms": 58776, "paragraph_index": 5}, {"index": 8, "text": "Her lawyers called her progress \"medically unprecedented\", and while her prognosis remains unclear, \"at a minimum, we expect a long recovery\".", "start_ms": 58776, "end_ms": 69000, "paragraph_index": 6}, {"index": 9, "text": "Deborah Denno, a criminologist and professor at Fordham Law School, said she was \"absolutely astonished\" that Pike is conscious and speaking.", "start_ms": 69000, "end_ms": 78864, "paragraph_index": 7}, {"index": 10, "text": "There were seven other cases where prisoners survived slated executions, but in those cases, executioners were not able to inject anything into the inmates' veins, Denno told the BBC.", "start_ms": 78864, "end_ms": 92376, "paragraph_index": 8}, {"index": 11, "text": "Pike \"is the only person for whom some kind of toxin has been injected,\" she said.", "start_ms": 92376, "end_ms": 98664, "paragraph_index": 9}, {"index": 12, "text": "\"They did everything they were supposed to do as part of the execution process, and it simply didn't work,\" Denno said.", "start_ms": 98664, "end_ms": 106944, "paragraph_index": 10}, {"index": 13, "text": "\"This has never happened before.\"", "start_ms": 106944, "end_ms": 109944, "paragraph_index": 10}, {"index": 14, "text": "What happened in the failed execution of Christa Pike - and what next?", "start_ms": 109944, "end_ms": 115008, "paragraph_index": 11}, {"index": 15, "text": "Authorities have not yet said whether they will try again to execute Pike.", "start_ms": 115008, "end_ms": 120432, "paragraph_index": 12}, {"index": 16, "text": "They have also not offered an explanation for what went wrong after injecting her with the chemical pentobarbital.", "start_ms": 120432, "end_ms": 128040, "paragraph_index": 12}, {"index": 17, "text": "Tennessee Governor Bill Lee suspended all executions for the rest of the year - and the head of prisons in the state said over the weekend that he plans to resign.", "start_ms": 128040, "end_ms": 138120, "paragraph_index": 13}, {"index": 18, "text": "Pike was 18 when she and her then-boyfriend, Tadaryl Shipp, beat, tortured and killed 19-year-old Slemmer, whom they had met at a job training camp for troubled teens.", "start_ms": 138120, "end_ms": 149784, "paragraph_index": 14}, {"index": 19, "text": "Pike's attorneys are scheduled to appear in court in Nashville on Wednesday.", "start_ms": 149784, "end_ms": 155160, "paragraph_index": 15}, {"index": 20, "text": "They also plan to hold a news conference outside the court.", "start_ms": 155160, "end_ms": 159648, "paragraph_index": 15}, {"index": 21, "text": "This video can not be played", "start_ms": 159648, "end_ms": 162648, "paragraph_index": 16}, {"index": 22, "text": "How widely used is the death penalty in the US?", "start_ms": 162648, "end_ms": 166800, "paragraph_index": 17}, {"index": 23, "text": "Dr Joel Zivot, an anaesthesiologist advising Pike's defence team, said on Tuesday that the likelihood of recovering from lethal injection is low.", "start_ms": 166800, "end_ms": 177624, "paragraph_index": 18}, {"index": 24, "text": "\"Most people who get lethal injection die from it,\" he told the BBC.", "start_ms": 177624, "end_ms": 183216, "paragraph_index": 19}, {"index": 25, "text": "\"In fact, pretty well everyone, except Christa.", "start_ms": 183216, "end_ms": 187584, "paragraph_index": 19}, {"index": 26, "text": "So, the fact that she survived it ...", "start_ms": 187584, "end_ms": 191064, "paragraph_index": 19}, {"index": 27, "text": "was unusual.\"", "start_ms": 191064, "end_ms": 193224, "paragraph_index": 19}, {"index": 28, "text": "But there remains a lot of uncertainty and many unknowns, he said, including how much of the pentobarbital got into her system, what her blood levels were after the injection and what her recovery will look like.", "start_ms": 193224, "end_ms": 206688, "paragraph_index": 20}, {"index": 29, "text": "\"I would not, in any way, say at this point that all the big risks are behind her,\" he noted.", "start_ms": 206688, "end_ms": 213360, "paragraph_index": 21}, {"index": 30, "text": "Zivot had previously said the two doses of pentobarbital she received last week would have been enough that, had it entered her bloodstream in normal circulation, \"she would have surely died\".", "start_ms": 213360, "end_ms": 225576, "paragraph_index": 22}, {"index": 31, "text": "Instead, Zivot said a possible explanation is that instead of entering Pike's bloodstream, the pentobarbital was more likely to have spread across the tissue under her skin.", "start_ms": 225576, "end_ms": 237288, "paragraph_index": 23}, {"index": 32, "text": "Zivot said last week he thought her ending up with a brain injury was \"very possible\", due to the delays in resuscitating her.", "start_ms": 237288, "end_ms": 245832, "paragraph_index": 24}, {"index": 33, "text": "He also believed it would take about a week to truly understand her condition and do a neurological exam.", "start_ms": 245832, "end_ms": 253128, "paragraph_index": 24}, {"index": 34, "text": "It's now been six days since the failed attempt to execute her.", "start_ms": 253128, "end_ms": 258048, "paragraph_index": 24}, {"index": 35, "text": "Pike's lawyers previously warned that her medical history and anatomy - including thrombocytosis (a blood-clotting condition) and small veins - meant there was a risk she would experience \"unnecessary\" pain and suffering during a lethal injection.", "start_ms": 258048, "end_ms": 274224, "paragraph_index": 25}, {"index": 36, "text": "They said on Tuesday that she has endured \"severe damage\" to her arms.", "start_ms": 274224, "end_ms": 279672, "paragraph_index": 26}, {"index": 37, "text": "In 2022, more than a third of executions across the US were botched or highly problematic, according to the Death Penalty Information Center, which tracks information about such cases.", "start_ms": 279672, "end_ms": 293160, "paragraph_index": 27}, {"index": 38, "text": "For lethal injections, such incidents have typically occurred due to difficulty obtaining reliable IV access to the veins, though the underlying reason differs from person to person.", "start_ms": 293160, "end_ms": 305592, "paragraph_index": 28}, {"index": 39, "text": "In cases the centre has documented, all failures happened before the lethal  drugs could be administered.", "start_ms": 305592, "end_ms": 313032, "paragraph_index": 29}, {"index": 40, "text": "The last failed lethal injection that was tracked happened earlier this year - also in Tennessee.", "start_ms": 313032, "end_ms": 319632, "paragraph_index": 29}, {"index": 41, "text": "The execution of Tony Carruthers, who was convicted of kidnapping and murdering three people in 1994, was postponed in May after staff were unable to find a vein for a lethal injection.", "start_ms": 319632, "end_ms": 333000, "paragraph_index": 30}, {"index": 42, "text": "He was granted a year's reprieve by the governor.", "start_ms": 333000, "end_ms": 336816, "paragraph_index": 30}, {"index": 43, "text": "What happened in the failed execution of Christa Pike - and what next?", "start_ms": 336816, "end_ms": 341880, "paragraph_index": 31}, {"index": 44, "text": "I interviewed Christa Pike 20 years ago - I can't stop thinking about her", "start_ms": 341880, "end_ms": 347400, "paragraph_index": 32}, {"index": 45, "text": "Tennessee prison chief to resign after Christa Pike's failed execution", "start_ms": 347400, "end_ms": 353016, "paragraph_index": 33}], "total_duration_ms": 353016};
+  const WORD_GLOSS = {"the": "这个", "her": "她的", "to": "到", "in": "在", "and": "和", "of": "的", "said": "说", "was": "是", "she": "她", "that": "那个", "what": "什么", "failed": "失败", "is": "是", "after": "之后", "for": "为了", "they": "它们", "he": "他", "not": "不", "were": "是", "have": "有", "this": "这个", "last": "最后", "it": "它", "happened": "发生", "would": "将", "be": "是", "about": "关于", "recovery": "恢复", "death": "死亡", "week": "周", "on": "在", "person": "个人", "at": "在", "cases": "情况", "has": "有", "also": "也", "us": "我们", "lawyers": "律师", "say": "说", "medical": "医疗", "tuesday": "星期二", "who": "谁", "survived": "幸存", "there": "那里", "been": "已经", "all": "所有", "had": "有", "from": "来自", "video": "视频", "can": "可以", "played": "比赛", "we": "我们", "conscious": "有意识的", "speaking": "发言", "attempt": "企图", "while": "而", "hospital": "医院", "murdering": "谋杀", "two": "两个", "wednesday": "星期三", "where": "那里", "days": "天", "as": "作为", "staff": "员工", "chemical": "化学物质", "team": "团队", "believed": "据信", "only": "只有", "remains": "仍然", "but": "但是", "into": "进入", "told": "告诉", "bbc": "英国广播公司", "whom": "谁", "do": "做", "before": "之前", "next": "下一个", "will": "将", "an": "一个", "explanation": "解释", "with": "与", "governor": "州长", "year": "年", "resign": "辞职", "are": "是", "court": "法庭", "how": "如何", "penalty": "点球", "people": "人们", "fact": "事实", "including": "包括", "previously": "此前", "instead": "反而", "possible": "可能的", "more": "更多", "across": "跨越", "due": "应得", "condition": "状况", "information": "信息", "such": "如此", "watch": "观看", "know": "知道", "row": "争吵", "surviving": "幸存", "continues": "继续", "receive": "收到", "critical": "关键", "care": "照顾", "handcuffed": "被铐上手铐", "statement": "声明", "sentenced": "判刑", "taken": "采取", "remained": "仍然是", "unconscious": "失去知觉", "cleared": "澄清", "body": "机构", "experts": "专家", "legal": "法律的", "apparent": "明显的", "survive": "生存", "called": "称为", "progress": "进展", "unclear": "不清楚的", "minimum": "最低的", "expect": "期望", "long": "长久", "deborah": "黛博拉", "professor": "教授", "law": "法律", "school": "学校", "absolutely": "绝对", "seven": "七", "other": "其他", "prisoners": "囚犯", "those": "那些", "able": "能够", "anything": "任何事", "inmates": "囚犯", "some": "一些", "kind": "种类", "did": "做了", "everything": "一切", "supposed": "应该", "part": "部分", "process": "过程", "simply": "仅仅", "didn't": "没有", "work": "工作", "never": "从未", "authorities": "当局", "yet": "尚未", "whether": "是否", "try": "审判", "again": "再次", "offered": "提供", "went": "去", "wrong": "错误的", "bill": "法案", "lee": "李", "suspended": "暂停", "rest": "其余", "head": "前往", "prisons": "监狱", "state": "国家", "over": "超过", "weekend": "周末", "plans": "计划", "when": "当", "beat": "击败", "killed": "杀死", "year-old": "岁的", "met": "伦敦警察厅", "job": "工作", "training": "培训", "camp": "阵营", "teens": "青少年", "scheduled": "预定", "appear": "出现", "plan": "计划", "hold": "追究", "news": "新闻", "conference": "会议", "outside": "外部", "widely": "广泛地", "used": "使用", "dr": "博士", "advising": "建议", "defence": "国防", "likelihood": "可能性", "recovering": "康复中的", "low": "低的", "most": "最", "get": "得到", "die": "死亡", "pretty": "相当", "well": "好", "everyone": "每个人", "except": "除了", "so": "所以", "unusual": "不寻常的", "lot": "很多", "uncertainty": "不确定性", "many": "许多", "unknowns": "未知因素", "much": "许多", "got": "获得", "system": "制度", "blood": "血", "levels": "水平", "look": "看起来", "like": "像", "any": "任何", "way": "方式", "point": "点", "big": "大的", "risks": "风险", "behind": "在...后面", "noted": "指出", "received": "受到", "enough": "足够", "entered": "进入", "normal": "正常", "surely": "肯定", "died": "死亡", "entering": "进入", "likely": "可能", "spread": "传播", "under": "在...之下", "skin": "皮肤", "thought": "认为", "ending": "结束", "up": "向上", "brain": "大脑", "injury": "受伤", "very": "非常", "delays": "延误", "take": "采取", "truly": "真正地", "understand": "理解", "it's": "它是", "now": "现在", "six": "六", "since": "自从", "warned": "警告", "history": "历史", "small": "小的", "meant": "意味着", "risk": "风险", "experience": "经历", "unnecessary": "不必要", "pain": "痛苦", "suffering": "苦难", "during": "在期间", "endured": "忍受", "severe": "严重的", "damage": "损坏", "arms": "武器", "than": "比", "third": "第三", "or": "或者", "highly": "高度", "problematic": "有问题的", "according": "根据", "center": "中心", "which": "哪个", "tracks": "轨道", "incidents": "事件", "typically": "通常", "occurred": "发生", "difficulty": "困难", "obtaining": "获得", "reliable": "可靠的", "access": "进入", "though": "尽管", "underlying": "潜在的", "reason": "原因", "differs": "不同", "centre": "中心", "failures": "失败", "drugs": "毒品", "could": "可能", "tracked": "追踪", "earlier": "较早", "tony": "托尼", "convicted": "被定罪", "three": "三个", "may": "可能", "unable": "无法", "find": "找到", "vein": "静脉", "granted": "授予", "year's": "今年的", "by": "被", "years": "多年", "ago": "以前", "can't": "不能", "stop": "停止", "thinking": "思考", "prison": "监狱", "chief": "首席", "pike": "派克", "christa": "克里斯塔", "execution": "处决", "injection": "注射", "pike's": "派克的", "tennessee": "田纳西州", "pentobarbital": "戊巴比妥", "zivot": "齐沃特", "denno": "丹诺", "executions": "处决", "veins": "静脉", "attorneys": "律师", "slemmer": "斯莱默", "injections": "注射", "injected": "注射", "execute": "处决", "bloodstream": "血液", "colleen": "科琳", "medically": "医学上", "criminologist": "犯罪学家", "fordham": "福德汉姆", "slated": "预定", "executioners": "行刑者", "inject": "注射", "injecting": "注射", "then-boyfriend": "当时的男友", "tadaryl": "塔达里尔", "shipp": "希普", "tortured": "折磨", "troubled": "问题重重", "nashville": "纳什维尔", "joel": "乔尔", "anaesthesiologist": "麻醉师", "doses": "剂量", "circulation": "循环", "tissue": "组织", "neurological": "神经", "exam": "检查", "anatomy": "解剖", "thrombocytosis": "血小板增多症", "blood-clotting": "凝血", "iv": "静脉注射", "documented": "记录", "administered": "施用", "carruthers": "卡鲁瑟斯", "kidnapping": "绑架", "postponed": "推迟", "reprieve": "缓刑", "interviewed": "采访"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
