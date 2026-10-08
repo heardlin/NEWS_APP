@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-08</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-08</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1dd4/live/a3575730-c26d-11f1-bc2e-018d645d8d21.jpg" alt="Christa Pike 'angry and confused' after failed execution, lawyers say" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Christa Pike 'angry and confused' after failed execution, lawyers say</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c617kdle01k9o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-08.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: What we know about Christa Pikeâs "<span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="前所未有的" data-def-en="never having happened or existed before">unprecedented</span>" recovery after failed execution</span></p>
+        <p class="cn">观看：关于克里斯塔·派克（Christa Pike）在处决失败后“史无前例”的恢复情况，我们所知道的</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">A lawyer for convicted murderer Christa Pike says that she woke up in hospital "angry and confused" after she survived a <span class="keyword" data-word="botched" data-phonetic="/bɒtʃt/" data-pos="adj." data-def="搞砸的，失败的" data-def-en="done badly or unsuccessfully">botched</span> execution attempt last week.</span></p>
+        <p class="cn">被定罪的杀人犯克里斯塔·派克（Christa Pike）的律师表示，上周她在一次拙劣的处决尝试中幸存下来后，在医院醒来时“愤怒且困惑”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Her first words were to ask "Where am I?" and "Who are you?", her lawyer Randy Spivey recalled during a news conference.</span></p>
+        <p class="cn">她的律师兰迪·斯派维（Randy Spivey）在新闻发布会上回忆说，她说的第一句话是“我在哪里？”和“你是谁？”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Pike, who was sentenced to death after murdering Colleen Slemmer with her then-boyfriend in 1995, survived two <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="causing death">lethal</span> injections on 30 September in Tennessee.</span></p>
+        <p class="cn">派克因在1995年与当时的男友一起谋杀科琳·斯莱默（Colleen Slemmer）而被判处死刑，于9月30日在田纳西州（Tennessee）接受了两次致命注射后幸存下来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Experts and her legal team say her apparent recovery is <span class="keyword" data-word="unprecedented" data-phonetic="/ʌnˈpresɪdentɪd/" data-pos="adj." data-def="前所未有的" data-def-en="never having happened or existed before">unprecedented</span>, and that no other US <span class="keyword" data-word="inmate" data-phonetic="/ˈɪnmeɪt/" data-pos="n." data-def="囚犯" data-def-en="a person confined to an institution such as a prison or hospital">inmate</span> has survived a <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="causing death">lethal</span> injection from executioners.</span></p>
+        <p class="cn">专家和她的法律团队表示，她的明显恢复是史无前例的，没有其他美国囚犯在处决者的致命注射中幸存下来。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">A court on Wednesday ordered the state of Tennessee to <span class="keyword" data-word="preserve" data-phonetic="/prɪˈzɜːv/" data-pos="v." data-def="保存，保留" data-def-en="to keep something in its original state or in good condition">preserve</span> all evidence related to the failed execution.</span></p>
+        <p class="cn">周三，法院命令田纳西州（Tennessee）保存与此次失败处决相关的所有证据。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Pike, 50, continues to receive critical medical care and is being restrained at her hands and feet in her hospital bed, her lawyers said at the news conference after a court hearing on Wednesday.</span></p>
+        <p class="cn">律师们在周三的法庭听证会后于新闻发布会上表示，50岁的派克仍在接受重症医疗护理，并在医院病床上被束缚着手脚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Spivey said that her legal team believed for days that she was brain dead, and expected her to be taken off life support at any moment.</span></p>
+        <p class="cn">斯派维说，她的法律团队数天来认为她脑死亡，并预计她随时会被撤除生命支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">However, in a "shock to everyone", she began to talk on Tuesday, while recalling only limited details about the execution attempt.</span></p>
+        <p class="cn">然而，在“令所有人震惊”的情况下，她于周二开始说话，但对处决尝试的细节回忆有限。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">Pike, he said, had helped the execution team find a vein in her arm, and she was kind and polite while she was being injected.</span></p>
+        <p class="cn">他说，派克曾帮助处决小组找到她手臂上的静脉，并且在被注射时她友善而有礼貌。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Then she woke up in a hospital with a tube down her throat and people she didn't know.</span> <span class="sentence" data-sentence-index="12">Both of her arms, he said, are now "tremendously swollen".</span></p>
+        <p class="cn">然后她在医院醒来，喉咙里插着管子，周围是她不认识的人。他说，她的双臂现在“极度肿胀”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">"We don't know the toll all of this will take" on her mental health, Spivey said, noting how she was left "angry and confused" by the <span class="keyword" data-word="ordeal" data-phonetic="/ɔːˈdiːl/" data-pos="n." data-def="折磨，严峻考验" data-def-en="a very unpleasant and prolonged experience">ordeal</span>.</span></p>
+        <p class="cn">斯派维说，“我们不知道这一切会对她的心理健康造成什么影响”，并指出她因这次折磨而“愤怒且困惑”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">He added that she also has a blood clot in one of her arms, pneumonia, and is not able to swallow.</span></p>
+        <p class="cn">他补充说，她的一只手臂还有血栓、肺炎，并且无法吞咽。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">Pike is believed to be the only person to survive an execution attempt by <span class="keyword" data-word="lethal" data-phonetic="/ˈliːθl/" data-pos="adj." data-def="致命的" data-def-en="causing death">lethal</span> injection.</span></p>
+        <p class="cn">据信，派克是唯一一个在致命注射处决尝试中幸存下来的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">After it became clear Pike would not die, following two rounds of the drug pentobarbital, she was taken to hospital, where she remained unconscious for days as medical staff cleared her body of the injected chemical.</span></p>
+        <p class="cn">在第二轮戊巴比妥（pentobarbital）药物注射后，派克显然不会死亡，随后她被送往医院，在那里昏迷了数天，医疗人员清除她体内的注射化学物质。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Earlier on Wednesday, lawyers appeared before a judge for an emergency hearing, where her team requested that all evidence from the <span class="keyword" data-word="botched" data-phonetic="/bɒtʃt/" data-pos="adj." data-def="搞砸的，失败的" data-def-en="done badly or unsuccessfully">botched</span> execution be preserved.</span></p>
+        <p class="cn">周三早些时候，律师们出现在法官面前进行紧急听证会，她的团队要求保存此次拙劣处决的所有证据。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">That evidence could lay the groundwork for a future lawsuit against the state.</span></p>
+        <p class="cn">这些证据可能为未来针对该州的诉讼奠定基础。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Luke Ihnen, one of Pike's lawyers, began by describing the "roadblocks" that have made it challenging to communicate with his client.</span></p>
+        <p class="cn">派克的律师之一卢克·伊南（Luke Ihnen）首先描述了与客户沟通所面临的“障碍”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">"Up until yesterday our client was unconscious, and unable to communicate," he told Judge Chancellor I'Ashea Myles.</span> <span class="sentence" data-sentence-index="21">Pike is now "speaking limitedly", he said.</span></p>
+        <p class="cn">他告诉法官校长伊阿谢亚·迈尔斯（I'Ashea Myles）：“直到昨天，我们的客户还处于昏迷状态，无法沟通。”他说，派克现在“说话有限”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">Tennessee Assistant Attorney General Will Ayers called attention to the "unusual procedural position here", prompting agreement from the judge.</span> <span class="sentence" data-sentence-index="23">He argued that an emergency motion was unnecessary because the state is already compelled to <span class="keyword" data-word="preserve" data-phonetic="/prɪˈzɜːv/" data-pos="v." data-def="保存，保留" data-def-en="to keep something in its original state or in good condition">preserve</span> evidence.</span></p>
+        <p class="cn">田纳西州（Tennessee）助理总检察长威尔·艾尔斯（Will Ayers）提请注意“此处不寻常的程序立场”，促使法官同意。他辩称，紧急动议没有必要，因为该州已被迫保存证据。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Still, Judge Myles ordered that "anything that was in the actual room needs to be preserved and maintained," including IV lines and syringes, as well as waste, like packaging, inserts, and labels.</span></p>
+        <p class="cn">尽管如此，迈尔斯法官仍命令“实际房间内的任何物品都需要保存和维护”，包括静脉输液管和注射器，以及废物，如包装、插页和标签。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">The judge also demanded documentation on Pike's psychological condition prior to, during and after the 30 September execution attempt.</span></p>
+        <p class="cn">法官还要求提供派克在9月30日处决尝试之前、期间和之后心理状况的文件。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">The judge agreed when a state lawyer called the situation 'unusual'</span></p>
+        <p class="cn">当一名州律师称情况“不寻常”时，法官表示同意。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">She advised the state to take "special care" not to misplace or accidentally delete any information that may be <span class="keyword" data-word="pertinent" data-phonetic="/ˈpɜːtɪnənt/" data-pos="adj." data-def="相关的" data-def-en="relevant or applicable to a particular matter">pertinent</span> to the case.</span></p>
+        <p class="cn">她建议该州“特别小心”，不要 misplaced 或意外删除任何可能与案件相关的信息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Asked by the judge whether the state intended to reschedule execution for Pike, Ayers said he did not know the answer.</span></p>
+        <p class="cn">当法官询问该州是否打算重新安排对派克的处决时，艾尔斯说他不知道答案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Tennessee Governor Bill Lee has ordered a pause on all executions in the state for the rest of the year, and has said he wants answers about what went wrong.</span> <span class="sentence" data-sentence-index="30">The state's prisons chief said he is resigning after the failed execution.</span></p>
+        <p class="cn">田纳西州（Tennessee）州长比尔·李（Bill Lee）已下令暂停该州今年剩余时间的所有处决，并表示他希望了解出了什么问题。该州监狱负责人表示，在处决失败后他将辞职。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="31">Ihnen asked the judge to allow Pike access to a phone so she can call her lawyers, and they can have "continuous liberal access to Ms Pike".</span> <span class="sentence" data-sentence-index="32">He said they were kept waiting for over two hours during a recent attempt to visit her in hospital.</span></p>
+        <p class="cn">伊南要求法官允许派克使用电话，以便她可以给律师打电话，并且他们可以“持续自由地接触派克女士”。他说，在最近一次试图去医院探望她时，他们被等待了两个多小时。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="33">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="34">How widely used is the death penalty in the US?</span></p>
+        <p class="cn">美国死刑的使用范围有多广？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="35">Ihnen added that Tennessee prison officials are keeping her "shackled" to her hospital bed, despite requests from medical staff that the handcuffs be removed.</span></p>
+        <p class="cn">伊南补充说，田纳西州（Tennessee）监狱官员将她“铐”在医院病床上，尽管医疗人员要求移除手铐。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="36">Her lawyer also requested that the Tennessee Department of Corrections be required to notify his team 48 hours before she is transferred from the hospital to any state hospital or other government-run facility.</span></p>
+        <p class="cn">她的律师还要求田纳西州惩教署（Tennessee Department of Corrections）在她从医院转移到任何州立医院或其他政府运营设施前48小时通知他的团队。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="37">Ayers (left) argued the case for the state, while Ihnen (far right) represented Pike</span></p>
+        <p class="cn">艾尔斯（左）为州方辩护，而伊南（最右）代表派克</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="38">Pike was 18 when she and her then-boyfriend, Tadaryl Shipp, beat, tortured and killed 19-year-old Slemmer, whom they had met at a job training camp for troubled teens.</span></p>
+        <p class="cn">派克18岁时，她和当时的男友塔达里尔·希普（Tadaryl Shipp）殴打、折磨并杀害了19岁的斯莱默，他们是在一个为问题青少年举办的工作训练营中认识的。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="39">Shipp was 17 years old at the time, meaning that he was spared the death penalty for his part in the attack because he was not yet legally an adult at the time.</span> <span class="sentence" data-sentence-index="40">He remains in prison.</span></p>
+        <p class="cn">希普当时17岁，这意味着他因参与袭击而免于死刑，因为他当时还未成年。他仍在监狱中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="41">I interviewed Christa Pike 20 years ago - I can't stop thinking about her</span></p>
+        <p class="cn">20年前我采访过克里斯塔·派克（Christa Pike）——我无法停止想她</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="42">I've seen nearly 500 executions - but never one like Christa Pike's</span></p>
+        <p class="cn">我见过近500次处决——但从未见过像克里斯塔·派克（Christa Pike）这样的</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unprecedented</span>
+        <button class="kw-speak-btn" data-word="unprecedented" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈpresɪdentɪd/ adj.</span>
+      </div>
+      <p class="kw-def">前所未有的</p>
+      <p class="kw-def-en">never having happened or existed before</p>
+      <p class="kw-ctx">&ldquo;Experts and her legal team say her apparent recovery is unprecedented, and that no other US inmate has survived a lethal injection from executioners.&rdquo;</p>
+      <p class="kw-ctx-cn">专家和她的法律团队表示，她的明显康复是前所未有的，没有其他美国囚犯能在执行者的致命注射中幸存下来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">botched</span>
+        <button class="kw-speak-btn" data-word="botched" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/bɒtʃt/ adj.</span>
+      </div>
+      <p class="kw-def">搞砸的，失败的</p>
+      <p class="kw-def-en">done badly or unsuccessfully</p>
+      <p class="kw-ctx">&ldquo;A lawyer for convicted murderer Christa Pike says that she woke up in hospital "angry and confused" after she survived a botched execution attempt last week.&rdquo;</p>
+      <p class="kw-ctx-cn">被定罪的杀人犯克里斯塔·派克的律师表示，上周一次拙劣的处决尝试后，她幸存下来，在医院醒来时“愤怒而困惑”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">lethal</span>
+        <button class="kw-speak-btn" data-word="lethal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈliːθl/ adj.</span>
+      </div>
+      <p class="kw-def">致命的</p>
+      <p class="kw-def-en">causing death</p>
+      <p class="kw-ctx">&ldquo;Pike, who was sentenced to death after murdering Colleen Slemmer with her then-boyfriend in 1995, survived two lethal injections on 30 September in Tennessee.&rdquo;</p>
+      <p class="kw-ctx-cn">派克因1995年与当时的男友谋杀科琳·斯莱默而被判处死刑，她于9月30日在田纳西州经历了两次致命注射后幸存下来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inmate</span>
+        <button class="kw-speak-btn" data-word="inmate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnmeɪt/ n.</span>
+      </div>
+      <p class="kw-def">囚犯</p>
+      <p class="kw-def-en">a person confined to an institution such as a prison or hospital</p>
+      <p class="kw-ctx">&ldquo;Experts and her legal team say her apparent recovery is unprecedented, and that no other US inmate has survived a lethal injection from executioners.&rdquo;</p>
+      <p class="kw-ctx-cn">专家和她的法律团队表示，她的明显康复是前所未有的，没有其他美国囚犯能在执行者的致命注射中幸存下来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">preserve</span>
+        <button class="kw-speak-btn" data-word="preserve" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prɪˈzɜːv/ v.</span>
+      </div>
+      <p class="kw-def">保存，保留</p>
+      <p class="kw-def-en">to keep something in its original state or in good condition</p>
+      <p class="kw-ctx">&ldquo;A court on Wednesday ordered the state of Tennessee to preserve all evidence related to the failed execution.&rdquo;</p>
+      <p class="kw-ctx-cn">周三，法院命令田纳西州保存与失败处决有关的所有证据。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">restrain</span>
+        <button class="kw-speak-btn" data-word="restrain" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈstreɪn/ v.</span>
+      </div>
+      <p class="kw-def">束缚，限制</p>
+      <p class="kw-def-en">to prevent someone or something from doing something, often by using physical force</p>
+      <p class="kw-ctx">&ldquo;Pike, 50, continues to receive critical medical care and is being restrained at her hands and feet in her hospital bed, her lawyers said at the news conference after a court hearing on Wednesday.&rdquo;</p>
+      <p class="kw-ctx-cn">派克，50岁，继续接受重症医疗护理，并在医院病床上被束缚住手脚，她的律师在周三法庭听证会后的新闻发布会上说。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ordeal</span>
+        <button class="kw-speak-btn" data-word="ordeal" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɔːˈdiːl/ n.</span>
+      </div>
+      <p class="kw-def">折磨，严峻考验</p>
+      <p class="kw-def-en">a very unpleasant and prolonged experience</p>
+      <p class="kw-ctx">&ldquo;"We don't know the toll all of this will take" on her mental health, Spivey said, noting how she was left "angry and confused" by the ordeal.&rdquo;</p>
+      <p class="kw-ctx-cn">“我们不知道这一切会对她的心理健康造成什么影响，”斯派维说，并指出这场折磨让她“愤怒而困惑”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pertinent</span>
+        <button class="kw-speak-btn" data-word="pertinent" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈpɜːtɪnənt/ adj.</span>
+      </div>
+      <p class="kw-def">相关的</p>
+      <p class="kw-def-en">relevant or applicable to a particular matter</p>
+      <p class="kw-ctx">&ldquo;She advised the state to take "special care" not to misplace or accidentally delete any information that may be pertinent to the case.&rdquo;</p>
+      <p class="kw-ctx-cn">她建议该州“特别小心”，不要放错或意外删除任何可能与案件相关的信息。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: What we know about Christa Pike\u00e2\u0080\u0099s \"unprecedented\" recovery after failed execution", "start_ms": 3000, "end_ms": 10152, "paragraph_index": 1}, {"index": 2, "text": "A lawyer for convicted murderer Christa Pike says that she woke up in hospital \"angry and confused\" after she survived a botched execution attempt last week.", "start_ms": 10152, "end_ms": 20664, "paragraph_index": 2}, {"index": 3, "text": "Her first words were to ask \"Where am I?\" and \"Who are you?\", her lawyer Randy Spivey recalled during a news conference.", "start_ms": 20664, "end_ms": 28680, "paragraph_index": 3}, {"index": 4, "text": "Pike, who was sentenced to death after murdering Colleen Slemmer with her then-boyfriend in 1995, survived two lethal injections on 30 September in Tennessee.", "start_ms": 28680, "end_ms": 40440, "paragraph_index": 4}, {"index": 5, "text": "Experts and her legal team say her apparent recovery is unprecedented, and that no other US inmate has survived a lethal injection from executioners.", "start_ms": 40440, "end_ms": 51240, "paragraph_index": 5}, {"index": 6, "text": "A court on Wednesday ordered the state of Tennessee to preserve all evidence related to the failed execution.", "start_ms": 51240, "end_ms": 58872, "paragraph_index": 6}, {"index": 7, "text": "Pike, 50, continues to receive critical medical care and is being restrained at her hands and feet in her hospital bed, her lawyers said at the news conference after a court hearing on Wednesday.", "start_ms": 58872, "end_ms": 71616, "paragraph_index": 7}, {"index": 8, "text": "Spivey said that her legal team believed for days that she was brain dead, and expected her to be taken off life support at any moment.", "start_ms": 71616, "end_ms": 80904, "paragraph_index": 8}, {"index": 9, "text": "However, in a \"shock to everyone\", she began to talk on Tuesday, while recalling only limited details about the execution attempt.", "start_ms": 80904, "end_ms": 90384, "paragraph_index": 9}, {"index": 10, "text": "Pike, he said, had helped the execution team find a vein in her arm, and she was kind and polite while she was being injected.", "start_ms": 90384, "end_ms": 99192, "paragraph_index": 10}, {"index": 11, "text": "Then she woke up in a hospital with a tube down her throat and people she didn't know.", "start_ms": 99192, "end_ms": 104976, "paragraph_index": 11}, {"index": 12, "text": "Both of her arms, he said, are now \"tremendously swollen\".", "start_ms": 104976, "end_ms": 109680, "paragraph_index": 11}, {"index": 13, "text": "\"We don't know the toll all of this will take\" on her mental health, Spivey said, noting how she was left \"angry and confused\" by the ordeal.", "start_ms": 109680, "end_ms": 119040, "paragraph_index": 12}, {"index": 14, "text": "He added that she also has a blood clot in one of her arms, pneumonia, and is not able to swallow.", "start_ms": 119040, "end_ms": 126384, "paragraph_index": 13}, {"index": 15, "text": "Pike is believed to be the only person to survive an execution attempt by lethal injection.", "start_ms": 126384, "end_ms": 133176, "paragraph_index": 14}, {"index": 16, "text": "After it became clear Pike would not die, following two rounds of the drug pentobarbital, she was taken to hospital, where she remained unconscious for days as medical staff cleared her body of the injected chemical.", "start_ms": 133176, "end_ms": 147552, "paragraph_index": 15}, {"index": 17, "text": "Earlier on Wednesday, lawyers appeared before a judge for an emergency hearing, where her team requested that all evidence from the botched execution be preserved.", "start_ms": 147552, "end_ms": 158568, "paragraph_index": 16}, {"index": 18, "text": "That evidence could lay the groundwork for a future lawsuit against the state.", "start_ms": 158568, "end_ms": 164040, "paragraph_index": 17}, {"index": 19, "text": "Luke Ihnen, one of Pike's lawyers, began by describing the \"roadblocks\" that have made it challenging to communicate with his client.", "start_ms": 164040, "end_ms": 172728, "paragraph_index": 18}, {"index": 20, "text": "\"Up until yesterday our client was unconscious, and unable to communicate,\" he told Judge Chancellor I'Ashea Myles.", "start_ms": 172728, "end_ms": 181488, "paragraph_index": 19}, {"index": 21, "text": "Pike is now \"speaking limitedly\", he said.", "start_ms": 181488, "end_ms": 185304, "paragraph_index": 19}, {"index": 22, "text": "Tennessee Assistant Attorney General Will Ayers called attention to the \"unusual procedural position here\", prompting agreement from the judge.", "start_ms": 185304, "end_ms": 194736, "paragraph_index": 20}, {"index": 23, "text": "He argued that an emergency motion was unnecessary because the state is already compelled to preserve evidence.", "start_ms": 194736, "end_ms": 202488, "paragraph_index": 20}, {"index": 24, "text": "Still, Judge Myles ordered that \"anything that was in the actual room needs to be preserved and maintained,\" including IV lines and syringes, as well as waste, like packaging, inserts, and labels.", "start_ms": 202488, "end_ms": 216600, "paragraph_index": 21}, {"index": 25, "text": "The judge also demanded documentation on Pike's psychological condition prior to, during and after the 30 September execution attempt.", "start_ms": 216600, "end_ms": 226704, "paragraph_index": 22}, {"index": 26, "text": "The judge agreed when a state lawyer called the situation 'unusual'", "start_ms": 226704, "end_ms": 231648, "paragraph_index": 23}, {"index": 27, "text": "She advised the state to take \"special care\" not to misplace or accidentally delete any information that may be pertinent to the case.", "start_ms": 231648, "end_ms": 240744, "paragraph_index": 24}, {"index": 28, "text": "Asked by the judge whether the state intended to reschedule execution for Pike, Ayers said he did not know the answer.", "start_ms": 240744, "end_ms": 248856, "paragraph_index": 25}, {"index": 29, "text": "Tennessee Governor Bill Lee has ordered a pause on all executions in the state for the rest of the year, and has said he wants answers about what went wrong.", "start_ms": 248856, "end_ms": 258840, "paragraph_index": 26}, {"index": 30, "text": "The state's prisons chief said he is resigning after the failed execution.", "start_ms": 258840, "end_ms": 264336, "paragraph_index": 26}, {"index": 31, "text": "Ihnen asked the judge to allow Pike access to a phone so she can call her lawyers, and they can have \"continuous liberal access to Ms Pike\".", "start_ms": 264336, "end_ms": 274008, "paragraph_index": 27}, {"index": 32, "text": "He said they were kept waiting for over two hours during a recent attempt to visit her in hospital.", "start_ms": 274008, "end_ms": 280704, "paragraph_index": 27}, {"index": 33, "text": "This video can not be played", "start_ms": 280704, "end_ms": 283704, "paragraph_index": 28}, {"index": 34, "text": "How widely used is the death penalty in the US?", "start_ms": 283704, "end_ms": 287856, "paragraph_index": 29}, {"index": 35, "text": "Ihnen added that Tennessee prison officials are keeping her \"shackled\" to her hospital bed, despite requests from medical staff that the handcuffs be removed.", "start_ms": 287856, "end_ms": 298032, "paragraph_index": 30}, {"index": 36, "text": "Her lawyer also requested that the Tennessee Department of Corrections be required to notify his team 48 hours before she is transferred from the hospital to any state hospital or other government-run facility.", "start_ms": 298032, "end_ms": 311832, "paragraph_index": 31}, {"index": 37, "text": "Ayers (left) argued the case for the state, while Ihnen (far right) represented Pike", "start_ms": 311832, "end_ms": 318744, "paragraph_index": 32}, {"index": 38, "text": "Pike was 18 when she and her then-boyfriend, Tadaryl Shipp, beat, tortured and killed 19-year-old Slemmer, whom they had met at a job training camp for troubled teens.", "start_ms": 318744, "end_ms": 330408, "paragraph_index": 33}, {"index": 39, "text": "Shipp was 17 years old at the time, meaning that he was spared the death penalty for his part in the attack because he was not yet legally an adult at the time.", "start_ms": 330408, "end_ms": 340800, "paragraph_index": 34}, {"index": 40, "text": "He remains in prison.", "start_ms": 340800, "end_ms": 343224, "paragraph_index": 34}, {"index": 41, "text": "I interviewed Christa Pike 20 years ago - I can't stop thinking about her", "start_ms": 343224, "end_ms": 348744, "paragraph_index": 35}, {"index": 42, "text": "I've seen nearly 500 executions - but never one like Christa Pike's", "start_ms": 348744, "end_ms": 354480, "paragraph_index": 36}], "total_duration_ms": 354480};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "her": "她的", "and": "和", "that": "那个", "she": "她", "in": "在", "pike": "派克", "was": "是", "he": "他", "for": "为了", "execution": "处决", "said": "说", "be": "是", "is": "是", "state": "国家", "of": "的", "hospital": "医院", "on": "在", "judge": "法官", "not": "不", "after": "之后", "tennessee": "田纳西州", "at": "在", "attempt": "企图", "team": "团队", "from": "来自", "can": "可以", "know": "知道", "about": "关于", "christa": "克里斯塔", "lawyer": "律师", "has": "有", "all": "所有", "evidence": "证据", "lawyers": "律师", "by": "被", "an": "一个", "this": "这个", "failed": "失败", "up": "向上", "survived": "幸存", "where": "那里", "are": "是", "during": "在期间", "death": "死亡", "with": "与", "two": "两个", "wednesday": "星期三", "ordered": "命令", "medical": "医疗", "any": "任何", "while": "而", "also": "也", "one": "一个", "as": "作为", "pike's": "派克的", "his": "他的", "they": "它们", "video": "视频", "played": "比赛", "what": "什么", "we": "我们", "recovery": "恢复", "woke": "觉醒", "angry": "愤怒的", "confused": "困惑的", "were": "是", "who": "谁", "news": "新闻", "conference": "会议", "slemmer": "斯莱默", "then-boyfriend": "当时的男友", "september": "九月", "legal": "法律的", "other": "其他", "us": "我们", "injection": "注射", "court": "法庭", "care": "照顾", "being": "正在", "bed": "床", "hearing": "听证会", "believed": "据信", "days": "天", "taken": "采取", "began": "开始", "only": "只有", "had": "有", "injected": "注射", "arms": "武器", "now": "现在", "will": "将", "take": "采取", "how": "如何", "left": "离开", "added": "补充", "it": "它", "unconscious": "失去知觉", "staff": "员工", "before": "之前", "emergency": "紧急", "requested": "要求", "have": "有", "communicate": "沟通", "called": "称为", "unusual": "不寻常的", "argued": "争论", "because": "因为", "like": "像", "when": "当", "or": "或者", "case": "案例", "asked": "询问", "executions": "处决", "access": "进入", "hours": "小时", "penalty": "点球", "prison": "监狱", "shipp": "希普", "years": "多年", "time": "时间", "watch": "观看", "convicted": "被定罪", "murderer": "杀人犯", "says": "表示", "last": "最后", "week": "周", "first": "第一轮", "words": "言辞", "ask": "询问", "am": "是", "you": "你", "recalled": "回忆", "sentenced": "判刑", "murdering": "谋杀", "colleen": "科琳", "injections": "注射", "experts": "专家", "say": "说", "apparent": "明显的", "no": "没有", "executioners": "行刑者", "related": "相关的", "continues": "继续", "receive": "收到", "critical": "关键", "hands": "双手", "feet": "英尺", "brain": "大脑", "dead": "死亡", "expected": "预期", "off": "离开", "life": "生活", "support": "支持", "moment": "时刻", "however": "然而", "shock": "震惊", "everyone": "每个人", "talk": "会谈", "tuesday": "星期二", "recalling": "回忆", "limited": "有限的", "details": "细节", "helped": "帮助", "find": "找到", "vein": "静脉", "arm": "武装", "kind": "种类", "then": "然后", "tube": "地铁", "down": "下来", "throat": "喉咙", "people": "人们", "didn't": "没有", "both": "两者", "don't": "不要", "toll": "代价", "mental": "精神的", "health": "健康", "noting": "指出", "blood": "血", "able": "能够", "person": "个人", "survive": "生存", "became": "成为", "clear": "明确", "would": "将", "die": "死亡", "following": "随后", "rounds": "轮次", "drug": "毒品", "pentobarbital": "戊巴比妥", "remained": "仍然是", "cleared": "澄清", "body": "机构", "chemical": "化学物质", "earlier": "较早", "appeared": "出现", "could": "可能", "lay": "躺", "future": "未来", "lawsuit": "诉讼", "against": "反对", "luke": "卢克", "describing": "描述", "made": "做出", "challenging": "具有挑战性的", "until": "直到", "yesterday": "昨天", "our": "我们的", "unable": "无法", "told": "告诉", "chancellor": "总理", "speaking": "发言", "assistant": "助理", "attorney": "检察官", "general": "总", "attention": "关注", "position": "立场", "here": "这里", "prompting": "促使", "agreement": "协议", "unnecessary": "不必要", "already": "已经", "compelled": "被迫", "still": "仍然", "anything": "任何事", "room": "房间", "needs": "需要", "maintained": "保持", "including": "包括", "iv": "静脉注射", "lines": "线", "well": "好", "waste": "浪费", "demanded": "要求", "psychological": "心理的", "condition": "状况", "prior": "先前的", "agreed": "同意", "situation": "局势", "advised": "建议", "special": "特别的", "accidentally": "意外地", "information": "信息", "may": "可能", "whether": "是否", "intended": "打算的", "did": "做了", "answer": "回答", "governor": "州长", "bill": "法案", "lee": "李", "rest": "其余", "year": "年", "wants": "想要", "answers": "答案", "went": "去", "wrong": "错误的", "prisons": "监狱", "chief": "首席", "resigning": "辞职", "allow": "允许", "phone": "电话", "so": "所以", "call": "呼吁", "liberal": "自由", "ms": "女士", "kept": "保留", "waiting": "等待", "over": "超过", "recent": "最近", "visit": "访问", "widely": "广泛地", "used": "使用", "officials": "官员", "keeping": "保持", "despite": "尽管", "requests": "请求", "handcuffs": "手铐", "removed": "移除", "department": "部门", "required": "需要", "notify": "通知", "transferred": "转移", "facility": "设施", "far": "远", "right": "正确", "represented": "代表", "tadaryl": "塔达里尔", "beat": "击败", "tortured": "折磨", "killed": "杀死", "year-old": "岁的", "whom": "谁", "met": "伦敦警察厅", "job": "工作", "training": "培训", "camp": "阵营", "troubled": "问题重重", "teens": "青少年", "old": "旧的", "meaning": "意义", "spared": "幸免", "part": "部分", "attack": "袭击", "yet": "尚未", "legally": "法律上", "adult": "成年人", "remains": "仍然", "interviewed": "采访", "ago": "以前", "can't": "不能", "stop": "停止", "thinking": "思考", "i've": "我已经", "seen": "被视为", "nearly": "几乎", "but": "但是", "never": "从未", "ihnen": "他们", "spivey": "斯派维", "ayers": "艾尔斯", "preserved": "保留的", "client": "客户", "myles": "迈尔斯", "randy": "兰迪", "restrained": "被约束的", "polite": "礼貌的", "tremendously": "极大地", "swollen": "肿胀的", "clot": "血栓", "pneumonia": "肺炎", "swallow": "吞咽", "groundwork": "基础工作", "roadblocks": "障碍", "i'ashea": "艾莎", "limitedly": "有限地", "procedural": "程序性的", "motion": "动议", "actual": "实际的", "syringes": "注射器", "packaging": "包装", "inserts": "说明书", "labels": "标签", "documentation": "文件", "misplace": "放错", "delete": "删除", "reschedule": "重新安排", "pause": "暂停", "state's": "州的", "continuous": "连续的", "shackled": "戴镣铐的", "corrections": "惩教", "government-run": "政府运营的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
