@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-09</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-09</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ffe4/live/9e47b8d0-c370-11f1-b66b-bbfeb0feb741.jpg" alt="Polanski failed to show leadership over Zionism motion, ex-Green leader says" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Polanski failed to show leadership over Zionism motion, ex-Green leader says</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cm2d6x11l6pko?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-09.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Zack Polanski failed to show leadership over a <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> passed by Green Party members declaring Zionism a form of racism, the party's former leader Caroline Lucas has told the BBC.</span></p>
+        <p class="cn">绿党前领袖卡罗琳·卢卡斯（Caroline Lucas）告诉BBC，扎克·波兰斯基（Zack Polanski）在一项由绿党成员通过、宣布犹太复国主义是一种种族主义的动议上未能展现领导力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Lucas told Newsnight that the party's current leader, who did not attend the debate on the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> at the Green Party's annual conference in Brighton, "should have been there and he should have voted".</span></p>
+        <p class="cn">卢卡斯告诉《新闻之夜》（Newsnight），该党现任领袖未出席在布莱顿举行的绿党年度会议上关于该动议的辩论，“他本应该在场，而且他本应该投票”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">She described the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span>, which defined Zionism as an <span class="keyword" data-word="ideology" data-phonetic="/ˌaɪdiˈɑlədʒi/" data-pos="n." data-def="意识形态" data-def-en="A system of ideas and ideals, especially one that forms the basis of economic or political theory and policy.">ideology</span> supporting "an ethnonationalist Jewish state", as "dangerous" and "<span class="keyword" data-word="divisive" data-phonetic="/dɪˈvaɪsɪv/" data-pos="adj." data-def="分裂的，引起分歧的" data-def-en="Tending to cause disagreement or hostility between people.">divisive</span>".</span></p>
+        <p class="cn">她形容该动议——将犹太复国主义定义为支持“一个族裔民族主义犹太国家”的意识形态——是“危险的”和“分裂性的”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In the wake of the vote, Polanski has said he will not accept anyone being excluded from the Green Party "because of the religious or communal body they are part of".</span></p>
+        <p class="cn">投票之后，波兰斯基表示，他不会接受任何人“因为他们所属的宗教或社区团体”而被排除在绿党之外。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Lucas's comments came after polls closed in the Holborn and St Pancras by-election, where Polanski is standing as a candidate.</span></p>
+        <p class="cn">卢卡斯发表上述评论之际，霍尔本和圣潘克拉斯（Holborn and St Pancras）补选的投票已经结束，波兰斯基是该选区的候选人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Polanski did not vote on the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> after leaving the party's conference early to campaign in the north London <span class="keyword" data-word="constituency" data-phonetic="/kənˈstɪtʃuənsi/" data-pos="n." data-def="选区" data-def-en="A body of voters in a specified area who elect a representative to a legislative body.">constituency</span>.</span></p>
+        <p class="cn">波兰斯基提前离开该党会议，前往北伦敦选区竞选，因此没有对该动议投票。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The Green leader has declined media interviews since the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> was passed on Sunday and did not answer questions from a BBC reporter about the motion earlier on Thursday.</span></p>
+        <p class="cn">自该动议于周日通过以来，这位绿党领袖一直拒绝媒体采访，并且在周四早些时候没有回答BBC记者关于该动议的问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> also backed a "single democratic Palestinian state in all of historic Palestine", which includes modern-day Israel.</span></p>
+        <p class="cn">该动议还支持“在整个历史上的巴勒斯坦建立一个单一的民主巴勒斯坦国”，其中包括现代以色列。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Under Green Party rules, motions supported by members become official party policy, but will not necessarily be included in the party's <span class="keyword" data-word="manifesto" data-phonetic="/ˌmænɪˈfestoʊ/" data-pos="n." data-def="宣言，纲领" data-def-en="A public declaration of policy and aims, especially one issued before an election by a political party.">manifesto</span> at the next general election.</span></p>
+        <p class="cn">根据绿党规则，获得成员支持的动议将成为该党的官方政策，但不一定会被纳入该党在下届大选中的宣言。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">Lucas, who voted against the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span>, said: "I would have hoped [Polanski] would have been a very strong critic of this motion."</span></p>
+        <p class="cn">对该动议投了反对票的卢卡斯说：“我原本希望[波兰斯基]会成为这项动议的强烈批评者。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">She added that it was "flawed from top to bottom".</span></p>
+        <p class="cn">她补充说，这项动议“从上到下都有缺陷”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">Asked if Polanski should stand down, she told Newsnight: "I think let's just see what happens in the coming days and weeks.</span> <span class="sentence" data-sentence-index="12">Obviously he has been completely taken up with this by-election.</span></p>
+        <p class="cn">当被问及波兰斯基是否应该下台时，她告诉《新闻之夜》：“我想我们只需看看未来几天和几周会发生什么。显然，他一直完全忙于这场补选。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">"I want him to speak now about what's happened, I want him to show the leadership that was frankly missing on Sunday.</span></p>
+        <p class="cn">“我希望他现在就所发生的事情表态，我希望他展现出周日坦率地说所缺失的那种领导力。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">"I think the jury is out about whether he will do that - but I very much hope he will."</span></p>
+        <p class="cn">“我认为他是否会这样做还有待观察——但我非常希望他会。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">In response to Lucas's comments, a Green Party source said: "There are ups and downs in politics and when people are passionate they disagree in the heat of a campaign.</span></p>
+        <p class="cn">针对卢卡斯的评论，一名绿党消息人士说：“政治中有起有落，当人们充满热情时，他们会在竞选的白热化阶段产生分歧。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">"We do things differently - unlike Labour who use anonymous sources and resort to  <span class="keyword" data-word="factionalism" data-phonetic="/ˈfækʃənəlɪzəm/" data-pos="n." data-def="派系主义，小集团活动" data-def-en="The state of being split into factions; partisan conflict within a group.">factionalism</span>."</span></p>
+        <p class="cn">“我们做事方式不同——不像工党那样使用匿名消息来源并诉诸派系斗争。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">Watch: Polanski was asked earlier on Thursday about the Zionism conference <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span></span></p>
+        <p class="cn">观看：波兰斯基于周四早些时候被问及会议上关于犹太复国主义的动议</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">The <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> has overshadowed the final days of Polanski's by-election campaign, where the Greens have been looking to overturn a substantial Labour majority in the seat vacated by former Prime Minister Sir Keir Starmer .</span></p>
+        <p class="cn">该动议给波兰斯基补选竞选的最后几天蒙上阴影。绿党一直希望在前首相基尔·斯塔默爵士（Sir Keir Starmer）空出的席位上推翻工党可观的多数优势。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">It has sparked days of controversy and exposed divisions between the party's newly enlarged membership base under Polanski and its MPs elected at the last general election.</span></p>
+        <p class="cn">该动议引发了数日争议，并暴露出在波兰斯基领导下新扩大的党员基础与该党在上次大选中当选的议员之间的分歧。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Four of the five Green MPs opposed the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span>, while the party's co-deputy leaders were split over whether they supported it.</span></p>
+        <p class="cn">绿党五名议员中有四名反对该动议，而该党的联合副领袖们则在是否支持该动议的问题上意见分裂。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">The vote also led to the resignation of the Green deputy leader in Wales and condemnation from the European Green Party.</span></p>
+        <p class="cn">此次投票还导致威尔士绿党副领袖辞职，并招致欧洲绿党（European Green Party）的谴责。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">In a written statement on Monday, Polanski did not specify whether he supported the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> passed by members but sought to reassure Jewish members that "no-one will be made unwelcome because of their background, their faith, or where they worship".</span></p>
+        <p class="cn">在周一的一份书面声明中，波兰斯基没有具体说明他是否支持成员通过的这项动议，但试图向犹太成员保证，“不会有人因为他们的背景、信仰或礼拜场所而被拒之门外”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">Polanski, who is Jewish, added that "antisemitism and criticism of the Israeli state are, and must always be, completely distinct".</span></p>
+        <p class="cn">波兰斯基是犹太人，他补充说，“反犹太主义和对以色列国的批评过去是、也必须始终是完全不同的两回事”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Ahead of the vote, he had backed an amendment to specify that the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> should not be used to discipline Jewish members attending synagogues that consider themselves Zionist, but this was voted down by members.</span></p>
+        <p class="cn">在投票前，他曾支持一项修正案，明确规定该动议不应被用来惩戒那些参加自认为犹太复国主义会堂的犹太成员，但该修正案被成员否决。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="26">He had also said he wanted to see the reference to a single Palestinian state changed, arguing: "I don't believe we as a Green Party of England and Wales, or even the British government, should be deciding what the future settlement looks like."</span></p>
+        <p class="cn">他还曾表示，他希望修改关于单一巴勒斯坦国的表述，并辩称：“我不认为我们作为英格兰和威尔士绿党，甚至英国政府，应该决定未来的解决方案是什么样子。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="27">I won't accept exclusion within Green Party, says Polanski after criticism of Zionism <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span></span></p>
+        <p class="cn">波兰斯基在犹太复国主义动议遭批评后表示：我不会接受绿党内部的排斥</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="28">Tensions exposed among Greens by 'Zionism is racism' conference vote</span></p>
+        <p class="cn">绿党内部因会议投票称“犹太复国主义是种族主义”而暴露出的紧张关系</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="29">Polanski banned from Israel after party's <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> declaring 'Zionism is racism'</span></p>
+        <p class="cn">在绿党通过宣布“犹太复国主义是种族主义”的动议后，波兰斯基被禁止进入以色列</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="30">Meanwhile, Prime Minister Andy Burnham has called on Polanski to reverse the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> and ensure it is not Green Party policy.</span></p>
+        <p class="cn">与此同时，首相安迪·伯纳姆（Andy Burnham）呼吁波兰斯基撤销该动议，并确保它不会成为绿党政策。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="31">In his first comment on the row, Burnham said it was "completely wrong" for the party to support the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> and this showed "terrible judgement".</span></p>
+        <p class="cn">伯纳姆在首次评论这场争议时说，该党支持这项动议是“完全错误的”，这表明“判断力糟糕透顶”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="32">The PM said he felt the <span class="keyword" data-word="motion" data-phonetic="/ˈmoʊʃən/" data-pos="n." data-def="动议，提案" data-def-en="A formal proposal put to a meeting for discussion and vote.">motion</span> effectively ruled out a two-state solution between Israel and Palestine.</span></p>
+        <p class="cn">首相表示，他认为该动议实际上排除了以色列和巴勒斯坦之间的两国方案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="33">"For that reason, it shouldn't be supported in any way, shape or form," he told reporters while on a visit to Berlin.</span></p>
+        <p class="cn">他在访问柏林期间对记者说：“因此，无论如何都不应该支持它。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="34">When asked if he would rule out entering into coalition with the Greens, he would not be drawn on "any business about what might or might not happen in the future".</span></p>
+        <p class="cn">当被问及他是否会排除与绿党联合组阁时，他不愿就“任何关于未来可能或不可能发生的事情”作出表态。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="35">On Thursday, a Green Party spokesperson said: "This has been an emotive issue and is complex.</span> <span class="sentence" data-sentence-index="36">It has rightly caused much discussion, and needs to be taken in the context that Israel's behaviour has had.</span></p>
+        <p class="cn">周四，一名绿党发言人说：“这一直是一个情绪化且复杂的问题。它理所当然地引发了大量讨论，并且需要放在以色列行为所造成的背景下来看待。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="37">"Israel has been responsible for a <span class="keyword" data-word="genocide" data-phonetic="/ˈdʒɛnəsaɪd/" data-pos="n." data-def="种族灭绝" data-def-en="The deliberate killing of a large number of people from a particular nation or ethnic group with the aim of destroying that nation or group.">genocide</span>, ethnic cleansing and the killing of children, and we've had a political establishment which has not only turned a blind eye but provided support."</span></p>
+        <p class="cn">“以色列对种族灭绝、种族清洗和杀害儿童负有责任，而我们有一个政治建制派不仅视而不见，还提供了支持。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="38">The International Court of Justice (ICJ) is currently hearing a case brought by South Africa that accuses Israeli forces of <span class="keyword" data-word="genocide" data-phonetic="/ˈdʒɛnəsaɪd/" data-pos="n." data-def="种族灭绝" data-def-en="The deliberate killing of a large number of people from a particular nation or ethnic group with the aim of destroying that nation or group.">genocide</span>, but it could take years to reach a conclusion.</span> <span class="sentence" data-sentence-index="39">Israel has called the case "wholly unfounded" and based on "biased and false claims".</span></p>
+        <p class="cn">国际法院（ICJ）目前正在审理南非提起的一起案件，该案指控以色列军队实施种族灭绝，但可能需要数年才能得出结论。以色列称该案“完全没有根据”，并且基于“有偏见和虚假的指控”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="40">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">订阅我们的《政治要闻》（Politics Essential）新闻简报，了解威斯敏斯特及其他地区的内幕动态。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">motion</span>
+        <button class="kw-speak-btn" data-word="motion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmoʊʃən/ n.</span>
+      </div>
+      <p class="kw-def">动议，提案</p>
+      <p class="kw-def-en">A formal proposal put to a meeting for discussion and vote.</p>
+      <p class="kw-ctx">&ldquo;Zack Polanski failed to show leadership over a motion passed by Green Party members declaring Zionism a form of racism, the party's former leader Caroline Lucas has told the BBC.&rdquo;</p>
+      <p class="kw-ctx-cn">绿党前领袖卡罗琳·卢卡斯告诉BBC，扎克·波兰斯基在绿党成员通过的一项宣布犹太复国主义是种族主义的动议上未能展现领导力。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ideology</span>
+        <button class="kw-speak-btn" data-word="ideology" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌaɪdiˈɑlədʒi/ n.</span>
+      </div>
+      <p class="kw-def">意识形态</p>
+      <p class="kw-def-en">A system of ideas and ideals, especially one that forms the basis of economic or political theory and policy.</p>
+      <p class="kw-ctx">&ldquo;She described the motion, which defined Zionism as an ideology supporting 'an ethnonationalist Jewish state', as 'dangerous' and 'divisive'.&rdquo;</p>
+      <p class="kw-ctx-cn">她将这项将犹太复国主义定义为支持“一个民族主义的犹太国家”的意识形态的动议描述为“危险的”和“分裂的”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">divisive</span>
+        <button class="kw-speak-btn" data-word="divisive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈvaɪsɪv/ adj.</span>
+      </div>
+      <p class="kw-def">分裂的，引起分歧的</p>
+      <p class="kw-def-en">Tending to cause disagreement or hostility between people.</p>
+      <p class="kw-ctx">&ldquo;She described the motion, which defined Zionism as an ideology supporting 'an ethnonationalist Jewish state', as 'dangerous' and 'divisive'.&rdquo;</p>
+      <p class="kw-ctx-cn">她将这项将犹太复国主义定义为支持“一个民族主义的犹太国家”的意识形态的动议描述为“危险的”和“分裂的”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">constituency</span>
+        <button class="kw-speak-btn" data-word="constituency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈstɪtʃuənsi/ n.</span>
+      </div>
+      <p class="kw-def">选区</p>
+      <p class="kw-def-en">A body of voters in a specified area who elect a representative to a legislative body.</p>
+      <p class="kw-ctx">&ldquo;Polanski did not vote on the motion after leaving the party's conference early to campaign in the north London constituency.&rdquo;</p>
+      <p class="kw-ctx-cn">波兰斯基提前离开党会议，前往北伦敦选区竞选，因此没有对这项动议进行投票。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">manifesto</span>
+        <button class="kw-speak-btn" data-word="manifesto" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌmænɪˈfestoʊ/ n.</span>
+      </div>
+      <p class="kw-def">宣言，纲领</p>
+      <p class="kw-def-en">A public declaration of policy and aims, especially one issued before an election by a political party.</p>
+      <p class="kw-ctx">&ldquo;Under Green Party rules, motions supported by members become official party policy, but will not necessarily be included in the party's manifesto at the next general election.&rdquo;</p>
+      <p class="kw-ctx-cn">根据绿党规则，成员支持的动议成为官方党政策，但不一定会在下次大选的党宣言中体现。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overshadow</span>
+        <button class="kw-speak-btn" data-word="overshadow" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌoʊvərˈʃædoʊ/ v.</span>
+      </div>
+      <p class="kw-def">使黯然失色，蒙上阴影</p>
+      <p class="kw-def-en">To make something seem less important or to cause it to be remembered in a negative way.</p>
+      <p class="kw-ctx">&ldquo;The motion has overshadowed the final days of Polanski's by-election campaign, where the Greens have been looking to overturn a substantial Labour majority in the seat vacated by former Prime Minister Sir Keir Starmer.&rdquo;</p>
+      <p class="kw-ctx-cn">这项动议给波兰斯基补选竞选的最后几天蒙上了阴影，绿党原本希望在前首相基尔·斯塔默爵士空出的席位上推翻工党的巨大多数优势。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">factionalism</span>
+        <button class="kw-speak-btn" data-word="factionalism" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfækʃənəlɪzəm/ n.</span>
+      </div>
+      <p class="kw-def">派系主义，小集团活动</p>
+      <p class="kw-def-en">The state of being split into factions; partisan conflict within a group.</p>
+      <p class="kw-ctx">&ldquo;We do things differently - unlike Labour who use anonymous sources and resort to factionalism.&rdquo;</p>
+      <p class="kw-ctx-cn">我们做事方式不同——不像工党那样使用匿名消息来源并诉诸派系主义。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">genocide</span>
+        <button class="kw-speak-btn" data-word="genocide" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdʒɛnəsaɪd/ n.</span>
+      </div>
+      <p class="kw-def">种族灭绝</p>
+      <p class="kw-def-en">The deliberate killing of a large number of people from a particular nation or ethnic group with the aim of destroying that nation or group.</p>
+      <p class="kw-ctx">&ldquo;Israel has been responsible for a genocide, ethnic cleansing and the killing of children, and we've had a political establishment which has not only turned a blind eye but provided support.&rdquo;</p>
+      <p class="kw-ctx-cn">以色列对种族灭绝、种族清洗和杀害儿童负有责任，而我们有一个政治体制不仅视而不见，还提供了支持。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Zack Polanski failed to show leadership over a motion passed by Green Party members declaring Zionism a form of racism, the party's former leader Caroline Lucas has told the BBC.", "start_ms": 0, "end_ms": 12720, "paragraph_index": 0}, {"index": 1, "text": "Lucas told Newsnight that the party's current leader, who did not attend the debate on the motion at the Green Party's annual conference in Brighton, \"should have been there and he should have voted\".", "start_ms": 12720, "end_ms": 24264, "paragraph_index": 1}, {"index": 2, "text": "She described the motion, which defined Zionism as an ideology supporting \"an ethnonationalist Jewish state\", as \"dangerous\" and \"divisive\".", "start_ms": 24264, "end_ms": 34536, "paragraph_index": 2}, {"index": 3, "text": "In the wake of the vote, Polanski has said he will not accept anyone being excluded from the Green Party \"because of the religious or communal body they are part of\".", "start_ms": 34536, "end_ms": 45048, "paragraph_index": 3}, {"index": 4, "text": "Lucas's comments came after polls closed in the Holborn and St Pancras by-election, where Polanski is standing as a candidate.", "start_ms": 45048, "end_ms": 54168, "paragraph_index": 4}, {"index": 5, "text": "Polanski did not vote on the motion after leaving the party's conference early to campaign in the north London constituency.", "start_ms": 54168, "end_ms": 62352, "paragraph_index": 5}, {"index": 6, "text": "The Green leader has declined media interviews since the motion was passed on Sunday and did not answer questions from a BBC reporter about the motion earlier on Thursday.", "start_ms": 62352, "end_ms": 73728, "paragraph_index": 6}, {"index": 7, "text": "The motion also backed a \"single democratic Palestinian state in all of historic Palestine\", which includes modern-day Israel.", "start_ms": 73728, "end_ms": 82944, "paragraph_index": 7}, {"index": 8, "text": "Under Green Party rules, motions supported by members become official party policy, but will not necessarily be included in the party's manifesto at the next general election.", "start_ms": 82944, "end_ms": 95232, "paragraph_index": 8}, {"index": 9, "text": "Lucas, who voted against the motion, said: \"I would have hoped [Polanski] would have been a very strong critic of this motion.\"", "start_ms": 95232, "end_ms": 103776, "paragraph_index": 9}, {"index": 10, "text": "She added that it was \"flawed from top to bottom\".", "start_ms": 103776, "end_ms": 107544, "paragraph_index": 10}, {"index": 11, "text": "Asked if Polanski should stand down, she told Newsnight: \"I think let's just see what happens in the coming days and weeks.", "start_ms": 107544, "end_ms": 115896, "paragraph_index": 11}, {"index": 12, "text": "Obviously he has been completely taken up with this by-election.", "start_ms": 115896, "end_ms": 120744, "paragraph_index": 11}, {"index": 13, "text": "\"I want him to speak now about what's happened, I want him to show the leadership that was frankly missing on Sunday.", "start_ms": 120744, "end_ms": 128256, "paragraph_index": 12}, {"index": 14, "text": "\"I think the jury is out about whether he will do that - but I very much hope he will.\"", "start_ms": 128256, "end_ms": 133944, "paragraph_index": 13}, {"index": 15, "text": "In response to Lucas's comments, a Green Party source said: \"There are ups and downs in politics and when people are passionate they disagree in the heat of a campaign.", "start_ms": 133944, "end_ms": 144888, "paragraph_index": 14}, {"index": 16, "text": "\"We do things differently - unlike Labour who use anonymous sources and resort to  factionalism.\"", "start_ms": 144888, "end_ms": 151776, "paragraph_index": 15}, {"index": 17, "text": "This video can not be played", "start_ms": 151776, "end_ms": 154776, "paragraph_index": 16}, {"index": 18, "text": "Watch: Polanski was asked earlier on Thursday about the Zionism conference motion", "start_ms": 154776, "end_ms": 161280, "paragraph_index": 17}, {"index": 19, "text": "The motion has overshadowed the final days of Polanski's by-election campaign, where the Greens have been looking to overturn a substantial Labour majority in the seat vacated by former Prime Minister Sir Keir Starmer .", "start_ms": 161280, "end_ms": 175320, "paragraph_index": 18}, {"index": 20, "text": "It has sparked days of controversy and exposed divisions between the party's newly enlarged membership base under Polanski and its MPs elected at the last general election.", "start_ms": 175320, "end_ms": 186888, "paragraph_index": 19}, {"index": 21, "text": "Four of the five Green MPs opposed the motion, while the party's co-deputy leaders were split over whether they supported it.", "start_ms": 186888, "end_ms": 195504, "paragraph_index": 20}, {"index": 22, "text": "The vote also led to the resignation of the Green deputy leader in Wales and condemnation from the European Green Party.", "start_ms": 195504, "end_ms": 203784, "paragraph_index": 21}, {"index": 23, "text": "In a written statement on Monday, Polanski did not specify whether he supported the motion passed by members but sought to reassure Jewish members that \"no-one will be made unwelcome because of their background, their faith, or where they worship\".", "start_ms": 203784, "end_ms": 219024, "paragraph_index": 22}, {"index": 24, "text": "Polanski, who is Jewish, added that \"antisemitism and criticism of the Israeli state are, and must always be, completely distinct\".", "start_ms": 219024, "end_ms": 228936, "paragraph_index": 23}, {"index": 25, "text": "Ahead of the vote, he had backed an amendment to specify that the motion should not be used to discipline Jewish members attending synagogues that consider themselves Zionist, but this was voted down by members.", "start_ms": 228936, "end_ms": 242112, "paragraph_index": 24}, {"index": 26, "text": "He had also said he wanted to see the reference to a single Palestinian state changed, arguing: \"I don't believe we as a Green Party of England and Wales, or even the British government, should be deciding what the future settlement looks like.\"", "start_ms": 242112, "end_ms": 257040, "paragraph_index": 25}, {"index": 27, "text": "I won't accept exclusion within Green Party, says Polanski after criticism of Zionism motion", "start_ms": 257040, "end_ms": 264432, "paragraph_index": 26}, {"index": 28, "text": "Tensions exposed among Greens by 'Zionism is racism' conference vote", "start_ms": 264432, "end_ms": 270168, "paragraph_index": 27}, {"index": 29, "text": "Polanski banned from Israel after party's motion declaring 'Zionism is racism'", "start_ms": 270168, "end_ms": 276288, "paragraph_index": 28}, {"index": 30, "text": "Meanwhile, Prime Minister Andy Burnham has called on Polanski to reverse the motion and ensure it is not Green Party policy.", "start_ms": 276288, "end_ms": 285456, "paragraph_index": 29}, {"index": 31, "text": "In his first comment on the row, Burnham said it was \"completely wrong\" for the party to support the motion and this showed \"terrible judgement\".", "start_ms": 285456, "end_ms": 294840, "paragraph_index": 30}, {"index": 32, "text": "The PM said he felt the motion effectively ruled out a two-state solution between Israel and Palestine.", "start_ms": 294840, "end_ms": 302496, "paragraph_index": 31}, {"index": 33, "text": "\"For that reason, it shouldn't be supported in any way, shape or form,\" he told reporters while on a visit to Berlin.", "start_ms": 302496, "end_ms": 310800, "paragraph_index": 32}, {"index": 34, "text": "When asked if he would rule out entering into coalition with the Greens, he would not be drawn on \"any business about what might or might not happen in the future\".", "start_ms": 310800, "end_ms": 320592, "paragraph_index": 33}, {"index": 35, "text": "On Thursday, a Green Party spokesperson said: \"This has been an emotive issue and is complex.", "start_ms": 320592, "end_ms": 327816, "paragraph_index": 34}, {"index": 36, "text": "It has rightly caused much discussion, and needs to be taken in the context that Israel's behaviour has had.", "start_ms": 327816, "end_ms": 335592, "paragraph_index": 34}, {"index": 37, "text": "\"Israel has been responsible for a genocide, ethnic cleansing and the killing of children, and we've had a political establishment which has not only turned a blind eye but provided support.\"", "start_ms": 335592, "end_ms": 347976, "paragraph_index": 35}, {"index": 38, "text": "The International Court of Justice (ICJ) is currently hearing a case brought by South Africa that accuses Israeli forces of genocide, but it could take years to reach a conclusion.", "start_ms": 347976, "end_ms": 360768, "paragraph_index": 36}, {"index": 39, "text": "Israel has called the case \"wholly unfounded\" and based on \"biased and false claims\".", "start_ms": 360768, "end_ms": 367032, "paragraph_index": 36}, {"index": 40, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 367032, "end_ms": 374472, "paragraph_index": 37}], "total_duration_ms": 374472};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "of": "的", "in": "在", "polanski": "波兰斯基", "green": "绿色", "has": "有", "on": "在", "he": "他", "not": "不", "party": "政党", "that": "那个", "be": "是", "party's": "党的", "is": "是", "it": "它", "by": "被", "said": "说", "members": "成员", "been": "已经", "was": "是", "but": "但是", "this": "这个", "should": "应该", "have": "有", "vote": "投票", "will": "将", "from": "来自", "or": "或者", "about": "关于", "israel": "以色列", "leader": "领导人", "told": "告诉", "who": "谁", "did": "做了", "conference": "会议", "as": "作为", "an": "一个", "jewish": "犹太人的", "state": "国家", "they": "它们", "are": "是", "after": "之后", "supported": "支持", "would": "将", "had": "有", "for": "为了", "passed": "通过", "racism": "种族主义", "lucas": "卢卡斯", "at": "在", "voted": "投票", "she": "她", "which": "哪个", "by-election": "补选", "where": "那里", "campaign": "竞选活动", "thursday": "星期四", "also": "也", "asked": "询问", "what": "什么", "days": "天", "completely": "完全", "up": "向上", "with": "与", "out": "出来", "whether": "是否", "greens": "绿党", "show": "显示", "leadership": "领导力", "over": "超过", "declaring": "宣布", "form": "形成", "former": "前任", "bbc": "英国广播公司", "newsnight": "新闻之夜", "there": "那里", "accept": "接受", "because": "因为", "comments": "评论", "sunday": "星期日", "earlier": "较早", "backed": "支持", "single": "单一的", "palestinian": "巴勒斯坦的", "palestine": "巴勒斯坦", "under": "在...之下", "policy": "政策", "general": "总", "election": "选举", "very": "非常", "added": "补充", "if": "如果", "down": "下来", "think": "认为", "see": "看到", "taken": "采取", "want": "想要", "him": "他", "do": "做", "much": "许多", "politics": "政治", "when": "当", "we": "我们", "labour": "工党", "prime": "首相", "minister": "部长", "exposed": "暴露", "between": "之间", "mps": "议员", "while": "而", "wales": "威尔士", "their": "他们的", "criticism": "批评", "israeli": "以色列的", "future": "未来", "burnham": "伯纳姆", "called": "称为", "support": "支持", "any": "任何", "might": "可能", "case": "案例", "zack": "扎克", "failed": "失败", "caroline": "卡罗琳", "current": "当前的", "attend": "出席", "debate": "辩论", "annual": "年度", "brighton": "布莱顿", "described": "描述", "defined": "明确的", "supporting": "支持", "dangerous": "危险", "wake": "醒来", "anyone": "任何人", "being": "正在", "excluded": "被排除的", "religious": "宗教的", "body": "机构", "part": "部分", "came": "到来", "polls": "民调", "closed": "关闭", "st": "圣", "standing": "站立", "candidate": "候选人", "leaving": "离开", "early": "早期的", "north": "北部", "london": "伦敦", "declined": "拒绝", "media": "媒体", "interviews": "采访", "since": "自从", "answer": "回答", "questions": "问题", "reporter": "记者", "democratic": "民主的", "all": "所有", "historic": "历史性的", "includes": "包括", "rules": "规则", "become": "成为", "official": "官方", "included": "包括", "next": "下一个", "against": "反对", "hoped": "希望", "strong": "强烈", "critic": "批评者", "top": "顶级的", "bottom": "底部", "stand": "立场", "let's": "让我们", "just": "只是", "happens": "发生", "coming": "即将到来的", "weeks": "周", "obviously": "显然", "speak": "发言", "now": "现在", "what's": "什么是", "happened": "发生", "frankly": "坦率地", "missing": "失踪", "jury": "陪审团", "hope": "希望", "response": "回应", "source": "来源", "downs": "丘陵地带", "people": "人们", "passionate": "热情的", "disagree": "不同意", "heat": "高温", "things": "事情", "differently": "不同", "unlike": "不像", "use": "使用", "anonymous": "匿名的", "sources": "消息来源", "resort": "度假胜地", "video": "视频", "can": "可以", "played": "比赛", "watch": "观看", "overshadowed": "使黯然失色", "final": "最终", "looking": "寻找", "overturn": "推翻", "substantial": "大量的", "majority": "多数", "seat": "席位", "sir": "爵士", "keir": "基尔", "starmer": "斯塔默", "sparked": "引发", "controversy": "争议", "divisions": "分歧", "newly": "新近", "membership": "会员资格", "base": "基地", "its": "它的", "elected": "当选的", "last": "最后", "four": "四", "five": "五", "opposed": "反对的", "leaders": "领导人", "were": "是", "led": "带领", "resignation": "辞职", "deputy": "副手", "condemnation": "谴责", "european": "欧洲的", "written": "书面", "statement": "声明", "monday": "星期一", "sought": "寻求", "reassure": "使安心", "no-one": "无人", "made": "做出", "background": "背景", "faith": "信仰", "worship": "礼拜", "antisemitism": "反犹太主义", "must": "必须", "always": "总是", "ahead": "提前", "used": "使用", "discipline": "纪律", "attending": "出席", "synagogues": "犹太教堂", "consider": "考虑", "themselves": "他们自己", "zionist": "犹太复国主义的", "wanted": "想要", "reference": "提及", "changed": "改变", "arguing": "争论", "don't": "不要", "believe": "认为", "england": "英格兰", "even": "甚至", "british": "英国的", "government": "政府", "deciding": "决定", "settlement": "解决", "looks": "看起来", "like": "像", "won't": "不会", "within": "在内部", "says": "表示", "tensions": "紧张局势", "among": "在...之中", "banned": "被禁的", "meanwhile": "与此同时", "andy": "安迪", "reverse": "逆转", "ensure": "确保", "his": "他的", "first": "第一轮", "comment": "评论", "row": "争吵", "wrong": "错误的", "showed": "显示", "terrible": "糟糕的", "judgement": "判断", "pm": "首相", "felt": "感觉", "effectively": "实际上", "ruled": "裁定", "two-state": "两国方案", "solution": "解决方案", "reason": "原因", "shouldn't": "不应该", "way": "方式", "shape": "塑造", "reporters": "记者们", "visit": "访问", "berlin": "柏林", "rule": "统治", "entering": "进入", "into": "进入", "coalition": "联盟", "drawn": "划定", "business": "事务", "happen": "发生", "spokesperson": "发言人", "issue": "问题", "complex": "复杂的", "rightly": "理所当然地", "caused": "导致", "discussion": "讨论", "needs": "需要", "context": "背景", "israel's": "以色列的", "behaviour": "行为", "responsible": "负责的", "ethnic": "种族的", "cleansing": "清洗", "killing": "杀害", "children": "儿童", "we've": "我们已经", "political": "政治的", "establishment": "建立", "only": "只有", "turned": "转向", "blind": "盲目的", "eye": "目光", "provided": "提供", "international": "国际", "court": "法庭", "justice": "正义", "currently": "目前", "hearing": "听证会", "brought": "带来", "south": "韩国", "africa": "非洲", "accuses": "指责", "forces": "力量", "could": "可能", "take": "采取", "years": "多年", "reach": "达到", "conclusion": "结论", "wholly": "完全", "unfounded": "毫无根据", "based": "基于", "false": "虚假的", "claims": "声称", "sign": "签署", "our": "我们的", "essential": "必要的", "newsletter": "新闻简报", "keep": "保持", "inner": "内部的", "workings": "运作", "westminster": "威斯敏斯特", "beyond": "超出", "zionism": "犹太复国主义", "lucas's": "卢卡斯的", "specify": "明确规定", "ethnonationalist": "民族主义", "communal": "族群间的", "holborn": "霍尔本", "pancras": "潘克拉斯", "modern-day": "当代的", "motions": "动议", "necessarily": "必然", "flawed": "有缺陷的", "ups": "联合包裹", "polanski's": "波兰斯基的", "vacated": "被撤销", "enlarged": "扩大的", "co-deputy": "联席副职", "split": "分裂", "unwelcome": "不受欢迎的", "distinct": "截然不同的", "amendment": "修正案", "exclusion": "排除", "emotive": "情绪化的", "icj": "国际法院", "biased": "有偏见的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
