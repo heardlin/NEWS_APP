@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-10</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-10</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/d61b/live/93d8fbd0-c41e-11f1-a175-8928617a734f.jpg" alt="Trump announces deal for Russian diesel as Zelensky calls it a gift to Putin" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump announces deal for Russian diesel as Zelensky calls it a gift to Putin</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cm1dwgr666wno?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-10.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">President Donald Trump has announced a deal to import Russian diesel into the US, as he faces mounting pressure to bring down fuel prices.</span></p>
+        <p class="cn">美国总统唐纳德·特朗普（Donald Trump）宣布了一项将俄罗斯柴油进口到美国的协议，他正面临越来越大的压力要求降低燃料价格。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Trump said Putin had agreed to release 300,000 tonnes of diesel immediately "to the American and global marketplace" followed by 500,000 tonnes in November and another million after that.</span></p>
+        <p class="cn">特朗普表示，普京已同意立即向“美国及全球市场”释放30万吨柴油，随后在11月再释放50万吨，之后还有另外100万吨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The move on Friday sparked anger from Ukraine's President Volodymr Zelensky, who called it a gift to Putin that amounts to "an investment in a war that must be ended, not prolonged".</span></p>
+        <p class="cn">周五的这一举动引发了乌克兰总统弗拉基米尔·泽连斯基（Volodymyr Zelensky）的愤怒，他称这是给普京的礼物，相当于“对一场必须结束而非延续的战争的投资”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">It is understood the US Treasury is suspending sanctions on Russian diesel exports until 7 April as part of the deal, but other assets like those in American banks are still frozen.</span></p>
+        <p class="cn">据了解，作为协议的一部分，美国财政部（US Treasury）将暂停对俄罗斯柴油出口的制裁直至4月7日，但其他资产如美国银行中的资产仍被冻结。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">In his Truth Social post, Trump added that a further three million tonnes of Russian diesel would be delivered "within a short period", dependent on the condition of its refineries, which have seen attacks by Ukraine.</span></p>
+        <p class="cn">特朗普在其Truth Social帖子中还表示，另外300万吨俄罗斯柴油将在“短期内”交付，具体取决于其炼油厂的情况，这些炼油厂曾遭到乌克兰的袭击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Putin later said Russia, which introduced a ban on diesel exports earlier this year, was willing to supply both the US and global markets with oil and petroleum products, but his statement did not specify amounts.</span></p>
+        <p class="cn">普京随后表示，俄罗斯今年早些时候实施了柴油出口禁令，但愿意向美国和全球市场供应石油和石油产品，但他的声明未具体说明数量。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Analysts, however, have questioned whether Russia is capable of providing that quantity of diesel and the extent to which doing so will ease prices for American consumers.</span></p>
+        <p class="cn">然而，分析人士质疑俄罗斯是否有能力提供如此数量的柴油，以及这样做能在多大程度上缓解美国消费者的价格压力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Analysis: Trump's shock Russia deal highlights mounting pressure to curb fuel prices</span></p>
+        <p class="cn">分析：特朗普令人震惊的俄罗斯协议凸显了遏制燃料价格的日益增大的压力</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Tim Armitage, investment strategist at Quilter Cheviot, said the numbers mentioned by Trump were "relatively small".</span></p>
+        <p class="cn">Quilter Cheviot的投资策略师蒂姆·阿米蒂奇（Tim Armitage）表示，特朗普提到的数字“相对较小”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">He said the first tranche equated to approximately 2.25m barrels, and daily US consumption was around 3.8m barrels, "so it won't make a material difference to pump prices in the US".</span></p>
+        <p class="cn">他说，第一批约相当于225万桶，而美国每日消费量约为380万桶，“因此不会对美国的加油站价格产生实质性影响”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">"Granted, there are then two more releases to come, but it does appear to be a slightly desperate move by President Trump to try to lower <span class="keyword" data-word="inflation" data-phonetic="/ɪnˈfleɪʃən/" data-pos="n." data-def="通货膨胀" data-def-en="A general increase in prices and fall in the purchasing value of money.">inflation</span> ahead of the midterms."</span></p>
+        <p class="cn">“诚然，随后还会有两次释放，但这看起来确实是特朗普总统在中期选举前试图降低通胀的一种略显绝望的举动。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">The BBC has asked the White House what Russia will get from the US in return for the commitment.</span></p>
+        <p class="cn">BBC已询问白宫，俄罗斯将从美国获得什么作为这一承诺的回报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Meanwhile, the UK government spokesperson said its position "could not be clearer" and it would continue working with international partners to support Ukraine and bring about sustained peace.</span></p>
+        <p class="cn">与此同时，英国政府发言人表示其立场“再清楚不过”，并将继续与国际伙伴合作，支持乌克兰并实现持久和平。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">"We will also maintain pressure on Russia through the toughest sanctions regime ever imposed by the UK, increasing the cost of Putin's aggression and supporting efforts to secure a just and lasting peace."</span></p>
+        <p class="cn">“我们还将通过英国有史以来实施的最严厉制裁制度继续对俄罗斯施压，增加普京侵略的成本，并支持确保公正持久和平的努力。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">Friday's announcement is the latest effort from Trump to lower fuel prices in the US, as he has spent months grappling with the political consequences of the Iran war, which began in February, and its impact on global energy prices.</span></p>
+        <p class="cn">周五的宣布是特朗普降低美国燃料价格的最新努力，他数月来一直在应对2月开始的伊朗战争及其对全球能源价格影响的政治后果。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">That conflict has sent the cost of petrol and, in particular diesel, skyrocketing in America in recent months, which has soured his standing with the public who have been stung by the higher pump prices and knock-on effects that led to across-the board <span class="keyword" data-word="inflation" data-phonetic="/ɪnˈfleɪʃən/" data-pos="n." data-def="通货膨胀" data-def-en="A general increase in prices and fall in the purchasing value of money.">inflation</span>.</span></p>
+        <p class="cn">这场冲突导致美国近几个月汽油价格，尤其是柴油价格飙升，损害了他在公众中的声望，公众因油价上涨及随之而来的全面通胀而受到打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">The average diesel price in the US is currently $6.28 (Â£4.74) a gallon, according to the AAA, down from the record high of $6.53 recorded at the end of September.</span></p>
+        <p class="cn">据AAA数据，美国目前柴油平均价格为每加仑6.28美元（4.74英镑），低于9月底创下的6.53美元的历史高点。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="17">Shortly after Trump's announcement, the US Treasury formally issued a temporary licence allowing Russian diesel into the market.</span></p>
+        <p class="cn">特朗普宣布后不久，美国财政部正式发放了允许俄罗斯柴油进入市场的临时许可证。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="18">Putin said in a statement that he had spoken to Trump about the global energy situation on Friday, adding: "The Russian side confirmed its willingness to supply oil and petroleum products to the US market and global markets at large."</span></p>
+        <p class="cn">普京在一份声明中表示，他周五与特朗普讨论了全球能源形势，并补充说：“俄方确认愿意向美国市场和全球市场供应石油和石油产品。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="19">An envoy for Putin, Kirill Dmitriev, welcomed the deal on social media, saying: "Russia-US co-operation on diesel and energy will benefit the world."</span></p>
+        <p class="cn">普京的特使基里尔·德米特里耶夫（Kirill Dmitriev）在社交媒体上对该协议表示欢迎，称：“俄美在柴油和能源方面的合作将造福世界。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="20">But Zelensky hit out at it, saying "gifts to Putin will not work for peace" and that Russia would repay the diesel with "further terror".</span></p>
+        <p class="cn">但泽连斯基对此予以抨击，称“给普京的礼物不会带来和平”，俄罗斯将以“进一步的恐怖”来回报柴油。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="21">"We count on America's fair support for our defence of life, for our defence of people in Ukraine â and on the United States having a correspondingly strong conversation with Russia.</span> <span class="sentence" data-sentence-index="22">A strong one, not a weak one," he wrote.</span></p>
+        <p class="cn">“我们指望美国公平支持我们捍卫生命、捍卫乌克兰人民——并指望美国与俄罗斯进行相应强有力的对话。强有力的，而非软弱的，”他写道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">A spokesperson for the UK government said: "The UK's position could not be clearer.</span> <span class="sentence" data-sentence-index="24">We will continue working closely with international partners to ensure Ukraine has the military and financial support it needs to defend itself."</span></p>
+        <p class="cn">英国政府发言人表示：“英国的立场再清楚不过。我们将继续与国际伙伴密切合作，确保乌克兰拥有自卫所需的军事和财政支持。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">They added that the government would continue to "maintain pressure on Russia through the toughest sanctions regime ever imposed by UK".</span></p>
+        <p class="cn">他们补充说，政府将继续“通过英国有史以来实施的最严厉制裁制度对俄罗斯施压”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">"Russia could end this war today.</span> <span class="sentence" data-sentence-index="27">We remain committed to supporting Ukraine for as long as it takes and to working with partners to bring about a durable peace."</span></p>
+        <p class="cn">“俄罗斯今天就可以结束这场战争。我们仍然致力于在必要时支持乌克兰，并与伙伴合作实现持久和平。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">Russia has this year experienced two waves of severe fuel shortages across the country as a result of Ukrainian drone strikes on Russian oil refineries.</span></p>
+        <p class="cn">由于乌克兰无人机袭击俄罗斯炼油厂，俄罗斯今年在全国范围内经历了两次严重的燃料短缺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">According to the International Energy Agency, its diesel production is estimated to have fallen by nearly 30%.</span></p>
+        <p class="cn">据国际能源署（International Energy Agency）称，其柴油产量估计下降了近30%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">Trump has expressed his displeasure over those attacks, blaming them for rising fuel prices.</span></p>
+        <p class="cn">特朗普对这些袭击表示不满，将其归咎于燃料价格上涨。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">But Zelensky defended the strikes on Friday, saying there were in response to "Russia's years-long campaign of terror against Ukraine's energy sector".</span></p>
+        <p class="cn">但泽连斯基周五为袭击辩护，称这是对“俄罗斯多年来对乌克兰能源部门的恐怖行动”的回应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">"Ukraine will not set Russian oil refineries on fire if Russia does not destroy our energy infrastructure," he said.</span></p>
+        <p class="cn">“如果俄罗斯不摧毁我们的能源基础设施，乌克兰就不会点燃俄罗斯炼油厂，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">Trump wants to reduce the cost of fuel as the midterms <span class="keyword" data-word="loom" data-phonetic="/luːm/" data-pos="v." data-def="逼近" data-def-en="To appear as a large, unclear shape, often threatening.">loom</span> - will it work?</span></p>
+        <p class="cn">特朗普希望在中期选举临近之际降低燃料成本——这会奏效吗？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">Trump's Truth Social posts often provide incomplete information and the details of exactly how Russia is supplying this fuel to the global market, and what they might get for in return is unclear.</span></p>
+        <p class="cn">特朗普的Truth Social帖子往往提供不完整的信息，关于俄罗斯究竟如何向全球市场供应这些燃料以及他们可能得到什么回报的细节尚不清楚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">But the announced deal represents a remarkable about-face, as the US Congress recently enacted legislation - signed by the president - to authorise new American sanctions and tariffs on nations that import Russian oil and gas.</span></p>
+        <p class="cn">但宣布的协议代表了一个显著的政策转变，因为美国国会最近颁布了由总统签署的立法，授权对进口俄罗斯石油和天然气的国家实施新的美国制裁和关税。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">The agreement with Russia also opens Trump up to criticism from European allies and pro-Ukraine politicians in the US, that the American president is now helping to fund Moscow's war machine.</span></p>
+        <p class="cn">与俄罗斯的协议也使特朗普面临欧洲盟友和美国亲乌克兰政客的批评，称美国总统现在正在帮助资助莫斯科的战争机器。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">What impact the deal with Russia will have on fuel prices also remains unclear.</span> <span class="sentence" data-sentence-index="38">The global benchmark for crude oil, Brent, remains above $103 a barrel.</span> <span class="sentence" data-sentence-index="39">Before the war with Iran, Brent crude was trading at about $73 a barrel.</span></p>
+        <p class="cn">与俄罗斯的协议对燃料价格的影响也仍不清楚。全球原油基准布伦特（Brent）仍在每桶103美元以上。在与伊朗开战前，布伦特原油交易价格约为每桶73美元。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="40">With the looming US <span class="keyword" data-word="midterm" data-phonetic="/ˌmɪdˈtɜːrm/" data-pos="n." data-def="中期选举" data-def-en="A US election held halfway through a president's term.">midterm</span> congressional elections - which will determine if Republicans maintain control of Congress - Trump has been searching for ways to ease his Republican party's political pain.</span></p>
+        <p class="cn">随着美国中期国会选举的临近——这将决定共和党能否保持对国会的控制——特朗普一直在寻找减轻共和党政治痛苦的方法。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="41">Earlier this week, he said he was "thinking about" suspending the federal tax on gasoline and also announced that he would allow so-called red dye diesel to be used on US highways without facing federal tax.</span></p>
+        <p class="cn">本周早些时候，他表示正在“考虑”暂停联邦汽油税，并宣布将允许所谓的红色染料柴油在美国高速公路上使用而无需缴纳联邦税。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="42">Trump has also successfully pressured G7 nations into releasing 100 million barrels of oil and diesel from stockpiles to help ease supply concerns, and previously supported calls for a ban on diesel exports from the US.</span></p>
+        <p class="cn">特朗普还成功施压七国集团（G7）国家从库存中释放1亿桶石油和柴油以帮助缓解供应担忧，此前还支持禁止美国柴油出口的呼吁。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃən/ n.</span>
+      </div>
+      <p class="kw-def">制裁</p>
+      <p class="kw-def-en">A penalty or restriction imposed by one country on another.</p>
+      <p class="kw-ctx">&ldquo;It is understood the US Treasury is suspending sanctions on Russian diesel exports until 7 April as part of the deal, but other assets like those in American banks are still frozen.&rdquo;</p>
+      <p class="kw-ctx-cn">据了解，作为协议的一部分，美国财政部将暂停对俄罗斯柴油出口的制裁直至4月7日，但美国银行等其他资产仍被冻结。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">refinery</span>
+        <button class="kw-speak-btn" data-word="refinery" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈfaɪnəri/ n.</span>
+      </div>
+      <p class="kw-def">炼油厂</p>
+      <p class="kw-def-en">An industrial plant where crude oil is processed into fuels.</p>
+      <p class="kw-ctx">&ldquo;In his Truth Social post, Trump added that a further three million tonnes of Russian diesel would be delivered "within a short period", dependent on the condition of its refineries, which have seen attacks by Ukraine.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普在其Truth Social帖子中补充说，另外300万吨俄罗斯柴油将在“短期内”交付，这取决于其炼油厂的情况，这些炼油厂曾遭到乌克兰的袭击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">analyst</span>
+        <button class="kw-speak-btn" data-word="analyst" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈænəlɪst/ n.</span>
+      </div>
+      <p class="kw-def">分析师</p>
+      <p class="kw-def-en">A person who analyzes data or situations to provide insights.</p>
+      <p class="kw-ctx">&ldquo;Analysts, however, have questioned whether Russia is capable of providing that quantity of diesel and the extent to which doing so will ease prices for American consumers.&rdquo;</p>
+      <p class="kw-ctx-cn">然而，分析人士质疑俄罗斯是否有能力提供如此数量的柴油，以及这样做能在多大程度上缓解美国消费者的价格压力。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inflation</span>
+        <button class="kw-speak-btn" data-word="inflation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈfleɪʃən/ n.</span>
+      </div>
+      <p class="kw-def">通货膨胀</p>
+      <p class="kw-def-en">A general increase in prices and fall in the purchasing value of money.</p>
+      <p class="kw-ctx">&ldquo;Granted, there are then two more releases to come, but it does appear to be a slightly desperate move by President Trump to try to lower inflation ahead of the midterms.&rdquo;</p>
+      <p class="kw-ctx-cn">诚然，随后还会有两次释放，但这似乎是特朗普总统在中期选举前试图降低通胀的有点绝望的举动。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">midterm</span>
+        <button class="kw-speak-btn" data-word="midterm" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌmɪdˈtɜːrm/ n.</span>
+      </div>
+      <p class="kw-def">中期选举</p>
+      <p class="kw-def-en">A US election held halfway through a president's term.</p>
+      <p class="kw-ctx">&ldquo;Granted, there are then two more releases to come, but it does appear to be a slightly desperate move by President Trump to try to lower inflation ahead of the midterms.&rdquo;</p>
+      <p class="kw-ctx-cn">诚然，随后还会有两次释放，但这似乎是特朗普总统在中期选举前试图降低通胀的有点绝望的举动。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">skyrocket</span>
+        <button class="kw-speak-btn" data-word="skyrocket" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈskaɪrɒkɪt/ v.</span>
+      </div>
+      <p class="kw-def">暴涨</p>
+      <p class="kw-def-en">To rise rapidly and suddenly to a high level.</p>
+      <p class="kw-ctx">&ldquo;That conflict has sent the cost of petrol and, in particular diesel, skyrocketing in America in recent months, which has soured his standing with the public who have been stung by the higher pump prices and knock-on effects that led to across-the board inflation.&rdquo;</p>
+      <p class="kw-ctx-cn">这场冲突导致近几个月美国汽油尤其是柴油价格暴涨，这损害了他在公众中的声望，公众因油价上涨和导致全面通胀的连锁反应而受到伤害。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">loom</span>
+        <button class="kw-speak-btn" data-word="loom" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/luːm/ v.</span>
+      </div>
+      <p class="kw-def">逼近</p>
+      <p class="kw-def-en">To appear as a large, unclear shape, often threatening.</p>
+      <p class="kw-ctx">&ldquo;With the looming US midterm congressional elections - which will determine if Republicans maintain control of Congress - Trump has been searching for ways to ease his Republican party's political pain.&rdquo;</p>
+      <p class="kw-ctx-cn">随着美国中期国会选举的临近——这将决定共和党能否保持对国会的控制——特朗普一直在寻找减轻其共和党政治痛苦的方法。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stockpile</span>
+        <button class="kw-speak-btn" data-word="stockpile" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈstɒkpaɪl/ n.</span>
+      </div>
+      <p class="kw-def">库存</p>
+      <p class="kw-def-en">A large supply of goods stored for future use.</p>
+      <p class="kw-ctx">&ldquo;Trump has also successfully pressured G7 nations into releasing 100 million barrels of oil and diesel from stockpiles to help ease supply concerns, and previously supported calls for a ban on diesel exports from the US.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普还成功施压七国集团从库存中释放1亿桶石油和柴油，以帮助缓解供应担忧，此前还支持禁止美国柴油出口的呼吁。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "President Donald Trump has announced a deal to import Russian diesel into the US, as he faces mounting pressure to bring down fuel prices.", "start_ms": 0, "end_ms": 9984, "paragraph_index": 0}, {"index": 1, "text": "Trump said Putin had agreed to release 300,000 tonnes of diesel immediately \"to the American and global marketplace\" followed by 500,000 tonnes in November and another million after that.", "start_ms": 9984, "end_ms": 23232, "paragraph_index": 1}, {"index": 2, "text": "The move on Friday sparked anger from Ukraine's President Volodymr Zelensky, who called it a gift to Putin that amounts to \"an investment in a war that must be ended, not prolonged\".", "start_ms": 23232, "end_ms": 35232, "paragraph_index": 2}, {"index": 3, "text": "It is understood the US Treasury is suspending sanctions on Russian diesel exports until 7 April as part of the deal, but other assets like those in American banks are still frozen.", "start_ms": 35232, "end_ms": 47808, "paragraph_index": 3}, {"index": 4, "text": "In his Truth Social post, Trump added that a further three million tonnes of Russian diesel would be delivered \"within a short period\", dependent on the condition of its refineries, which have seen attacks by Ukraine.", "start_ms": 47808, "end_ms": 61680, "paragraph_index": 4}, {"index": 5, "text": "Putin later said Russia, which introduced a ban on diesel exports earlier this year, was willing to supply both the US and global markets with oil and petroleum products, but his statement did not specify amounts.", "start_ms": 61680, "end_ms": 76416, "paragraph_index": 5}, {"index": 6, "text": "Analysts, however, have questioned whether Russia is capable of providing that quantity of diesel and the extent to which doing so will ease prices for American consumers.", "start_ms": 76416, "end_ms": 88056, "paragraph_index": 6}, {"index": 7, "text": "Analysis: Trump's shock Russia deal highlights mounting pressure to curb fuel prices", "start_ms": 88056, "end_ms": 94728, "paragraph_index": 7}, {"index": 8, "text": "Tim Armitage, investment strategist at Quilter Cheviot, said the numbers mentioned by Trump were \"relatively small\".", "start_ms": 94728, "end_ms": 103104, "paragraph_index": 8}, {"index": 9, "text": "He said the first tranche equated to approximately 2.25m barrels, and daily US consumption was around 3.8m barrels, \"so it won't make a material difference to pump prices in the US\".", "start_ms": 103104, "end_ms": 117552, "paragraph_index": 9}, {"index": 10, "text": "\"Granted, there are then two more releases to come, but it does appear to be a slightly desperate move by President Trump to try to lower inflation ahead of the midterms.\"", "start_ms": 117552, "end_ms": 128352, "paragraph_index": 10}, {"index": 11, "text": "The BBC has asked the White House what Russia will get from the US in return for the commitment.", "start_ms": 128352, "end_ms": 134976, "paragraph_index": 11}, {"index": 12, "text": "Meanwhile, the UK government spokesperson said its position \"could not be clearer\" and it would continue working with international partners to support Ukraine and bring about sustained peace.", "start_ms": 134976, "end_ms": 147192, "paragraph_index": 12}, {"index": 13, "text": "\"We will also maintain pressure on Russia through the toughest sanctions regime ever imposed by the UK, increasing the cost of Putin's aggression and supporting efforts to secure a just and lasting peace.\"", "start_ms": 147192, "end_ms": 160536, "paragraph_index": 13}, {"index": 14, "text": "Friday's announcement is the latest effort from Trump to lower fuel prices in the US, as he has spent months grappling with the political consequences of the Iran war, which began in February, and its impact on global energy prices.", "start_ms": 160536, "end_ms": 176424, "paragraph_index": 14}, {"index": 15, "text": "That conflict has sent the cost of petrol and, in particular diesel, skyrocketing in America in recent months, which has soured his standing with the public who have been stung by the higher pump prices and knock-on effects that led to across-the board inflation.", "start_ms": 176424, "end_ms": 193176, "paragraph_index": 15}, {"index": 16, "text": "The average diesel price in the US is currently $6.28 (\u00c2\u00a34.74) a gallon, according to the AAA, down from the record high of $6.53 recorded at the end of September.", "start_ms": 193176, "end_ms": 209832, "paragraph_index": 16}, {"index": 17, "text": "Shortly after Trump's announcement, the US Treasury formally issued a temporary licence allowing Russian diesel into the market.", "start_ms": 209832, "end_ms": 219024, "paragraph_index": 17}, {"index": 18, "text": "Putin said in a statement that he had spoken to Trump about the global energy situation on Friday, adding: \"The Russian side confirmed its willingness to supply oil and petroleum products to the US market and global markets at large.\"", "start_ms": 219024, "end_ms": 234480, "paragraph_index": 18}, {"index": 19, "text": "An envoy for Putin, Kirill Dmitriev, welcomed the deal on social media, saying: \"Russia-US co-operation on diesel and energy will benefit the world.\"", "start_ms": 234480, "end_ms": 246024, "paragraph_index": 19}, {"index": 20, "text": "But Zelensky hit out at it, saying \"gifts to Putin will not work for peace\" and that Russia would repay the diesel with \"further terror\".", "start_ms": 246024, "end_ms": 254952, "paragraph_index": 20}, {"index": 21, "text": "\"We count on America's fair support for our defence of life, for our defence of people in Ukraine \u00e2\u0080\u0093 and on the United States having a correspondingly strong conversation with Russia.", "start_ms": 254952, "end_ms": 267216, "paragraph_index": 21}, {"index": 22, "text": "A strong one, not a weak one,\" he wrote.", "start_ms": 267216, "end_ms": 271128, "paragraph_index": 21}, {"index": 23, "text": "A spokesperson for the UK government said: \"The UK's position could not be clearer.", "start_ms": 271128, "end_ms": 277560, "paragraph_index": 22}, {"index": 24, "text": "We will continue working closely with international partners to ensure Ukraine has the military and financial support it needs to defend itself.\"", "start_ms": 277560, "end_ms": 287400, "paragraph_index": 22}, {"index": 25, "text": "They added that the government would continue to \"maintain pressure on Russia through the toughest sanctions regime ever imposed by UK\".", "start_ms": 287400, "end_ms": 296160, "paragraph_index": 23}, {"index": 26, "text": "\"Russia could end this war today.", "start_ms": 296160, "end_ms": 299232, "paragraph_index": 24}, {"index": 27, "text": "We remain committed to supporting Ukraine for as long as it takes and to working with partners to bring about a durable peace.\"", "start_ms": 299232, "end_ms": 307392, "paragraph_index": 24}, {"index": 28, "text": "Russia has this year experienced two waves of severe fuel shortages across the country as a result of Ukrainian drone strikes on Russian oil refineries.", "start_ms": 307392, "end_ms": 318072, "paragraph_index": 25}, {"index": 29, "text": "According to the International Energy Agency, its diesel production is estimated to have fallen by nearly 30%.", "start_ms": 318072, "end_ms": 326616, "paragraph_index": 26}, {"index": 30, "text": "Trump has expressed his displeasure over those attacks, blaming them for rising fuel prices.", "start_ms": 326616, "end_ms": 333672, "paragraph_index": 27}, {"index": 31, "text": "But Zelensky defended the strikes on Friday, saying there were in response to \"Russia's years-long campaign of terror against Ukraine's energy sector\".", "start_ms": 333672, "end_ms": 343968, "paragraph_index": 28}, {"index": 32, "text": "\"Ukraine will not set Russian oil refineries on fire if Russia does not destroy our energy infrastructure,\" he said.", "start_ms": 343968, "end_ms": 352440, "paragraph_index": 29}, {"index": 33, "text": "Trump wants to reduce the cost of fuel as the midterms loom - will it work?", "start_ms": 352440, "end_ms": 357816, "paragraph_index": 30}, {"index": 34, "text": "Trump's Truth Social posts often provide incomplete information and the details of exactly how Russia is supplying this fuel to the global market, and what they might get for in return is unclear.", "start_ms": 357816, "end_ms": 370872, "paragraph_index": 31}, {"index": 35, "text": "But the announced deal represents a remarkable about-face, as the US Congress recently enacted legislation - signed by the president - to authorise new American sanctions and tariffs on nations that import Russian oil and gas.", "start_ms": 370872, "end_ms": 386448, "paragraph_index": 32}, {"index": 36, "text": "The agreement with Russia also opens Trump up to criticism from European allies and pro-Ukraine politicians in the US, that the American president is now helping to fund Moscow's war machine.", "start_ms": 386448, "end_ms": 399888, "paragraph_index": 33}, {"index": 37, "text": "What impact the deal with Russia will have on fuel prices also remains unclear.", "start_ms": 399888, "end_ms": 406056, "paragraph_index": 34}, {"index": 38, "text": "The global benchmark for crude oil, Brent, remains above $103 a barrel.", "start_ms": 406056, "end_ms": 412944, "paragraph_index": 34}, {"index": 39, "text": "Before the war with Iran, Brent crude was trading at about $73 a barrel.", "start_ms": 412944, "end_ms": 419496, "paragraph_index": 34}, {"index": 40, "text": "With the looming US midterm congressional elections - which will determine if Republicans maintain control of Congress - Trump has been searching for ways to ease his Republican party's political pain.", "start_ms": 419496, "end_ms": 432288, "paragraph_index": 35}, {"index": 41, "text": "Earlier this week, he said he was \"thinking about\" suspending the federal tax on gasoline and also announced that he would allow so-called red dye diesel to be used on US highways without facing federal tax.", "start_ms": 432288, "end_ms": 446064, "paragraph_index": 36}, {"index": 42, "text": "Trump has also successfully pressured G7 nations into releasing 100 million barrels of oil and diesel from stockpiles to help ease supply concerns, and previously supported calls for a ban on diesel exports from the US.", "start_ms": 446064, "end_ms": 462096, "paragraph_index": 37}], "total_duration_ms": 462096};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "on": "在", "in": "在", "us": "我们", "russia": "俄罗斯", "that": "那个", "for": "为了", "trump": "特朗普", "with": "与", "has": "有", "will": "将", "he": "他", "prices": "价格", "said": "说", "by": "被", "it": "它", "is": "是", "russian": "俄罗斯的", "as": "作为", "fuel": "动力", "not": "不", "global": "全球", "from": "来自", "oil": "石油", "deal": "协议", "putin": "普京", "be": "是", "but": "但是", "which": "哪个", "ukraine": "乌克兰", "energy": "能源", "president": "总统", "american": "美国的", "war": "战争", "his": "他的", "would": "将", "its": "它的", "have": "有", "this": "这个", "at": "在", "about": "关于", "also": "也", "pressure": "压力", "sanctions": "制裁", "was": "是", "uk": "英国", "peace": "和平", "we": "我们", "announced": "宣布", "into": "进入", "bring": "带来", "tonnes": "吨", "million": "百万", "friday": "星期五", "zelensky": "泽连斯基", "exports": "出口", "social": "社交的", "supply": "供应", "ease": "缓解", "trump's": "特朗普的", "barrels": "桶", "what": "什么", "government": "政府", "could": "可能", "continue": "继续", "working": "工作", "international": "国际", "partners": "伴侣", "support": "支持", "maintain": "维持", "cost": "成本", "market": "市场", "saying": "说", "our": "我们的", "import": "进口", "mounting": "增加的", "down": "下来", "had": "有", "after": "之后", "move": "行动", "ukraine's": "乌克兰的", "who": "谁", "amounts": "数量", "an": "一个", "investment": "投资", "treasury": "财政部", "suspending": "暂停", "those": "那些", "are": "是", "truth": "真相", "added": "补充", "further": "进一步的", "attacks": "袭击", "ban": "禁止", "earlier": "较早", "year": "年", "markets": "市场", "products": "产品", "statement": "声明", "so": "所以", "were": "是", "there": "那里", "two": "两个", "does": "做", "lower": "较低的", "get": "得到", "return": "返回", "spokesperson": "发言人", "position": "立场", "clearer": "更清晰的", "through": "通过", "toughest": "最艰难的", "regime": "政权", "ever": "曾经", "imposed": "施加", "supporting": "支持", "announcement": "公告", "months": "月", "political": "政治的", "iran": "伊朗", "impact": "影响", "been": "已经", "according": "根据", "end": "结束", "work": "工作", "terror": "恐怖", "defence": "国防", "strong": "强烈", "one": "一个", "they": "它们", "strikes": "袭击", "if": "如果", "unclear": "不清楚的", "congress": "国会", "nations": "国家（复数）", "remains": "仍然", "crude": "原油", "brent": "布伦特", "barrel": "桶", "federal": "联邦", "tax": "税收", "donald": "唐纳德", "faces": "面临", "agreed": "同意", "release": "发布", "immediately": "立即", "followed": "遵循", "november": "十一月", "another": "另一个", "sparked": "引发", "anger": "愤怒", "called": "称为", "gift": "礼物", "must": "必须", "ended": "结束", "prolonged": "持久的", "understood": "理解", "until": "直到", "april": "四月", "part": "部分", "other": "其他", "assets": "资产", "like": "像", "still": "仍然", "post": "职位", "three": "三个", "delivered": "递送", "within": "在内部", "short": "短暂的", "period": "时期", "dependent": "依赖的", "condition": "状况", "seen": "被视为", "later": "后来", "introduced": "介绍", "willing": "愿意的", "both": "两者", "did": "做了", "specify": "明确规定", "analysts": "分析师", "however": "然而", "questioned": "质疑", "whether": "是否", "capable": "有能力的", "providing": "提供", "quantity": "数量", "extent": "程度", "doing": "做", "consumers": "消费者", "analysis": "分析", "shock": "震惊", "tim": "蒂姆", "strategist": "策略师", "numbers": "数字", "mentioned": "提到的", "relatively": "相对地", "small": "小的", "first": "第一轮", "tranche": "部分", "approximately": "大约", "daily": "每日", "around": "在...周围", "won't": "不会", "make": "使", "material": "材料", "difference": "差异", "granted": "授予", "then": "然后", "more": "更多", "releases": "释放", "come": "到来", "appear": "出现", "slightly": "稍微", "desperate": "绝望的", "try": "审判", "ahead": "提前", "bbc": "英国广播公司", "asked": "询问", "white": "白色的", "house": "议院", "commitment": "承诺", "meanwhile": "与此同时", "sustained": "持续的", "increasing": "增加", "putin's": "普京的", "aggression": "侵略", "efforts": "努力", "secure": "安全的", "just": "只是", "lasting": "持久的", "friday's": "周五的", "latest": "最新的", "effort": "射门", "spent": "花费", "consequences": "后果", "began": "开始", "february": "二月", "conflict": "冲突", "sent": "派遣", "petrol": "汽油", "particular": "特定", "skyrocketing": "飙升的", "america": "美国", "recent": "最近", "soured": "恶化", "standing": "站立", "public": "公众", "higher": "更高的", "knock-on": "连锁", "effects": "影响", "led": "带领", "board": "董事会", "average": "平均", "price": "价格", "currently": "目前", "record": "记录", "high": "高的", "recorded": "记录", "september": "九月", "shortly": "不久", "formally": "正式", "issued": "发布", "temporary": "临时的", "licence": "许可证", "allowing": "允许", "spoken": "发言", "situation": "局势", "adding": "补充说", "side": "方面", "confirmed": "确认", "large": "大的", "envoy": "特使", "kirill": "基里尔", "dmitriev": "德米特里耶夫", "welcomed": "受到欢迎", "media": "媒体", "co-operation": "合作", "benefit": "利益", "world": "世界", "hit": "击中", "out": "出来", "gifts": "礼物", "repay": "偿还", "count": "计票", "america's": "美国的", "fair": "公平的", "life": "生活", "people": "人们", "united": "联合", "states": "国家", "having": "拥有", "conversation": "对话", "weak": "弱的", "wrote": "写道", "uk's": "英国的", "closely": "密切", "ensure": "确保", "military": "军事", "financial": "金融的", "needs": "需要", "defend": "辩护", "itself": "自身", "today": "今天", "remain": "仍然", "committed": "承诺的", "long": "长久", "takes": "担任", "experienced": "经历", "severe": "严重的", "shortages": "短缺", "across": "跨越", "country": "国家", "result": "结果", "ukrainian": "乌克兰的", "drone": "无人机", "agency": "机构", "production": "制作", "estimated": "估计的", "fallen": "下降", "nearly": "几乎", "expressed": "表达", "over": "超过", "blaming": "责备", "them": "他们", "rising": "上升的", "defended": "辩护", "response": "回应", "russia's": "俄罗斯的", "campaign": "竞选活动", "against": "反对", "sector": "部门", "set": "设定", "fire": "射击", "destroy": "摧毁", "infrastructure": "基础设施", "wants": "想要", "reduce": "减少", "posts": "岗位", "often": "经常", "provide": "提供", "incomplete": "不完整的", "information": "信息", "details": "细节", "exactly": "确切地", "how": "如何", "might": "可能", "represents": "代表", "remarkable": "显著的", "recently": "最近", "legislation": "立法", "signed": "签署", "new": "新的", "gas": "气体", "agreement": "协议", "up": "向上", "criticism": "批评", "european": "欧洲的", "allies": "盟友", "politicians": "政治家", "now": "现在", "helping": "帮助", "fund": "资金", "machine": "机器", "benchmark": "基准", "above": "超过", "before": "之前", "trading": "交易", "congressional": "国会的", "elections": "选举", "determine": "确定", "republicans": "共和党人", "control": "控制", "searching": "搜寻", "ways": "方式", "republican": "共和党人", "party's": "党的", "pain": "痛苦", "week": "周", "thinking": "思考", "allow": "允许", "so-called": "所谓的", "red": "红色的", "used": "使用", "without": "没有", "facing": "面临", "successfully": "成功地", "releasing": "释放", "help": "帮助", "concerns": "担忧", "previously": "此前", "supported": "支持", "calls": "呼吁", "diesel": "柴油", "refineries": "炼油厂", "petroleum": "石油", "pump": "加油泵", "midterms": "中期选举", "marketplace": "市场", "volodymr": "弗拉基米尔", "banks": "银行", "frozen": "冻结的", "highlights": "要点", "curb": "遏制", "armitage": "阿米蒂奇", "quilter": "奎尔特", "cheviot": "切维厄特", "equated": "等同", "consumption": "消费", "grappling": "应对", "stung": "刺痛", "across-the": "全面的", "gallon": "加仑", "aaa": "美国汽车协会", "willingness": "意愿", "russia-us": "俄美", "correspondingly": "相应地", "durable": "持久的", "waves": "浪潮", "displeasure": "不满", "years-long": "多年的", "supplying": "供应", "about-face": "态度转变", "enacted": "颁布", "authorise": "授权", "tariffs": "关税", "opens": "开启", "pro-ukraine": "亲乌克兰", "moscow's": "莫斯科的", "looming": "迫在眉睫", "gasoline": "汽油", "dye": "染料", "highways": "高速公路", "pressured": "施压", "stockpiles": "库存"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
