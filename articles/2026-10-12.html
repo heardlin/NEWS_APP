@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-12</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-12</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/16d8/live/4817e400-c58a-11f1-bc2e-018d645d8d21.jpg" alt="Trump's 'energy ceasefire' claim welcomed by Zelensky but Russia silent" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Trump's 'energy ceasefire' claim welcomed by Zelensky but Russia silent</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c6pvg4jyz1m0o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-12.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Donald Trump has claimed that Russia and Ukraine have agreed to an "energy <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火" data-def-en="A temporary stop to fighting in a war.">ceasefire</span>", with Kyiv saying it would support such a move but Moscow yet to comment.</span></p>
+        <p class="cn">唐纳德·特朗普（Donald Trump）声称俄罗斯和乌克兰已同意“能源停火”，基辅方面表示将支持这一举措，但莫斯科尚未置评。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The US president insisted that it was "effective immediately" but provided no details.</span></p>
+        <p class="cn">这位美国总统坚称该停火“立即生效”，但未提供任何细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">Ukrainian President Volodymyr Zelensky initially expressed surprise at the announcement, before saying Kyiv would support it if Moscow did.</span> <span class="sentence" data-sentence-index="3">He also accused Russia of striking Ukrainian energy facilities after Trump's post.</span></p>
+        <p class="cn">乌克兰总统弗拉基米尔·泽连斯基（Volodymyr Zelensky）最初对这一宣布表示惊讶，随后表示如果莫斯科同意，基辅将予以支持。他还指责俄罗斯在特朗普发帖后袭击了乌克兰的能源设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">Trump has been urging Ukraine to stop strikes on Russian oil <span class="keyword" data-word="infrastructure" data-phonetic="/ˈɪnfrəstrʌktʃər/" data-pos="n." data-def="基础设施" data-def-en="The basic physical systems and facilities of a country or organization.">infrastructure</span> - which Kyiv says are vital to curtailing revenue for Moscow's war machine - so Russia can fulfil a recently-struck deal to release diesel to the US and the global market.</span></p>
+        <p class="cn">特朗普一直敦促乌克兰停止对俄罗斯石油基础设施的打击——基辅称这些打击对于削减莫斯科战争机器的收入至关重要——以便俄罗斯能够履行最近达成的一项协议，向美国和全球市场释放柴油。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">The diesel deal, temporarily undoing sanctions on Russian imports, is attracting growing criticism.</span> <span class="sentence" data-sentence-index="6">Zelensky called it a gift to Russian President Vladimir Putin.</span> <span class="sentence" data-sentence-index="7">European officials and some US politicians, including from Trump's Republican party, have said they do not support it.</span></p>
+        <p class="cn">这项柴油协议暂时解除了对俄罗斯进口的制裁，正招致越来越多的批评。泽连斯基称这是给俄罗斯总统弗拉基米尔·普京（Vladimir Putin）的礼物。欧洲官员和一些美国政界人士，包括来自特朗普所属共和党的人士，表示他们不支持该协议。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="8">The deal is Trump's latest effort to lower domestic fuel prices ahead of the midterm elections, having spent months grappling with the political consequences of the war with Iran which has pushed up global fuel prices, particularly those for diesel.</span></p>
+        <p class="cn">该协议是特朗普在中期选举前降低国内燃料价格的最新努力。此前数月，他一直在应对与伊朗战争带来的政治后果，这场战争推高了全球燃料价格，尤其是柴油价格。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="9">That has soured Trump's standing with the American public, who have been stung by the higher pump prices and knock-on effects that led to across-the-board <span class="keyword" data-word="inflation" data-phonetic="/ɪnˈfleɪʃn/" data-pos="n." data-def="通货膨胀" data-def-en="A general increase in prices and fall in the purchasing value of money.">inflation</span>.</span></p>
+        <p class="cn">这损害了特朗普在美国公众中的声望，美国民众受到油价上涨及随之而来的全面通胀的打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="10">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">Watch: What's behind Trump's energy <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火" data-def-en="A temporary stop to fighting in a war.">ceasefire</span> claim?</span></p>
+        <p class="cn">观看：特朗普能源停火声明的背后是什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">Zelensky said it was "news" to him that an energy truce was in effect in comments to news site Axios, before writing on social media that his officials "look forward to clear details of America's dialogue with Russia".</span></p>
+        <p class="cn">泽连斯基在接受新闻网站Axios采访时表示，能源休战正在生效对他来说是个“新闻”，随后他在社交媒体上写道，他的官员“期待美国与俄罗斯对话的明确细节”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">"Ukraine is ready not to strike at Russian energy and we count on Russia's similar readiness and on the agreement of the president of the United States of America on this," he said.</span></p>
+        <p class="cn">“乌克兰准备不打击俄罗斯能源设施，我们期待俄罗斯也有同样的准备，并期待美利坚合众国总统就此达成协议，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="14">The BBC has asked the White House for further details.</span></p>
+        <p class="cn">BBC已要求白宫提供更多细节。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="15">UK Prime Minister Andy Burnham said Britain "strongly supports President Trump's call today for a sustained energy <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火" data-def-en="A temporary stop to fighting in a war.">ceasefire</span> to start now", while France, Canada and the EU also expressed support.</span></p>
+        <p class="cn">英国首相安迪·伯纳姆（Andy Burnham）表示，英国“强烈支持特朗普总统今天呼吁立即开始持久能源停火”，法国、加拿大和欧盟也表达了支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="16">Zelensky later said Russia had hit a power plant in Kyiv with a drone, causing power cuts, followed by strikes on energy facilities in the north-eastern Kharkiv region.</span></p>
+        <p class="cn">泽连斯基随后表示，俄罗斯用无人机袭击了基辅的一座发电厂，导致停电，随后又袭击了东北部哈尔科夫地区的能源设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="17">"All of this happened after the president of the United States made his statement about an energy <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火" data-def-en="A temporary stop to fighting in a war.">ceasefire</span>," he said.</span></p>
+        <p class="cn">“所有这些都发生在美国总统发表能源停火声明之后，”他说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="18">For months, Ukraine and Russia have been exchanging strikes on energy <span class="keyword" data-word="infrastructure" data-phonetic="/ˈɪnfrəstrʌktʃər/" data-pos="n." data-def="基础设施" data-def-en="The basic physical systems and facilities of a country or organization.">infrastructure</span>.</span></p>
+        <p class="cn">数月来，乌克兰和俄罗斯一直在相互打击能源基础设施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="19">Moscow said the installations it hits were legitimate targets because they supported Ukraine's military operation, while Zelensky has characterised Ukrainian attacks deep inside Russian territory as part of an effort to "reduce Russia's ability to finance the war".</span></p>
+        <p class="cn">莫斯科表示，其打击的设施是合法目标，因为它们支持乌克兰的军事行动，而泽连斯基则将乌克兰深入俄罗斯领土的袭击描述为“削弱俄罗斯资助战争能力”努力的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="20">The attacks have disrupted energy supplies on both sides.</span></p>
+        <p class="cn">这些袭击扰乱了双方的能源供应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Huge plumes of smoke seen rising in the skies from the site where the Slavneft-Yanos oil <span class="keyword" data-word="refinery" data-phonetic="/rɪˈfaɪnəri/" data-pos="n." data-def="炼油厂" data-def-en="A factory where crude oil is processed into useful products like gasoline.">refinery</span> in Russia is located on 6 August</span></p>
+        <p class="cn">8月6日，俄罗斯斯拉夫石油-亚诺斯炼油厂所在地的天空中升起巨大的烟柱</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Earlier on Sunday, UK Defence Secretary Wes Streeting told the BBC that the UK did not support it , while EU foreign policy chief Kaja Kallas echoed Zelensky's criticism of it on Saturday.</span></p>
+        <p class="cn">周日早些时候，英国国防大臣韦斯·斯特里廷（Wes Streeting）告诉BBC，英国不支持该协议，而欧盟外交政策负责人卡娅·卡拉斯（Kaja Kallas）周六也附和了泽连斯基对该协议的批评。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">The deal has also attracted criticism from politicians of both main US parties.</span></p>
+        <p class="cn">该协议还招致了美国两大主要政党政界人士的批评。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Seven senators, including three Democrats and four Republicans, have published a statement saying Trump's deal "runs directly counter" to a law that had explicitly banned Russian energy imports.</span></p>
+        <p class="cn">七名参议员，包括三名民主党人和四名共和党人，发表声明称特朗普的协议“直接违背”了一项明确禁止俄罗斯能源进口的法律。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">"Congress was clear: the US should not import oil from Russia until it ends its aggression against Ukraine and ceases threats against our Nato Allies," they said, urging the Trump administration to "<span class="keyword" data-word="reverse" data-phonetic="/rɪˈvɜːrs/" data-pos="v." data-def="逆转，撤销" data-def-en="To change a decision or policy to the opposite of what it was.">reverse</span> course".</span></p>
+        <p class="cn">“国会态度明确：美国不应从俄罗斯进口石油，直到它结束对乌克兰的侵略并停止对北约盟友的威胁，”他们说，并敦促特朗普政府“改弦更张”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Republican Senator Thom Tillis, one of the seven, told NBC News that the deal "absolutely will" put American lives at risk.</span></p>
+        <p class="cn">七人之一的共和党参议员汤姆·蒂利斯（Thom Tillis）告诉NBC新闻，该协议“绝对会”将美国人的生命置于危险之中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">On Saturday Trump accused Zelensky of wanting to "make problems for the world" by continuing to authorise attacks on Russian refineries following the Ukrainian leader's criticism of the diesel deal.</span></p>
+        <p class="cn">周六，特朗普指责泽连斯基在乌克兰领导人批评柴油协议后，继续授权袭击俄罗斯炼油厂，是想“给世界制造麻烦”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">The US president suggested that it was "time for Ukraine to get a new president".</span></p>
+        <p class="cn">这位美国总统暗示“是时候让乌克兰换一位新总统了”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Zelensky pledged to hold elections - despite them being suspended by the Ukrainian constitution during wartime - if Russia agreed to a 60-day total <span class="keyword" data-word="ceasefire" data-phonetic="/ˈsiːsfaɪər/" data-pos="n." data-def="停火" data-def-en="A temporary stop to fighting in a war.">ceasefire</span>.</span></p>
+        <p class="cn">泽连斯基承诺，如果俄罗斯同意60天全面停火，他将举行选举——尽管战时乌克兰宪法暂停了选举。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">The Ukrainian president previously resisted calls from the US for fresh elections, pointing to complications with holding a vote in parts of the country that are active war zones or under Russian <span class="keyword" data-word="occupation" data-phonetic="/ˌɒkjuˈpeɪʃn/" data-pos="n." data-def="占领" data-def-en="The act of controlling a country or area by military force.">occupation</span>.</span></p>
+        <p class="cn">这位乌克兰总统此前一直抵制美国要求其举行新选举的呼吁，指出在该国处于活跃战区或被俄罗斯占领的地区举行投票存在复杂问题。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">Trump, however, has repeatedly accused the Ukrainian leader of using the war to stay in power.</span></p>
+        <p class="cn">然而，特朗普一再指责这位乌克兰领导人利用战争来继续掌权。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">Meanwhile, strikes and fighting on the ground continue in the four-year-long war.</span></p>
+        <p class="cn">与此同时，这场长达四年的战争中的打击和地面战斗仍在继续。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">Six people were killed in attacks on two Ukrainian cities on Sunday, regional officials said.</span></p>
+        <p class="cn">地方官员称，周日对乌克兰两座城市的袭击造成六人死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">One person was killed in Russia's Belgorod region, which borders Ukraine, while another man was killed in a drone attack in the Russian-occupied Donetsk region, officials said.</span></p>
+        <p class="cn">官员称，与乌克兰接壤的俄罗斯别尔哥罗德地区有一人丧生，另有一名男子在俄罗斯占领的顿涅茨克地区的一次无人机袭击中丧生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">'Time for Ukraine to get new president,' says Trump after Zelensky condemns diesel deal</span></p>
+        <p class="cn">泽连斯基谴责柴油协议后，特朗普称“是时候让乌克兰换新总统了”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">Trump announces deal for Russian diesel as Zelensky calls it a gift to Putin</span></p>
+        <p class="cn">特朗普宣布俄罗斯柴油协议，泽连斯基称这是给普京的礼物</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Russian strike on buses kills at least 30, say officials, as deadly attacks on Ukraine surge</span></p>
+        <p class="cn">官员称俄罗斯袭击巴士造成至少30人死亡，乌克兰致命袭击激增</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">ceasefire</span>
+        <button class="kw-speak-btn" data-word="ceasefire" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsiːsfaɪər/ n.</span>
+      </div>
+      <p class="kw-def">停火</p>
+      <p class="kw-def-en">A temporary stop to fighting in a war.</p>
+      <p class="kw-ctx">&ldquo;Donald Trump has claimed that Russia and Ukraine have agreed to an "energy ceasefire", with Kyiv saying it would support such a move but Moscow yet to comment.&rdquo;</p>
+      <p class="kw-ctx-cn">唐纳德·特朗普声称俄罗斯和乌克兰已同意“能源停火”，基辅表示支持此举，但莫斯科尚未置评。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃn/ n.</span>
+      </div>
+      <p class="kw-def">制裁</p>
+      <p class="kw-def-en">A penalty imposed by one country on another to force a change in policy.</p>
+      <p class="kw-ctx">&ldquo;The diesel deal, temporarily undoing sanctions on Russian imports, is attracting growing criticism.&rdquo;</p>
+      <p class="kw-ctx-cn">这项柴油协议暂时解除了对俄罗斯进口的制裁，正招致越来越多的批评。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">infrastructure</span>
+        <button class="kw-speak-btn" data-word="infrastructure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnfrəstrʌktʃər/ n.</span>
+      </div>
+      <p class="kw-def">基础设施</p>
+      <p class="kw-def-en">The basic physical systems and facilities of a country or organization.</p>
+      <p class="kw-ctx">&ldquo;Trump has been urging Ukraine to stop strikes on Russian oil infrastructure - which Kyiv says are vital to curtailing revenue for Moscow's war machine - so Russia can fulfil a recently-struck deal to release diesel to the US and the global market.&rdquo;</p>
+      <p class="kw-ctx-cn">特朗普一直敦促乌克兰停止对俄罗斯石油基础设施的打击——基辅称这些打击对于削减莫斯科战争机器的收入至关重要——以便俄罗斯能够履行最近达成的向美国和全球市场释放柴油的协议。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inflation</span>
+        <button class="kw-speak-btn" data-word="inflation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈfleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">通货膨胀</p>
+      <p class="kw-def-en">A general increase in prices and fall in the purchasing value of money.</p>
+      <p class="kw-ctx">&ldquo;That has soured Trump's standing with the American public, who have been stung by the higher pump prices and knock-on effects that led to across-the-board inflation.&rdquo;</p>
+      <p class="kw-ctx-cn">这已经损害了特朗普在美国公众中的形象，他们因油价上涨和导致全面通胀的连锁反应而感到痛苦。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">refinery</span>
+        <button class="kw-speak-btn" data-word="refinery" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈfaɪnəri/ n.</span>
+      </div>
+      <p class="kw-def">炼油厂</p>
+      <p class="kw-def-en">A factory where crude oil is processed into useful products like gasoline.</p>
+      <p class="kw-ctx">&ldquo;Huge plumes of smoke seen rising in the skies from the site where the Slavneft-Yanos oil refinery in Russia is located on 6 August&rdquo;</p>
+      <p class="kw-ctx-cn">8月6日，俄罗斯斯拉夫石油-亚诺斯炼油厂所在地的天空中升起巨大的烟柱。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">pledge</span>
+        <button class="kw-speak-btn" data-word="pledge" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/pledʒ/ v.</span>
+      </div>
+      <p class="kw-def">承诺</p>
+      <p class="kw-def-en">To make a serious or formal promise to do something.</p>
+      <p class="kw-ctx">&ldquo;Zelensky pledged to hold elections - despite them being suspended by the Ukrainian constitution during wartime - if Russia agreed to a 60-day total ceasefire.&rdquo;</p>
+      <p class="kw-ctx-cn">泽连斯基承诺，如果俄罗斯同意为期60天的全面停火，他将举行选举——尽管战时乌克兰宪法暂停了选举。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">reverse</span>
+        <button class="kw-speak-btn" data-word="reverse" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈvɜːrs/ v.</span>
+      </div>
+      <p class="kw-def">逆转，撤销</p>
+      <p class="kw-def-en">To change a decision or policy to the opposite of what it was.</p>
+      <p class="kw-ctx">&ldquo;They said, urging the Trump administration to "reverse course".&rdquo;</p>
+      <p class="kw-ctx-cn">他们表示，并敦促特朗普政府“改变方针”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">occupation</span>
+        <button class="kw-speak-btn" data-word="occupation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɒkjuˈpeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">占领</p>
+      <p class="kw-def-en">The act of controlling a country or area by military force.</p>
+      <p class="kw-ctx">&ldquo;The Ukrainian president previously resisted calls from the US for fresh elections, pointing to complications with holding a vote in parts of the country that are active war zones or under Russian occupation.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰总统此前拒绝了美国要求重新选举的呼吁，指出在该国处于活跃战区或被俄罗斯占领的地区举行投票存在复杂情况。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Donald Trump has claimed that Russia and Ukraine have agreed to an \"energy ceasefire\", with Kyiv saying it would support such a move but Moscow yet to comment.", "start_ms": 0, "end_ms": 10608, "paragraph_index": 0}, {"index": 1, "text": "The US president insisted that it was \"effective immediately\" but provided no details.", "start_ms": 10608, "end_ms": 17208, "paragraph_index": 1}, {"index": 2, "text": "Ukrainian President Volodymyr Zelensky initially expressed surprise at the announcement, before saying Kyiv would support it if Moscow did.", "start_ms": 17208, "end_ms": 27240, "paragraph_index": 2}, {"index": 3, "text": "He also accused Russia of striking Ukrainian energy facilities after Trump's post.", "start_ms": 27240, "end_ms": 33768, "paragraph_index": 2}, {"index": 4, "text": "Trump has been urging Ukraine to stop strikes on Russian oil infrastructure - which Kyiv says are vital to curtailing revenue for Moscow's war machine - so Russia can fulfil a recently-struck deal to release diesel to the US and the global market.", "start_ms": 33768, "end_ms": 49728, "paragraph_index": 3}, {"index": 5, "text": "The diesel deal, temporarily undoing sanctions on Russian imports, is attracting growing criticism.", "start_ms": 49728, "end_ms": 57384, "paragraph_index": 4}, {"index": 6, "text": "Zelensky called it a gift to Russian President Vladimir Putin.", "start_ms": 57384, "end_ms": 62208, "paragraph_index": 4}, {"index": 7, "text": "European officials and some US politicians, including from Trump's Republican party, have said they do not support it.", "start_ms": 62208, "end_ms": 71040, "paragraph_index": 4}, {"index": 8, "text": "The deal is Trump's latest effort to lower domestic fuel prices ahead of the midterm elections, having spent months grappling with the political consequences of the war with Iran which has pushed up global fuel prices, particularly those for diesel.", "start_ms": 71040, "end_ms": 87120, "paragraph_index": 5}, {"index": 9, "text": "That has soured Trump's standing with the American public, who have been stung by the higher pump prices and knock-on effects that led to across-the-board inflation.", "start_ms": 87120, "end_ms": 97632, "paragraph_index": 6}, {"index": 10, "text": "This video can not be played", "start_ms": 97632, "end_ms": 100632, "paragraph_index": 7}, {"index": 11, "text": "Watch: What's behind Trump's energy ceasefire claim?", "start_ms": 100632, "end_ms": 105312, "paragraph_index": 8}, {"index": 12, "text": "Zelensky said it was \"news\" to him that an energy truce was in effect in comments to news site Axios, before writing on social media that his officials \"look forward to clear details of America's dialogue with Russia\".", "start_ms": 105312, "end_ms": 119424, "paragraph_index": 9}, {"index": 13, "text": "\"Ukraine is ready not to strike at Russian energy and we count on Russia's similar readiness and on the agreement of the president of the United States of America on this,\" he said.", "start_ms": 119424, "end_ms": 130968, "paragraph_index": 10}, {"index": 14, "text": "The BBC has asked the White House for further details.", "start_ms": 130968, "end_ms": 135528, "paragraph_index": 11}, {"index": 15, "text": "UK Prime Minister Andy Burnham said Britain \"strongly supports President Trump's call today for a sustained energy ceasefire to start now\", while France, Canada and the EU also expressed support.", "start_ms": 135528, "end_ms": 149256, "paragraph_index": 12}, {"index": 16, "text": "Zelensky later said Russia had hit a power plant in Kyiv with a drone, causing power cuts, followed by strikes on energy facilities in the north-eastern Kharkiv region.", "start_ms": 149256, "end_ms": 161352, "paragraph_index": 13}, {"index": 17, "text": "\"All of this happened after the president of the United States made his statement about an energy ceasefire,\" he said.", "start_ms": 161352, "end_ms": 169416, "paragraph_index": 14}, {"index": 18, "text": "For months, Ukraine and Russia have been exchanging strikes on energy infrastructure.", "start_ms": 169416, "end_ms": 175992, "paragraph_index": 15}, {"index": 19, "text": "Moscow said the installations it hits were legitimate targets because they supported Ukraine's military operation, while Zelensky has characterised Ukrainian attacks deep inside Russian territory as part of an effort to \"reduce Russia's ability to finance the war\".", "start_ms": 175992, "end_ms": 193608, "paragraph_index": 16}, {"index": 20, "text": "The attacks have disrupted energy supplies on both sides.", "start_ms": 193608, "end_ms": 198264, "paragraph_index": 17}, {"index": 21, "text": "Huge plumes of smoke seen rising in the skies from the site where the Slavneft-Yanos oil refinery in Russia is located on 6 August", "start_ms": 198264, "end_ms": 207960, "paragraph_index": 18}, {"index": 22, "text": "Earlier on Sunday, UK Defence Secretary Wes Streeting told the BBC that the UK did not support it , while EU foreign policy chief Kaja Kallas echoed Zelensky's criticism of it on Saturday.", "start_ms": 207960, "end_ms": 222024, "paragraph_index": 19}, {"index": 23, "text": "The deal has also attracted criticism from politicians of both main US parties.", "start_ms": 222024, "end_ms": 228408, "paragraph_index": 20}, {"index": 24, "text": "Seven senators, including three Democrats and four Republicans, have published a statement saying Trump's deal \"runs directly counter\" to a law that had explicitly banned Russian energy imports.", "start_ms": 228408, "end_ms": 242088, "paragraph_index": 21}, {"index": 25, "text": "\"Congress was clear: the US should not import oil from Russia until it ends its aggression against Ukraine and ceases threats against our Nato Allies,\" they said, urging the Trump administration to \"reverse course\".", "start_ms": 242088, "end_ms": 256368, "paragraph_index": 22}, {"index": 26, "text": "Republican Senator Thom Tillis, one of the seven, told NBC News that the deal \"absolutely will\" put American lives at risk.", "start_ms": 256368, "end_ms": 265560, "paragraph_index": 23}, {"index": 27, "text": "On Saturday Trump accused Zelensky of wanting to \"make problems for the world\" by continuing to authorise attacks on Russian refineries following the Ukrainian leader's criticism of the diesel deal.", "start_ms": 265560, "end_ms": 278160, "paragraph_index": 24}, {"index": 28, "text": "The US president suggested that it was \"time for Ukraine to get a new president\".", "start_ms": 278160, "end_ms": 284112, "paragraph_index": 25}, {"index": 29, "text": "Zelensky pledged to hold elections - despite them being suspended by the Ukrainian constitution during wartime - if Russia agreed to a 60-day total ceasefire.", "start_ms": 284112, "end_ms": 295080, "paragraph_index": 26}, {"index": 30, "text": "The Ukrainian president previously resisted calls from the US for fresh elections, pointing to complications with holding a vote in parts of the country that are active war zones or under Russian occupation.", "start_ms": 295080, "end_ms": 308856, "paragraph_index": 27}, {"index": 31, "text": "Trump, however, has repeatedly accused the Ukrainian leader of using the war to stay in power.", "start_ms": 308856, "end_ms": 316104, "paragraph_index": 28}, {"index": 32, "text": "Meanwhile, strikes and fighting on the ground continue in the four-year-long war.", "start_ms": 316104, "end_ms": 321936, "paragraph_index": 29}, {"index": 33, "text": "Six people were killed in attacks on two Ukrainian cities on Sunday, regional officials said.", "start_ms": 321936, "end_ms": 328968, "paragraph_index": 30}, {"index": 34, "text": "One person was killed in Russia's Belgorod region, which borders Ukraine, while another man was killed in a drone attack in the Russian-occupied Donetsk region, officials said.", "start_ms": 328968, "end_ms": 340776, "paragraph_index": 31}, {"index": 35, "text": "'Time for Ukraine to get new president,' says Trump after Zelensky condemns diesel deal", "start_ms": 340776, "end_ms": 347352, "paragraph_index": 32}, {"index": 36, "text": "Trump announces deal for Russian diesel as Zelensky calls it a gift to Putin", "start_ms": 347352, "end_ms": 353064, "paragraph_index": 33}, {"index": 37, "text": "Russian strike on buses kills at least 30, say officials, as deadly attacks on Ukraine surge", "start_ms": 353064, "end_ms": 360888, "paragraph_index": 34}], "total_duration_ms": 360888};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "on": "在", "of": "的", "in": "在", "it": "它", "that": "那个", "and": "和", "energy": "能源", "president": "总统", "russian": "俄罗斯的", "for": "为了", "said": "说", "russia": "俄罗斯", "ukraine": "乌克兰", "zelensky": "泽连斯基", "deal": "协议", "has": "有", "ukrainian": "乌克兰的", "trump": "特朗普", "with": "与", "us": "我们", "was": "是", "trump's": "特朗普的", "have": "有", "war": "战争", "diesel": "柴油", "support": "支持", "officials": "官员", "from": "来自", "not": "不", "attacks": "袭击", "an": "一个", "kyiv": "基辅", "at": "在", "strikes": "袭击", "is": "是", "criticism": "批评", "by": "被", "while": "而", "saying": "说", "moscow": "莫斯科", "details": "细节", "he": "他", "also": "也", "accused": "被指控", "after": "之后", "been": "已经", "oil": "石油", "which": "哪个", "they": "它们", "prices": "价格", "elections": "选举", "this": "这个", "news": "新闻", "russia's": "俄罗斯的", "uk": "英国", "power": "权力", "region": "地区", "as": "作为", "killed": "杀死", "agreed": "同意", "would": "将", "but": "但是", "expressed": "表达", "before": "之前", "if": "如果", "did": "做了", "facilities": "设施", "urging": "敦促", "says": "表示", "are": "是", "can": "可以", "global": "全球", "imports": "进口", "gift": "礼物", "putin": "普京", "politicians": "政治家", "including": "包括", "republican": "共和党人", "effort": "射门", "fuel": "动力", "months": "月", "american": "美国的", "site": "网站", "his": "他的", "clear": "明确", "strike": "罢工", "united": "联合", "states": "国家", "bbc": "英国广播公司", "eu": "欧盟", "had": "有", "drone": "无人机", "statement": "声明", "were": "是", "both": "两者", "sunday": "星期日", "told": "告诉", "saturday": "星期六", "seven": "七", "against": "反对", "one": "一个", "time": "时间", "get": "得到", "new": "新的", "calls": "呼吁", "donald": "唐纳德", "claimed": "声称", "such": "如此", "move": "行动", "yet": "尚未", "comment": "评论", "insisted": "坚持", "effective": "有效的", "immediately": "立即", "provided": "提供", "no": "没有", "volodymyr": "弗拉基米尔", "initially": "最初", "surprise": "惊喜", "announcement": "公告", "striking": "显著的", "post": "职位", "stop": "停止", "vital": "至关重要的", "revenue": "税收", "moscow's": "莫斯科的", "machine": "机器", "so": "所以", "fulfil": "履行", "release": "发布", "market": "市场", "temporarily": "暂时", "sanctions": "制裁", "growing": "日益增长的", "called": "称为", "vladimir": "弗拉基米尔", "european": "欧洲的", "some": "一些", "party": "政党", "do": "做", "latest": "最新的", "lower": "较低的", "domestic": "国内的", "ahead": "提前", "having": "拥有", "spent": "花费", "grappling": "应对", "political": "政治的", "consequences": "后果", "iran": "伊朗", "pushed": "推动", "up": "向上", "particularly": "尤其", "those": "那些", "soured": "恶化", "standing": "站立", "public": "公众", "who": "谁", "stung": "刺痛", "higher": "更高的", "pump": "加油泵", "knock-on": "连锁", "effects": "影响", "led": "带领", "video": "视频", "be": "是", "played": "比赛", "watch": "观看", "what's": "什么是", "behind": "在...后面", "claim": "声称", "him": "他", "truce": "停火", "effect": "效果", "comments": "评论", "axios": "阿克西奥斯", "writing": "写作", "social": "社交的", "media": "媒体", "look": "看起来", "forward": "向前", "america's": "美国的", "dialogue": "对话", "ready": "准备就绪", "we": "我们", "count": "计票", "similar": "类似的", "readiness": "战备状态", "agreement": "协议", "america": "美国", "asked": "询问", "white": "白色的", "house": "议院", "further": "进一步的", "prime": "首相", "minister": "部长", "andy": "安迪", "burnham": "伯纳姆", "britain": "英国", "strongly": "强烈地", "supports": "支持", "call": "呼吁", "today": "今天", "sustained": "持续的", "start": "开始", "now": "现在", "france": "法国", "canada": "加拿大", "later": "后来", "hit": "击中", "plant": "工厂", "causing": "导致", "cuts": "削减", "followed": "遵循", "north-eastern": "东北部", "kharkiv": "哈尔科夫", "all": "所有", "happened": "发生", "made": "做出", "about": "关于", "exchanging": "交换", "hits": "命中", "legitimate": "合法的", "targets": "目标", "because": "因为", "supported": "支持", "ukraine's": "乌克兰的", "military": "军事", "operation": "行动", "characterised": "以...为特征", "deep": "深切", "inside": "内部", "territory": "领土", "part": "部分", "reduce": "减少", "ability": "能力", "finance": "财务", "disrupted": "中断的", "supplies": "补给", "sides": "各方", "huge": "巨大的", "plumes": "烟柱", "smoke": "烟雾", "seen": "被视为", "rising": "上升的", "skies": "天空", "where": "那里", "located": "位于", "august": "八月", "earlier": "较早", "defence": "国防", "secretary": "秘书", "wes": "我们", "streeting": "街头活动", "foreign": "外交", "policy": "政策", "chief": "首席", "echoed": "附和", "attracted": "吸引", "main": "主要的", "parties": "政党", "senators": "参议员", "three": "三个", "democrats": "民主党人", "four": "四", "republicans": "共和党人", "published": "发布", "runs": "奔跑（第三人称）", "directly": "直接地", "counter": "反制", "law": "法律", "explicitly": "明确地", "banned": "被禁的", "congress": "国会", "should": "应该", "import": "进口", "until": "直到", "ends": "结束", "its": "它的", "aggression": "侵略", "threats": "威胁", "our": "我们的", "nato": "北约", "allies": "盟友", "administration": "政府", "course": "课程", "senator": "参议员", "nbc": "全国广播公司", "absolutely": "绝对", "will": "将", "put": "提出", "lives": "生命", "risk": "风险", "wanting": "想要", "make": "使", "problems": "问题", "world": "世界", "continuing": "持续", "authorise": "授权", "refineries": "炼油厂", "following": "随后", "suggested": "建议", "pledged": "承诺", "hold": "追究", "despite": "尽管", "them": "他们", "being": "正在", "suspended": "暂停", "during": "在期间", "wartime": "战时", "day": "天", "total": "总体的", "previously": "此前", "fresh": "新的", "pointing": "指出", "holding": "拿着", "vote": "投票", "parts": "部分", "country": "国家", "active": "现役的", "zones": "区域", "or": "或者", "under": "在...之下", "however": "然而", "repeatedly": "反复地", "leader": "领导人", "using": "使用", "stay": "保持", "meanwhile": "与此同时", "fighting": "战斗", "ground": "地面", "continue": "继续", "six": "六", "people": "人们", "two": "两个", "cities": "城市", "regional": "地区的", "person": "个人", "belgorod": "别尔哥罗德", "borders": "边境", "another": "另一个", "man": "男子", "attack": "袭击", "condemns": "谴责", "announces": "宣布", "buses": "公交车", "least": "至少", "say": "说", "deadly": "致命的", "surge": "飙升", "curtailing": "削减", "recently-struck": "近期达成的", "undoing": "取消", "attracting": "吸引", "midterm": "中期选举", "across-the-board": "全面的", "installations": "设施", "slavneft-yanos": "斯拉夫石油-亚诺斯", "kaja": "卡娅", "kallas": "卡拉斯", "zelensky's": "泽连斯基的", "ceases": "停止", "thom": "汤姆", "tillis": "蒂利斯", "leader's": "领导人的", "constitution": "宪法", "resisted": "抵制", "complications": "并发症", "four-year-long": "长达四年的", "russian-occupied": "俄占", "donetsk": "顿涅茨克", "kills": "死亡"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
