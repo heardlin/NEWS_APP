@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-13</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-13</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/7029/live/55aab9b0-c663-11f1-8600-efb62b613ab5.jpg" alt="Hundreds more prisoners to be freed in second phase of early release scheme" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Hundreds more prisoners to be freed in second phase of early release scheme</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cwzrdnrrmgymo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player hidden">
+      <audio id="article-audio" src="" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">An <span class="keyword" data-word="inmate" data-phonetic="/ˈɪnmeɪt/" data-pos="n." data-def="囚犯" data-def-en="A person confined to an institution such as a prison.">inmate</span> walks free from HMP Brixton earlier this month, in the first wave of the government's early release scheme</span></p>
+        <p class="cn">本月早些时候，一名囚犯在政府早期释放计划的第一波中走出了布里克斯顿监狱（HMP Brixton），重获自由。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">About 650 more offenders will leave jails in England and Wales early on Tuesday in the second phase of the government's plan to tackle the prison population crisis.</span></p>
+        <p class="cn">周二，约650名更多罪犯将提前离开英格兰和威尔士的监狱，这是政府解决监狱人口危机计划的第二阶段。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The group will include offenders serving up to two and a half years for crimes.</span></p>
+        <p class="cn">这批人将包括因犯罪而被判刑期最长两年半的罪犯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Under the new rules, they are leaving jail after serving a third of their sentence behind bars, rather than half.</span></p>
+        <p class="cn">根据新规定，他们在服完三分之一刑期后即可出狱，而非原来的一半。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The second wave of releases comes as the government takes its plan to radically <span class="keyword" data-word="overhaul" data-phonetic="/ˌəʊvəˈhɔːl/" data-pos="v." data-def="彻底改革" data-def-en="To examine and improve something thoroughly.">overhaul</span> criminal courts back to Parliament - but also as <span class="keyword" data-word="probation" data-phonetic="/prəˈbeɪʃn/" data-pos="n." data-def="缓刑" data-def-en="A system where a person who has committed a crime is not sent to prison but must follow certain rules.">probation</span> officers prepare to vote in a ballot that could lead to a strike over pay and workload.</span></p>
+        <p class="cn">第二波释放正值政府将其彻底改革刑事法院的计划重新提交议会之际——但同时，缓刑监督官也正准备进行投票，这可能导致因薪酬和工作量问题而罢工。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Some 700 offenders left jail early on 1 October - all of whom were serving terms of less than 19 months.</span></p>
+        <p class="cn">10月1日，约有700名罪犯提前离开监狱——他们的刑期均少于19个月。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Monday's second stage begins the process of releasing batches of offenders serving increasingly long sentences - culminating next June with those serving more than 12 years.</span></p>
+        <p class="cn">周一的第二阶段开始分批释放刑期越来越长的罪犯——最终在明年6月释放刑期超过12年的罪犯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">Napo, the <span class="keyword" data-word="probation" data-phonetic="/prəˈbeɪʃn/" data-pos="n." data-def="缓刑" data-def-en="A system where a person who has committed a crime is not sent to prison but must follow certain rules.">probation</span> service union, said the releases have put enormous strain on its members, who are charged with monitoring the offenders in the community.</span></p>
+        <p class="cn">缓刑服务工会Napo表示，这些释放给其成员带来了巨大压力，他们负责在社区中监督这些罪犯。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Typically, those being released should expect to be electronically tagged and subject to other monitoring conditions for the second third of their sentence.</span></p>
+        <p class="cn">通常，被释放者应预期在刑期的第二个三分之一期间被电子标签监控，并受到其他监控条件的约束。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">On Tuesday, the union's members will meet to discuss next week's vote, which could lead to strike action.</span> <span class="sentence" data-sentence-index="10"><span class="keyword" data-word="probation" data-phonetic="/prəˈbeɪʃn/" data-pos="n." data-def="缓刑" data-def-en="A system where a person who has committed a crime is not sent to prison but must follow certain rules.">Probation</span> officers have been offered a 5% pay rise by the Ministry of Justice (MoJ), while it had demanded 12% as part of a plan to make up for loss of earnings caused by cuts from 2010.</span></p>
+        <p class="cn">周二，工会成员将开会讨论下周的投票，这可能导致罢工行动。司法部（MoJ）已向缓刑监督官提出加薪5%，而工会要求12%，以弥补2010年以来削减造成的收入损失。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The MoJ says the offer is fair and has been accepted by two other unions and is twinned with a Â£700m investment in <span class="keyword" data-word="probation" data-phonetic="/prəˈbeɪʃn/" data-pos="n." data-def="缓刑" data-def-en="A system where a person who has committed a crime is not sent to prison but must follow certain rules.">probation</span> to recruit 1,300 extra officers and the roll-out of AI tools to cut the workload of monitoring offenders.</span></p>
+        <p class="cn">司法部表示这一提议是公平的，并已被另外两个工会接受，同时伴随着对缓刑服务的7亿英镑投资，以招募1300名额外官员，并推出人工智能工具来减少监督罪犯的工作量。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">While the second phase of prison releases gets under way, the government is bringing its criminal court reform plan back before MPs, after announcing a week ago that it had abandoned the most controversial element of it.</span></p>
+        <p class="cn">在监狱释放第二阶段进行的同时，政府将其刑事法院改革计划重新提交给议员，此前一周它宣布放弃了其中最具争议的部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">The revised plan drops proposals for a new form of Crown Court where a judge alone, sitting without a jury of ordinary people, would reach a <span class="keyword" data-word="verdict" data-phonetic="/ˈvɜːdɪkt/" data-pos="n." data-def="裁决" data-def-en="A decision made by a jury or judge in a court of law.">verdict</span> against suspects facing up to three years in prison.</span></p>
+        <p class="cn">修订后的计划放弃了设立一种新形式皇家法院的提议，即由法官单独审理，没有普通公民组成的陪审团，对面临最高三年监禁的嫌疑人作出裁决。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">However, jury trials will still be scrapped for the most complex and long fraud cases - and another 5,500 trials will be kept in the lower magistrates court by ending a defendant's right to ask for a jury trial.</span></p>
+        <p class="cn">然而，对于最复杂和冗长的欺诈案件，陪审团审判仍将被取消——另外5500场审判将通过终止被告要求陪审团审判的权利而保留在下级治安法院。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">The government says it will expand the use of so-called "blitz" or "short trial" courts after pilots have shown that grouping similar cases together can speed up their progression through the courts - cutting backlogs.</span></p>
+        <p class="cn">政府表示将扩大所谓的“闪电”或“短审”法院的使用，此前试点表明，将类似案件分组可以加快其在法院的进程——减少积压。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">One of the pilots at the Old Bailey led to the London <span class="keyword" data-word="backlog" data-phonetic="/ˈbæklɒɡ/" data-pos="n." data-def="积压" data-def-en="A large number of things that have not been done yet.">backlog</span> of 500 cases concerning assaults on emergency workers being cut in half over the summer.</span></p>
+        <p class="cn">在老贝利（Old Bailey）的一个试点导致伦敦涉及袭击急救人员的500起案件积压在夏季减少了一半。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">A major review of criminal courts by former appeal judge Sir Brian Leveson recommended more <span class="keyword" data-word="virtual" data-phonetic="/ˈvɜːtʃuəl/" data-pos="adj." data-def="虚拟的" data-def-en="Existing or occurring on computers or on the internet.">virtual</span> hearings for defendants to slash wasted time bringing them to and from cells.</span> <span class="sentence" data-sentence-index="18">The government has now ordered pilots for defendants to appear direct from police cells.</span></p>
+        <p class="cn">前上诉法官布莱恩·莱维森爵士（Sir Brian Leveson）对刑事法院进行的一项重大审查建议为被告提供更多虚拟听证会，以减少将他们往返牢房的时间浪费。政府现已下令试点让被告直接从警察牢房出庭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">On Monday, the government announced it had accepted more than 150 of his 180 recommendations to modernise the criminal courts.</span></p>
+        <p class="cn">周一，政府宣布已接受了他180项建议中的150多项，以现代化刑事法院。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">It has rejected his advice to retain a restriction on volunteer magistrates that means they can only jail an <span class="keyword" data-word="offender" data-phonetic="/əˈfendər/" data-pos="n." data-def="罪犯" data-def-en="A person who commits a crime.">offender</span> for 12 months.</span> <span class="sentence" data-sentence-index="21">Under the government's plan magistrates will have the power to jail for up to two years - the aim being to keep more cases out of Crown Court, to help clear backlogs.</span></p>
+        <p class="cn">它拒绝了他关于保留对志愿治安法官限制的建议，该限制意味着他们只能判处罪犯12个月监禁。根据政府的计划，治安法官将有权判处最高两年监禁——目的是将更多案件排除在皇家法院之外，以帮助清理积压。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Early release scheme prisoner jailed days after leaving</span></p>
+        <p class="cn">早期释放计划囚犯出狱几天后又被监禁</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">How the new prison release scheme will work - and number of inmates to be freed</span></p>
+        <p class="cn">新监狱释放计划如何运作——以及将释放的囚犯数量</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Hundreds of criminals start leaving prison under new early release scheme</span></p>
+        <p class="cn">数百名罪犯根据新的早期释放计划开始离开监狱</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">inmate</span>
+        <button class="kw-speak-btn" data-word="inmate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪnmeɪt/ n.</span>
+      </div>
+      <p class="kw-def">囚犯</p>
+      <p class="kw-def-en">A person confined to an institution such as a prison.</p>
+      <p class="kw-ctx">&ldquo;An inmate walks free from HMP Brixton earlier this month, in the first wave of the government's early release scheme&rdquo;</p>
+      <p class="kw-ctx-cn">本月早些时候，一名囚犯根据政府提前释放计划的第一波，从布里克斯顿监狱获释。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">offender</span>
+        <button class="kw-speak-btn" data-word="offender" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈfendər/ n.</span>
+      </div>
+      <p class="kw-def">罪犯</p>
+      <p class="kw-def-en">A person who commits a crime.</p>
+      <p class="kw-ctx">&ldquo;About 650 more offenders will leave jails in England and Wales early on Tuesday in the second phase of the government's plan to tackle the prison population crisis.&rdquo;</p>
+      <p class="kw-ctx-cn">周二早些时候，大约650名罪犯将在英格兰和威尔士提前离开监狱，这是政府解决监狱人口危机计划的第二阶段。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">probation</span>
+        <button class="kw-speak-btn" data-word="probation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/prəˈbeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">缓刑</p>
+      <p class="kw-def-en">A system where a person who has committed a crime is not sent to prison but must follow certain rules.</p>
+      <p class="kw-ctx">&ldquo;The second wave of releases comes as the government takes its plan to radically overhaul criminal courts back to Parliament - but also as probation officers prepare to vote in a ballot that could lead to a strike over pay and workload.&rdquo;</p>
+      <p class="kw-ctx-cn">第二波释放之际，政府将其彻底改革刑事法院的计划带回议会，同时缓刑监督官也准备投票，可能因薪酬和工作量问题引发罢工。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">monitor</span>
+        <button class="kw-speak-btn" data-word="monitor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈmɒnɪtər/ v.</span>
+      </div>
+      <p class="kw-def">监控</p>
+      <p class="kw-def-en">To watch and check something over a period of time.</p>
+      <p class="kw-ctx">&ldquo;Napo, the probation service union, said the releases have put enormous strain on its members, who are charged with monitoring the offenders in the community.&rdquo;</p>
+      <p class="kw-ctx-cn">缓刑服务工会Napo表示，释放给其成员带来了巨大压力，他们负责监控社区中的罪犯。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overhaul</span>
+        <button class="kw-speak-btn" data-word="overhaul" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌəʊvəˈhɔːl/ v.</span>
+      </div>
+      <p class="kw-def">彻底改革</p>
+      <p class="kw-def-en">To examine and improve something thoroughly.</p>
+      <p class="kw-ctx">&ldquo;The second wave of releases comes as the government takes its plan to radically overhaul criminal courts back to Parliament - but also as probation officers prepare to vote in a ballot that could lead to a strike over pay and workload.&rdquo;</p>
+      <p class="kw-ctx-cn">第二波释放之际，政府将其彻底改革刑事法院的计划带回议会，同时缓刑监督官也准备投票，可能因薪酬和工作量问题引发罢工。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">verdict</span>
+        <button class="kw-speak-btn" data-word="verdict" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɜːdɪkt/ n.</span>
+      </div>
+      <p class="kw-def">裁决</p>
+      <p class="kw-def-en">A decision made by a jury or judge in a court of law.</p>
+      <p class="kw-ctx">&ldquo;The revised plan drops proposals for a new form of Crown Court where a judge alone, sitting without a jury of ordinary people, would reach a verdict against suspects facing up to three years in prison.&rdquo;</p>
+      <p class="kw-ctx-cn">修订后的计划放弃了设立一种新形式皇家法院的提议，即由法官单独审理，没有普通陪审团，对面临最高三年监禁的嫌疑人作出裁决。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">backlog</span>
+        <button class="kw-speak-btn" data-word="backlog" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbæklɒɡ/ n.</span>
+      </div>
+      <p class="kw-def">积压</p>
+      <p class="kw-def-en">A large number of things that have not been done yet.</p>
+      <p class="kw-ctx">&ldquo;The government says it will expand the use of so-called "blitz" or "short trial" courts after pilots have shown that grouping similar cases together can speed up their progression through the courts - cutting backlogs.&rdquo;</p>
+      <p class="kw-ctx-cn">政府表示将扩大所谓“闪电”或“短审”法院的使用，此前试点表明将类似案件分组可以加快其在法院的进展——减少积压。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">virtual</span>
+        <button class="kw-speak-btn" data-word="virtual" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɜːtʃuəl/ adj.</span>
+      </div>
+      <p class="kw-def">虚拟的</p>
+      <p class="kw-def-en">Existing or occurring on computers or on the internet.</p>
+      <p class="kw-ctx">&ldquo;A major review of criminal courts by former appeal judge Sir Brian Leveson recommended more virtual hearings for defendants to slash wasted time bringing them to and from cells.&rdquo;</p>
+      <p class="kw-ctx-cn">前上诉法官布莱恩·莱维森爵士对刑事法院的重大审查建议为被告提供更多虚拟听证会，以减少将他们往返牢房浪费的时间。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [], "total_duration_ms": 0};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "and": "和", "for": "为了", "in": "在", "will": "将", "on": "在", "offenders": "罪犯", "plan": "计划", "it": "它", "early": "早期的", "more": "更多", "second": "第二", "prison": "监狱", "serving": "担任", "up": "向上", "government": "政府", "courts": "法院", "by": "被", "from": "来自", "release": "发布", "scheme": "计划", "years": "多年", "under": "在...之下", "new": "新的", "jail": "监禁", "after": "之后", "than": "比", "criminal": "犯罪的", "that": "那个", "have": "有", "be": "是", "court": "法庭", "cases": "情况", "government's": "政府的", "two": "两个", "half": "一半", "leaving": "离开", "their": "他们的", "releases": "释放", "as": "作为", "its": "它的", "officers": "官员", "with": "与", "monitoring": "监控", "being": "正在", "had": "有", "is": "是", "has": "有", "jury": "陪审团", "magistrates": "地方法官", "pilots": "飞行员们", "an": "一个", "wave": "浪潮", "tuesday": "星期二", "phase": "阶段", "they": "它们", "are": "是", "third": "第三", "sentence": "判决", "back": "后退", "vote": "投票", "could": "可能", "lead": "导致", "strike": "罢工", "over": "超过", "pay": "支付", "months": "月", "long": "长久", "next": "下一个", "those": "那些", "members": "成员", "other": "其他", "been": "已经", "moj": "司法部", "while": "而", "says": "表示", "accepted": "接受", "cut": "削减", "bringing": "带来", "most": "最", "crown": "王冠", "judge": "法官", "trials": "试验", "trial": "审判", "can": "可以", "defendants": "被告", "cells": "牢房", "his": "他的", "free": "自由的", "hmp": "女王陛下监狱", "brixton": "布里克斯顿", "earlier": "较早", "this": "这个", "month": "月份", "first": "第一轮", "about": "关于", "leave": "离开", "jails": "监狱", "england": "英格兰", "wales": "威尔士", "tackle": "应对", "population": "人口", "crisis": "危机", "group": "团体", "include": "包括", "crimes": "罪行", "rules": "规则", "behind": "在...后面", "bars": "酒吧", "rather": "宁愿", "comes": "到来", "takes": "担任", "radically": "彻底地", "parliament": "议会", "but": "但是", "also": "也", "prepare": "准备", "ballot": "选票", "some": "一些", "left": "离开", "october": "十月", "all": "所有", "whom": "谁", "were": "是", "terms": "条件", "less": "更少", "monday's": "周一的", "stage": "舞台", "begins": "开始", "process": "过程", "releasing": "释放", "increasingly": "日益", "sentences": "刑期", "june": "六月", "service": "服务", "union": "工会", "said": "说", "put": "提出", "enormous": "巨大的", "strain": "紧张", "who": "谁", "charged": "指控", "community": "社区", "typically": "通常", "released": "释放", "should": "应该", "expect": "期望", "tagged": "标记的", "subject": "主题", "conditions": "条件", "union's": "联盟的", "meet": "会见", "discuss": "讨论", "week's": "一周的", "which": "哪个", "action": "行动", "offered": "提供", "rise": "上升", "ministry": "外交部", "justice": "正义", "demanded": "要求", "part": "部分", "make": "使", "loss": "损失", "earnings": "收益", "caused": "导致", "cuts": "削减", "offer": "提供", "fair": "公平的", "unions": "工会", "investment": "投资", "extra": "额外的", "ai": "人工智能", "tools": "工具", "gets": "得到", "way": "方式", "reform": "改革", "before": "之前", "mps": "议员", "announcing": "宣布", "week": "周", "ago": "以前", "abandoned": "被遗弃的", "controversial": "有争议的", "element": "元素", "revised": "修订的", "proposals": "提议", "form": "形成", "where": "那里", "alone": "独自", "sitting": "现任的", "without": "没有", "ordinary": "普通的", "people": "人们", "would": "将", "reach": "达到", "against": "反对", "suspects": "嫌疑人", "facing": "面临", "three": "三个", "however": "然而", "still": "仍然", "scrapped": "废弃的", "complex": "复杂的", "fraud": "欺诈", "another": "另一个", "kept": "保留", "lower": "较低的", "ending": "结束", "right": "正确", "ask": "询问", "expand": "膨胀", "use": "使用", "so-called": "所谓的", "blitz": "闪电战", "or": "或者", "short": "短暂的", "shown": "表现出", "similar": "类似的", "together": "一起", "speed": "速度", "through": "通过", "cutting": "削减", "one": "一个", "at": "在", "old": "旧的", "bailey": "贝利", "led": "带领", "london": "伦敦", "concerning": "关于", "assaults": "袭击", "emergency": "紧急", "workers": "工人", "summer": "夏天", "major": "重大的", "review": "审查", "former": "前任", "appeal": "呼吁", "sir": "爵士", "brian": "布赖恩", "leveson": "莱韦森", "recommended": "建议", "wasted": "浪费的", "time": "时间", "them": "他们", "now": "现在", "ordered": "命令", "appear": "出现", "direct": "直接的", "police": "警方", "monday": "星期一", "announced": "宣布", "recommendations": "建议", "modernise": "现代化", "rejected": "拒绝", "advice": "建议", "retain": "保留", "restriction": "限制", "volunteer": "志愿者", "means": "意味着", "only": "只有", "power": "权力", "aim": "目标", "keep": "保持", "out": "出来", "help": "帮助", "clear": "明确", "prisoner": "囚犯", "jailed": "被监禁", "days": "天", "how": "如何", "work": "工作", "number": "数量", "inmates": "囚犯", "freed": "被释放的", "hundreds": "数百", "criminals": "罪犯", "start": "开始", "workload": "工作量", "backlogs": "积压案件", "walks": "罢工", "batches": "批次", "culminating": "最终导致", "napo": "全国缓刑官协会", "electronically": "以电子方式", "twinned": "结对", "recruit": "招聘", "roll-out": "推广", "drops": "下降", "defendant's": "被告的", "grouping": "分组", "progression": "晋升", "hearings": "听证会", "slash": "大幅削减"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
