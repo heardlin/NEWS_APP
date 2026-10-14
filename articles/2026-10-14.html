@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-14</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-14</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/74d5/live/41c477c0-c74d-11f1-b4d5-87f9c6c95a29.jpg" alt="Family pays tribute to 'warm and engaging' man killed in tiger attack" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Family pays tribute to 'warm and engaging' man killed in tiger attack</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/ck054nvzr676o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-14.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The family of a man who was killed by a tiger after he entered its <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏；圈地" data-def-en="An area surrounded by fences or walls, especially for animals.">enclosure</span> at a wildlife park has paid <span class="keyword" data-word="tribute" data-phonetic="/ˈtrɪbjuːt/" data-pos="n." data-def="致敬；悼念" data-def-en="An act, statement, or gift that shows respect or admiration.">tribute</span>, describing him as "bright, warm and engaging".</span></p>
+        <p class="cn">一名男子在野生动物园进入虎舍后被老虎咬死，其家人已致哀，称他“聪明、热情、讨人喜欢”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">William Chapman, 23, visited Yorkshire Wildlife Park near Doncaster on Saturday and was attacked after going into the animal's pen.</span> <span class="sentence" data-sentence-index="2">He was pronounced dead at the scene.</span></p>
+        <p class="cn">23岁的威廉·查普曼（William Chapman）周六参观了唐卡斯特附近的约克郡野生动物园（Yorkshire Wildlife Park），在进入动物围栏后遭到袭击。他被当场宣布死亡。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="3">In a statement, his family said that he had suffered from "significant mental illness" over a number of years and had been prescribed "strong medication".</span></p>
+        <p class="cn">他的家人在一份声明中说，他多年来患有“严重的精神疾病”，并服用了“强效药物”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">It said it was for the <span class="keyword" data-word="coroner" data-phonetic="/ˈkɔːrənər/" data-pos="n." data-def="验尸官" data-def-en="An official who investigates deaths that are sudden or violent.">coroner</span> to decide whether his mental illness played a part in his death, asking that the public respect that process.</span></p>
+        <p class="cn">声明称，应由验尸官决定他的精神疾病是否与他的死亡有关，并请求公众尊重这一过程。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">City of Doncaster Council has launched a health and safety <span class="keyword" data-word="investigation" data-phonetic="/ɪnˌvestɪˈɡeɪʃn/" data-pos="n." data-def="调查" data-def-en="An official examination of the facts about a situation or crime.">investigation</span> into Chapman's death and the park remains closed.</span></p>
+        <p class="cn">唐卡斯特市议会（City of Doncaster Council）已对查普曼的死因展开健康与安全调查，该公园仍然关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">"William was a bright, warm and engaging young man whom his family dearly loved - and William loved them back," a statement released on Tuesday evening said.</span></p>
+        <p class="cn">周二晚间发布的一份声明说：“威廉是一个聪明、热情、讨人喜欢的年轻人，他的家人深爱着他——威廉也爱他们。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">The family also asked for privacy, saying "the publication and circulation of deeply offensive media content is causing them severe <span class="keyword" data-word="distress" data-phonetic="/dɪˈstres/" data-pos="n." data-def="痛苦；忧虑" data-def-en="Extreme worry, sadness, or pain.">distress</span> at an exceptionally vulnerable time".</span></p>
+        <p class="cn">家人还要求隐私，称“在极其脆弱的时刻，发布和传播极具冒犯性的媒体内容给他们带来了严重的痛苦”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">"The family are utterly <span class="keyword" data-word="devastated" data-phonetic="/ˈdevəsteɪtɪd/" data-pos="adj." data-def="极度震惊；悲痛欲绝" data-def-en="Feeling extreme shock and sadness.">devastated</span> by their loss and are struggling to come to terms with what has happened," the statement continued.</span></p>
+        <p class="cn">声明继续写道：“家人对失去亲人感到彻底崩溃，正在努力接受所发生的一切。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">"The family are hopeful that the relevant authorities will do their upmost to get to the bottom of why our amazing son did what he did."</span></p>
+        <p class="cn">“家人希望有关当局能尽最大努力查明我们出色的儿子为何会做出这样的事。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">A spokesperson for the South Yorkshire Police said Chapman's family are being supported by specialist officers.</span></p>
+        <p class="cn">南约克郡警方（South Yorkshire Police）的一位发言人说，查普曼的家人正在得到专业人员的支持。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">The incident, which took place shortly after 13:30 BST on Saturday, led to the <span class="keyword" data-word="evacuation" data-phonetic="/ɪˌvækjuˈeɪʃn/" data-pos="n." data-def="疏散；撤离" data-def-en="The act of moving people from a dangerous place to a safe place.">evacuation</span> and ongoing closure of the park.</span></p>
+        <p class="cn">这起事件发生在英国夏令时周六13:30刚过，导致公园疏散并持续关闭。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">An eyewitness described seeing Chapman wearing headphones and "pacing around" near the <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏；圈地" data-def-en="An area surrounded by fences or walls, especially for animals.">enclosure</span> before he went in.</span></p>
+        <p class="cn">一名目击者描述，看到查普曼戴着耳机，在围栏附近“来回踱步”，随后进入其中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Mobile phone footage, believed to be from Chapman, appears to show the inside of the <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏；圈地" data-def-en="An area surrounded by fences or walls, especially for animals.">enclosure</span> as he approaches the tiger across a patch of grass.</span></p>
+        <p class="cn">据信是查普曼拍摄的手机视频显示，他穿过一片草地接近老虎时，围栏内部的情景。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Chapman was a former pupil of the Jackie Palmer Stage School in High Wycombe.</span></p>
+        <p class="cn">查普曼曾是海威科姆（High Wycombe）杰基·帕尔默戏剧学校（Jackie Palmer Stage School）的学生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"We loved watching William grow, both as a person and as a performer, during his time with us," the Jackie Palmer Stage School in High Wycombe said in a <span class="keyword" data-word="tribute" data-phonetic="/ˈtrɪbjuːt/" data-pos="n." data-def="致敬；悼念" data-def-en="An act, statement, or gift that shows respect or admiration.">tribute</span> on Tuesday.</span></p>
+        <p class="cn">海威科姆的杰基·帕尔默戏剧学校在周二的悼念中说：“我们喜欢看着威廉在我们这里成长，无论是作为一个人还是一名表演者。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">"It was a privilege to be part of his journey, and he will be remembered with great fondness by everyone who had the pleasure of knowing him."</span></p>
+        <p class="cn">“能成为他旅程的一部分是一种荣幸，所有有幸认识他的人都会深深怀念他。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">"Our thoughts and heartfelt condolences are with William's family and friends during this incredibly difficult time," the statement continued.</span></p>
+        <p class="cn">声明继续写道：“在这个极其艰难的时刻，我们的思念和衷心的哀悼与威廉的家人和朋友同在。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">As a child, Chapman appeared in the ITV production May Contain Nuts alongside Shirley Henderson - who is best known for playing Moaning Myrtle in the Harry Potter films - and Darren Boyd.</span></p>
+        <p class="cn">小时候，查普曼曾与雪莉·亨德森（Shirley Henderson）——她因在《哈利·波特》系列电影中饰演哭泣的桃金娘而闻名——以及达伦·博伊德（Darren Boyd）一起出演了ITV制作的《可能含坚果》（May Contain Nuts）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">He also portrayed Edward Jenner in the BBC series True Stories.</span></p>
+        <p class="cn">他还在BBC系列剧《真实故事》（True Stories）中饰演了爱德华·詹纳（Edward Jenner）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">Staff at Yorkshire Wildlife Park have separately said their "thoughts and heartfelt sympathies" are with Chapman's family and confirmed the rare Amur tiger, called Altai, remained in the <span class="keyword" data-word="enclosure" data-phonetic="/ɪnˈkloʊʒər/" data-pos="n." data-def="围栏；圈地" data-def-en="An area surrounded by fences or walls, especially for animals.">enclosure</span> and would not be euthanised.</span></p>
+        <p class="cn">约克郡野生动物园的工作人员分别表示，他们向查普曼的家人致以“思念和衷心的同情”，并确认这只名叫阿尔泰（Altai）的稀有阿穆尔虎仍留在围栏内，不会被安乐死。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Dan Swaine, the local authority's executive director of place, said the council was "deeply saddened" by the incident and sent its "deepest sympathies" to Chapman's family and those who were at the scene.</span></p>
+        <p class="cn">当地政府的地区执行主任丹·斯韦恩（Dan Swaine）表示，市议会对这一事件“深感悲痛”，并向查普曼的家人和现场人员致以“最深切的同情”。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">enclosure</span>
+        <button class="kw-speak-btn" data-word="enclosure" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈkloʊʒər/ n.</span>
+      </div>
+      <p class="kw-def">围栏；圈地</p>
+      <p class="kw-def-en">An area surrounded by fences or walls, especially for animals.</p>
+      <p class="kw-ctx">&ldquo;The family of a man who was killed by a tiger after he entered its enclosure at a wildlife park has paid tribute, describing him as "bright, warm and engaging".&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子进入野生动物园的老虎围栏后被老虎咬死，其家人已向其致敬，称他“聪明、热情、有魅力”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tribute</span>
+        <button class="kw-speak-btn" data-word="tribute" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtrɪbjuːt/ n.</span>
+      </div>
+      <p class="kw-def">致敬；悼念</p>
+      <p class="kw-def-en">An act, statement, or gift that shows respect or admiration.</p>
+      <p class="kw-ctx">&ldquo;The family of a man who was killed by a tiger after he entered its enclosure at a wildlife park has paid tribute, describing him as "bright, warm and engaging".&rdquo;</p>
+      <p class="kw-ctx-cn">一名男子进入野生动物园的老虎围栏后被老虎咬死，其家人已向其致敬，称他“聪明、热情、有魅力”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">coroner</span>
+        <button class="kw-speak-btn" data-word="coroner" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɔːrənər/ n.</span>
+      </div>
+      <p class="kw-def">验尸官</p>
+      <p class="kw-def-en">An official who investigates deaths that are sudden or violent.</p>
+      <p class="kw-ctx">&ldquo;It said it was for the coroner to decide whether his mental illness played a part in his death, asking that the public respect that process.&rdquo;</p>
+      <p class="kw-ctx-cn">声明称，应由验尸官决定他的精神疾病是否与他的死亡有关，并请求公众尊重这一程序。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">investigation</span>
+        <button class="kw-speak-btn" data-word="investigation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˌvestɪˈɡeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">调查</p>
+      <p class="kw-def-en">An official examination of the facts about a situation or crime.</p>
+      <p class="kw-ctx">&ldquo;City of Doncaster Council has launched a health and safety investigation into Chapman's death and the park remains closed.&rdquo;</p>
+      <p class="kw-ctx-cn">唐卡斯特市议会已对查普曼的死因展开健康与安全调查，公园仍然关闭。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">distress</span>
+        <button class="kw-speak-btn" data-word="distress" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈstres/ n.</span>
+      </div>
+      <p class="kw-def">痛苦；忧虑</p>
+      <p class="kw-def-en">Extreme worry, sadness, or pain.</p>
+      <p class="kw-ctx">&ldquo;The family also asked for privacy, saying "the publication and circulation of deeply offensive media content is causing them severe distress at an exceptionally vulnerable time".&rdquo;</p>
+      <p class="kw-ctx-cn">家人还要求隐私，称“在极其脆弱的时刻，发布和传播极具冒犯性的媒体内容给他们带来了严重的痛苦”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devastated</span>
+        <button class="kw-speak-btn" data-word="devastated" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdevəsteɪtɪd/ adj.</span>
+      </div>
+      <p class="kw-def">极度震惊；悲痛欲绝</p>
+      <p class="kw-def-en">Feeling extreme shock and sadness.</p>
+      <p class="kw-ctx">&ldquo;The family are utterly devastated by their loss and are struggling to come to terms with what has happened,&rdquo;</p>
+      <p class="kw-ctx-cn">这个家庭因失去亲人而悲痛欲绝，并难以接受所发生的一切。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuation</span>
+        <button class="kw-speak-btn" data-word="evacuation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˌvækjuˈeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">疏散；撤离</p>
+      <p class="kw-def-en">The act of moving people from a dangerous place to a safe place.</p>
+      <p class="kw-ctx">&ldquo;The incident, which took place shortly after 13:30 BST on Saturday, led to the evacuation and ongoing closure of the park.&rdquo;</p>
+      <p class="kw-ctx-cn">该事件发生在周六英国夏令时13:30后不久，导致公园疏散并持续关闭。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">condolence</span>
+        <button class="kw-speak-btn" data-word="condolence" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈdoʊləns/ n.</span>
+      </div>
+      <p class="kw-def">哀悼；慰问</p>
+      <p class="kw-def-en">An expression of sympathy for someone who has experienced a loss.</p>
+      <p class="kw-ctx">&ldquo;Our thoughts and heartfelt condolences are with William's family and friends during this incredibly difficult time,&rdquo;</p>
+      <p class="kw-ctx-cn">在这个极其艰难的时刻，我们向威廉的家人和朋友致以思念和衷心的哀悼。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The family of a man who was killed by a tiger after he entered its enclosure at a wildlife park has paid tribute, describing him as \"bright, warm and engaging\".", "start_ms": 0, "end_ms": 11208, "paragraph_index": 0}, {"index": 1, "text": "William Chapman, 23, visited Yorkshire Wildlife Park near Doncaster on Saturday and was attacked after going into the animal's pen.", "start_ms": 11208, "end_ms": 21192, "paragraph_index": 1}, {"index": 2, "text": "He was pronounced dead at the scene.", "start_ms": 21192, "end_ms": 24216, "paragraph_index": 1}, {"index": 3, "text": "In a statement, his family said that he had suffered from \"significant mental illness\" over a number of years and had been prescribed \"strong medication\".", "start_ms": 24216, "end_ms": 34128, "paragraph_index": 2}, {"index": 4, "text": "It said it was for the coroner to decide whether his mental illness played a part in his death, asking that the public respect that process.", "start_ms": 34128, "end_ms": 43296, "paragraph_index": 3}, {"index": 5, "text": "City of Doncaster Council has launched a health and safety investigation into Chapman's death and the park remains closed.", "start_ms": 43296, "end_ms": 51864, "paragraph_index": 4}, {"index": 6, "text": "\"William was a bright, warm and engaging young man whom his family dearly loved - and William loved them back,\" a statement released on Tuesday evening said.", "start_ms": 51864, "end_ms": 62544, "paragraph_index": 5}, {"index": 7, "text": "The family also asked for privacy, saying \"the publication and circulation of deeply offensive media content is causing them severe distress at an exceptionally vulnerable time\".", "start_ms": 62544, "end_ms": 74832, "paragraph_index": 6}, {"index": 8, "text": "\"The family are utterly devastated by their loss and are struggling to come to terms with what has happened,\" the statement continued.", "start_ms": 74832, "end_ms": 83280, "paragraph_index": 7}, {"index": 9, "text": "\"The family are hopeful that the relevant authorities will do their upmost to get to the bottom of why our amazing son did what he did.\"", "start_ms": 83280, "end_ms": 91584, "paragraph_index": 8}, {"index": 10, "text": "A spokesperson for the South Yorkshire Police said Chapman's family are being supported by specialist officers.", "start_ms": 91584, "end_ms": 99192, "paragraph_index": 9}, {"index": 11, "text": "The incident, which took place shortly after 13:30 BST on Saturday, led to the evacuation and ongoing closure of the park.", "start_ms": 99192, "end_ms": 109704, "paragraph_index": 10}, {"index": 12, "text": "An eyewitness described seeing Chapman wearing headphones and \"pacing around\" near the enclosure before he went in.", "start_ms": 109704, "end_ms": 117576, "paragraph_index": 11}, {"index": 13, "text": "Mobile phone footage, believed to be from Chapman, appears to show the inside of the enclosure as he approaches the tiger across a patch of grass.", "start_ms": 117576, "end_ms": 127464, "paragraph_index": 12}, {"index": 14, "text": "Chapman was a former pupil of the Jackie Palmer Stage School in High Wycombe.", "start_ms": 127464, "end_ms": 132912, "paragraph_index": 13}, {"index": 15, "text": "\"We loved watching William grow, both as a person and as a performer, during his time with us,\" the Jackie Palmer Stage School in High Wycombe said in a tribute on Tuesday.", "start_ms": 132912, "end_ms": 144600, "paragraph_index": 14}, {"index": 16, "text": "\"It was a privilege to be part of his journey, and he will be remembered with great fondness by everyone who had the pleasure of knowing him.\"", "start_ms": 144600, "end_ms": 153336, "paragraph_index": 15}, {"index": 17, "text": "\"Our thoughts and heartfelt condolences are with William's family and friends during this incredibly difficult time,\" the statement continued.", "start_ms": 153336, "end_ms": 162264, "paragraph_index": 16}, {"index": 18, "text": "As a child, Chapman appeared in the ITV production May Contain Nuts alongside Shirley Henderson - who is best known for playing Moaning Myrtle in the Harry Potter films - and Darren Boyd.", "start_ms": 162264, "end_ms": 174864, "paragraph_index": 17}, {"index": 19, "text": "He also portrayed Edward Jenner in the BBC series True Stories.", "start_ms": 174864, "end_ms": 180216, "paragraph_index": 18}, {"index": 20, "text": "Staff at Yorkshire Wildlife Park have separately said their \"thoughts and heartfelt sympathies\" are with Chapman's family and confirmed the rare Amur tiger, called Altai, remained in the enclosure and would not be euthanised.", "start_ms": 180216, "end_ms": 194592, "paragraph_index": 19}, {"index": 21, "text": "Dan Swaine, the local authority's executive director of place, said the council was \"deeply saddened\" by the incident and sent its \"deepest sympathies\" to Chapman's family and those who were at the scene.", "start_ms": 194592, "end_ms": 207408, "paragraph_index": 20}], "total_duration_ms": 207408};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "of": "的", "family": "家庭", "in": "在", "to": "到", "was": "是", "he": "他", "said": "说", "his": "他的", "are": "是", "by": "被", "at": "在", "park": "公园", "as": "作为", "chapman": "查普曼", "with": "与", "who": "谁", "william": "威廉", "on": "在", "statement": "声明", "that": "那个", "for": "为了", "be": "是", "tiger": "老虎", "after": "之后", "wildlife": "野生动物", "has": "有", "yorkshire": "约克郡", "had": "有", "it": "它", "loved": "爱过的", "time": "时间", "their": "他们的", "man": "男子", "its": "它的", "him": "他", "bright": "明亮的", "warm": "温暖的", "engaging": "参与", "near": "附近", "doncaster": "唐卡斯特", "saturday": "星期六", "into": "进入", "scene": "现场", "from": "来自", "mental": "精神的", "illness": "疾病", "part": "部分", "death": "死亡", "council": "委员会", "them": "他们", "tuesday": "星期二", "also": "也", "deeply": "深深地", "is": "是", "an": "一个", "what": "什么", "continued": "持续的", "will": "将", "our": "我们的", "did": "做了", "incident": "事件", "place": "地点", "stage": "舞台", "school": "学校", "high": "高的", "during": "在期间", "thoughts": "想法", "heartfelt": "衷心的", "sympathies": "同情", "killed": "杀死", "entered": "进入", "paid": "支付", "describing": "描述", "visited": "访问", "attacked": "袭击", "going": "将要", "pronounced": "宣布的", "dead": "死亡", "suffered": "遭受", "significant": "重大", "over": "超过", "number": "数量", "years": "多年", "been": "已经", "strong": "强烈", "medication": "药物", "decide": "决定", "whether": "是否", "played": "比赛", "asking": "询问", "public": "公众", "respect": "尊重", "process": "过程", "city": "城市", "launched": "发起", "health": "健康", "safety": "安全", "remains": "仍然", "closed": "关闭", "young": "年轻的", "whom": "谁", "back": "后退", "released": "释放", "evening": "晚上", "asked": "询问", "privacy": "隐私", "saying": "说", "publication": "出版", "circulation": "循环", "offensive": "冒犯的", "media": "媒体", "content": "内容", "causing": "导致", "severe": "严重的", "exceptionally": "异常地", "vulnerable": "易受攻击的", "utterly": "完全地", "loss": "损失", "struggling": "挣扎", "come": "到来", "terms": "条件", "happened": "发生", "hopeful": "有希望的", "relevant": "相关", "authorities": "当局", "do": "做", "get": "得到", "bottom": "底部", "why": "为何", "amazing": "惊人的", "son": "儿子", "spokesperson": "发言人", "south": "韩国", "police": "警方", "being": "正在", "supported": "支持", "specialist": "专家", "officers": "官员", "which": "哪个", "took": "担任", "shortly": "不久", "bst": "英国夏令时", "led": "带领", "ongoing": "正在进行的", "closure": "关闭", "eyewitness": "目击者", "described": "描述", "seeing": "看到", "wearing": "穿着", "around": "在...周围", "before": "之前", "went": "去", "mobile": "移动", "phone": "电话", "footage": "视频片段", "believed": "据信", "appears": "似乎", "show": "显示", "inside": "内部", "approaches": "接近", "across": "跨越", "grass": "草", "former": "前任", "we": "我们", "watching": "关注", "grow": "增长", "both": "两者", "person": "个人", "us": "我们", "privilege": "特权", "journey": "旅程", "remembered": "被记住", "great": "伟大的", "everyone": "每个人", "knowing": "明知", "condolences": "哀悼", "william's": "威廉的", "friends": "朋友", "this": "这个", "incredibly": "极其", "difficult": "困难的", "child": "孩子", "appeared": "出现", "itv": "独立电视台", "production": "制作", "may": "可能", "alongside": "与...一起", "shirley": "雪莉", "best": "最佳", "known": "已知", "playing": "玩耍", "harry": "哈里", "darren": "达伦", "bbc": "英国广播公司", "series": "系列", "true": "真实", "stories": "报道", "staff": "员工", "have": "有", "separately": "分别", "confirmed": "确认", "rare": "罕见的", "called": "称为", "remained": "仍然是", "would": "将", "not": "不", "dan": "丹", "local": "当地", "executive": "行政的", "director": "局长", "saddened": "感到悲伤的", "sent": "派遣", "deepest": "最深切的", "those": "那些", "were": "是", "chapman's": "查普曼的", "jackie": "杰基", "palmer": "帕尔默", "wycombe": "威科姆", "animal's": "动物的", "pen": "围栏", "prescribed": "规定的", "dearly": "深深地", "upmost": "最重要的", "headphones": "耳机", "pacing": "踱步", "patch": "一块地", "pupil": "瞳孔", "performer": "表演者", "fondness": "喜爱", "pleasure": "快乐", "contain": "容纳", "nuts": "坚果", "henderson": "亨德森", "moaning": "呻吟", "myrtle": "桃金娘", "potter": "波特", "films": "电影", "boyd": "博伊德", "portrayed": "扮演", "edward": "爱德华", "jenner": "詹纳", "amur": "阿穆尔", "altai": "阿尔泰", "euthanised": "安乐死", "swaine": "斯温", "authority's": "当局的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
