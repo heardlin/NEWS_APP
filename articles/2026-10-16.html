@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-16</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-16</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/4526/live/ca62a180-c8ea-11f1-8e7c-9b1d04b5a9dd.png" alt="Bus hits train stopped on French side of Channel Tunnel, with 19 injured" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Bus hits train stopped on French side of Channel Tunnel, with 19 injured</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c6wyrnmgzn01o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-16.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: BBC at scene as emergency crews head towards Channel Tunnel crash</span></p>
+        <p class="cn">观看：BBC在紧急救援人员前往英吉利海峡隧道事故现场的画面</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">A bus has hit a <span class="keyword" data-word="stationary" data-phonetic="/ˈsteɪʃənri/" data-pos="adj." data-def="静止的，不动的" data-def-en="Not moving; standing still.">stationary</span> <span class="keyword" data-word="freight" data-phonetic="/freɪt/" data-pos="n." data-def="货物，货运" data-def-en="Goods transported in bulk by truck, train, ship, or aircraft.">freight</span> train near the French entrance to the Channel Tunnel, injuring the driver and 18 passengers, French authorities say.</span></p>
+        <p class="cn">法国当局称，一辆巴士在英吉利海峡隧道法国入口附近撞上了一列停靠的货运列车，导致司机和18名乘客受伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">The bus, which was carrying lorry drivers due to take a shuttle rail service, struck the train at the loading platform of the tunnel in Coquelles, near Calais, at 19:27 (18:27 BST) on Thursday.</span></p>
+        <p class="cn">这辆巴士载有准备乘坐穿梭列车服务的卡车司机，于周四19:27（英国夏令时18:27）在加来附近的科凯勒隧道装载平台撞上了列车。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">The bus driver and one passenger were severely injured and evacuated by helicopter.</span> <span class="sentence" data-sentence-index="5">None of the injuries were life threatening, a local official said.</span></p>
+        <p class="cn">巴士司机和一名乘客伤势严重，已由直升机撤离。当地官员表示，所有伤者均无生命危险。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">Local sub-prefect Agathe Cury said <span class="keyword" data-word="freight" data-phonetic="/freɪt/" data-pos="n." data-def="货物，货运" data-def-en="Goods transported in bulk by truck, train, ship, or aircraft.">freight</span> and Eurostar passenger traffic through the tunnel had not been disrupted after a brief stoppage to <span class="keyword" data-word="evacuate" data-phonetic="/ɪˈvækjueɪt/" data-pos="v." data-def="疏散，撤离" data-def-en="To remove people from a dangerous place to a safer one.">evacuate</span> injured people.</span> <span class="sentence" data-sentence-index="7">An investigation has begun.</span></p>
+        <p class="cn">当地副省长阿加特·库里表示，在短暂停车疏散伤者后，通过隧道的货运和欧洲之星客运交通未受影响。调查已经开始。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="8">Trains near the French entrance to the Channel Tunnel (file image)</span></p>
+        <p class="cn">英吉利海峡隧道法国入口附近的列车（资料图）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">"Two trains were on either side of the platform.</span> <span class="sentence" data-sentence-index="10">One was being loaded by heavy goods vehicles ahead of a cross-Channel journey, and another train that had previously been loaded was departing," Cury said.</span></p>
+        <p class="cn">库里说：“两列火车分别位于站台两侧。一列正在装载重型货车，准备进行跨海峡旅程，另一列之前已装载完毕的列车正在出发。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="11">"For a reason that currently remains unknown, the minibus collided with the departing train.</span></p>
+        <p class="cn">“目前原因不明，小巴撞上了正在出发的列车。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">"The bus did not <span class="keyword" data-word="overturn" data-phonetic="/ˌəʊvəˈtɜːn/" data-pos="v." data-def="翻倒，倾覆" data-def-en="To turn over or cause to turn over; capsize.">overturn</span>, it is still upright â but the shock and the collision caused injuries to the people involved."</span></p>
+        <p class="cn">“巴士没有翻车，仍然直立——但撞击和碰撞导致相关人员受伤。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">The incident involved a minibus transporting workers who were about to board Le Shuttle.</span> <span class="sentence" data-sentence-index="14">All were men of different nationalities, she added.</span></p>
+        <p class="cn">事件涉及一辆运送即将登上Le Shuttle的工人的小巴。她补充说，所有人都是不同国籍的男性。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="15">It is not clear whether any British nationals are among the injured.</span></p>
+        <p class="cn">目前不清楚伤者中是否有英国公民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="16">Cury said it was "the first time an incident of this type has occurred" on an Eurotunnel loading platform.</span></p>
+        <p class="cn">库里表示，这是“欧洲隧道装载平台上首次发生此类事件”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">The BBC's Evan Davis, who was travelling through the Eurotunnel to Calais at the time of the incident, witnessed blue light vehicles "concentrated on one of the platforms" as he entered France.</span></p>
+        <p class="cn">BBC的埃文·戴维斯在事故发生时正通过欧洲隧道前往加来，他进入法国时目睹了蓝色灯光车辆“集中在其中一个站台上”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="18">"There were plenty of cars queueing up at check-in when I drove past just now, and I saw some cars going through check-in, so despite the collision they weren't being held," he said from the scene.</span></p>
+        <p class="cn">他在现场说：“我刚才开车经过时，检查站有很多车在排队，我看到一些车正在通过检查站，所以尽管发生了碰撞，他们并没有被拦住。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="19">Photos published by local French newspaper La Voix du Nord , external showed a small bus with damage to its front and side standing alongside a train, among a crowd of emergency workers.</span></p>
+        <p class="cn">法国当地报纸《北方之声》发布的外部照片显示，一辆前部和侧面受损的小型巴士停在列车旁边，周围是紧急救援人员。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="20">Eurostar has released an update saying: "An incident occurred several kilometers away from the Channel Tunnel.</span></p>
+        <p class="cn">欧洲之星发布更新称：“在距离英吉利海峡隧道几公里处发生了一起事件。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="21">"This incident does not involved or <span class="keyword" data-word="impact" data-phonetic="/ˈɪmpækt/" data-pos="v." data-def="影响，冲击" data-def-en="To have a strong effect on someone or something.">impact</span> Eurostar trains running from and to London.</span> <span class="sentence" data-sentence-index="22">All of Eurostar trains will run as expected."</span></p>
+        <p class="cn">“此事件不涉及或影响往返伦敦的欧洲之星列车。所有欧洲之星列车将按计划运行。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="23">The Eurotunnel runs under the sea between England and France, from Folkestone in Kent to Coquelles on the French side.</span></p>
+        <p class="cn">欧洲隧道在英格兰和法国之间的海底运行，从肯特郡的福克斯通到法国侧的科凯勒。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="24">Three different rail services operate through the tunnel - the Eurostar, a passenger train that begins in London and goes to several European destinations, <span class="keyword" data-word="freight" data-phonetic="/freɪt/" data-pos="n." data-def="货物，货运" data-def-en="Goods transported in bulk by truck, train, ship, or aircraft.">freight</span> trains which transport goods and Le Shuttle, which transports vehicles.</span></p>
+        <p class="cn">隧道内运营着三种不同的铁路服务——欧洲之星，从伦敦出发前往多个欧洲目的地的客运列车；货运列车，运输货物；以及Le Shuttle，运输车辆。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">stationary</span>
+        <button class="kw-speak-btn" data-word="stationary" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsteɪʃənri/ adj.</span>
+      </div>
+      <p class="kw-def">静止的，不动的</p>
+      <p class="kw-def-en">Not moving; standing still.</p>
+      <p class="kw-ctx">&ldquo;A bus has hit a stationary freight train near the French entrance to the Channel Tunnel, injuring the driver and 18 passengers, French authorities say.&rdquo;</p>
+      <p class="kw-ctx-cn">法国当局称，一辆巴士在英吉利海峡隧道法国入口附近撞上了一列静止的货运列车，导致司机和18名乘客受伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">freight</span>
+        <button class="kw-speak-btn" data-word="freight" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/freɪt/ n.</span>
+      </div>
+      <p class="kw-def">货物，货运</p>
+      <p class="kw-def-en">Goods transported in bulk by truck, train, ship, or aircraft.</p>
+      <p class="kw-ctx">&ldquo;A bus has hit a stationary freight train near the French entrance to the Channel Tunnel, injuring the driver and 18 passengers, French authorities say.&rdquo;</p>
+      <p class="kw-ctx-cn">法国当局称，一辆巴士在英吉利海峡隧道法国入口附近撞上了一列静止的货运列车，导致司机和18名乘客受伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散，撤离</p>
+      <p class="kw-def-en">To remove people from a dangerous place to a safer one.</p>
+      <p class="kw-ctx">&ldquo;The bus driver and one passenger were severely injured and evacuated by helicopter.&rdquo;</p>
+      <p class="kw-ctx-cn">巴士司机和一名乘客伤势严重，已由直升机撤离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">disrupt</span>
+        <button class="kw-speak-btn" data-word="disrupt" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪsˈrʌpt/ v.</span>
+      </div>
+      <p class="kw-def">扰乱，中断</p>
+      <p class="kw-def-en">To interrupt the normal course or unity of something.</p>
+      <p class="kw-ctx">&ldquo;Local sub-prefect Agathe Cury said freight and Eurostar passenger traffic through the tunnel had not been disrupted after a brief stoppage to evacuate injured people.&rdquo;</p>
+      <p class="kw-ctx-cn">当地副省长阿加特·库里表示，在短暂停止以疏散伤者后，通过隧道的货运和欧洲之星客运交通并未中断。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">collide</span>
+        <button class="kw-speak-btn" data-word="collide" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kəˈlaɪd/ v.</span>
+      </div>
+      <p class="kw-def">碰撞，相撞</p>
+      <p class="kw-def-en">To hit something or someone with force, especially while moving.</p>
+      <p class="kw-ctx">&ldquo;For a reason that currently remains unknown, the minibus collided with the departing train.&rdquo;</p>
+      <p class="kw-ctx-cn">由于目前未知的原因，小型巴士与正在驶离的列车相撞。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">overturn</span>
+        <button class="kw-speak-btn" data-word="overturn" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌəʊvəˈtɜːn/ v.</span>
+      </div>
+      <p class="kw-def">翻倒，倾覆</p>
+      <p class="kw-def-en">To turn over or cause to turn over; capsize.</p>
+      <p class="kw-ctx">&ldquo;The bus did not overturn, it is still upright – but the shock and the collision caused injuries to the people involved.&rdquo;</p>
+      <p class="kw-ctx-cn">巴士没有翻倒，仍然直立——但冲击和碰撞导致相关人员受伤。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">witness</span>
+        <button class="kw-speak-btn" data-word="witness" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwɪtnəs/ v.</span>
+      </div>
+      <p class="kw-def">目睹，见证</p>
+      <p class="kw-def-en">To see something happen, especially an accident or crime.</p>
+      <p class="kw-ctx">&ldquo;The BBC's Evan Davis, who was travelling through the Eurotunnel to Calais at the time of the incident, witnessed blue light vehicles "concentrated on one of the platforms" as he entered France.&rdquo;</p>
+      <p class="kw-ctx-cn">BBC的埃文·戴维斯在事故发生时正乘坐欧洲隧道前往加来，他进入法国时目睹了蓝色警灯车辆“集中在其中一个站台上”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">impact</span>
+        <button class="kw-speak-btn" data-word="impact" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɪmpækt/ v.</span>
+      </div>
+      <p class="kw-def">影响，冲击</p>
+      <p class="kw-def-en">To have a strong effect on someone or something.</p>
+      <p class="kw-ctx">&ldquo;This incident does not involved or impact Eurostar trains running from and to London.&rdquo;</p>
+      <p class="kw-ctx-cn">这一事件不涉及或影响往返伦敦的欧洲之星列车。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: BBC at scene as emergency crews head towards Channel Tunnel crash", "start_ms": 3000, "end_ms": 9288, "paragraph_index": 1}, {"index": 2, "text": "A bus has hit a stationary freight train near the French entrance to the Channel Tunnel, injuring the driver and 18 passengers, French authorities say.", "start_ms": 9288, "end_ms": 19464, "paragraph_index": 2}, {"index": 3, "text": "The bus, which was carrying lorry drivers due to take a shuttle rail service, struck the train at the loading platform of the tunnel in Coquelles, near Calais, at 19:27 (18:27 BST) on Thursday.", "start_ms": 19464, "end_ms": 35544, "paragraph_index": 3}, {"index": 4, "text": "The bus driver and one passenger were severely injured and evacuated by helicopter.", "start_ms": 35544, "end_ms": 41928, "paragraph_index": 4}, {"index": 5, "text": "None of the injuries were life threatening, a local official said.", "start_ms": 41928, "end_ms": 46824, "paragraph_index": 4}, {"index": 6, "text": "Local sub-prefect Agathe Cury said freight and Eurostar passenger traffic through the tunnel had not been disrupted after a brief stoppage to evacuate injured people.", "start_ms": 46824, "end_ms": 57864, "paragraph_index": 5}, {"index": 7, "text": "An investigation has begun.", "start_ms": 57864, "end_ms": 60936, "paragraph_index": 5}, {"index": 8, "text": "Trains near the French entrance to the Channel Tunnel (file image)", "start_ms": 60936, "end_ms": 66048, "paragraph_index": 6}, {"index": 9, "text": "\"Two trains were on either side of the platform.", "start_ms": 66048, "end_ms": 69864, "paragraph_index": 7}, {"index": 10, "text": "One was being loaded by heavy goods vehicles ahead of a cross-Channel journey, and another train that had previously been loaded was departing,\" Cury said.", "start_ms": 69864, "end_ms": 80088, "paragraph_index": 7}, {"index": 11, "text": "\"For a reason that currently remains unknown, the minibus collided with the departing train.", "start_ms": 80088, "end_ms": 86568, "paragraph_index": 8}, {"index": 12, "text": "\"The bus did not overturn, it is still upright \u00e2\u0080\u0093 but the shock and the collision caused injuries to the people involved.\"", "start_ms": 86568, "end_ms": 94680, "paragraph_index": 9}, {"index": 13, "text": "The incident involved a minibus transporting workers who were about to board Le Shuttle.", "start_ms": 94680, "end_ms": 100776, "paragraph_index": 10}, {"index": 14, "text": "All were men of different nationalities, she added.", "start_ms": 100776, "end_ms": 105048, "paragraph_index": 10}, {"index": 15, "text": "It is not clear whether any British nationals are among the injured.", "start_ms": 105048, "end_ms": 110112, "paragraph_index": 11}, {"index": 16, "text": "Cury said it was \"the first time an incident of this type has occurred\" on an Eurotunnel loading platform.", "start_ms": 110112, "end_ms": 117096, "paragraph_index": 12}, {"index": 17, "text": "The BBC's Evan Davis, who was travelling through the Eurotunnel to Calais at the time of the incident, witnessed blue light vehicles \"concentrated on one of the platforms\" as he entered France.", "start_ms": 117096, "end_ms": 129792, "paragraph_index": 13}, {"index": 18, "text": "\"There were plenty of cars queueing up at check-in when I drove past just now, and I saw some cars going through check-in, so despite the collision they weren't being held,\" he said from the scene.", "start_ms": 129792, "end_ms": 141720, "paragraph_index": 14}, {"index": 19, "text": "Photos published by local French newspaper La Voix du Nord , external showed a small bus with damage to its front and side standing alongside a train, among a crowd of emergency workers.", "start_ms": 141720, "end_ms": 154920, "paragraph_index": 15}, {"index": 20, "text": "Eurostar has released an update saying: \"An incident occurred several kilometers away from the Channel Tunnel.", "start_ms": 154920, "end_ms": 162672, "paragraph_index": 16}, {"index": 21, "text": "\"This incident does not involved or impact Eurostar trains running from and to London.", "start_ms": 162672, "end_ms": 169008, "paragraph_index": 17}, {"index": 22, "text": "All of Eurostar trains will run as expected.\"", "start_ms": 169008, "end_ms": 172992, "paragraph_index": 17}, {"index": 23, "text": "The Eurotunnel runs under the sea between England and France, from Folkestone in Kent to Coquelles on the French side.", "start_ms": 172992, "end_ms": 181248, "paragraph_index": 18}, {"index": 24, "text": "Three different rail services operate through the tunnel - the Eurostar, a passenger train that begins in London and goes to several European destinations, freight trains which transport goods and Le Shuttle, which transports vehicles.", "start_ms": 181248, "end_ms": 196968, "paragraph_index": 19}], "total_duration_ms": 196968};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "of": "的", "tunnel": "隧道", "train": "火车", "were": "是", "not": "不", "at": "在", "bus": "巴士", "french": "法国的", "was": "是", "on": "在", "said": "说", "an": "一个", "trains": "火车", "incident": "事件", "channel": "航道", "has": "有", "through": "通过", "from": "来自", "this": "这个", "as": "作为", "near": "附近", "which": "哪个", "platform": "平台", "in": "在", "one": "一个", "passenger": "乘客", "injured": "受伤", "by": "被", "local": "当地", "side": "方面", "vehicles": "车辆", "that": "那个", "it": "它", "involved": "涉及的", "scene": "现场", "emergency": "紧急", "entrance": "入口", "driver": "司机", "rail": "铁路", "loading": "装载", "calais": "加来", "injuries": "受伤", "had": "有", "been": "已经", "people": "人们", "being": "正在", "loaded": "装载", "goods": "商品", "departing": "离开的", "with": "与", "is": "是", "collision": "碰撞", "workers": "工人", "who": "谁", "le": "勒", "all": "所有", "different": "不同的", "among": "在...之中", "time": "时间", "occurred": "发生", "he": "他", "france": "法国", "cars": "汽车", "several": "数个", "london": "伦敦", "video": "视频", "can": "可以", "be": "是", "played": "比赛", "watch": "观看", "bbc": "英国广播公司", "crews": "工作人员", "head": "前往", "towards": "对待", "crash": "坠毁", "hit": "击中", "passengers": "乘客", "authorities": "当局", "say": "说", "carrying": "携带", "due": "应得", "take": "采取", "service": "服务", "struck": "击中", "bst": "英国夏令时", "thursday": "星期四", "severely": "严重地", "evacuated": "撤离", "helicopter": "直升机", "none": "没有一个", "life": "生活", "threatening": "威胁性的", "official": "官方", "traffic": "交通", "disrupted": "中断的", "after": "之后", "brief": "简短的", "investigation": "调查", "begun": "开始", "file": "提交", "image": "画面", "two": "两个", "either": "要么", "heavy": "沉重的", "ahead": "提前", "journey": "旅程", "another": "另一个", "previously": "此前", "for": "为了", "reason": "原因", "currently": "目前", "remains": "仍然", "unknown": "未知", "collided": "相撞", "did": "做了", "still": "仍然", "but": "但是", "shock": "震惊", "caused": "导致", "transporting": "运送", "about": "关于", "board": "董事会", "men": "男人们", "she": "她", "added": "补充", "clear": "明确", "whether": "是否", "any": "任何", "british": "英国的", "nationals": "国民", "are": "是", "first": "第一轮", "type": "类型", "bbc's": "英国广播公司的", "travelling": "旅行", "witnessed": "目睹", "blue": "蓝色", "light": "轻的", "platforms": "平台", "entered": "进入", "there": "那里", "plenty": "大量", "up": "向上", "when": "当", "drove": "驱使", "past": "过去", "just": "只是", "now": "现在", "saw": "看到", "some": "一些", "going": "将要", "so": "所以", "despite": "尽管", "they": "它们", "weren't": "不是", "held": "举行", "photos": "照片", "published": "发布", "newspaper": "报纸", "la": "拉", "du": "杜", "external": "外部的", "showed": "显示", "small": "小的", "damage": "损坏", "its": "它的", "front": "前线", "standing": "站立", "alongside": "与...一起", "crowd": "人群", "released": "释放", "update": "更新", "saying": "说", "away": "离开", "does": "做", "or": "或者", "running": "奔跑", "will": "将", "run": "奔跑", "expected": "预期", "runs": "奔跑（第三人称）", "under": "在...之下", "sea": "海域", "between": "之间", "england": "英格兰", "kent": "肯特", "three": "三个", "services": "服务", "operate": "运营", "begins": "开始", "goes": "进行", "european": "欧洲的", "destinations": "目的地", "transport": "运输", "eurostar": "欧洲之星列车", "shuttle": "穿梭列车", "cury": "屈里", "eurotunnel": "欧洲隧道公司", "coquelles": "科凯勒", "minibus": "小型巴士", "check-in": "办理登车手续", "injuring": "致伤", "lorry": "卡车", "drivers": "司机", "sub-prefect": "副省长", "agathe": "阿加特", "stoppage": "停工", "cross-channel": "跨海峡", "upright": "直立", "nationalities": "国籍", "evan": "埃文", "davis": "戴维斯", "concentrated": "集中的", "queueing": "排队", "voix": "北方之声", "nord": "北方", "kilometers": "公里", "folkestone": "福克斯通", "transports": "运输"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
