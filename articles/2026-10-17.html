@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-17</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/7c80/live/72894110-c9b4-11f1-9409-01a8c77950d7.jpg" alt="Oregon teacher fought school attacker before armed dad shot suspect 'multiple times'" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Oregon teacher fought school attacker before armed dad shot suspect 'multiple times'</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cv98zw1k8kp3o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-17.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Oregon school shooting: Police name victims and say suspect was former student</span></p>
+        <p class="cn">俄勒冈州学校枪击案：警方公布受害者姓名，称嫌疑人是前学生</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">An Oregon teacher threw her mobile phone before she tackled and tried to <span class="keyword" data-word="wrestle" data-phonetic="/ˈresəl/" data-pos="v." data-def="搏斗；扭打" data-def-en="to fight by holding and pushing someone">wrestle</span> away a shotgun from the arms of a teen suspect who opened fire on a special educational needs class.</span></p>
+        <p class="cn">俄勒冈州一名教师扔出手机，随后扑向一名向特殊教育班级开火的青少年嫌疑人，试图夺走他手中的猎枪。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">As she tussled with him on the floor of the class - where three children and a teacher were killed - a <span class="keyword" data-word="bystander" data-phonetic="/ˈbaɪˌstændər/" data-pos="n." data-def="旁观者" data-def-en="a person who is present at an event but not involved">bystander</span> ran inside.</span> <span class="sentence" data-sentence-index="4">Armed with a .40-caliber pistol, he opened fire and killed the teen.</span></p>
+        <p class="cn">当她在教室地板上与嫌疑人扭打时——那里有三名儿童和一名教师遇害——一名旁观者冲了进来。他手持一把0.40口径手枪，开枪击毙了这名青少年。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">The <span class="keyword" data-word="bystander" data-phonetic="/ˈbaɪˌstændər/" data-pos="n." data-def="旁观者" data-def-en="a person who is present at an event but not involved">bystander</span>, a dad of two girls at the school, had been driving past Silver Rail Elementary in Bend when he saw the suspect firing in the car park then shooting through a window to enter.</span></p>
+        <p class="cn">这名旁观者是该校两名女孩的父亲，当时他正驾车经过本德市的银轨小学，看到嫌疑人在停车场开枪，然后透过窗户射击进入学校。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">The details of the Thursday attack were confirmed by police, who said the 16-year-old suspect was a prior student at the school.</span></p>
+        <p class="cn">警方证实了周四袭击的细节，称这名16岁的嫌疑人是该校的前学生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Police say the suspect was armed with about 44 more rounds of shotgun ammunition when he was stopped.</span> <span class="sentence" data-sentence-index="8">He fired as many as 15 rounds in the class.</span></p>
+        <p class="cn">警方表示，嫌疑人被制止时还携带约44发猎枪弹药。他在教室里发射了多达15发子弹。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="9">"To the people who showed courage in the face of such violence, and intervened to prevent this tragedy from being any worse, we owe you a debt of <span class="keyword" data-word="gratitude" data-phonetic="/ˈɡrætɪtjuːd/" data-pos="n." data-def="感激；感谢" data-def-en="the feeling of being thankful">gratitude</span>," Bend Police Chief Mike Krantz said on Friday.</span></p>
+        <p class="cn">本德警察局长迈克·克兰茨（Mike Krantz）周五表示：“对于那些面对如此暴力展现出勇气并介入阻止这场悲剧进一步恶化的人们，我们欠你们一份感激。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="10">Police offered more information on the attack at at a news conference on Friday, where they identified two of the four victims.</span> <span class="sentence" data-sentence-index="11">They include five-year-old Rhoam Summer and 25-year-old teacher Meghan Lambert.</span></p>
+        <p class="cn">警方在周五的新闻发布会上提供了更多关于袭击的信息，并确认了四名受害者中的两人。他们包括5岁的罗姆·萨默（Rhoam Summer）和25岁的教师梅根·兰伯特（Meghan Lambert）。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="12">The families of the two other students who were killed, an eight-year-old and 11-year-old, did not wish to have them publicly identified yet, police said.</span></p>
+        <p class="cn">警方称，另外两名遇害学生（一名8岁和一名11岁）的家属不希望公开他们的身份。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="13">Two others were injured in the attack.</span> <span class="sentence" data-sentence-index="14">Another teacher, a 54-year-old, was still being treated at hospital, and a seven-year-old student, who was in serious but stable condition.</span></p>
+        <p class="cn">另有两人在袭击中受伤。另一名54岁的教师仍在医院接受治疗，一名7岁的学生伤势严重但情况稳定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="15">Krantz said the heroic actions of both the teacher and the father who ran inside the school saved lives.</span></p>
+        <p class="cn">克兰茨表示，那位教师和冲进学校的父亲的英勇行为挽救了生命。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="16">He said the teacher who wrestled with the gunman was not hurt but "almost certainly helped prevent more <span class="keyword" data-word="bloodshed" data-phonetic="/ˈblʌdʃed/" data-pos="n." data-def="流血；杀戮" data-def-en="the killing of people, especially in war">bloodshed</span>".</span></p>
+        <p class="cn">他说，与枪手扭打的教师没有受伤，但“几乎可以肯定帮助阻止了更多流血事件”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="17">He identified the suspect as 16-year-old Griffin J.</span> <span class="sentence" data-sentence-index="18">John II, who previously attended the school and was a special educational needs student there.</span></p>
+        <p class="cn">他确认嫌疑人为16岁的格里芬·J·约翰二世（Griffin J. John II），此前曾就读于该校，是一名特殊教育需求学生。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="19">A search warrant has been executed at the suspect's home and a search is ongoing, the police chief said.</span></p>
+        <p class="cn">警察局长表示，已对嫌疑人的住所执行了搜查令，搜查正在进行中。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="20">Police believe the suspect travelled to the elementary school on foot, but police are still investigating his exact movements and how he acquired the gun.</span> <span class="sentence" data-sentence-index="21">A motive is also not clear.</span></p>
+        <p class="cn">警方认为嫌疑人是步行前往小学的，但警方仍在调查他的具体行动路线以及他如何获得枪支。作案动机也不清楚。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="22">Police identified two of the victims as five-year-old Rhoam Summer (left) and 25-year-old teacher Meghan Lambert (right)</span></p>
+        <p class="cn">警方确认了两名受害者：5岁的罗姆·萨默（左）和25岁的教师梅根·兰伯特（右）</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="23">Officials did not confirm the name of the father who intervened and fatally shot the suspect.</span></p>
+        <p class="cn">官员没有确认介入并击毙嫌疑人的父亲的名字。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="24">But Kaylub Giamanco's family has identified him to US media as the person who sprang into action.</span></p>
+        <p class="cn">但凯卢布·贾曼科（Kaylub Giamanco）的家人向美国媒体确认他就是采取行动的人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="25">The 36-year-old carpenter had just finished lunch and was on his way home when he passed the school, his brother told NBC News.</span> <span class="sentence" data-sentence-index="26">He saw the suspect open fire on a vehicle outside the school then shoot through a window and go inside.</span></p>
+        <p class="cn">他的兄弟告诉NBC新闻，这位36岁的木匠刚吃完午饭正在回家路上，经过学校时看到了这一幕。他看到嫌疑人在学校外的一辆车上开枪，然后透过窗户射击并进入学校。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="27">Police said he had a legally <span class="keyword" data-word="concealed" data-phonetic="/kənˈsiːld/" data-pos="adj." data-def="隐藏的；隐蔽的" data-def-en="kept hidden from view">concealed</span> .40 caliber in his vehicle and his brother said he grabbed the pistol "and decided to go in after" the suspect.</span> <span class="sentence" data-sentence-index="28">Police say he fired at the suspect "multiple times", killing him.</span></p>
+        <p class="cn">警方称他车内合法藏有一把0.40口径手枪，他的兄弟说他抓起手枪“决定进去追”嫌疑人。警方称他向嫌疑人“多次”开枪，将其击毙。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="29">In a statement to the BBC's partner CBS News, Giamanco's family said he is a "lifelong resident of Bend" and that he "is not seeking recognition".</span></p>
+        <p class="cn">在向BBC合作伙伴CBS新闻发表的一份声明中，贾曼科的家人表示他是“本德的终身居民”，并且他“不寻求认可”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="30">The family said Giamanco wants to express his "<span class="keyword" data-word="gratitude" data-phonetic="/ˈɡrætɪtjuːd/" data-pos="n." data-def="感激；感谢" data-def-en="the feeling of being thankful">gratitude</span> to the first responders, school personnel, and community for the outpouring of love and support".</span> <span class="sentence" data-sentence-index="31">He and his family "respectfully ask for privacy".</span></p>
+        <p class="cn">家人表示，贾曼科想表达他“对急救人员、学校工作人员和社区的感激之情，感谢大家倾注的爱和支持”。他和他的家人“恳请尊重隐私”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="32">US President Donald Trump praised the <span class="keyword" data-word="bystander" data-phonetic="/ˈbaɪˌstændər/" data-pos="n." data-def="旁观者" data-def-en="a person who is present at an event but not involved">bystander</span>'s actions on Friday, calling him a "great hero".</span></p>
+        <p class="cn">美国总统唐纳德·特朗普（Donald Trump）周五赞扬了这位旁观者的行为，称他为“伟大的英雄”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="33">Addressing reporters at the White House before departing for Georgia, Trump said the situation could have been "much worse" with no intervention.</span></p>
+        <p class="cn">特朗普在离开白宫前往佐治亚州之前对记者说，如果没有干预，情况可能会“糟糕得多”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="34">"It's a terrible thing, but thank goodness for a man that had a gun and knew how to use it," he said.</span></p>
+        <p class="cn">他说：“这是一件可怕的事情，但感谢上帝，有一个人有枪并且知道如何使用它。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="35">Without naming the <span class="keyword" data-word="bystander" data-phonetic="/ˈbaɪˌstændər/" data-pos="n." data-def="旁观者" data-def-en="a person who is present at an event but not involved">bystander</span>, Governor Kotek acknowledged the man's heroic actions stopping further loss of life, but noted they "carry a heavy emotional burden, and I just want you to know that my thoughts are with you as well".</span></p>
+        <p class="cn">州长科特克（Kotek）没有点名这位旁观者，但承认了他阻止更多生命损失的英勇行为，同时指出这些行为“承载着沉重的心理负担，我只想让你知道，我的思念也与你同在”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="36">Kayla Epstein contributed to this report.</span></p>
+        <p class="cn">凯拉·爱泼斯坦（Kayla Epstein）对本报道有贡献。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="37">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="38">Candlelit <span class="keyword" data-word="vigil" data-phonetic="/ˈvɪdʒɪl/" data-pos="n." data-def="守夜；烛光守夜" data-def-en="a period of staying awake to pray or show respect">vigil</span> held for Oregon school shooting victims</span></p>
+        <p class="cn">俄勒冈州学校枪击案受害者守夜活动</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="39">'It's really hard to believe' - How Oregon primary school shooting unfolded</span></p>
+        <p class="cn">“真的很难相信”——俄勒冈州小学枪击案如何发生</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="40">Community 'heartbroken and horrified' after Oregon school shooting</span></p>
+        <p class="cn">俄勒冈州学校枪击案后社区“心碎且惊恐”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tackle</span>
+        <button class="kw-speak-btn" data-word="tackle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtækəl/ v.</span>
+      </div>
+      <p class="kw-def">擒抱；扑倒</p>
+      <p class="kw-def-en">to seize and throw someone to the ground</p>
+      <p class="kw-ctx">&ldquo;An Oregon teacher threw her mobile phone before she tackled and tried to wrestle away a shotgun from the arms of a teen suspect who opened fire on a special educational needs class.&rdquo;</p>
+      <p class="kw-ctx-cn">一名俄勒冈州教师在扑向一名向特殊教育班级开火的青少年嫌疑人并试图夺走他手中的猎枪之前，扔掉了她的手机。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">wrestle</span>
+        <button class="kw-speak-btn" data-word="wrestle" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈresəl/ v.</span>
+      </div>
+      <p class="kw-def">搏斗；扭打</p>
+      <p class="kw-def-en">to fight by holding and pushing someone</p>
+      <p class="kw-ctx">&ldquo;An Oregon teacher threw her mobile phone before she tackled and tried to wrestle away a shotgun from the arms of a teen suspect who opened fire on a special educational needs class.&rdquo;</p>
+      <p class="kw-ctx-cn">一名俄勒冈州教师在扑向一名向特殊教育班级开火的青少年嫌疑人并试图夺走他手中的猎枪之前，扔掉了她的手机。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bystander</span>
+        <button class="kw-speak-btn" data-word="bystander" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈbaɪˌstændər/ n.</span>
+      </div>
+      <p class="kw-def">旁观者</p>
+      <p class="kw-def-en">a person who is present at an event but not involved</p>
+      <p class="kw-ctx">&ldquo;As she tussled with him on the floor of the class - where three children and a teacher were killed - a bystander ran inside.&rdquo;</p>
+      <p class="kw-ctx-cn">当她在教室地板上与他扭打时——三名儿童和一名教师在那里被杀——一名旁观者跑了进来。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">intervene</span>
+        <button class="kw-speak-btn" data-word="intervene" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntərˈviːn/ v.</span>
+      </div>
+      <p class="kw-def">干预；介入</p>
+      <p class="kw-def-en">to become involved in a situation to change what is happening</p>
+      <p class="kw-ctx">&ldquo;To the people who showed courage in the face of such violence, and intervened to prevent this tragedy from being any worse, we owe you a debt of gratitude,&rdquo;</p>
+      <p class="kw-ctx-cn">对于在面对如此暴力时表现出勇气并介入以防止这场悲剧变得更糟的人们，我们欠你们一份感激之情。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">gratitude</span>
+        <button class="kw-speak-btn" data-word="gratitude" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈɡrætɪtjuːd/ n.</span>
+      </div>
+      <p class="kw-def">感激；感谢</p>
+      <p class="kw-def-en">the feeling of being thankful</p>
+      <p class="kw-ctx">&ldquo;To the people who showed courage in the face of such violence, and intervened to prevent this tragedy from being any worse, we owe you a debt of gratitude,&rdquo;</p>
+      <p class="kw-ctx-cn">对于在面对如此暴力时表现出勇气并介入以防止这场悲剧变得更糟的人们，我们欠你们一份感激之情。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">bloodshed</span>
+        <button class="kw-speak-btn" data-word="bloodshed" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈblʌdʃed/ n.</span>
+      </div>
+      <p class="kw-def">流血；杀戮</p>
+      <p class="kw-def-en">the killing of people, especially in war</p>
+      <p class="kw-ctx">&ldquo;He said the teacher who wrestled with the gunman was not hurt but "almost certainly helped prevent more bloodshed".&rdquo;</p>
+      <p class="kw-ctx-cn">他说，与枪手搏斗的教师没有受伤，但“几乎肯定帮助防止了更多流血事件”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">concealed</span>
+        <button class="kw-speak-btn" data-word="concealed" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈsiːld/ adj.</span>
+      </div>
+      <p class="kw-def">隐藏的；隐蔽的</p>
+      <p class="kw-def-en">kept hidden from view</p>
+      <p class="kw-ctx">&ldquo;Police said he had a legally concealed .40 caliber in his vehicle and his brother said he grabbed the pistol "and decided to go in after" the suspect.&rdquo;</p>
+      <p class="kw-ctx-cn">警方说，他的车里有一把合法隐藏的.40口径手枪，他的兄弟说，他抓起手枪“决定跟着进去”追嫌疑人。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">vigil</span>
+        <button class="kw-speak-btn" data-word="vigil" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈvɪdʒɪl/ n.</span>
+      </div>
+      <p class="kw-def">守夜；烛光守夜</p>
+      <p class="kw-def-en">a period of staying awake to pray or show respect</p>
+      <p class="kw-ctx">&ldquo;Candlelit vigil held for Oregon school shooting victims&rdquo;</p>
+      <p class="kw-ctx-cn">为俄勒冈州学校枪击案受害者举行烛光守夜活动</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Oregon school shooting: Police name victims and say suspect was former student", "start_ms": 3000, "end_ms": 9240, "paragraph_index": 1}, {"index": 2, "text": "An Oregon teacher threw her mobile phone before she tackled and tried to wrestle away a shotgun from the arms of a teen suspect who opened fire on a special educational needs class.", "start_ms": 9240, "end_ms": 21192, "paragraph_index": 2}, {"index": 3, "text": "As she tussled with him on the floor of the class - where three children and a teacher were killed - a bystander ran inside.", "start_ms": 21192, "end_ms": 29256, "paragraph_index": 3}, {"index": 4, "text": "Armed with a .40-caliber pistol, he opened fire and killed the teen.", "start_ms": 29256, "end_ms": 35400, "paragraph_index": 3}, {"index": 5, "text": "The bystander, a dad of two girls at the school, had been driving past Silver Rail Elementary in Bend when he saw the suspect firing in the car park then shooting through a window to enter.", "start_ms": 35400, "end_ms": 47784, "paragraph_index": 4}, {"index": 6, "text": "The details of the Thursday attack were confirmed by police, who said the 16-year-old suspect was a prior student at the school.", "start_ms": 47784, "end_ms": 56688, "paragraph_index": 5}, {"index": 7, "text": "Police say the suspect was armed with about 44 more rounds of shotgun ammunition when he was stopped.", "start_ms": 56688, "end_ms": 64104, "paragraph_index": 6}, {"index": 8, "text": "He fired as many as 15 rounds in the class.", "start_ms": 64104, "end_ms": 68208, "paragraph_index": 6}, {"index": 9, "text": "\"To the people who showed courage in the face of such violence, and intervened to prevent this tragedy from being any worse, we owe you a debt of gratitude,\" Bend Police Chief Mike Krantz said on Friday.", "start_ms": 68208, "end_ms": 81384, "paragraph_index": 7}, {"index": 10, "text": "Police offered more information on the attack at at a news conference on Friday, where they identified two of the four victims.", "start_ms": 81384, "end_ms": 89952, "paragraph_index": 8}, {"index": 11, "text": "They include five-year-old Rhoam Summer and 25-year-old teacher Meghan Lambert.", "start_ms": 89952, "end_ms": 96048, "paragraph_index": 8}, {"index": 12, "text": "The families of the two other students who were killed, an eight-year-old and 11-year-old, did not wish to have them publicly identified yet, police said.", "start_ms": 96048, "end_ms": 106224, "paragraph_index": 9}, {"index": 13, "text": "Two others were injured in the attack.", "start_ms": 106224, "end_ms": 109368, "paragraph_index": 10}, {"index": 14, "text": "Another teacher, a 54-year-old, was still being treated at hospital, and a seven-year-old student, who was in serious but stable condition.", "start_ms": 109368, "end_ms": 119352, "paragraph_index": 10}, {"index": 15, "text": "Krantz said the heroic actions of both the teacher and the father who ran inside the school saved lives.", "start_ms": 119352, "end_ms": 126672, "paragraph_index": 11}, {"index": 16, "text": "He said the teacher who wrestled with the gunman was not hurt but \"almost certainly helped prevent more bloodshed\".", "start_ms": 126672, "end_ms": 133920, "paragraph_index": 12}, {"index": 17, "text": "He identified the suspect as 16-year-old Griffin J.", "start_ms": 133920, "end_ms": 138720, "paragraph_index": 13}, {"index": 18, "text": "John II, who previously attended the school and was a special educational needs student there.", "start_ms": 138720, "end_ms": 145896, "paragraph_index": 13}, {"index": 19, "text": "A search warrant has been executed at the suspect's home and a search is ongoing, the police chief said.", "start_ms": 145896, "end_ms": 153024, "paragraph_index": 14}, {"index": 20, "text": "Police believe the suspect travelled to the elementary school on foot, but police are still investigating his exact movements and how he acquired the gun.", "start_ms": 153024, "end_ms": 163224, "paragraph_index": 15}, {"index": 21, "text": "A motive is also not clear.", "start_ms": 163224, "end_ms": 166200, "paragraph_index": 15}, {"index": 22, "text": "Police identified two of the victims as five-year-old Rhoam Summer (left) and 25-year-old teacher Meghan Lambert (right)", "start_ms": 166200, "end_ms": 175344, "paragraph_index": 16}, {"index": 23, "text": "Officials did not confirm the name of the father who intervened and fatally shot the suspect.", "start_ms": 175344, "end_ms": 181944, "paragraph_index": 17}, {"index": 24, "text": "But Kaylub Giamanco's family has identified him to US media as the person who sprang into action.", "start_ms": 181944, "end_ms": 189384, "paragraph_index": 18}, {"index": 25, "text": "The 36-year-old carpenter had just finished lunch and was on his way home when he passed the school, his brother told NBC News.", "start_ms": 189384, "end_ms": 198576, "paragraph_index": 19}, {"index": 26, "text": "He saw the suspect open fire on a vehicle outside the school then shoot through a window and go inside.", "start_ms": 198576, "end_ms": 205848, "paragraph_index": 19}, {"index": 27, "text": "Police said he had a legally concealed .40 caliber in his vehicle and his brother said he grabbed the pistol \"and decided to go in after\" the suspect.", "start_ms": 205848, "end_ms": 216384, "paragraph_index": 20}, {"index": 28, "text": "Police say he fired at the suspect \"multiple times\", killing him.", "start_ms": 216384, "end_ms": 221640, "paragraph_index": 20}, {"index": 29, "text": "In a statement to the BBC's partner CBS News, Giamanco's family said he is a \"lifelong resident of Bend\" and that he \"is not seeking recognition\".", "start_ms": 221640, "end_ms": 232224, "paragraph_index": 21}, {"index": 30, "text": "The family said Giamanco wants to express his \"gratitude to the first responders, school personnel, and community for the outpouring of love and support\".", "start_ms": 232224, "end_ms": 242832, "paragraph_index": 22}, {"index": 31, "text": "He and his family \"respectfully ask for privacy\".", "start_ms": 242832, "end_ms": 247152, "paragraph_index": 22}, {"index": 32, "text": "US President Donald Trump praised the bystander's actions on Friday, calling him a \"great hero\".", "start_ms": 247152, "end_ms": 254640, "paragraph_index": 23}, {"index": 33, "text": "Addressing reporters at the White House before departing for Georgia, Trump said the situation could have been \"much worse\" with no intervention.", "start_ms": 254640, "end_ms": 263928, "paragraph_index": 24}, {"index": 34, "text": "\"It's a terrible thing, but thank goodness for a man that had a gun and knew how to use it,\" he said.", "start_ms": 263928, "end_ms": 270744, "paragraph_index": 25}, {"index": 35, "text": "Without naming the bystander, Governor Kotek acknowledged the man's heroic actions stopping further loss of life, but noted they \"carry a heavy emotional burden, and I just want you to know that my thoughts are with you as well\".", "start_ms": 270744, "end_ms": 285336, "paragraph_index": 26}, {"index": 36, "text": "Kayla Epstein contributed to this report.", "start_ms": 285336, "end_ms": 289104, "paragraph_index": 27}, {"index": 37, "text": "This video can not be played", "start_ms": 289104, "end_ms": 292104, "paragraph_index": 28}, {"index": 38, "text": "Candlelit vigil held for Oregon school shooting victims", "start_ms": 292104, "end_ms": 296736, "paragraph_index": 29}, {"index": 39, "text": "'It's really hard to believe' - How Oregon primary school shooting unfolded", "start_ms": 296736, "end_ms": 302136, "paragraph_index": 30}, {"index": 40, "text": "Community 'heartbroken and horrified' after Oregon school shooting", "start_ms": 302136, "end_ms": 307224, "paragraph_index": 31}], "total_duration_ms": 307224};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "he": "他", "to": "到", "of": "的", "school": "学校", "police": "警方", "said": "说", "suspect": "嫌疑人", "who": "谁", "was": "是", "on": "在", "in": "在", "at": "在", "not": "不", "teacher": "教师", "as": "作为", "year-old": "岁的", "his": "他的", "with": "与", "but": "但是", "shooting": "射击", "two": "两个", "identified": "被确认", "for": "为了", "this": "这个", "victims": "受害者", "student": "学生", "him": "他", "were": "是", "had": "有", "is": "是", "family": "家庭", "say": "说", "fire": "射击", "class": "阶级", "killed": "杀死", "inside": "内部", "been": "已经", "when": "当", "attack": "袭击", "more": "更多", "you": "你", "friday": "星期五", "news": "新闻", "they": "它们", "actions": "行动", "how": "如何", "that": "那个", "video": "视频", "can": "可以", "be": "是", "played": "比赛", "name": "名字", "an": "一个", "before": "之前", "she": "她", "shotgun": "霰弹枪", "from": "来自", "opened": "开火", "special": "特别的", "educational": "教育的", "needs": "需要", "where": "那里", "ran": "运行", "armed": "武装的", "saw": "看到", "then": "然后", "through": "通过", "window": "窗户", "rounds": "轮次", "fired": "发射", "prevent": "防止", "being": "正在", "worse": "更糟", "chief": "首席", "five-year-old": "五岁的", "summer": "夏天", "meghan": "梅根", "did": "做了", "have": "有", "still": "仍然", "heroic": "英勇的", "father": "父亲", "search": "搜索", "has": "有", "home": "家", "believe": "认为", "are": "是", "gun": "枪", "us": "我们", "just": "只是", "brother": "兄弟", "vehicle": "车辆", "go": "去", "after": "之后", "community": "社区", "trump": "特朗普", "it's": "它是", "former": "前任", "threw": "扔", "her": "她的", "mobile": "移动", "phone": "电话", "tackled": "应对", "tried": "试图", "away": "离开", "arms": "武器", "floor": "楼层", "three": "三个", "children": "儿童", "dad": "爸爸", "girls": "女孩", "driving": "推动", "past": "过去", "silver": "银色的", "rail": "铁路", "firing": "解雇", "car": "汽车", "park": "公园", "enter": "提出", "details": "细节", "thursday": "星期四", "confirmed": "确认", "by": "被", "prior": "先前的", "about": "关于", "ammunition": "弹药", "stopped": "停止", "many": "许多", "people": "人们", "showed": "显示", "courage": "勇气", "face": "面临", "such": "如此", "violence": "暴力", "tragedy": "悲剧", "any": "任何", "we": "我们", "debt": "债务", "mike": "麦克风", "offered": "提供", "information": "信息", "conference": "会议", "four": "四", "include": "包括", "families": "家庭", "other": "其他", "students": "学生", "wish": "希望", "them": "他们", "publicly": "公开地", "yet": "尚未", "others": "其他", "injured": "受伤", "another": "另一个", "treated": "接受治疗", "hospital": "医院", "serious": "严重的", "stable": "稳定的", "condition": "状况", "both": "两者", "saved": "拯救", "lives": "生命", "gunman": "枪手", "hurt": "伤害", "almost": "几乎", "certainly": "当然", "helped": "帮助", "john": "约翰", "ii": "二世", "previously": "此前", "attended": "参加", "there": "那里", "warrant": "warrant", "suspect's": "嫌疑人的", "ongoing": "正在进行的", "travelled": "旅行", "foot": "立足", "investigating": "调查", "exact": "确切的", "movements": "运动", "acquired": "获得", "motive": "动机", "also": "也", "clear": "明确", "left": "离开", "right": "正确", "officials": "官员", "confirm": "确认", "fatally": "致命地", "shot": "开枪", "media": "媒体", "person": "个人", "into": "进入", "action": "行动", "finished": "完成的", "lunch": "午餐", "way": "方式", "passed": "通过", "told": "告诉", "nbc": "全国广播公司", "open": "开放", "outside": "外部", "shoot": "射击", "legally": "法律上", "grabbed": "抓住", "decided": "决定", "multiple": "多条", "times": "次", "killing": "杀害", "statement": "声明", "bbc's": "英国广播公司的", "partner": "伴侣", "cbs": "哥伦比亚广播公司", "resident": "居民", "seeking": "寻求", "recognition": "承认", "wants": "想要", "express": "表达", "first": "第一轮", "responders": "响应者", "personnel": "人员", "love": "爱", "support": "支持", "ask": "询问", "privacy": "隐私", "president": "总统", "donald": "唐纳德", "praised": "赞扬", "calling": "呼吁", "great": "伟大的", "hero": "英雄", "addressing": "解决", "reporters": "记者们", "white": "白色的", "house": "议院", "departing": "离开的", "situation": "局势", "could": "可能", "much": "许多", "no": "没有", "intervention": "干预", "terrible": "糟糕的", "thing": "事情", "thank": "感谢", "man": "男子", "knew": "知道", "use": "使用", "it": "它", "without": "没有", "governor": "州长", "acknowledged": "承认", "further": "进一步的", "loss": "损失", "life": "生活", "noted": "指出", "carry": "携带", "heavy": "沉重的", "emotional": "情感的", "burden": "伯登", "want": "想要", "know": "知道", "my": "我的", "thoughts": "想法", "well": "好", "epstein": "爱泼斯坦", "contributed": "促成", "report": "报告", "held": "举行", "really": "真正地", "hard": "艰难的", "primary": "主要的", "unfolded": "展开", "heartbroken": "心碎的", "horrified": "惊骇的", "oregon": "俄勒冈州", "bend": "本德市", "teen": "青少年", "caliber": "口径", "pistol": "手枪", "elementary": "小学", "intervened": "介入", "krantz": "克兰茨", "rhoam": "罗姆", "lambert": "兰伯特", "giamanco's": "贾曼科家的", "tussled": "扭打", "owe": "归功于", "eight-year-old": "八岁孩子", "seven-year-old": "七岁孩子", "wrestled": "搏斗", "griffin": "格里芬", "executed": "处决", "kaylub": "凯勒布", "sprang": "跃起", "carpenter": "木匠", "lifelong": "终身的", "giamanco": "贾曼科", "outpouring": "涌现", "respectfully": "恭敬地", "bystander's": "旁观者的", "georgia": "佐治亚州", "goodness": "善良", "naming": "命名", "kotek": "科特克", "man's": "男子的", "stopping": "阻止", "kayla": "凯拉", "candlelit": "烛光的"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
