@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-18</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-18</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/3671/live/56f97410-cb35-11f1-9e57-a506a0943bb2.jpg" alt="Macron calls for 'calm and order' after riots across France" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Macron calls for 'calm and order' after riots across France</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cw240zl08dm5o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-18.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Watch: James Waterhouse speaks to looted shop owners on the streets of Paris</span></p>
+        <p class="cn">观看：詹姆斯·沃特豪斯（James Waterhouse）在巴黎街头与被抢劫的店主交谈</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">French President Emmanuel Macron has called for "calm and order" after a major day of protests turned into rioting and looting on Saturday, and as some disorder continued in Paris on Sunday.</span></p>
+        <p class="cn">法国总统埃马纽埃尔·马克龙（Emmanuel Macron）在周六的大规模抗议演变成骚乱和抢劫后，呼吁“冷静和秩序”，周日巴黎仍有一些混乱持续。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">In a national address from the ÃlysÃ©e Palace, he warned those who had taken part not to "<span class="keyword" data-word="escalate" data-phonetic="/ˈeskəleɪt/" data-pos="v." data-def="升级，加剧" data-def-en="To become or make something more serious or intense.">escalate</span>", adding: "We all feel anger and shame."</span></p>
+        <p class="cn">在爱丽舍宫（Élysée Palace）的全国讲话中，他警告参与者不要“升级”，并补充说：“我们都感到愤怒和羞耻。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Some 550,000 demonstrators took to the streets for largely peaceful protests against rising fuel prices, the cost of living and deteriorating public services, including schools.</span></p>
+        <p class="cn">约55万示威者走上街头，主要是和平抗议，反对油价上涨、生活成本上升和包括学校在内的公共服务恶化。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">Macron said a distinction must be drawn between the "<span class="keyword" data-word="legitimate" data-phonetic="/lɪˈdʒɪtɪmət/" data-pos="adj." data-def="合法的，正当的" data-def-en="Conforming to the law or to rules; able to be defended with logic or justification.">legitimate</span> demands" of protesters and "those who destroyed, smashed and looted".</span></p>
+        <p class="cn">马克龙表示，必须区分抗议者的“合法要求”和“那些破坏、砸抢和抢劫的人”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Police have arrested about 2,400 people, according to France's interior ministry.</span></p>
+        <p class="cn">据法国内政部称，警方已逮捕约2400人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The French president said "nothing justifies" the "<span class="keyword" data-word="unbridled" data-phonetic="/ʌnˈbraɪdld/" data-pos="adj." data-def="无节制的，放纵的" data-def-en="Uncontrolled; unconstrained.">unbridled</span>" violence seen and said those involved would face justice.</span></p>
+        <p class="cn">法国总统表示，所见的“肆无忌惮”的暴力“没有任何理由”，并称参与者将面临法律制裁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="8">Groups of rioters, some dressed in black and wearing masks and balaclavas, also came out in Paris, Marseille and other towns and cities, with some setting fire to cars and buildings.</span></p>
+        <p class="cn">一群暴徒，其中一些人身穿黑衣、戴着口罩和巴拉克拉瓦帽，也出现在巴黎、马赛和其他城镇，一些人放火烧毁汽车和建筑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="9">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="10">'Very upsetting': Residents in shock after historic French town hall set alight</span></p>
+        <p class="cn">‘非常令人不安’：历史悠久的法国市政厅被纵火后，居民感到震惊</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="11">On Sunday, looting and clashes with police continued on a smaller scale in parts of the capital and Lyon.</span></p>
+        <p class="cn">周日，首都部分地区和里昂的抢劫和与警方的冲突仍在较小规模上继续。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="12">Tear gas and stun grenades were fired at hundreds of people in Paris, according to the AFP news agency, and bottles and rocks were again hurled at police.</span></p>
+        <p class="cn">据法新社（AFP）报道，巴黎向数百人发射了催泪瓦斯和眩晕手榴弹，瓶子和石块再次投向警察。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="13">Sunday saw cities across the country confront the impact of what developed into one of the worst bouts of disorder in modern French history.</span></p>
+        <p class="cn">周日，全国各城市面临这场发展成法国现代史上最严重骚乱之一的影响。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="14">In Limoges, the ornate 19th Century city hall was gutted by a fire started by rioters on Saturday, its clock tower and roof collapsing and the flames took hold.</span></p>
+        <p class="cn">在利摩日（Limoges），19世纪华丽的市政厅被暴徒周六点燃的大火烧毁，钟楼和屋顶坍塌，火焰蔓延。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="15">A view of the damage inside Limoges town hall on Sunday morning</span></p>
+        <p class="cn">周日早上利摩日市政厅内部损坏的景象</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="16">Speaking near the ruined building, AnnÃ¨yse said: "This is very upsetting.</span> <span class="sentence" data-sentence-index="17">Harming <span class="keyword" data-word="heritage" data-phonetic="/ˈherɪtɪdʒ/" data-pos="n." data-def="遗产" data-def-en="Valued objects and qualities such as cultural traditions that have been passed down from previous generations.">heritage</span> buildings just because you are angry at the government is selfish, I think.</span> <span class="sentence" data-sentence-index="18">It's hurting everybody."</span></p>
+        <p class="cn">在毁坏的建筑附近，安妮丝（Annèyse）说：“这非常令人不安。仅仅因为对政府生气就破坏遗产建筑，我认为是自私的。这伤害了所有人。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">"It's awful and unbelievable," said another man who gave his name as Gerrard.</span> <span class="sentence" data-sentence-index="20">"We are very sad and I think it will be a long time to put it back as it was before."</span></p>
+        <p class="cn">另一位自称杰拉德（Gerrard）的男子说：“这太糟糕了，难以置信。我们非常难过，我认为要恢复原样需要很长时间。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="21">Shopkeepers were seen early on Sunday morning picking up large shards of glass in Paris as rubbish trucks cleared up debris on some of the larger streets.</span></p>
+        <p class="cn">周日清晨，在巴黎看到店主们捡起大块玻璃碎片，垃圾车在一些较大的街道上清理碎片。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="22">Fires were lit and shops looted during smaller scale disorder in Paris on Sunday</span></p>
+        <p class="cn">周日巴黎较小规模的骚乱中，火灾被点燃，商店被抢劫</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="23">Widespread looting took place across the cities of Paris, Marseille and Lille, as well as other areas.</span></p>
+        <p class="cn">巴黎、马赛和里尔等城市以及其他地区发生了广泛的抢劫。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="24">Macron said local prefects and mayors would draft measures to protect shops and civic buildings.</span></p>
+        <p class="cn">马克龙表示，地方长官和市长将起草措施保护商店和市政建筑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">The president also said there would be "full <span class="keyword" data-word="transparency" data-phonetic="/trænsˈpærənsi/" data-pos="n." data-def="透明度" data-def-en="The condition of being transparent; openness and accountability.">transparency</span>" over the police response to the demonstrations.</span></p>
+        <p class="cn">总统还表示，警方对示威的回应将“完全透明”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Tear gas and water cannon were turned on crowds over the weekend and riot police were seen hitting people with batons in several places.</span></p>
+        <p class="cn">周末，催泪瓦斯和水炮被用于人群，防暴警察在几个地方被看到用警棍打人。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">France's interior ministry said about 1,000 police officers were injured on Saturday, seven of them seriously.</span></p>
+        <p class="cn">法国内政部表示，周六约有1000名警察受伤，其中7人重伤。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">A man tries to extinguish a fire in Paris on Sunday</span></p>
+        <p class="cn">周日，一名男子在巴黎试图扑灭火灾</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">Student protests which began last month escalated significant on Saturday after they were joined by trade union members and other anti-government groups.</span></p>
+        <p class="cn">上个月开始的学生抗议在周六显著升级，工会成员和其他反政府团体加入。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">The response from political figures has pointed to France's deep political divisions as the country prepares for an election in April which could see the hard-right pitted against the hard-left.</span></p>
+        <p class="cn">政治人物的回应指出了法国深刻的政治分歧，该国正准备4月的选举，可能出现极右翼与极左翼的对决。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">France's Interior Minister Laurent NuÃ±ez said that while demonstrating was a fundamental right, there were "outrages" committed by "several thousand far-left individuals" who were determined to target public buildings and confront the police.</span></p>
+        <p class="cn">法国内政部长洛朗·努涅斯（Laurent Nuñez）表示，虽然示威是一项基本权利，但“数千名极左个人”犯下了“暴行”，他们决心针对公共建筑并与警察对抗。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">Later, they were joined by "delinquents who looted and ransacked numerous businesses in several cities in France", he said.</span></p>
+        <p class="cn">后来，他说，“罪犯加入他们，在法国几个城市抢劫和洗劫了许多企业”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">Jean-Luc MÃ©lenchon - leader of the hard-left La France Insoumise party - heavily criticised NuÃ±ez and police chiefs on social media.</span></p>
+        <p class="cn">让-吕克·梅朗雄（Jean-Luc Mélenchon）——极左翼“不屈法国”（La France Insoumise）党领袖——在社交媒体上严厉批评努涅斯和警察局长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">He said they had "shown complete incompetence" with their handling of the demonstrations and called them "specialists in organised chaos".</span></p>
+        <p class="cn">他说他们在处理示威时“表现出完全的无能”，并称他们为“有组织混乱的专家”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">Meanwhile, the leader of the hard-right National Rally party, Marine Le Pen, condemned the "exploitation" of anger "by political forces that encourage violence".</span></p>
+        <p class="cn">与此同时，极右翼国民联盟（National Rally）党领袖玛丽娜·勒庞（Marine Le Pen）谴责“政治力量鼓励暴力”对愤怒的“利用”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="36">Burnt out cars and shattered glass on Paris streets after protests turn to riots and looting</span></p>
+        <p class="cn">抗议转为骚乱和抢劫后，巴黎街头烧毁的汽车和破碎的玻璃</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="37">Violent clashes, looting and buildings ablaze in France as more than 1,200 arrested after protests</span></p>
+        <p class="cn">法国发生暴力冲突、抢劫和建筑着火，抗议后超过1200人被捕</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="38">Are student protests being manipulated ahead of France's presidential election?</span></p>
+        <p class="cn">学生抗议在法国总统选举前被操纵了吗？</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">loot</span>
+        <button class="kw-speak-btn" data-word="loot" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/luːt/ v.</span>
+      </div>
+      <p class="kw-def">抢劫，掠夺</p>
+      <p class="kw-def-en">To steal goods from a place, typically during a war or riot.</p>
+      <p class="kw-ctx">&ldquo;Widespread looting took place across the cities of Paris, Marseille and Lille, as well as other areas.&rdquo;</p>
+      <p class="kw-ctx-cn">在巴黎、马赛和里尔等城市以及其他地区发生了广泛的抢劫。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">demonstrator</span>
+        <button class="kw-speak-btn" data-word="demonstrator" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈdemənstreɪtə(r)/ n.</span>
+      </div>
+      <p class="kw-def">示威者</p>
+      <p class="kw-def-en">A person who takes part in a public protest.</p>
+      <p class="kw-ctx">&ldquo;Some 550,000 demonstrators took to the streets for largely peaceful protests against rising fuel prices, the cost of living and deteriorating public services, including schools.&rdquo;</p>
+      <p class="kw-ctx-cn">约55万示威者走上街头，举行大体和平的抗议活动，反对燃料价格上涨、生活成本上升以及包括学校在内的公共服务恶化。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">escalate</span>
+        <button class="kw-speak-btn" data-word="escalate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈeskəleɪt/ v.</span>
+      </div>
+      <p class="kw-def">升级，加剧</p>
+      <p class="kw-def-en">To become or make something more serious or intense.</p>
+      <p class="kw-ctx">&ldquo;In a national address from the Élysée Palace, he warned those who had taken part not to "escalate", adding: "We all feel anger and shame."&rdquo;</p>
+      <p class="kw-ctx-cn">在爱丽舍宫发表的全国讲话中，他警告参与者不要“升级”事态，并补充说：“我们都感到愤怒和羞耻。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">deteriorate</span>
+        <button class="kw-speak-btn" data-word="deteriorate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/dɪˈtɪəriəreɪt/ v.</span>
+      </div>
+      <p class="kw-def">恶化，变坏</p>
+      <p class="kw-def-en">To become progressively worse.</p>
+      <p class="kw-ctx">&ldquo;Some 550,000 demonstrators took to the streets for largely peaceful protests against rising fuel prices, the cost of living and deteriorating public services, including schools.&rdquo;</p>
+      <p class="kw-ctx-cn">约55万示威者走上街头，举行大体和平的抗议活动，反对燃料价格上涨、生活成本上升以及包括学校在内的公共服务恶化。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">legitimate</span>
+        <button class="kw-speak-btn" data-word="legitimate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/lɪˈdʒɪtɪmət/ adj.</span>
+      </div>
+      <p class="kw-def">合法的，正当的</p>
+      <p class="kw-def-en">Conforming to the law or to rules; able to be defended with logic or justification.</p>
+      <p class="kw-ctx">&ldquo;Macron said a distinction must be drawn between the "legitimate demands" of protesters and "those who destroyed, smashed and looted".&rdquo;</p>
+      <p class="kw-ctx-cn">马克龙表示，必须区分抗议者的“合法诉求”和“那些破坏、砸抢的人”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unbridled</span>
+        <button class="kw-speak-btn" data-word="unbridled" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈbraɪdld/ adj.</span>
+      </div>
+      <p class="kw-def">无节制的，放纵的</p>
+      <p class="kw-def-en">Uncontrolled; unconstrained.</p>
+      <p class="kw-ctx">&ldquo;The French president said "nothing justifies" the "unbridled" violence seen and said those involved would face justice.&rdquo;</p>
+      <p class="kw-ctx-cn">法国总统表示，所看到的“无节制”暴力“没有任何正当理由”，并表示参与者将面临法律制裁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">heritage</span>
+        <button class="kw-speak-btn" data-word="heritage" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈherɪtɪdʒ/ n.</span>
+      </div>
+      <p class="kw-def">遗产</p>
+      <p class="kw-def-en">Valued objects and qualities such as cultural traditions that have been passed down from previous generations.</p>
+      <p class="kw-ctx">&ldquo;Harming heritage buildings just because you are angry at the government is selfish, I think.&rdquo;</p>
+      <p class="kw-ctx-cn">我认为，仅仅因为对政府不满就破坏遗产建筑是自私的。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">transparency</span>
+        <button class="kw-speak-btn" data-word="transparency" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/trænsˈpærənsi/ n.</span>
+      </div>
+      <p class="kw-def">透明度</p>
+      <p class="kw-def-en">The condition of being transparent; openness and accountability.</p>
+      <p class="kw-ctx">&ldquo;The president also said there would be "full transparency" over the police response to the demonstrations.&rdquo;</p>
+      <p class="kw-ctx-cn">总统还表示，警方对示威活动的应对将“完全透明”。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "This video can not be played", "start_ms": 0, "end_ms": 3000, "paragraph_index": 0}, {"index": 1, "text": "Watch: James Waterhouse speaks to looted shop owners on the streets of Paris", "start_ms": 3000, "end_ms": 9072, "paragraph_index": 1}, {"index": 2, "text": "French President Emmanuel Macron has called for \"calm and order\" after a major day of protests turned into rioting and looting on Saturday, and as some disorder continued in Paris on Sunday.", "start_ms": 9072, "end_ms": 22032, "paragraph_index": 2}, {"index": 3, "text": "In a national address from the \u00c3\u0089lys\u00c3\u00a9e Palace, he warned those who had taken part not to \"escalate\", adding: \"We all feel anger and shame.\"", "start_ms": 22032, "end_ms": 32304, "paragraph_index": 3}, {"index": 4, "text": "Some 550,000 demonstrators took to the streets for largely peaceful protests against rising fuel prices, the cost of living and deteriorating public services, including schools.", "start_ms": 32304, "end_ms": 46032, "paragraph_index": 4}, {"index": 5, "text": "Macron said a distinction must be drawn between the \"legitimate demands\" of protesters and \"those who destroyed, smashed and looted\".", "start_ms": 46032, "end_ms": 55392, "paragraph_index": 5}, {"index": 6, "text": "Police have arrested about 2,400 people, according to France's interior ministry.", "start_ms": 55392, "end_ms": 62472, "paragraph_index": 6}, {"index": 7, "text": "The French president said \"nothing justifies\" the \"unbridled\" violence seen and said those involved would face justice.", "start_ms": 62472, "end_ms": 70464, "paragraph_index": 7}, {"index": 8, "text": "Groups of rioters, some dressed in black and wearing masks and balaclavas, also came out in Paris, Marseille and other towns and cities, with some setting fire to cars and buildings.", "start_ms": 70464, "end_ms": 83496, "paragraph_index": 8}, {"index": 9, "text": "This video can not be played", "start_ms": 83496, "end_ms": 86496, "paragraph_index": 9}, {"index": 10, "text": "'Very upsetting': Residents in shock after historic French town hall set alight", "start_ms": 86496, "end_ms": 92928, "paragraph_index": 10}, {"index": 11, "text": "On Sunday, looting and clashes with police continued on a smaller scale in parts of the capital and Lyon.", "start_ms": 92928, "end_ms": 100608, "paragraph_index": 11}, {"index": 12, "text": "Tear gas and stun grenades were fired at hundreds of people in Paris, according to the AFP news agency, and bottles and rocks were again hurled at police.", "start_ms": 100608, "end_ms": 111840, "paragraph_index": 12}, {"index": 13, "text": "Sunday saw cities across the country confront the impact of what developed into one of the worst bouts of disorder in modern French history.", "start_ms": 111840, "end_ms": 120912, "paragraph_index": 13}, {"index": 14, "text": "In Limoges, the ornate 19th Century city hall was gutted by a fire started by rioters on Saturday, its clock tower and roof collapsing and the flames took hold.", "start_ms": 120912, "end_ms": 132576, "paragraph_index": 14}, {"index": 15, "text": "A view of the damage inside Limoges town hall on Sunday morning", "start_ms": 132576, "end_ms": 137688, "paragraph_index": 15}, {"index": 16, "text": "Speaking near the ruined building, Ann\u00c3\u00a8yse said: \"This is very upsetting.", "start_ms": 137688, "end_ms": 143208, "paragraph_index": 16}, {"index": 17, "text": "Harming heritage buildings just because you are angry at the government is selfish, I think.", "start_ms": 143208, "end_ms": 149640, "paragraph_index": 16}, {"index": 18, "text": "It's hurting everybody.\"", "start_ms": 149640, "end_ms": 152064, "paragraph_index": 16}, {"index": 19, "text": "\"It's awful and unbelievable,\" said another man who gave his name as Gerrard.", "start_ms": 152064, "end_ms": 157824, "paragraph_index": 17}, {"index": 20, "text": "\"We are very sad and I think it will be a long time to put it back as it was before.\"", "start_ms": 157824, "end_ms": 163728, "paragraph_index": 17}, {"index": 21, "text": "Shopkeepers were seen early on Sunday morning picking up large shards of glass in Paris as rubbish trucks cleared up debris on some of the larger streets.", "start_ms": 163728, "end_ms": 173952, "paragraph_index": 18}, {"index": 22, "text": "Fires were lit and shops looted during smaller scale disorder in Paris on Sunday", "start_ms": 173952, "end_ms": 180216, "paragraph_index": 19}, {"index": 23, "text": "Widespread looting took place across the cities of Paris, Marseille and Lille, as well as other areas.", "start_ms": 180216, "end_ms": 187896, "paragraph_index": 20}, {"index": 24, "text": "Macron said local prefects and mayors would draft measures to protect shops and civic buildings.", "start_ms": 187896, "end_ms": 195048, "paragraph_index": 21}, {"index": 25, "text": "The president also said there would be \"full transparency\" over the police response to the demonstrations.", "start_ms": 195048, "end_ms": 202176, "paragraph_index": 22}, {"index": 26, "text": "Tear gas and water cannon were turned on crowds over the weekend and riot police were seen hitting people with batons in several places.", "start_ms": 202176, "end_ms": 211272, "paragraph_index": 23}, {"index": 27, "text": "France's interior ministry said about 1,000 police officers were injured on Saturday, seven of them seriously.", "start_ms": 211272, "end_ms": 219912, "paragraph_index": 24}, {"index": 28, "text": "A man tries to extinguish a fire in Paris on Sunday", "start_ms": 219912, "end_ms": 224568, "paragraph_index": 25}, {"index": 29, "text": "Student protests which began last month escalated significant on Saturday after they were joined by trade union members and other anti-government groups.", "start_ms": 224568, "end_ms": 235080, "paragraph_index": 26}, {"index": 30, "text": "The response from political figures has pointed to France's deep political divisions as the country prepares for an election in April which could see the hard-right pitted against the hard-left.", "start_ms": 235080, "end_ms": 246864, "paragraph_index": 27}, {"index": 31, "text": "France's Interior Minister Laurent Nu\u00c3\u00b1ez said that while demonstrating was a fundamental right, there were \"outrages\" committed by \"several thousand far-left individuals\" who were determined to target public buildings and confront the police.", "start_ms": 246864, "end_ms": 263040, "paragraph_index": 28}, {"index": 32, "text": "Later, they were joined by \"delinquents who looted and ransacked numerous businesses in several cities in France\", he said.", "start_ms": 263040, "end_ms": 271584, "paragraph_index": 29}, {"index": 33, "text": "Jean-Luc M\u00c3\u00a9lenchon - leader of the hard-left La France Insoumise party - heavily criticised Nu\u00c3\u00b1ez and police chiefs on social media.", "start_ms": 271584, "end_ms": 283488, "paragraph_index": 30}, {"index": 34, "text": "He said they had \"shown complete incompetence\" with their handling of the demonstrations and called them \"specialists in organised chaos\".", "start_ms": 283488, "end_ms": 292344, "paragraph_index": 31}, {"index": 35, "text": "Meanwhile, the leader of the hard-right National Rally party, Marine Le Pen, condemned the \"exploitation\" of anger \"by political forces that encourage violence\".", "start_ms": 292344, "end_ms": 303456, "paragraph_index": 32}, {"index": 36, "text": "Burnt out cars and shattered glass on Paris streets after protests turn to riots and looting", "start_ms": 303456, "end_ms": 310296, "paragraph_index": 33}, {"index": 37, "text": "Violent clashes, looting and buildings ablaze in France as more than 1,200 arrested after protests", "start_ms": 310296, "end_ms": 318720, "paragraph_index": 34}, {"index": 38, "text": "Are student protests being manipulated ahead of France's presidential election?", "start_ms": 318720, "end_ms": 324504, "paragraph_index": 35}], "total_duration_ms": 324504};
+  const WORD_GLOSS = {"and": "和", "the": "这个", "of": "的", "in": "在", "on": "在", "to": "到", "said": "说", "were": "是", "paris": "巴黎", "as": "作为", "police": "警方", "sunday": "星期日", "protests": "抗议活动", "by": "被", "be": "是", "after": "之后", "some": "一些", "who": "谁", "france's": "法国的", "buildings": "建筑物", "looted": "遭抢劫", "streets": "街道", "french": "法国的", "saturday": "星期六", "cities": "城市", "with": "与", "this": "这个", "not": "不", "president": "总统", "macron": "马克龙", "for": "为了", "disorder": "骚乱", "he": "他", "those": "那些", "took": "担任", "people": "人们", "interior": "内政", "seen": "被视为", "would": "将", "other": "其他", "fire": "射击", "very": "非常", "hall": "霍尔", "at": "在", "was": "是", "are": "是", "it": "它", "several": "数个", "they": "它们", "political": "政治的", "france": "法国", "video": "视频", "can": "可以", "played": "比赛", "has": "有", "called": "称为", "turned": "转向", "into": "进入", "continued": "持续的", "national": "国家", "from": "来自", "had": "有", "we": "我们", "anger": "愤怒", "against": "反对", "public": "公众", "arrested": "被捕", "about": "关于", "according": "根据", "ministry": "外交部", "violence": "暴力", "groups": "团体", "also": "也", "out": "出来", "marseille": "马赛", "cars": "汽车", "upsetting": "令人不安的", "town": "城镇", "clashes": "冲突", "smaller": "较小的", "scale": "规模", "tear": "撕裂", "gas": "气体", "across": "跨越", "country": "国家", "confront": "面对", "limoges": "利摩日", "morning": "上午", "is": "是", "think": "认为", "it's": "它是", "man": "男子", "up": "向上", "glass": "玻璃", "shops": "商店", "there": "那里", "over": "超过", "response": "回应", "demonstrations": "示威游行", "them": "他们", "student": "学生", "which": "哪个", "joined": "加入", "election": "选举", "hard-left": "极左", "ez": "埃兹", "that": "那个", "leader": "领导人", "party": "政党", "watch": "观看", "james": "詹姆斯", "speaks": "发言", "shop": "商店", "owners": "所有者", "emmanuel": "埃马纽埃尔", "calm": "平静的", "order": "命令", "major": "重大的", "day": "天", "address": "地址", "palace": "宫", "warned": "警告", "taken": "采取", "part": "部分", "adding": "补充说", "all": "所有", "feel": "感觉", "shame": "羞耻", "largely": "很大程度上", "peaceful": "和平的", "rising": "上升的", "fuel": "动力", "prices": "价格", "cost": "成本", "living": "生活", "services": "服务", "including": "包括", "schools": "学校", "must": "必须", "drawn": "划定", "between": "之间", "demands": "要求", "protesters": "抗议者", "destroyed": "被毁的", "smashed": "猛击", "have": "有", "nothing": "没有东西", "involved": "涉及的", "face": "面临", "justice": "正义", "dressed": "穿着", "black": "黑色", "wearing": "穿着", "masks": "口罩", "balaclavas": "巴拉克拉瓦帽", "came": "到来", "towns": "城镇", "setting": "环境", "residents": "居民", "shock": "震惊", "historic": "历史性的", "set": "设定", "alight": "点燃", "parts": "部分", "capital": "资本", "lyon": "里昂", "fired": "发射", "hundreds": "数百", "afp": "法新社", "news": "新闻", "agency": "机构", "bottles": "瓶子", "rocks": "岩石", "again": "再次", "saw": "看到", "impact": "影响", "what": "什么", "developed": "发展", "one": "一个", "worst": "最坏的", "modern": "现代", "history": "历史", "century": "世纪", "city": "城市", "gutted": "焚毁", "started": "开始", "its": "它的", "clock": "时钟", "tower": "塔", "roof": "顶网", "collapsing": "崩溃的", "flames": "火焰", "hold": "追究", "view": "看法", "damage": "损坏", "inside": "内部", "speaking": "发言", "near": "附近", "building": "建筑物", "harming": "伤害", "just": "只是", "because": "因为", "you": "你", "angry": "愤怒的", "government": "政府", "selfish": "自私的", "everybody": "每个人", "awful": "糟糕的", "unbelievable": "难以置信的", "another": "另一个", "gave": "给予", "his": "他的", "name": "名字", "sad": "悲伤的", "will": "将", "long": "长久", "time": "时间", "put": "提出", "back": "后退", "before": "之前", "early": "早期的", "picking": "挑选", "large": "大的", "rubbish": "垃圾", "cleared": "澄清", "larger": "更大的", "fires": "火灾", "lit": "点燃", "during": "在期间", "widespread": "广泛的", "place": "地点", "lille": "里尔", "well": "好", "areas": "区域", "local": "当地", "mayors": "市长们", "draft": "草案", "measures": "措施", "protect": "保护", "full": "完整", "water": "水", "cannon": "大炮", "crowds": "人群", "weekend": "周末", "riot": "骚乱", "hitting": "撞击", "batons": "警棍", "places": "地方", "officers": "官员", "injured": "受伤", "seven": "七", "seriously": "认真地", "tries": "试图", "extinguish": "扑灭", "began": "开始", "last": "最后", "month": "月份", "escalated": "上报", "significant": "重大", "trade": "贸易", "union": "工会", "members": "成员", "anti-government": "反政府的", "figures": "人物", "pointed": "指出", "deep": "深切", "divisions": "分歧", "prepares": "准备", "an": "一个", "april": "四月", "could": "可能", "see": "看到", "minister": "部长", "laurent": "洛朗", "while": "而", "fundamental": "根本的", "right": "正确", "outrages": "暴行", "committed": "承诺的", "individuals": "个人", "determined": "坚定的", "target": "目标", "later": "后来", "ransacked": "洗劫", "numerous": "众多的", "businesses": "企业", "jean-luc": "让-吕克", "lenchon": "梅朗雄", "la": "拉", "insoumise": "不屈", "heavily": "大量地", "criticised": "批评", "chiefs": "首领", "social": "社交的", "media": "媒体", "shown": "表现出", "complete": "完全的", "their": "他们的", "handling": "处理", "organised": "有组织的", "chaos": "混乱", "meanwhile": "与此同时", "rally": "集会", "marine": "海军陆战队", "le": "勒", "pen": "围栏", "condemned": "谴责", "forces": "力量", "encourage": "鼓励", "burnt": "烧毁", "shattered": "破碎的", "turn": "转变", "riots": "骚乱", "violent": "暴力的", "ablaze": "着火的", "more": "更多", "than": "比", "being": "正在", "manipulated": "操纵", "ahead": "提前", "presidential": "总统的", "looting": "抢劫", "rioters": "暴徒", "hard-right": "极右翼", "waterhouse": "水屋", "rioting": "骚乱", "demonstrators": "示威者", "deteriorating": "恶化", "distinction": "区别", "justifies": "证明合理", "stun": "震撼弹", "grenades": "手榴弹", "hurled": "投掷", "bouts": "轮次", "ornate": "华丽", "ruined": "毁坏", "yse": "伊瑟", "hurting": "受伤", "gerrard": "杰拉德", "shopkeepers": "店主", "shards": "碎片", "trucks": "卡车", "debris": "残骸", "prefects": "省长", "civic": "市政", "pitted": "对抗", "demonstrating": "示威", "thousand": "数千", "far-left": "极左翼", "delinquents": "违法者", "incompetence": "无能", "specialists": "专家", "exploitation": "利用"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
