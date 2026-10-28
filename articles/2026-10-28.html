@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-28</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-28</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/7041/live/3d52f8e0-d23a-11f1-a701-fddedf244c16.jpg" alt="Chris Mason: Budget needs to go some way towards delivering PM's promises" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Chris Mason: Budget needs to go some way towards delivering PM's promises</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c6y43wkln1k2o?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-28.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Two quotes from the chancellor and the prime minister get to the heart of this Budget.</span></p>
+        <p class="cn">财政大臣和首相的两句话直击本次预算案的核心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">"The money New Labour had in the 90s is simply not there nowâ¦ Britain has it harder now," Chancellor John Healey said last month.</span></p>
+        <p class="cn">“新工党在90年代拥有的资金现在根本不存在……英国现在的处境更加艰难，”财政大臣约翰·希利（John Healey）上个月表示。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">And from Andy Burnham, days before he became prime minister: "This change...</span> <span class="sentence" data-sentence-index="3">is the most significant change moment in our politics for 40 years."</span></p>
+        <p class="cn">而安迪·伯纳姆（Andy Burnham）在成为首相的前几天说：“这一变革……是我们政治40年来最重要的变革时刻。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="4">So what happens when the economic realities confront the political ambitions of this new government?</span></p>
+        <p class="cn">那么，当经济现实与新政府的政治雄心相冲突时，会发生什么？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="5">As Helen Miller, director of the Institute for Fiscal Studies (IFS), puts it , external : "We have a relatively new government with seemingly big ambitions but facing a long list of constraints.</span></p>
+        <p class="cn">正如财政研究所（IFS）所长海伦·米勒（Helen Miller）对外所说：“我们有一个看似雄心勃勃的新政府，但面临着一长串制约因素。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="6">"Some of those constraintsâ¦ are self imposed, others are being worsened by global events, most noticeably war in the Middle East."</span></p>
+        <p class="cn">“其中一些制约……是自我施加的，另一些则因全球事件而恶化，最明显的是中东战争。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="7">Let's be clear, plenty in Westminster in all parties will say that the amount of money around isn't everything â how well taxpayers' money is spent and where it is spent matters too.</span></p>
+        <p class="cn">需要明确的是，威斯敏斯特各党派的许多人都会说，可用的资金数量并不是一切——纳税人的钱花得如何、花在哪里也很重要。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">And spending less and taxing less, plenty argue, should be a priority.</span></p>
+        <p class="cn">许多人认为，减少支出和减税应该是优先事项。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">But in the bones of many in the Labour Party is an instinct that the government, the state, can and should be a vital agent in driving change and improvements in people's lives â a world-view grounded in a sense that governments should proudly step in, rather than one that believes they should get out of the way.</span></p>
+        <p class="cn">但在工党许多人的骨子里，有一种本能，即政府、国家能够而且应该成为推动变革和改善人民生活的关键力量——这种世界观基于一种观念，即政府应该自豪地介入，而不是认为政府应该让开。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">And how do you deliver a proudly <span class="keyword" data-word="proactive" data-phonetic="/proʊˈæktɪv/" data-pos="adj." data-def="积极主动的" data-def-en="Creating or controlling a situation by causing something to happen rather than responding to it after it has happened.">proactive</span> state, delivering for people in a noticeable way, when the tax burden is generationally high, the national debt is sky high, energy bills are rising and inflation is higher than expected?</span></p>
+        <p class="cn">当税负处于世代高位、国债高企、能源账单上涨、通胀高于预期时，你如何打造一个自豪地积极主动的国家，以显著的方式为人民服务？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">In short: it is not easy.</span></p>
+        <p class="cn">简而言之：这并不容易。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Minimum wage set to rise but 18-20 year-olds will not get bigger increase</span></p>
+        <p class="cn">最低工资将上涨，但18-20岁人群不会获得更大幅度增长</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Tax on banks, energy bill help and minimum wage rise - what could be in the Budget?</span></p>
+        <p class="cn">银行税、能源账单援助和最低工资上涨——预算案可能包含哪些内容？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Healey's Budget needs to sustain the stronger economy through gathering clouds</span></p>
+        <p class="cn">希利的预算案需要在乌云密布中维持更强劲的经济</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">But ministers argue all of this doesn't mean the government is powerless.</span></p>
+        <p class="cn">但部长们认为，所有这些并不意味着政府无能为力。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Many are expecting support on the cost of living, and in particular energy bills, to be targeted at the most vulnerable.</span> <span class="sentence" data-sentence-index="17">On the eve of the Budget, Healey said he wants to "start the long-term action needed to get energy costs down for good".</span></p>
+        <p class="cn">许多人预计，生活成本支持，特别是能源账单方面的支持，将针对最弱势群体。在预算案前夕，希利表示，他希望“启动必要的长期行动，以永久降低能源成本”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="18">The banks are braced for a <span class="keyword" data-word="levy" data-phonetic="/ˈlevi/" data-pos="n." data-def="征税，税款" data-def-en="An amount of money, such as a tax, that you have to pay to a government or organization.">levy</span> or surcharge that may pay for this.</span></p>
+        <p class="cn">银行已准备好应对可能为此提供资金的征税或附加费。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="19">There will be an announcement about further spending on defence, but not yet how spending 3% of national income on our security will be delivered by 2030 â that will come in next year's Spending Review.</span></p>
+        <p class="cn">将宣布进一步增加国防开支，但尚未说明如何到2030年将国民收入的3%用于安全——这将在明年的支出审查中确定。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="20">And one of the prime minister's key ideas - handing power away from Westminster and closer to you, <span class="keyword" data-word="devolution" data-phonetic="/ˌdevəˈluːʃn/" data-pos="n." data-def="权力下放" data-def-en="The transfer of power or authority from central government to local government.">devolution</span> - will be central too.</span></p>
+        <p class="cn">而首相的关键理念之一——将权力从威斯敏斯特下放，更贴近你，即权力下放——也将是核心。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="21">There will be, the chancellor told BBC Newscast, a "really radical <span class="keyword" data-word="devolution" data-phonetic="/ˌdevəˈluːʃn/" data-pos="n." data-def="权力下放" data-def-en="The transfer of power or authority from central government to local government.">devolution</span> of powers and resources to local leaders that are often better placed to get beyond the departmental systems."</span></p>
+        <p class="cn">财政大臣告诉BBC Newscast，将“真正激进地将权力和资源下放给地方领导人，他们往往更有能力超越部门体系。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="22">But some at Westminster fret extra money for mayors and others in local government are not yet accompanied by adequate checks and balances to ensure that money is well spent.</span></p>
+        <p class="cn">但威斯敏斯特的一些人担心，给市长和其他地方政府人员的额外资金尚未 accompanied by 足够的制衡机制，以确保资金得到良好使用。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="23">The chancellor will argue the economy is becoming more <span class="keyword" data-word="robust" data-phonetic="/roʊˈbʌst/" data-pos="adj." data-def="强劲的，稳健的" data-def-en="Strong and healthy; vigorous.">robust</span> â and yes, there are some economic indicators that are more positive than forecast: growth is better than expected, as is productivity and unemployment is down.</span></p>
+        <p class="cn">财政大臣将辩称，经济正变得更加稳健——是的，一些经济指标比预测更为积极：增长好于预期，生产率也是如此，失业率下降。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="24">But as the Resolution Foundation think tank points out , external : "John Healey's problem is that conflict in the Middle East has once again pushed up energy prices and interest rates.</span></p>
+        <p class="cn">但正如决议基金会（Resolution Foundation）智库对外指出的：“约翰·希利的问题是，中东冲突再次推高了能源价格和利率。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="25">"So, despite the signs that the UK economy is becoming more <span class="keyword" data-word="resilient" data-phonetic="/rɪˈzɪliənt/" data-pos="adj." data-def="有韧性的，能恢复的" data-def-en="Able to withstand or recover quickly from difficult conditions.">resilient</span>, household and public finances are in for another shock."</span></p>
+        <p class="cn">“因此，尽管有迹象表明英国经济正变得更具韧性，但家庭和公共财政将面临另一次冲击。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="26">Four ways Labour could raise money in the Budget without hiking income tax</span></p>
+        <p class="cn">工党可以在不提高所得税的情况下在预算案中筹集资金的四种方式</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="27">Chris Mason: Jackdaw approved but tricky energy trade-offs remain</span></p>
+        <p class="cn">克里斯·梅森（Chris Mason）：寒鸦批准，但棘手的能源权衡依然存在</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="28">In essence, we can expect a smaller Budget this time, compared to some in recent years, when it comes to the scale of tax and spending changes.</span></p>
+        <p class="cn">本质上，与近年来的一些预算案相比，就税收和支出变化的规模而言，我们可以预期这次预算案规模较小。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="29">The chancellor has been talking up a desire to offer "breathing space" and "hope" - a <span class="keyword" data-word="tacit" data-phonetic="/ˈtæsɪt/" data-pos="adj." data-def="心照不宣的，默许的" data-def-en="Understood or implied without being stated.">tacit</span> acknowledgement that there is a limit to what the government can do given the constraints it faces.</span></p>
+        <p class="cn">财政大臣一直在谈论希望提供“喘息空间”和“希望”——这 tacitly 承认，鉴于面临的制约，政府能做的有限。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="30">It has promised not to raise income tax, national insurance or VAT, a self imposed <span class="keyword" data-word="constraint" data-phonetic="/kənˈstreɪnt/" data-pos="n." data-def="限制，约束" data-def-en="A limitation or restriction.">constraint</span>, as the IFS put it.</span> <span class="sentence" data-sentence-index="31">And there are the international ones beyond its control too.</span></p>
+        <p class="cn">正如IFS所说，政府已承诺不提高所得税、国民保险或增值税，这是一项自我施加的制约。还有超出其控制的国际制约。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">The big question for many will be whether the Budget is â or can be - big enough to meet the moment?</span> <span class="sentence" data-sentence-index="33">Opposition parties will argue it amounts to tinkering.</span></p>
+        <p class="cn">对许多人来说，最大的问题将是预算案是否——或能否——足够大以应对时局？反对党将辩称这不过是小修小补。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="34">Conservative shadow chancellor Andrew Griffith argued the public finances are "on a cliff edge" and wants Healey to use the Budget to "take tough decisions, instead of continuing to kick the can down the road".</span></p>
+        <p class="cn">保守党影子财政大臣安德鲁·格里菲斯（Andrew Griffith）辩称，公共财政“处于悬崖边缘”，希望希利利用预算案“做出艰难决定，而不是继续拖延”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="35">For the Liberal Democrats, Daisy Cooper warned a "steady as she goes" Budget is "not going to cut it", while Reform UK's Robert Jenrick said the chancellor "can't keep fiddling while the economy burns".</span></p>
+        <p class="cn">对于自由民主党，黛西·库珀（Daisy Cooper）警告说，“稳扎稳打”的预算案“行不通”，而改革英国党的罗伯特·詹里克（Robert Jenrick）表示，财政大臣“不能在经济燃烧时继续瞎折腾”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="36">Green Party MP Ellie Chowns wanted a "bold" approach but fears it will be "business as usual".</span></p>
+        <p class="cn">绿党议员埃莉·乔恩斯（Ellie Chowns）希望采取“大胆”的方式，但担心会“一切照旧”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">The government will try to convince you it is one of many moments in the coming weeks and months that will attempt to deliver the scale of change the prime minister has promised.</span></p>
+        <p class="cn">政府将试图说服你，这只是未来几周和几个月内众多时刻之一，这些时刻将试图实现首相承诺的变革规模。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">注册我们的《政治精华》时事通讯，了解威斯敏斯特及其他地区的内部运作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">constraint</span>
+        <button class="kw-speak-btn" data-word="constraint" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈstreɪnt/ n.</span>
+      </div>
+      <p class="kw-def">限制，约束</p>
+      <p class="kw-def-en">A limitation or restriction.</p>
+      <p class="kw-ctx">&ldquo;We have a relatively new government with seemingly big ambitions but facing a long list of constraints.&rdquo;</p>
+      <p class="kw-ctx-cn">我们有一个相对较新的政府，看似雄心勃勃，但面临着一长串限制。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">proactive</span>
+        <button class="kw-speak-btn" data-word="proactive" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/proʊˈæktɪv/ adj.</span>
+      </div>
+      <p class="kw-def">积极主动的</p>
+      <p class="kw-def-en">Creating or controlling a situation by causing something to happen rather than responding to it after it has happened.</p>
+      <p class="kw-ctx">&ldquo;And how do you deliver a proudly proactive state, delivering for people in a noticeable way, when the tax burden is generationally high, the national debt is sky high, energy bills are rising and inflation is higher than expected?&rdquo;</p>
+      <p class="kw-ctx-cn">当税负达到世代高点、国家债务高企、能源账单上涨、通胀高于预期时，你如何打造一个自豪的积极主动的国家，以显著的方式为人民服务？</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">levy</span>
+        <button class="kw-speak-btn" data-word="levy" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈlevi/ n.</span>
+      </div>
+      <p class="kw-def">征税，税款</p>
+      <p class="kw-def-en">An amount of money, such as a tax, that you have to pay to a government or organization.</p>
+      <p class="kw-ctx">&ldquo;The banks are braced for a levy or surcharge that may pay for this.&rdquo;</p>
+      <p class="kw-ctx-cn">银行正准备应对可能为此支付的征税或附加费。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devolution</span>
+        <button class="kw-speak-btn" data-word="devolution" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdevəˈluːʃn/ n.</span>
+      </div>
+      <p class="kw-def">权力下放</p>
+      <p class="kw-def-en">The transfer of power or authority from central government to local government.</p>
+      <p class="kw-ctx">&ldquo;And one of the prime minister's key ideas - handing power away from Westminster and closer to you, devolution - will be central too.&rdquo;</p>
+      <p class="kw-ctx-cn">首相的关键理念之一——将权力从威斯敏斯特下放，更贴近你，即权力下放——也将是核心。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">robust</span>
+        <button class="kw-speak-btn" data-word="robust" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/roʊˈbʌst/ adj.</span>
+      </div>
+      <p class="kw-def">强劲的，稳健的</p>
+      <p class="kw-def-en">Strong and healthy; vigorous.</p>
+      <p class="kw-ctx">&ldquo;The chancellor will argue the economy is becoming more robust – and yes, there are some economic indicators that are more positive than forecast: growth is better than expected, as is productivity and unemployment is down.&rdquo;</p>
+      <p class="kw-ctx-cn">财政大臣将主张经济正变得更加强劲——是的，一些经济指标比预测更积极：增长好于预期，生产力也是如此，失业率下降。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">resilient</span>
+        <button class="kw-speak-btn" data-word="resilient" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/rɪˈzɪliənt/ adj.</span>
+      </div>
+      <p class="kw-def">有韧性的，能恢复的</p>
+      <p class="kw-def-en">Able to withstand or recover quickly from difficult conditions.</p>
+      <p class="kw-ctx">&ldquo;So, despite the signs that the UK economy is becoming more resilient, household and public finances are in for another shock.&rdquo;</p>
+      <p class="kw-ctx-cn">因此，尽管有迹象表明英国经济正变得更具韧性，但家庭和公共财政将面临另一次冲击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tacit</span>
+        <button class="kw-speak-btn" data-word="tacit" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtæsɪt/ adj.</span>
+      </div>
+      <p class="kw-def">心照不宣的，默许的</p>
+      <p class="kw-def-en">Understood or implied without being stated.</p>
+      <p class="kw-ctx">&ldquo;The chancellor has been talking up a desire to offer "breathing space" and "hope" - a tacit acknowledgement that there is a limit to what the government can do given the constraints it faces.&rdquo;</p>
+      <p class="kw-ctx-cn">财政大臣一直在谈论提供“喘息空间”和“希望”的愿望——这是对政府面临限制所能做的事情有限的一种心照不宣的承认。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tinker</span>
+        <button class="kw-speak-btn" data-word="tinker" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɪŋkər/ v.</span>
+      </div>
+      <p class="kw-def">小修小补，摆弄</p>
+      <p class="kw-def-en">To make small changes to something, often without a clear plan or purpose.</p>
+      <p class="kw-ctx">&ldquo;Opposition parties will argue it amounts to tinkering.&rdquo;</p>
+      <p class="kw-ctx-cn">反对党将争辩说这只不过是修修补补。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Two quotes from the chancellor and the prime minister get to the heart of this Budget.", "start_ms": 0, "end_ms": 5616, "paragraph_index": 0}, {"index": 1, "text": "\"The money New Labour had in the 90s is simply not there now\u00e2\u0080\u00a6 Britain has it harder now,\" Chancellor John Healey said last month.", "start_ms": 5616, "end_ms": 14400, "paragraph_index": 1}, {"index": 2, "text": "And from Andy Burnham, days before he became prime minister: \"This change...", "start_ms": 14400, "end_ms": 20280, "paragraph_index": 2}, {"index": 3, "text": "is the most significant change moment in our politics for 40 years.\"", "start_ms": 20280, "end_ms": 25728, "paragraph_index": 2}, {"index": 4, "text": "So what happens when the economic realities confront the political ambitions of this new government?", "start_ms": 25728, "end_ms": 32496, "paragraph_index": 3}, {"index": 5, "text": "As Helen Miller, director of the Institute for Fiscal Studies (IFS), puts it , external : \"We have a relatively new government with seemingly big ambitions but facing a long list of constraints.", "start_ms": 32496, "end_ms": 46296, "paragraph_index": 4}, {"index": 6, "text": "\"Some of those constraints\u00e2\u0080\u00a6 are self imposed, others are being worsened by global events, most noticeably war in the Middle East.\"", "start_ms": 46296, "end_ms": 55320, "paragraph_index": 5}, {"index": 7, "text": "Let's be clear, plenty in Westminster in all parties will say that the amount of money around isn't everything \u00e2\u0080\u0093 how well taxpayers' money is spent and where it is spent matters too.", "start_ms": 55320, "end_ms": 67080, "paragraph_index": 6}, {"index": 8, "text": "And spending less and taxing less, plenty argue, should be a priority.", "start_ms": 67080, "end_ms": 72912, "paragraph_index": 7}, {"index": 9, "text": "But in the bones of many in the Labour Party is an instinct that the government, the state, can and should be a vital agent in driving change and improvements in people's lives \u00e2\u0080\u0093 a world-view grounded in a sense that governments should proudly step in, rather than one that believes they should get out of the way.", "start_ms": 72912, "end_ms": 91320, "paragraph_index": 8}, {"index": 10, "text": "And how do you deliver a proudly proactive state, delivering for people in a noticeable way, when the tax burden is generationally high, the national debt is sky high, energy bills are rising and inflation is higher than expected?", "start_ms": 91320, "end_ms": 107040, "paragraph_index": 9}, {"index": 11, "text": "In short: it is not easy.", "start_ms": 107040, "end_ms": 109968, "paragraph_index": 10}, {"index": 12, "text": "Minimum wage set to rise but 18-20 year-olds will not get bigger increase", "start_ms": 109968, "end_ms": 116352, "paragraph_index": 11}, {"index": 13, "text": "Tax on banks, energy bill help and minimum wage rise - what could be in the Budget?", "start_ms": 116352, "end_ms": 122448, "paragraph_index": 12}, {"index": 14, "text": "Healey's Budget needs to sustain the stronger economy through gathering clouds", "start_ms": 122448, "end_ms": 128112, "paragraph_index": 13}, {"index": 15, "text": "But ministers argue all of this doesn't mean the government is powerless.", "start_ms": 128112, "end_ms": 133392, "paragraph_index": 14}, {"index": 16, "text": "Many are expecting support on the cost of living, and in particular energy bills, to be targeted at the most vulnerable.", "start_ms": 133392, "end_ms": 141960, "paragraph_index": 15}, {"index": 17, "text": "On the eve of the Budget, Healey said he wants to \"start the long-term action needed to get energy costs down for good\".", "start_ms": 141960, "end_ms": 150024, "paragraph_index": 15}, {"index": 18, "text": "The banks are braced for a levy or surcharge that may pay for this.", "start_ms": 150024, "end_ms": 155040, "paragraph_index": 16}, {"index": 19, "text": "There will be an announcement about further spending on defence, but not yet how spending 3% of national income on our security will be delivered by 2030 \u00e2\u0080\u0093 that will come in next year's Spending Review.", "start_ms": 155040, "end_ms": 168576, "paragraph_index": 17}, {"index": 20, "text": "And one of the prime minister's key ideas - handing power away from Westminster and closer to you, devolution - will be central too.", "start_ms": 168576, "end_ms": 177720, "paragraph_index": 18}, {"index": 21, "text": "There will be, the chancellor told BBC Newscast, a \"really radical devolution of powers and resources to local leaders that are often better placed to get beyond the departmental systems.\"", "start_ms": 177720, "end_ms": 190536, "paragraph_index": 19}, {"index": 22, "text": "But some at Westminster fret extra money for mayors and others in local government are not yet accompanied by adequate checks and balances to ensure that money is well spent.", "start_ms": 190536, "end_ms": 201624, "paragraph_index": 20}, {"index": 23, "text": "The chancellor will argue the economy is becoming more robust \u00e2\u0080\u0093 and yes, there are some economic indicators that are more positive than forecast: growth is better than expected, as is productivity and unemployment is down.", "start_ms": 201624, "end_ms": 216720, "paragraph_index": 21}, {"index": 24, "text": "But as the Resolution Foundation think tank points out , external : \"John Healey's problem is that conflict in the Middle East has once again pushed up energy prices and interest rates.", "start_ms": 216720, "end_ms": 229152, "paragraph_index": 22}, {"index": 25, "text": "\"So, despite the signs that the UK economy is becoming more resilient, household and public finances are in for another shock.\"", "start_ms": 229152, "end_ms": 238488, "paragraph_index": 23}, {"index": 26, "text": "Four ways Labour could raise money in the Budget without hiking income tax", "start_ms": 238488, "end_ms": 243960, "paragraph_index": 24}, {"index": 27, "text": "Chris Mason: Jackdaw approved but tricky energy trade-offs remain", "start_ms": 243960, "end_ms": 249552, "paragraph_index": 25}, {"index": 28, "text": "In essence, we can expect a smaller Budget this time, compared to some in recent years, when it comes to the scale of tax and spending changes.", "start_ms": 249552, "end_ms": 259584, "paragraph_index": 26}, {"index": 29, "text": "The chancellor has been talking up a desire to offer \"breathing space\" and \"hope\" - a tacit acknowledgement that there is a limit to what the government can do given the constraints it faces.", "start_ms": 259584, "end_ms": 270864, "paragraph_index": 27}, {"index": 30, "text": "It has promised not to raise income tax, national insurance or VAT, a self imposed constraint, as the IFS put it.", "start_ms": 270864, "end_ms": 280656, "paragraph_index": 28}, {"index": 31, "text": "And there are the international ones beyond its control too.", "start_ms": 280656, "end_ms": 285216, "paragraph_index": 28}, {"index": 32, "text": "The big question for many will be whether the Budget is \u00e2\u0080\u0093 or can be - big enough to meet the moment?", "start_ms": 285216, "end_ms": 291720, "paragraph_index": 29}, {"index": 33, "text": "Opposition parties will argue it amounts to tinkering.", "start_ms": 291720, "end_ms": 295992, "paragraph_index": 29}, {"index": 34, "text": "Conservative shadow chancellor Andrew Griffith argued the public finances are \"on a cliff edge\" and wants Healey to use the Budget to \"take tough decisions, instead of continuing to kick the can down the road\".", "start_ms": 295992, "end_ms": 309528, "paragraph_index": 30}, {"index": 35, "text": "For the Liberal Democrats, Daisy Cooper warned a \"steady as she goes\" Budget is \"not going to cut it\", while Reform UK's Robert Jenrick said the chancellor \"can't keep fiddling while the economy burns\".", "start_ms": 309528, "end_ms": 322536, "paragraph_index": 31}, {"index": 36, "text": "Green Party MP Ellie Chowns wanted a \"bold\" approach but fears it will be \"business as usual\".", "start_ms": 322536, "end_ms": 329328, "paragraph_index": 32}, {"index": 37, "text": "The government will try to convince you it is one of many moments in the coming weeks and months that will attempt to deliver the scale of change the prime minister has promised.", "start_ms": 329328, "end_ms": 339840, "paragraph_index": 33}, {"index": 38, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 339840, "end_ms": 347280, "paragraph_index": 34}], "total_duration_ms": 347280};
+  const WORD_GLOSS = {"the": "这个", "and": "和", "to": "到", "in": "在", "is": "是", "of": "的", "will": "将", "that": "那个", "it": "它", "are": "是", "be": "是", "for": "为了", "budget": "预算", "but": "但是", "chancellor": "总理", "not": "不", "government": "政府", "this": "这个", "money": "金钱", "there": "那里", "as": "作为", "energy": "能源", "on": "在", "get": "得到", "has": "有", "spending": "支出", "can": "可以", "tax": "税收", "prime": "首相", "change": "改变", "some": "一些", "westminster": "威斯敏斯特", "argue": "争论", "should": "应该", "many": "许多", "than": "比", "economy": "经济", "up": "向上", "from": "来自", "minister": "部长", "new": "新的", "labour": "工党", "healey": "希利", "said": "说", "most": "最", "our": "我们的", "what": "什么", "when": "当", "big": "大的", "by": "被", "how": "如何", "spent": "花费", "too": "太", "one": "一个", "you": "你", "national": "国家", "down": "下来", "or": "或者", "income": "收入", "beyond": "超出", "more": "更多", "john": "约翰", "he": "他", "moment": "时刻", "politics": "政治", "years": "多年", "so": "所以", "economic": "经济的", "ambitions": "野心", "external": "外部的", "we": "我们", "with": "与", "imposed": "施加", "others": "其他", "middle": "中间", "east": "东部", "plenty": "大量", "all": "所有", "parties": "政党", "well": "好", "less": "更少", "party": "政党", "an": "一个", "state": "国家", "proudly": "自豪地", "out": "出来", "way": "方式", "do": "做", "deliver": "发表", "high": "高的", "bills": "法案", "expected": "预期", "minimum": "最低的", "wage": "工资", "rise": "上升", "banks": "银行", "could": "可能", "healey's": "希利的", "at": "在", "wants": "想要", "yet": "尚未", "local": "当地", "better": "更好的", "becoming": "变得", "public": "公众", "finances": "财务", "raise": "提高", "scale": "规模", "promised": "承诺", "while": "而", "keep": "保持", "two": "两个", "heart": "核心", "had": "有", "simply": "仅仅", "britain": "英国", "harder": "更努力地", "now": "现在", "last": "最后", "month": "月份", "andy": "安迪", "burnham": "伯纳姆", "days": "天", "before": "之前", "became": "成为", "significant": "重大", "happens": "发生", "realities": "现实", "confront": "面对", "political": "政治的", "helen": "海伦", "director": "局长", "institute": "学院", "fiscal": "财政的", "puts": "使处于", "have": "有", "relatively": "相对地", "seemingly": "看似", "facing": "面临", "long": "长久", "list": "名单", "those": "那些", "being": "正在", "worsened": "恶化", "global": "全球", "events": "事件", "noticeably": "显著地", "war": "战争", "let's": "让我们", "clear": "明确", "say": "说", "amount": "数量", "around": "在...周围", "isn't": "不是", "everything": "一切", "taxpayers": "纳税人", "where": "那里", "matters": "事务", "priority": "优先事项", "bones": "遗骸", "instinct": "本能", "vital": "至关重要的", "agent": "特工", "driving": "推动", "improvements": "改进", "people's": "人民的", "lives": "生命", "grounded": "停飞的", "sense": "感觉", "governments": "政府", "step": "步骤", "rather": "宁愿", "believes": "认为", "they": "它们", "delivering": "传递", "people": "人们", "burden": "伯登", "debt": "债务", "sky": "天空", "rising": "上升的", "higher": "更高的", "short": "短暂的", "easy": "容易的", "set": "设定", "year-olds": "岁的人", "bigger": "更大的", "increase": "增加", "bill": "法案", "help": "帮助", "needs": "需要", "stronger": "更强", "through": "通过", "gathering": "集会", "ministers": "部长", "doesn't": "不", "mean": "意味着", "expecting": "期待", "support": "支持", "cost": "成本", "living": "生活", "particular": "特定", "targeted": "针对", "vulnerable": "易受攻击的", "eve": "前夕", "start": "开始", "long-term": "长期的", "action": "行动", "needed": "需要", "costs": "成本", "good": "良好", "may": "可能", "pay": "支付", "announcement": "公告", "about": "关于", "further": "进一步的", "defence": "国防", "security": "安全", "delivered": "递送", "come": "到来", "next": "下一个", "year's": "今年的", "review": "审查", "minister's": "部长的", "key": "关键", "ideas": "想法", "handing": "递交", "power": "权力", "away": "离开", "closer": "更近的", "central": "中央的", "told": "告诉", "bbc": "英国广播公司", "really": "真正地", "radical": "激进的", "powers": "权力", "resources": "资源", "leaders": "领导人", "often": "经常", "placed": "放置", "systems": "系统", "extra": "额外的", "mayors": "市长们", "accompanied": "伴随", "adequate": "足够的", "checks": "审查", "balances": "平衡", "ensure": "确保", "yes": "是的", "positive": "积极的", "forecast": "预报", "growth": "增长", "unemployment": "失业", "resolution": "决议", "foundation": "基金会", "think": "认为", "tank": "坦克", "points": "水平", "problem": "问题", "conflict": "冲突", "once": "一旦", "again": "再次", "pushed": "推动", "prices": "价格", "interest": "兴趣", "rates": "费率", "despite": "尽管", "signs": "迹象", "uk": "英国", "household": "王室", "another": "另一个", "shock": "震惊", "four": "四", "ways": "方式", "without": "没有", "chris": "克里斯", "mason": "梅森", "jackdaw": "杰克道", "approved": "批准", "tricky": "棘手的", "trade-offs": "权衡取舍", "remain": "仍然", "expect": "期望", "smaller": "较小的", "time": "时间", "compared": "比较", "recent": "最近", "comes": "到来", "changes": "变化", "been": "已经", "talking": "谈论", "desire": "渴望", "offer": "提供", "breathing": "呼吸", "space": "空间", "hope": "希望", "acknowledgement": "承认", "limit": "限制", "given": "给定", "faces": "面临", "insurance": "保险", "vat": "增值税", "put": "提出", "international": "国际", "ones": "人们", "its": "它的", "control": "控制", "question": "问题", "whether": "是否", "enough": "足够", "meet": "会见", "opposition": "反对党", "amounts": "数量", "conservative": "保守党", "shadow": "阴影", "andrew": "安德鲁", "griffith": "格里菲斯", "argued": "争论", "edge": "边缘", "use": "使用", "take": "采取", "tough": "艰难的", "decisions": "决定", "instead": "反而", "continuing": "持续", "kick": "踢", "road": "道路", "liberal": "自由", "democrats": "民主党人", "daisy": "雏菊", "cooper": "库珀", "warned": "警告", "she": "她", "goes": "进行", "going": "将要", "cut": "削减", "reform": "改革", "uk's": "英国的", "robert": "罗伯特", "jenrick": "詹里克", "can't": "不能", "burns": "烧伤", "green": "绿色", "mp": "议员", "ellie": "埃莉", "chowns": "查恩斯", "wanted": "想要", "bold": "大胆的", "approach": "方法", "fears": "担忧", "business": "事务", "usual": "通常的", "try": "审判", "convince": "说服", "moments": "时刻", "coming": "即将到来的", "weeks": "周", "months": "月", "attempt": "企图", "sign": "签署", "essential": "必要的", "newsletter": "新闻简报", "inner": "内部的", "workings": "运作", "ifs": "不确定因素", "constraints": "限制", "self": "自我", "quotes": "引语", "miller": "米勒", "studies": "研究", "taxing": "费力的", "world-view": "世界观", "noticeable": "明显的", "generationally": "代际间", "inflation": "通货膨胀", "sustain": "维持", "clouds": "阴云", "powerless": "无能为力", "braced": "做好准备", "surcharge": "附加费", "newscast": "新闻广播", "departmental": "部门的", "fret": "担忧", "indicators": "指标", "productivity": "生产率", "hiking": "上调", "essence": "本质", "tinkering": "小修小补", "cliff": "悬崖", "steady": "稳定的", "fiddling": "摆弄"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
