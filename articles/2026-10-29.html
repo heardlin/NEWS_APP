@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-29</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-29</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ab01/live/ce128db0-d2fc-11f1-a701-fddedf244c16.jpg" alt="Healey unveils £100 for energy bills and bank tax in first Budget" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Healey unveils £100 for energy bills and bank tax in first Budget</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/cqpvgxz3y49go?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-29.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Millions of households will get Â£100 to help with soaring energy bills to be paid for by a tax on bank profits, John Healey has announced in his first Budget.</span></p>
+        <p class="cn">约翰·希利（John Healey）在他的首份预算案中宣布，数百万家庭将获得100英镑，以帮助应对飙升的能源账单，这笔钱将由银行利润税支付。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">The <span class="keyword" data-word="chancellor" data-phonetic="/ˈtʃɑːnsələr/" data-pos="n." data-def="财政大臣" data-def-en="The senior government official responsible for economic and financial policy.">chancellor</span> said he wanted to give hard-pressed families "breathing space now" and "hope for the future" as the UK economy is battered by "global economic storms".</span></p>
+        <p class="cn">财政大臣表示，他希望给压力重重的家庭“眼下的喘息空间”和“对未来的希望”，因为英国经济正遭受“全球经济风暴”的打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">He also unveiled tax breaks to boost high street businesses - but confirmed that many big decisions, including on defence spending and <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利" data-def-en="Government financial support for people in need.">welfare</span>, will not be made until next year.</span></p>
+        <p class="cn">他还公布了税收减免措施以提振商业街企业——但确认许多重大决定，包括国防开支和福利方面的决定，要到明年才会做出。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">Conservative leader Kemi Badenoch said Healey's plans were "not bold enough" and the government was "overspent, overborrowed, overtaxed and drowning in an out-of-control <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利" data-def-en="Government financial support for people in need.">welfare</span> system".</span></p>
+        <p class="cn">保守党领袖凯米·巴德诺赫（Kemi Badenoch）表示，希利的计划“不够大胆”，政府“超支、过度借贷、过度征税，并淹没在失控的福利体系中”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">In an hour-long speech to a packed House of Commons, with Prime Minister Andy Burnham and other frontbench colleagues cheering him on, the <span class="keyword" data-word="chancellor" data-phonetic="/ˈtʃɑːnsələr/" data-pos="n." data-def="财政大臣" data-def-en="The senior government official responsible for economic and financial policy.">chancellor</span> unveiled a string of measures aimed at cutting the cost of living.</span></p>
+        <p class="cn">在向座无虚席的下议院发表的一小时演讲中，首相安迪·伯纳姆（Andy Burnham）和其他前排同事为他欢呼，财政大臣公布了一系列旨在降低生活成本的措施。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">One-off Â£100 energy payment for people living in council tax bands A to D in England, with Wales saying it will match the payment and the Scottish government planning to "replicate" it</span></p>
+        <p class="cn">一次性100英镑能源补贴，针对英格兰 council tax 等级 A 至 D 的居民，威尔士表示将匹配该补贴，苏格兰政府计划“复制”该补贴</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">Gas standing charges in England, Scotland and Wales, to be scrapped during 2027 "or as soon as possible after".</span> <span class="sentence" data-sentence-index="7">These fixed daily fees will be shifted onto the price of each unit of energy, meaning heavy gas users will face higher bills</span></p>
+        <p class="cn">英格兰、苏格兰和威尔士的天然气固定费用将在2027年“或之后尽快”取消。这些固定的每日费用将转移到每单位能源的价格中，这意味着天然气使用量大的用户将面临更高的账单</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="8">Extending the 5p "temporary" cut in fuel duty on petrol and diesel to July</span></p>
+        <p class="cn">将汽油和柴油燃油税的5便士“临时”削减延长至7月</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Increasing minimum wage rates by 3.9% in April, although there will be no progress on narrowing the gap between rates for older and younger workers</span></p>
+        <p class="cn">4月份将最低工资标准提高3.9%，但在缩小老年和年轻工人工资差距方面没有进展</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">Healey increased the tax on the profits of big banks from 3% to 6%, which will last from January next year to April 2028, and increased taxes on high-stakes gambling machines.</span></p>
+        <p class="cn">希利将大银行利润税从3%提高到6%，该政策将从明年1月持续到2028年4月，并提高了高风险赌博机的税收。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">Healey announces Â£100 energy bill help for millions and raises taxes on banks and some savers</span></p>
+        <p class="cn">希利宣布为数百万人提供100英镑能源账单援助，并提高银行和部分储户的税收</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">Budget 2026: Key points at a glance</span></p>
+        <p class="cn">2026年预算案：要点一览</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Your pay, energy bills and savings: How the Budget affects you</span></p>
+        <p class="cn">你的工资、能源账单和储蓄：预算案如何影响你</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">Chris Mason: Budget felt cautious despite its range of small measures</span></p>
+        <p class="cn">克里斯·梅森（Chris Mason）：尽管采取了一系列小措施，预算案仍显得谨慎</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">As part of a package to help business, Healey increased the point at which High Street shops in England start paying business rates from Â£12,000 to Â£18,000, with vape shops and adult gaming centres excluded from the relief.</span></p>
+        <p class="cn">作为帮助企业的一揽子计划的一部分，希利将英格兰商业街商店开始缴纳商业税的起征点从12,000英镑提高到18,000英镑，电子烟商店和成人游戏中心被排除在减免之外。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">But he had little scope for big giveaways as the public finances remain stretched, with the UK set to spend Â£14bn more on debt interest payments this year.</span></p>
+        <p class="cn">但由于公共财政仍然紧张，他没有多少空间进行大规模派发，今年英国将在债务利息支付上多支出140亿英镑。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">Income tax thresholds will remain frozen and the tax on income from savings and property rental will rise to 24% for basic rate taxpayers from April 2027, after it had been scheduled to go up to 22%.</span></p>
+        <p class="cn">所得税起征点将保持不变，从2027年4月起，基本税率纳税人的储蓄和房产租赁收入税率将升至24%，此前计划升至22%。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">But a cut to the cash ISA <span class="keyword" data-word="allowance" data-phonetic="/əˈlaʊəns/" data-pos="n." data-def="免税额；津贴" data-def-en="An amount of money that can be earned or received before tax is paid, or a regular sum given for a purpose.">allowance</span> from Â£20,000 a year to Â£12,000, announced last year by Healey's predecessor Rachel Reeves, will be axed.</span></p>
+        <p class="cn">但去年希利的前任雷切尔·里夫斯（Rachel Reeves）宣布的将现金ISA免税额从每年20,000英镑削减至12,000英镑的计划将被取消。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">The Office for Budget Responsibility (OBR) downgraded its growth forecast for next year to 1%, with slightly higher increases predicted for subsequent years.</span></p>
+        <p class="cn">预算责任办公室（OBR）将明年的增长预测下调至1%，预计随后几年的增幅略高。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">In its latest assessment, the OBR said British households were set to be little better off than before the Covid pandemic even a decade after Covid-19 hit, a situation the watchdog's boss David Miles described as "pretty grim".</span></p>
+        <p class="cn">在其最新评估中，OBR表示，即使新冠疫情爆发十年后，英国家庭的经济状况也仅比疫情前略好，该监管机构负责人戴维·迈尔斯（David Miles）将这种情况描述为“相当严峻”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">In his Budget speech, Healey repeatedly stressed that the UK economy was being battered by "global uncertainties" and soaring oil prices caused by conflict in the Middle East.</span></p>
+        <p class="cn">在预算演讲中，希利反复强调，英国经济正受到“全球不确定性”和中东冲突导致的油价飙升的打击。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">"Those are the storms we face.</span> <span class="sentence" data-sentence-index="23">We can't wish them away.</span> <span class="sentence" data-sentence-index="24">We must choose the course we steer through them," he told MPs.</span></p>
+        <p class="cn">“这些就是我们面临的风暴。我们无法希望它们消失。我们必须选择穿越风暴的航向，”他告诉议员们。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="25">This video can not be played</span></p>
+        <p class="cn">此视频无法播放</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="26">Watch: What are the key points from the Budget and how will it be funded?</span></p>
+        <p class="cn">观看：预算案的关键点是什么，将如何筹资？</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="27">Healey also used his speech to announce plans to allow regional mayors to keep 20% of business rates and a share of income tax to spend on local priorities.</span></p>
+        <p class="cn">希利还在演讲中宣布，计划允许地区市长保留20%的商业税和一部分所得税，用于地方优先事项。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="25">
+        <p class="en"><span class="sentence" data-sentence-index="28">The aim was to allow mayors to retain 100% of business rates raised in their areas by the end of the decade, he added, in "the most radical act of <span class="keyword" data-word="devolution" data-phonetic="/ˌdiːvəˈluːʃn/" data-pos="n." data-def="权力下放" data-def-en="The transfer of power from a central government to regional or local governments.">devolution</span> in a generation".</span></p>
+        <p class="cn">他补充说，目标是到本十年末，让市长保留其地区征收的100%商业税，这是“一代人以来最激进的权力下放举措”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="26">
+        <p class="en"><span class="sentence" data-sentence-index="29">And he sought to address opposition claims the Labour government is unwilling to cut benefits, insisting that both he and Burnham were committed to bringing down the <span class="keyword" data-word="welfare" data-phonetic="/ˈwelfeər/" data-pos="n." data-def="福利" data-def-en="Government financial support for people in need.">welfare</span> bill in a "Labour way".</span></p>
+        <p class="cn">他试图回应反对党关于工党政府不愿削减福利的说法，坚称他和伯纳姆都致力于以“工党方式”降低福利法案。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="27">
+        <p class="en"><span class="sentence" data-sentence-index="30">But he said no decisions would be taken until reviews by Alan Milburn , into young people not in work or training, and Stephen Timms, on Personal Independence Payments , had been published, with <span class="keyword" data-word="legislation" data-phonetic="/ˌledʒɪsˈleɪʃn/" data-pos="n." data-def="立法，法律" data-def-en="Laws or the process of making laws.">legislation</span> to follow next year.</span></p>
+        <p class="cn">但他表示，在艾伦·米尔本（Alan Milburn）关于未工作或未接受培训的年轻人以及斯蒂芬·蒂姆斯（Stephen Timms）关于个人独立支付（PIP）的审查报告发布之前，不会做出任何决定，立法将于明年跟进。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="28">
+        <p class="en"><span class="sentence" data-sentence-index="31">The Â£4.7bn black hole in the defence investment plan will be funded, the <span class="keyword" data-word="chancellor" data-phonetic="/ˈtʃɑːnsələr/" data-pos="n." data-def="财政大臣" data-def-en="The senior government official responsible for economic and financial policy.">chancellor</span> revealed, in part through taking money from capital budgets across Whitehall.</span></p>
+        <p class="cn">财政大臣透露，国防投资计划中47亿英镑的缺口将得到填补，部分资金来自白厅各部门的资本预算。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="29">
+        <p class="en"><span class="sentence" data-sentence-index="32">Healey said he will set out how the government plans to meet its commitment to spend 3% of the national income on defence by 2030, and 3.5% by 2035, at next year's spending review.</span></p>
+        <p class="cn">希利表示，他将在明年的支出审查中阐述政府计划如何实现在2030年前将国民收入的3%用于国防、2035年前达到3.5%的承诺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="30">
+        <p class="en"><span class="sentence" data-sentence-index="33">But Badenoch said he "should have set out a plan for 3% today," highlighting his claim when he resigned as Sir Keir Starmer's defence secretary in June that UK forces were at risk due to a lack of cash.</span></p>
+        <p class="cn">但巴德诺赫表示，他“今天就应该提出3%的计划”，并强调他在6月辞去基尔·斯塔默爵士（Sir Keir Starmer）的国防大臣职务时声称，由于缺乏资金，英国军队面临风险。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="31">
+        <p class="en"><span class="sentence" data-sentence-index="34">"So now he is the man who is increasing risk to personnel on operations, he is the man who is making our country less safe, he has failed his own test," the Conservative leader said.</span></p>
+        <p class="cn">“所以现在他是增加作战人员风险的人，他是让我们的国家更不安全的人，他没有通过自己的考验，”保守党领袖说。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="32">
+        <p class="en"><span class="sentence" data-sentence-index="35">"This is on him and no-one will ever forget.</span> <span class="sentence" data-sentence-index="36">If he had any decency he would resign again today."</span></p>
+        <p class="cn">“这是他的责任，没有人会忘记。如果他还有一点体面，他今天就应该再次辞职。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="33">
+        <p class="en"><span class="sentence" data-sentence-index="37">The Tory leader said that with the UK heading for a record tax burden and "spending more on debt interest than on the army and schools combined", Healey's Budget was "not good enough, not strong enough, not bold enough".</span></p>
+        <p class="cn">保守党领袖表示，随着英国走向创纪录的税收负担，且“债务利息支出超过军队和学校总和”，希利的预算案“不够好，不够强，不够大胆”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="34">
+        <p class="en"><span class="sentence" data-sentence-index="38">Helen Miller, director of the Institute for Fiscal Studies, said the Budget "has a raft of fiddly measures but very little that will move the dial on growth".</span></p>
+        <p class="cn">财政研究所所长海伦·米勒（Helen Miller）表示，预算案“有一堆琐碎的措施，但几乎没有什么能改变增长轨迹”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="35">
+        <p class="en"><span class="sentence" data-sentence-index="39">Lib Dem leader Sir Ed Davey said that until the government has "the courage" to fix the UK's trading relationship with the EU any Budget will just be "tinkering around the edges" and will not provide the growth the country needs.</span></p>
+        <p class="cn">自由民主党领袖埃德·戴维爵士（Sir Ed Davey）表示，除非政府有“勇气”修复英国与欧盟的贸易关系，否则任何预算案都只是“小修小补”，无法提供国家所需的增长。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="36">
+        <p class="en"><span class="sentence" data-sentence-index="40">Reform UK leader Nigel Farage said the Budget was full of "little giveaways" but  "doesn't overall do very much" and did not offer "anything of any value on defence whatsoever".</span></p>
+        <p class="cn">改革英国党领袖奈杰尔·法拉奇（Nigel Farage）表示，预算案充满了“小恩小惠”，但“总体上没有太大作用”，并且在国防方面“没有任何有价值的东西”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="37">
+        <p class="en"><span class="sentence" data-sentence-index="41">Healey also faced criticism from the left, with the general secretary of the Unite union, Sharon Graham describing the cost of living measures in the Budget as "baby steps".</span></p>
+        <p class="cn">希利也面临左翼的批评，联合工会秘书长莎伦·格雷厄姆（Sharon Graham）将预算案中的生活成本措施描述为“婴儿步”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="38">
+        <p class="en"><span class="sentence" data-sentence-index="42">"Scrapping standing charges on gas and a Â£100 energy payment for households in council tax bands, A to D, whilst welcome, will not touch the sides, when many forecasts show bills set to jump over Â£400 in January," she added.</span></p>
+        <p class="cn">“取消化石燃料固定费用以及为 council tax 等级 A 至 D 的家庭提供100英镑能源补贴虽然受欢迎，但无济于事，因为许多预测显示1月份账单将上涨超过400英镑，”她补充道。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="39">
+        <p class="en"><span class="sentence" data-sentence-index="43">Green Party leader Zack Polanski said it was a Budget "that betrays the future for young people and the planet they inherit".</span></p>
+        <p class="cn">绿党领袖扎克·波兰斯基（Zack Polanski）表示，这份预算案“背叛了年轻人的未来和他们继承的地球”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="40">
+        <p class="en"><span class="sentence" data-sentence-index="44">He added: "The <span class="keyword" data-word="chancellor" data-phonetic="/ˈtʃɑːnsələr/" data-pos="n." data-def="财政大臣" data-def-en="The senior government official responsible for economic and financial policy.">chancellor</span> didn't mention climate once but praised bankers repeatedly."</span></p>
+        <p class="cn">他补充说：“财政大臣一次都没有提到气候，却反复赞扬银行家。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="41">
+        <p class="en"><span class="sentence" data-sentence-index="45">Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.</span></p>
+        <p class="cn">注册我们的《政治要闻》时事通讯，了解威斯敏斯特及其他地区的内部运作。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">chancellor</span>
+        <button class="kw-speak-btn" data-word="chancellor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtʃɑːnsələr/ n.</span>
+      </div>
+      <p class="kw-def">财政大臣</p>
+      <p class="kw-def-en">The senior government official responsible for economic and financial policy.</p>
+      <p class="kw-ctx">&ldquo;The chancellor said he wanted to give hard-pressed families "breathing space now" and "hope for the future" as the UK economy is battered by "global economic storms".&rdquo;</p>
+      <p class="kw-ctx-cn">财政大臣表示，他希望给压力重重的家庭“喘息的空间”和“对未来的希望”，因为英国经济正遭受“全球经济风暴”的打击。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">unveil</span>
+        <button class="kw-speak-btn" data-word="unveil" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ʌnˈveɪl/ v.</span>
+      </div>
+      <p class="kw-def">公布，揭晓</p>
+      <p class="kw-def-en">To show or announce something publicly for the first time.</p>
+      <p class="kw-ctx">&ldquo;He also unveiled tax breaks to boost high street businesses - but confirmed that many big decisions, including on defence spending and welfare, will not be made until next year.&rdquo;</p>
+      <p class="kw-ctx-cn">他还公布了促进商业街企业的税收减免措施，但确认包括国防支出和福利在内的许多重大决定要到明年才会做出。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">welfare</span>
+        <button class="kw-speak-btn" data-word="welfare" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈwelfeər/ n.</span>
+      </div>
+      <p class="kw-def">福利</p>
+      <p class="kw-def-en">Government financial support for people in need.</p>
+      <p class="kw-ctx">&ldquo;Conservative leader Kemi Badenoch said Healey's plans were "not bold enough" and the government was "overspent, overborrowed, overtaxed and drowning in an out-of-control welfare system".&rdquo;</p>
+      <p class="kw-ctx-cn">保守党领袖凯米·巴德诺赫表示，希利的计划“不够大胆”，政府“超支、过度借贷、过度征税，并淹没在失控的福利体系中”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">allowance</span>
+        <button class="kw-speak-btn" data-word="allowance" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈlaʊəns/ n.</span>
+      </div>
+      <p class="kw-def">免税额；津贴</p>
+      <p class="kw-def-en">An amount of money that can be earned or received before tax is paid, or a regular sum given for a purpose.</p>
+      <p class="kw-ctx">&ldquo;But a cut to the cash ISA allowance from £20,000 a year to £12,000, announced last year by Healey's predecessor Rachel Reeves, will be axed.&rdquo;</p>
+      <p class="kw-ctx-cn">但希利的前任雷切尔·里夫斯去年宣布的将现金ISA免税额从每年2万英镑削减至1.2万英镑的计划将被取消。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">downgrade</span>
+        <button class="kw-speak-btn" data-word="downgrade" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdaʊnˈɡreɪd/ v.</span>
+      </div>
+      <p class="kw-def">下调，降级</p>
+      <p class="kw-def-en">To reduce the rating or estimate of something to a lower level.</p>
+      <p class="kw-ctx">&ldquo;The Office for Budget Responsibility (OBR) downgraded its growth forecast for next year to 1%, with slightly higher increases predicted for subsequent years.&rdquo;</p>
+      <p class="kw-ctx-cn">预算责任办公室（OBR）将明年的增长预测下调至1%，预计随后几年的增幅会略高。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">devolution</span>
+        <button class="kw-speak-btn" data-word="devolution" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌdiːvəˈluːʃn/ n.</span>
+      </div>
+      <p class="kw-def">权力下放</p>
+      <p class="kw-def-en">The transfer of power from a central government to regional or local governments.</p>
+      <p class="kw-ctx">&ldquo;The aim was to allow mayors to retain 100% of business rates raised in their areas by the end of the decade, he added, in "the most radical act of devolution in a generation".&rdquo;</p>
+      <p class="kw-ctx-cn">他补充说，目标是到本十年末，让市长保留其地区征收的100%的商业税率，这是“一代人以来最激进的权力下放举措”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">legislation</span>
+        <button class="kw-speak-btn" data-word="legislation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌledʒɪsˈleɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">立法，法律</p>
+      <p class="kw-def-en">Laws or the process of making laws.</p>
+      <p class="kw-ctx">&ldquo;But he said no decisions would be taken until reviews by Alan Milburn, into young people not in work or training, and Stephen Timms, on Personal Independence Payments, had been published, with legislation to follow next year.&rdquo;</p>
+      <p class="kw-ctx-cn">但他表示，在艾伦·米尔本关于未工作或未接受培训的年轻人以及斯蒂芬·蒂姆斯关于个人独立津贴的审查报告发布之前，不会做出任何决定，立法将于明年跟进。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">tinker</span>
+        <button class="kw-speak-btn" data-word="tinker" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈtɪŋkər/ v.</span>
+      </div>
+      <p class="kw-def">小修小补</p>
+      <p class="kw-def-en">To make small changes to something in an attempt to improve it.</p>
+      <p class="kw-ctx">&ldquo;Lib Dem leader Sir Ed Davey said that until the government has "the courage" to fix the UK's trading relationship with the EU any Budget will just be "tinkering around the edges" and will not provide the growth the country needs.&rdquo;</p>
+      <p class="kw-ctx-cn">自由民主党领袖埃德·戴维爵士表示，除非政府有“勇气”修复英国与欧盟的贸易关系，否则任何预算都只是“小修小补”，不会提供国家所需的增长。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Millions of households will get \u00c2\u00a3100 to help with soaring energy bills to be paid for by a tax on bank profits, John Healey has announced in his first Budget.", "start_ms": 0, "end_ms": 11496, "paragraph_index": 0}, {"index": 1, "text": "The chancellor said he wanted to give hard-pressed families \"breathing space now\" and \"hope for the future\" as the UK economy is battered by \"global economic storms\".", "start_ms": 11496, "end_ms": 22368, "paragraph_index": 1}, {"index": 2, "text": "He also unveiled tax breaks to boost high street businesses - but confirmed that many big decisions, including on defence spending and welfare, will not be made until next year.", "start_ms": 22368, "end_ms": 34248, "paragraph_index": 2}, {"index": 3, "text": "Conservative leader Kemi Badenoch said Healey's plans were \"not bold enough\" and the government was \"overspent, overborrowed, overtaxed and drowning in an out-of-control welfare system\".", "start_ms": 34248, "end_ms": 46440, "paragraph_index": 3}, {"index": 4, "text": "In an hour-long speech to a packed House of Commons, with Prime Minister Andy Burnham and other frontbench colleagues cheering him on, the chancellor unveiled a string of measures aimed at cutting the cost of living.", "start_ms": 46440, "end_ms": 60144, "paragraph_index": 4}, {"index": 5, "text": "One-off \u00c2\u00a3100 energy payment for people living in council tax bands A to D in England, with Wales saying it will match the payment and the Scottish government planning to \"replicate\" it", "start_ms": 60144, "end_ms": 72960, "paragraph_index": 5}, {"index": 6, "text": "Gas standing charges in England, Scotland and Wales, to be scrapped during 2027 \"or as soon as possible after\".", "start_ms": 72960, "end_ms": 82392, "paragraph_index": 6}, {"index": 7, "text": "These fixed daily fees will be shifted onto the price of each unit of energy, meaning heavy gas users will face higher bills", "start_ms": 82392, "end_ms": 91200, "paragraph_index": 6}, {"index": 8, "text": "Extending the 5p \"temporary\" cut in fuel duty on petrol and diesel to July", "start_ms": 91200, "end_ms": 97464, "paragraph_index": 7}, {"index": 9, "text": "Increasing minimum wage rates by 3.9% in April, although there will be no progress on narrowing the gap between rates for older and younger workers", "start_ms": 97464, "end_ms": 108336, "paragraph_index": 8}, {"index": 10, "text": "Healey increased the tax on the profits of big banks from 3% to 6%, which will last from January next year to April 2028, and increased taxes on high-stakes gambling machines.", "start_ms": 108336, "end_ms": 122280, "paragraph_index": 9}, {"index": 11, "text": "Healey announces \u00c2\u00a3100 energy bill help for millions and raises taxes on banks and some savers", "start_ms": 122280, "end_ms": 130152, "paragraph_index": 10}, {"index": 12, "text": "Budget 2026: Key points at a glance", "start_ms": 130152, "end_ms": 134568, "paragraph_index": 11}, {"index": 13, "text": "Your pay, energy bills and savings: How the Budget affects you", "start_ms": 134568, "end_ms": 139800, "paragraph_index": 12}, {"index": 14, "text": "Chris Mason: Budget felt cautious despite its range of small measures", "start_ms": 139800, "end_ms": 145512, "paragraph_index": 13}, {"index": 15, "text": "As part of a package to help business, Healey increased the point at which High Street shops in England start paying business rates from \u00c2\u00a312,000 to \u00c2\u00a318,000, with vape shops and adult gaming centres excluded from the relief.", "start_ms": 145512, "end_ms": 163248, "paragraph_index": 14}, {"index": 16, "text": "But he had little scope for big giveaways as the public finances remain stretched, with the UK set to spend \u00c2\u00a314bn more on debt interest payments this year.", "start_ms": 163248, "end_ms": 174720, "paragraph_index": 15}, {"index": 17, "text": "Income tax thresholds will remain frozen and the tax on income from savings and property rental will rise to 24% for basic rate taxpayers from April 2027, after it had been scheduled to go up to 22%.", "start_ms": 174720, "end_ms": 190632, "paragraph_index": 16}, {"index": 18, "text": "But a cut to the cash ISA allowance from \u00c2\u00a320,000 a year to \u00c2\u00a312,000, announced last year by Healey's predecessor Rachel Reeves, will be axed.", "start_ms": 190632, "end_ms": 204168, "paragraph_index": 17}, {"index": 19, "text": "The Office for Budget Responsibility (OBR) downgraded its growth forecast for next year to 1%, with slightly higher increases predicted for subsequent years.", "start_ms": 204168, "end_ms": 216360, "paragraph_index": 18}, {"index": 20, "text": "In its latest assessment, the OBR said British households were set to be little better off than before the Covid pandemic even a decade after Covid-19 hit, a situation the watchdog's boss David Miles described as \"pretty grim\".", "start_ms": 216360, "end_ms": 232104, "paragraph_index": 19}, {"index": 21, "text": "In his Budget speech, Healey repeatedly stressed that the UK economy was being battered by \"global uncertainties\" and soaring oil prices caused by conflict in the Middle East.", "start_ms": 232104, "end_ms": 243792, "paragraph_index": 20}, {"index": 22, "text": "\"Those are the storms we face.", "start_ms": 243792, "end_ms": 246696, "paragraph_index": 21}, {"index": 23, "text": "We can't wish them away.", "start_ms": 246696, "end_ms": 249216, "paragraph_index": 21}, {"index": 24, "text": "We must choose the course we steer through them,\" he told MPs.", "start_ms": 249216, "end_ms": 254016, "paragraph_index": 21}, {"index": 25, "text": "This video can not be played", "start_ms": 254016, "end_ms": 257016, "paragraph_index": 22}, {"index": 26, "text": "Watch: What are the key points from the Budget and how will it be funded?", "start_ms": 257016, "end_ms": 262080, "paragraph_index": 23}, {"index": 27, "text": "Healey also used his speech to announce plans to allow regional mayors to keep 20% of business rates and a share of income tax to spend on local priorities.", "start_ms": 262080, "end_ms": 273312, "paragraph_index": 24}, {"index": 28, "text": "The aim was to allow mayors to retain 100% of business rates raised in their areas by the end of the decade, he added, in \"the most radical act of devolution in a generation\".", "start_ms": 273312, "end_ms": 285960, "paragraph_index": 25}, {"index": 29, "text": "And he sought to address opposition claims the Labour government is unwilling to cut benefits, insisting that both he and Burnham were committed to bringing down the welfare bill in a \"Labour way\".", "start_ms": 285960, "end_ms": 298032, "paragraph_index": 26}, {"index": 30, "text": "But he said no decisions would be taken until reviews by Alan Milburn , into young people not in work or training, and Stephen Timms, on Personal Independence Payments , had been published, with legislation to follow next year.", "start_ms": 298032, "end_ms": 313368, "paragraph_index": 27}, {"index": 31, "text": "The \u00c2\u00a34.7bn black hole in the defence investment plan will be funded, the chancellor revealed, in part through taking money from capital budgets across Whitehall.", "start_ms": 313368, "end_ms": 325488, "paragraph_index": 28}, {"index": 32, "text": "Healey said he will set out how the government plans to meet its commitment to spend 3% of the national income on defence by 2030, and 3.5% by 2035, at next year's spending review.", "start_ms": 325488, "end_ms": 340056, "paragraph_index": 29}, {"index": 33, "text": "But Badenoch said he \"should have set out a plan for 3% today,\" highlighting his claim when he resigned as Sir Keir Starmer's defence secretary in June that UK forces were at risk due to a lack of cash.", "start_ms": 340056, "end_ms": 354168, "paragraph_index": 30}, {"index": 34, "text": "\"So now he is the man who is increasing risk to personnel on operations, he is the man who is making our country less safe, he has failed his own test,\" the Conservative leader said.", "start_ms": 354168, "end_ms": 366624, "paragraph_index": 31}, {"index": 35, "text": "\"This is on him and no-one will ever forget.", "start_ms": 366624, "end_ms": 370296, "paragraph_index": 32}, {"index": 36, "text": "If he had any decency he would resign again today.\"", "start_ms": 370296, "end_ms": 374496, "paragraph_index": 32}, {"index": 37, "text": "The Tory leader said that with the UK heading for a record tax burden and \"spending more on debt interest than on the army and schools combined\", Healey's Budget was \"not good enough, not strong enough, not bold enough\".", "start_ms": 374496, "end_ms": 388464, "paragraph_index": 33}, {"index": 38, "text": "Helen Miller, director of the Institute for Fiscal Studies, said the Budget \"has a raft of fiddly measures but very little that will move the dial on growth\".", "start_ms": 388464, "end_ms": 398952, "paragraph_index": 34}, {"index": 39, "text": "Lib Dem leader Sir Ed Davey said that until the government has \"the courage\" to fix the UK's trading relationship with the EU any Budget will just be \"tinkering around the edges\" and will not provide the growth the country needs.", "start_ms": 398952, "end_ms": 413280, "paragraph_index": 35}, {"index": 40, "text": "Reform UK leader Nigel Farage said the Budget was full of \"little giveaways\" but  \"doesn't overall do very much\" and did not offer \"anything of any value on defence whatsoever\".", "start_ms": 413280, "end_ms": 425232, "paragraph_index": 36}, {"index": 41, "text": "Healey also faced criticism from the left, with the general secretary of the Unite union, Sharon Graham describing the cost of living measures in the Budget as \"baby steps\".", "start_ms": 425232, "end_ms": 436992, "paragraph_index": 37}, {"index": 42, "text": "\"Scrapping standing charges on gas and a \u00c2\u00a3100 energy payment for households in council tax bands, A to D, whilst welcome, will not touch the sides, when many forecasts show bills set to jump over \u00c2\u00a3400 in January,\" she added.", "start_ms": 436992, "end_ms": 454704, "paragraph_index": 38}, {"index": 43, "text": "Green Party leader Zack Polanski said it was a Budget \"that betrays the future for young people and the planet they inherit\".", "start_ms": 454704, "end_ms": 462840, "paragraph_index": 39}, {"index": 44, "text": "He added: \"The chancellor didn't mention climate once but praised bankers repeatedly.\"", "start_ms": 462840, "end_ms": 469176, "paragraph_index": 40}, {"index": 45, "text": "Sign up for our Politics Essential newsletter to keep up with the inner workings of Westminster and beyond.", "start_ms": 469176, "end_ms": 476616, "paragraph_index": 41}], "total_duration_ms": 476616};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "and": "和", "of": "的", "in": "在", "on": "在", "will": "将", "he": "他", "for": "为了", "budget": "预算", "be": "是", "said": "说", "with": "与", "by": "被", "not": "不", "from": "来自", "tax": "税收", "healey": "希利", "as": "作为", "but": "但是", "that": "那个", "is": "是", "year": "年", "energy": "能源", "uk": "英国", "leader": "领导人", "was": "是", "his": "他的", "defence": "国防", "next": "下一个", "government": "政府", "at": "在", "it": "它", "rates": "费率", "set": "设定", "bills": "法案", "has": "有", "were": "是", "enough": "足够", "measures": "措施", "its": "它的", "business": "事务", "had": "有", "little": "很少", "income": "收入", "we": "我们", "households": "家庭", "help": "帮助", "also": "也", "big": "大的", "spending": "支出", "until": "直到", "healey's": "希利的", "plans": "计划", "speech": "演讲", "living": "生活", "payment": "付款", "people": "人们", "england": "英格兰", "gas": "气体", "after": "之后", "cut": "削减", "april": "四月", "increased": "增加的", "how": "如何", "spend": "花费", "this": "这个", "up": "向上", "growth": "增长", "added": "补充", "any": "任何", "millions": "数百万", "profits": "利润", "announced": "宣布", "now": "现在", "future": "未来", "economy": "经济", "battered": "饱受打击的", "global": "全球", "storms": "风暴", "unveiled": "公布", "high": "高的", "street": "街", "many": "许多", "decisions": "决定", "conservative": "保守党", "badenoch": "巴德诺赫", "bold": "大胆的", "an": "一个", "burnham": "伯纳姆", "him": "他", "cost": "成本", "council": "委员会", "wales": "威尔士", "standing": "站立", "charges": "指控", "or": "或者", "face": "面临", "higher": "更高的", "increasing": "增加", "no": "没有", "banks": "银行", "which": "哪个", "last": "最后", "january": "一月", "taxes": "税收", "bill": "法案", "key": "关键", "points": "水平", "savings": "储蓄", "part": "部分", "shops": "商店", "remain": "仍然", "more": "更多", "debt": "债务", "interest": "兴趣", "payments": "付款", "been": "已经", "cash": "现金", "than": "比", "decade": "十年", "repeatedly": "反复地", "are": "是", "them": "他们", "through": "通过", "funded": "资助的", "allow": "允许", "mayors": "市长们", "keep": "保持", "labour": "工党", "would": "将", "young": "年轻的", "plan": "计划", "out": "出来", "today": "今天", "when": "当", "sir": "爵士", "secretary": "秘书", "risk": "风险", "man": "男子", "who": "谁", "our": "我们的", "country": "国家", "very": "非常", "get": "得到", "paid": "支付", "bank": "银行", "john": "约翰", "first": "第一轮", "wanted": "想要", "give": "提供", "families": "家庭", "breathing": "呼吸", "space": "空间", "hope": "希望", "economic": "经济的", "breaks": "休息", "boost": "提升", "businesses": "企业", "confirmed": "确认", "including": "包括", "made": "做出", "kemi": "凯米", "drowning": "溺水", "system": "制度", "packed": "拥挤的", "house": "议院", "commons": "下议院", "prime": "首相", "minister": "部长", "andy": "安迪", "other": "其他", "frontbench": "前座议员", "colleagues": "同事", "cheering": "欢呼", "string": "一连串", "aimed": "旨在", "cutting": "削减", "saying": "说", "match": "匹配", "scottish": "苏格兰的", "planning": "计划", "scotland": "苏格兰", "scrapped": "废弃的", "during": "在期间", "soon": "很快", "possible": "可能的", "these": "这些", "fixed": "固定的", "daily": "每日", "fees": "费用", "shifted": "转移", "onto": "到...上", "price": "价格", "each": "每个", "unit": "单位", "meaning": "意义", "heavy": "沉重的", "extending": "延长", "temporary": "临时的", "fuel": "动力", "duty": "职责", "petrol": "汽油", "diesel": "柴油", "july": "七月", "minimum": "最低的", "wage": "工资", "although": "虽然", "there": "那里", "progress": "进展", "between": "之间", "older": "年长的", "younger": "较年轻的", "workers": "工人", "gambling": "赌博", "machines": "机器", "announces": "宣布", "raises": "提出", "some": "一些", "glance": "瞥一眼", "your": "你的", "pay": "支付", "affects": "影响", "you": "你", "chris": "克里斯", "mason": "梅森", "felt": "感觉", "cautious": "谨慎的", "despite": "尽管", "range": "范围", "small": "小的", "package": "一揽子计划", "point": "点", "start": "开始", "paying": "支付", "adult": "成年人", "gaming": "游戏", "centres": "中心", "excluded": "被排除的", "relief": "缓解", "public": "公众", "finances": "财务", "frozen": "冻结的", "property": "财产", "rise": "上升", "basic": "基本的", "rate": "比率", "taxpayers": "纳税人", "scheduled": "预定", "go": "去", "predecessor": "前任", "rachel": "雷切尔", "reeves": "里夫斯", "office": "办公室", "responsibility": "责任", "downgraded": "降级的", "forecast": "预报", "slightly": "稍微", "increases": "增加", "predicted": "预测的", "subsequent": "随后的", "years": "多年", "latest": "最新的", "assessment": "评估", "british": "英国的", "better": "更好的", "off": "离开", "before": "之前", "covid": "新冠肺炎", "pandemic": "大流行", "even": "甚至", "hit": "击中", "situation": "局势", "boss": "老板", "david": "大卫", "miles": "英里", "described": "描述", "pretty": "相当", "grim": "严峻", "stressed": "强调", "being": "正在", "oil": "石油", "prices": "价格", "caused": "导致", "conflict": "冲突", "middle": "中间", "east": "东部", "those": "那些", "can't": "不能", "wish": "希望", "away": "离开", "must": "必须", "choose": "选择", "course": "课程", "steer": "引导", "told": "告诉", "mps": "议员", "video": "视频", "can": "可以", "played": "比赛", "watch": "观看", "what": "什么", "used": "使用", "announce": "宣布", "regional": "地区的", "share": "分享", "local": "当地", "priorities": "优先事项", "aim": "目标", "retain": "保留", "raised": "提出的", "their": "他们的", "areas": "区域", "end": "结束", "most": "最", "radical": "激进的", "act": "行为", "generation": "一代", "sought": "寻求", "address": "地址", "opposition": "反对党", "claims": "声称", "unwilling": "不愿意的", "benefits": "好处", "insisting": "坚持", "both": "两者", "committed": "承诺的", "bringing": "带来", "down": "下来", "way": "方式", "taken": "采取", "reviews": "审查", "alan": "艾伦", "milburn": "米尔本", "into": "进入", "work": "工作", "training": "培训", "stephen": "斯蒂芬", "personal": "个人", "independence": "独立", "published": "发布", "follow": "关注", "black": "黑色", "investment": "投资", "revealed": "揭露", "taking": "采取", "money": "金钱", "capital": "资本", "budgets": "预算", "across": "跨越", "whitehall": "白厅", "meet": "会见", "commitment": "承诺", "national": "国家", "year's": "今年的", "review": "审查", "should": "应该", "have": "有", "highlighting": "强调", "claim": "声称", "resigned": "辞职的", "keir": "基尔", "starmer's": "斯塔默的", "june": "六月", "forces": "力量", "due": "应得", "lack": "缺乏", "so": "所以", "personnel": "人员", "operations": "行动", "making": "进行", "less": "更少", "safe": "安全", "failed": "失败", "own": "自己", "test": "测试", "no-one": "无人", "ever": "曾经", "forget": "忘记", "if": "如果", "decency": "正派", "resign": "辞职", "again": "再次", "tory": "保守党", "heading": "领导", "record": "记录", "burden": "伯登", "army": "军队", "schools": "学校", "combined": "联合的", "good": "良好", "strong": "强烈", "helen": "海伦", "miller": "米勒", "director": "局长", "institute": "学院", "fiscal": "财政的", "studies": "研究", "move": "行动", "lib": "自由", "dem": "民主党", "ed": "编辑", "davey": "戴维", "courage": "勇气", "fix": "修复", "uk's": "英国的", "trading": "交易", "relationship": "关系", "eu": "欧盟", "just": "只是", "tinkering": "小修小补", "around": "在...周围", "provide": "提供", "needs": "需要", "reform": "改革", "nigel": "奈杰尔", "farage": "法拉奇", "full": "完整", "doesn't": "不", "overall": "总体", "do": "做", "much": "许多", "did": "做了", "offer": "提供", "anything": "任何事", "value": "价值", "whatsoever": "丝毫", "faced": "面对", "criticism": "批评", "left": "离开", "general": "总", "unite": "团结", "union": "工会", "sharon": "莎伦", "graham": "格雷厄姆", "describing": "描述", "baby": "婴儿", "steps": "步骤", "scrapping": "废除", "whilst": "当", "welcome": "欢迎", "touch": "接触", "sides": "各方", "show": "显示", "jump": "跃升", "over": "超过", "she": "她", "green": "绿色", "party": "政党", "zack": "扎克", "polanski": "波兰斯基", "planet": "行星", "they": "它们", "inherit": "继承", "didn't": "没有", "mention": "提及", "climate": "气候", "once": "一旦", "praised": "赞扬", "sign": "签署", "politics": "政治", "essential": "必要的", "newsletter": "新闻简报", "inner": "内部的", "workings": "运作", "westminster": "威斯敏斯特", "beyond": "超出", "soaring": "飙升的", "bands": "税率档次", "giveaways": "赠品", "obr": "预算责任办公室", "hard-pressed": "处境艰难的", "overspent": "超支", "overborrowed": "过度借贷", "overtaxed": "税负过重", "out-of-control": "失控的", "hour-long": "长达一小时的", "one-off": "一次性的", "replicate": "复制", "users": "用户", "narrowing": "缩小", "gap": "差距", "high-stakes": "高风险的", "savers": "储户", "vape": "电子烟", "scope": "范围", "stretched": "捉襟见肘的", "thresholds": "门槛", "rental": "租赁", "isa": "个人储蓄账户", "axed": "被削减", "covid-": "新冠", "watchdog's": "监管机构的", "uncertainties": "不确定性", "timms": "蒂姆斯", "hole": "缺口", "raft": "一系列", "fiddly": "繁琐的", "dial": "调节", "edges": "边缘", "forecasts": "预测", "betrays": "暴露", "bankers": "银行家"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
