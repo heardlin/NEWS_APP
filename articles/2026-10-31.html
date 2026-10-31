@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-10-31</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-10-31</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ea75/live/f93e2820-d4b7-11f1-a701-fddedf244c16.jpg" alt="US approves sale of 500 Patriot missiles to Ukraine" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>US approves sale of 500 Patriot missiles to Ukraine</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c3vgxznlx7jzo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-10-31.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">The United States has approved the sale of 500 Patriot missiles to Ukraine, a critically-needed munition for defence against escalating Russian aerial attacks.</span></p>
+        <p class="cn">美国已批准向乌克兰出售500枚爱国者导弹，这是抵御俄罗斯不断升级的空中攻击所急需的弹药。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">However Ukrainian President Volodymyr Zelensky has warned it could take "several years" for the deliveries to arrive.</span></p>
+        <p class="cn">然而，乌克兰总统弗拉基米尔·泽连斯基（Volodymyr Zelensky）警告称，这些导弹的交付可能需要“数年”时间。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The US State Department said the advanced PAC-3 <span class="keyword" data-word="interceptor" data-phonetic="/ˌɪntəˈseptə(r)/" data-pos="n." data-def="拦截器；拦截导弹" data-def-en="A missile or aircraft designed to intercept and destroy enemy targets.">interceptor</span> missiles would cost $2.1bn (Â£1.6bn) and would be "funded entirely" by Kyiv's allies in Europe and Canada.</span></p>
+        <p class="cn">美国国务院表示，先进的PAC-3拦截导弹将耗资21亿美元（16亿英镑），并将由乌克兰在欧洲和加拿大的盟友“全额资助”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="3">On Friday night Zelensky repeated his calls for the US to speed up the release of its Patriots - the only effective weapon in downing Russia's deadly ballistic missiles.</span></p>
+        <p class="cn">周五晚上，泽连斯基再次呼吁美国加快交付爱国者导弹——这是击落俄罗斯致命弹道导弹的唯一有效武器。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="4">Hundreds evacuated from Russian-occupied Oleshky during rare Ukraine ceasefire</span></p>
+        <p class="cn">乌克兰罕见停火期间，数百人从俄罗斯占领的奥列什基撤离</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="5">G20 'family photo' cancelled after protests over presence of Russian minister</span></p>
+        <p class="cn">由于对俄罗斯部长出席的抗议，G20“全家福”被取消</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="6">The latest move comes after a row between Zelensky and Donald Trump earlier this month when the US eased sanctions on Russia as part of a deal to secure Russian diesel.</span></p>
+        <p class="cn">这一最新举措是在本月早些时候泽连斯基与唐纳德·特朗普发生争执之后采取的，当时美国放松了对俄罗斯的制裁，作为确保俄罗斯柴油供应协议的一部分。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="7">The US president stated it was time for Ukraine to get a new leader to strike a deal to end the war with Russia.</span> <span class="sentence" data-sentence-index="8">Moscow launched a full-scale <span class="keyword" data-word="invasion" data-phonetic="/ɪnˈveɪʒn/" data-pos="n." data-def="入侵；侵略" data-def-en="The act of entering a country with an army to conquer it.">invasion</span> of Ukraine in February 2022, having earlier seized Crimea and parts of Donbas in the east.</span></p>
+        <p class="cn">美国总统表示，现在是乌克兰换一位新领导人来达成结束与俄罗斯战争的协议的时候了。莫斯科于2022年2月对乌克兰发动了全面入侵，此前已占领克里米亚和东部顿巴斯部分地区。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="9">Tensions eased after Zelensky held talks with US envoys in Oslo on 20 October.</span></p>
+        <p class="cn">在泽连斯基10月20日在奥斯陆与美国特使举行会谈后，紧张局势有所缓和。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="10">In Friday's statement, the State Department said "this proposed sale will support the foreign policy and national security objectives of the United States by improving the security of a partner country that is a force for political and economic stability in Europe".</span></p>
+        <p class="cn">在周五的声明中，国务院表示“这项拟议的军售将通过提高一个伙伴国家的安全来支持美国的外交政策和国家安全目标，该伙伴国家是欧洲政治和经济稳定的力量”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="11">It said "Ukraine will pay for this purchase with donations from Canada, Germany, and Norway via the JUMPSTART program and national funds, financed by the European Union's Ukraine Support Loan".</span></p>
+        <p class="cn">声明称，“乌克兰将通过JUMPSTART计划以及由欧盟乌克兰支持贷款资助的国家资金，用加拿大、德国和挪威的捐款支付此次采购费用”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="12">The statement said the "principal <span class="keyword" data-word="contractor" data-phonetic="/kənˈtræktə(r)/" data-pos="n." data-def="承包商；合同方" data-def-en="A person or company that undertakes a contract to provide materials or labor.">contractor</span>" would be American company Lockheed Martin, adding that "no US funds are involved in this sale".</span></p>
+        <p class="cn">声明称，“主承包商”将是美国公司洛克希德·马丁（Lockheed Martin），并补充说“此次军售不涉及任何美国资金”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="13">Meanwhile, at the G20 foreign ministers' meeting European diplomats protested over the presence of Russia's Foreign Minister Sergei Lavrov by refusing to stand for an official photograph.</span></p>
+        <p class="cn">与此同时，在G20外长会议上，欧洲外交官抗议俄罗斯外长谢尔盖·拉夫罗夫（Sergei Lavrov）的出席，拒绝站立合影。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="14">The meeting is being hosted in Atlanta by US Secretary of State Marco Rubio.</span></p>
+        <p class="cn">此次会议在美国国务卿马可·卢比奥（Marco Rubio）的主持下于亚特兰大举行。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="15">"Let me say this directly to the Russian Foreign Minister: We all know who the <span class="keyword" data-word="aggressor" data-phonetic="/əˈɡresə(r)/" data-pos="n." data-def="侵略者；挑衅者" data-def-en="A person or country that attacks first or starts a war.">aggressor</span> in this war is," UK Foreign Secretary Ed Miliband told Lavrov at the summit, accusing his government of killing innocent civilians in Ukraine.</span></p>
+        <p class="cn">英国外交大臣埃德·米利班德（Ed Miliband）在峰会上对拉夫罗夫说：“让我直接对俄罗斯外长说：我们都知道这场战争中的侵略者是谁。”他指责俄罗斯政府杀害乌克兰无辜平民。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="16">Zelensky said earlier this week that Ukraine had been waiting almost a month for the US to sign off on critical missile supplies which his country was running critically low on.</span></p>
+        <p class="cn">泽连斯基本周早些时候表示，乌克兰等待美国批准关键导弹供应已近一个月，而该国的此类导弹库存严重不足。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="17">In a post on X late on Friday, he welcomed the US announcement but said Ukraine needed the Patriot missiles "right now".</span></p>
+        <p class="cn">周五晚些时候，他在X上发帖欢迎美国的声明，但表示乌克兰“现在”就需要爱国者导弹。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="17">
+        <p class="en"><span class="sentence" data-sentence-index="18">He said Russia was intensifying its attacks on key energy infrastructure ahead of winter with "more than 30 Russian strikes" on "critical parts" of Ukraine's power grid over the past two weeks.</span></p>
+        <p class="cn">他说，俄罗斯正在冬季前加强对关键能源基础设施的攻击，过去两周对乌克兰电网的“关键部分”进行了“超过30次俄罗斯袭击”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="18">
+        <p class="en"><span class="sentence" data-sentence-index="19">Kyiv desperately needs the interceptors but there is a global shortage of the munitions due to their use by the US in its war against Iran.</span></p>
+        <p class="cn">基辅迫切需要这些拦截导弹，但由于美国在与伊朗的战争中使用，全球弹药短缺。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="19">
+        <p class="en"><span class="sentence" data-sentence-index="20">It is not clear what the production schedule will be for the Patriots - but it is understood the order is for new builds rather than existing missiles, meaning there is unlikely to be any kind of rapid delivery to Ukraine.</span></p>
+        <p class="cn">目前尚不清楚爱国者导弹的生产计划——但据了解，订单是新建导弹而非现有导弹，这意味着不太可能快速交付给乌克兰。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="20">
+        <p class="en"><span class="sentence" data-sentence-index="21">Patriots also have lengthy production times, with only 600 missiles produced per year according to the US Department of Defence.</span></p>
+        <p class="cn">爱国者导弹的生产时间也很长，根据美国国防部的数据，每年仅生产600枚导弹。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="21">
+        <p class="en"><span class="sentence" data-sentence-index="22">In July, Trump said Washington had "not agreed" to license Ukraine to produce Patriots - three weeks after offering the country such a right.</span></p>
+        <p class="cn">7月，特朗普表示华盛顿“未同意”授权乌克兰生产爱国者导弹——而三周前他才提出给予该国这一权利。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="22">
+        <p class="en"><span class="sentence" data-sentence-index="23">Additional reporting by Victoria Bourne</span></p>
+        <p class="cn">维多利亚·伯恩补充报道</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="23">
+        <p class="en"><span class="sentence" data-sentence-index="24">After deadly Kyiv strike, Ukraine warns <span class="keyword" data-word="interceptor" data-phonetic="/ˌɪntəˈseptə(r)/" data-pos="n." data-def="拦截器；拦截导弹" data-def-en="A missile or aircraft designed to intercept and destroy enemy targets.">interceptor</span> shortage is costing lives</span></p>
+        <p class="cn">基辅遭致命袭击后，乌克兰警告拦截导弹短缺正在造成生命损失</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="24">
+        <p class="en"><span class="sentence" data-sentence-index="25">Trump now 'not sure' about letting Ukraine build Patriot missiles</span></p>
+        <p class="cn">特朗普现在对让乌克兰生产爱国者导弹“不确定”</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">approve</span>
+        <button class="kw-speak-btn" data-word="approve" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈpruːv/ v.</span>
+      </div>
+      <p class="kw-def">批准；同意</p>
+      <p class="kw-def-en">To officially agree to or accept something.</p>
+      <p class="kw-ctx">&ldquo;The United States has approved the sale of 500 Patriot missiles to Ukraine, a critically-needed munition for defence against escalating Russian aerial attacks.&rdquo;</p>
+      <p class="kw-ctx-cn">美国已批准向乌克兰出售500枚爱国者导弹，这是防御俄罗斯不断升级的空中攻击所急需的弹药。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">escalate</span>
+        <button class="kw-speak-btn" data-word="escalate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈeskəleɪt/ v.</span>
+      </div>
+      <p class="kw-def">升级；加剧</p>
+      <p class="kw-def-en">To become or make something more serious or intense.</p>
+      <p class="kw-ctx">&ldquo;The United States has approved the sale of 500 Patriot missiles to Ukraine, a critically-needed munition for defence against escalating Russian aerial attacks.&rdquo;</p>
+      <p class="kw-ctx-cn">美国已批准向乌克兰出售500枚爱国者导弹，这是防御俄罗斯不断升级的空中攻击所急需的弹药。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">interceptor</span>
+        <button class="kw-speak-btn" data-word="interceptor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntəˈseptə(r)/ n.</span>
+      </div>
+      <p class="kw-def">拦截器；拦截导弹</p>
+      <p class="kw-def-en">A missile or aircraft designed to intercept and destroy enemy targets.</p>
+      <p class="kw-ctx">&ldquo;The US State Department said the advanced PAC-3 interceptor missiles would cost $2.1bn (Â£1.6bn) and would be "funded entirely" by Kyiv's allies in Europe and Canada.&rdquo;</p>
+      <p class="kw-ctx-cn">美国国务院表示，先进的PAC-3拦截导弹将耗资21亿美元（16亿英镑），并将“完全由”乌克兰在欧洲和加拿大的盟友资助。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">evacuate</span>
+        <button class="kw-speak-btn" data-word="evacuate" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪˈvækjueɪt/ v.</span>
+      </div>
+      <p class="kw-def">疏散；撤离</p>
+      <p class="kw-def-en">To move people from a dangerous place to a safer one.</p>
+      <p class="kw-ctx">&ldquo;Hundreds evacuated from Russian-occupied Oleshky during rare Ukraine ceasefire&rdquo;</p>
+      <p class="kw-ctx-cn">在罕见的乌克兰停火期间，数百人从俄罗斯占领的奥列什基撤离。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">sanction</span>
+        <button class="kw-speak-btn" data-word="sanction" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈsæŋkʃn/ n.</span>
+      </div>
+      <p class="kw-def">制裁；处罚</p>
+      <p class="kw-def-en">An official action taken to punish or restrict a country, often to force compliance with laws.</p>
+      <p class="kw-ctx">&ldquo;The latest move comes after a row between Zelensky and Donald Trump earlier this month when the US eased sanctions on Russia as part of a deal to secure Russian diesel.&rdquo;</p>
+      <p class="kw-ctx-cn">这一最新举动发生在本月早些时候泽连斯基与唐纳德·特朗普发生争执之后，当时美国放松了对俄罗斯的制裁，作为确保俄罗斯柴油供应协议的一部分。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">invasion</span>
+        <button class="kw-speak-btn" data-word="invasion" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ɪnˈveɪʒn/ n.</span>
+      </div>
+      <p class="kw-def">入侵；侵略</p>
+      <p class="kw-def-en">The act of entering a country with an army to conquer it.</p>
+      <p class="kw-ctx">&ldquo;Moscow launched a full-scale invasion of Ukraine in February 2022, having earlier seized Crimea and parts of Donbas in the east.&rdquo;</p>
+      <p class="kw-ctx-cn">莫斯科于2022年2月对乌克兰发动了全面入侵，此前已占领克里米亚和东部顿巴斯部分地区。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">contractor</span>
+        <button class="kw-speak-btn" data-word="contractor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/kənˈtræktə(r)/ n.</span>
+      </div>
+      <p class="kw-def">承包商；合同方</p>
+      <p class="kw-def-en">A person or company that undertakes a contract to provide materials or labor.</p>
+      <p class="kw-ctx">&ldquo;The statement said the "principal contractor" would be American company Lockheed Martin, adding that "no US funds are involved in this sale".&rdquo;</p>
+      <p class="kw-ctx-cn">声明称，“主要承包商”将是美国公司洛克希德·马丁，并补充说“此次销售不涉及美国资金”。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">aggressor</span>
+        <button class="kw-speak-btn" data-word="aggressor" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈɡresə(r)/ n.</span>
+      </div>
+      <p class="kw-def">侵略者；挑衅者</p>
+      <p class="kw-def-en">A person or country that attacks first or starts a war.</p>
+      <p class="kw-ctx">&ldquo;"Let me say this directly to the Russian Foreign Minister: We all know who the aggressor in this war is," UK Foreign Secretary Ed Miliband told Lavrov at the summit, accusing his government of killing innocent civilians in Ukraine.&rdquo;</p>
+      <p class="kw-ctx-cn">英国外交大臣埃德·米利班德在峰会上对拉夫罗夫说：“让我直接对俄罗斯外长说：我们都知道这场战争中的侵略者是谁。”他指责俄罗斯政府杀害乌克兰的无辜平民。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "The United States has approved the sale of 500 Patriot missiles to Ukraine, a critically-needed munition for defence against escalating Russian aerial attacks.", "start_ms": 0, "end_ms": 11136, "paragraph_index": 0}, {"index": 1, "text": "However Ukrainian President Volodymyr Zelensky has warned it could take \"several years\" for the deliveries to arrive.", "start_ms": 11136, "end_ms": 19152, "paragraph_index": 1}, {"index": 2, "text": "The US State Department said the advanced PAC-3 interceptor missiles would cost $2.1bn (\u00c2\u00a31.6bn) and would be \"funded entirely\" by Kyiv's allies in Europe and Canada.", "start_ms": 19152, "end_ms": 33744, "paragraph_index": 2}, {"index": 3, "text": "On Friday night Zelensky repeated his calls for the US to speed up the release of its Patriots - the only effective weapon in downing Russia's deadly ballistic missiles.", "start_ms": 33744, "end_ms": 44808, "paragraph_index": 3}, {"index": 4, "text": "Hundreds evacuated from Russian-occupied Oleshky during rare Ukraine ceasefire", "start_ms": 44808, "end_ms": 51000, "paragraph_index": 4}, {"index": 5, "text": "G20 'family photo' cancelled after protests over presence of Russian minister", "start_ms": 51000, "end_ms": 57360, "paragraph_index": 5}, {"index": 6, "text": "The latest move comes after a row between Zelensky and Donald Trump earlier this month when the US eased sanctions on Russia as part of a deal to secure Russian diesel.", "start_ms": 57360, "end_ms": 68568, "paragraph_index": 6}, {"index": 7, "text": "The US president stated it was time for Ukraine to get a new leader to strike a deal to end the war with Russia.", "start_ms": 68568, "end_ms": 76272, "paragraph_index": 7}, {"index": 8, "text": "Moscow launched a full-scale invasion of Ukraine in February 2022, having earlier seized Crimea and parts of Donbas in the east.", "start_ms": 76272, "end_ms": 86568, "paragraph_index": 7}, {"index": 9, "text": "Tensions eased after Zelensky held talks with US envoys in Oslo on 20 October.", "start_ms": 86568, "end_ms": 93576, "paragraph_index": 8}, {"index": 10, "text": "In Friday's statement, the State Department said \"this proposed sale will support the foreign policy and national security objectives of the United States by improving the security of a partner country that is a force for political and economic stability in Europe\".", "start_ms": 93576, "end_ms": 110352, "paragraph_index": 9}, {"index": 11, "text": "It said \"Ukraine will pay for this purchase with donations from Canada, Germany, and Norway via the JUMPSTART program and national funds, financed by the European Union's Ukraine Support Loan\".", "start_ms": 110352, "end_ms": 123960, "paragraph_index": 10}, {"index": 12, "text": "The statement said the \"principal contractor\" would be American company Lockheed Martin, adding that \"no US funds are involved in this sale\".", "start_ms": 123960, "end_ms": 133416, "paragraph_index": 11}, {"index": 13, "text": "Meanwhile, at the G20 foreign ministers' meeting European diplomats protested over the presence of Russia's Foreign Minister Sergei Lavrov by refusing to stand for an official photograph.", "start_ms": 133416, "end_ms": 146184, "paragraph_index": 12}, {"index": 14, "text": "The meeting is being hosted in Atlanta by US Secretary of State Marco Rubio.", "start_ms": 146184, "end_ms": 152304, "paragraph_index": 13}, {"index": 15, "text": "\"Let me say this directly to the Russian Foreign Minister: We all know who the aggressor in this war is,\" UK Foreign Secretary Ed Miliband told Lavrov at the summit, accusing his government of killing innocent civilians in Ukraine.", "start_ms": 152304, "end_ms": 167784, "paragraph_index": 14}, {"index": 16, "text": "Zelensky said earlier this week that Ukraine had been waiting almost a month for the US to sign off on critical missile supplies which his country was running critically low on.", "start_ms": 167784, "end_ms": 178728, "paragraph_index": 15}, {"index": 17, "text": "In a post on X late on Friday, he welcomed the US announcement but said Ukraine needed the Patriot missiles \"right now\".", "start_ms": 178728, "end_ms": 187176, "paragraph_index": 16}, {"index": 18, "text": "He said Russia was intensifying its attacks on key energy infrastructure ahead of winter with \"more than 30 Russian strikes\" on \"critical parts\" of Ukraine's power grid over the past two weeks.", "start_ms": 187176, "end_ms": 199704, "paragraph_index": 17}, {"index": 19, "text": "Kyiv desperately needs the interceptors but there is a global shortage of the munitions due to their use by the US in its war against Iran.", "start_ms": 199704, "end_ms": 208896, "paragraph_index": 18}, {"index": 20, "text": "It is not clear what the production schedule will be for the Patriots - but it is understood the order is for new builds rather than existing missiles, meaning there is unlikely to be any kind of rapid delivery to Ukraine.", "start_ms": 208896, "end_ms": 222744, "paragraph_index": 19}, {"index": 21, "text": "Patriots also have lengthy production times, with only 600 missiles produced per year according to the US Department of Defence.", "start_ms": 222744, "end_ms": 232248, "paragraph_index": 20}, {"index": 22, "text": "In July, Trump said Washington had \"not agreed\" to license Ukraine to produce Patriots - three weeks after offering the country such a right.", "start_ms": 232248, "end_ms": 242208, "paragraph_index": 21}, {"index": 23, "text": "Additional reporting by Victoria Bourne", "start_ms": 242208, "end_ms": 245760, "paragraph_index": 22}, {"index": 24, "text": "After deadly Kyiv strike, Ukraine warns interceptor shortage is costing lives", "start_ms": 245760, "end_ms": 252288, "paragraph_index": 23}, {"index": 25, "text": "Trump now 'not sure' about letting Ukraine build Patriot missiles", "start_ms": 252288, "end_ms": 257304, "paragraph_index": 24}], "total_duration_ms": 257304};
+  const WORD_GLOSS = {"the": "这个", "of": "的", "to": "到", "in": "在", "ukraine": "乌克兰", "us": "我们", "for": "为了", "on": "在", "is": "是", "said": "说", "and": "和", "missiles": "导弹", "by": "被", "this": "这个", "russian": "俄罗斯的", "zelensky": "泽连斯基", "it": "它", "after": "之后", "with": "与", "foreign": "外交", "be": "是", "sale": "出售", "state": "国家", "department": "部门", "would": "将", "his": "他的", "its": "它的", "over": "超过", "minister": "部长", "trump": "特朗普", "earlier": "较早", "russia": "俄罗斯", "was": "是", "war": "战争", "will": "将", "country": "国家", "that": "那个", "but": "但是", "not": "不", "united": "联合", "states": "国家", "has": "有", "defence": "国防", "against": "反对", "attacks": "袭击", "president": "总统", "europe": "欧洲", "canada": "加拿大", "friday": "星期五", "only": "只有", "russia's": "俄罗斯的", "deadly": "致命的", "from": "来自", "presence": "存在", "month": "月份", "deal": "协议", "new": "新的", "strike": "罢工", "parts": "部分", "statement": "声明", "support": "支持", "national": "国家", "security": "安全", "funds": "资金", "european": "欧洲的", "at": "在", "meeting": "会议", "secretary": "秘书", "had": "有", "critical": "关键", "he": "他", "right": "正确", "now": "现在", "than": "比", "weeks": "周", "kyiv": "基辅", "there": "那里", "production": "制作", "approved": "批准", "escalating": "升级", "aerial": "空中的", "however": "然而", "ukrainian": "乌克兰的", "volodymyr": "弗拉基米尔", "warned": "警告", "could": "可能", "take": "采取", "several": "数个", "years": "多年", "arrive": "抵达", "advanced": "先进的", "cost": "成本", "funded": "资助的", "entirely": "完全地", "kyiv's": "基辅的", "allies": "盟友", "night": "晚上", "repeated": "重复", "calls": "呼吁", "speed": "速度", "up": "向上", "release": "发布", "effective": "有效的", "weapon": "武器", "downing": "唐宁", "ballistic": "弹道", "hundreds": "数百", "evacuated": "撤离", "russian-occupied": "俄占", "during": "在期间", "rare": "罕见的", "ceasefire": "停火", "family": "家庭", "photo": "照片", "cancelled": "取消", "protests": "抗议活动", "latest": "最新的", "move": "行动", "comes": "到来", "row": "争吵", "between": "之间", "donald": "唐纳德", "when": "当", "sanctions": "制裁", "as": "作为", "part": "部分", "secure": "安全的", "diesel": "柴油", "stated": "陈述", "time": "时间", "get": "得到", "leader": "领导人", "end": "结束", "moscow": "莫斯科", "launched": "发起", "full-scale": "全面的", "february": "二月", "having": "拥有", "seized": "抓住", "east": "东部", "tensions": "紧张局势", "held": "举行", "talks": "会谈", "envoys": "特使", "october": "十月", "friday's": "周五的", "proposed": "提议的", "policy": "政策", "objectives": "目标", "improving": "改善", "partner": "伴侣", "force": "力量", "political": "政治的", "economic": "经济的", "stability": "稳定", "pay": "支付", "purchase": "购买", "donations": "捐款", "germany": "德国", "norway": "挪威", "via": "通过", "union's": "联盟的", "loan": "贷款", "american": "美国的", "company": "公司", "martin": "马丁", "adding": "补充说", "no": "没有", "are": "是", "involved": "涉及的", "meanwhile": "与此同时", "ministers": "部长", "diplomats": "外交官", "protested": "抗议", "refusing": "拒绝", "stand": "立场", "an": "一个", "official": "官方", "being": "正在", "hosted": "主办", "atlanta": "亚特兰大", "marco": "马可", "rubio": "鲁比奥", "let": "让", "me": "我", "say": "说", "directly": "直接地", "we": "我们", "all": "所有", "know": "知道", "who": "谁", "uk": "英国", "ed": "编辑", "miliband": "米利班德", "told": "告诉", "summit": "巅峰", "accusing": "指责", "government": "政府", "killing": "杀害", "innocent": "无辜的", "civilians": "平民", "week": "周", "been": "已经", "waiting": "等待", "almost": "几乎", "sign": "签署", "off": "离开", "missile": "导弹", "supplies": "补给", "which": "哪个", "running": "奔跑", "critically": "关键地", "low": "低的", "post": "职位", "late": "已故", "welcomed": "受到欢迎", "announcement": "公告", "needed": "需要", "intensifying": "加剧", "key": "关键", "energy": "能源", "infrastructure": "基础设施", "ahead": "提前", "winter": "冬季", "more": "更多", "strikes": "袭击", "ukraine's": "乌克兰的", "power": "权力", "grid": "电网", "past": "过去", "two": "两个", "desperately": "拼命地", "needs": "需要", "interceptors": "拦截器", "global": "全球", "munitions": "弹药", "due": "应得", "their": "他们的", "use": "使用", "iran": "伊朗", "clear": "明确", "what": "什么", "schedule": "日程", "understood": "理解", "order": "命令", "builds": "构建", "rather": "宁愿", "existing": "现有的", "meaning": "意义", "unlikely": "不太可能", "any": "任何", "kind": "种类", "rapid": "迅速的", "delivery": "交付", "also": "也", "have": "有", "lengthy": "漫长的", "times": "次", "produced": "产生", "per": "每", "year": "年", "according": "根据", "july": "七月", "washington": "华盛顿", "agreed": "同意", "produce": "产生", "three": "三个", "offering": "提供", "such": "如此", "additional": "额外的", "reporting": "报道", "victoria": "维多利亚", "warns": "警告", "costing": "花费", "lives": "生命", "sure": "确定", "about": "关于", "letting": "允许", "build": "建立", "patriots": "爱国者导弹", "patriot": "爱国者导弹", "eased": "放宽", "lavrov": "拉夫罗夫", "shortage": "短缺", "critically-needed": "急需的", "munition": "弹药", "deliveries": "交付", "pac-": "PAC导弹", "oleshky": "奥列什基", "crimea": "克里米亚", "donbas": "顿巴斯", "oslo": "奥斯陆", "jumpstart": "启动", "program": "计划", "financed": "资助", "principal": "主要的", "lockheed": "洛克希德", "sergei": "谢尔盖", "photograph": "照片", "license": "许可证", "bourne": "伯恩"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
