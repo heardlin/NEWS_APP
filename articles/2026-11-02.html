@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Eight Words Daily - 2026-11-02</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+      line-height: 1.75;
+      color: #1a1a1a;
+      background: #f8f7f2;
+    }
+
+    /* ── Masthead (New Yorker style) ── */
+    .masthead {
+      border-top: 4px solid #8b0000;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 26px 0 22px;
+      text-align: center;
+    }
+    .masthead-the {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .masthead-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 2px 0 0;
+      line-height: 1.05;
+    }
+    .masthead-daily {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 6px 0 0;
+    }
+    .masthead-date {
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+      margin: 10px 0 0;
+    }
+
+    /* ── Two-column grid ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      align-items: start;
+    }
+
+    /* ── Left column ── */
+    .column-main { min-width: 0; }
+
+    .lead-image { margin: 0 0 20px; }
+    .lead-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.3;
+      color: #111;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+    .source {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source a { color: #8b0000; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+
+    /* ── Audio player ── */
+    .audio-player {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+    }
+    .audio-player.hidden { display: none; }
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #play-btn {
+      background: #8b0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: #a00000; }
+    .time-display {
+      font-size: 12px;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #seek-bar {
+      flex: 1;
+      min-width: 80px;
+      height: 5px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #ddd;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      cursor: pointer;
+    }
+    #seek-bar::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: #8b0000;
+      border: none;
+      cursor: pointer;
+    }
+    #rate-select {
+      padding: 3px 5px;
+      font-size: 11px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ── Paragraphs ── */
+    .paragraph-pair {
+      margin-bottom: 0;
+      padding: 18px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .paragraph-pair:last-child { border-bottom: none; }
+    .paragraph-pair .en {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 6px;
+      line-height: 1.8;
+    }
+    .paragraph-pair .cn {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Sentence highlighting + click-to-seek */
+    .sentence {
+      transition: background-color 0.3s ease;
+      border-radius: 2px;
+      padding: 1px 0;
+      cursor: pointer;
+    }
+    .sentence:hover { background-color: #f0ede4; }
+    .sentence.highlight { background-color: #fff3cd; }
+
+    /* Keywords inline */
+    .keyword {
+      color: #8b0000;
+      border-bottom: 1px dashed #8b0000;
+      cursor: pointer;
+    }
+    .keyword:hover { background-color: #fdf0f0; border-radius: 2px; }
+
+    /* ── Right column: sticky keyword sidebar ── */
+    .column-kw {
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+    .kw-sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b0000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #8b0000;
+    }
+    .kw-card {
+      background: #fff;
+      border-left: 3px solid #8b0000;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .kw-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kw-word {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #8b0000;
+    }
+    .kw-speak-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .kw-speak-btn:hover { color: #8b0000; border-color: #8b0000; }
+    .kw-speak-btn.speaking { color: #8b0000; border-color: #8b0000; background: #fdf0f0; }
+    .kw-meta { font-size: 11px; color: #999; margin-left: auto; white-space: nowrap; }
+    .kw-def { font-size: 13px; color: #333; margin: 4px 0 0; }
+    .kw-def-en { font-size: 12px; color: #777; margin: 2px 0 0; }
+    .kw-ctx { font-size: 11px; color: #aaa; margin: 4px 0 0; font-style: italic; }
+    .kw-ctx-cn { font-size: 11px; color: #bbb; margin: 2px 0 0; }
+
+    /* ── Hover tooltip ── */
+    .word-hoverable { position: relative; cursor: default; }
+    .word-hoverable:hover { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #ccc; text-underline-offset: 3px; }
+    /* Fixed to viewport via JS — do not set top/bottom/left in CSS (conflicts collapse height) */
+    .word-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #222;
+      white-space: pre-line;
+      max-width: min(280px, calc(100vw - 24px));
+      min-width: 48px;
+      min-height: 1.2em;
+      word-break: break-word;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .word-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #fff;
+    }
+    .word-tooltip a {
+      color: #8b0000;
+      text-decoration: underline;
+      pointer-events: auto;
+    }
+
+    /* ── Popup (for inline keyword clicks) ── */
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      max-width: 360px;
+      width: 90%;
+      z-index: 100;
+    }
+    .popup.hidden { display: none; }
+    .popup-word { font-family: Georgia, serif; font-size: 20px; font-weight: 700; color: #8b0000; }
+    .popup-phonetic { font-size: 14px; color: #888; margin-top: 2px; }
+    .popup-pos { font-size: 13px; color: #aaa; }
+    .popup-def { font-size: 15px; color: #333; margin-top: 8px; }
+    .popup-def-en { font-size: 13px; color: #888; margin-top: 4px; }
+    .popup-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none;
+      font-size: 18px; color: #aaa; cursor: pointer;
+    }
+    .popup-close:hover { color: #333; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 16px 12px 80px;
+      }
+      .column-kw {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      h1 { font-size: 24px; }
+      .paragraph-pair .en { font-size: 15px; }
+      .masthead-title { font-size: 32px; }
+      .masthead-the { font-size: 12px; }
+      .masthead-daily { font-size: 13px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Masthead ── -->
+<div class="masthead">
+  <p class="masthead-the">The</p>
+  <p class="masthead-title">Eight Words</p>
+  <p class="masthead-daily">Daily</p>
+  <p class="masthead-date">2026-11-02</p>
+</div>
+
+<div class="layout">
+
+  <!-- ════ LEFT COLUMN: Article ════ -->
+  <div class="column-main">
+
+    
+    <figure class="lead-image">
+      <img src="https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/3608/live/1d2513e0-d646-11f1-b441-2b33b063138f.jpg" alt="Ukraine air raid app apparently hacked as users receive false radiation threat, Air Force says" loading="lazy">
+    </figure>
+    
+
+    <header>
+      <h1>Ukraine air raid app apparently hacked as users receive false radiation threat, Air Force says</h1>
+      <p class="source">Source: <a href="https://www.bbc.co.uk/news/articles/c51kdy1ew7zvo?at_medium=RSS&at_campaign=rss">BBC News</a></p>
+    </header>
+
+    <div class="audio-player ">
+      <audio id="article-audio" src="https://heardlin.github.io/NEWS_APP/audio/2026-11-02.mp3" preload="metadata"></audio>
+      <div class="audio-controls">
+        <button id="play-btn">&#9654; Play</button>
+        <span class="time-display" id="time-current">00:00</span>
+        <input type="range" id="seek-bar" min="0" max="1000" value="0" step="1">
+        <span class="time-display" id="time-total">--:--</span>
+        <select id="rate-select">
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="1.75">1.75x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <main id="article-main">
+      
+      <div class="paragraph-pair" data-para-index="0">
+        <p class="en"><span class="sentence" data-sentence-index="0">Ukrainians are used to reacting to the warnings of Russian attacks sent via the air <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> app</span></p>
+        <p class="cn">乌克兰人已经习惯通过空袭警报应用程序对俄罗斯袭击的警告做出反应。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="1">
+        <p class="en"><span class="sentence" data-sentence-index="1">Ukraine's air raid <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> app was apparently hacked on Sunday and for a short time said the capital Kyiv was subject to a <span class="keyword" data-word="radiation" data-phonetic="/ˌreɪdiˈeɪʃn/" data-pos="n." data-def="辐射" data-def-en="The emission of energy as electromagnetic waves or particles.">radiation</span> <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>, the Ukrainian Air Force has said.</span></p>
+        <p class="cn">乌克兰空军表示，乌克兰的空袭警报应用程序显然在周日遭到黑客攻击，并短暂显示首都基辅受到辐射威胁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="2">
+        <p class="en"><span class="sentence" data-sentence-index="2">The <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> on Telegram read: "The Air Alarm application has probably been subjected to hostile <span class="keyword" data-word="interference" data-phonetic="/ˌɪntərˈfɪrəns/" data-pos="n." data-def="干扰" data-def-en="The disruption of a signal or process, often deliberately.">interference</span>.</span> <span class="sentence" data-sentence-index="3">There is no <span class="keyword" data-word="radiation" data-phonetic="/ˌreɪdiˈeɪʃn/" data-pos="n." data-def="辐射" data-def-en="The emission of energy as electromagnetic waves or particles.">radiation</span> <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>!</span> <span class="sentence" data-sentence-index="4">Stay calm and follow our updates on our channel."</span></p>
+        <p class="cn">Telegram上的警报写道：“空袭警报应用程序可能遭到了敌对干扰。没有辐射威胁！保持冷静，并关注我们频道的最新消息。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="3">
+        <p class="en"><span class="sentence" data-sentence-index="5">The Ukrainian Central Intelligence Agency said there had been a failure in the app, and urged people to use other sources of information to clarify the situation on the <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span> of air strikes.</span></p>
+        <p class="cn">乌克兰中央情报局表示，该应用程序出现了故障，并敦促人们使用其他信息来源来澄清空袭威胁的情况。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="4">
+        <p class="en"><span class="sentence" data-sentence-index="6">The alerts, in Ukrainian, started at approximately 22:47 (20:47 GMT), with the first reading: "<span class="keyword" data-word="radiation" data-phonetic="/ˌreɪdiˈeɪʃn/" data-pos="n." data-def="辐射" data-def-en="The emission of energy as electromagnetic waves or particles.">Radiation</span> <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>.</span> <span class="sentence" data-sentence-index="7"><span class="keyword" data-word="radiation" data-phonetic="/ˌreɪdiˈeɪʃn/" data-pos="n." data-def="辐射" data-def-en="The emission of energy as electromagnetic waves or particles.">Radiation</span> <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span> declared in Kyiv."</span></p>
+        <p class="cn">这些警报以乌克兰语发出，开始于大约22:47（格林威治标准时间20:47），第一条警报写道：“辐射威胁。基辅宣布辐射威胁。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="5">
+        <p class="en"><span class="sentence" data-sentence-index="8">The next message, written in Russian, came at 22:48, which read: "Hi!</span> <span class="sentence" data-sentence-index="9">There will be a nuclear <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> across Ukraine.</span> <span class="sentence" data-sentence-index="10">Don't worry, it's Oreshnik flying".</span></p>
+        <p class="cn">第二条信息用俄语写成，于22:48发出，内容为：“嗨！乌克兰全境将发布核警报。别担心，是‘奥列什尼克’导弹飞过”。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="6">
+        <p class="en"><span class="sentence" data-sentence-index="11">A third <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span>, at 22:49, again in Ukrainian, said "Chemical <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>.</span> <span class="sentence" data-sentence-index="12">There is a <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span> of a chemical attack on Kyiv.</span> <span class="sentence" data-sentence-index="13">Don't go outside."</span></p>
+        <p class="cn">第三条警报于22:49发出，再次用乌克兰语表示：“化学威胁。基辅面临化学攻击威胁。不要外出。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="7">
+        <p class="en"><span class="sentence" data-sentence-index="14">At 22:49, a fourth <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> stated there was a "Street fighting <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>.</span> <span class="sentence" data-sentence-index="15">Street fighting is taking place in Kyiv.</span> <span class="sentence" data-sentence-index="16">Don't go outside."</span></p>
+        <p class="cn">22:49时，第四条警报称存在“巷战威胁。基辅正在发生巷战。不要外出。”</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="8">
+        <p class="en"><span class="sentence" data-sentence-index="17">At 23:53 a series of all clear messages were then delivered to users' phones, which were connected to each of the previous Kyiv alerts, individually declaring each <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span> clear.</span></p>
+        <p class="cn">23:53时，一系列解除警报的消息发送到用户手机上，这些消息分别与之前的每一条基辅警报相关联，逐一宣布每个威胁已解除。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="9">
+        <p class="en"><span class="sentence" data-sentence-index="18">In a separate post on Telegram, the Ukrainian Central Intelligence Agency said that due to the Air <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">Alert</span> application, the <span class="keyword" data-word="radiation" data-phonetic="/ˌreɪdiˈeɪʃn/" data-pos="n." data-def="辐射" data-def-en="The emission of energy as electromagnetic waves or particles.">Radiation</span> Hazard signal was played on loudspeaker devices in the Lviv region, and added there was no <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span> of radiation hazard.</span></p>
+        <p class="cn">在Telegram的另一条帖子中，乌克兰中央情报局表示，由于空袭警报应用程序，利沃夫地区的扩音器设备播放了辐射危险信号，并补充说没有辐射危险威胁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="10">
+        <p class="en"><span class="sentence" data-sentence-index="19">If the <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> app is not working, Ukraine's Centre for Countering Disinformation advises the public to turn on notifications on their smartphones, pay attention to sirens, and to only read official sources</span></p>
+        <p class="cn">如果警报应用程序无法正常工作，乌克兰反虚假信息中心建议公众打开智能手机上的通知功能，注意听警报器，并且只阅读官方来源的信息。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="11">
+        <p class="en"><span class="sentence" data-sentence-index="20">Several governors of other regions also posted on Telegram that the app had apparently been hacked and there was no local <span class="keyword" data-word="threat" data-phonetic="/θret/" data-pos="n." data-def="威胁" data-def-en="A statement or situation indicating potential danger or harm.">threat</span>.</span></p>
+        <p class="cn">其他几个地区的州长也在Telegram上发帖称，该应用程序显然遭到黑客攻击，当地没有威胁。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="12">
+        <p class="en"><span class="sentence" data-sentence-index="21">"Everything is calm in the region for now," said Svitlana Onyshchuk, the governor of the Ivano-Frankivsk Oblast.</span> <span class="sentence" data-sentence-index="22">The app had reported a red-level air raid <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">alert</span> for the oblast in Ukraine's east, between 22:50 and 23:57.</span></p>
+        <p class="cn">伊万诺-弗兰科夫斯克州州长斯维特兰娜·奥尼休克表示：“目前该地区一切平静。”该应用程序曾在22:50至23:57期间报告该州（位于乌克兰东部）发布了红色级别的空袭警报。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="13">
+        <p class="en"><span class="sentence" data-sentence-index="23">The governor of Vinnytsia oblast, Natalya Zabolotna said there had been a cyber-attack on the Air <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">Alert</span> app and posted a warning on Telegram not to click on the link in the message, which could be a <span class="keyword" data-word="phishing" data-phonetic="/ˈfɪʃɪŋ/" data-pos="n." data-def="网络钓鱼" data-def-en="The fraudulent practice of sending emails or messages to trick people into revealing personal information.">phishing</span> attempt.</span></p>
+        <p class="cn">文尼察州州长纳塔利娅·扎博洛特纳表示，空袭警报应用程序遭到了网络攻击，并在Telegram上发布警告，不要点击消息中的链接，这可能是网络钓鱼的尝试。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="14">
+        <p class="en"><span class="sentence" data-sentence-index="24">The Air <span class="keyword" data-word="alert" data-phonetic="/əˈlɜːrt/" data-pos="n." data-def="警报" data-def-en="A warning of danger or an emergency.">Alert</span> app is supported by the Ministry of Digital Transformation of Ukraine, and informs users instantly about the beginning and end of defence alerts.</span> <span class="sentence" data-sentence-index="25">The ministry had earlier said the app was temporarily disabled for maintenance after it had "apparently been compromised".</span> <span class="sentence" data-sentence-index="26">It urged residents to turn on their smartphones' emergency notifications so they could receive state-issued distress signals.</span></p>
+        <p class="cn">空袭警报应用程序由乌克兰数字转型部支持，即时向用户通报防御警报的开始和结束。该部早些时候曾表示，该应用程序在“显然遭到入侵”后暂时停用进行维护。它敦促居民打开智能手机的紧急通知功能，以便接收国家发布的遇险信号。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="15">
+        <p class="en"><span class="sentence" data-sentence-index="27">The alerts occurred just minutes before the end of a localised ceasefire in Ukraine's front-line Kherson region , which was implemented last Tuesday and officially ended at 23:00 Sunday.</span></p>
+        <p class="cn">这些警报发生在乌克兰前线赫尔松地区局部停火结束前几分钟，该停火于上周二实施，并于周日23:00正式结束。</p>
+      </div>
+      
+      <div class="paragraph-pair" data-para-index="16">
+        <p class="en"><span class="sentence" data-sentence-index="28">Fighting had continued elsewhere while the Kherson ceasefire was in place, to allow civilians to evacuate the Russian-occupied city of Oleshky .</span></p>
+        <p class="cn">在赫尔松停火期间，其他地方的战斗仍在继续，以便平民从俄罗斯占领的奥列什基市撤离。</p>
+      </div>
+      
+    </main>
+
+  </div>
+
+  <!-- ════ RIGHT COLUMN: Keywords (sticky) ════ -->
+  <aside class="column-kw">
+    <p class="kw-sidebar-title">Today's Eight Words</p>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">alert</span>
+        <button class="kw-speak-btn" data-word="alert" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/əˈlɜːrt/ n.</span>
+      </div>
+      <p class="kw-def">警报</p>
+      <p class="kw-def-en">A warning of danger or an emergency.</p>
+      <p class="kw-ctx">&ldquo;Ukraine's air raid alert app was apparently hacked on Sunday and for a short time said the capital Kyiv was subject to a radiation threat, the Ukrainian Air Force has said.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰空军表示，乌克兰的空袭警报应用程序在周日显然被黑客入侵，并短暂表示首都基辅受到辐射威胁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">hack</span>
+        <button class="kw-speak-btn" data-word="hack" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/hæk/ v.</span>
+      </div>
+      <p class="kw-def">黑客入侵</p>
+      <p class="kw-def-en">To gain unauthorized access to a computer system or data.</p>
+      <p class="kw-ctx">&ldquo;Ukraine's air raid alert app was apparently hacked on Sunday and for a short time said the capital Kyiv was subject to a radiation threat, the Ukrainian Air Force has said.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰空军表示，乌克兰的空袭警报应用程序在周日显然被黑客入侵，并短暂表示首都基辅受到辐射威胁。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">radiation</span>
+        <button class="kw-speak-btn" data-word="radiation" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌreɪdiˈeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">辐射</p>
+      <p class="kw-def-en">The emission of energy as electromagnetic waves or particles.</p>
+      <p class="kw-ctx">&ldquo;The alert on Telegram read: "The Air Alarm application has probably been subjected to hostile interference. There is no radiation threat! Stay calm and follow our updates on our channel."&rdquo;</p>
+      <p class="kw-ctx-cn">Telegram上的警报写道：“空袭警报应用程序可能遭到了敌对干扰。没有辐射威胁！保持冷静，并关注我们频道上的更新。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">interference</span>
+        <button class="kw-speak-btn" data-word="interference" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌɪntərˈfɪrəns/ n.</span>
+      </div>
+      <p class="kw-def">干扰</p>
+      <p class="kw-def-en">The disruption of a signal or process, often deliberately.</p>
+      <p class="kw-ctx">&ldquo;The alert on Telegram read: "The Air Alarm application has probably been subjected to hostile interference. There is no radiation threat! Stay calm and follow our updates on our channel."&rdquo;</p>
+      <p class="kw-ctx-cn">Telegram上的警报写道：“空袭警报应用程序可能遭到了敌对干扰。没有辐射威胁！保持冷静，并关注我们频道上的更新。”</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">threat</span>
+        <button class="kw-speak-btn" data-word="threat" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/θret/ n.</span>
+      </div>
+      <p class="kw-def">威胁</p>
+      <p class="kw-def-en">A statement or situation indicating potential danger or harm.</p>
+      <p class="kw-ctx">&ldquo;The Ukrainian Central Intelligence Agency said there had been a failure in the app, and urged people to use other sources of information to clarify the situation on the threat of air strikes.&rdquo;</p>
+      <p class="kw-ctx-cn">乌克兰中央情报局表示，该应用程序出现了故障，并敦促人们使用其他信息来源来澄清空袭威胁的情况。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">notification</span>
+        <button class="kw-speak-btn" data-word="notification" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˌnoʊtɪfɪˈkeɪʃn/ n.</span>
+      </div>
+      <p class="kw-def">通知</p>
+      <p class="kw-def-en">A message or alert that informs someone about something.</p>
+      <p class="kw-ctx">&ldquo;If the alert app is not working, Ukraine's Centre for Countering Disinformation advises the public to turn on notifications on their smartphones, pay attention to sirens, and to only read official sources&rdquo;</p>
+      <p class="kw-ctx-cn">如果警报应用程序无法工作，乌克兰反虚假信息中心建议公众打开智能手机上的通知，注意警报器，并只阅读官方来源。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">phishing</span>
+        <button class="kw-speak-btn" data-word="phishing" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈfɪʃɪŋ/ n.</span>
+      </div>
+      <p class="kw-def">网络钓鱼</p>
+      <p class="kw-def-en">The fraudulent practice of sending emails or messages to trick people into revealing personal information.</p>
+      <p class="kw-ctx">&ldquo;The governor of Vinnytsia oblast, Natalya Zabolotna said there had been a cyber-attack on the Air Alert app and posted a warning on Telegram not to click on the link in the message, which could be a phishing attempt.&rdquo;</p>
+      <p class="kw-ctx-cn">文尼察州州长纳塔利娅·扎博洛特纳表示，空袭警报应用程序遭到了网络攻击，并在Telegram上发布警告，不要点击消息中的链接，这可能是网络钓鱼企图。</p>
+    </div>
+    
+    <div class="kw-card">
+      <div class="kw-card-header">
+        <span class="kw-word">compromise</span>
+        <button class="kw-speak-btn" data-word="compromise" title="Pronounce">&#128264;</button>
+        <span class="kw-meta">/ˈkɑːmprəmaɪz/ v.</span>
+      </div>
+      <p class="kw-def">损害；危及</p>
+      <p class="kw-def-en">To expose to danger or risk; to weaken or damage.</p>
+      <p class="kw-ctx">&ldquo;The ministry had earlier said the app was temporarily disabled for maintenance after it had "apparently been compromised".&rdquo;</p>
+      <p class="kw-ctx-cn">该部早些时候表示，该应用程序在“显然遭到破坏”后暂时禁用进行维护。</p>
+    </div>
+    
+  </aside>
+
+</div>
+
+<!-- Keyword popup -->
+<div id="keyword-popup" class="popup hidden">
+  <div class="popup-word"></div>
+  <div class="popup-phonetic"></div>
+  <div class="popup-pos"></div>
+  <div class="popup-def"></div>
+  <div class="popup-def-en"></div>
+  <button class="popup-close">&#10005;</button>
+</div>
+
+<!-- Hover tooltip (shared, repositioned dynamically) -->
+<div id="hover-tooltip" class="word-tooltip" style="display:none;"></div>
+
+<script>
+  const TIMELINE = {"sentences": [{"index": 0, "text": "Ukrainians are used to reacting to the warnings of Russian attacks sent via the air alert app", "start_ms": 0, "end_ms": 6624, "paragraph_index": 0}, {"index": 1, "text": "Ukraine's air raid alert app was apparently hacked on Sunday and for a short time said the capital Kyiv was subject to a radiation threat, the Ukrainian Air Force has said.", "start_ms": 6624, "end_ms": 18216, "paragraph_index": 1}, {"index": 2, "text": "The alert on Telegram read: \"The Air Alarm application has probably been subjected to hostile interference.", "start_ms": 18216, "end_ms": 26184, "paragraph_index": 2}, {"index": 3, "text": "There is no radiation threat!", "start_ms": 26184, "end_ms": 29184, "paragraph_index": 2}, {"index": 4, "text": "Stay calm and follow our updates on our channel.\"", "start_ms": 29184, "end_ms": 33096, "paragraph_index": 2}, {"index": 5, "text": "The Ukrainian Central Intelligence Agency said there had been a failure in the app, and urged people to use other sources of information to clarify the situation on the threat of air strikes.", "start_ms": 33096, "end_ms": 45696, "paragraph_index": 3}, {"index": 6, "text": "The alerts, in Ukrainian, started at approximately 22:47 (20:47 GMT), with the first reading: \"Radiation threat.", "start_ms": 45696, "end_ms": 57072, "paragraph_index": 4}, {"index": 7, "text": "Radiation threat declared in Kyiv.\"", "start_ms": 57072, "end_ms": 60600, "paragraph_index": 4}, {"index": 8, "text": "The next message, written in Russian, came at 22:48, which read: \"Hi!", "start_ms": 60600, "end_ms": 67392, "paragraph_index": 5}, {"index": 9, "text": "There will be a nuclear alert across Ukraine.", "start_ms": 67392, "end_ms": 71160, "paragraph_index": 5}, {"index": 10, "text": "Don't worry, it's Oreshnik flying\".", "start_ms": 71160, "end_ms": 74376, "paragraph_index": 5}, {"index": 11, "text": "A third alert, at 22:49, again in Ukrainian, said \"Chemical threat.", "start_ms": 74376, "end_ms": 80928, "paragraph_index": 6}, {"index": 12, "text": "There is a threat of a chemical attack on Kyiv.", "start_ms": 80928, "end_ms": 84720, "paragraph_index": 6}, {"index": 13, "text": "Don't go outside.\"", "start_ms": 84720, "end_ms": 87120, "paragraph_index": 6}, {"index": 14, "text": "At 22:49, a fourth alert stated there was a \"Street fighting threat.", "start_ms": 87120, "end_ms": 93072, "paragraph_index": 7}, {"index": 15, "text": "Street fighting is taking place in Kyiv.", "start_ms": 93072, "end_ms": 96648, "paragraph_index": 7}, {"index": 16, "text": "Don't go outside.\"", "start_ms": 96648, "end_ms": 99048, "paragraph_index": 7}, {"index": 17, "text": "At 23:53 a series of all clear messages were then delivered to users' phones, which were connected to each of the previous Kyiv alerts, individually declaring each threat clear.", "start_ms": 99048, "end_ms": 112224, "paragraph_index": 8}, {"index": 18, "text": "In a separate post on Telegram, the Ukrainian Central Intelligence Agency said that due to the Air Alert application, the Radiation Hazard signal was played on loudspeaker devices in the Lviv region, and added there was no threat of radiation hazard.", "start_ms": 112224, "end_ms": 129120, "paragraph_index": 9}, {"index": 19, "text": "If the alert app is not working, Ukraine's Centre for Countering Disinformation advises the public to turn on notifications on their smartphones, pay attention to sirens, and to only read official sources", "start_ms": 129120, "end_ms": 143136, "paragraph_index": 10}, {"index": 20, "text": "Several governors of other regions also posted on Telegram that the app had apparently been hacked and there was no local threat.", "start_ms": 143136, "end_ms": 151536, "paragraph_index": 11}, {"index": 21, "text": "\"Everything is calm in the region for now,\" said Svitlana Onyshchuk, the governor of the Ivano-Frankivsk Oblast.", "start_ms": 151536, "end_ms": 159600, "paragraph_index": 12}, {"index": 22, "text": "The app had reported a red-level air raid alert for the oblast in Ukraine's east, between 22:50 and 23:57.", "start_ms": 159600, "end_ms": 169296, "paragraph_index": 12}, {"index": 23, "text": "The governor of Vinnytsia oblast, Natalya Zabolotna said there had been a cyber-attack on the Air Alert app and posted a warning on Telegram not to click on the link in the message, which could be a phishing attempt.", "start_ms": 169296, "end_ms": 182856, "paragraph_index": 13}, {"index": 24, "text": "The Air Alert app is supported by the Ministry of Digital Transformation of Ukraine, and informs users instantly about the beginning and end of defence alerts.", "start_ms": 182856, "end_ms": 193776, "paragraph_index": 14}, {"index": 25, "text": "The ministry had earlier said the app was temporarily disabled for maintenance after it had \"apparently been compromised\".", "start_ms": 193776, "end_ms": 201936, "paragraph_index": 14}, {"index": 26, "text": "It urged residents to turn on their smartphones' emergency notifications so they could receive state-issued distress signals.", "start_ms": 201936, "end_ms": 210264, "paragraph_index": 14}, {"index": 27, "text": "The alerts occurred just minutes before the end of a localised ceasefire in Ukraine's front-line Kherson region , which was implemented last Tuesday and officially ended at 23:00 Sunday.", "start_ms": 210264, "end_ms": 223608, "paragraph_index": 15}, {"index": 28, "text": "Fighting had continued elsewhere while the Kherson ceasefire was in place, to allow civilians to evacuate the Russian-occupied city of Oleshky .", "start_ms": 223608, "end_ms": 233712, "paragraph_index": 16}], "total_duration_ms": 233712};
+  const WORD_GLOSS = {"the": "这个", "to": "到", "of": "的", "on": "在", "in": "在", "and": "和", "air": "气氛", "app": "应用程序", "was": "是", "said": "说", "there": "那里", "had": "有", "is": "是", "at": "在", "for": "为了", "kyiv": "基辅", "ukrainian": "乌克兰的", "been": "已经", "ukraine's": "乌克兰的", "telegram": "电报", "alerts": "警报", "which": "哪个", "apparently": "显然", "read": "阅读", "no": "没有", "don't": "不要", "fighting": "战斗", "region": "地区", "russian": "俄罗斯的", "raid": "袭击", "hacked": "被黑", "sunday": "星期日", "has": "有", "application": "申请", "calm": "平静的", "our": "我们的", "central": "中央的", "intelligence": "情报", "agency": "机构", "urged": "敦促", "other": "其他", "sources": "消息来源", "message": "信息", "be": "是", "ukraine": "乌克兰", "chemical": "化学物质", "go": "去", "outside": "外部", "street": "街", "place": "地点", "clear": "明确", "were": "是", "users": "用户", "each": "每个", "that": "那个", "not": "不", "turn": "转变", "their": "他们的", "posted": "发布", "governor": "州长", "could": "可能", "ministry": "外交部", "end": "结束", "it": "它", "ceasefire": "停火", "kherson": "赫尔松", "ukrainians": "乌克兰人", "are": "是", "used": "使用", "reacting": "反应", "warnings": "警告", "attacks": "袭击", "sent": "派遣", "via": "通过", "short": "短暂的", "time": "时间", "capital": "资本", "subject": "主题", "force": "力量", "alarm": "警报", "probably": "很可能", "subjected": "遭受", "hostile": "敌对的", "stay": "保持", "follow": "关注", "updates": "更新", "channel": "航道", "failure": "失败", "people": "人们", "use": "使用", "information": "信息", "clarify": "澄清", "situation": "局势", "strikes": "袭击", "started": "开始", "approximately": "大约", "gmt": "格林尼治标准时间", "with": "与", "first": "第一轮", "reading": "解读", "declared": "宣布", "next": "下一个", "written": "书面", "came": "到来", "will": "将", "nuclear": "核的", "across": "跨越", "worry": "担心", "it's": "它是", "flying": "飞行的", "third": "第三", "again": "再次", "attack": "袭击", "fourth": "第四", "stated": "陈述", "taking": "采取", "series": "系列", "all": "所有", "messages": "信息", "then": "然后", "delivered": "递送", "phones": "电话", "connected": "有联系的", "previous": "先前", "individually": "个别地", "declaring": "宣布", "separate": "单独的", "post": "职位", "due": "应得", "signal": "信号", "played": "比赛", "devices": "设备", "lviv": "利沃夫", "added": "补充", "if": "如果", "working": "工作", "centre": "中心", "public": "公众", "pay": "支付", "attention": "关注", "sirens": "警笛声", "only": "只有", "official": "官方", "several": "数个", "governors": "州长们", "regions": "地区", "also": "也", "local": "当地", "everything": "一切", "now": "现在", "reported": "据报道", "east": "东部", "between": "之间", "warning": "警告", "click": "点击", "link": "联系", "attempt": "企图", "supported": "支持", "by": "被", "digital": "数字的", "transformation": "转型", "about": "关于", "beginning": "开始", "defence": "国防", "earlier": "较早", "temporarily": "暂时", "disabled": "残疾的", "maintenance": "维护", "after": "之后", "compromised": "受损的", "residents": "居民", "emergency": "紧急", "so": "所以", "they": "它们", "receive": "收到", "distress": "痛苦", "signals": "信号", "occurred": "发生", "just": "只是", "minutes": "会议记录", "before": "之前", "localised": "局部的", "front-line": "一线", "last": "最后", "tuesday": "星期二", "officially": "正式地", "ended": "结束", "continued": "持续的", "elsewhere": "其他地方", "while": "而", "allow": "允许", "civilians": "平民", "russian-occupied": "俄占", "city": "城市", "oleshky": "奥列什基", "oblast": "州", "hazard": "危险", "notifications": "通知", "smartphones": "智能手机", "hi": "嗨", "oreshnik": "榛树导弹", "loudspeaker": "扩音器", "countering": "打击", "disinformation": "虚假信息", "advises": "建议", "svitlana": "斯维特兰娜", "onyshchuk": "奥尼休克", "ivano-frankivsk": "伊万诺-弗兰科夫斯克", "red-level": "红色级别", "vinnytsia": "文尼察", "natalya": "娜塔莉娅", "zabolotna": "扎博洛特娜", "cyber-attack": "网络攻击", "informs": "告知", "instantly": "立即", "state-issued": "国家发放的", "implemented": "实施", "evacuate": "疏散"};
+
+  // ── Build keyword dictionary from data attributes ──
+  const KW_DICT = {};
+  document.querySelectorAll('.keyword').forEach(el => {
+    const w = (el.dataset.word || '').toLowerCase();
+    if (w) KW_DICT[w] = el.dataset.def || '';
+  });
+
+  // Chinese from keywords + build-time glossary (DeepSeek, article-aware)
+  const TRANS_CACHE = {};
+  Object.keys(KW_DICT).forEach(w => { TRANS_CACHE[w] = KW_DICT[w]; });
+  Object.keys(WORD_GLOSS).forEach(w => { TRANS_CACHE[w] = WORD_GLOSS[w]; });
+
+  // ── Hover-to-translate: wrap English words ──
+  const tooltip = document.getElementById('hover-tooltip');
+  let tooltipTimer = null;
+  let activeHoverEl = null;
+
+  function wrapTextNodes(root) {
+    const replacements = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (node.parentElement && node.parentElement.classList.contains('keyword')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      replacements.push(node);
+    }
+    replacements.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part) || part === '') {
+          frag.appendChild(document.createTextNode(part));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'word-hoverable';
+          span.textContent = part;
+          frag.appendChild(span);
+        }
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+  document.querySelectorAll('.paragraph-pair .en').forEach(pEl => wrapTextNodes(pEl));
+
+  function positionTooltip(el) {
+    const rect = el.getBoundingClientRect();
+    const margin = 8;
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.transform = 'translateX(-50%)';
+    const h = tooltip.offsetHeight;
+    let top = rect.top - margin - h;
+    if (top < margin) top = rect.bottom + margin;
+    tooltip.style.top = top + 'px';
+  }
+
+  function resolveGloss(word) {
+    if (TRANS_CACHE[word]) return TRANS_CACHE[word];
+    if (word.endsWith("'s")) {
+      const base = word.slice(0, -2);
+      if (TRANS_CACHE[base]) return TRANS_CACHE[base] + "（所有格）";
+    }
+    if (word.endsWith("s")) {
+      const singular = word.slice(0, -1);
+      if (TRANS_CACHE[singular]) return TRANS_CACHE[singular] + "（复数）";
+    }
+    return "";
+  }
+
+  document.addEventListener('mouseenter', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    const el = e.target;
+    const raw = el.textContent.replace(/[^a-zA-Z'-]/g, '').toLowerCase();
+    if (!raw || raw.length <= 1) return;
+
+    activeHoverEl = el;
+    clearTimeout(tooltipTimer);
+    tooltipTimer = setTimeout(() => {
+      if (activeHoverEl !== el) return;
+      const gloss = resolveGloss(raw);
+      tooltip.textContent = gloss || "（词表未命中）";
+      tooltip.style.display = 'block';
+      positionTooltip(el);
+    }, 200);
+  }, true);
+
+  document.addEventListener('mouseleave', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('word-hoverable')) return;
+    activeHoverEl = null;
+    clearTimeout(tooltipTimer);
+    setTimeout(() => { if (!activeHoverEl) tooltip.style.display = 'none'; }, 150);
+  }, true);
+
+  // ── Keyword speak buttons (SpeechSynthesis) ──
+  document.querySelectorAll('.kw-speak-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const word = btn.dataset.word;
+      if (!word || !window.speechSynthesis) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(word);
+      utter.lang = 'en-US';
+      utter.rate = 0.85;
+
+      btn.classList.add('speaking');
+      utter.onend = () => btn.classList.remove('speaking');
+      utter.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(utter);
+    });
+  });
+
+  // ── Audio player ──
+  const audio = document.getElementById('article-audio');
+  const playBtn = document.getElementById('play-btn');
+  const seekBar = document.getElementById('seek-bar');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const rateSelect = document.getElementById('rate-select');
+  let isDragging = false;
+
+  function fmtTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  if (audio && playBtn) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      } else {
+        audio.pause();
+        playBtn.innerHTML = '&#9654; Play';
+      }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      timeTotal.textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const cur = audio.currentTime;
+      const dur = audio.duration || 1;
+      timeCurrent.textContent = fmtTime(cur);
+      if (!isDragging) seekBar.value = Math.round((cur / dur) * 1000);
+
+      const currentMs = cur * 1000;
+      TIMELINE.sentences.forEach((entry) => {
+        const el = document.querySelector('[data-sentence-index="' + entry.index + '"]');
+        if (!el) return;
+        if (currentMs >= entry.start_ms && currentMs < entry.end_ms) {
+          if (!el.classList.contains('highlight')) {
+            el.classList.add('highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.innerHTML = '&#9654; Play';
+      seekBar.value = 0;
+      document.querySelectorAll('.sentence.highlight').forEach(el => el.classList.remove('highlight'));
+    });
+
+    seekBar.addEventListener('mousedown', () => { isDragging = true; });
+    seekBar.addEventListener('touchstart', () => { isDragging = true; }, { passive: true });
+    seekBar.addEventListener('input', () => {
+      timeCurrent.textContent = fmtTime((seekBar.value / 1000) * (audio.duration || 0));
+    });
+    seekBar.addEventListener('change', () => {
+      audio.currentTime = (seekBar.value / 1000) * (audio.duration || 0);
+      isDragging = false;
+    });
+
+    rateSelect.addEventListener('change', () => {
+      audio.playbackRate = parseFloat(rateSelect.value);
+    });
+  }
+
+  // ── Click sentence to seek ──
+  const articleMain = document.getElementById('article-main');
+  if (articleMain && audio) {
+    articleMain.addEventListener('click', (e) => {
+      if (e.target.closest('.keyword')) return;
+      const sentenceEl = e.target.closest('.sentence');
+      if (!sentenceEl) return;
+      const idx = parseInt(sentenceEl.dataset.sentenceIndex, 10);
+      const entry = TIMELINE.sentences.find(s => s.index === idx);
+      if (entry) {
+        audio.currentTime = entry.start_ms / 1000;
+        audio.play();
+        playBtn.innerHTML = '&#9646;&#9646; Pause';
+      }
+    });
+  }
+
+  // ── Keyword popup ──
+  const popup = document.getElementById('keyword-popup');
+
+  document.querySelectorAll('.keyword').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.querySelector('.popup-word').textContent = el.dataset.word;
+      popup.querySelector('.popup-phonetic').textContent = el.dataset.phonetic || '';
+      popup.querySelector('.popup-pos').textContent = el.dataset.pos || '';
+      popup.querySelector('.popup-def').textContent = el.dataset.def || '';
+      popup.querySelector('.popup-def-en').textContent = el.dataset.defEn || '';
+      popup.classList.remove('hidden');
+    });
+  });
+
+  popup.querySelector('.popup-close').addEventListener('click', () => {
+    popup.classList.add('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && !e.target.classList.contains('keyword')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+</body>
+</html>
